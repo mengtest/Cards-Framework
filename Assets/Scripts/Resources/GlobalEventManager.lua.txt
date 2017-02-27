@@ -1,0 +1,38 @@
+-- region *.lua
+-- Date
+-- 此文件由[BabeLua]插件自动生成
+
+
+
+GlobalEventManager = { };
+local this = GlobalEventManager;
+
+function GlobalEventManager:Register(eventID, handler)
+    globalEventManager:Register(eventID, handler);
+end
+
+function GlobalEventManager:Unregister(eventID, handler)
+    globalEventManager:Unregister(eventID, handler);
+end
+
+function GlobalEventManager:Notify(eventObj)
+    globalEventManager:Notify(eventObj);
+end
+
+function GlobalEventManager:TestRegister()
+    this.Register(1, Callback);
+end
+
+function GlobalEventManager:TestUnregister()
+    this.Unregister(1,Callback);
+end
+
+function GlobalEventManager:TestNotify()
+    this.Notify(1);
+end
+
+function GlobalEventManager:Callback(evt)
+    log("callback");
+end
+
+-- endregion
