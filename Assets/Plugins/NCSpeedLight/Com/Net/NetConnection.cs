@@ -656,7 +656,7 @@ namespace NCSpeedLight
                             if (packet != null)
                             {
                                 //Debug.LogError("Reveive a net message,id is " + packet.GetMessageID());
-                                NetEventManager.Instance.Notify(new EventEX<NetPacket>(packet.GetMessageID(), packet));
+                                NetEventManager.Instance.Notify(new Event(packet.GetMessageID(), packet));
                             }
                         }
                         m_PacketsBuffer.Clear();

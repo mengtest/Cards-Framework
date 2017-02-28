@@ -23,9 +23,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Lua\" />
+    <Folder Include="Lua\NCSpeedLight\" />
+    <Folder Include="Lua\NCSpeedLight\Interface\" />
+    <Folder Include="Lua\NCSpeedLight\Utils\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Lua\Main.lua" />
+    <Compile Include="Lua\NCSpeedLight\Interface\IGlobalEventManager.lua" />
+    <Compile Include="Lua\NCSpeedLight\Interface\IResManager.lua" />
+    <Compile Include="Lua\NCSpeedLight\Interface\IUIManager.lua" />
+    <Compile Include="Lua\NCSpeedLight\Utils\Define.lua" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
 </Project>

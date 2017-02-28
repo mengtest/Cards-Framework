@@ -15,19 +15,29 @@ namespace NCSpeedLight
 {
     public class Event
     {
-        public int EventID;
-        public Event(int evtID) { EventID = evtID; }
-    }
-
-    public class EventEX<T> : Event
-        where T : class
-    {
-        public T Param;
-        public EventEX(int evtID, T param) : base(evtID)
+        public int ID;
+        public object Param;
+        public Event() { }
+        public Event(int id)
         {
-            Param = param;
+            this.ID = id;
+        }
+        public Event(int id, object param)
+        {
+            this.ID = id;
+            this.Param = param;
         }
     }
+
+    //public class EventEX<T> : Event
+    //    where T : class
+    //{
+    //    public T Param;
+    //    public EventEX(int evtID, T param) : base(evtID)
+    //    {
+    //        Param = param;
+    //    }
+    //}
 
     public class EventHandlerQueue
     {

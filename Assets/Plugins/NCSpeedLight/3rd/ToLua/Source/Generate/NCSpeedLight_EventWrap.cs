@@ -47,7 +47,7 @@ public class NCSpeedLight_EventWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			NCSpeedLight.Event obj = (NCSpeedLight.Event)o;
-			int ret = obj.EventID;
+			int ret = obj.ID;
 			LuaDLL.lua_pushinteger(L, ret);
 			return 1;
 		}
@@ -67,7 +67,7 @@ public class NCSpeedLight_EventWrap
 			o = ToLua.ToObject(L, 1);
 			NCSpeedLight.Event obj = (NCSpeedLight.Event)o;
 			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
-			obj.EventID = arg0;
+			obj.ID = arg0;
 			return 0;
 		}
 		catch(Exception e)

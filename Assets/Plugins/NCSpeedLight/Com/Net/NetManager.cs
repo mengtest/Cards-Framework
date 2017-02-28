@@ -2,7 +2,7 @@
             // Copyright © 2014-2017 NCSpeedLight
             // 
             // FileName: NetManager.cs
-			// Describle:  管理不同的网络连接
+			// Describle:  管理不同的网络连接，处理收发包等逻辑
 			// Created By:  Wells Hsu
 			// Date&Time:  2016/3/3 19:11:09
             // Modify History:
@@ -208,7 +208,7 @@ namespace NCSpeedLight
             {
                 return returnObj;
             }
-            EventEX<NetPacket> eventObj = obj as EventEX<NetPacket>;
+            Event eventObj = obj as Event;
             if (eventObj == null || eventObj.Param == null)
             {
                 return returnObj;

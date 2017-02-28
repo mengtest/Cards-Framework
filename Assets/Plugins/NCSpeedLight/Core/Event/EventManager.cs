@@ -204,7 +204,7 @@ namespace NCSpeedLight
             {
                 return;
             }
-            Dispatch(eventObj.EventID, eventObj);
+            Dispatch(eventObj.ID, eventObj);
         }
 
         /// <summary>
