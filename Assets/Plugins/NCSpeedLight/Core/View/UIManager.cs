@@ -102,7 +102,7 @@ namespace NCSpeedLight
             return window;
         }
         public static T OpenDialog<T>()
-            where T : Window
+            where T : LuaView
         {
             Type type = typeof(T);
             object obj = type.Assembly.CreateInstance(type.FullName);

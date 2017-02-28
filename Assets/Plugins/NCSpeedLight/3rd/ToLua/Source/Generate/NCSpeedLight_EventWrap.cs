@@ -9,7 +9,9 @@ public class NCSpeedLight_EventWrap
 		L.BeginClass(typeof(NCSpeedLight.Event), typeof(System.Object));
 		L.RegFunction("New", _CreateNCSpeedLight_Event);
 		L.RegFunction("__tostring", ToLua.op_ToString);
-		L.RegVar("EventID", get_EventID, set_EventID);
+		L.RegVar("ID", get_ID, set_ID);
+		L.RegVar("Param", get_Param, set_Param);
+		L.RegVar("Buffer", get_Buffer, set_Buffer);
 		L.EndClass();
 	}
 
@@ -20,10 +22,25 @@ public class NCSpeedLight_EventWrap
 		{
 			int count = LuaDLL.lua_gettop(L);
 
-			if (count == 1)
+			if (count == 0)
+			{
+				NCSpeedLight.Event obj = new NCSpeedLight.Event();
+				ToLua.PushObject(L, obj);
+				return 1;
+			}
+			else if (count == 1 && TypeChecker.CheckTypes(L, 1, typeof(int)))
 			{
 				int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
 				NCSpeedLight.Event obj = new NCSpeedLight.Event(arg0);
+				ToLua.PushObject(L, obj);
+				return 1;
+			}
+			else if (count == 3 && TypeChecker.CheckTypes(L, 1, typeof(int), typeof(object), typeof(byte[])))
+			{
+				int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
+				object arg1 = ToLua.ToVarObject(L, 2);
+				byte[] arg2 = ToLua.CheckByteBuffer(L, 3);
+				NCSpeedLight.Event obj = new NCSpeedLight.Event(arg0, arg1, arg2);
 				ToLua.PushObject(L, obj);
 				return 1;
 			}
@@ -39,7 +56,7 @@ public class NCSpeedLight_EventWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_EventID(IntPtr L)
+	static int get_ID(IntPtr L)
 	{
 		object o = null;
 
@@ -53,12 +70,50 @@ public class NCSpeedLight_EventWrap
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index EventID on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index ID on a nil value" : e.Message);
 		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_EventID(IntPtr L)
+	static int get_Param(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			NCSpeedLight.Event obj = (NCSpeedLight.Event)o;
+			object ret = obj.Param;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index Param on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_Buffer(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			NCSpeedLight.Event obj = (NCSpeedLight.Event)o;
+			byte[] ret = obj.Buffer;
+			LuaDLL.tolua_pushlstring(L, ret, ret.Length);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index Buffer on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_ID(IntPtr L)
 	{
 		object o = null;
 
@@ -72,7 +127,45 @@ public class NCSpeedLight_EventWrap
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index EventID on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index ID on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_Param(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			NCSpeedLight.Event obj = (NCSpeedLight.Event)o;
+			object arg0 = ToLua.ToVarObject(L, 2);
+			obj.Param = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index Param on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_Buffer(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			NCSpeedLight.Event obj = (NCSpeedLight.Event)o;
+			byte[] arg0 = ToLua.CheckByteBuffer(L, 2);
+			obj.Buffer = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index Buffer on a nil value" : e.Message);
 		}
 	}
 }

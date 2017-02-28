@@ -69,9 +69,9 @@ namespace NCSpeedLight
         }
         public PlayerManager() : base()
         {
-            NetManager.BindNetworkEvent((int)AccountMessage.GO_COPY_NEW_MAN_RETURN, OnPlayerEnter);
-            NetManager.BindNetworkEvent((int)AccountMessage.GO_COPY_MAN_LEAVE_RETURN, OnPlayerLeave);
-            NetManager.BindNetworkEvent((int)AccountMessage.GO_POSITION_COMMANF_RETURN, OnSyncPlayerTransform);
+            NetEventManager.Instance.Register((int)AccountMessage.GO_COPY_NEW_MAN_RETURN, OnPlayerEnter);
+            NetEventManager.Instance.Register((int)AccountMessage.GO_COPY_MAN_LEAVE_RETURN, OnPlayerLeave);
+            NetEventManager.Instance.Register((int)AccountMessage.GO_POSITION_COMMANF_RETURN, OnSyncPlayerTransform);
         }
         public void Logout()
         {
@@ -98,7 +98,7 @@ namespace NCSpeedLight
         }
         private void OnPlayerLeave(Event evt)
         {
-            PBMessage.go_copy_roleleave_return info = NetManager.DeserializeNetPacket<PBMessage.go_copy_roleleave_return>(evt);
+            PBMessage.go_copy_roleleave_return info = NetConnection.DeserializeProtoBuf<PBMessage.go_copy_roleleave_return>(evt.Param);
             if (info != null)
             {
                 RemovePlayer(info.roleid);
@@ -106,7 +106,7 @@ namespace NCSpeedLight
         }
         private void OnSyncPlayerTransform(Event evt)
         {
-            PBMessage.go_charactercommand_return info = NetManager.DeserializeNetPacket<PBMessage.go_charactercommand_return>(evt);
+            PBMessage.go_charactercommand_return info = NetConnection.DeserializeProtoBuf<PBMessage.go_charactercommand_return>(evt.Param);
             if (info != null)
             {
                 Player player = GetOnlinePlayer(info.roleid);

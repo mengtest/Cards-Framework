@@ -12,33 +12,37 @@
 require 'NCSpeedLight/Utils/Define'
 
 function Main()
-    GlobalEventManager.Register(2,
-    function(eventObj)
-        print("has received a message,id is " .. eventObj.EventID)
-    end
-    )
-    local go = UnityEngine.GameObject()
-    go.name = "hsu"
-    local eventObj = NCSpeedLight.Event(2)
-    GlobalEventManager.Notify(eventObj)
-
-    UIManager.OpenWindow("Login")
-    print(UIManager)
-    print(ResManager)
-    print(GlobalEventManager)
-    --    local resManager = NCSpeedLight.ResManager.Instance;
-    --    print(resManager)
-    --    local ui = NCSpeedLight.ResManager.LoadAssetSync("UI/Login", "UnityEngine.GameObject")
-    --    if ui then
-    --        ui = UnityEngine.GameObject.Instantiate(ui);
-    --    end
-    --    NCSpeedLight.UIManager.OpenWindow("Login")
+    TestEvent()
+    TestOpenWindow()
+    --    TestLoadAsset()
+    --    TestLuaBehaviour()
+    --    TestProtobuf()
 end
 
--- 场景切换通知
-function OnLevelWasLoaded(level)
-    collectgarbage("collect")
-    Time.timeSinceLevelLoad = 0
+function TestEvent()
+    GlobalEventManager.Register(2,
+    function(eventObj)
+        --        print("has received a message,id is " .. eventObj.ID)
+        --        eventObj.Param:UnregisterAll()
+    end
+    )
+    GlobalEventManager.Notify(2, GlobalEventManager, nil)
+end
+
+function TestOpenWindow()
+    UIManager.OpenWindow("Login")
+end
+
+function TestLoadAsset()
+    local ui = NCSpeedLight.ResManager.LoadAssetSync("UI/Login", "UnityEngine.GameObject")
+    if ui then
+        ui = UnityEngine.GameObject.Instantiate(ui);
+    end
+end
+
+function TestLuaBehaviour()
+    local go = UnityEngine.GameObject("TestLuaBehaviour")
+    NCSpeedLight.LuaUtils.AddComponent('NCSpeedLight.LuaBehaviour', go);
 end
 
 Main()

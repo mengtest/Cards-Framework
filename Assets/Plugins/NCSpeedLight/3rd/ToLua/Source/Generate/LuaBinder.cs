@@ -10,6 +10,7 @@ public static class LuaBinder
 		float t = Time.realtimeSinceStartup;
 		L.BeginModule(null);
 		LuaInterface_DebuggerWrap.Register(L);
+		TestProtoBufferWrap.Register(L);
 		L.BeginModule("UnityEngine");
 		UnityEngine_ComponentWrap.Register(L);
 		UnityEngine_TransformWrap.Register(L);
@@ -78,6 +79,11 @@ public static class LuaBinder
 		NCSpeedLight_AudioManagerWrap.Register(L);
 		NCSpeedLight_DBManagerWrap.Register(L);
 		NCSpeedLight_LuaManagerWrap.Register(L);
+		NCSpeedLight_LuaBehaviourWrap.Register(L);
+		NCSpeedLight_LuaUtilsWrap.Register(L);
+		NCSpeedLight_LuaViewWrap.Register(L);
+		NCSpeedLight_NetManagerWrap.Register(L);
+		NCSpeedLight_NetEventManagerWrap.Register(L);
 		NCSpeedLight_EventManagerWrap.Register(L);
 		L.RegFunction("EventHandlerDelegate", NCSpeedLight_EventHandlerDelegate);
 		L.RegFunction("PostResManagerInitializedDelegate", NCSpeedLight_PostResManagerInitializedDelegate);

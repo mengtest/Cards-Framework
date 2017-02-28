@@ -10,6 +10,7 @@ public class NCSpeedLight_LuaManagerWrap
 		L.RegFunction("Initialize", Initialize);
 		L.RegFunction("StartMain", StartMain);
 		L.RegFunction("DoFile", DoFile);
+		L.RegFunction("DoString", DoString);
 		L.RegFunction("CallFunction", CallFunction);
 		L.RegFunction("GC", GC);
 		L.RegFunction("Close", Close);
@@ -60,6 +61,23 @@ public class NCSpeedLight_LuaManagerWrap
 			ToLua.CheckArgsCount(L, 1);
 			string arg0 = ToLua.CheckString(L, 1);
 			object[] o = NCSpeedLight.LuaManager.DoFile(arg0);
+			ToLua.Push(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int DoString(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			string arg0 = ToLua.CheckString(L, 1);
+			object[] o = NCSpeedLight.LuaManager.DoString(arg0);
 			ToLua.Push(L, o);
 			return 1;
 		}

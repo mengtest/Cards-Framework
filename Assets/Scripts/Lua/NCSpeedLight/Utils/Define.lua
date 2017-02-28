@@ -12,7 +12,15 @@
 require 'NCSpeedLight/Interface/IUIManager'
 require 'NCSpeedLight/Interface/IResManager'
 require 'NCSpeedLight/Interface/IGlobalEventManager'
+require 'NCSpeedLight/Interface/INetManager'
+require 'NCSpeedLight/Interface/IAudioManager'
+require 'NCSpeedLight/Interface/IDBManager'
+require 'NCSpeedLight/Interface/INetEventManager'
 
 UIManager = IUIManager.Instance()
 ResManager = IResManager.Instance()
 GlobalEventManager = IGlobalEventManager.Instance()
+NetManager = INetManager.Instance()
+AudioManager = IAudioManager.Instance()
+DBManager = IDBManager.Instance()
+NetEventManager = INetEventManager.Instance()

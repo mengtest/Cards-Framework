@@ -191,37 +191,13 @@ namespace NCSpeedLight
 
         #endregion
 
-        public static void SendNetPacket<T>(int msgID, T obj)
-        where T : class, ProtoBuf.IExtensible
+        public static void SendNetPacket(int msgID, byte[] buffer)
         {
             NetConnection connection = NetManager.Instance.GetConnection(NetManager.ServerType.Logic);
             if (connection != null && connection.IsConnected())
             {
-                connection.SendMessageProtoBuf<T>(msgID, obj);
+                connection.SendMessage(msgID, buffer, 0);
             }
-        }
-        public static T DeserializeNetPacket<T>(Event obj)
-          where T : class, ProtoBuf.IExtensible
-        {
-            T returnObj = default(T);
-            if (obj == null)
-            {
-                return returnObj;
-            }
-            Event eventObj = obj as Event;
-            if (eventObj == null || eventObj.Param == null)
-            {
-                return returnObj;
-            }
-            return NetConnection.DeserializeProtoBuf<T>(eventObj.Param);
-        }
-        public static void BindNetworkEvent(int id, EventHandlerDelegate handler)
-        {
-            NetEventManager.Instance.Register(id, handler);
-        }
-        public static void UnbindNetworkEvent(int id, EventHandlerDelegate handler)
-        {
-            NetEventManager.Instance.Unregister(id, handler);
         }
     }
 }

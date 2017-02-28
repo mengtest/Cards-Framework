@@ -40,7 +40,7 @@ namespace NCSpeedLight
         {
             if (GUI.Button(new Rect(10, 50, 300, 40), "Notify event 2"))
             {
-                GlobalEventManager.Instance.Notify(new Event(2));
+                //GlobalEventManager.Instance.Notify(new Event(2));
             }
         }
         private void OnDestroy()
@@ -72,7 +72,8 @@ namespace NCSpeedLight
 
         public static void StartMain()
         {
-            LuaState.DoFile("Main");
+            DoString("require 'NCSpeedLight/3rd/pblua/person_pb'");
+            DoFile("Main");
             //StartLooper();
             //LuaEnv.DoString("require 'GlobalEventManager'");
             //LuaEnv.DoString("require 'main'");
@@ -94,15 +95,11 @@ namespace NCSpeedLight
         }
         private static void InitializeLuaFiles()
         {
-            //LuaEnv.AddLoader((ref string filename) =>
-            //{
-            //    Debug.Log("LuaManager: streamed a lua file," + filename);
-            //    return null;
-            //});
+            //LuaState.AddPreLoad()
         }
         private static void InitializeLuaDirectory()
         {
-            LuaState.AddSearchPath(Application.dataPath + "/Scripts/Lua/");
+            //LuaState.AddSearchPath(Application.dataPath + "/Scripts/Lua/");
         }
         private static void InitializeLuaBundle()
         {
@@ -111,12 +108,29 @@ namespace NCSpeedLight
 
         public static object[] DoFile(string filename)
         {
+            if (LuaState != null && string.IsNullOrEmpty(filename) == false)
+            {
+                return LuaState.DoFile(filename);
+            }
             return null;
         }
 
-        // Update is called once per frame
-        public static object[] CallFunction(string funcName, params object[] args)
+        public static object[] DoString(string str)
         {
+            if (LuaState != null && string.IsNullOrEmpty(str) == false)
+            {
+                return LuaState.DoString(str);
+            }
+            return null;
+        }
+
+        public static object[] CallFunction(string fullFuncName, params object[] args)
+        {
+            LuaFunction func = LuaState.GetFunction(fullFuncName, false);
+            if (func != null)
+            {
+                return func.Call(args);
+            }
             return null;
         }
 

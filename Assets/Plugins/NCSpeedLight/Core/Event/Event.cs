@@ -10,6 +10,8 @@
 //----------------------------------------------------------------*/
 
 using System.Collections.Generic;
+using LuaInterface;
+using System.IO;
 
 namespace NCSpeedLight
 {
@@ -17,27 +19,20 @@ namespace NCSpeedLight
     {
         public int ID;
         public object Param;
+        [LuaByteBuffer]
+        public byte[] Buffer;
         public Event() { }
         public Event(int id)
         {
             this.ID = id;
         }
-        public Event(int id, object param)
+        public Event(int id, object param, byte[] buffer)
         {
             this.ID = id;
             this.Param = param;
+            this.Buffer = buffer;
         }
     }
-
-    //public class EventEX<T> : Event
-    //    where T : class
-    //{
-    //    public T Param;
-    //    public EventEX(int evtID, T param) : base(evtID)
-    //    {
-    //        Param = param;
-    //    }
-    //}
 
     public class EventHandlerQueue
     {
