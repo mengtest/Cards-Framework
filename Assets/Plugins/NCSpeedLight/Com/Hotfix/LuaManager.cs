@@ -72,7 +72,7 @@ namespace NCSpeedLight
 
         public static void StartMain()
         {
-            DoString("require 'NCSpeedLight/3rd/pblua/person_pb'");
+            //DoString("");
             DoFile("Main");
             //StartLooper();
             //LuaEnv.DoString("require 'GlobalEventManager'");

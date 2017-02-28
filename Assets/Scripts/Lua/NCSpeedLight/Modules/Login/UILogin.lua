@@ -1,8 +1,3 @@
--- region *.lua
--- Date
--- 此文件由[BabeLua]插件自动生成
-local person_pb = require 'person_pb'
-require 'NCSpeedLight/Utils/Define'
 
 UILogin = { }
 
@@ -10,7 +5,6 @@ function UILogin.Awake()
     print("UILogin.Awake");
     NetEventManager.Register(1, OnRecvMsg)
     SendNetPacket()
-    --    Decoder()
 end
 
 function UILogin.Start()
@@ -26,7 +20,7 @@ function UILogin.OnDisable()
 end
 
 function UILogin.Update()
-    GlobalEventManager.Notify(2, nil, nil)
+    GlobalEventManager.Notify(2)
 end
 
 function UILogin.LateUpdate()
@@ -48,7 +42,6 @@ function SendNetPacket()
     msg.name = 'hsu'
     msg.email = 'wellshsu1004@gmail.com'
     local buffer = msg:SerializeToString()
-    NetEventManager.Notify(1, buffer)
+    NetEventManager.Notify(1, nil, buffer)
 end
 
--- endregion

@@ -110,6 +110,7 @@
     <Compile Include="Assets\Editor\NCSpeedLight\EditorEventCatcher.cs" />
     <Compile Include="Assets\Editor\NCSpeedLight\EditorLoom.cs" />
     <Compile Include="Assets\Editor\NCSpeedLight\LuaCompiler.cs" />
+    <Compile Include="Assets\Editor\NCSpeedLight\LuaPBProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\NCSpeedLight\3rd\AudioToolkit\Readme.txt" />

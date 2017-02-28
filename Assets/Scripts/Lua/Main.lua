@@ -42,7 +42,7 @@ end
 
 function TestLuaBehaviour()
     local go = UnityEngine.GameObject("TestLuaBehaviour")
-    NCSpeedLight.LuaUtils.AddComponent('NCSpeedLight.LuaBehaviour', go);
+    NCSpeedLight.LuaUtils.AddComponent('NCSpeedLight.LuaView', go);
 end
 
 Main()

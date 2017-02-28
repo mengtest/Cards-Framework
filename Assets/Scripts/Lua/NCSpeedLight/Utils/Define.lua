@@ -17,6 +17,9 @@ require 'NCSpeedLight/Interface/IAudioManager'
 require 'NCSpeedLight/Interface/IDBManager'
 require 'NCSpeedLight/Interface/INetEventManager'
 
+require 'NCSpeedLight/3rd/pblua/person_pb'
+--require 'NCSpeedLight/Protocol/account_pb'
+
 UIManager = IUIManager.Instance()
 ResManager = IResManager.Instance()
 GlobalEventManager = IGlobalEventManager.Instance()

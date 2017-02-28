@@ -28,7 +28,11 @@ function IGlobalEventManager.UnregisterAll()
     NCSpeedLight.GlobalEventManager.Instance:UnregisterAll()
 end
 
-function IGlobalEventManager.Notify(id, tb,buffer)
+function IGlobalEventManager.Notify(id)
+    this.Notify(id, nil, nil)
+end
+
+function IGlobalEventManager.Notify(id, tb, buffer)
     local eventObj = NCSpeedLight.Event()
     eventObj.ID = id
     eventObj.Param = tb

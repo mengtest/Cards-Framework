@@ -28,18 +28,14 @@ function INetEventManager.UnregisterAll()
     NCSpeedLight.NetEventManager.Instance:UnregisterAll()
 end
 
+function INetEventManager.Notify(id)
+    this.Notify(id, nil, nil)
+end
+
 function INetEventManager.Notify(id, tb, buffer)
     local eventObj = NCSpeedLight.Event()
     eventObj.ID = id
     eventObj.Param = tb
-    eventObj.Buffer = buffer
-    NCSpeedLight.NetEventManager.Instance:Notify(eventObj)
-end
-
-function INetEventManager.Notify(id, buffer)
-    local eventObj = NCSpeedLight.Event()
-    eventObj.ID = id
-    eventObj.Param = nil
     eventObj.Buffer = buffer
     NCSpeedLight.NetEventManager.Instance:Notify(eventObj)
 end

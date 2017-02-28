@@ -35,6 +35,7 @@
     <Folder Include="Lua\NCSpeedLight\Interface\" />
     <Folder Include="Lua\NCSpeedLight\Modules\" />
     <Folder Include="Lua\NCSpeedLight\Modules\Login\" />
+    <Folder Include="Lua\NCSpeedLight\Protocol\" />
     <Folder Include="Lua\NCSpeedLight\Utils\" />
   </ItemGroup>
   <ItemGroup>
@@ -68,6 +69,7 @@
     <Compile Include="Lua\NCSpeedLight\Interface\IDBManager.lua" />
     <Compile Include="Lua\NCSpeedLight\Interface\IResManager.lua" />
     <Compile Include="Lua\NCSpeedLight\Interface\IUIManager.lua" />
+    <Compile Include="Lua\NCSpeedLight\Protocol\account_pb.lua" />
     <Compile Include="Lua\NCSpeedLight\Utils\Define.lua" />
     <Compile Include="Lua\NCSpeedLight\Modules\Login\UILogin.lua" />
   </ItemGroup>
