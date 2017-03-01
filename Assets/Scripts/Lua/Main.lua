@@ -18,30 +18,31 @@ protobuf = require 'protobuf'
 parser = require 'NCSpeedLight/3rd/pbc/parser'
 
 function Main()
-    TestEvent()
-    TestOpenWindow()
+    OpenLogin()
+    --    TestEvent()
     --    TestLoadAsset()
     --    TestLuaBehaviour()
-    TestProtobuf1()
-    TestProtobuf2()
+        TestProtobuf1()
+        TestProtobuf2()
 end
 
 function TestEvent()
     GlobalEventManager.Register(2,
     function(eventObj)
-        --        print("has received a message,id is " .. eventObj.ID)
+        print("has received a message,id is " .. eventObj.ID)
         --        eventObj.Param:UnregisterAll()
     end
     )
     GlobalEventManager.Notify(2, GlobalEventManager, nil)
 end
 
-function TestOpenWindow()
-    UIManager.OpenWindow("Login")
+function OpenLogin()
+    UIManager.OpenWindow("Login/ui_loginBk")
+    UIManager.OpenWindow("Login/ui_normalLogin")
 end
 
 function TestLoadAsset()
-    local ui = NCSpeedLight.ResManager.LoadAssetSync("UI/Login", "UnityEngine.GameObject")
+    local ui = NCSpeedLight.ResManager.LoadAssetSync("UI/Login/ui_loginBk", "UnityEngine.GameObject")
     if ui then
         ui = UnityEngine.GameObject.Instantiate(ui);
     end

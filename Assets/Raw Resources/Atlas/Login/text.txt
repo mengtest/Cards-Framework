@@ -1,0 +1,36 @@
+{"frames": {
+
+"DL-17.png":
+{
+	"frame": {"x":171,"y":2,"w":530,"h":513},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":530,"h":513},
+	"sourceSize": {"w":530,"h":513}
+},
+"DL-18.png":
+{
+	"frame": {"x":2,"y":2,"w":167,"h":550},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":167,"h":550},
+	"sourceSize": {"w":167,"h":550}
+},
+"DL-19.png":
+{
+	"frame": {"x":2,"y":554,"w":47,"h":172},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":47,"h":172},
+	"sourceSize": {"w":47,"h":172}
+}},
+"meta": {
+	"app": "http://www.texturepacker.com",
+	"version": "1.0",
+	"image": "text.png",
+	"format": "RGBA8888",
+	"size": {"w":1024,"h":1024},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:6e3c7f0290d618703c518e57b2d17580$"
+}
+}

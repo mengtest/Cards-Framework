@@ -18,7 +18,7 @@ namespace NCSpeedLight
     {
         public enum ServerType
         {
-            Login, // login(account) server
+            Login, // login server
             Logic, // game logic server
         }
         public class LantencyIno
@@ -193,7 +193,7 @@ namespace NCSpeedLight
 
         public static void SendNetPacket(int msgID, byte[] buffer)
         {
-            NetConnection connection = NetManager.Instance.GetConnection(NetManager.ServerType.Logic);
+            NetConnection connection = NetManager.Instance.GetConnection(NetManager.ServerType.Login);
             if (connection != null && connection.IsConnected())
             {
                 connection.SendMessage(msgID, buffer, 0);

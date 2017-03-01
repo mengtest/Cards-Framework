@@ -22,7 +22,7 @@ namespace NCSpeedLight
         protected virtual void Awake()
         {
             LuaManager.DoString(string.Format("require 'NCSpeedLight/Modules/{0}/{1}'", ModuleName, ScriptName));
-            LuaManager.CallFunction(ScriptName + ".Awake");
+            LuaManager.CallFunction(ScriptName + ".Awake", gameObject);
         }
 
         protected virtual void Start()

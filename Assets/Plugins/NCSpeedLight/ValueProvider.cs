@@ -8,24 +8,15 @@
             // Modify History:
             //
 //----------------------------------------------------------------*/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace NCSpeedLight
 {
-    public class ValueProvider
+    public static class ValueProvider
     {
-        public static string SERVER_ADDRESS = "139.224.165.102";
-        //public const string SERVER_ADDRESS = "172.16.30.158";
-        //public const string SERVER_ADDRESS = "127.0.0.1";
-        //public const string SERVER_ADDRESS = "139.224.165.102";
+        public static string LOGIN_SERVER_ADDRESS = "jinxianmajiangappts.damaigame.com";
+        public const int LOGIN_SERVER_PORT = 20000;
 
-
-
-        public const int SERVER_PORT = 6000;
         public const int UI_ROOT_HEIGHT = 720;
         public const int UI_ROOT_WIDTH = 1224;
         public static float SCREEN_SCALE

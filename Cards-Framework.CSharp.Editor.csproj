@@ -139,6 +139,9 @@
     <None Include="Assets\Plugins\NCSpeedLight\3rd\NGUI\Resources\Shaders\Unlit - Transparent Packed 3.shader" />
     <None Include="Assets\Plugins\NCSpeedLight\3rd\NGUI\Resources\Shaders\Unlit - Transparent Packed.shader" />
     <None Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\readme.txt" />
+    <None Include="Assets\Raw Resources\Atlas\Login\QQlogin.txt" />
+    <None Include="Assets\Raw Resources\Atlas\Login\login.txt" />
+    <None Include="Assets\Raw Resources\Atlas\Login\text.txt" />
     <None Include="Assets\Scripts\Resources\GlobalEventManager.lua.txt" />
     <None Include="Assets\Scripts\Resources\main.lua.txt" />
     <None Include="Assets\Scripts\Resources\protobuf.lua.txt" />

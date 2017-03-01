@@ -38,10 +38,10 @@ namespace NCSpeedLight
         }
         private void OnGUI()
         {
-            if (GUI.Button(new Rect(10, 50, 300, 40), "Notify event 2"))
-            {
-                //GlobalEventManager.Instance.Notify(new Event(2));
-            }
+            //if (GUI.Button(new Rect(10, 50, 300, 40), "Notify event 2"))
+            //{
+            //    //GlobalEventManager.Instance.Notify(new Event(2));
+            //}
         }
         private void OnDestroy()
         {
@@ -134,6 +134,14 @@ namespace NCSpeedLight
                 return func.Call(args);
             }
             return null;
+        }
+
+        public static void PushParam(string moduleName, params object[] args)
+        {
+            if (LuaState != null)
+            {
+                //LuaState.push
+            }
         }
 
         public static void GC()

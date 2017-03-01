@@ -78,9 +78,9 @@ namespace NCSpeedLight
 
 
         }
-        public static void HideWindow<T>()
+        public static GameObject HideWindow(string windowName)
         {
-
+            return null;
         }
         public static void HideAllWindows()
         {
@@ -119,7 +119,15 @@ namespace NCSpeedLight
                 return default(T);
             }
         }
-        public static void CloseWindow<T>() { }
+        public static void CloseWindow(string windowName)
+        {
+            GameObject go = TryGetWindow(windowName);
+            if (go)
+            {
+                GameObject.DestroyImmediate(go);
+                m_ShownWindows.Remove(windowName);
+            }
+        }
         public static void CloseDialog<T>() { }
         public static GameObject TryGetWindow(string windowName)
         {

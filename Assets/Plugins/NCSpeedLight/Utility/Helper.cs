@@ -9,7 +9,7 @@
             //
 //----------------------------------------------------------------*/
 
-//#define OPEN_LOG //该定义控制是否打印Log
+#define OPEN_LOG //该定义控制是否打印Log
 using System;
 //#define OPEN_DEBUG_TOAST //该定义控制是否在打印Log的同时，通过Toast（小弹框）的形式显示出来
 using System.Collections;
@@ -23,8 +23,7 @@ using System.IO;
 
 namespace NCSpeedLight
 {
-
-
+   
 
 
     public delegate void GameObjectCallback(GameObject obj);
@@ -49,23 +48,19 @@ namespace NCSpeedLight
             }
             catch (Exception e)
             {
-                Debug.LogError("help format error: "+e.Message);
+                Debug.LogError("help format error: " + e.Message);
                 return "";
             }
         }
 
-        //public static string readLocalTableToStr(string sql, ref LocalItem localitem, string column_name)
-        //{
-        //    if (LocalConfig.GetSingleton() != null)
-        //    {
-        //        LocalConfig.GetSingleton().GetLocalItem(sql, out localitem);
-        //    }
-        //    if (localitem != null && !String.IsNullOrEmpty(column_name) && localitem.Read())
-        //    {
-        //        return localitem.GetValueByColumnName(column_name, "");
-        //    }
-        //    return "";
-        //}
+        public static void AddComponent(string className, GameObject go)
+        {
+            if (go && string.IsNullOrEmpty(className) == false)
+            {
+                Type type = Type.GetType(className);
+                go.AddComponent(type);
+            }
+        }
 
 
         //指定对象指定的layer;
@@ -75,9 +70,9 @@ namespace NCSpeedLight
         //    return;
         //    /*
         //    if (root == null) return;
-			
+
         //    Transform[] all_transform = root.GetComponentsInChildren<Transform>();
-			
+
         //    foreach (Transform tran in all_transform)
         //    {
         //        tran.gameObject.layer = LayerMask.NameToLayer(layer_name);
@@ -412,10 +407,10 @@ namespace NCSpeedLight
             {
                 str_time += (hour + ":");
             }
-			if (hour == 0) 
-			{
-				str_time = string.Empty;
-			}
+            if (hour == 0)
+            {
+                str_time = string.Empty;
+            }
 
             if (minutes < 10)
             {
@@ -666,7 +661,7 @@ namespace NCSpeedLight
 
             return tempTrans.GetComponent<T>();
         }
-       
+
 
         /// <summary>
         /// 发现文件夹不存在，则创建.
@@ -1039,27 +1034,27 @@ namespace NCSpeedLight
             return path;
         }
 
-		/// <summary>
-		/// 删除目录.
-		/// </summary>
-		/// <param name="varPath">Variable path.</param>
-		public static bool DeleteDirectory(string varPath)
-		{
-			bool tempResult = false;
-			try
-			{
-				if (Directory.Exists(varPath) == true)
-				{
-					Directory.Delete(varPath, true);
-				}
-				tempResult = true;
-			}
-			catch (Exception e)
-			{
-				Debug.LogError(e.Message);
-			}
-			return tempResult;
-		}
+        /// <summary>
+        /// 删除目录.
+        /// </summary>
+        /// <param name="varPath">Variable path.</param>
+        public static bool DeleteDirectory(string varPath)
+        {
+            bool tempResult = false;
+            try
+            {
+                if (Directory.Exists(varPath) == true)
+                {
+                    Directory.Delete(varPath, true);
+                }
+                tempResult = true;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e.Message);
+            }
+            return tempResult;
+        }
 
         /// <summary>
         /// 金币转化为万和亿  保留两位小数
@@ -1069,113 +1064,113 @@ namespace NCSpeedLight
 		public static string GoldReturnStr(Double varGold)
         {
             string outStr = "0";
-			string tempStr = "";
+            string tempStr = "";
             if (varGold < 10000)
             {
-				outStr = varGold.ToString();
+                outStr = varGold.ToString();
             }
             else if (varGold < 100000000)
             {
-				Double tempM = varGold / 10000;
-				tempStr = tempM.ToString();
-				SetStringTo4(ref tempStr);
-				outStr = tempStr + Localization.Get("useful ten thousand");
+                Double tempM = varGold / 10000;
+                tempStr = tempM.ToString();
+                SetStringTo4(ref tempStr);
+                outStr = tempStr + Localization.Get("useful ten thousand");
                 //temp = temp.Insert(temp.Length - 3, ".");
             }
             else
             {
-				Double tempM = varGold / 100000000;
-				tempStr = tempM.ToString();
-				SetStringTo4(ref tempStr);
-				outStr = tempStr.ToString() + Localization.Get("Golden Text_1");
-				//outStr = temp.Insert(temp.Length - 3, ".");
+                Double tempM = varGold / 100000000;
+                tempStr = tempM.ToString();
+                SetStringTo4(ref tempStr);
+                outStr = tempStr.ToString() + Localization.Get("Golden Text_1");
+                //outStr = temp.Insert(temp.Length - 3, ".");
             }
-			return outStr;
+            return outStr;
         }
 
-		//设置字符串长度为4;
-		static void SetStringTo4(ref string varStr)
-		{
-			if(varStr.IndexOf('.') <= -1)
-			{
-				if(varStr.Length <= 4)
-				{
-					return;
-				}
-			}
-			else
-			{
-				if(varStr.Length <= 5)
-				{
-					return;
-				}
-			}
+        //设置字符串长度为4;
+        static void SetStringTo4(ref string varStr)
+        {
+            if (varStr.IndexOf('.') <= -1)
+            {
+                if (varStr.Length <= 4)
+                {
+                    return;
+                }
+            }
+            else
+            {
+                if (varStr.Length <= 5)
+                {
+                    return;
+                }
+            }
 
-//			else if(varStr.Length < 4)
-//			{
-//				if(varStr.IndexOf('.') <= -1)
-//				{
-//					varStr += ".";
-//					for(int i = varStr.Length; i != 5; ++i)
-//					{
-//						varStr += "0";
-//					}
-//				}
-//				else
-//				{
-//					for(int i = varStr.Length; i != 5; ++i)
-//					{
-//						varStr += "0";
-//					}
-//				}
-////				for(int i = varStr.Length; i != 4; ++i)
-////				{
-////					varStr += "0";
-////				}
-//			}
-//			else
-//			{
-				int tempPos = varStr.IndexOf('.');
-				if(tempPos > -1)
-				{
-					if(tempPos == 4)
-					{
-						varStr = varStr.Substring(0,4);
-					}
-					else
-					{
-						varStr = varStr.Substring(0,5);
-					}
-				}
-				else
-				{
-					varStr = varStr.Substring(0,4);
-				}
+            //			else if(varStr.Length < 4)
+            //			{
+            //				if(varStr.IndexOf('.') <= -1)
+            //				{
+            //					varStr += ".";
+            //					for(int i = varStr.Length; i != 5; ++i)
+            //					{
+            //						varStr += "0";
+            //					}
+            //				}
+            //				else
+            //				{
+            //					for(int i = varStr.Length; i != 5; ++i)
+            //					{
+            //						varStr += "0";
+            //					}
+            //				}
+            ////				for(int i = varStr.Length; i != 4; ++i)
+            ////				{
+            ////					varStr += "0";
+            ////				}
+            //			}
+            //			else
+            //			{
+            int tempPos = varStr.IndexOf('.');
+            if (tempPos > -1)
+            {
+                if (tempPos == 4)
+                {
+                    varStr = varStr.Substring(0, 4);
+                }
+                else
+                {
+                    varStr = varStr.Substring(0, 5);
+                }
+            }
+            else
+            {
+                varStr = varStr.Substring(0, 4);
+            }
 
-//			while(varStr.EndsWith("0") || varStr.EndsWith("."))
-//			{
-//				varStr = varStr.Substring(0,varStr.Length -1);
-//				//break;
-//			}
-			while(varStr.EndsWith("0"))
-			{
-				varStr = varStr.Substring (0, varStr.Length - 1);
-				if (varStr.Length > 1&&varStr [varStr.Length - 1].Equals ('.')) 
-				{
-					varStr = varStr.Substring (0, varStr.Length - 1);
-					break;
-				}
-			}
-//				while(varStr.Length != 4)
-//				{
-//					varStr.Remove(varStr.Length - 1);
-//				}
-//				for(int i = varStr.Length; i != 4; --i)
-//				{
-//					varStr.Remove(i);
-//				}
-//			}
-		}
+            //			while(varStr.EndsWith("0") || varStr.EndsWith("."))
+            //			{
+            //				varStr = varStr.Substring(0,varStr.Length -1);
+            //				//break;
+            //			}
+            while (varStr.EndsWith("0"))
+            {
+                varStr = varStr.Substring(0, varStr.Length - 1);
+                if (varStr.Length > 1 && varStr[varStr.Length - 1].Equals('.'))
+                {
+                    varStr = varStr.Substring(0, varStr.Length - 1);
+                    break;
+                }
+            }
+            //				while(varStr.Length != 4)
+            //				{
+            //					varStr.Remove(varStr.Length - 1);
+            //				}
+            //				for(int i = varStr.Length; i != 4; --i)
+            //				{
+            //					varStr.Remove(i);
+            //				}
+            //			}
+        }
     }
 }
 

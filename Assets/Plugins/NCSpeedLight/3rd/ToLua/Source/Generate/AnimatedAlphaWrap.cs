@@ -2,14 +2,14 @@
 using System;
 using LuaInterface;
 
-public class TestProtoBufferWrap
+public class AnimatedAlphaWrap
 {
 	public static void Register(LuaState L)
 	{
-		L.BeginClass(typeof(TestProtoBuffer), typeof(UnityEngine.MonoBehaviour));
+		L.BeginClass(typeof(AnimatedAlpha), typeof(UnityEngine.MonoBehaviour));
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
-		L.RegVar("BUFFER", get_BUFFER, set_BUFFER);
+		L.RegVar("alpha", get_alpha, set_alpha);
 		L.EndClass();
 	}
 
@@ -32,31 +32,40 @@ public class TestProtoBufferWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_BUFFER(IntPtr L)
+	static int get_alpha(IntPtr L)
 	{
+		object o = null;
+
 		try
 		{
-			LuaDLL.tolua_pushlstring(L, TestProtoBuffer.BUFFER, TestProtoBuffer.BUFFER.Length);
+			o = ToLua.ToObject(L, 1);
+			AnimatedAlpha obj = (AnimatedAlpha)o;
+			float ret = obj.alpha;
+			LuaDLL.lua_pushnumber(L, ret);
 			return 1;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index alpha on a nil value" : e.Message);
 		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_BUFFER(IntPtr L)
+	static int set_alpha(IntPtr L)
 	{
+		object o = null;
+
 		try
 		{
-			byte[] arg0 = ToLua.CheckByteBuffer(L, 2);
-			TestProtoBuffer.BUFFER = arg0;
+			o = ToLua.ToObject(L, 1);
+			AnimatedAlpha obj = (AnimatedAlpha)o;
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
+			obj.alpha = arg0;
 			return 0;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index alpha on a nil value" : e.Message);
 		}
 	}
 }

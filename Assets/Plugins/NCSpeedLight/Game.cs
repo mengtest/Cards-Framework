@@ -24,6 +24,17 @@ namespace NCSpeedLight
         }
         void Start()
         {
+            NetManager.Instance.CreateConnection(NetManager.ServerType.Login, ValueProvider.LOGIN_SERVER_ADDRESS, ValueProvider.LOGIN_SERVER_PORT, new NetConnection.StateListener()
+            {
+                OnConnect = delegate (NetConnection connection)
+                {
+                    Helper.Log("Connect to account server.");
+                },
+                OnDisconnect = delegate (NetConnection connection)
+                {
+                    Helper.Log("Disconnect from account server.");
+                }
+            });
             LuaManager.StartMain();
         }
         void OnGUI()
@@ -86,10 +97,10 @@ namespace NCSpeedLight
             //    int a = 1;
             //}
 
-            if (GUI.Button(new Rect(10, 10, 300, 40), "Load UI"))
-            {
-                UIManager.OpenWindow("Login");
-            }
+            //if (GUI.Button(new Rect(10, 10, 300, 40), "Load UI"))
+            //{
+            //    UIManager.OpenWindow("Login");
+            //}
             //if (GUI.Button(new Rect(10, 50, 300, 40), "Send a test msg"))
             //{
             //    Connection toLoginServer = NetworkProvider.Instance.GetConnection(NetworkProvider.ServerType.Logic);

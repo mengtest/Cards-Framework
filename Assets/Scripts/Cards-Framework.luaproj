@@ -70,6 +70,7 @@
     <Compile Include="Lua\NCSpeedLight\Interface\IDBManager.lua" />
     <Compile Include="Lua\NCSpeedLight\Interface\IResManager.lua" />
     <Compile Include="Lua\NCSpeedLight\Interface\IUIManager.lua" />
+    <Compile Include="Lua\NCSpeedLight\Modules\Login\NormalLogin.lua" />
     <Compile Include="Lua\NCSpeedLight\Protocol\account_pb.lua" />
     <Compile Include="Lua\NCSpeedLight\Utils\Define.lua" />
     <Compile Include="Lua\NCSpeedLight\Modules\Login\UILogin.lua" />

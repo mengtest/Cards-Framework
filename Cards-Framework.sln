@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2015
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cards-Framework.CSharp.Plugins", "Cards-Framework.CSharp.Plugins.csproj", "{4BBE1FB9-4A43-07E5-D1A6-B430F1A61F0F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cards-Framework.CSharp.Editor.Plugins", "Cards-Framework.CSharp.Editor.Plugins.csproj", "{1361DACE-2F66-FCB1-A14A-BEB8386B16FA}"
