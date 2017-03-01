@@ -37,6 +37,7 @@
     <Folder Include="Lua\NCSpeedLight\Modules\Login\" />
     <Folder Include="Lua\NCSpeedLight\Protocol\" />
     <Folder Include="Lua\NCSpeedLight\Utils\" />
+    <Folder Include="Lua\protobuf\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Lua\Main.lua" />
@@ -72,6 +73,15 @@
     <Compile Include="Lua\NCSpeedLight\Protocol\account_pb.lua" />
     <Compile Include="Lua\NCSpeedLight\Utils\Define.lua" />
     <Compile Include="Lua\NCSpeedLight\Modules\Login\UILogin.lua" />
+    <Compile Include="Lua\protobuf\containers.lua" />
+    <Compile Include="Lua\protobuf\decoder.lua" />
+    <Compile Include="Lua\protobuf\descriptor.lua" />
+    <Compile Include="Lua\protobuf\encoder.lua" />
+    <Compile Include="Lua\protobuf\listener.lua" />
+    <Compile Include="Lua\protobuf\protobuf.lua" />
+    <Compile Include="Lua\protobuf\text_format.lua" />
+    <Compile Include="Lua\protobuf\type_checkers.lua" />
+    <Compile Include="Lua\protobuf\wire_format.lua" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Lua\NCSpeedLight\3rd\cjson\example1.json" />
@@ -96,6 +106,15 @@
     <Content Include="Lua\NCSpeedLight\3rd\pbc\addressbook.pb" />
     <Content Include="Lua\NCSpeedLight\3rd\pbc\addressbook.proto" />
     <Content Include="Lua\NCSpeedLight\3rd\pblua\login.proto" />
+    <Content Include="Lua\protobuf\containers.lua.meta" />
+    <Content Include="Lua\protobuf\decoder.lua.meta" />
+    <Content Include="Lua\protobuf\descriptor.lua.meta" />
+    <Content Include="Lua\protobuf\encoder.lua.meta" />
+    <Content Include="Lua\protobuf\listener.lua.meta" />
+    <Content Include="Lua\protobuf\protobuf.lua.meta" />
+    <Content Include="Lua\protobuf\text_format.lua.meta" />
+    <Content Include="Lua\protobuf\type_checkers.lua.meta" />
+    <Content Include="Lua\protobuf\wire_format.lua.meta" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
 </Project>

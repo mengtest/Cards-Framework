@@ -61,21 +61,13 @@ namespace LuaInterface
     {        
         public LuaByteBuffer(IntPtr source, int len)
         {
-            buffer = new byte[len];
-            Length = len;
+            buffer = new byte[len];            
             Marshal.Copy(source, buffer, 0, len);
         }
         
         public LuaByteBuffer(byte[] buf)
         {
-            buffer = buf;
-            Length = buf.Length;            
-        }
-
-        public LuaByteBuffer(byte[] buf, int len)
-        {            
-            buffer = buf;
-            Length = len;
+            this.buffer = buf;            
         }
 
         public override bool Equals(object o)
@@ -129,13 +121,7 @@ namespace LuaInterface
             return buffer == null ? 0 : buffer.GetHashCode();
         }
 
-        public byte[] buffer = null;    
-
-        public int Length
-        {
-            get;
-            private set;
-        }    
+        public byte[] buffer = null;        
     }   
 
     public class LuaOut<T> { }

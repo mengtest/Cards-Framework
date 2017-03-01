@@ -61,11 +61,6 @@ namespace LuaInterface
             base.Dispose();
         }
 
-        public T ToDelegate<T>() where T: class
-        {
-            return DelegateFactory.CreateDelegate(typeof(T), this) as T;
-        }
-
         public virtual int BeginPCall()
         {
             if (luaState == null)
@@ -358,16 +353,11 @@ namespace LuaInterface
             luaState.PushArgs(args);
         }
 
-        public void PushByteBuffer(byte[] buffer, int len = -1)
+        public void PushByteBuffer(byte[] buffer)
         {
             try
             {
-                if (len == -1)
-                {
-                    len = buffer.Length;
-                }
-
-                luaState.PushByteBuffer(buffer, len);
+                luaState.PushByteBuffer(buffer);
                 ++argCount;
             }
             catch (Exception e)

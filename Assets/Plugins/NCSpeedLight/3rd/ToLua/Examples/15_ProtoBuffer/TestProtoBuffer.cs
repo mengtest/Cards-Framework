@@ -59,7 +59,7 @@ public class TestProtoBuffer : LuaClient
 #else
         Application.RegisterLogCallback(ShowTips);
 #endif  
-        base.Awake();
+        base.Awake();            
     }
 
     protected override LuaFileUtils InitLoader()
@@ -80,14 +80,14 @@ public class TestProtoBuffer : LuaClient
     protected override void CallMain() { }
 
     protected override void OnLoadFinished()
-    {
+    {                
         base.OnLoadFinished();
         luaState.DoString(script, "TestProtoBuffer.cs");
 
 #if !USE_PROTOBUF_NET
         LuaFunction func = luaState.GetFunction("Encoder");
         func.Call();
-        func.Dispose();
+        func.Dispose();        
 
         func = luaState.GetFunction("Decoder");
         func.Call();

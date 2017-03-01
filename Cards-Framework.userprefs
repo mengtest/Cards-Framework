@@ -1,0 +1,13 @@
+﻿<Properties StartupItem="Cards-Framework.CSharp.Plugins.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Resources\protobuf.lua.txt">
+    <Files>
+      <File FileName="Assets\Scripts\Resources\protobuf.lua.txt" Line="1" Column="1" />
+      <File FileName="Assets\Editor\NCSpeedLight\LuaPBProcessor.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

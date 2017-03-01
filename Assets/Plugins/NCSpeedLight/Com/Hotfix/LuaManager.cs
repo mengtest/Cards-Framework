@@ -89,6 +89,8 @@ namespace NCSpeedLight
         private static void InitializeLibs()
         {
             LuaState.OpenLibs(LuaDLL.luaopen_pb);
+            LuaState.OpenLibs(LuaDLL.luaopen_sproto_core);
+            LuaState.OpenLibs(LuaDLL.luaopen_protobuf_c);
             LuaState.OpenLibs(LuaDLL.luaopen_lpeg);
             LuaState.OpenLibs(LuaDLL.luaopen_bit);
             LuaState.OpenLibs(LuaDLL.luaopen_socket_core);

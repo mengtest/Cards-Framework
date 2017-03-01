@@ -10,13 +10,20 @@
 ----------------------------------------------- 
 
 require 'NCSpeedLight/Utils/Define'
+require 'NCSpeedLight/Protocol/account_pb'
+require 'NCSpeedLight/3rd/pbc/protobuf'
+
+
+protobuf = require 'protobuf'
+parser = require 'NCSpeedLight/3rd/pbc/parser'
 
 function Main()
     TestEvent()
     TestOpenWindow()
     --    TestLoadAsset()
     --    TestLuaBehaviour()
-    --    TestProtobuf()
+    TestProtobuf1()
+    TestProtobuf2()
 end
 
 function TestEvent()
@@ -43,6 +50,73 @@ end
 function TestLuaBehaviour()
     local go = UnityEngine.GameObject("TestLuaBehaviour")
     NCSpeedLight.LuaUtils.AddComponent('NCSpeedLight.LuaView', go);
+end
+
+function TestProtobuf1()
+    local path = "D:/addressbook.pb";
+    local addr = io.open(path, "rb")
+    local buffer = addr:read "*a"
+    addr:close()
+    protobuf.register(buffer)
+
+    local addressbook = {
+        name = "Alice",
+        id = 12345,
+        phone =
+        {
+            { number = "1301234567" },
+            { number = "87654321", type = "WORK" },
+        }
+    }
+    local code = protobuf.encode("tutorial.Person", addressbook)
+end
+
+function TestProtobuf2()
+    local path = "D:/account.pb";
+    local addr = io.open(path, "rb")
+    local buffer = addr:read "*a"
+    addr:close()
+    protobuf.register(buffer)
+
+    local createAccountMsg =
+    {
+        m_AccountName = "hsu1994",
+        m_Password = "123455436",
+        m_activatekey = "5",
+        accountLogInfo =
+        {
+            platformID = 14546765,
+            ditchID = "2",
+            version = "1.0.1",
+            accountID = 99988254,
+            macAddress = "4D6MDJJ",
+            deviceUUID = "547SFHBSDFHESYHTRY",
+        }
+    }
+
+    local code = protobuf.encode("GM_AccountCreate", createAccountMsg)
+
+    NetEventManager.Register(3,
+    function(eventObj)
+        local obj = protobuf.decode("GM_AccountCreate", eventObj.Buffer)
+        print("======= Parse Start =======")
+
+        print("m_AccountName=" .. obj.m_AccountName)
+        print("m_Password=" .. obj.m_Password)
+        print("m_activatekey=" .. obj.m_activatekey)
+
+        print("accountLogInfo.platformID=" .. obj.accountLogInfo.platformID)
+        print("accountLogInfo.ditchID=" .. obj.accountLogInfo.ditchID)
+        print("accountLogInfo.version=" .. obj.accountLogInfo.version)
+        print("accountLogInfo.accountID=" .. obj.accountLogInfo.accountID)
+        print("accountLogInfo.macAddress=" .. obj.accountLogInfo.macAddress)
+        print("accountLogInfo.deviceUUID=" .. obj.accountLogInfo.deviceUUID)
+
+        print("======= Parse End =======")
+
+    end
+    )
+    NetEventManager.Notify(3, nil, code)
 end
 
 Main()
