@@ -57,32 +57,21 @@ public class LuaManager : MonoBehaviour
 
         LuaState = new LuaState();
         InitializeLibs();
+        InitializeCJson();
         LuaState.LuaSetTop(0);
         LuaBinder.Bind(LuaState);
         LuaCoroutine.Register(LuaState, Instance);
 
-        InitializeLuaFiles();
         InitializeLuaDirectory();
         InitializeLuaBundle();
 
         LuaState.Start();
-    }
 
-    public static void StartMain()
-    {
-        //DoString("");
-        DoFile("Main");
-        //StartLooper();
-        //LuaEnv.DoString("require 'GlobalEventManager'");
-        //LuaEnv.DoString("require 'main'");
-    }
-
-    private static void StartLooper()
-    {
         LuaLooper = Instance.gameObject.AddComponent<LuaLooper>();
         LuaLooper.luaState = LuaState;
-    }
 
+        InitializeLuaFiles();
+    }
 
     private static void InitializeLibs()
     {
@@ -93,9 +82,17 @@ public class LuaManager : MonoBehaviour
         LuaState.OpenLibs(LuaDLL.luaopen_bit);
         LuaState.OpenLibs(LuaDLL.luaopen_socket_core);
     }
+    private static void InitializeCJson()
+    {
+        LuaState.LuaGetField(LuaIndexes.LUA_REGISTRYINDEX, "_LOADED");
+        LuaState.OpenLibs(LuaDLL.luaopen_cjson);
+        LuaState.LuaSetField(-2, "cjson");
+        LuaState.OpenLibs(LuaDLL.luaopen_cjson_safe);
+        LuaState.LuaSetField(-2, "cjson.safe");
+    }
     private static void InitializeLuaFiles()
     {
-        //LuaState.AddPreLoad()
+        DoString("require 'NCSpeedLight/Utils/Define'");
     }
     private static void InitializeLuaDirectory()
     {

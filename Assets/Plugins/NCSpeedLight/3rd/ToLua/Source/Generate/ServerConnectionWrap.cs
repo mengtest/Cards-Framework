@@ -52,7 +52,7 @@ public class ServerConnectionWrap
 		{
 			ToLua.CheckArgsCount(L, 1);
 			ServerConnection obj = (ServerConnection)ToLua.CheckObject(L, 1, typeof(ServerConnection));
-			ServerConnection.StateListener o = obj.GetStateListener();
+			ServerConnection.Listener o = obj.GetStateListener();
 			ToLua.PushObject(L, o);
 			return 1;
 		}
@@ -69,7 +69,7 @@ public class ServerConnectionWrap
 		{
 			ToLua.CheckArgsCount(L, 2);
 			ServerConnection obj = (ServerConnection)ToLua.CheckObject(L, 1, typeof(ServerConnection));
-			ServerConnection.StateListener arg0 = (ServerConnection.StateListener)ToLua.CheckObject(L, 2, typeof(ServerConnection.StateListener));
+			ServerConnection.Listener arg0 = (ServerConnection.Listener)ToLua.CheckObject(L, 2, typeof(ServerConnection.Listener));
 			obj.SetNetStateListener(arg0);
 			return 0;
 		}

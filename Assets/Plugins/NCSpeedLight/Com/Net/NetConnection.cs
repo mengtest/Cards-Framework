@@ -506,12 +506,12 @@ public class ServerConnection
 {
     #region [Declration]
     public delegate void ConnectionDelegate(ServerConnection connection);
-    public class StateListener
+    public class Listener
     {
         public ConnectionDelegate OnConnect;
         public ConnectionDelegate OnUpdate;
         public ConnectionDelegate OnDisconnect;
-        public StateListener()
+        public Listener()
         {
             OnDisconnect = new ConnectionDelegate(Func);
             OnConnect = new ConnectionDelegate(Func);
@@ -521,15 +521,15 @@ public class ServerConnection
     }
 
     private SocketConnect m_Socket; // socket connection
-    private StateListener m_ConnectionStateListener; // net state listener
+    private Listener m_ConnectionStateListener; // net state listener
     private List<NetPacket> m_PacketsBuffer = new List<NetPacket>(); // packets' buffer
     #endregion
 
     #region [Functions]
 
-    public StateListener GetStateListener() { return m_ConnectionStateListener; }
+    public Listener GetStateListener() { return m_ConnectionStateListener; }
 
-    public void SetNetStateListener(StateListener listener) { m_ConnectionStateListener = listener; }
+    public void SetNetStateListener(Listener listener) { m_ConnectionStateListener = listener; }
 
     public bool IsConnected()
     {

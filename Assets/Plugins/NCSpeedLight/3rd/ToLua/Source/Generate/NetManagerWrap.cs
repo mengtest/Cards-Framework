@@ -46,7 +46,7 @@ public class NetManagerWrap
 			NetManager.ServerType arg0 = (NetManager.ServerType)ToLua.CheckObject(L, 1, typeof(NetManager.ServerType));
 			string arg1 = ToLua.CheckString(L, 2);
 			int arg2 = (int)LuaDLL.luaL_checknumber(L, 3);
-			ServerConnection.StateListener arg3 = (ServerConnection.StateListener)ToLua.CheckObject(L, 4, typeof(ServerConnection.StateListener));
+			ServerConnection.Listener arg3 = (ServerConnection.Listener)ToLua.CheckObject(L, 4, typeof(ServerConnection.Listener));
 			bool o = NetManager.CreateConnection(arg0, arg1, arg2, arg3);
 			LuaDLL.lua_pushboolean(L, o);
 			return 1;

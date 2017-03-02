@@ -27,3 +27,5 @@
 -- AudioManager = IAudioManager.Instance()
 -- DBManager = IDBManager.Instance()
 -- NetEventManager = INetEventManager.Instance()
+
+require 'NCSpeedLight/Utils/UrlKeeper'

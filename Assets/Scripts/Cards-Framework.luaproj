@@ -80,6 +80,7 @@
     <Compile Include="Lua\NCSpeedLight\Protocol\account_pb.lua" />
     <Compile Include="Lua\NCSpeedLight\Test.lua" />
     <Compile Include="Lua\NCSpeedLight\Utils\Define.lua" />
+    <Compile Include="Lua\NCSpeedLight\Utils\UrlKeeper.lua" />
     <Compile Include="Lua\protobuf\containers.lua" />
     <Compile Include="Lua\protobuf\decoder.lua" />
     <Compile Include="Lua\protobuf\descriptor.lua" />

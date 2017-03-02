@@ -182,11 +182,16 @@ public static class LuaBinder
 		L.BeginModule("NetManager");
 		NetManager_ServerTypeWrap.Register(L);
 		L.EndModule();
+		L.BeginModule("ServerConnection");
+		ServerConnection_ListenerWrap.Register(L);
+		L.RegFunction("ConnectionDelegate", ServerConnection_ConnectionDelegate);
+		L.EndModule();
 		L.BeginModule("Scene");
 		Scene_LAYERWrap.Register(L);
 		Scene_TypeWrap.Register(L);
 		L.EndModule();
 		L.BeginModule("System");
+		System_DateTimeWrap.Register(L);
 		L.RegFunction("Action", System_Action);
 		L.RegFunction("Predicate_int", System_Predicate_int);
 		L.RegFunction("Action_int", System_Action_int);
@@ -519,6 +524,33 @@ public static class LuaBinder
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
 				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UnityEngine.AudioClip.PCMSetPositionCallback), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ServerConnection_ConnectionDelegate(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(ServerConnection.ConnectionDelegate), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(ServerConnection.ConnectionDelegate), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;

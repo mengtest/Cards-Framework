@@ -8,7 +8,6 @@ public class LuaManagerWrap
 	{
 		L.BeginClass(typeof(LuaManager), typeof(UnityEngine.MonoBehaviour));
 		L.RegFunction("Initialize", Initialize);
-		L.RegFunction("StartMain", StartMain);
 		L.RegFunction("DoFile", DoFile);
 		L.RegFunction("DoString", DoString);
 		L.RegFunction("CallFunction", CallFunction);
@@ -31,21 +30,6 @@ public class LuaManagerWrap
 		{
 			ToLua.CheckArgsCount(L, 0);
 			LuaManager.Initialize();
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int StartMain(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 0);
-			LuaManager.StartMain();
 			return 0;
 		}
 		catch(Exception e)

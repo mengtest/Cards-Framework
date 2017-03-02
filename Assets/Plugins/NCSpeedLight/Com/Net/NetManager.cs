@@ -45,7 +45,7 @@ public class NetManager : EventManager
         m_Buffer = new List<ServerConnection>();
     }
 
-    public static bool CreateConnection(ServerType type, string host, int port, ServerConnection.StateListener listener)
+    public static bool CreateConnection(ServerType type, string host, int port, ServerConnection.Listener listener)
     {
         DeleteConnection(type);
         ServerConnection connection = new ServerConnection();

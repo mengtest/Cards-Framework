@@ -36,6 +36,8 @@ public static class CustomSettings
         _DT(typeof(System.Predicate<int>)),
         _DT(typeof(System.Action<int>)),
         _DT(typeof(System.Comparison<int>)),
+        _DT(typeof(ServerConnection.ConnectionDelegate)),
+
     };
 
     //在这里添加你要导出注册到lua的类型列表
@@ -159,6 +161,7 @@ public static class CustomSettings
          _GT(typeof(NetManager)),
          _GT(typeof(NetManager.ServerType)),
          _GT(typeof(ServerConnection)),
+         _GT(typeof(ServerConnection.Listener)),
 
 
          _GT(typeof(Helper)),
@@ -261,6 +264,9 @@ public static class CustomSettings
 
 
 #endregion
+
+         _GT(typeof(string)),
+         _GT(typeof(DateTime)),
 
     };
 
