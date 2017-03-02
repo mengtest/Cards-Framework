@@ -191,10 +191,16 @@ public class NetManager : EventManager
 
     public static void SendMsg(int id, byte[] buffer, ServerType server = ServerType.Logic)
     {
+        if (id == 204)
+        {
+            System.IO.MemoryStream ms = new System.IO.MemoryStream(buffer);
+            PBMessage.GM_AccountCreate create = ProtoBuf.Serializer.Deserialize<PBMessage.GM_AccountCreate>(ms);
+            int a = 1;
+        }
         NetConnection connection = NetManager.Instance.GetConnection(server);
         if (connection != null && connection.IsConnected())
         {
-            connection.SendMessage(id, buffer, 0);
+            connection.SendMessage(id, buffer, 15992);
         }
     }
 

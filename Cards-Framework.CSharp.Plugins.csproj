@@ -400,6 +400,7 @@
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Reflection\LuaMethod.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Reflection\LuaProperty.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Reflection\LuaReflection.cs" />
+    <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\AndroidAdapterWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\AnimatedAlphaWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\AnimatedColorWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\AnimatedWidgetWrap.cs" />
@@ -420,6 +421,7 @@
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NetManagerWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NetManager_ServerTypeWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\ResManagerWrap.cs" />
+    <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\SDKManagerWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\SpringPositionWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\TweenAlphaWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\TweenColorWrap.cs" />
@@ -556,6 +558,7 @@
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\UnityEngine_TransformWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\UnityEngine_WWWWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\UnityEngine_WrapModeWrap.cs" />
+    <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\iOSAdapterWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\LuaConst.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\protobuf-net\BclHelpers.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\protobuf-net\BufferExtension.cs" />
@@ -656,6 +659,9 @@
     <Compile Include="Assets\Plugins\NCSpeedLight\Com\Net\NetPacket.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Com\Res\ResLoadAssetOperation.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Com\Res\ResManager.cs" />
+    <Compile Include="Assets\Plugins\NCSpeedLight\Com\SDK\AndroidAdapter.cs" />
+    <Compile Include="Assets\Plugins\NCSpeedLight\Com\SDK\SDKManager.cs" />
+    <Compile Include="Assets\Plugins\NCSpeedLight\Com\SDK\iOSAdapter.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Core\Event\Event.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Core\Event\EventManager.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Core\Event\GlobalEventManager.cs" />
@@ -676,13 +682,13 @@
     <Compile Include="Assets\Plugins\NCSpeedLight\Game.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Protocol\AccountMessage.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Protocol\PBMessage.cs" />
-    <Compile Include="Assets\Plugins\NCSpeedLight\Utility\Helper.cs" />
-    <Compile Include="Assets\Plugins\NCSpeedLight\Utility\UIHelper.cs" />
-    <Compile Include="Assets\Plugins\NCSpeedLight\Utility\VPTimer.cs" />
-    <Compile Include="Assets\Plugins\NCSpeedLight\Utility\View\FPSPrinter.cs" />
-    <Compile Include="Assets\Plugins\NCSpeedLight\Utility\View\GetBlurBackground.cs" />
-    <Compile Include="Assets\Plugins\NCSpeedLight\Utility\View\UIGaussianBlurEffect.cs" />
-    <Compile Include="Assets\Plugins\NCSpeedLight\Utility\View\VisiableTest.cs" />
+    <Compile Include="Assets\Plugins\NCSpeedLight\Utils\Helper.cs" />
+    <Compile Include="Assets\Plugins\NCSpeedLight\Utils\UIHelper.cs" />
+    <Compile Include="Assets\Plugins\NCSpeedLight\Utils\VPTimer.cs" />
+    <Compile Include="Assets\Plugins\NCSpeedLight\Utils\View\FPSPrinter.cs" />
+    <Compile Include="Assets\Plugins\NCSpeedLight\Utils\View\GetBlurBackground.cs" />
+    <Compile Include="Assets\Plugins\NCSpeedLight\Utils\View\UIGaussianBlurEffect.cs" />
+    <Compile Include="Assets\Plugins\NCSpeedLight\Utils\View\VisiableTest.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\ValueProvider.cs" />
   </ItemGroup>
   <ItemGroup>

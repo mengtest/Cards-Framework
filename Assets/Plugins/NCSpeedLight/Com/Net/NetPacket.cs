@@ -84,12 +84,29 @@ public class NetPacket
     public bool SetUserData(int userData)
     {
         if (m_Buffer == null || m_Buffer.Length < PACK_HEAD_SIZE)
+        {
             return false;
+        }
         byte[] bytes = BitConverter.GetBytes(userData);
         Array.Copy(bytes, 0, m_Buffer, PACK_USERDATA_OFFSET, bytes.Length);
         return true;
     }
     public int GetUserData()
+    {
+        int data = BitConverter.ToInt32(m_Buffer, PACK_USERDATA_OFFSET);
+        return data;
+    }
+    public bool SetServerID(int id)
+    {
+        if (m_Buffer == null || m_Buffer.Length < PACK_HEAD_SIZE)
+        {
+            return false;
+        }
+        byte[] bytes = BitConverter.GetBytes(id);
+        Array.Copy(bytes, 0, m_Buffer, PACK_SERVERID_OFFSET, bytes.Length);
+        return true;
+    }
+    public int GetServerID()
     {
         int data = BitConverter.ToInt32(m_Buffer, PACK_USERDATA_OFFSET);
         return data;

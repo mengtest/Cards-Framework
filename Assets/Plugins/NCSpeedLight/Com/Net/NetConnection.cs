@@ -343,7 +343,8 @@ public class SocketConnect
         NetPacket packet = new NetPacket(msgID, bodySize);
         bool b = packet.SetUserData(userData);
         if (b == false) return false;
-
+        b = packet.SetServerID(1);
+        if (b == false) return false;
         packet.SetData(newData);
 
         if (m_SendObject == null)

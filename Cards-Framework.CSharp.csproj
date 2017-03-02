@@ -75,16 +75,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Resources\majorUI\login\script\LoginTipsDialog.cs" />
-    <Compile Include="Assets\Resources\majorUI\login\script\UI_BindAccount.cs" />
-    <Compile Include="Assets\Resources\majorUI\login\script\UI_ChooseArea.cs" />
-    <Compile Include="Assets\Resources\majorUI\login\script\UI_FirstLogin.cs" />
-    <Compile Include="Assets\Resources\majorUI\login\script\UI_Guest.cs" />
-    <Compile Include="Assets\Resources\majorUI\login\script\UI_Login.cs" />
-    <Compile Include="Assets\Resources\majorUI\login\script\UI_LoopMove.cs" />
-    <Compile Include="Assets\Resources\majorUI\login\script\UI_NormalLogin.cs" />
-    <Compile Include="Assets\Resources\majorUI\login\script\UI_OtherLogin.cs" />
-    <Compile Include="Assets\Resources\majorUI\login\script\UI_Regist.cs" />
+    <Compile Include="Assets\NewBehaviourScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\NCSpeedLight\3rd\AudioToolkit\Readme.txt" />

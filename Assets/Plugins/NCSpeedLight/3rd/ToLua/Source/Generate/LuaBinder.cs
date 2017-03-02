@@ -23,6 +23,9 @@ public static class LuaBinder
 		NetManagerWrap.Register(L);
 		HelperWrap.Register(L);
 		UIHelperWrap.Register(L);
+		SDKManagerWrap.Register(L);
+		AndroidAdapterWrap.Register(L);
+		iOSAdapterWrap.Register(L);
 		UIEventListenerWrap.Register(L);
 		LanguageSelectionWrap.Register(L);
 		TypewriterEffectWrap.Register(L);

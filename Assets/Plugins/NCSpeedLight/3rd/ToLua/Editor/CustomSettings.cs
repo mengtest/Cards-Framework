@@ -157,6 +157,10 @@ public static class CustomSettings
          _GT(typeof(Helper)),
          _GT(typeof(UIHelper)),
 
+         _GT(typeof(SDKManager)),
+         _GT(typeof(AndroidAdapter)),
+         _GT(typeof(iOSAdapter)),
+
 
         #region NGUI Component
          _GT(typeof(UIEventListener)),

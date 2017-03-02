@@ -12,8 +12,11 @@ using UnityEngine;
 
 public static class ValueProvider
 {
-    public static string LOGIN_SERVER_ADDRESS = "jinxianmajiangappts.damaigame.com";
-    public const int LOGIN_SERVER_PORT = 20000;
+    //public static string LOGIN_SERVER_ADDRESS = "jinxianmajiangappts.damaigame.com";
+    public static string LOGIN_SERVER_ADDRESS = "192.168.0.228";
+
+    //public const int LOGIN_SERVER_PORT = 20000;
+    public const int LOGIN_SERVER_PORT = 50000;
 
     public const int UI_ROOT_HEIGHT = 720;
     public const int UI_ROOT_WIDTH = 1224;

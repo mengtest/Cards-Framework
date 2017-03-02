@@ -7,10 +7,9 @@ local transform
 local gameObject
 
 
-local lbAccount
+local ipAccount
 local ipPassword
-local btnLogin
-local btnRegister
+local ipPassword2
 
 function UI_Register.New()
     return this
@@ -22,18 +21,20 @@ function UI_Register.Awake(go)
 end 
 
 function UI_Register.Start()
-    lbAccount = transform:Find("Input (account)/Label"):GetComponent('UILabel');
+    ipAccount = transform:Find("Input (account)"):GetComponent('UIInput');
     ipPassword = transform:Find("Input (password)"):GetComponent('UIInput');
-    UIHelper.SetButtonEvent(transform, 'Btn/Button (login)', this.onClickLogin)
-    UIHelper.SetButtonEvent(transform, 'Btn/Button (regist)', this.onClickRegister)
+    ipPassword2 = transform:Find("Input (password2)"):GetComponent('UIInput');
 
-    NetManager.Register(203,
+    UIHelper.SetButtonEvent(transform, 'Button (back)', this.onClickBack)
+    UIHelper.SetButtonEvent(transform, 'Button (submit)', this.onClickSubmit)
+
+    NetManager.Register(205,
     function(eventObj)
-        print("OnRecv login return")
-        local obj = protobuf.decode("GM_AccountReturn", eventObj.Buffer)
+        print("OnRecv register return")
+        local obj = protobuf.decode("GM_AccountCreateReturn", eventObj.LuaParam)
         print("GM_AccountReturn.m_Result=" .. obj.m_Result)
         print("GM_AccountReturn.m_AccountID=" .. obj.m_AccountID)
-        print("GM_AccountReturn.m_RandStr=" .. obj.m_RandStr)
+        print("GM_AccountReturn.m_AccountName=" .. obj.m_AccountName)
     end
     )
 end
@@ -56,16 +57,20 @@ function UI_Register.OnDestroy()
     print("UI_Register.OnDestroy")
 end
 
-function UI_Register.onClickLogin()
-    print("===== Start send login msg =====")
-    print("AccountName: " .. lbAccount.text)
+function UI_Register.onClickBack()
+    UIManager.CloseWindow("Login/ui_regist")
+    UIManager.OpenWindow("Login/ui_normalLogin")
+end
+
+function UI_Register.onClickSubmit()
+    print("===== Start send register msg =====")
+    print("AccountName: " .. ipAccount.value)
     print("Password: " .. ipPassword.value)
 
-    local accountRequest =
+    local accountCreateRequest =
     {
-        m_AccountName = lbAccount.text,
+        m_AccountName = ipAccount.value,
         m_Password = ipPassword.value,
-        platform = 2,
         accountLogInfo =
         {
             platformID = 14546765,
@@ -77,14 +82,11 @@ function UI_Register.onClickLogin()
         }
     }
 
-    local code = protobuf.encode("GM_AccountRequest", accountRequest)
+    local code = protobuf.encode("GM_AccountCreate", accountCreateRequest)
+    NetManager.SendMsg(204, code, NetManager.ServerType.Login)
 
-    NetManager.SendNetPacket(202, code)
-
-    print("===== Finish send login msg =====")
+    print("===== Finish send register msg =====")
 end
 
-function UI_Register.onClickRegister()
 
-end
 
