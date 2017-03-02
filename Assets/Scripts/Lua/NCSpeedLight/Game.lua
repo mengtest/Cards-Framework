@@ -52,8 +52,9 @@ end
 function Game.Initialize()
     UnityEngine.Application.targetFrameRate = 30
     UnityEngine.Screen.sleepTimeout = UnityEngine.SleepTimeout.NeverSleep
-    DBManager.Instance:Initialize()
     ResManager.Initialize()
+    PersistentManager.Initialize()
+    VersionManager.Initialize()
     UIManager.Initialize()
     SceneManager.Initialize()
     NetManager.Initialize()

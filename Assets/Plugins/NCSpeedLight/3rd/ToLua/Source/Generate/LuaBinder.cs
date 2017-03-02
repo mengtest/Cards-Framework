@@ -15,7 +15,6 @@ public static class LuaBinder
 		ResManagerWrap.Register(L);
 		UIManagerWrap.Register(L);
 		AudioManagerWrap.Register(L);
-		DBManagerWrap.Register(L);
 		LuaManagerWrap.Register(L);
 		LuaBehaviourWrap.Register(L);
 		LuaUtilsWrap.Register(L);
@@ -29,6 +28,8 @@ public static class LuaBinder
 		iOSAdapterWrap.Register(L);
 		SceneManagerWrap.Register(L);
 		SceneWrap.Register(L);
+		PersistentManagerWrap.Register(L);
+		VersionManagerWrap.Register(L);
 		UIEventListenerWrap.Register(L);
 		LanguageSelectionWrap.Register(L);
 		TypewriterEffectWrap.Register(L);

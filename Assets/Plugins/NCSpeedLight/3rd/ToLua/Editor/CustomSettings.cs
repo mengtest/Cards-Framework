@@ -152,7 +152,6 @@ public static class CustomSettings
          _GT(typeof(ResManager)),
          _GT(typeof(UIManager)),
          _GT(typeof(AudioManager)),
-         _GT(typeof(DBManager)),
          _GT(typeof(LuaManager)),
          _GT(typeof(LuaBehaviour)),
          _GT(typeof(LuaUtils)),
@@ -175,6 +174,11 @@ public static class CustomSettings
          _GT(typeof(Scene)),
          _GT(typeof(Scene.LAYER)),
          _GT(typeof(Scene.Type)),
+
+
+         _GT(typeof(PersistentManager)),
+
+         _GT(typeof(VersionManager)),
 
 
         #region NGUI Component
