@@ -9,8 +9,8 @@ public class LuaBehaviourWrap
 		L.BeginClass(typeof(LuaBehaviour), typeof(UnityEngine.MonoBehaviour));
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
-		L.RegVar("ModuleName", get_ModuleName, set_ModuleName);
-		L.RegVar("ScriptName", get_ScriptName, set_ScriptName);
+		L.RegVar("LuaPath", get_LuaPath, set_LuaPath);
+		L.RegVar("LuaName", get_LuaName, set_LuaName);
 		L.EndClass();
 	}
 
@@ -33,7 +33,7 @@ public class LuaBehaviourWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_ModuleName(IntPtr L)
+	static int get_LuaPath(IntPtr L)
 	{
 		object o = null;
 
@@ -41,18 +41,18 @@ public class LuaBehaviourWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			LuaBehaviour obj = (LuaBehaviour)o;
-			string ret = obj.ModuleName;
+			string ret = obj.LuaPath;
 			LuaDLL.lua_pushstring(L, ret);
 			return 1;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index ModuleName on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index LuaPath on a nil value" : e.Message);
 		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_ScriptName(IntPtr L)
+	static int get_LuaName(IntPtr L)
 	{
 		object o = null;
 
@@ -60,18 +60,18 @@ public class LuaBehaviourWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			LuaBehaviour obj = (LuaBehaviour)o;
-			string ret = obj.ScriptName;
+			string ret = obj.LuaName;
 			LuaDLL.lua_pushstring(L, ret);
 			return 1;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index ScriptName on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index LuaName on a nil value" : e.Message);
 		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_ModuleName(IntPtr L)
+	static int set_LuaPath(IntPtr L)
 	{
 		object o = null;
 
@@ -80,17 +80,17 @@ public class LuaBehaviourWrap
 			o = ToLua.ToObject(L, 1);
 			LuaBehaviour obj = (LuaBehaviour)o;
 			string arg0 = ToLua.CheckString(L, 2);
-			obj.ModuleName = arg0;
+			obj.LuaPath = arg0;
 			return 0;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index ModuleName on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index LuaPath on a nil value" : e.Message);
 		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_ScriptName(IntPtr L)
+	static int set_LuaName(IntPtr L)
 	{
 		object o = null;
 
@@ -99,12 +99,12 @@ public class LuaBehaviourWrap
 			o = ToLua.ToObject(L, 1);
 			LuaBehaviour obj = (LuaBehaviour)o;
 			string arg0 = ToLua.CheckString(L, 2);
-			obj.ScriptName = arg0;
+			obj.LuaName = arg0;
 			return 0;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index ScriptName on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index LuaName on a nil value" : e.Message);
 		}
 	}
 }

@@ -7,39 +7,29 @@ public class NetManagerWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(NetManager), typeof(EventManager));
+		L.RegFunction("Initialize", Initialize);
 		L.RegFunction("CreateConnection", CreateConnection);
 		L.RegFunction("DeleteConnection", DeleteConnection);
 		L.RegFunction("GetConnection", GetConnection);
 		L.RegFunction("Update", Update);
 		L.RegFunction("Destroy", Destroy);
-		L.RegFunction("SendMsg", SendMsg);
-		L.RegFunction("Register", _Register);
-		L.RegFunction("Unregister", Unregister);
-		L.RegFunction("Notify", Notify);
-		L.RegFunction("New", _CreateNetManager);
+		L.RegFunction("SendEvent", SendEvent);
+		L.RegFunction("RegisterEvent", RegisterEvent);
+		L.RegFunction("UnregisterEvent", UnregisterEvent);
+		L.RegFunction("NotifyEvent", NotifyEvent);
 		L.RegFunction("__tostring", ToLua.op_ToString);
-		L.RegVar("CurrentLatency", get_CurrentLatency, set_CurrentLatency);
 		L.RegVar("Instance", get_Instance, null);
 		L.EndClass();
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int _CreateNetManager(IntPtr L)
+	static int Initialize(IntPtr L)
 	{
 		try
 		{
-			int count = LuaDLL.lua_gettop(L);
-
-			if (count == 0)
-			{
-				NetManager obj = new NetManager();
-				ToLua.PushObject(L, obj);
-				return 1;
-			}
-			else
-			{
-				return LuaDLL.luaL_throw(L, "invalid arguments to ctor method: NetManager.New");
-			}
+			ToLua.CheckArgsCount(L, 0);
+			NetManager.Initialize();
+			return 0;
 		}
 		catch(Exception e)
 		{
@@ -52,13 +42,12 @@ public class NetManagerWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 5);
-			NetManager obj = (NetManager)ToLua.CheckObject(L, 1, typeof(NetManager));
-			NetManager.ServerType arg0 = (NetManager.ServerType)ToLua.CheckObject(L, 2, typeof(NetManager.ServerType));
-			string arg1 = ToLua.CheckString(L, 3);
-			int arg2 = (int)LuaDLL.luaL_checknumber(L, 4);
-			NetConnection.StateListener arg3 = (NetConnection.StateListener)ToLua.CheckObject(L, 5, typeof(NetConnection.StateListener));
-			bool o = obj.CreateConnection(arg0, arg1, arg2, arg3);
+			ToLua.CheckArgsCount(L, 4);
+			NetManager.ServerType arg0 = (NetManager.ServerType)ToLua.CheckObject(L, 1, typeof(NetManager.ServerType));
+			string arg1 = ToLua.CheckString(L, 2);
+			int arg2 = (int)LuaDLL.luaL_checknumber(L, 3);
+			ServerConnection.StateListener arg3 = (ServerConnection.StateListener)ToLua.CheckObject(L, 4, typeof(ServerConnection.StateListener));
+			bool o = NetManager.CreateConnection(arg0, arg1, arg2, arg3);
 			LuaDLL.lua_pushboolean(L, o);
 			return 1;
 		}
@@ -73,10 +62,9 @@ public class NetManagerWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 2);
-			NetManager obj = (NetManager)ToLua.CheckObject(L, 1, typeof(NetManager));
-			NetManager.ServerType arg0 = (NetManager.ServerType)ToLua.CheckObject(L, 2, typeof(NetManager.ServerType));
-			obj.DeleteConnection(arg0);
+			ToLua.CheckArgsCount(L, 1);
+			NetManager.ServerType arg0 = (NetManager.ServerType)ToLua.CheckObject(L, 1, typeof(NetManager.ServerType));
+			NetManager.DeleteConnection(arg0);
 			return 0;
 		}
 		catch(Exception e)
@@ -90,10 +78,9 @@ public class NetManagerWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 2);
-			NetManager obj = (NetManager)ToLua.CheckObject(L, 1, typeof(NetManager));
-			NetManager.ServerType arg0 = (NetManager.ServerType)ToLua.CheckObject(L, 2, typeof(NetManager.ServerType));
-			NetConnection o = obj.GetConnection(arg0);
+			ToLua.CheckArgsCount(L, 1);
+			NetManager.ServerType arg0 = (NetManager.ServerType)ToLua.CheckObject(L, 1, typeof(NetManager.ServerType));
+			ServerConnection o = NetManager.GetConnection(arg0);
 			ToLua.PushObject(L, o);
 			return 1;
 		}
@@ -108,9 +95,8 @@ public class NetManagerWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 1);
-			NetManager obj = (NetManager)ToLua.CheckObject(L, 1, typeof(NetManager));
-			obj.Update();
+			ToLua.CheckArgsCount(L, 0);
+			NetManager.Update();
 			return 0;
 		}
 		catch(Exception e)
@@ -124,9 +110,8 @@ public class NetManagerWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 1);
-			NetManager obj = (NetManager)ToLua.CheckObject(L, 1, typeof(NetManager));
-			obj.Destroy();
+			ToLua.CheckArgsCount(L, 0);
+			NetManager.Destroy();
 			return 0;
 		}
 		catch(Exception e)
@@ -136,15 +121,17 @@ public class NetManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int SendMsg(IntPtr L)
+	static int SendEvent(IntPtr L)
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 3);
+			ToLua.CheckArgsCount(L, 5);
 			int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
 			byte[] arg1 = ToLua.CheckByteBuffer(L, 2);
-			NetManager.ServerType arg2 = (NetManager.ServerType)ToLua.CheckObject(L, 3, typeof(NetManager.ServerType));
-			NetManager.SendMsg(arg0, arg1, arg2);
+			int arg2 = (int)LuaDLL.luaL_checknumber(L, 3);
+			int arg3 = (int)LuaDLL.luaL_checknumber(L, 4);
+			NetManager.ServerType arg4 = (NetManager.ServerType)ToLua.CheckObject(L, 5, typeof(NetManager.ServerType));
+			NetManager.SendEvent(arg0, arg1, arg2, arg3, arg4);
 			return 0;
 		}
 		catch(Exception e)
@@ -154,7 +141,7 @@ public class NetManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int _Register(IntPtr L)
+	static int RegisterEvent(IntPtr L)
 	{
 		try
 		{
@@ -173,7 +160,7 @@ public class NetManagerWrap
 				arg1 = DelegateFactory.CreateDelegate(typeof(EventHandlerDelegate), func) as EventHandlerDelegate;
 			}
 
-			NetManager.Register(arg0, arg1);
+			NetManager.RegisterEvent(arg0, arg1);
 			return 0;
 		}
 		catch(Exception e)
@@ -183,7 +170,7 @@ public class NetManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int Unregister(IntPtr L)
+	static int UnregisterEvent(IntPtr L)
 	{
 		try
 		{
@@ -202,7 +189,7 @@ public class NetManagerWrap
 				arg1 = DelegateFactory.CreateDelegate(typeof(EventHandlerDelegate), func) as EventHandlerDelegate;
 			}
 
-			NetManager.Unregister(arg0, arg1);
+			NetManager.UnregisterEvent(arg0, arg1);
 			return 0;
 		}
 		catch(Exception e)
@@ -212,28 +199,14 @@ public class NetManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int Notify(IntPtr L)
+	static int NotifyEvent(IntPtr L)
 	{
 		try
 		{
 			ToLua.CheckArgsCount(L, 1);
 			Evt arg0 = (Evt)ToLua.CheckObject(L, 1, typeof(Evt));
-			NetManager.Notify(arg0);
+			NetManager.NotifyEvent(arg0);
 			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_CurrentLatency(IntPtr L)
-	{
-		try
-		{
-			LuaDLL.lua_pushinteger(L, NetManager.CurrentLatency);
-			return 1;
 		}
 		catch(Exception e)
 		{
@@ -248,21 +221,6 @@ public class NetManagerWrap
 		{
 			ToLua.PushObject(L, NetManager.Instance);
 			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_CurrentLatency(IntPtr L)
-	{
-		try
-		{
-			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
-			NetManager.CurrentLatency = arg0;
-			return 0;
 		}
 		catch(Exception e)
 		{

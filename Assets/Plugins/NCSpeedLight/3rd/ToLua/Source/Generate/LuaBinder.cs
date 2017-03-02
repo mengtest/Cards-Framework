@@ -21,11 +21,14 @@ public static class LuaBinder
 		LuaUtilsWrap.Register(L);
 		LuaViewWrap.Register(L);
 		NetManagerWrap.Register(L);
+		ServerConnectionWrap.Register(L);
 		HelperWrap.Register(L);
 		UIHelperWrap.Register(L);
 		SDKManagerWrap.Register(L);
 		AndroidAdapterWrap.Register(L);
 		iOSAdapterWrap.Register(L);
+		SceneManagerWrap.Register(L);
+		SceneWrap.Register(L);
 		UIEventListenerWrap.Register(L);
 		LanguageSelectionWrap.Register(L);
 		TypewriterEffectWrap.Register(L);
@@ -107,6 +110,8 @@ public static class LuaBinder
 		UITooltipWrap.Register(L);
 		UIViewportWrap.Register(L);
 		EventManagerWrap.Register(L);
+		StateMachineWrap.Register(L);
+		StateWrap.Register(L);
 		UIBasicSpriteWrap.Register(L);
 		UIWidgetWrap.Register(L);
 		UIRectWrap.Register(L);
@@ -125,6 +130,7 @@ public static class LuaBinder
 		UnityEngine_GameObjectWrap.Register(L);
 		UnityEngine_TrackedReferenceWrap.Register(L);
 		UnityEngine_ApplicationWrap.Register(L);
+		UnityEngine_RuntimePlatformWrap.Register(L);
 		UnityEngine_PhysicsWrap.Register(L);
 		UnityEngine_ColliderWrap.Register(L);
 		UnityEngine_TimeWrap.Register(L);
@@ -175,6 +181,10 @@ public static class LuaBinder
 		L.EndModule();
 		L.BeginModule("NetManager");
 		NetManager_ServerTypeWrap.Register(L);
+		L.EndModule();
+		L.BeginModule("Scene");
+		Scene_LAYERWrap.Register(L);
+		Scene_TypeWrap.Register(L);
 		L.EndModule();
 		L.BeginModule("System");
 		L.RegFunction("Action", System_Action);

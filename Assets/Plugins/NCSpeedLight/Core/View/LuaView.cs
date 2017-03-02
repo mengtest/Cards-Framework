@@ -15,21 +15,18 @@
             NetEventQueue.RemoveAll();
         }
     }
-    public void RegisterNetEvent(NetworkEventType type, EventHandlerDelegate func)
+    public void RegisterNetEvent(int id, EventHandlerDelegate func)
     {
         if (NetEventQueue != null)
         {
-            NetEventQueue.Add((int)type, func);
+            NetEventQueue.Add(id, func);
         }
     }
-    public void UnregisterNetEvent(NetworkEventType type, EventHandlerDelegate func)
+    public void UnregisterNetEvent(int id, EventHandlerDelegate func)
     {
         if (NetEventQueue != null)
         {
-            NetEventQueue.Remove((int)type, func);
+            NetEventQueue.Remove(id, func);
         }
     }
-    public void SendNetEvent(object obj) { }
-
-    //public void RegisterPlayerEvent(PlayerE)
 }

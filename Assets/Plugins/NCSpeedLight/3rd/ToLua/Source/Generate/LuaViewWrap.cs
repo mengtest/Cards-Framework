@@ -9,7 +9,6 @@ public class LuaViewWrap
 		L.BeginClass(typeof(LuaView), typeof(LuaBehaviour));
 		L.RegFunction("RegisterNetEvent", RegisterNetEvent);
 		L.RegFunction("UnregisterNetEvent", UnregisterNetEvent);
-		L.RegFunction("SendNetEvent", SendNetEvent);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.EndClass();
@@ -22,7 +21,7 @@ public class LuaViewWrap
 		{
 			ToLua.CheckArgsCount(L, 3);
 			LuaView obj = (LuaView)ToLua.CheckObject(L, 1, typeof(LuaView));
-			NetworkEventType arg0 = (NetworkEventType)ToLua.CheckObject(L, 2, typeof(NetworkEventType));
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
 			EventHandlerDelegate arg1 = null;
 			LuaTypes funcType3 = LuaDLL.lua_type(L, 3);
 
@@ -52,7 +51,7 @@ public class LuaViewWrap
 		{
 			ToLua.CheckArgsCount(L, 3);
 			LuaView obj = (LuaView)ToLua.CheckObject(L, 1, typeof(LuaView));
-			NetworkEventType arg0 = (NetworkEventType)ToLua.CheckObject(L, 2, typeof(NetworkEventType));
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
 			EventHandlerDelegate arg1 = null;
 			LuaTypes funcType3 = LuaDLL.lua_type(L, 3);
 
@@ -67,23 +66,6 @@ public class LuaViewWrap
 			}
 
 			obj.UnregisterNetEvent(arg0, arg1);
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int SendNetEvent(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 2);
-			LuaView obj = (LuaView)ToLua.CheckObject(L, 1, typeof(LuaView));
-			object arg0 = ToLua.ToVarObject(L, 2);
-			obj.SendNetEvent(arg0);
 			return 0;
 		}
 		catch(Exception e)

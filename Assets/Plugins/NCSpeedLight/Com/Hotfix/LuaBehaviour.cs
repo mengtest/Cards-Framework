@@ -10,47 +10,45 @@
 //----------------------------------------------------------------*/
 
 using UnityEngine;
-using System.Collections;
-using LuaInterface;
 
-    public class LuaBehaviour : MonoBehaviour
+public class LuaBehaviour : MonoBehaviour
+{
+    public string LuaPath = "Modules/Test/";
+    public string LuaName = "Hello";
+    protected virtual void Awake()
     {
-        public string ModuleName = "LuaBehaviour";
-        public string ScriptName = "Hello";
-        protected virtual void Awake()
-        {
-            LuaManager.DoString(string.Format("require 'NCSpeedLight/Modules/{0}/{1}'", ModuleName, ScriptName));
-            LuaManager.CallFunction(ScriptName + ".Awake", gameObject);
-        }
-
-        protected virtual void Start()
-        {
-            LuaManager.CallFunction(ScriptName + ".Start");
-        }
-
-        protected virtual void OnEnable()
-        {
-            LuaManager.CallFunction(ScriptName + ".OnEnable");
-        }
-
-        protected virtual void OnDisable()
-        {
-            LuaManager.CallFunction(ScriptName + ".OnDisable");
-        }
-
-        protected virtual void Update()
-        {
-            LuaManager.CallFunction(ScriptName + ".Update");
-        }
-
-        protected virtual void LateUpdate()
-        {
-            LuaManager.CallFunction(ScriptName + ".LateUpdate");
-        }
-
-        protected virtual void OnDestroy()
-        {
-            LuaManager.CallFunction(ScriptName + ".OnDestroy");
-        }
+        LuaManager.DoString(string.Format("require 'NCSpeedLight/{0}{1}'", LuaPath, LuaName));
+        LuaManager.CallFunction(LuaName + ".Awake", gameObject);
     }
+
+    protected virtual void Start()
+    {
+        LuaManager.CallFunction(LuaName + ".Start");
+    }
+
+    protected virtual void OnEnable()
+    {
+        LuaManager.CallFunction(LuaName + ".OnEnable");
+    }
+
+    protected virtual void OnDisable()
+    {
+        LuaManager.CallFunction(LuaName + ".OnDisable");
+    }
+
+    protected virtual void Update()
+    {
+        LuaManager.CallFunction(LuaName + ".Update");
+    }
+
+    protected virtual void LateUpdate()
+    {
+        LuaManager.CallFunction(LuaName + ".LateUpdate");
+    }
+
+    protected virtual void OnDestroy()
+    {
+        LuaManager.CallFunction(LuaName + ".OnDestroy");
+    }
+}
 

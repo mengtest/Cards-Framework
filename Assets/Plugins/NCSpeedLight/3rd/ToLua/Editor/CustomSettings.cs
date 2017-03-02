@@ -16,6 +16,7 @@ public static class CustomSettings
     public static List<Type> staticClassTypes = new List<Type>
     {
         typeof(UnityEngine.Application),
+        typeof(UnityEngine.RuntimePlatform),
         typeof(UnityEngine.Time),
         typeof(UnityEngine.Screen),
         typeof(UnityEngine.SleepTimeout),
@@ -88,6 +89,7 @@ public static class CustomSettings
         _GT(typeof(GameObject)),
         _GT(typeof(TrackedReference)),
         _GT(typeof(Application)),
+        _GT(typeof(UnityEngine.RuntimePlatform)),
         _GT(typeof(Physics)),
         _GT(typeof(Collider)),
         _GT(typeof(Time)),
@@ -102,6 +104,7 @@ public static class CustomSettings
         _GT(typeof(AssetBundle)),
         _GT(typeof(ParticleSystem)),
         _GT(typeof(AsyncOperation)).SetBaseType(typeof(System.Object)),
+
         _GT(typeof(LightType)),
         _GT(typeof(SleepTimeout)),
 #if UNITY_5_3_OR_NEWER
@@ -152,14 +155,23 @@ public static class CustomSettings
          _GT(typeof(LuaBehaviour)),
          _GT(typeof(LuaUtils)),
          _GT(typeof(LuaView)),
+
          _GT(typeof(NetManager)),
          _GT(typeof(NetManager.ServerType)),
+         _GT(typeof(ServerConnection)),
+
+
          _GT(typeof(Helper)),
          _GT(typeof(UIHelper)),
 
          _GT(typeof(SDKManager)),
          _GT(typeof(AndroidAdapter)),
          _GT(typeof(iOSAdapter)),
+
+         _GT(typeof(SceneManager)),
+         _GT(typeof(Scene)),
+         _GT(typeof(Scene.LAYER)),
+         _GT(typeof(Scene.Type)),
 
 
         #region NGUI Component

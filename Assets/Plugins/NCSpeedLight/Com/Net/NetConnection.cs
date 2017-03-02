@@ -331,17 +331,18 @@ public class SocketConnect
         }
     }
 
-    public bool SendMessage(int msgID, int userData, Byte[] data)
+    public bool SendMessage(int id, byte[] data, int playerID, int serverID)
     {
         int bodySize = 0;
         if (data != null)
         {
             bodySize = data.Length;
         }
-        Byte[] newData = data;
 
-        NetPacket packet = new NetPacket(msgID, bodySize);
-        bool b = packet.SetUserData(userData);
+        byte[] newData = data;
+
+        NetPacket packet = new NetPacket(id, bodySize);
+        bool b = packet.SetUserData(playerID);
         if (b == false) return false;
         b = packet.SetServerID(1);
         if (b == false) return false;
@@ -474,21 +475,6 @@ public class SocketConnect
             {
                 try
                 {
-                    //NetPackage package = new NetPackage();
-                    //package.MsgID = 998;
-                    //package.PlayerID = 12896;
-                    //package.buffer = packet.GetBuffer();
-
-                    //int length = Marshal.SizeOf(package);
-                    //byte[] buffer = StructToBytes(package,length);
-
-                    //int sendSize = m_Socket.Send(buffer, 0, length, SocketFlags.None);
-                    //if (sendSize != length)
-                    //{
-                    //    m_NeedClose = true;
-                    //    break;
-                    //}
-
                     byte[] buffer = packet.GetBuffer();
                     int length = buffer.Length;
                     AsyncCallback callback = delegate (IAsyncResult finalResult)
@@ -516,10 +502,10 @@ public class SocketConnect
         }
     }
 }
-public class NetConnection
+public class ServerConnection
 {
     #region [Declration]
-    public delegate void ConnectionDelegate(NetConnection connection);
+    public delegate void ConnectionDelegate(ServerConnection connection);
     public class StateListener
     {
         public ConnectionDelegate OnConnect;
@@ -531,7 +517,7 @@ public class NetConnection
             OnConnect = new ConnectionDelegate(Func);
             OnUpdate = new ConnectionDelegate(Func);
         }
-        private void Func(NetConnection connection) { }
+        private void Func(ServerConnection connection) { }
     }
 
     private SocketConnect m_Socket; // socket connection
@@ -540,16 +526,9 @@ public class NetConnection
     #endregion
 
     #region [Functions]
-    /// <summary>
-    /// Get connection state listener.
-    /// </summary>
-    /// <returns></returns>
+
     public StateListener GetStateListener() { return m_ConnectionStateListener; }
 
-    /// <summary>
-    /// Set connection state listener.
-    /// </summary>
-    /// <param name="listener"></param>
     public void SetNetStateListener(StateListener listener) { m_ConnectionStateListener = listener; }
 
     public bool IsConnected()
@@ -560,12 +539,6 @@ public class NetConnection
         return m_Socket.IsConnected;
     }
 
-    /// <summary>
-    /// Execute connect.
-    /// </summary>
-    /// <param name="host"></param>
-    /// <param name="port"></param>
-    /// <returns></returns>
     public bool Connect(string host, int port)
     {
         Disconnect();
@@ -575,10 +548,6 @@ public class NetConnection
         return m_Socket.Connect(host, port);
     }
 
-    /// <summary>
-    /// Execute reconnect.
-    /// </summary>
-    /// <returns></returns>
     public bool Reconnect()
     {
         if (m_Socket != null)
@@ -589,9 +558,6 @@ public class NetConnection
         return false;
     }
 
-    /// <summary>
-    /// Disconnect the socket.
-    /// </summary>
     public void Disconnect()
     {
         if (m_Socket != null)
@@ -655,7 +621,7 @@ public class NetConnection
                         if (packet != null)
                         {
                             //Debug.LogError("Reveive a net message,id is " + packet.GetMessageID());
-                            NetManager.Notify(new Evt(packet.GetMessageID(), packet, packet.GetBuffer()));
+                            NetManager.NotifyEvent(new Evt(packet.GetMessageID(), packet, packet.GetBuffer()));
                         }
                     }
                     m_PacketsBuffer.Clear();
@@ -669,87 +635,18 @@ public class NetConnection
         }
     }
 
-    /// <summary>
-    /// Send a message.
-    /// </summary>
-    /// <param name="cmd"></param>
-    /// <param name="data"></param>
-    /// <param name="playerID"></param>
-    /// <returns></returns>
-    public bool SendMessage(int cmd, Byte[] data, int playerID)
+    public bool SendMessage(int id, Byte[] data, int playerID, int serverID)
     {
         if (m_Socket == null || m_Socket.IsConnected == false)
         {
             return false;
         }
-        return m_Socket.SendMessage(cmd, playerID, data);
+        return m_Socket.SendMessage(id, data, playerID, serverID);
     }
 
-    /// <summary>
-    /// Send a empty message.
-    /// </summary>
-    /// <param name="cmd"></param>
-    /// <returns></returns>
-    public bool SendMessageEmpty(int cmd)
+    public bool SendEmpty(int id)
     {
-        return SendMessage(cmd, new byte[] { 0 }, 0);
+        return SendMessage(id, new byte[] { 0 }, 0, 0);
     }
-
-    /// <summary>
-    /// Send a message and the data format is ProtoBuf.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="cmd"></param>
-    /// <param name="obj"></param>
-    /// <returns></returns>
-    public bool SendMessageProtoBuf<T>(int cmd, T obj)
-        where T : class, ProtoBuf.IExtensible
-    {
-        using (var ms = new MemoryStream())
-        {
-            ProtoBuf.Serializer.Serialize<T>(ms, obj);
-            byte[] bytes = ms.ToArray();
-            ms.Close();
-            return SendMessage(cmd, bytes, 0);
-        }
-    }
-
-    /// <summary>
-    /// Deserialize data(ProtoBuf.IExtensible).
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="obj"></param>
-    /// <returns></returns>
-    public static T DeserializeProtoBuf<T>(object obj) where T : class, ProtoBuf.IExtensible
-    {
-        NetPacket packet = obj as NetPacket;
-        if (packet == null)
-        {
-            return null;
-        }
-        T t = DeserializeProtoBuf<T>(packet);
-        return t;
-    }
-
-    /// <summary>
-    /// Deserialize data(Proto.IExtensible).
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="packet"></param>
-    /// <returns></returns>
-    public static T DeserializeProtoBuf<T>(NetPacket packet) where T : class, ProtoBuf.IExtensible
-    {
-        Byte[] buffer = packet.GetBuffer();
-        if (buffer == null)
-        {
-            return null;
-        }
-        using (var ms = new MemoryStream(buffer, NetPacket.PACK_HEAD_SIZE, buffer.Length - NetPacket.PACK_HEAD_SIZE))
-        {
-            return ProtoBuf.Serializer.Deserialize(typeof(T), ms) as T;
-        }
-    }
-
     #endregion
-
 }

@@ -35,12 +35,12 @@
     <Folder Include="Lua\NCSpeedLight\Interface\" />
     <Folder Include="Lua\NCSpeedLight\Modules\" />
     <Folder Include="Lua\NCSpeedLight\Modules\Login\" />
+    <Folder Include="Lua\NCSpeedLight\Scenes\" />
     <Folder Include="Lua\NCSpeedLight\Protocol\" />
     <Folder Include="Lua\NCSpeedLight\Utils\" />
     <Folder Include="Lua\protobuf\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Lua\Main.lua" />
     <Compile Include="Lua\NCSpeedLight\3rd\cjson\json2lua.lua" />
     <Compile Include="Lua\NCSpeedLight\3rd\cjson\lua2json.lua" />
     <Compile Include="Lua\NCSpeedLight\3rd\cjson\test.lua" />
@@ -63,6 +63,11 @@
     <Compile Include="Lua\NCSpeedLight\3rd\sproto\test.lua" />
     <Compile Include="Lua\NCSpeedLight\3rd\sproto\testall.lua" />
     <Compile Include="Lua\NCSpeedLight\3rd\sproto\testrpc.lua" />
+    <Compile Include="Lua\NCSpeedLight\Scenes\GameScene.lua" />
+    <Compile Include="Lua\NCSpeedLight\Scenes\HallScene.lua" />
+    <Compile Include="Lua\NCSpeedLight\Scenes\LoginScene.lua" />
+    <Compile Include="Lua\NCSpeedLight\Scenes\DownloadScene.lua" />
+    <Compile Include="Lua\NCSpeedLight\Game.lua" />
     <Compile Include="Lua\NCSpeedLight\Interface\IGlobalEventManager.lua" />
     <Compile Include="Lua\NCSpeedLight\Interface\INetEventManager.lua" />
     <Compile Include="Lua\NCSpeedLight\Interface\INetManager.lua" />
@@ -73,6 +78,7 @@
     <Compile Include="Lua\NCSpeedLight\Modules\Login\UI_NormalLogin.lua" />
     <Compile Include="Lua\NCSpeedLight\Modules\Login\UI_Register.lua" />
     <Compile Include="Lua\NCSpeedLight\Protocol\account_pb.lua" />
+    <Compile Include="Lua\NCSpeedLight\Test.lua" />
     <Compile Include="Lua\NCSpeedLight\Utils\Define.lua" />
     <Compile Include="Lua\protobuf\containers.lua" />
     <Compile Include="Lua\protobuf\decoder.lua" />

@@ -10,28 +10,21 @@
 //----------------------------------------------------------------*/
 
 using System.Collections.Generic;
-using UnityEngine;
 
 public class NetManager : EventManager
 {
     public enum ServerType
     {
-        Login, // login server
-        Logic, // game logic server
+        Login,
+        Logic,
     }
-    public class LantencyIno
-    {
-        public float ReqTime;
-        public float RecvTime;
-        public float DeltaTime
-        {
-            get
-            {
-                return RecvTime - ReqTime;
-            }
-        }
-    }
+
     private static NetManager m_Instance;
+
+    private static Dictionary<ServerType, ServerConnection> m_Connections = null;
+
+    private static List<ServerConnection> m_Buffer = null;
+
     public static NetManager Instance
     {
         get
@@ -44,70 +37,47 @@ public class NetManager : EventManager
         }
     }
 
-    private Dictionary<ServerType, NetConnection> m_Connections; // all connected connection
-    private List<NetConnection> m_Buffer; // temporary buffer
+    private NetManager() : base() { }
 
-    #region [Functions]
-    public NetManager() : base()
+    public static void Initialize()
     {
-        m_Connections = new Dictionary<ServerType, NetConnection>();
-        m_Buffer = new List<NetConnection>();
-        InitLatencyTest();
+        m_Connections = new Dictionary<ServerType, ServerConnection>();
+        m_Buffer = new List<ServerConnection>();
     }
 
-    /// <summary>
-    /// Connect to a specific server with host and port number,we now have account server and game logic server.
-    /// </summary>
-    /// <param name="svrType"></param>
-    /// <param name="host"></param>
-    /// <param name="port"></param>
-    /// <param name="listener"></param>
-    /// <returns></returns>
-    public bool CreateConnection(ServerType svrType, string host, int port, NetConnection.StateListener listener)
+    public static bool CreateConnection(ServerType type, string host, int port, ServerConnection.StateListener listener)
     {
-        DeleteConnection(svrType);
-        NetConnection connection = new NetConnection();
-        m_Connections.Add(svrType, connection);
+        DeleteConnection(type);
+        ServerConnection connection = new ServerConnection();
+        m_Connections.Add(type, connection);
         connection.SetNetStateListener(listener);
         return connection.Connect(host, port);
     }
 
-    /// <summary>
-    /// Disconnect form a server with server type,we now have account server and game logic server.
-    /// </summary>
-    /// <param name="svrType"></param>
-    public void DeleteConnection(ServerType svrType)
+    public static void DeleteConnection(ServerType type)
     {
-        NetConnection connection;
-        if (m_Connections.TryGetValue(svrType, out connection))
+        ServerConnection connection;
+        if (m_Connections.TryGetValue(type, out connection))
         {
             connection.Disconnect();
-            m_Connections.Remove(svrType);
+            m_Connections.Remove(type);
         }
     }
 
-    /// <summary>
-    /// Get a connection with server type.
-    /// </summary>
-    /// <param name="svrType"></param>
-    /// <returns>Connection</returns>
-    public NetConnection GetConnection(ServerType svrType)
+    public static ServerConnection GetConnection(ServerType type)
     {
-        NetConnection connection;
-        m_Connections.TryGetValue(svrType, out connection);
+        ServerConnection connection;
+        m_Connections.TryGetValue(type, out connection);
         return connection;
     }
 
-    /// <summary>
-    /// Drive manager,it's important to make sure all operations are operated in main thread.
-    /// </summary>
-    public void Update()
+    public static void Update()
     {
         if (m_Buffer.Count != 0)
         {
             m_Buffer.Clear();
         }
-        Dictionary<ServerType, NetConnection>.Enumerator it = m_Connections.GetEnumerator();
+        Dictionary<ServerType, ServerConnection>.Enumerator it = m_Connections.GetEnumerator();
         for (int i = 0; i < m_Connections.Count; i++)
         {
             it.MoveNext();
@@ -116,16 +86,13 @@ public class NetManager : EventManager
         }
     }
 
-    /// <summary>
-    /// Dispose manager instance.
-    /// </summary>
-    public void Destroy()
+    public static void Destroy()
     {
-        Dictionary<ServerType, NetConnection>.Enumerator it = m_Connections.GetEnumerator();
+        Dictionary<ServerType, ServerConnection>.Enumerator it = m_Connections.GetEnumerator();
         for (int i = 0; i < m_Connections.Count; i++)
         {
             it.MoveNext();
-            NetConnection client = it.Current.Value;
+            ServerConnection client = it.Current.Value;
             if (client != null)
                 client.Disconnect();
         }
@@ -133,91 +100,27 @@ public class NetManager : EventManager
         m_Connections = null;
     }
 
-    #region Latency Test
-    private List<LantencyIno> m_ReceivedLatencyInfos = new List<LantencyIno>();
-    private static int m_CurrentRecvCount = 0;
-    private static readonly int TOTAL_SEND_COUNT = 5;
-    public static int CurrentLatency;
-    private void InitLatencyTest()
+    public static void SendEvent(int id, byte[] buffer, int playerID, int serverID, ServerType type = ServerType.Logic)
     {
-        //GTimer.In(5.0f, SendLatencyTest, int.MaxValue);
-        //ServiceProvider.BindNetworkEvent((int)AccountMessage.GO_TEST_LATENCY, OnRecvLatencyTest);
-    }
-    private void SendLatencyTest()
-    {
-        //m_ReceivedLatencyInfos.Clear();
-        //m_CurrentRecvCount = 0;
-        //for (int i = 0; i < TOTAL_SEND_COUNT; i++)
-        //{
-        //    LantencyIno info = new LantencyIno();
-        //    info.ReqTime = Time.realtimeSinceStartup;
-        //    m_ReceivedLatencyInfos.Add(info);
-        //    ServiceProvider.SendNetPacket<PBMessage.go_time_return>((int)AccountMessage.GO_TEST_LATENCY, new PBMessage.go_time_return() { nowtime = i });
-        //}
-    }
-    private void OnRecvLatencyTest(Evt obj)
-    {
-        if (m_CurrentRecvCount < m_ReceivedLatencyInfos.Count)
-        {
-            m_ReceivedLatencyInfos[m_CurrentRecvCount].RecvTime = Time.realtimeSinceStartup;
-        }
-        m_CurrentRecvCount++;
-        if (m_CurrentRecvCount == TOTAL_SEND_COUNT)
-        {
-            CalculateLatency();
-        }
-    }
-    private void CalculateLatency()
-    {
-        if (m_ReceivedLatencyInfos.Count == 0 || m_ReceivedLatencyInfos == null)
-        {
-            return;
-        }
-        float delay = 0.0f;
-        for (int i = 0; i < m_ReceivedLatencyInfos.Count; i++)
-        {
-            delay += m_ReceivedLatencyInfos[i].DeltaTime;
-        }
-        if (delay == 0.0f)
-        {
-            return;
-        }
-        CurrentLatency = (int)((delay / (m_ReceivedLatencyInfos.Count * 2.0f)) * 1000);
-        //Debug.LogError("CurrentLatency: " + CurrentLatency);
-    }
-    #endregion
-
-    #endregion
-
-    public static void SendMsg(int id, byte[] buffer, ServerType server = ServerType.Logic)
-    {
-        if (id == 204)
-        {
-            System.IO.MemoryStream ms = new System.IO.MemoryStream(buffer);
-            PBMessage.GM_AccountCreate create = ProtoBuf.Serializer.Deserialize<PBMessage.GM_AccountCreate>(ms);
-            int a = 1;
-        }
-        NetConnection connection = NetManager.Instance.GetConnection(server);
+        ServerConnection connection = GetConnection(type);
         if (connection != null && connection.IsConnected())
         {
-            connection.SendMessage(id, buffer, 15992);
+            connection.SendMessage(id, buffer, playerID, serverID);
         }
     }
 
-    public static void Register(int id, EventHandlerDelegate func)
+    public static void RegisterEvent(int id, EventHandlerDelegate func)
     {
         Instance.Bind(id, func);
     }
-    public static void Unregister(int id, EventHandlerDelegate func)
+
+    public static void UnregisterEvent(int id, EventHandlerDelegate func)
     {
         Instance.Unbind(id, func);
     }
-    public static void Notify(Evt evt)
+
+    public static void NotifyEvent(Evt evt)
     {
         Instance.Dispatch(evt);
     }
-}
-
-public enum NetworkEventType
-{
 }
