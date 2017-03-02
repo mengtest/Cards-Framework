@@ -140,10 +140,10 @@
     <None Include="Assets\Plugins\NCSpeedLight\3rd\NGUI\Resources\Shaders\Unlit - Transparent Packed 3.shader" />
     <None Include="Assets\Plugins\NCSpeedLight\3rd\NGUI\Resources\Shaders\Unlit - Transparent Packed.shader" />
     <None Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\readme.txt" />
+    <None Include="Assets\Raw Resources\Atlas\Dialog\Dialog.txt" />
     <None Include="Assets\Raw Resources\Atlas\Login\QQlogin.txt" />
     <None Include="Assets\Raw Resources\Atlas\Login\login.txt" />
     <None Include="Assets\Raw Resources\Atlas\Login\text.txt" />
-    <None Include="Assets\Resources\UI\Dialog\Atlas\Dialog.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
