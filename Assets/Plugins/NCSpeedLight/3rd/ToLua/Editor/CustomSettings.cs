@@ -146,7 +146,6 @@ public static class CustomSettings
          _GT(typeof( Evt)),
          _GT(typeof(ResManager)),
          _GT(typeof(UIManager)),
-         //_GT(typeof(NetManager)),
          _GT(typeof(AudioManager)),
          _GT(typeof(DBManager)),
          _GT(typeof(LuaManager)),
@@ -154,7 +153,7 @@ public static class CustomSettings
          _GT(typeof(LuaUtils)),
          _GT(typeof(LuaView)),
          _GT(typeof(NetManager)),
-         _GT(typeof(NetEventManager)),
+         _GT(typeof(NetManager.ServerType)),
          _GT(typeof(Helper)),
          _GT(typeof(UIHelper)),
 

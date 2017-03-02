@@ -21,7 +21,6 @@ public static class LuaBinder
 		LuaUtilsWrap.Register(L);
 		LuaViewWrap.Register(L);
 		NetManagerWrap.Register(L);
-		NetEventManagerWrap.Register(L);
 		HelperWrap.Register(L);
 		UIHelperWrap.Register(L);
 		UIEventListenerWrap.Register(L);
@@ -170,6 +169,9 @@ public static class LuaBinder
 		L.RegFunction("PCMReaderCallback", UnityEngine_AudioClip_PCMReaderCallback);
 		L.RegFunction("PCMSetPositionCallback", UnityEngine_AudioClip_PCMSetPositionCallback);
 		L.EndModule();
+		L.EndModule();
+		L.BeginModule("NetManager");
+		NetManager_ServerTypeWrap.Register(L);
 		L.EndModule();
 		L.BeginModule("System");
 		L.RegFunction("Action", System_Action);

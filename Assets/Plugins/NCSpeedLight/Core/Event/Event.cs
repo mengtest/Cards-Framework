@@ -58,14 +58,14 @@ public class EventHandlerQueue
             handlers = new List<EventHandlerDelegate>();
             handlers.Add(handler);
             m_Handlers.Add(eventID, handlers);
-            m_Processor.Register(eventID, handler);
+            m_Processor.Bind(eventID, handler);
         }
         else
         {
             if (handlers.Contains(handler) == false)
             {
                 handlers.Add(handler);
-                m_Processor.Register(eventID, handler);
+                m_Processor.Bind(eventID, handler);
             }
         }
     }
@@ -85,7 +85,7 @@ public class EventHandlerQueue
         {
             tmpDels.Clear();
             m_Handlers.Remove(eventID);
-            m_Processor.Unregister(eventID, handler);
+            m_Processor.Unbind(eventID, handler);
         }
     }
 
@@ -106,7 +106,7 @@ public class EventHandlerQueue
             }
             for (int j = 0; j < kvp.Value.Count; j++)
             {
-                m_Processor.Unregister(kvp.Key, kvp.Value[j]);
+                m_Processor.Unbind(kvp.Key, kvp.Value[j]);
             }
         }
         m_Handlers.Clear();

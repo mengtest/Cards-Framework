@@ -97,7 +97,7 @@ function TestProtobuf2()
 
     local code = protobuf.encode("GM_AccountCreate", createAccountMsg)
 
-    NetEventManager.Instance:Register(3,
+    NetManager.Register(3,
     function(eventObj)
         local obj = protobuf.decode("GM_AccountCreate", eventObj.LuaParam)
         print("======= Parse Start =======")
@@ -120,7 +120,7 @@ function TestProtobuf2()
     local evt = Evt()
     evt.ID = 3
     evt.LuaParam = code
-    NetEventManager.Instance:Notify(evt)
+    NetManager.Notify(evt)
 end
 
 Main()

@@ -9,10 +9,10 @@ public class EventManagerWrap
 		L.BeginClass(typeof(EventManager), typeof(System.Object));
 		L.RegFunction("GetAllHandlersCount", GetAllHandlersCount);
 		L.RegFunction("GetHandlersCount", GetHandlersCount);
-		L.RegFunction("Notify", Notify);
-		L.RegFunction("Register", _Register);
-		L.RegFunction("Unregister", Unregister);
-		L.RegFunction("UnregisterAll", UnregisterAll);
+		L.RegFunction("Dispatch", Dispatch);
+		L.RegFunction("Bind", Bind);
+		L.RegFunction("Unbind", Unbind);
+		L.RegFunction("UnbindAll", UnbindAll);
 		L.RegFunction("New", _CreateEventManager);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.EndClass();
@@ -78,14 +78,14 @@ public class EventManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int Notify(IntPtr L)
+	static int Dispatch(IntPtr L)
 	{
 		try
 		{
 			ToLua.CheckArgsCount(L, 2);
 			EventManager obj = (EventManager)ToLua.CheckObject(L, 1, typeof(EventManager));
 			Evt arg0 = (Evt)ToLua.CheckObject(L, 2, typeof(Evt));
-			obj.Notify(arg0);
+			obj.Dispatch(arg0);
 			return 0;
 		}
 		catch(Exception e)
@@ -95,7 +95,7 @@ public class EventManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int _Register(IntPtr L)
+	static int Bind(IntPtr L)
 	{
 		try
 		{
@@ -115,7 +115,7 @@ public class EventManagerWrap
 				arg1 = DelegateFactory.CreateDelegate(typeof(EventHandlerDelegate), func) as EventHandlerDelegate;
 			}
 
-			obj.Register(arg0, arg1);
+			obj.Bind(arg0, arg1);
 			return 0;
 		}
 		catch(Exception e)
@@ -125,7 +125,7 @@ public class EventManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int Unregister(IntPtr L)
+	static int Unbind(IntPtr L)
 	{
 		try
 		{
@@ -145,7 +145,7 @@ public class EventManagerWrap
 				arg1 = DelegateFactory.CreateDelegate(typeof(EventHandlerDelegate), func) as EventHandlerDelegate;
 			}
 
-			obj.Unregister(arg0, arg1);
+			obj.Unbind(arg0, arg1);
 			return 0;
 		}
 		catch(Exception e)
@@ -155,13 +155,13 @@ public class EventManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int UnregisterAll(IntPtr L)
+	static int UnbindAll(IntPtr L)
 	{
 		try
 		{
 			ToLua.CheckArgsCount(L, 1);
 			EventManager obj = (EventManager)ToLua.CheckObject(L, 1, typeof(EventManager));
-			obj.UnregisterAll();
+			obj.UnbindAll();
 			return 0;
 		}
 		catch(Exception e)

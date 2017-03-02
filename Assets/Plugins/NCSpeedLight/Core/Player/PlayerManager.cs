@@ -66,9 +66,9 @@ public class PlayerManager
     }
     public PlayerManager() : base()
     {
-        NetEventManager.Instance.Register((int)AccountMessage.GO_COPY_NEW_MAN_RETURN, OnPlayerEnter);
-        NetEventManager.Instance.Register((int)AccountMessage.GO_COPY_MAN_LEAVE_RETURN, OnPlayerLeave);
-        NetEventManager.Instance.Register((int)AccountMessage.GO_POSITION_COMMANF_RETURN, OnSyncPlayerTransform);
+        //NetManager.Register((int)AccountMessage.GO_COPY_NEW_MAN_RETURN, OnPlayerEnter);
+        //NetManager.Register((int)AccountMessage.GO_COPY_MAN_LEAVE_RETURN, OnPlayerLeave);
+        //NetManager.Register((int)AccountMessage.GO_POSITION_COMMANF_RETURN, OnSyncPlayerTransform);
     }
     public void Logout()
     {

@@ -27,7 +27,7 @@ function UI_Register.Start()
     UIHelper.SetButtonEvent(transform, 'Btn/Button (login)', this.onClickLogin)
     UIHelper.SetButtonEvent(transform, 'Btn/Button (regist)', this.onClickRegister)
 
-    NetEventManager.Instance:Register(203,
+    NetManager.Register(203,
     function(eventObj)
         print("OnRecv login return")
         local obj = protobuf.decode("GM_AccountReturn", eventObj.Buffer)

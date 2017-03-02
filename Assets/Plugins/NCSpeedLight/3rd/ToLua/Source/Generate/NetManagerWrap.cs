@@ -6,13 +6,16 @@ public class NetManagerWrap
 {
 	public static void Register(LuaState L)
 	{
-		L.BeginClass(typeof(NetManager), typeof(System.Object));
+		L.BeginClass(typeof(NetManager), typeof(EventManager));
 		L.RegFunction("CreateConnection", CreateConnection);
 		L.RegFunction("DeleteConnection", DeleteConnection);
 		L.RegFunction("GetConnection", GetConnection);
 		L.RegFunction("Update", Update);
 		L.RegFunction("Destroy", Destroy);
-		L.RegFunction("SendNetPacket", SendNetPacket);
+		L.RegFunction("SendMsg", SendMsg);
+		L.RegFunction("Register", _Register);
+		L.RegFunction("Unregister", Unregister);
+		L.RegFunction("Notify", Notify);
 		L.RegFunction("New", _CreateNetManager);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("CurrentLatency", get_CurrentLatency, set_CurrentLatency);
@@ -133,14 +136,89 @@ public class NetManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int SendNetPacket(IntPtr L)
+	static int SendMsg(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
+			byte[] arg1 = ToLua.CheckByteBuffer(L, 2);
+			NetManager.ServerType arg2 = (NetManager.ServerType)ToLua.CheckObject(L, 3, typeof(NetManager.ServerType));
+			NetManager.SendMsg(arg0, arg1, arg2);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int _Register(IntPtr L)
 	{
 		try
 		{
 			ToLua.CheckArgsCount(L, 2);
 			int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
-			byte[] arg1 = ToLua.CheckByteBuffer(L, 2);
-			NetManager.SendNetPacket(arg0, arg1);
+			EventHandlerDelegate arg1 = null;
+			LuaTypes funcType2 = LuaDLL.lua_type(L, 2);
+
+			if (funcType2 != LuaTypes.LUA_TFUNCTION)
+			{
+				 arg1 = (EventHandlerDelegate)ToLua.CheckObject(L, 2, typeof(EventHandlerDelegate));
+			}
+			else
+			{
+				LuaFunction func = ToLua.ToLuaFunction(L, 2);
+				arg1 = DelegateFactory.CreateDelegate(typeof(EventHandlerDelegate), func) as EventHandlerDelegate;
+			}
+
+			NetManager.Register(arg0, arg1);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Unregister(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
+			EventHandlerDelegate arg1 = null;
+			LuaTypes funcType2 = LuaDLL.lua_type(L, 2);
+
+			if (funcType2 != LuaTypes.LUA_TFUNCTION)
+			{
+				 arg1 = (EventHandlerDelegate)ToLua.CheckObject(L, 2, typeof(EventHandlerDelegate));
+			}
+			else
+			{
+				LuaFunction func = ToLua.ToLuaFunction(L, 2);
+				arg1 = DelegateFactory.CreateDelegate(typeof(EventHandlerDelegate), func) as EventHandlerDelegate;
+			}
+
+			NetManager.Unregister(arg0, arg1);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Notify(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			Evt arg0 = (Evt)ToLua.CheckObject(L, 1, typeof(Evt));
+			NetManager.Notify(arg0);
 			return 0;
 		}
 		catch(Exception e)

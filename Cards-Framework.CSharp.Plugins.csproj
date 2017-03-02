@@ -417,8 +417,8 @@
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\LuaManagerWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\LuaUtilsWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\LuaViewWrap.cs" />
-    <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NetEventManagerWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NetManagerWrap.cs" />
+    <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NetManager_ServerTypeWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\ResManagerWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\SpringPositionWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\TweenAlphaWrap.cs" />
@@ -652,7 +652,6 @@
     <Compile Include="Assets\Plugins\NCSpeedLight\Com\Hotfix\LuaUtils.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Com\Media\AudioManager.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Com\Net\NetConnection.cs" />
-    <Compile Include="Assets\Plugins\NCSpeedLight\Com\Net\NetEventManager.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Com\Net\NetManager.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Com\Net\NetPacket.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Com\Res\ResLoadAssetOperation.cs" />

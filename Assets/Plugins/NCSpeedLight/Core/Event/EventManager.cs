@@ -58,7 +58,7 @@ public class EventManager
     /// </summary>
     /// <param name="eventID"></param>
     /// <param name="eventObj"></param>
-    private void Dispatch(int eventID, Evt eventObj)
+    private void BeginDispatch(int eventID, Evt eventObj)
     {
         List<EventHandlerDelegate> handlers = null;
         if (m_RegisteredHandlers.TryGetValue(eventID, out handlers))
@@ -193,24 +193,24 @@ public class EventManager
     }
 
     /// <summary>
-    /// Notify event to all handlers.
+    /// Dispatch event to all handlers.
     /// </summary>
     /// <param name="eventObj"></param>
-    public virtual void Notify(Evt eventObj)
+    public void Dispatch(Evt eventObj)
     {
         if (eventObj == null)
         {
             return;
         }
-        Dispatch(eventObj.ID, eventObj);
+        BeginDispatch(eventObj.ID, eventObj);
     }
 
     /// <summary>
-    /// Register handler to event processor.
+    /// Bind handler to event processor.
     /// </summary>
     /// <param name="eventID"></param>
     /// <param name="handler"></param>
-    public virtual void Register(int eventID, EventHandlerDelegate handler)
+    public void Bind(int eventID, EventHandlerDelegate handler)
     {
         if (handler != null)
         {
@@ -219,11 +219,11 @@ public class EventManager
     }
 
     /// <summary>
-    /// Unregister handler from event processor.
+    /// Unbind handler from event processor.
     /// </summary>
     /// <param name="eventID"></param>
     /// <param name="handler"></param>
-    public virtual void Unregister(int eventID, EventHandlerDelegate handler)
+    public void Unbind(int eventID, EventHandlerDelegate handler)
     {
         if (handler != null)
         {
@@ -232,9 +232,9 @@ public class EventManager
     }
 
     /// <summary>
-    /// Unregister all handlers form event processor.
+    /// UnbindAll all handlers form event processor.
     /// </summary>
-    public virtual void UnregisterAll()
+    public void UnbindAll()
     {
         RemoveAllHandlers();
     }

@@ -43,7 +43,7 @@ public class Scene : State
         {
             return;
         }
-        mEventManager.Register((int)evtType, func);
+        mEventManager.Bind((int)evtType, func);
     }
 
     /// <summary>
@@ -57,7 +57,7 @@ public class Scene : State
         {
             return;
         }
-        mEventManager.Unregister((int)evtType, func);
+        mEventManager.Unbind((int)evtType, func);
     }
 
     /// <summary>
@@ -70,7 +70,7 @@ public class Scene : State
         {
             return;
         }
-        mEventManager.Notify(evt);
+        mEventManager.Dispatch(evt);
         return;
     }
 

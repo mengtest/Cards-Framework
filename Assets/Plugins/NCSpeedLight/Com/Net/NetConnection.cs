@@ -654,7 +654,7 @@ public class NetConnection
                         if (packet != null)
                         {
                             //Debug.LogError("Reveive a net message,id is " + packet.GetMessageID());
-                            NetEventManager.Instance.Notify(new Evt(packet.GetMessageID(), packet, packet.GetBuffer()));
+                            NetManager.Notify(new Evt(packet.GetMessageID(), packet, packet.GetBuffer()));
                         }
                     }
                     m_PacketsBuffer.Clear();

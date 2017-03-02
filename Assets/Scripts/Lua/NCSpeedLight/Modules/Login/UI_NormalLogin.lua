@@ -27,7 +27,7 @@ function UI_NormalLogin.Start()
     UIHelper.SetButtonEvent(transform, 'Btn/Button (login)', this.onClickLogin)
     UIHelper.SetButtonEvent(transform, 'Btn/Button (regist)', this.onClickRegister)
 
-    NetEventManager.Instance:Register(203,
+    NetManager.Register(203,
     function(eventObj)
         print("OnRecv login return")
         local obj = protobuf.decode("GM_AccountReturn", eventObj.LuaParam)
@@ -79,8 +79,7 @@ function UI_NormalLogin.onClickLogin()
     }
 
     local code = protobuf.encode("GM_AccountRequest", accountRequest)
-
-    NetManager.SendNetPacket(202, code)
+    NetManager.SendMsg(202, code, NetManager.ServerType.Login)
 
     print("===== Finish send login msg =====")
 end

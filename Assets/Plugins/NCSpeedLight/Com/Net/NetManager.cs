@@ -12,7 +12,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NetManager
+public class NetManager : EventManager
 {
     public enum ServerType
     {
@@ -189,12 +189,29 @@ public class NetManager
 
     #endregion
 
-    public static void SendNetPacket(int msgID, byte[] buffer)
+    public static void SendMsg(int id, byte[] buffer, ServerType server = ServerType.Logic)
     {
-        NetConnection connection = NetManager.Instance.GetConnection(NetManager.ServerType.Login);
+        NetConnection connection = NetManager.Instance.GetConnection(server);
         if (connection != null && connection.IsConnected())
         {
-            connection.SendMessage(msgID, buffer, 0);
+            connection.SendMessage(id, buffer, 0);
         }
     }
+
+    public static void Register(int id, EventHandlerDelegate func)
+    {
+        Instance.Bind(id, func);
+    }
+    public static void Unregister(int id, EventHandlerDelegate func)
+    {
+        Instance.Unbind(id, func);
+    }
+    public static void Notify(Evt evt)
+    {
+        Instance.Dispatch(evt);
+    }
+}
+
+public enum NetworkEventType
+{
 }

@@ -1,6 +1,6 @@
 ﻿public class LuaView : LuaBehaviour
 {
-    protected EventHandlerQueue NetEventQueue = new EventHandlerQueue(NetEventManager.Instance);
+    protected EventHandlerQueue NetEventQueue = new EventHandlerQueue(NetManager.Instance);
     protected override void Awake() { base.Awake(); }
     protected override void Start() { base.Start(); }
     protected override void OnEnable() { base.OnEnable(); }
