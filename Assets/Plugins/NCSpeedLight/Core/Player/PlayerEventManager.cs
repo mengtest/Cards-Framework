@@ -9,18 +9,15 @@
            //
 //----------------------------------------------------------------*/
 
-namespace NCSpeedLight
+public class PlayerEventManager : EventManager
 {
-    public class PlayerEventManager : EventManager
+    public Player Player;
+    public PlayerEventManager(Player player)
     {
-        public Player Player;
-        public PlayerEventManager(Player player)
-        {
-            this.Player = player;
-        }
+        this.Player = player;
     }
+}
 
-    public enum PlayerEventType
-    {
-    }
+public enum PlayerEventType
+{
 }

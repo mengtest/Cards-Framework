@@ -5,7 +5,6 @@ using LuaInterface;
 
 using BindType = ToLuaMenu.BindType;
 using System.Reflection;
-using NCSpeedLight;
 
 public static class CustomSettings
 {
@@ -144,7 +143,7 @@ public static class CustomSettings
 
 
          _GT(typeof(GlobalEventManager)),
-         _GT(typeof(NCSpeedLight.Event)),
+         _GT(typeof( Evt)),
          _GT(typeof(ResManager)),
          _GT(typeof(UIManager)),
          //_GT(typeof(NetManager)),

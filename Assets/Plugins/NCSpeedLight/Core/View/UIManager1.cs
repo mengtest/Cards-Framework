@@ -14,7 +14,7 @@
 //using System.Collections.Generic;
 //using UnityEngine;
 
-//namespace NCSpeedLight
+//
 //{
 //    public delegate void OpenWindowCallBack(GameObject view, ResLoadParam param);
 

@@ -17,15 +17,15 @@ function IGlobalEventManager.Instance()
 end
 
 function IGlobalEventManager.Register(id, func)
-    NCSpeedLight.GlobalEventManager.Instance:Register(id, func)
+    GlobalEventManager.Instance:Register(id, func)
 end
 
 function IGlobalEventManager.Unregister(id, func)
-    NCSpeedLight.GlobalEventManager.Instance:Unregister(id, func)
+    GlobalEventManager.Instance:Unregister(id, func)
 end
 
 function IGlobalEventManager.UnregisterAll()
-    NCSpeedLight.GlobalEventManager.Instance:UnregisterAll()
+    GlobalEventManager.Instance:UnregisterAll()
 end
 
 function IGlobalEventManager.Notify(id)
@@ -33,9 +33,9 @@ function IGlobalEventManager.Notify(id)
 end
 
 function IGlobalEventManager.Notify(id, tb, buffer)
-    local eventObj = NCSpeedLight.Event()
+    local eventObj = Evt()
     eventObj.ID = id
     eventObj.Param = tb
     eventObj.Buffer = buffer
-    NCSpeedLight.GlobalEventManager.Instance:Notify(eventObj)
+    GlobalEventManager.Instance:Notify(eventObj)
 end

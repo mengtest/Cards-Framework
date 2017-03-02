@@ -17,15 +17,15 @@ function INetEventManager.Instance()
 end
 
 function INetEventManager.Register(id, func)
-    NCSpeedLight.NetEventManager.Instance:Register(id, func)
+    NetEventManager.Instance:Register(id, func)
 end
 
 function INetEventManager.Unregister(id, func)
-    NCSpeedLight.NetEventManager.Instance:Unregister(id, func)
+    NetEventManager.Instance:Unregister(id, func)
 end
 
 function INetEventManager.UnregisterAll()
-    NCSpeedLight.NetEventManager.Instance:UnregisterAll()
+    NetEventManager.Instance:UnregisterAll()
 end
 
 function INetEventManager.Notify(id)
@@ -33,9 +33,9 @@ function INetEventManager.Notify(id)
 end
 
 function INetEventManager.Notify(id, tb, buffer)
-    local eventObj = NCSpeedLight.Event()
+    local eventObj = Evt()
     eventObj.ID = id
     eventObj.Param = tb
-    eventObj.Buffer = buffer
+    eventObj.LuaParam = buffer
     NCSpeedLight.NetEventManager.Instance:Notify(eventObj)
 end

@@ -9,26 +9,23 @@
             //
 //----------------------------------------------------------------*/
 
-namespace NCSpeedLight
+public class NetEventManager : EventManager
 {
-    public class NetEventManager : EventManager
+    private static NetEventManager m_Instance;
+    public static NetEventManager Instance
     {
-        private static NetEventManager m_Instance;
-        public static NetEventManager Instance
+        get
         {
-            get
+            if (m_Instance == null)
             {
-                if (m_Instance == null)
-                {
-                    m_Instance = new NetEventManager();
-                }
-                return m_Instance;
+                m_Instance = new NetEventManager();
             }
+            return m_Instance;
         }
-        private NetEventManager() { }
     }
+    private NetEventManager() { }
+}
 
-    public enum NetworkEventType
-    {
-    }
+public enum NetworkEventType
+{
 }

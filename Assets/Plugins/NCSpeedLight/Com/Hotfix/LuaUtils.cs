@@ -13,17 +13,14 @@ using UnityEngine;
 using LuaInterface;
 using System;
 
-namespace NCSpeedLight
+public class LuaUtils
 {
-    public class LuaUtils
+    public static void AddComponent(string className, GameObject go)
     {
-        public static void AddComponent(string className, GameObject go)
+        if (go && string.IsNullOrEmpty(className) == false)
         {
-            if (go && string.IsNullOrEmpty(className) == false)
-            {
-                Type type = Type.GetType(className);
-                go.AddComponent(type);
-            }
+            Type type = Type.GetType(className);
+            go.AddComponent(type);
         }
     }
 }

@@ -11,84 +11,81 @@
 
 using UnityEngine;
 
-namespace NCSpeedLight
+public class Scene : State
 {
-    public class Scene : State
+    public enum LAYER
     {
-        public enum LAYER
-        {
-            Default = 0,
-            UI = 5,
-            Dialog = 9,
-            Terrain = 10,
-            SceneEffect = 11,
-            Player = 12,
-            PlayerEffect = 13,
-        }
+        Default = 0,
+        UI = 5,
+        Dialog = 9,
+        Terrain = 10,
+        SceneEffect = 11,
+        Player = 12,
+        PlayerEffect = 13,
+    }
 
-        private SceneEventManager mEventManager;
+    private SceneEventManager mEventManager;
 
-        public SceneEventManager EventManager
-        {
-            get { return mEventManager; }
-        }
+    public SceneEventManager EventManager
+    {
+        get { return mEventManager; }
+    }
 
-        public Scene(string sceneName)
-            : base(sceneName)
-        {
-            mEventManager = new SceneEventManager(this);
-        }
+    public Scene(string sceneName)
+        : base(sceneName)
+    {
+        mEventManager = new SceneEventManager(this);
+    }
 
-        public void RegisterSceneEvent(SceneEventType evtType, EventHandlerDelegate func)
-        {
-            if (mEventManager == null)
-            {
-                return;
-            }
-            mEventManager.Register((int)evtType, func);
-        }
-
-        /// <summary>
-        /// 解注册场景事件
-        /// </summary>
-        /// <param name="evtType"></param>
-        /// <param name="func"></param>
-        public void UnRegisterSceneEvent(SceneEventType evtType, EventHandlerDelegate func)
-        {
-            if (mEventManager == null)
-            {
-                return;
-            }
-            mEventManager.Unregister((int)evtType, func);
-        }
-
-        /// <summary>
-        /// 广播场景事件
-        /// </summary>
-        /// <param name="evt"></param>
-        public void NotifySceneEvent(Event evt)
-        {
-            if (mEventManager == null)
-            {
-                return;
-            }
-            mEventManager.Notify(evt);
-            return;
-        }
-
-        public override void Begin()
+    public void RegisterSceneEvent(SceneEventType evtType, EventHandlerDelegate func)
+    {
+        if (mEventManager == null)
         {
             return;
         }
+        mEventManager.Register((int)evtType, func);
+    }
 
-        public override void Update()
+    /// <summary>
+    /// 解注册场景事件
+    /// </summary>
+    /// <param name="evtType"></param>
+    /// <param name="func"></param>
+    public void UnRegisterSceneEvent(SceneEventType evtType, EventHandlerDelegate func)
+    {
+        if (mEventManager == null)
         {
-        }
-
-        public override void End()
-        {
-            Resources.UnloadUnusedAssets();
             return;
         }
+        mEventManager.Unregister((int)evtType, func);
+    }
+
+    /// <summary>
+    /// 广播场景事件
+    /// </summary>
+    /// <param name="evt"></param>
+    public void NotifySceneEvent(Evt evt)
+    {
+        if (mEventManager == null)
+        {
+            return;
+        }
+        mEventManager.Notify(evt);
+        return;
+    }
+
+    public override void Begin()
+    {
+        return;
+    }
+
+    public override void Update()
+    {
+    }
+
+    public override void End()
+    {
+        Resources.UnloadUnusedAssets();
+        return;
     }
 }

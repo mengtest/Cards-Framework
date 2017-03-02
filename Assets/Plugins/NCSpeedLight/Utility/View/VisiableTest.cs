@@ -8,21 +8,14 @@
             // Modify History:
             //
 //----------------------------------------------------------------*/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
-namespace NCSpeedLight
+public class VisiableTest : MonoBehaviour
 {
-    public class VisiableTest : MonoBehaviour
+    public static bool IsVisible(Renderer renderer, Camera camera)
     {
-        public static bool IsVisible(Renderer renderer, Camera camera)
-        {
-            if (renderer == null || camera == null) return true;
-            Plane[] planes = GeometryUtility.CalculateFrustumPlanes(camera);
-            return GeometryUtility.TestPlanesAABB(planes, renderer.bounds);
-        }
+        if (renderer == null || camera == null) return true;
+        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(camera);
+        return GeometryUtility.TestPlanesAABB(planes, renderer.bounds);
     }
 }

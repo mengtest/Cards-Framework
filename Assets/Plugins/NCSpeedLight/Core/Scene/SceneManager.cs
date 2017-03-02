@@ -8,25 +8,21 @@
             // Modify History:
             //
 //----------------------------------------------------------------*/
-
-namespace NCSpeedLight
+public class SceneManager : StateMachine
 {
-    public class SceneManager : StateMachine
+    private static SceneManager m_Instance;
+    public static SceneManager Instance()
     {
-        private static SceneManager m_Instance;
-        public static SceneManager Instance()
-        {
-            if (m_Instance == null)
-                m_Instance = new SceneManager();
-            return m_Instance;
-        }
-        public static Scene GetLastScene()
-        {
-            return SceneManager.Instance().m_LastState as Scene;
-        }
-        public static Scene GetCurrentScene()
-        {
-            return SceneManager.Instance().GetCurrentState() as Scene;
-        }
+        if (m_Instance == null)
+            m_Instance = new SceneManager();
+        return m_Instance;
+    }
+    public static Scene GetLastScene()
+    {
+        return SceneManager.Instance().m_LastState as Scene;
+    }
+    public static Scene GetCurrentScene()
+    {
+        return SceneManager.Instance().GetCurrentState() as Scene;
     }
 }

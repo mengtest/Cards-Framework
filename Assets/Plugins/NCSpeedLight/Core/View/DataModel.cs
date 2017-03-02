@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace NCSpeedLight
+public abstract class DataModel
 {
-    public abstract class DataModel
-    {
-    }
 }

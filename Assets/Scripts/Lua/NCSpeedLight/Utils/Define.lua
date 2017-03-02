@@ -7,23 +7,23 @@
 -- Date&Time:  2017/2/28 19:11:09
 -- Modify History:
 --
------------------------------------------------ 
+-----------------------------------------------
 
-require 'NCSpeedLight/Interface/IUIManager'
-require 'NCSpeedLight/Interface/IResManager'
-require 'NCSpeedLight/Interface/IGlobalEventManager'
-require 'NCSpeedLight/Interface/INetManager'
-require 'NCSpeedLight/Interface/IAudioManager'
-require 'NCSpeedLight/Interface/IDBManager'
-require 'NCSpeedLight/Interface/INetEventManager'
+-- require 'NCSpeedLight/Interface/IUIManager'
+-- require 'NCSpeedLight/Interface/IResManager'
+-- require 'NCSpeedLight/Interface/IGlobalEventManager'
+-- require 'NCSpeedLight/Interface/INetManager'
+-- require 'NCSpeedLight/Interface/IAudioManager'
+-- require 'NCSpeedLight/Interface/IDBManager'
+-- require 'NCSpeedLight/Interface/INetEventManager'
 
---require 'NCSpeedLight/3rd/pblua/person_pb'
-require 'NCSpeedLight/Protocol/account_pb'
+-- require 'NCSpeedLight/3rd/pblua/person_pb'
+-- require 'NCSpeedLight/Protocol/account_pb'
 
-UIManager = IUIManager.Instance()
-ResManager = IResManager.Instance()
-GlobalEventManager = IGlobalEventManager.Instance()
-NetManager = INetManager.Instance()
-AudioManager = IAudioManager.Instance()
-DBManager = IDBManager.Instance()
-NetEventManager = INetEventManager.Instance()
+-- UIManager = IUIManager.Instance()
+-- ResManager = IResManager.Instance()
+-- GlobalEventManager = IGlobalEventManager.Instance()
+-- NetManager = INetManager.Instance()
+-- AudioManager = IAudioManager.Instance()
+-- DBManager = IDBManager.Instance()
+-- NetEventManager = INetEventManager.Instance()

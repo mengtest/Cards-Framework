@@ -9,84 +9,78 @@
             //
 //----------------------------------------------------------------*/
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
-namespace NCSpeedLight.ImageEffect
+public class GetBlurBackground : MonoBehaviour
 {
-    public class GetBlurBackground : MonoBehaviour
-    {
-        public UITexture Texture;
-        [NonSerialized]
-        [HideInInspector]
-        public static Color ColorTint = new Color(0.8f, 0.8f, 0.8f, 1f);
-        public bool OverrideColorTint = false;
-        [NonSerialized]
-        public Texture BlurTexture;
+    public UITexture Texture;
+    [NonSerialized]
+    [HideInInspector]
+    public static Color ColorTint = new Color(0.8f, 0.8f, 0.8f, 1f);
+    public bool OverrideColorTint = false;
+    [NonSerialized]
+    public Texture BlurTexture;
 
-        public bool NoAction = false;
-        void Awake()
+    public bool NoAction = false;
+    void Awake()
+    {
+        if (NoAction == true)
         {
-            if (NoAction == true)
-            {
-                return;
-            }
-            GetBlurImg();
+            return;
         }
-        void OnDestroy()
+        GetBlurImg();
+    }
+    void OnDestroy()
+    {
+        if (Texture != null)
         {
-            if (Texture != null)
-            {
-                Texture.mainTexture = null;
-                Texture = null;
-            }
-            BlurTexture = null;
-        }
-        public void GetBlurImg(bool recapture = false)
-        {
-            if (recapture == false && BlurTexture != null) return;
-            if (Texture == null)
-            {
-                Texture = GetComponent<UITexture>();
-            }
-            if (Texture == null) return;
-            Texture.type = UIBasicSprite.Type.Sliced;
-            if (UIGaussianBlurEffect.Instance == null) return;
-            UIGaussianBlurEffect.Instance.GetImageDelegate += OnGotBlurImg;
-        }
-        void ReleaseBlurImg()
-        {
-            if (Texture == null)
-            {
-                Texture = GetComponent<UITexture>();
-            }
-            if (Texture == null) return;
             Texture.mainTexture = null;
+            Texture = null;
         }
-        void OnGotBlurImg(Texture tex)
+        BlurTexture = null;
+    }
+    public void GetBlurImg(bool recapture = false)
+    {
+        if (recapture == false && BlurTexture != null) return;
+        if (Texture == null)
         {
-            BlurTexture = tex;
-            if (Texture != null)
+            Texture = GetComponent<UITexture>();
+        }
+        if (Texture == null) return;
+        Texture.type = UIBasicSprite.Type.Sliced;
+        if (UIGaussianBlurEffect.Instance == null) return;
+        UIGaussianBlurEffect.Instance.GetImageDelegate += OnGotBlurImg;
+    }
+    void ReleaseBlurImg()
+    {
+        if (Texture == null)
+        {
+            Texture = GetComponent<UITexture>();
+        }
+        if (Texture == null) return;
+        Texture.mainTexture = null;
+    }
+    void OnGotBlurImg(Texture tex)
+    {
+        BlurTexture = tex;
+        if (Texture != null)
+        {
+            Texture.mainTexture = BlurTexture;
+            if (OverrideColorTint == false)
             {
-                Texture.mainTexture = BlurTexture;
-                if (OverrideColorTint == false)
-                {
-                    Texture.color = ColorTint;
-                }
+                Texture.color = ColorTint;
             }
         }
-        void OnApplicationPause(bool pause)
+    }
+    void OnApplicationPause(bool pause)
+    {
+        if (pause == false)
         {
-            if (pause == false)
-            {
-                GetBlurImg(true);
-            }
-            else
-            {
-                ReleaseBlurImg();
-            }
+            GetBlurImg(true);
+        }
+        else
+        {
+            ReleaseBlurImg();
         }
     }
 }

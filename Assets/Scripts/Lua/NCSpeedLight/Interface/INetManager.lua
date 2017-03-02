@@ -17,5 +17,5 @@ function INetManager.Instance()
 end
 
 function  INetManager.SendNetPacket(buffer)
-    NCSpeedLight.NetManager.SendNetPacket(buffer)
+    NetManager.SendNetPacket(buffer)
 end

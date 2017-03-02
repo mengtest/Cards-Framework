@@ -11,7 +11,7 @@
 
 //using UnityEngine;
 
-//namespace NCSpeedLight
+//
 //{
 //    public class SmallTipsDialog : MonoBehaviour
 //    {

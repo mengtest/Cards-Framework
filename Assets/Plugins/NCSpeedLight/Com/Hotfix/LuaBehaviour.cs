@@ -13,8 +13,6 @@ using UnityEngine;
 using System.Collections;
 using LuaInterface;
 
-namespace NCSpeedLight
-{
     public class LuaBehaviour : MonoBehaviour
     {
         public string ModuleName = "LuaBehaviour";
@@ -55,5 +53,4 @@ namespace NCSpeedLight
             LuaManager.CallFunction(ScriptName + ".OnDestroy");
         }
     }
-}
 

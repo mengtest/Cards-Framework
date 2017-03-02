@@ -11,84 +11,80 @@
 
 using UnityEngine;
 using System.Collections;
-
-namespace NCSpeedLight
+public abstract class LoadOperation : IEnumerator
 {
-    public abstract class LoadOperation : IEnumerator
+    public UnityEngine.Object LoadedAsset { get; set; }
+    public virtual UnityEngine.Object GetAsset() { return null; }
+    public virtual T GetAsset<T>() where T : UnityEngine.Object { return default(T); }
+    public LoadAssetCallback Callback { get; set; }
+    public object CallbackParam { get; set; }
+    public object Current { get { return null; } set { } }
+    public bool MoveNext() { return !IsDone(); }
+    public void Reset() { }
+    public abstract bool Update();
+    public abstract bool IsDone();
+    public virtual void Finish(UnityEngine.Object obj = null)
     {
-        public UnityEngine.Object LoadedAsset { get; set; }
-        public virtual UnityEngine.Object GetAsset() { return null; }
-        public virtual T GetAsset<T>() where T : UnityEngine.Object { return default(T); }
-        public LoadAssetCallback Callback { get; set; }
-        public object CallbackParam { get; set; }
-        public object Current { get { return null; } set { } }
-        public bool MoveNext() { return !IsDone(); }
-        public void Reset() { }
-        public abstract bool Update();
-        public abstract bool IsDone();
-        public virtual void Finish(UnityEngine.Object obj = null)
+        if (Callback != null)
         {
-            if (Callback != null)
+            if (obj != null)
             {
-                if (obj != null)
-                {
-                    Callback(obj, CallbackParam as ResLoadParam);
-                }
-                else
-                {
-                    Callback(GetAsset(), CallbackParam as ResLoadParam);
-                }
+                Callback(obj, CallbackParam as ResLoadParam);
+            }
+            else
+            {
+                Callback(GetAsset(), CallbackParam as ResLoadParam);
             }
         }
-        public virtual void Execute() { }
     }
-    public class LoadAssetOperation : LoadOperation
+    public virtual void Execute() { }
+}
+public class LoadAssetOperation : LoadOperation
+{
+    public string AssetPath;
+    public System.Type AssetType;
+    private ResourceRequest m_Request;
+    private bool m_Error = false;
+    public override T GetAsset<T>()
     {
-        public string AssetPath;
-        public System.Type AssetType;
-        private ResourceRequest m_Request;
-        private bool m_Error = false;
-        public override T GetAsset<T>()
+        if (m_Request != null && m_Request.isDone)
+            return m_Request.asset as T;
+        else
+            return LoadedAsset as T;
+    }
+    public override Object GetAsset()
+    {
+        if (m_Request != null && m_Request.isDone)
+            return m_Request.asset;
+        else
+            return LoadedAsset;
+    }
+    public override void Execute()
+    {
+        if (string.IsNullOrEmpty(AssetPath))
         {
-            if (m_Request != null && m_Request.isDone)
-                return m_Request.asset as T;
-            else
-                return LoadedAsset as T;
+            m_Error = true;
         }
-        public override Object GetAsset()
+        m_Request = Resources.LoadAsync(AssetPath, AssetType);
+    }
+    public override bool IsDone()
+    {
+        if (m_Error)
         {
-            if (m_Request != null && m_Request.isDone)
-                return m_Request.asset;
-            else
-                return LoadedAsset;
-        }
-        public override void Execute()
-        {
-            if (string.IsNullOrEmpty(AssetPath))
-            {
-                m_Error = true;
-            }
-            m_Request = Resources.LoadAsync(AssetPath, AssetType);
-        }
-        public override bool IsDone()
-        {
-            if (m_Error)
-            {
-                return true;
-            }
-            if (m_Request != null)
-            {
-                return m_Request.isDone;
-            }
-            return false;
-        }
-        public override bool Update()
-        {
-            if (IsDone())
-            {
-                return false;
-            }
             return true;
         }
+        if (m_Request != null)
+        {
+            return m_Request.isDone;
+        }
+        return false;
+    }
+    public override bool Update()
+    {
+        if (IsDone())
+        {
+            return false;
+        }
+        return true;
     }
 }

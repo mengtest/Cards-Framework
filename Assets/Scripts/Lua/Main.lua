@@ -22,8 +22,8 @@ function Main()
     --    TestEvent()
     --    TestLoadAsset()
     --    TestLuaBehaviour()
-        TestProtobuf1()
-        TestProtobuf2()
+    TestProtobuf1()
+    TestProtobuf2()
 end
 
 function TestEvent()
@@ -42,7 +42,7 @@ function OpenLogin()
 end
 
 function TestLoadAsset()
-    local ui = NCSpeedLight.ResManager.LoadAssetSync("UI/Login/ui_loginBk", "UnityEngine.GameObject")
+    local ui = ResManager.LoadAssetSync("UI/Login/ui_loginBk", "UnityEngine.GameObject")
     if ui then
         ui = UnityEngine.GameObject.Instantiate(ui);
     end
@@ -50,7 +50,7 @@ end
 
 function TestLuaBehaviour()
     local go = UnityEngine.GameObject("TestLuaBehaviour")
-    NCSpeedLight.LuaUtils.AddComponent('NCSpeedLight.LuaView', go);
+    LuaUtils.AddComponent('LuaView', go);
 end
 
 function TestProtobuf1()
@@ -97,9 +97,9 @@ function TestProtobuf2()
 
     local code = protobuf.encode("GM_AccountCreate", createAccountMsg)
 
-    NetEventManager.Register(3,
+    NetEventManager.Instance:Register(3,
     function(eventObj)
-        local obj = protobuf.decode("GM_AccountCreate", eventObj.Buffer)
+        local obj = protobuf.decode("GM_AccountCreate", eventObj.LuaParam)
         print("======= Parse Start =======")
 
         print("m_AccountName=" .. obj.m_AccountName)
@@ -117,7 +117,10 @@ function TestProtobuf2()
 
     end
     )
-    NetEventManager.Notify(3, nil, code)
+    local evt = Evt()
+    evt.ID = 3
+    evt.LuaParam = code
+    NetEventManager.Instance:Notify(evt)
 end
 
 Main()

@@ -27,10 +27,10 @@ public static class DelegateFactory
 		dict.Add(typeof(UnityEngine.Application.AdvertisingIdentifierCallback), UnityEngine_Application_AdvertisingIdentifierCallback);
 		dict.Add(typeof(UnityEngine.AudioClip.PCMReaderCallback), UnityEngine_AudioClip_PCMReaderCallback);
 		dict.Add(typeof(UnityEngine.AudioClip.PCMSetPositionCallback), UnityEngine_AudioClip_PCMSetPositionCallback);
-		dict.Add(typeof(NCSpeedLight.EventHandlerDelegate), NCSpeedLight_EventHandlerDelegate);
-		dict.Add(typeof(NCSpeedLight.PostResManagerInitializedDelegate), NCSpeedLight_PostResManagerInitializedDelegate);
-		dict.Add(typeof(NCSpeedLight.LoadAssetCallback), NCSpeedLight_LoadAssetCallback);
-		dict.Add(typeof(NCSpeedLight.Helper.ChildDelegate), NCSpeedLight_Helper_ChildDelegate);
+		dict.Add(typeof(EventHandlerDelegate), EventHandlerDelegate);
+		dict.Add(typeof(PostResManagerInitializedDelegate), PostResManagerInitializedDelegate);
+		dict.Add(typeof(LoadAssetCallback), LoadAssetCallback);
+		dict.Add(typeof(Helper.ChildDelegate), Helper_ChildDelegate);
 		dict.Add(typeof(UIEventListener.VoidDelegate), UIEventListener_VoidDelegate);
 		dict.Add(typeof(UIEventListener.BoolDelegate), UIEventListener_BoolDelegate);
 		dict.Add(typeof(UIEventListener.FloatDelegate), UIEventListener_FloatDelegate);
@@ -662,12 +662,12 @@ public static class DelegateFactory
 		}
 	}
 
-	class NCSpeedLight_EventHandlerDelegate_Event : LuaDelegate
+	class EventHandlerDelegate_Event : LuaDelegate
 	{
-		public NCSpeedLight_EventHandlerDelegate_Event(LuaFunction func) : base(func) { }
-		public NCSpeedLight_EventHandlerDelegate_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+		public EventHandlerDelegate_Event(LuaFunction func) : base(func) { }
+		public EventHandlerDelegate_Event(LuaFunction func, LuaTable self) : base(func, self) { }
 
-		public void Call(NCSpeedLight.Event param0)
+		public void Call(Evt param0)
 		{
 			func.BeginPCall();
 			func.PushObject(param0);
@@ -675,7 +675,7 @@ public static class DelegateFactory
 			func.EndPCall();
 		}
 
-		public void CallWithSelf(NCSpeedLight.Event param0)
+		public void CallWithSelf(Evt param0)
 		{
 			func.BeginPCall();
 			func.Push(self);
@@ -685,34 +685,34 @@ public static class DelegateFactory
 		}
 	}
 
-	public static Delegate NCSpeedLight_EventHandlerDelegate(LuaFunction func, LuaTable self, bool flag)
+	public static Delegate EventHandlerDelegate(LuaFunction func, LuaTable self, bool flag)
 	{
 		if (func == null)
 		{
-			NCSpeedLight.EventHandlerDelegate fn = delegate(NCSpeedLight.Event param0) { };
+			EventHandlerDelegate fn = delegate(Evt param0) { };
 			return fn;
 		}
 
 		if(!flag)
 		{
-			NCSpeedLight_EventHandlerDelegate_Event target = new NCSpeedLight_EventHandlerDelegate_Event(func);
-			NCSpeedLight.EventHandlerDelegate d = target.Call;
+			EventHandlerDelegate_Event target = new EventHandlerDelegate_Event(func);
+			EventHandlerDelegate d = target.Call;
 			target.method = d.Method;
 			return d;
 		}
 		else
 		{
-			NCSpeedLight_EventHandlerDelegate_Event target = new NCSpeedLight_EventHandlerDelegate_Event(func, self);
-			NCSpeedLight.EventHandlerDelegate d = target.CallWithSelf;
+			EventHandlerDelegate_Event target = new EventHandlerDelegate_Event(func, self);
+			EventHandlerDelegate d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}
 	}
 
-	class NCSpeedLight_PostResManagerInitializedDelegate_Event : LuaDelegate
+	class PostResManagerInitializedDelegate_Event : LuaDelegate
 	{
-		public NCSpeedLight_PostResManagerInitializedDelegate_Event(LuaFunction func) : base(func) { }
-		public NCSpeedLight_PostResManagerInitializedDelegate_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+		public PostResManagerInitializedDelegate_Event(LuaFunction func) : base(func) { }
+		public PostResManagerInitializedDelegate_Event(LuaFunction func, LuaTable self) : base(func, self) { }
 
 		public void Call()
 		{
@@ -728,36 +728,36 @@ public static class DelegateFactory
 		}
 	}
 
-	public static Delegate NCSpeedLight_PostResManagerInitializedDelegate(LuaFunction func, LuaTable self, bool flag)
+	public static Delegate PostResManagerInitializedDelegate(LuaFunction func, LuaTable self, bool flag)
 	{
 		if (func == null)
 		{
-			NCSpeedLight.PostResManagerInitializedDelegate fn = delegate() { };
+			PostResManagerInitializedDelegate fn = delegate() { };
 			return fn;
 		}
 
 		if(!flag)
 		{
-			NCSpeedLight_PostResManagerInitializedDelegate_Event target = new NCSpeedLight_PostResManagerInitializedDelegate_Event(func);
-			NCSpeedLight.PostResManagerInitializedDelegate d = target.Call;
+			PostResManagerInitializedDelegate_Event target = new PostResManagerInitializedDelegate_Event(func);
+			PostResManagerInitializedDelegate d = target.Call;
 			target.method = d.Method;
 			return d;
 		}
 		else
 		{
-			NCSpeedLight_PostResManagerInitializedDelegate_Event target = new NCSpeedLight_PostResManagerInitializedDelegate_Event(func, self);
-			NCSpeedLight.PostResManagerInitializedDelegate d = target.CallWithSelf;
+			PostResManagerInitializedDelegate_Event target = new PostResManagerInitializedDelegate_Event(func, self);
+			PostResManagerInitializedDelegate d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}
 	}
 
-	class NCSpeedLight_LoadAssetCallback_Event : LuaDelegate
+	class LoadAssetCallback_Event : LuaDelegate
 	{
-		public NCSpeedLight_LoadAssetCallback_Event(LuaFunction func) : base(func) { }
-		public NCSpeedLight_LoadAssetCallback_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+		public LoadAssetCallback_Event(LuaFunction func) : base(func) { }
+		public LoadAssetCallback_Event(LuaFunction func, LuaTable self) : base(func, self) { }
 
-		public void Call(UnityEngine.Object param0, NCSpeedLight.ResLoadParam param1)
+		public void Call(UnityEngine.Object param0, ResLoadParam param1)
 		{
 			func.BeginPCall();
 			func.Push(param0);
@@ -766,7 +766,7 @@ public static class DelegateFactory
 			func.EndPCall();
 		}
 
-		public void CallWithSelf(UnityEngine.Object param0, NCSpeedLight.ResLoadParam param1)
+		public void CallWithSelf(UnityEngine.Object param0, ResLoadParam param1)
 		{
 			func.BeginPCall();
 			func.Push(self);
@@ -777,34 +777,34 @@ public static class DelegateFactory
 		}
 	}
 
-	public static Delegate NCSpeedLight_LoadAssetCallback(LuaFunction func, LuaTable self, bool flag)
+	public static Delegate LoadAssetCallback(LuaFunction func, LuaTable self, bool flag)
 	{
 		if (func == null)
 		{
-			NCSpeedLight.LoadAssetCallback fn = delegate(UnityEngine.Object param0, NCSpeedLight.ResLoadParam param1) { };
+			LoadAssetCallback fn = delegate(UnityEngine.Object param0, ResLoadParam param1) { };
 			return fn;
 		}
 
 		if(!flag)
 		{
-			NCSpeedLight_LoadAssetCallback_Event target = new NCSpeedLight_LoadAssetCallback_Event(func);
-			NCSpeedLight.LoadAssetCallback d = target.Call;
+			LoadAssetCallback_Event target = new LoadAssetCallback_Event(func);
+			LoadAssetCallback d = target.Call;
 			target.method = d.Method;
 			return d;
 		}
 		else
 		{
-			NCSpeedLight_LoadAssetCallback_Event target = new NCSpeedLight_LoadAssetCallback_Event(func, self);
-			NCSpeedLight.LoadAssetCallback d = target.CallWithSelf;
+			LoadAssetCallback_Event target = new LoadAssetCallback_Event(func, self);
+			LoadAssetCallback d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}
 	}
 
-	class NCSpeedLight_Helper_ChildDelegate_Event : LuaDelegate
+	class Helper_ChildDelegate_Event : LuaDelegate
 	{
-		public NCSpeedLight_Helper_ChildDelegate_Event(LuaFunction func) : base(func) { }
-		public NCSpeedLight_Helper_ChildDelegate_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+		public Helper_ChildDelegate_Event(LuaFunction func) : base(func) { }
+		public Helper_ChildDelegate_Event(LuaFunction func, LuaTable self) : base(func, self) { }
 
 		public void Call(UnityEngine.GameObject param0, object param1)
 		{
@@ -826,25 +826,25 @@ public static class DelegateFactory
 		}
 	}
 
-	public static Delegate NCSpeedLight_Helper_ChildDelegate(LuaFunction func, LuaTable self, bool flag)
+	public static Delegate Helper_ChildDelegate(LuaFunction func, LuaTable self, bool flag)
 	{
 		if (func == null)
 		{
-			NCSpeedLight.Helper.ChildDelegate fn = delegate(UnityEngine.GameObject param0, object param1) { };
+			Helper.ChildDelegate fn = delegate(UnityEngine.GameObject param0, object param1) { };
 			return fn;
 		}
 
 		if(!flag)
 		{
-			NCSpeedLight_Helper_ChildDelegate_Event target = new NCSpeedLight_Helper_ChildDelegate_Event(func);
-			NCSpeedLight.Helper.ChildDelegate d = target.Call;
+			Helper_ChildDelegate_Event target = new Helper_ChildDelegate_Event(func);
+			Helper.ChildDelegate d = target.Call;
 			target.method = d.Method;
 			return d;
 		}
 		else
 		{
-			NCSpeedLight_Helper_ChildDelegate_Event target = new NCSpeedLight_Helper_ChildDelegate_Event(func, self);
-			NCSpeedLight.Helper.ChildDelegate d = target.CallWithSelf;
+			Helper_ChildDelegate_Event target = new Helper_ChildDelegate_Event(func, self);
+			Helper.ChildDelegate d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}

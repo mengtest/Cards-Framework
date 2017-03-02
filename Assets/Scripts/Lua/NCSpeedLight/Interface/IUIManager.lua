@@ -17,5 +17,9 @@ function IUIManager.Instance()
 end
 
 function IUIManager.OpenWindow(windowName)
-    NCSpeedLight.UIManager.OpenWindow(windowName)
+    UIManager.OpenWindow(windowName)
+end
+
+function IUIManager.CloseWindow(windowName)
+    UIManager.CloseWindow(windowName)
 end
