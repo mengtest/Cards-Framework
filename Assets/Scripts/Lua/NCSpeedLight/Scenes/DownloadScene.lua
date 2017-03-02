@@ -12,7 +12,6 @@ end
 
 function DownloadScene.OnCreate(obj)
     instance = obj
-    print("DownloadScene.OnCreate")
 end 
 
 function DownloadScene.Begin()
@@ -21,19 +20,16 @@ function DownloadScene.Begin()
     else
         UIManager.OpenWindow("Login/ui_loginBk")
     end
-
-    -- request json
-    coroutine.start(this.CoReqJson)
+    coroutine.start(this.CheckVersion)
 end
 
 function DownloadScene.Update()
 end
 
 function DownloadScene.End()
-    print("DownloadScene.End()")
 end
 
-function DownloadScene.CoReqJson()
+function DownloadScene.CheckVersion()
     local url = UrlKeeper.JsonUrl()
     print('Request json url at ' .. url)
     local www = UnityEngine.WWW(url)
@@ -51,6 +47,7 @@ end
 
 function DownloadScene.OnConnectLoginServer(connection)
     print("DownloadScene.OnConnectLoginServer()");
+    SceneManager.GotoScene(Scene.Type.LoginScene)
 end
 
 function DownloadScene.OnDisconnectLoginServer(connection)

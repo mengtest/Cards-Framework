@@ -255,7 +255,7 @@ internal class SaveSceneAssetModificationProcessor : UnityEditor.AssetModificati
             {
                 //scenePath = Path.GetDirectoryName(path);
                 //sceneName = Path.GetFileNameWithoutExtension(path);
-                EditorEventCatcher._onSaveSceneEvent();
+                //EditorEventCatcher._onSaveSceneEvent();
             }
         }
 

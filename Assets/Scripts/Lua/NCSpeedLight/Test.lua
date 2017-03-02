@@ -11,10 +11,7 @@
 
 require 'NCSpeedLight/Utils/Define'
 require 'NCSpeedLight/Protocol/account_pb'
-require 'NCSpeedLight/3rd/pbc/protobuf'
 
-
-protobuf = require 'protobuf'
 parser = require 'NCSpeedLight/3rd/pbc/parser'
 
 function Main()

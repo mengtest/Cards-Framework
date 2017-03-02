@@ -29,3 +29,16 @@
 -- NetEventManager = INetEventManager.Instance()
 
 require 'NCSpeedLight/Utils/UrlKeeper'
+require 'NCSpeedLight/3rd/pbc/protobuf'
+
+protobuf = require 'protobuf'
+
+function InitPBMessage()
+    local path = "D:/account.pb";
+    local addr = io.open(path, "rb")
+    local buffer = addr:read "*a"
+    addr:close()
+    protobuf.register(buffer)
+end
+
+InitPBMessage()

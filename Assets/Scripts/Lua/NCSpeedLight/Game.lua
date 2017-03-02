@@ -35,7 +35,7 @@ function Game.OnEnable()
 end
 
 function Game.OnDisable()
-    print("Game.OnDisable")
+    NetManager.Destroy()
 end
 
 function Game.Update()
@@ -47,7 +47,6 @@ function Game.LateUpdate()
 end
 
 function Game.OnDestroy()
-    NetManager.Destroy()
 end
 
 function Game.Initialize()
