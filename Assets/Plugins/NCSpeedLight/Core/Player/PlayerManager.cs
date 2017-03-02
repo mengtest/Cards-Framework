@@ -36,7 +36,7 @@ public class PlayerManager
             return m_Hero;
         }
     }
-    public static PBMessage.go_login_playerInfo HeroInfo
+    public static PBMessage.GM_Player_Data_Return HeroInfo
     {
         get
         {
@@ -74,7 +74,7 @@ public class PlayerManager
     {
         if (m_Hero != null)
         {
-            RemovePlayer(HeroInfo.roleid);
+            //RemovePlayer(HeroInfo.roleid);
         }
         m_Hero = null;
     }
@@ -93,56 +93,39 @@ public class PlayerManager
         //    ContextProvider.StartScene<BattleScene>();
         //}
     }
-    private void OnPlayerLeave(Evt evt)
-    {
-        PBMessage.go_copy_roleleave_return info = NetConnection.DeserializeProtoBuf<PBMessage.go_copy_roleleave_return>(evt.Param);
-        if (info != null)
-        {
-            RemovePlayer(info.roleid);
-        }
-    }
-    private void OnSyncPlayerTransform(Evt evt)
-    {
-        PBMessage.go_charactercommand_return info = NetConnection.DeserializeProtoBuf<PBMessage.go_charactercommand_return>(evt.Param);
-        if (info != null)
-        {
-            Player player = GetOnlinePlayer(info.roleid);
-        }
-    }
-
     public Player CreateHero()
     {
         return CreateHero(HeroInfo);
     }
-    public Player CreateHero(PBMessage.go_login_playerInfo playerInfo)
+    public Player CreateHero(PBMessage.GM_Player_Data_Return playerInfo)
     {
         Player tempPlayer = null;
-        if (m_OnlinePlayers.TryGetValue(playerInfo.roleid, out tempPlayer))
-        {
-            m_Hero = tempPlayer;
-            return tempPlayer;
-        }
-        if (m_Hero == null)
-        {
-            m_Hero = new Player(PlayerType.PT_Hero);
-        }
-        m_Hero.Initialize(playerInfo);
+        //if (m_OnlinePlayers.TryGetValue(playerInfo.roleid, out tempPlayer))
+        //{
+        //    m_Hero = tempPlayer;
+        //    return tempPlayer;
+        //}
+        //if (m_Hero == null)
+        //{
+        //    m_Hero = new Player(PlayerType.PT_Hero);
+        //}
+        //m_Hero.Initialize(playerInfo);
 
-        m_OnlinePlayers.Add(playerInfo.roleid, m_Hero);
+        //m_OnlinePlayers.Add(playerInfo.roleid, m_Hero);
         return m_Hero;
     }
-    public Player CreatePlayer(PBMessage.go_login_playerInfo data)
+    public Player CreatePlayer(PBMessage.GM_Player_Data_Return data)
     {
         Player player = null;
-        if (m_OnlinePlayers.TryGetValue(data.roleid, out player))
-        {
-            return player;
-        }
-        player = new Player(PlayerType.PT_Player);
+        //if (m_OnlinePlayers.TryGetValue(data., out player))
+        //{
+        //    return player;
+        //}
+        //player = new Player(PlayerType.PT_Player);
 
-        player.Initialize(data);
+        //player.Initialize(data);
 
-        m_OnlinePlayers.Add(data.roleid, player);
+        //m_OnlinePlayers.Add(data.roleid, player);
         return player;
     }
     public void RemovePlayer(int playerID)
@@ -151,10 +134,10 @@ public class PlayerManager
         Player player = null;
         if (m_OnlinePlayers.TryGetValue(playerID, out player))
         {
-            if (playerID != HeroInfo.roleid)//Do not remove hero.
-            {
-                m_OnlinePlayers.Remove(playerID);
-            }
+            //if (playerID != HeroInfo.roleid)//Do not remove hero.
+            //{
+            //    m_OnlinePlayers.Remove(playerID);
+            //}
         }
     }
     public Player GetOnlinePlayer(int playerID)

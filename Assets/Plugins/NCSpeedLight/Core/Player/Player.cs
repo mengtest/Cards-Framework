@@ -45,18 +45,18 @@ public class Player
         m_EventProcessor = new PlayerEventManager(this);
     }
 
-    private PBMessage.go_login_playerInfo m_Data;
-    public PBMessage.go_login_playerInfo Data
+    private PBMessage.GM_Player_Data_Return m_Data;
+    public PBMessage.GM_Player_Data_Return Data
     {
         get { return m_Data; }
         set { m_Data = value; }
     }
-    public bool Initialize(PBMessage.go_login_playerInfo data)
+    public bool Initialize(PBMessage.GM_Player_Data_Return data)
     {
         Data = data;
         return true;
     }
-    public bool UpdateData(PBMessage.go_login_playerInfo data)
+    public bool UpdateData(PBMessage.GM_Player_Data_Return data)
     {
         return true;
     }
