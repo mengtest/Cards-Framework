@@ -143,9 +143,6 @@
     <None Include="Assets\Raw Resources\Atlas\Login\login.txt" />
     <None Include="Assets\Raw Resources\Atlas\Login\text.txt" />
     <None Include="Assets\Resources\UI\Dialog\Atlas\Dialog.txt" />
-    <None Include="Assets\Scripts\Resources\GlobalEventManager.lua.txt" />
-    <None Include="Assets\Scripts\Resources\main.lua.txt" />
-    <None Include="Assets\Scripts\Resources\protobuf.lua.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
