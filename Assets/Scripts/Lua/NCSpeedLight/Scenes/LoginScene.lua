@@ -30,7 +30,7 @@ function LoginScene.End()
 end
 
 function LoginScene.RequestVerifyVersion()
-    Helper.Log("LoginScene: Send verify version msg,current version is " .. UrlKeeper.GetVersion())
+    print("LoginScene: Send verify version msg,current version is " .. UrlKeeper.GetVersion())
     local msg = {
         version = UrlKeeper.GetVersion()
     }
@@ -40,13 +40,10 @@ end
 
 function LoginScene.OnVerifyVersionReturn(evt)
     local obj = protobuf.decode("GM_VerifyVersionReturn", evt.LuaParam)
-    Helper.Log(obj.result);
-    Helper.Log(obj.serverFlag);
-    Helper.Log(obj.serverversion);
     if obj.result == 0 then
         UIManager.OpenWindow("Login/ui_normalLogin")
     else
-        Helper.LogError("LoginScene: Version doesn't match,can not enter game,please update.");
+        print("LoginScene: Version doesn't match,can not enter game,please update.");
     end
 end
 
@@ -73,9 +70,9 @@ end
 function LoginScene.OnLoginReturn(evt)
     local obj = protobuf.decode("GM_AccountReturn", evt.LuaParam)
     if obj.m_Result == 0 then
-        Helper.Log("Login success.")
+        print("Login success.")
     else
-        Helper.Log("Login fail.")
+        print("Login fail.")
     end
 end
 
@@ -101,8 +98,8 @@ end
 function LoginScene.OnRegisterReturn(evt)
     local obj = protobuf.decode("GM_AccountCreateReturn", evt.LuaParam)
     if obj.m_Result == 0 then
-        Helper.Log("Register success.")
+        print("Register success.")
     else
-        Helper.Log("Register fail.")
+        print("Register fail.")
     end
 end
