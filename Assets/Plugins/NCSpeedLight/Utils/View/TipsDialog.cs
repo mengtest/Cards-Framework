@@ -63,10 +63,10 @@ public class TipsDialog : MonoBehaviour
         positionTweener.to = new Vector3(0, 150, 0);
         positionTweener.duration = m_Timeout;
 
-        TweenAlpha alphaTweener = gameObject.AddComponent<TweenAlpha>();
-        alphaTweener.from = 1.0f;
-        alphaTweener.to = 0.5f;
-        alphaTweener.duration = m_Timeout;
+        //TweenAlpha alphaTweener = gameObject.AddComponent<TweenAlpha>();
+        //alphaTweener.from = 1.0f;
+        //alphaTweener.to = 0.5f;
+        //alphaTweener.duration = m_Timeout;
     }
     void CloseDialog()
     {

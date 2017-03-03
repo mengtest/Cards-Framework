@@ -215,9 +215,16 @@ public class VPTimer : MonoBehaviour
         // setup main gameobject
         if (m_MainObject == null)
         {
-            m_MainObject = new GameObject("Timers");
+            m_MainObject = new GameObject("VPTimer");
             m_MainObject.AddComponent<VPTimer>();
-            UnityEngine.Object.DontDestroyOnLoad(m_MainObject);
+            if (Game.Instance)
+            {
+                m_MainObject.transform.SetParent(Game.Instance.transform);
+            }
+            else
+            {
+                UnityEngine.Object.DontDestroyOnLoad(m_MainObject);
+            }
 
 #if (UNITY_EDITOR && !DEBUG)
 				m_MainObject.gameObject.hideFlags = HideFlags.HideInHierarchy;

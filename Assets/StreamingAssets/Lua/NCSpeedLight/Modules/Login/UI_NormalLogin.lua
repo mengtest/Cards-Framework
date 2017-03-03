@@ -49,9 +49,9 @@ function UI_NormalLogin.onClickLogin(go)
 end
 
 function UI_NormalLogin.onClickRegister(go)
-    UIManager.OpenTipsDialog("打开注册界面",1)
     UIManager.CloseWindow("Login/ui_normalLogin")
     UIManager.OpenWindow("Login/ui_regist")
+    UIManager.OpenTipsDialog("打开注册界面",1)
 end
 
 function UI_NormalLogin.TestOpenStandardDialog()
