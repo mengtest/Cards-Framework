@@ -17,6 +17,7 @@ public class UIManagerWrap
 		L.RegFunction("OpenStandardDialog", OpenStandardDialog);
 		L.RegFunction("OpenProgressDialog", OpenProgressDialog);
 		L.RegFunction("CloseProgressDialog", CloseProgressDialog);
+		L.RegFunction("OpenTipsDialog", OpenTipsDialog);
 		L.RegFunction("GetWindow", GetWindow);
 		L.RegFunction("GetDialog", GetDialog);
 		L.RegConstant("UI_ROOT_HEIGHT", 720);
@@ -187,6 +188,24 @@ public class UIManagerWrap
 			ToLua.CheckArgsCount(L, 0);
 			UIManager.CloseProgressDialog();
 			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int OpenTipsDialog(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			string arg0 = ToLua.CheckString(L, 1);
+			float arg1 = (float)LuaDLL.luaL_checknumber(L, 2);
+			UnityEngine.GameObject o = UIManager.OpenTipsDialog(arg0, arg1);
+			ToLua.Push(L, o);
+			return 1;
 		}
 		catch(Exception e)
 		{

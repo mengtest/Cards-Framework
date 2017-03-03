@@ -706,6 +706,7 @@
     <Compile Include="Assets\Plugins\NCSpeedLight\Utils\VPTimer.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Utils\View\FPSPrinter.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Utils\View\GetBlurBackground.cs" />
+    <Compile Include="Assets\Plugins\NCSpeedLight\Utils\View\TipsDialog.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Utils\View\UIGaussianBlurEffect.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Utils\View\VisiableTest.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\ValueProvider.cs" />

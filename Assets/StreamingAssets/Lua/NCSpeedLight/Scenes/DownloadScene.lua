@@ -1,4 +1,4 @@
-jsonProcessor = require 'cjson'
+﻿jsonProcessor = require 'cjson'
 
 DownloadScene = {
 }
@@ -33,7 +33,17 @@ function DownloadScene.CheckVersion()
     local url = UrlKeeper.JsonUrl()
     print('Request json url at ' .. url)
     local www = UnityEngine.WWW(url)
+
+    local option = UIManager.ProgressDialogOption()
+    option.Content = "正在检查更新..."
+    option.AutoClose = true
+    option.Cancelable = false
+    UIManager.OpenProgressDialog(option)
+
     coroutine.www(www)
+
+    UIManager.CloseProgressDialog()
+
     local str = tolua.tolstring(www.bytes)
     local json = jsonProcessor.decode(str)
     print("Account server ip is " .. json.accountserverip)

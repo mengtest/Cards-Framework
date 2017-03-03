@@ -10,9 +10,13 @@ public class UIManager_ProgressDialogOptionWrap
 		L.RegFunction("New", _CreateUIManager_ProgressDialogOption);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("AutoClose", get_AutoClose, set_AutoClose);
+		L.RegVar("Cancelable", get_Cancelable, set_Cancelable);
 		L.RegVar("Timeout", get_Timeout, set_Timeout);
 		L.RegVar("Content", get_Content, set_Content);
 		L.RegVar("ContentFontSize", get_ContentFontSize, set_ContentFontSize);
+		L.RegVar("OnClose", get_OnClose, set_OnClose);
+		L.RegVar("OnAutoClose", get_OnAutoClose, set_OnAutoClose);
+		L.RegVar("OnCancel", get_OnCancel, set_OnCancel);
 		L.EndClass();
 	}
 
@@ -56,6 +60,25 @@ public class UIManager_ProgressDialogOptionWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index AutoClose on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_Cancelable(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIManager.ProgressDialogOption obj = (UIManager.ProgressDialogOption)o;
+			bool ret = obj.Cancelable;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index Cancelable on a nil value" : e.Message);
 		}
 	}
 
@@ -117,6 +140,63 @@ public class UIManager_ProgressDialogOptionWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_OnClose(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIManager.ProgressDialogOption obj = (UIManager.ProgressDialogOption)o;
+			System.Action ret = obj.OnClose;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnClose on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_OnAutoClose(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIManager.ProgressDialogOption obj = (UIManager.ProgressDialogOption)o;
+			System.Action ret = obj.OnAutoClose;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnAutoClose on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_OnCancel(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIManager.ProgressDialogOption obj = (UIManager.ProgressDialogOption)o;
+			System.Action ret = obj.OnCancel;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnCancel on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_AutoClose(IntPtr L)
 	{
 		object o = null;
@@ -132,6 +212,25 @@ public class UIManager_ProgressDialogOptionWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index AutoClose on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_Cancelable(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIManager.ProgressDialogOption obj = (UIManager.ProgressDialogOption)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.Cancelable = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index Cancelable on a nil value" : e.Message);
 		}
 	}
 
@@ -189,6 +288,99 @@ public class UIManager_ProgressDialogOptionWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index ContentFontSize on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_OnClose(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIManager.ProgressDialogOption obj = (UIManager.ProgressDialogOption)o;
+			System.Action arg0 = null;
+			LuaTypes funcType2 = LuaDLL.lua_type(L, 2);
+
+			if (funcType2 != LuaTypes.LUA_TFUNCTION)
+			{
+				 arg0 = (System.Action)ToLua.CheckObject(L, 2, typeof(System.Action));
+			}
+			else
+			{
+				LuaFunction func = ToLua.ToLuaFunction(L, 2);
+				arg0 = DelegateFactory.CreateDelegate(typeof(System.Action), func) as System.Action;
+			}
+
+			obj.OnClose = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnClose on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_OnAutoClose(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIManager.ProgressDialogOption obj = (UIManager.ProgressDialogOption)o;
+			System.Action arg0 = null;
+			LuaTypes funcType2 = LuaDLL.lua_type(L, 2);
+
+			if (funcType2 != LuaTypes.LUA_TFUNCTION)
+			{
+				 arg0 = (System.Action)ToLua.CheckObject(L, 2, typeof(System.Action));
+			}
+			else
+			{
+				LuaFunction func = ToLua.ToLuaFunction(L, 2);
+				arg0 = DelegateFactory.CreateDelegate(typeof(System.Action), func) as System.Action;
+			}
+
+			obj.OnAutoClose = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnAutoClose on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_OnCancel(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIManager.ProgressDialogOption obj = (UIManager.ProgressDialogOption)o;
+			System.Action arg0 = null;
+			LuaTypes funcType2 = LuaDLL.lua_type(L, 2);
+
+			if (funcType2 != LuaTypes.LUA_TFUNCTION)
+			{
+				 arg0 = (System.Action)ToLua.CheckObject(L, 2, typeof(System.Action));
+			}
+			else
+			{
+				LuaFunction func = ToLua.ToLuaFunction(L, 2);
+				arg0 = DelegateFactory.CreateDelegate(typeof(System.Action), func) as System.Action;
+			}
+
+			obj.OnCancel = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnCancel on a nil value" : e.Message);
 		}
 	}
 }

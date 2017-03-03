@@ -9,6 +9,7 @@
             //
 //----------------------------------------------------------------*/
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -33,9 +34,13 @@ public static class UIManager
     public class ProgressDialogOption
     {
         public bool AutoClose = false;
+        public bool Cancelable = true;
         public float Timeout = 10f;
         public string Content;
         public int ContentFontSize = 26;
+        public Action OnClose;
+        public Action OnAutoClose;
+        public Action OnCancel;
     }
 
     public enum DialogType
@@ -70,6 +75,12 @@ public static class UIManager
     private static Dictionary<string, GameObject> m_ShownWindows = new Dictionary<string, GameObject>();
 
     private static Dictionary<string, GameObject> m_ShownDialogs = new Dictionary<string, GameObject>();
+
+    private static VPTimer.Handle m_ProgressDialogTimeoutHandle;
+
+    private static ProgressDialogOption m_CurrentProgressDialogOption;
+
+    private static StandardDialogOption m_CurrentStandardDialogOption;
 
     public static bool IsInitialized { get; set; }
 
@@ -228,6 +239,8 @@ public static class UIManager
 
                 UIHelper.SetButtonEvent(dialog.transform, "SingleBtn/OK", option.OnClickOK);
             }
+
+            m_CurrentStandardDialogOption = option;
         }
     }
 
@@ -246,16 +259,81 @@ public static class UIManager
                 contentLabel.text = option.Content;
                 contentLabel.fontSize = option.ContentFontSize;
             }
+
+            if (m_ProgressDialogTimeoutHandle != null)
+            {
+                if (m_ProgressDialogTimeoutHandle.Active)
+                {
+                    m_ProgressDialogTimeoutHandle.Cancel();
+                }
+            }
+            else
+            {
+                m_ProgressDialogTimeoutHandle = new VPTimer.Handle();
+            }
+
             if (option.AutoClose)
             {
-                VPTimer.In(option.Timeout, () => { CloseDialog(DialogType.ProgressDialog.ToString()); });
+                VPTimer.In(option.Timeout, () =>
+                {
+                    if (option.OnAutoClose != null)
+                    {
+                        option.OnAutoClose.Invoke();
+                    }
+                    CloseDialog(DialogType.ProgressDialog.ToString());
+                }, m_ProgressDialogTimeoutHandle);
             }
+
+            if (option.Cancelable)
+            {
+                UIHelper.SetButtonEvent(dialog.transform, "BlackBG", (go) =>
+                {
+                    if (m_ProgressDialogTimeoutHandle != null && m_ProgressDialogTimeoutHandle.Active)
+                    {
+                        m_ProgressDialogTimeoutHandle.Cancel();
+                    }
+                    if (option.OnCancel != null)
+                    {
+                        option.OnCancel.Invoke();
+                    }
+                    CloseDialog(DialogType.ProgressDialog.ToString());
+                });
+            }
+
+            m_CurrentProgressDialogOption = option;
         }
     }
 
     public static void CloseProgressDialog()
     {
+        CloseDialog(DialogType.ProgressDialog.ToString());
+        if (m_ProgressDialogTimeoutHandle != null && m_ProgressDialogTimeoutHandle.Active)
+        {
+            m_ProgressDialogTimeoutHandle.Cancel();
+        }
+        if (m_CurrentProgressDialogOption != null)
+        {
+            if (m_CurrentProgressDialogOption.OnClose != null)
+            {
+                m_CurrentProgressDialogOption.OnClose.Invoke();
+            }
+        }
+    }
 
+    public static GameObject OpenTipsDialog(string content, float time = 1f)
+    {
+        string assetPath = Helper.StringFormat("UI/Dialog/{0}", DialogType.TipsDialog.ToString());
+        GameObject go = ResManager.LoadAssetSync<GameObject>(assetPath);
+        go = SetupDialog(go);
+        if (go)
+        {
+            TipsDialog td = go.GetComponent<TipsDialog>();
+            if (td)
+            {
+                td.SetParam(content, time);
+            }
+        }
+        return go;
     }
 
     public static GameObject GetWindow(string windowName)

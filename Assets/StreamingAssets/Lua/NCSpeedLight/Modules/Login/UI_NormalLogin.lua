@@ -49,6 +49,7 @@ function UI_NormalLogin.onClickLogin(go)
 end
 
 function UI_NormalLogin.onClickRegister(go)
+    UIManager.OpenTipsDialog("打开注册界面",1)
     UIManager.CloseWindow("Login/ui_normalLogin")
     UIManager.OpenWindow("Login/ui_regist")
 end
@@ -67,6 +68,12 @@ function UI_NormalLogin.TestOpenProgressDialog()
     local option = UIManager.ProgressDialogOption()
     option.Content = "正在登录中..."
     option.AutoClose = true
+    option.OnAutoClose = function()
+        print("Progress dialog has been auto closed.");
+    end
+    option.OnCancel = function()
+        print("Progress dialog has been canceled.")
+    end
     UIManager.OpenProgressDialog(option)
 end
 
