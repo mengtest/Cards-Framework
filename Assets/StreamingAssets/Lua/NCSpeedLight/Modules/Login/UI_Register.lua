@@ -1,4 +1,4 @@
-UI_Register = {
+﻿UI_Register = {
 }
 
 local this = UI_Register
@@ -51,6 +51,16 @@ function UI_Register.onClickBack(go)
 end
 
 function UI_Register.onClickSubmit(go)
+    if string.len(ipAccount.value) == 0 then
+        UIManager.OpenTipsDialog("请输入账号")
+        return
+    elseif string.len(ipPassword.value) == 0 then
+        UIManager.OpenTipsDialog("请输入密码")
+        return
+    elseif ipPassword.value ~= ipPassword2.value then
+        UIManager.OpenTipsDialog("两次输入的账号不一致")
+        return
+    end
     LoginScene.RequestRegister(ipAccount.value, ipPassword.value)
 end
 

@@ -44,6 +44,13 @@ function UI_NormalLogin.OnDestroy()
 end
 
 function UI_NormalLogin.onClickLogin(go)
+    if string.len(lbAccount.text) == 0 then
+        UIManager.OpenTipsDialog("请输入账号")
+        return
+    elseif string.len(ipPassword.value) == 0 then
+        UIManager.OpenTipsDialog("请输入密码")
+        return
+    end
     LoginScene.RequestLogin(lbAccount.text, ipPassword.value)
 end
 
