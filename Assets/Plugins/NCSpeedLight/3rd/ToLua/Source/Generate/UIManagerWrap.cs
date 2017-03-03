@@ -11,8 +11,12 @@ public class UIManagerWrap
 		L.RegFunction("HideWindow", HideWindow);
 		L.RegFunction("HideAllWindows", HideAllWindows);
 		L.RegFunction("OpenWindow", OpenWindow);
+		L.RegFunction("OpenDialog", OpenDialog);
 		L.RegFunction("CloseWindow", CloseWindow);
-		L.RegFunction("TryGetWindow", TryGetWindow);
+		L.RegFunction("CloseDialog", CloseDialog);
+		L.RegFunction("OpenStandardDialog", OpenStandardDialog);
+		L.RegFunction("GetWindow", GetWindow);
+		L.RegFunction("GetDialog", GetDialog);
 		L.RegConstant("UI_ROOT_HEIGHT", 720);
 		L.RegConstant("UI_ROOT_WIDTH", 1224);
 		L.RegConstant("UI_ROOT_MAX_HEIGHT", 720);
@@ -93,6 +97,23 @@ public class UIManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int OpenDialog(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			string arg0 = ToLua.CheckString(L, 1);
+			UnityEngine.GameObject o = UIManager.OpenDialog(arg0);
+			ToLua.Push(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int CloseWindow(IntPtr L)
 	{
 		try
@@ -109,13 +130,62 @@ public class UIManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int TryGetWindow(IntPtr L)
+	static int CloseDialog(IntPtr L)
 	{
 		try
 		{
 			ToLua.CheckArgsCount(L, 1);
 			string arg0 = ToLua.CheckString(L, 1);
-			UnityEngine.GameObject o = UIManager.TryGetWindow(arg0);
+			UIManager.CloseDialog(arg0);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int OpenStandardDialog(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UIManager.StandardDialogOption arg0 = (UIManager.StandardDialogOption)ToLua.CheckObject(L, 1, typeof(UIManager.StandardDialogOption));
+			UIManager.OpenStandardDialog(arg0);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetWindow(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			string arg0 = ToLua.CheckString(L, 1);
+			UnityEngine.GameObject o = UIManager.GetWindow(arg0);
+			ToLua.Push(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetDialog(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			string arg0 = ToLua.CheckString(L, 1);
+			UnityEngine.GameObject o = UIManager.GetDialog(arg0);
 			ToLua.Push(L, o);
 			return 1;
 		}

@@ -13,11 +13,7 @@ public class UIHelperWrap
 		L.RegFunction("SetActiveState", SetActiveState);
 		L.RegFunction("SetSpriteName", SetSpriteName);
 		L.RegFunction("SetSpriteAlpha", SetSpriteAlpha);
-		L.RegFunction("GetString", GetString);
-		L.RegFunction("GetNumberString", GetNumberString);
-		L.RegFunction("GetCutNumber", GetCutNumber);
-		L.RegFunction("GetSeparatorNumber", GetSeparatorNumber);
-		L.RegFunction("SubByte", SubByte);
+		L.RegFunction("BytesToString", BytesToString);
 		L.RegFunction("New", _CreateUIHelper);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.EndClass();
@@ -272,100 +268,14 @@ public class UIHelperWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int GetString(IntPtr L)
+	static int BytesToString(IntPtr L)
 	{
 		try
 		{
 			ToLua.CheckArgsCount(L, 1);
 			byte[] arg0 = ToLua.CheckByteBuffer(L, 1);
-			string o = UIHelper.GetString(arg0);
+			string o = UIHelper.BytesToString(arg0);
 			LuaDLL.lua_pushstring(L, o);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int GetNumberString(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 1);
-			long arg0 = LuaDLL.tolua_checkint64(L, 1);
-			string o = UIHelper.GetNumberString(arg0);
-			LuaDLL.lua_pushstring(L, o);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int GetCutNumber(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 2);
-			string arg0 = ToLua.CheckString(L, 1);
-			char arg1 = (char)LuaDLL.luaL_checknumber(L, 2);
-			int o = UIHelper.GetCutNumber(arg0, arg1);
-			LuaDLL.lua_pushinteger(L, o);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int GetSeparatorNumber(IntPtr L)
-	{
-		try
-		{
-			int count = LuaDLL.lua_gettop(L);
-
-			if (count == 1 && TypeChecker.CheckTypes(L, 1, typeof(string)))
-			{
-				string arg0 = ToLua.ToString(L, 1);
-				string o = UIHelper.GetSeparatorNumber(arg0);
-				LuaDLL.lua_pushstring(L, o);
-				return 1;
-			}
-			else if (count == 1 && TypeChecker.CheckTypes(L, 1, typeof(int)))
-			{
-				int arg0 = (int)LuaDLL.lua_tonumber(L, 1);
-				string o = UIHelper.GetSeparatorNumber(arg0);
-				LuaDLL.lua_pushstring(L, o);
-				return 1;
-			}
-			else
-			{
-				return LuaDLL.luaL_throw(L, "invalid arguments to method: UIHelper.GetSeparatorNumber");
-			}
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int SubByte(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 3);
-			byte[] arg0 = ToLua.CheckByteBuffer(L, 1);
-			int arg1 = (int)LuaDLL.luaL_checknumber(L, 2);
-			int arg2 = (int)LuaDLL.luaL_checknumber(L, 3);
-			byte[] o = UIHelper.SubByte(arg0, arg1, arg2);
-			ToLua.Push(L, o);
 			return 1;
 		}
 		catch(Exception e)

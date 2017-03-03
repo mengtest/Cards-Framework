@@ -23,6 +23,7 @@ public static class DelegateFactory
 		dict.Add(typeof(System.Action<int>), System_Action_int);
 		dict.Add(typeof(System.Comparison<int>), System_Comparison_int);
 		dict.Add(typeof(ServerConnection.ConnectionDelegate), ServerConnection_ConnectionDelegate);
+		dict.Add(typeof(UIEventListener.VoidDelegate), UIEventListener_VoidDelegate);
 		dict.Add(typeof(UnityEngine.Camera.CameraCallback), UnityEngine_Camera_CameraCallback);
 		dict.Add(typeof(UnityEngine.Application.LogCallback), UnityEngine_Application_LogCallback);
 		dict.Add(typeof(UnityEngine.Application.AdvertisingIdentifierCallback), UnityEngine_Application_AdvertisingIdentifierCallback);
@@ -32,7 +33,6 @@ public static class DelegateFactory
 		dict.Add(typeof(PostResManagerInitializedDelegate), PostResManagerInitializedDelegate);
 		dict.Add(typeof(LoadAssetCallback), LoadAssetCallback);
 		dict.Add(typeof(Helper.ChildDelegate), Helper_ChildDelegate);
-		dict.Add(typeof(UIEventListener.VoidDelegate), UIEventListener_VoidDelegate);
 		dict.Add(typeof(UIEventListener.BoolDelegate), UIEventListener_BoolDelegate);
 		dict.Add(typeof(UIEventListener.FloatDelegate), UIEventListener_FloatDelegate);
 		dict.Add(typeof(UIEventListener.VectorDelegate), UIEventListener_VectorDelegate);
@@ -467,6 +467,53 @@ public static class DelegateFactory
 		}
 	}
 
+	class UIEventListener_VoidDelegate_Event : LuaDelegate
+	{
+		public UIEventListener_VoidDelegate_Event(LuaFunction func) : base(func) { }
+		public UIEventListener_VoidDelegate_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(UnityEngine.GameObject param0)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(UnityEngine.GameObject param0)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public static Delegate UIEventListener_VoidDelegate(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			UIEventListener.VoidDelegate fn = delegate(UnityEngine.GameObject param0) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			UIEventListener_VoidDelegate_Event target = new UIEventListener_VoidDelegate_Event(func);
+			UIEventListener.VoidDelegate d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			UIEventListener_VoidDelegate_Event target = new UIEventListener_VoidDelegate_Event(func, self);
+			UIEventListener.VoidDelegate d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
 	class UnityEngine_Camera_CameraCallback_Event : LuaDelegate
 	{
 		public UnityEngine_Camera_CameraCallback_Event(LuaFunction func) : base(func) { }
@@ -893,53 +940,6 @@ public static class DelegateFactory
 		{
 			Helper_ChildDelegate_Event target = new Helper_ChildDelegate_Event(func, self);
 			Helper.ChildDelegate d = target.CallWithSelf;
-			target.method = d.Method;
-			return d;
-		}
-	}
-
-	class UIEventListener_VoidDelegate_Event : LuaDelegate
-	{
-		public UIEventListener_VoidDelegate_Event(LuaFunction func) : base(func) { }
-		public UIEventListener_VoidDelegate_Event(LuaFunction func, LuaTable self) : base(func, self) { }
-
-		public void Call(UnityEngine.GameObject param0)
-		{
-			func.BeginPCall();
-			func.Push(param0);
-			func.PCall();
-			func.EndPCall();
-		}
-
-		public void CallWithSelf(UnityEngine.GameObject param0)
-		{
-			func.BeginPCall();
-			func.Push(self);
-			func.Push(param0);
-			func.PCall();
-			func.EndPCall();
-		}
-	}
-
-	public static Delegate UIEventListener_VoidDelegate(LuaFunction func, LuaTable self, bool flag)
-	{
-		if (func == null)
-		{
-			UIEventListener.VoidDelegate fn = delegate(UnityEngine.GameObject param0) { };
-			return fn;
-		}
-
-		if(!flag)
-		{
-			UIEventListener_VoidDelegate_Event target = new UIEventListener_VoidDelegate_Event(func);
-			UIEventListener.VoidDelegate d = target.Call;
-			target.method = d.Method;
-			return d;
-		}
-		else
-		{
-			UIEventListener_VoidDelegate_Event target = new UIEventListener_VoidDelegate_Event(func, self);
-			UIEventListener.VoidDelegate d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}

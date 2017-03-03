@@ -37,6 +37,7 @@ public static class CustomSettings
         _DT(typeof(System.Action<int>)),
         _DT(typeof(System.Comparison<int>)),
         _DT(typeof(ServerConnection.ConnectionDelegate)),
+        _DT(typeof(UIEventListener.VoidDelegate)),
 
     };
 
@@ -147,10 +148,14 @@ public static class CustomSettings
         _GT(typeof(Resources)),
 
 
-         _GT(typeof(GlobalEventManager)),
+        #region NCSpeedLight
+        _GT(typeof(GlobalEventManager)),
          _GT(typeof( Evt)),
          _GT(typeof(ResManager)),
+
          _GT(typeof(UIManager)),
+         _GT(typeof(UIManager.StandardDialogOption)),
+
          _GT(typeof(AudioManager)),
          _GT(typeof(LuaManager)),
          _GT(typeof(LuaBehaviour)),
@@ -179,10 +184,10 @@ public static class CustomSettings
          _GT(typeof(PersistentManager)),
 
          _GT(typeof(VersionManager)),
-
+#endregion
 
         #region NGUI Component
-         _GT(typeof(UIEventListener)),
+        _GT(typeof(UIEventListener)),
 
          _GT(typeof(LanguageSelection)),
          _GT(typeof(TypewriterEffect)),

@@ -180,6 +180,9 @@ public static class LuaBinder
 		L.RegFunction("PCMSetPositionCallback", UnityEngine_AudioClip_PCMSetPositionCallback);
 		L.EndModule();
 		L.EndModule();
+		L.BeginModule("UIManager");
+		UIManager_StandardDialogOptionWrap.Register(L);
+		L.EndModule();
 		L.BeginModule("NetManager");
 		NetManager_ServerTypeWrap.Register(L);
 		L.EndModule();
@@ -199,9 +202,6 @@ public static class LuaBinder
 		L.RegFunction("Comparison_int", System_Comparison_int);
 		L.RegFunction("Comparison_UnityEngine_Transform", System_Comparison_UnityEngine_Transform);
 		L.EndModule();
-		L.BeginModule("Helper");
-		L.RegFunction("ChildDelegate", Helper_ChildDelegate);
-		L.EndModule();
 		L.BeginModule("UIEventListener");
 		L.RegFunction("VoidDelegate", UIEventListener_VoidDelegate);
 		L.RegFunction("BoolDelegate", UIEventListener_BoolDelegate);
@@ -209,6 +209,9 @@ public static class LuaBinder
 		L.RegFunction("VectorDelegate", UIEventListener_VectorDelegate);
 		L.RegFunction("ObjectDelegate", UIEventListener_ObjectDelegate);
 		L.RegFunction("KeyCodeDelegate", UIEventListener_KeyCodeDelegate);
+		L.EndModule();
+		L.BeginModule("Helper");
+		L.RegFunction("ChildDelegate", Helper_ChildDelegate);
 		L.EndModule();
 		L.BeginModule("SpringPanel");
 		L.RegFunction("OnFinished", SpringPanel_OnFinished);
@@ -698,33 +701,6 @@ public static class LuaBinder
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int Helper_ChildDelegate(IntPtr L)
-	{
-		try
-		{
-			int count = LuaDLL.lua_gettop(L);
-			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
-
-			if (count == 1)
-			{
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(Helper.ChildDelegate), func);
-				ToLua.Push(L, arg1);
-			}
-			else
-			{
-				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(Helper.ChildDelegate), func, self);
-				ToLua.Push(L, arg1);
-			}
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int UIEventListener_VoidDelegate(IntPtr L)
 	{
 		try
@@ -876,6 +852,33 @@ public static class LuaBinder
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
 				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UIEventListener.KeyCodeDelegate), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Helper_ChildDelegate(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(Helper.ChildDelegate), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(Helper.ChildDelegate), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;

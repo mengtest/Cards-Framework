@@ -9,26 +9,55 @@
             //
 //----------------------------------------------------------------*/
 
-using System;
-using System.Reflection;
 using System.Collections.Generic;
 using UnityEngine;
 
 public static class UIManager
 {
-    private static Dictionary<string, GameObject> m_ShownWindows = new Dictionary<string, GameObject>();
+    public class StandardDialogOption
+    {
+        public string Title;
+        public int TitleFontSize = 35;
+        public string TitleSprite;
+        public bool ShowTitleSprite = false;
+
+        public string Content;
+        public int ContentFontSize = 30;
+
+        public bool DoubleButton = false;
+
+        public UIEventListener.VoidDelegate OnClickOK;
+        public UIEventListener.VoidDelegate OnClickCancel;
+    }
+
     public static GameObject UIRootGO;
+
     public static GameObject WindowGO;
+
     public static GameObject DialogGO;
+
     public static UIRoot UIRoot;
+
     public static UIPanel UIPanel;
+
     public static UICamera UICamera;
+
     public static Camera Camera;
+
     public const int UI_ROOT_HEIGHT = 720;
+
     public const int UI_ROOT_WIDTH = 1224;
+
     public const int UI_ROOT_MAX_HEIGHT = 720;
+
     public const int UI_ROOT_MIN_HEIGHT = 640;
+
+    private static Dictionary<string, GameObject> m_ShownWindows = new Dictionary<string, GameObject>();
+
+    private static Dictionary<string, GameObject> m_ShownDialogs = new Dictionary<string, GameObject>();
+
     public static bool IsInitialized { get; set; }
+
     public static void Initialize()
     {
         if (IsInitialized)
@@ -73,71 +102,139 @@ public static class UIManager
         // Dialog root.
         DialogGO = new GameObject("Dialog");
         DialogGO.transform.SetParent(UIRootGO.transform);
-
-
     }
+
     public static GameObject HideWindow(string windowName)
     {
         return null;
     }
+
     public static void HideAllWindows()
     {
     }
+
     public static GameObject OpenWindow(string windowName)
     {
-        GameObject window = TryGetWindow(windowName);
+        GameObject window = GetWindow(windowName);
         if (window != null)
         {
             return window;
         }
         string assetPath = Helper.StringFormat("UI/{0}", windowName);
         GameObject go = ResManager.LoadAssetSync<GameObject>(assetPath);
-        go = SetupUIPrefab(go);
+        go = SetupWindow(go);
         if (go)
         {
             m_ShownWindows.Add(windowName, go);
         }
-        return window;
+        return go;
     }
-    public static T OpenDialog<T>()
-        where T : LuaView
+
+    public static GameObject OpenDialog(string dialogName)
     {
-        Type type = typeof(T);
-        object obj = type.Assembly.CreateInstance(type.FullName);
-        MemberInfo[] infos = type.GetMember("AssetPath", BindingFlags.GetProperty);
-        if (infos != null && infos.Length > 0)
+        GameObject dialog = GetDialog(dialogName);
+        if (dialog != null)
         {
-            string key = (string)type.InvokeMember("AssetPath", BindingFlags.GetProperty | BindingFlags.Instance, null, obj, null);
-            string assetPath = Helper.StringFormat("UI/{0}", key);
-            GameObject go = ResManager.LoadAssetSync<GameObject>(assetPath);
-            return go.GetComponent<T>();
+            return dialog;
         }
-        else
+        string assetPath = Helper.StringFormat("UI/Dialog/{0}", dialogName);
+        GameObject go = ResManager.LoadAssetSync<GameObject>(assetPath);
+        go = SetupDialog(go);
+        if (go)
         {
-            return default(T);
+            m_ShownDialogs.Add(dialogName, go);
         }
+        return go;
     }
+
     public static void CloseWindow(string windowName)
     {
-        GameObject go = TryGetWindow(windowName);
+        GameObject go = GetWindow(windowName);
         if (go)
         {
             GameObject.DestroyImmediate(go);
             m_ShownWindows.Remove(windowName);
         }
     }
-    public static void CloseDialog<T>() { }
-    public static GameObject TryGetWindow(string windowName)
+
+    public static void CloseDialog(string dialogName)
+    {
+        GameObject go = GetDialog(dialogName);
+        if (go)
+        {
+            GameObject.DestroyImmediate(go);
+            m_ShownDialogs.Remove(dialogName);
+        }
+    }
+
+    public static void OpenStandardDialog(StandardDialogOption option)
+    {
+        if (option == null)
+        {
+            return;
+        }
+        GameObject dialog = OpenDialog("StandardDialog");
+        if (dialog)
+        {
+            UISprite titleSprite = dialog.transform.Find("BG/Title").GetComponent<UISprite>();
+            UILabel contentLabel = dialog.transform.Find("Label_Content").GetComponent<UILabel>();
+            UILabel titleLabel = dialog.transform.Find("Label_Title").GetComponent<UILabel>();
+            if (titleSprite)
+            {
+                titleSprite.enabled = option.ShowTitleSprite;
+                if (option.ShowTitleSprite)
+                {
+                    titleSprite.spriteName = option.TitleSprite;
+                }
+            }
+            if (titleLabel)
+            {
+                titleLabel.enabled = !option.ShowTitleSprite;
+                titleLabel.text = option.Title;
+                titleLabel.fontSize = option.TitleFontSize;
+            }
+            if (contentLabel)
+            {
+                contentLabel.text = option.Content;
+                contentLabel.fontSize = option.ContentFontSize;
+            }
+
+            if (option.DoubleButton)
+            {
+                UIHelper.SetButtonEvent(dialog.transform, "DoubleBtn/OK", (go) => { CloseDialog("StandardDialog"); });
+                UIHelper.SetButtonEvent(dialog.transform, "DoubleBtn/Cancel", (go) => { CloseDialog("StandardDialog"); });
+
+                UIHelper.SetButtonEvent(dialog.transform, "DoubleBtn/OK", option.OnClickOK);
+                UIHelper.SetButtonEvent(dialog.transform, "DoubleBtn/Cancel", option.OnClickCancel);
+            }
+            else
+            {
+                UIHelper.SetButtonEvent(dialog.transform, "SingleBtn/OK", (go) => { CloseDialog("StandardDialog"); });
+
+                UIHelper.SetButtonEvent(dialog.transform, "SingleBtn/OK", option.OnClickOK);
+            }
+        }
+    }
+
+    public static GameObject GetWindow(string windowName)
     {
         GameObject go = null;
         m_ShownWindows.TryGetValue(windowName, out go);
         return go;
     }
-    private static GameObject SetupUIPrefab(GameObject go)
+
+    public static GameObject GetDialog(string dialogName)
+    {
+        GameObject go = null;
+        m_ShownDialogs.TryGetValue(dialogName, out go);
+        return go;
+    }
+
+    private static GameObject SetupWindow(GameObject go)
     {
         if (go == null)
         {
-            Helper.LogError("SetupUIPrefab fail caused by null ui prefab.");
+            Helper.LogError("SetupWindow fail caused by null ui prefab.");
             return null;
         }
         go = GameObject.Instantiate(go) as GameObject;
@@ -156,7 +253,7 @@ public static class UIManager
         }
         if (root == null)
         {
-            Helper.LogError("SetupUIPrefab fail caused by null ui panel.");
+            Helper.LogError("SetupWindow fail caused by null ui panel.");
             return null;
         }
         GameObject window = root.gameObject;
@@ -164,5 +261,38 @@ public static class UIManager
         root.localScale = Vector3.one;
         GameObject.DestroyObject(go);
         return window;
+    }
+
+    private static GameObject SetupDialog(GameObject go)
+    {
+        if (go == null)
+        {
+            Helper.LogError("SetupDialog fail caused by null ui prefab.");
+            return null;
+        }
+        go = GameObject.Instantiate(go) as GameObject;
+        Transform tran = go.transform;
+        if (tran.childCount <= 1)
+        {
+            // not a valid ui.
+            GameObject.DestroyObject(go);
+            return null;
+        }
+        Transform root = tran.GetChild(0);
+        Camera camera = root.GetComponent<Camera>();
+        if (camera != null)
+        {
+            root = tran.GetChild(1);
+        }
+        if (root == null)
+        {
+            Helper.LogError("SetupDialog fail caused by null ui panel.");
+            return null;
+        }
+        GameObject dialog = root.gameObject;
+        root.SetParent(DialogGO.transform);
+        root.localScale = Vector3.one;
+        GameObject.DestroyObject(go);
+        return dialog;
     }
 }
