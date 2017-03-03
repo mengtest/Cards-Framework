@@ -155,6 +155,9 @@ public static class CustomSettings
 
          _GT(typeof(UIManager)),
          _GT(typeof(UIManager.StandardDialogOption)),
+         _GT(typeof(UIManager.ProgressDialogOption)),
+         _GT(typeof(UIManager.DialogType)),
+
 
          _GT(typeof(AudioManager)),
          _GT(typeof(LuaManager)),

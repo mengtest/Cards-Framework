@@ -182,6 +182,8 @@ public static class LuaBinder
 		L.EndModule();
 		L.BeginModule("UIManager");
 		UIManager_StandardDialogOptionWrap.Register(L);
+		UIManager_ProgressDialogOptionWrap.Register(L);
+		UIManager_DialogTypeWrap.Register(L);
 		L.EndModule();
 		L.BeginModule("NetManager");
 		NetManager_ServerTypeWrap.Register(L);

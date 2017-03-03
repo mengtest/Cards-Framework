@@ -15,6 +15,8 @@ public class UIManagerWrap
 		L.RegFunction("CloseWindow", CloseWindow);
 		L.RegFunction("CloseDialog", CloseDialog);
 		L.RegFunction("OpenStandardDialog", OpenStandardDialog);
+		L.RegFunction("OpenProgressDialog", OpenProgressDialog);
+		L.RegFunction("CloseProgressDialog", CloseProgressDialog);
 		L.RegFunction("GetWindow", GetWindow);
 		L.RegFunction("GetDialog", GetDialog);
 		L.RegConstant("UI_ROOT_HEIGHT", 720);
@@ -153,6 +155,37 @@ public class UIManagerWrap
 			ToLua.CheckArgsCount(L, 1);
 			UIManager.StandardDialogOption arg0 = (UIManager.StandardDialogOption)ToLua.CheckObject(L, 1, typeof(UIManager.StandardDialogOption));
 			UIManager.OpenStandardDialog(arg0);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int OpenProgressDialog(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UIManager.ProgressDialogOption arg0 = (UIManager.ProgressDialogOption)ToLua.CheckObject(L, 1, typeof(UIManager.ProgressDialogOption));
+			UIManager.OpenProgressDialog(arg0);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int CloseProgressDialog(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 0);
+			UIManager.CloseProgressDialog();
 			return 0;
 		}
 		catch(Exception e)

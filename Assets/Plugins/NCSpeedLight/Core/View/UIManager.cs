@@ -30,6 +30,21 @@ public static class UIManager
         public UIEventListener.VoidDelegate OnClickCancel;
     }
 
+    public class ProgressDialogOption
+    {
+        public bool AutoClose = false;
+        public float Timeout = 10f;
+        public string Content;
+        public int ContentFontSize = 26;
+    }
+
+    public enum DialogType
+    {
+        StandardDialog,
+        ProgressDialog,
+        TipsDialog,
+    }
+
     public static GameObject UIRootGO;
 
     public static GameObject WindowGO;
@@ -173,7 +188,7 @@ public static class UIManager
         {
             return;
         }
-        GameObject dialog = OpenDialog("StandardDialog");
+        GameObject dialog = OpenDialog(DialogType.StandardDialog.ToString());
         if (dialog)
         {
             UISprite titleSprite = dialog.transform.Find("BG/Title").GetComponent<UISprite>();
@@ -201,19 +216,46 @@ public static class UIManager
 
             if (option.DoubleButton)
             {
-                UIHelper.SetButtonEvent(dialog.transform, "DoubleBtn/OK", (go) => { CloseDialog("StandardDialog"); });
-                UIHelper.SetButtonEvent(dialog.transform, "DoubleBtn/Cancel", (go) => { CloseDialog("StandardDialog"); });
+                UIHelper.SetButtonEvent(dialog.transform, "DoubleBtn/OK", (go) => { CloseDialog(DialogType.StandardDialog.ToString()); });
+                UIHelper.SetButtonEvent(dialog.transform, "DoubleBtn/Cancel", (go) => { CloseDialog(DialogType.StandardDialog.ToString()); });
 
                 UIHelper.SetButtonEvent(dialog.transform, "DoubleBtn/OK", option.OnClickOK);
                 UIHelper.SetButtonEvent(dialog.transform, "DoubleBtn/Cancel", option.OnClickCancel);
             }
             else
             {
-                UIHelper.SetButtonEvent(dialog.transform, "SingleBtn/OK", (go) => { CloseDialog("StandardDialog"); });
+                UIHelper.SetButtonEvent(dialog.transform, "SingleBtn/OK", (go) => { CloseDialog(DialogType.StandardDialog.ToString()); });
 
                 UIHelper.SetButtonEvent(dialog.transform, "SingleBtn/OK", option.OnClickOK);
             }
         }
+    }
+
+    public static void OpenProgressDialog(ProgressDialogOption option)
+    {
+        if (option == null)
+        {
+            return;
+        }
+        GameObject dialog = OpenDialog(DialogType.ProgressDialog.ToString());
+        if (dialog)
+        {
+            UILabel contentLabel = dialog.transform.Find("Content/Label").GetComponent<UILabel>();
+            if (contentLabel)
+            {
+                contentLabel.text = option.Content;
+                contentLabel.fontSize = option.ContentFontSize;
+            }
+            if (option.AutoClose)
+            {
+                VPTimer.In(option.Timeout, () => { CloseDialog(DialogType.ProgressDialog.ToString()); });
+            }
+        }
+    }
+
+    public static void CloseProgressDialog()
+    {
+
     }
 
     public static GameObject GetWindow(string windowName)

@@ -44,6 +44,16 @@ function UI_NormalLogin.OnDestroy()
 end
 
 function UI_NormalLogin.onClickLogin(go)
+    this.TestOpenProgressDialog()
+    LoginScene.RequestLogin(lbAccount.text, ipPassword.value)
+end
+
+function UI_NormalLogin.onClickRegister(go)
+    UIManager.CloseWindow("Login/ui_normalLogin")
+    UIManager.OpenWindow("Login/ui_regist")
+end
+
+function UI_NormalLogin.TestOpenStandardDialog()
     local option = UIManager.StandardDialogOption()
     option.Title = "提示"
     option.Content = "你确定登录吗？"
@@ -51,12 +61,12 @@ function UI_NormalLogin.onClickLogin(go)
         print("OnClickOK")
     end
     UIManager.OpenStandardDialog(option)
-
-    LoginScene.RequestLogin(lbAccount.text, ipPassword.value)
 end
 
-function UI_NormalLogin.onClickRegister(go)
-    UIManager.CloseWindow("Login/ui_normalLogin")
-    UIManager.OpenWindow("Login/ui_regist")
+function UI_NormalLogin.TestOpenProgressDialog()
+    local option = UIManager.ProgressDialogOption()
+    option.Content = "正在登录中..."
+    option.AutoClose = true
+    UIManager.OpenProgressDialog(option)
 end
 
