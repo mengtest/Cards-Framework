@@ -30,23 +30,13 @@ function Game.Start()
     SceneManager.GotoScene(Scene.Type.DownloadScene)
 end
 
-function Game.OnEnable()
-    print("Game.OnEnable")
-end
-
-function Game.OnDisable()
-    NetManager.Destroy()
-end
-
 function Game.Update()
     NetManager.Update()
     SceneManager.Instance:Update()
 end
 
-function Game.LateUpdate()
-end
-
 function Game.OnDestroy()
+    NetManager.Destroy()
 end
 
 function Game.Initialize()

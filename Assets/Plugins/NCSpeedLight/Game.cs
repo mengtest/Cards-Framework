@@ -29,8 +29,12 @@ public class Game : LuaBehaviour
     {
         base.Update();
     }
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+    }
     protected override void OnDestroy()
     {
-        base.LateUpdate();
+        base.OnDestroy();
     }
 }

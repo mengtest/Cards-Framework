@@ -10,6 +10,7 @@
 //----------------------------------------------------------------*/
 
 using UnityEngine;
+using LuaInterface;
 
 public class Scene : State
 {
@@ -34,6 +35,11 @@ public class Scene : State
 
     private SceneEventManager m_EventManager;
 
+    private LuaFunction m_OnCreateFunction;
+    private LuaFunction m_BeginFunction;
+    private LuaFunction m_UpdateFunction;
+    private LuaFunction m_EndFunction;
+
     public SceneEventManager EventManager
     {
         get { return m_EventManager; }
@@ -44,7 +50,16 @@ public class Scene : State
     {
         m_EventManager = new SceneEventManager(this);
         LuaManager.DoString(string.Format("require 'NCSpeedLight/Scenes/{0}'", Name));
-        LuaManager.CallFunction(Name + ".OnCreate", this);
+
+        m_OnCreateFunction = LuaManager.LuaState.GetFunction(Name + ".OnCreate", false);
+        m_BeginFunction = LuaManager.LuaState.GetFunction(Name + ".Begin", false);
+        m_UpdateFunction = LuaManager.LuaState.GetFunction(Name + ".Update", false);
+        m_EndFunction = LuaManager.LuaState.GetFunction(Name + ".End", false);
+
+        if (m_OnCreateFunction != null)
+        {
+            m_OnCreateFunction.Call(this);
+        }
     }
 
     public void RegisterEvent(SceneEventType type, EventHandlerDelegate func)
@@ -78,13 +93,19 @@ public class Scene : State
     public override void Begin()
     {
         base.Begin();
-        LuaManager.CallFunction(Name + ".Begin");
+        if (m_BeginFunction != null)
+        {
+            m_BeginFunction.Call();
+        }
     }
 
     public override void Update()
     {
         base.Update();
-        LuaManager.CallFunction(Name + ".Update");
+        if (m_UpdateFunction != null)
+        {
+            m_UpdateFunction.Call();
+        }
     }
 
     public override void End()
@@ -92,6 +113,9 @@ public class Scene : State
         base.End();
         m_EventManager.UnbindAll();
         Resources.UnloadUnusedAssets();
-        LuaManager.CallFunction(Name + ".End");
+        if (m_EndFunction != null)
+        {
+            m_EndFunction.Call();
+        }
     }
 }

@@ -23,6 +23,8 @@ public class NetManager : EventManager
 
     private static Dictionary<ServerType, ServerConnection> m_Connections = null;
 
+    private static Dictionary<ServerType, ServerConnection>.Enumerator m_Enumerator;
+
     private static List<ServerConnection> m_Buffer = null;
 
     public static NetManager Instance
@@ -77,12 +79,14 @@ public class NetManager : EventManager
         {
             m_Buffer.Clear();
         }
-        Dictionary<ServerType, ServerConnection>.Enumerator it = m_Connections.GetEnumerator();
+        m_Enumerator = m_Connections.GetEnumerator();
         for (int i = 0; i < m_Connections.Count; i++)
         {
-            it.MoveNext();
-            if (it.Current.Value != null)
-                it.Current.Value.Update();
+            m_Enumerator.MoveNext();
+            if (m_Enumerator.Current.Value != null)
+            {
+                m_Enumerator.Current.Value.Update();
+            }
         }
     }
 

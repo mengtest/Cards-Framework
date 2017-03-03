@@ -366,9 +366,13 @@ public class SocketConnect
         return true;
     }
 
-    public void GetAllReveivePackets(out List<NetPacket> packets)
+    public void GetAllReveivePackets(List<NetPacket> packets)
     {
-        packets = new List<NetPacket>();
+        if (packets == null)
+        {
+            packets = new List<NetPacket>();
+        }
+        packets.Clear();
         if (m_ReceiveObject != null)
         {
             lock (m_ReceiveObject)
@@ -384,6 +388,7 @@ public class SocketConnect
         }
         return;
     }
+
 
     public NetPacket GetReceivePacket()
     {
@@ -569,7 +574,7 @@ public class ServerConnection
                     m_PacketsBuffer.Clear();
                 }
 
-                m_Socket.GetAllReveivePackets(out m_PacketsBuffer);
+                m_Socket.GetAllReveivePackets(m_PacketsBuffer);
                 if (m_PacketsBuffer != null && m_PacketsBuffer.Count != 0)
                 {
                     for (int i = 0; i < m_PacketsBuffer.Count; i++)

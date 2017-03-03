@@ -10,45 +10,85 @@
 //----------------------------------------------------------------*/
 
 using UnityEngine;
+using LuaInterface;
 
 public class LuaBehaviour : MonoBehaviour
 {
     public string LuaPath = "Modules/Test/";
     public string LuaName = "Hello";
+
+    private LuaFunction m_AwakeFunction;
+    private LuaFunction m_StartFunction;
+    private LuaFunction m_OnEnableFunction;
+    private LuaFunction m_OnDisableFunction;
+    private LuaFunction m_UpdateFunction;
+    private LuaFunction m_LateUpdateFunction;
+    private LuaFunction m_OnDestroyFunction;
+
     protected virtual void Awake()
     {
         LuaManager.DoString(string.Format("require 'NCSpeedLight/{0}{1}'", LuaPath, LuaName));
-        LuaManager.CallFunction(LuaName + ".Awake", gameObject);
+
+        m_AwakeFunction = LuaManager.LuaState.GetFunction(LuaName + ".Awake", false);
+        m_StartFunction = LuaManager.LuaState.GetFunction(LuaName + ".Start", false);
+        m_OnEnableFunction = LuaManager.LuaState.GetFunction(LuaName + ".OnEnable", false);
+        m_OnDisableFunction = LuaManager.LuaState.GetFunction(LuaName + ".OnDisable", false);
+        m_UpdateFunction = LuaManager.LuaState.GetFunction(LuaName + ".Update", false);
+        m_LateUpdateFunction = LuaManager.LuaState.GetFunction(LuaName + ".LateUpdate", false);
+        m_OnDestroyFunction = LuaManager.LuaState.GetFunction(LuaName + ".OnDestroy", false);
+
+        if (m_AwakeFunction != null)
+        {
+            m_AwakeFunction.Call(gameObject);
+        }
     }
 
     protected virtual void Start()
     {
-        LuaManager.CallFunction(LuaName + ".Start");
+        if (m_StartFunction != null)
+        {
+            m_StartFunction.Call();
+        }
     }
 
     protected virtual void OnEnable()
     {
-        LuaManager.CallFunction(LuaName + ".OnEnable");
+        if (m_OnEnableFunction != null)
+        {
+            m_OnEnableFunction.Call();
+        }
     }
 
     protected virtual void OnDisable()
     {
-        LuaManager.CallFunction(LuaName + ".OnDisable");
+        if (m_OnDisableFunction != null)
+        {
+            m_OnDisableFunction.Call();
+        }
     }
 
     protected virtual void Update()
     {
-        LuaManager.CallFunction(LuaName + ".Update");
+        if (m_UpdateFunction != null)
+        {
+            m_UpdateFunction.Call();
+        }
     }
 
     protected virtual void LateUpdate()
     {
-        LuaManager.CallFunction(LuaName + ".LateUpdate");
+        if (m_LateUpdateFunction != null)
+        {
+            m_LateUpdateFunction.Call();
+        }
     }
 
     protected virtual void OnDestroy()
     {
-        LuaManager.CallFunction(LuaName + ".OnDestroy");
+        if (m_OnDestroyFunction != null)
+        {
+            m_OnDestroyFunction.Call();
+        }
     }
 }
 

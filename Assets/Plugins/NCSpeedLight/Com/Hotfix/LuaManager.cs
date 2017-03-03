@@ -34,13 +34,6 @@ public class LuaManager : MonoBehaviour
     private void Update()
     {
     }
-    private void OnGUI()
-    {
-        //if (GUI.Button(new Rect(10, 50, 300, 40), "Notify event 2"))
-        //{
-        //    //GlobalEventManager.Instance.Notify(new Event(2));
-        //}
-    }
     private void OnDestroy()
     {
         m_Instance = null;
