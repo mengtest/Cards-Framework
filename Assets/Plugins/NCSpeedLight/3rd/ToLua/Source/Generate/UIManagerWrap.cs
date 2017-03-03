@@ -200,12 +200,27 @@ public class UIManagerWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 2);
-			string arg0 = ToLua.CheckString(L, 1);
-			float arg1 = (float)LuaDLL.luaL_checknumber(L, 2);
-			UnityEngine.GameObject o = UIManager.OpenTipsDialog(arg0, arg1);
-			ToLua.Push(L, o);
-			return 1;
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 1 && TypeChecker.CheckTypes(L, 1, typeof(string)))
+			{
+				string arg0 = ToLua.ToString(L, 1);
+				UnityEngine.GameObject o = UIManager.OpenTipsDialog(arg0);
+				ToLua.Push(L, o);
+				return 1;
+			}
+			else if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(string), typeof(float)))
+			{
+				string arg0 = ToLua.ToString(L, 1);
+				float arg1 = (float)LuaDLL.lua_tonumber(L, 2);
+				UnityEngine.GameObject o = UIManager.OpenTipsDialog(arg0, arg1);
+				ToLua.Push(L, o);
+				return 1;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: UIManager.OpenTipsDialog");
+			}
 		}
 		catch(Exception e)
 		{

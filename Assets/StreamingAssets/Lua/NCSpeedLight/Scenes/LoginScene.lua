@@ -1,4 +1,4 @@
-LoginScene = {
+﻿LoginScene = {
 }
 
 local this = LoginScene
@@ -70,9 +70,20 @@ end
 function LoginScene.OnLoginReturn(evt)
     local obj = protobuf.decode("GM_AccountReturn", evt.LuaParam)
     if obj.m_Result == 0 then
-        print("Login success.")
+        UIManager.OpenTipsDialog("登录成功")
+    elseif obj.m_Result == 1 then
+        UIManager.OpenTipsDialog("账号密码错误")
+    elseif obj.m_Result == 2 then
+        UIManager.OpenTipsDialog("验证错误")
+    elseif obj.m_Result == 3 then
+        UIManager.OpenTipsDialog("此账号已暂时冻结")
+    elseif obj.m_Result == 4 then
+        UIManager.OpenTipsDialog("账号长度不符合")
+    elseif obj.m_Result == 5 then
+        UIManager.OpenTipsDialog("密码长度不符合")
+    elseif obj.m_Result == 6 then
+        UIManager.OpenTipsDialog("此账号已永久冻结")
     else
-        print("Login fail.")
     end
 end
 
@@ -97,9 +108,16 @@ end
 
 function LoginScene.OnRegisterReturn(evt)
     local obj = protobuf.decode("GM_AccountCreateReturn", evt.LuaParam)
-    if obj.m_Result == 0 then
-        print("Register success.")
+     if obj.m_Result == 0 then
+        UIManager.OpenTipsDialog("创建成功")
+    elseif obj.m_Result == 1 then
+        UIManager.OpenTipsDialog("存在账号")
+    elseif obj.m_Result == 2 then
+        UIManager.OpenTipsDialog("账号长度不符合")
+    elseif obj.m_Result == 3 then
+        UIManager.OpenTipsDialog("密码长度不符合")
+    elseif obj.m_Result == 4 then
+        UIManager.OpenTipsDialog("是关键字")
     else
-        print("Register fail.")
     end
 end

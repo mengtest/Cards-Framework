@@ -44,14 +44,12 @@ function UI_NormalLogin.OnDestroy()
 end
 
 function UI_NormalLogin.onClickLogin(go)
-    this.TestOpenProgressDialog()
     LoginScene.RequestLogin(lbAccount.text, ipPassword.value)
 end
 
 function UI_NormalLogin.onClickRegister(go)
     UIManager.CloseWindow("Login/ui_normalLogin")
     UIManager.OpenWindow("Login/ui_regist")
-    UIManager.OpenTipsDialog("打开注册界面",1)
 end
 
 function UI_NormalLogin.TestOpenStandardDialog()

@@ -320,7 +320,12 @@ public static class UIManager
         }
     }
 
-    public static GameObject OpenTipsDialog(string content, float time = 1f)
+    public static GameObject OpenTipsDialog(string content)
+    {
+        return OpenTipsDialog(content, 1.0f);
+    }
+
+    public static GameObject OpenTipsDialog(string content, float time)
     {
         string assetPath = Helper.StringFormat("UI/Dialog/{0}", DialogType.TipsDialog.ToString());
         GameObject go = ResManager.LoadAssetSync<GameObject>(assetPath);

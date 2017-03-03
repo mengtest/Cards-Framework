@@ -41,7 +41,7 @@ function DownloadScene.CheckVersion()
     UIManager.OpenProgressDialog(option)
 
     coroutine.www(www)
-
+    coroutine.wait(0.5)
     UIManager.CloseProgressDialog()
 
     local str = tolua.tolstring(www.bytes)
@@ -57,11 +57,11 @@ end
 
 function DownloadScene.OnConnectLoginServer(connection)
     print("DownloadScene.OnConnectLoginServer()");
-    UIManager.OpenTipsDialog("成功连接至登录服务器", 1)
+    UIManager.OpenTipsDialog("成功连接至登录服务器")
     SceneManager.GotoScene(Scene.Type.LoginScene)
 end
 
 function DownloadScene.OnDisconnectLoginServer(connection)
     print("DownloadScene.OnDisConnectLoginServer()");
-    UIManager.OpenTipsDialog("已经断开与登录服务器的连接", 1)
+    UIManager.OpenTipsDialog("已经断开与登录服务器的连接")
 end
