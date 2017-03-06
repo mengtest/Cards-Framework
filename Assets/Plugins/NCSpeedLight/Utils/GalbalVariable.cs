@@ -1,16 +1,17 @@
 ﻿/*----------------------------------------------------------------
-            // Copyright © 2014-2016 NCSpeedLight
+            // Copyright © 2014-2017 NCSpeedLight
             // 
-            // FileName: ValueProvider.cs
+            // FileName: GalbalVariable.cs
 			// Describle:
-			// Created By:  Wells Wells Hsu
+			// Created By:  Wells Hsu
 			// Date&Time:  10/12 星期三 11:49:46
             // Modify History:
             //
 //----------------------------------------------------------------*/
+
 using UnityEngine;
 
-public static class ValueProvider
+public static class GalbalVariable
 {
     //public static string LOGIN_SERVER_ADDRESS = "jinxianmajiangappts.damaigame.com";
     public static string LOGIN_SERVER_ADDRESS = "192.168.0.228";
@@ -54,7 +55,7 @@ public static class ValueProvider
             if (m_DialogNode == null)
             {
                 m_DialogNode = new GameObject("DialogNode").transform;
-                m_DialogNode.transform.SetParent(ValueProvider.UIRoot);
+                m_DialogNode.transform.SetParent(GalbalVariable.UIRoot);
                 m_DialogNode.localScale = Vector3.one;
             }
             return m_DialogNode;

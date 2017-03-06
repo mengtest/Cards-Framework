@@ -141,3 +141,17 @@ public class LuaManager : MonoBehaviour
     {
     }
 }
+
+public class LuaLoader : LuaFileUtils
+{
+    public LuaLoader()
+    {
+        instance = this;
+        beZip = true;
+    }
+
+    public void AddBundle(string bundleName)
+    {
+        
+    }
+}

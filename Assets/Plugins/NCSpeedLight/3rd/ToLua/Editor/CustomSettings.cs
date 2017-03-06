@@ -187,6 +187,9 @@ public static class CustomSettings
          _GT(typeof(PersistentManager)),
 
          _GT(typeof(VersionManager)),
+
+         _GT(typeof(GalbalVariable)),
+
 #endregion
 
         #region NGUI Component
