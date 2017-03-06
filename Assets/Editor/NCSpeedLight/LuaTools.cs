@@ -4,14 +4,14 @@ using UnityEditor;
 using UnityEngine;
 
 [InitializeOnLoad]
-public class LuaCompiler
+public class LuaModificationListener
 {
     public static bool IsCompiling = false;
 
     public static string LUA_SCRIPT_DIRECTORY = Application.dataPath + "/Scripts/Lua/";
     public static string LUA_BUNDLE_OUTPUT_DIRECTORY = Application.streamingAssetsPath + "/" + EditorUserBuildSettings.activeBuildTarget + "/";
 
-    static LuaCompiler()
+    static LuaModificationListener()
     {
 
         new DirectoryModificationProcessor(LUA_SCRIPT_DIRECTORY, (o, args) =>
@@ -28,25 +28,25 @@ public class LuaCompiler
 }
 
 
-public class LuaCompilerTools
+public class LuaTools
 {
     [MenuItem("Lua Tools/Compile")]
     public static void CompileLua()
     {
-        if (Directory.Exists(LuaCompiler.LUA_SCRIPT_DIRECTORY) == false)
+        if (Directory.Exists(LuaModificationListener.LUA_SCRIPT_DIRECTORY) == false)
         {
-            Debug.LogError("Directory doesn't exist: " + LuaCompiler.LUA_SCRIPT_DIRECTORY);
+            Debug.LogError("Directory doesn't exist: " + LuaModificationListener.LUA_SCRIPT_DIRECTORY);
             return;
         }
         List<string> files = new List<string>();
-        CollectLuaFiles(LuaCompiler.LUA_SCRIPT_DIRECTORY, files);
+        CollectLuaFiles(LuaModificationListener.LUA_SCRIPT_DIRECTORY, files);
         if (files == null || files.Count == 0)
         {
-            Debug.LogError("Nothing to compile,please check the directory: " + LuaCompiler.LUA_SCRIPT_DIRECTORY);
+            Debug.LogError("Nothing to compile,please check the directory: " + LuaModificationListener.LUA_SCRIPT_DIRECTORY);
         }
         else
         {
-            LuaCompiler.IsCompiling = true;
+            LuaModificationListener.IsCompiling = true;
             BuildAssetBundleOptions options = BuildAssetBundleOptions.CollectDependencies | BuildAssetBundleOptions.CompleteAssets |
                                           BuildAssetBundleOptions.DeterministicAssetBundle | BuildAssetBundleOptions.UncompressedAssetBundle;
             Caching.CleanCache();
@@ -58,7 +58,7 @@ public class LuaCompilerTools
                 File.Copy(file, file + ".bytes", true);
                 Object asset = AssetDatabase.LoadMainAssetAtPath(file + ".bytes");
                 string relativePath = GetRelativePath(file);
-                string outputPath = LuaCompiler.LUA_BUNDLE_OUTPUT_DIRECTORY + relativePath + ".unity3d";
+                string outputPath = LuaModificationListener.LUA_BUNDLE_OUTPUT_DIRECTORY + relativePath + ".unity3d";
                 if (Directory.Exists(Path.GetDirectoryName(outputPath)) == false)
                 {
                     Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
@@ -71,13 +71,13 @@ public class LuaCompilerTools
                 File.Delete(file + ".bytes");
             }
             AssetDatabase.Refresh();
-            LuaCompiler.IsCompiling = false;
+            LuaModificationListener.IsCompiling = false;
         }
     }
 
     public static void CompileSingleLua(string luapath)
     {
-        LuaCompiler.IsCompiling = true;
+        LuaModificationListener.IsCompiling = true;
         BuildAssetBundleOptions options = BuildAssetBundleOptions.CollectDependencies | BuildAssetBundleOptions.CompleteAssets |
                                       BuildAssetBundleOptions.DeterministicAssetBundle | BuildAssetBundleOptions.UncompressedAssetBundle;
         Caching.CleanCache();
@@ -85,7 +85,7 @@ public class LuaCompilerTools
         File.Copy(luapath, luapath + ".bytes", true);
         Object asset = AssetDatabase.LoadMainAssetAtPath(luapath + ".bytes");
         string relativePath = GetRelativePath(luapath);
-        string outputPath = LuaCompiler.LUA_BUNDLE_OUTPUT_DIRECTORY + relativePath + ".unity3d";
+        string outputPath = LuaModificationListener.LUA_BUNDLE_OUTPUT_DIRECTORY + relativePath + ".unity3d";
         if (Directory.Exists(Path.GetDirectoryName(outputPath)) == false)
         {
             Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
@@ -98,7 +98,7 @@ public class LuaCompilerTools
         BuildPipeline.BuildAssetBundle(asset, null, outputPath, options, EditorUserBuildSettings.activeBuildTarget);
         File.Delete(luapath + ".bytes");
         AssetDatabase.Refresh();
-        LuaCompiler.IsCompiling = false;
+        LuaModificationListener.IsCompiling = false;
     }
 
     public static string GetRelativePath(string assetPath)
@@ -124,10 +124,12 @@ public class LuaCompilerTools
         }
         return output;
     }
+
     public static string NormallizePath(string path)
     {
         return path.Replace("\\", "/");
     }
+
     public static string GetFileDirectory(string fullpath)
     {
         if (string.IsNullOrEmpty(fullpath))

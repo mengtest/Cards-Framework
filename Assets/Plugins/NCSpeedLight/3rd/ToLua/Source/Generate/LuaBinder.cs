@@ -30,7 +30,7 @@ public static class LuaBinder
 		SceneWrap.Register(L);
 		PersistentManagerWrap.Register(L);
 		VersionManagerWrap.Register(L);
-		GalbalVariableWrap.Register(L);
+		SharedVariableWrap.Register(L);
 		UIEventListenerWrap.Register(L);
 		LanguageSelectionWrap.Register(L);
 		TypewriterEffectWrap.Register(L);

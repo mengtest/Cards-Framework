@@ -188,7 +188,7 @@ public static class CustomSettings
 
          _GT(typeof(VersionManager)),
 
-         _GT(typeof(GalbalVariable)),
+         _GT(typeof(SharedVariable)),
 
 #endregion
 

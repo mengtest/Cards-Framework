@@ -109,11 +109,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Editor\NCSpeedLight\CommonTools.cs" />
     <Compile Include="Assets\Editor\NCSpeedLight\DirectoryModificationProcessor.cs" />
     <Compile Include="Assets\Editor\NCSpeedLight\EditorEventCatcher.cs" />
     <Compile Include="Assets\Editor\NCSpeedLight\EditorLoom.cs" />
-    <Compile Include="Assets\Editor\NCSpeedLight\LuaCompiler.cs" />
     <Compile Include="Assets\Editor\NCSpeedLight\LuaPBProcessor.cs" />
+    <Compile Include="Assets\Editor\NCSpeedLight\LuaTools.cs" />
     <Compile Include="Assets\Editor\NCSpeedLight\SVNProcessor.cs" />
   </ItemGroup>
   <ItemGroup>

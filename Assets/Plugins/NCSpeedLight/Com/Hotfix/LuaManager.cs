@@ -9,16 +9,22 @@
            //
 //----------------------------------------------------------------*/
 
+using System.IO;
 using UnityEngine;
 using LuaInterface;
 
 public class LuaManager : MonoBehaviour
 {
-    public static GameObject GO;
+    public static GameObject Root;
+
     public static LuaState LuaState;
+
     public static LuaLooper LuaLooper = null;
 
+    public static LuaLoader LuaLoader = null;
+
     private static LuaManager m_Instance;
+
     public static LuaManager Instance
     {
         get
@@ -31,9 +37,7 @@ public class LuaManager : MonoBehaviour
     {
         m_Instance = this;
     }
-    private void Update()
-    {
-    }
+
     private void OnDestroy()
     {
         m_Instance = null;
@@ -41,14 +45,17 @@ public class LuaManager : MonoBehaviour
 
     public static void Initialize()
     {
-        GO = new GameObject("LuaManager");
+        Root = new GameObject("LuaManager");
         if (Game.Instance)
         {
-            GO.transform.SetParent(Game.Instance.transform);
+            Root.transform.SetParent(Game.Instance.transform);
         }
-        GO.AddComponent<LuaManager>();
+        Root.AddComponent<LuaManager>();
 
         LuaState = new LuaState();
+
+        //LuaLoader = new LuaLoader();
+
         InitializeLibs();
         InitializeCJson();
         LuaState.LuaSetTop(0);
@@ -56,7 +63,7 @@ public class LuaManager : MonoBehaviour
         LuaCoroutine.Register(LuaState, Instance);
 
         InitializeLuaDirectory();
-        InitializeLuaBundle();
+        InitializeCoreLuaBundle();
 
         LuaState.Start();
 
@@ -75,6 +82,7 @@ public class LuaManager : MonoBehaviour
         LuaState.OpenLibs(LuaDLL.luaopen_bit);
         LuaState.OpenLibs(LuaDLL.luaopen_socket_core);
     }
+
     private static void InitializeCJson()
     {
         LuaState.LuaGetField(LuaIndexes.LUA_REGISTRYINDEX, "_LOADED");
@@ -83,15 +91,18 @@ public class LuaManager : MonoBehaviour
         LuaState.OpenLibs(LuaDLL.luaopen_cjson_safe);
         LuaState.LuaSetField(-2, "cjson.safe");
     }
+
     private static void InitializeLuaFiles()
     {
         DoString("require 'NCSpeedLight/Utils/Define'");
     }
+
     private static void InitializeLuaDirectory()
     {
         //LuaState.AddSearchPath(Application.dataPath + "/Scripts/Lua/");
     }
-    private static void InitializeLuaBundle()
+
+    private static void InitializeCoreLuaBundle()
     {
 
     }
@@ -140,6 +151,7 @@ public class LuaManager : MonoBehaviour
     public void Close()
     {
     }
+
 }
 
 public class LuaLoader : LuaFileUtils
@@ -150,8 +162,32 @@ public class LuaLoader : LuaFileUtils
         beZip = true;
     }
 
+    /// <summary>
+    /// 添加assetbundle形式的lua代码.
+    /// </summary>
+    /// <param name="bundleName"></param>
     public void AddBundle(string bundleName)
     {
-        
+        string url = SharedVariable.DATA_PATH + bundleName.ToLower();
+        if (File.Exists(url))
+        {
+            AssetBundle bundle = AssetBundle.LoadFromFile(url);
+            if (bundle)
+            {
+                bundleName = bundleName.Replace("lua/", "");
+                base.AddSearchBundle(bundleName.ToLower(), bundle);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 当LuaVM加载Lua文件的时候，这里就会被调用，
+    /// 用户可以自定义加载行为，只要返回byte[]即可
+    /// </summary>
+    /// <param name="fileName"></param>
+    /// <returns></returns>
+    public override byte[] ReadFile(string fileName)
+    {
+        return base.ReadFile(fileName);
     }
 }

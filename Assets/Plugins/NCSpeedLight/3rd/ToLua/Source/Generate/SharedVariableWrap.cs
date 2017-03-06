@@ -2,39 +2,22 @@
 using System;
 using LuaInterface;
 
-public class GalbalVariableWrap
+public class SharedVariableWrap
 {
 	public static void Register(LuaState L)
 	{
-		L.BeginStaticLibs("GalbalVariable");
+		L.BeginStaticLibs("SharedVariable");
 		L.RegConstant("LOGIN_SERVER_PORT", 50000);
 		L.RegConstant("UI_ROOT_HEIGHT", 720);
 		L.RegConstant("UI_ROOT_WIDTH", 1224);
-		L.RegVar("UI_PRFAB_BASE_DIRECTORY", get_UI_PRFAB_BASE_DIRECTORY, null);
 		L.RegConstant("COPY_ID", 10001);
 		L.RegVar("LOGIN_SERVER_ADDRESS", get_LOGIN_SERVER_ADDRESS, set_LOGIN_SERVER_ADDRESS);
 		L.RegVar("IsSinglePlayer", get_IsSinglePlayer, set_IsSinglePlayer);
-		L.RegVar("m_PlayersNode", get_m_PlayersNode, set_m_PlayersNode);
+		L.RegVar("GAME_NAME", get_GAME_NAME, set_GAME_NAME);
 		L.RegVar("SCREEN_SCALE", get_SCREEN_SCALE, null);
-		L.RegVar("UICamera", get_UICamera, null);
-		L.RegVar("UIRoot", get_UIRoot, null);
-		L.RegVar("DialogNode", get_DialogNode, null);
-		L.RegVar("PlayersNode", get_PlayersNode, null);
+		L.RegVar("DATA_PATH", get_DATA_PATH, null);
+		L.RegVar("APP_CONTENT_PATH", get_APP_CONTENT_PATH, null);
 		L.EndStaticLibs();
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_UI_PRFAB_BASE_DIRECTORY(IntPtr L)
-	{
-		try
-		{
-			LuaDLL.lua_pushstring(L, GalbalVariable.UI_PRFAB_BASE_DIRECTORY);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -42,7 +25,7 @@ public class GalbalVariableWrap
 	{
 		try
 		{
-			LuaDLL.lua_pushstring(L, GalbalVariable.LOGIN_SERVER_ADDRESS);
+			LuaDLL.lua_pushstring(L, SharedVariable.LOGIN_SERVER_ADDRESS);
 			return 1;
 		}
 		catch(Exception e)
@@ -56,7 +39,7 @@ public class GalbalVariableWrap
 	{
 		try
 		{
-			LuaDLL.lua_pushboolean(L, GalbalVariable.IsSinglePlayer);
+			LuaDLL.lua_pushboolean(L, SharedVariable.IsSinglePlayer);
 			return 1;
 		}
 		catch(Exception e)
@@ -66,11 +49,11 @@ public class GalbalVariableWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_m_PlayersNode(IntPtr L)
+	static int get_GAME_NAME(IntPtr L)
 	{
 		try
 		{
-			ToLua.Push(L, GalbalVariable.m_PlayersNode);
+			LuaDLL.lua_pushstring(L, SharedVariable.GAME_NAME);
 			return 1;
 		}
 		catch(Exception e)
@@ -84,7 +67,7 @@ public class GalbalVariableWrap
 	{
 		try
 		{
-			LuaDLL.lua_pushnumber(L, GalbalVariable.SCREEN_SCALE);
+			LuaDLL.lua_pushnumber(L, SharedVariable.SCREEN_SCALE);
 			return 1;
 		}
 		catch(Exception e)
@@ -94,11 +77,11 @@ public class GalbalVariableWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_UICamera(IntPtr L)
+	static int get_DATA_PATH(IntPtr L)
 	{
 		try
 		{
-			ToLua.Push(L, GalbalVariable.UICamera);
+			LuaDLL.lua_pushstring(L, SharedVariable.DATA_PATH);
 			return 1;
 		}
 		catch(Exception e)
@@ -108,39 +91,11 @@ public class GalbalVariableWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_UIRoot(IntPtr L)
+	static int get_APP_CONTENT_PATH(IntPtr L)
 	{
 		try
 		{
-			ToLua.Push(L, GalbalVariable.UIRoot);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_DialogNode(IntPtr L)
-	{
-		try
-		{
-			ToLua.Push(L, GalbalVariable.DialogNode);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_PlayersNode(IntPtr L)
-	{
-		try
-		{
-			ToLua.Push(L, GalbalVariable.PlayersNode);
+			LuaDLL.lua_pushstring(L, SharedVariable.APP_CONTENT_PATH);
 			return 1;
 		}
 		catch(Exception e)
@@ -155,7 +110,7 @@ public class GalbalVariableWrap
 		try
 		{
 			string arg0 = ToLua.CheckString(L, 2);
-			GalbalVariable.LOGIN_SERVER_ADDRESS = arg0;
+			SharedVariable.LOGIN_SERVER_ADDRESS = arg0;
 			return 0;
 		}
 		catch(Exception e)
@@ -170,7 +125,7 @@ public class GalbalVariableWrap
 		try
 		{
 			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
-			GalbalVariable.IsSinglePlayer = arg0;
+			SharedVariable.IsSinglePlayer = arg0;
 			return 0;
 		}
 		catch(Exception e)
@@ -180,12 +135,12 @@ public class GalbalVariableWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_m_PlayersNode(IntPtr L)
+	static int set_GAME_NAME(IntPtr L)
 	{
 		try
 		{
-			UnityEngine.Transform arg0 = (UnityEngine.Transform)ToLua.CheckUnityObject(L, 2, typeof(UnityEngine.Transform));
-			GalbalVariable.m_PlayersNode = arg0;
+			string arg0 = ToLua.CheckString(L, 2);
+			SharedVariable.GAME_NAME = arg0;
 			return 0;
 		}
 		catch(Exception e)

@@ -16,9 +16,10 @@ public class LuaManagerWrap
 		L.RegFunction("Close", Close);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
-		L.RegVar("GO", get_GO, set_GO);
+		L.RegVar("Root", get_Root, set_Root);
 		L.RegVar("LuaState", get_LuaState, set_LuaState);
 		L.RegVar("LuaLooper", get_LuaLooper, set_LuaLooper);
+		L.RegVar("LuaLoader", get_LuaLoader, set_LuaLoader);
 		L.RegVar("Instance", get_Instance, null);
 		L.EndClass();
 	}
@@ -157,11 +158,11 @@ public class LuaManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_GO(IntPtr L)
+	static int get_Root(IntPtr L)
 	{
 		try
 		{
-			ToLua.Push(L, LuaManager.GO);
+			ToLua.Push(L, LuaManager.Root);
 			return 1;
 		}
 		catch(Exception e)
@@ -199,6 +200,20 @@ public class LuaManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_LuaLoader(IntPtr L)
+	{
+		try
+		{
+			ToLua.PushObject(L, LuaManager.LuaLoader);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_Instance(IntPtr L)
 	{
 		try
@@ -213,12 +228,12 @@ public class LuaManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_GO(IntPtr L)
+	static int set_Root(IntPtr L)
 	{
 		try
 		{
 			UnityEngine.GameObject arg0 = (UnityEngine.GameObject)ToLua.CheckUnityObject(L, 2, typeof(UnityEngine.GameObject));
-			LuaManager.GO = arg0;
+			LuaManager.Root = arg0;
 			return 0;
 		}
 		catch(Exception e)
@@ -249,6 +264,21 @@ public class LuaManagerWrap
 		{
 			LuaLooper arg0 = (LuaLooper)ToLua.CheckUnityObject(L, 2, typeof(LuaLooper));
 			LuaManager.LuaLooper = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_LuaLoader(IntPtr L)
+	{
+		try
+		{
+			LuaLoader arg0 = (LuaLoader)ToLua.CheckObject(L, 2, typeof(LuaLoader));
+			LuaManager.LuaLoader = arg0;
 			return 0;
 		}
 		catch(Exception e)

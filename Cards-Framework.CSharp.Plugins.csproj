@@ -408,7 +408,6 @@
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\DelegateFactory.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\EventManagerWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\EvtWrap.cs" />
-    <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\GalbalVariableWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\GlobalEventManagerWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\HelperWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\LanguageSelectionWrap.cs" />
@@ -429,6 +428,7 @@
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\Scene_TypeWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\ServerConnectionWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\ServerConnection_ListenerWrap.cs" />
+    <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\SharedVariableWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\SpringPositionWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\StateMachineWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\StateWrap.cs" />
@@ -702,8 +702,8 @@
     <Compile Include="Assets\Plugins\NCSpeedLight\Game.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Protocol\AccountMessage.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Protocol\PBMessage.cs" />
-    <Compile Include="Assets\Plugins\NCSpeedLight\Utils\GalbalVariable.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Utils\Helper.cs" />
+    <Compile Include="Assets\Plugins\NCSpeedLight\Utils\SharedVariable.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Utils\UIHelper.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Utils\VPTimer.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Utils\View\FPSPrinter.cs" />
