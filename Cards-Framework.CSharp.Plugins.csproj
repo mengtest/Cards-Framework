@@ -700,6 +700,7 @@
     <Compile Include="Assets\Plugins\NCSpeedLight\Core\View\UIManager.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Core\View\UIManager1.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Game.cs" />
+    <Compile Include="Assets\Plugins\NCSpeedLight\Main.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Protocol\AccountMessage.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Protocol\PBMessage.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Utils\Helper.cs" />
@@ -743,6 +744,7 @@
     <None Include="Assets\Raw Resources\Atlas\Login\QQlogin.txt" />
     <None Include="Assets\Raw Resources\Atlas\Login\login.txt" />
     <None Include="Assets\Raw Resources\Atlas\Login\text.txt" />
+    <None Include="Assets\StreamingAssets\Lua\files.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

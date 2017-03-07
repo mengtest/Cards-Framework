@@ -1085,4 +1085,26 @@ public class Helper
             }
         }
     }
+
+    public static string MD5File(string file)
+    {
+        try
+        {
+            FileStream fs = new FileStream(file, FileMode.Open);
+            MD5 md5 = new MD5CryptoServiceProvider();
+            byte[] retVal = md5.ComputeHash(fs);
+            fs.Close();
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < retVal.Length; i++)
+            {
+                sb.Append(retVal[i].ToString("x2"));
+            }
+            return sb.ToString();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("MD5File() fail, error:" + ex.Message);
+        }
+    }
 }

@@ -28,7 +28,7 @@ public class LuaTools
 
     public static string LUA_SCRIPT_DIRECTORY = Application.dataPath + "/Scripts/Lua/";
 
-    public static string LUA_BUNDLE_OUTPUT_DIRECTORY = SharedVariable.DATA_PATH + "/" + SharedVariable.PLATFORM_NAME + "/Lua/";
+    //public static string LUA_BUNDLE_OUTPUT_DIRECTORY = SharedVariable.DATA_PATH +   "/Lua/";
 
     [MenuItem("Lua Tools/Compile")]
     public static void CompileLua()
@@ -44,7 +44,15 @@ public class LuaTools
 
         DeleteLuaBytesFiles(byteFiles);
 
+        GenerateLuaFileIndex();
+
         IsCompiling = false;
+    }
+
+
+    [MenuItem("Lua Tools/Copy LuaBundles")]
+    public static void CopyLuaBundles()
+    {
     }
 
     private static bool PrepareDirectory()
@@ -54,14 +62,14 @@ public class LuaTools
             Debug.LogError("Directory doesn't exist: " + LUA_SCRIPT_DIRECTORY);
             return false;
         }
-        if (Directory.Exists(LUA_BUNDLE_OUTPUT_DIRECTORY) == false)
+        if (Directory.Exists(SharedVariable.LUA_BUNDLE_PATH) == false)
         {
-            Directory.CreateDirectory(LUA_BUNDLE_OUTPUT_DIRECTORY);
+            Directory.CreateDirectory(SharedVariable.LUA_BUNDLE_PATH);
         }
         else
         {
-            Directory.Delete(LUA_BUNDLE_OUTPUT_DIRECTORY, true);
-            Directory.CreateDirectory(LUA_BUNDLE_OUTPUT_DIRECTORY);
+            Directory.Delete(SharedVariable.LUA_BUNDLE_PATH, true);
+            Directory.CreateDirectory(SharedVariable.LUA_BUNDLE_PATH);
         }
         return true;
     }
@@ -72,7 +80,7 @@ public class LuaTools
         {
             files = new List<string>();
         }
-        CollectLuaFiles(LUA_SCRIPT_DIRECTORY, files);
+        CollecFiles(LUA_SCRIPT_DIRECTORY, files);
         if (files != null && files.Count >= 0)
         {
             for (int i = 0; i < files.Count; i++)
@@ -122,7 +130,7 @@ public class LuaTools
             BuildAssetBundleOptions options = BuildAssetBundleOptions.CollectDependencies | BuildAssetBundleOptions.CompleteAssets |
                                             BuildAssetBundleOptions.DeterministicAssetBundle | BuildAssetBundleOptions.UncompressedAssetBundle;
 
-            string outputPath = LUA_BUNDLE_OUTPUT_DIRECTORY + bundleName;
+            string outputPath = SharedVariable.LUA_BUNDLE_PATH + bundleName;
 
             if (File.Exists(outputPath))
             {
@@ -148,29 +156,58 @@ public class LuaTools
         AssetDatabase.Refresh();
     }
 
+    private static void GenerateLuaFileIndex()
+    {
+        string directory = SharedVariable.LUA_BUNDLE_PATH;
+
+        string filePath = directory + "/files.txt";
+        if (File.Exists(filePath))
+        {
+            File.Delete(filePath);
+        }
+
+        List<string> files = new List<string>();
+        CollecFiles(directory, files, "*.unity3d");
+
+        FileStream fs = new FileStream(filePath, FileMode.CreateNew);
+        StreamWriter sw = new StreamWriter(fs);
+        for (int i = 0; i < files.Count; i++)
+        {
+            string file = files[i];
+
+            string md5 = Helper.MD5File(file);
+            string value = file.Replace(directory, string.Empty);
+            sw.WriteLine(value + "|" + md5);
+        }
+        sw.Close();
+        fs.Close();
+
+        AssetDatabase.Refresh();
+    }
+
     public static void CompileSingleLua(string luapath)
     {
-        IsCompiling = true;
-        BuildAssetBundleOptions options = BuildAssetBundleOptions.CollectDependencies | BuildAssetBundleOptions.CompleteAssets | BuildAssetBundleOptions.DeterministicAssetBundle | BuildAssetBundleOptions.UncompressedAssetBundle;
-        Caching.CleanCache();
+        //IsCompiling = true;
+        //BuildAssetBundleOptions options = BuildAssetBundleOptions.CollectDependencies | BuildAssetBundleOptions.CompleteAssets | BuildAssetBundleOptions.DeterministicAssetBundle | BuildAssetBundleOptions.UncompressedAssetBundle;
+        //Caching.CleanCache();
 
-        File.Copy(luapath, luapath + ".bytes", true);
-        Object asset = AssetDatabase.LoadMainAssetAtPath(luapath + ".bytes");
-        string relativePath = GetRelativePath(luapath);
-        string outputPath = LUA_BUNDLE_OUTPUT_DIRECTORY + relativePath;
-        if (Directory.Exists(Path.GetDirectoryName(outputPath)) == false)
-        {
-            Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
-        }
-        if (File.Exists(outputPath))
-        {
-            File.Delete(outputPath);
-        }
+        //File.Copy(luapath, luapath + ".bytes", true);
+        //Object asset = AssetDatabase.LoadMainAssetAtPath(luapath + ".bytes");
+        //string relativePath = GetRelativePath(luapath);
+        //string outputPath = LUA_BUNDLE_OUTPUT_DIRECTORY + relativePath;
+        //if (Directory.Exists(Path.GetDirectoryName(outputPath)) == false)
+        //{
+        //    Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
+        //}
+        //if (File.Exists(outputPath))
+        //{
+        //    File.Delete(outputPath);
+        //}
 
-        BuildPipeline.BuildAssetBundle(asset, new Object[] { asset }, outputPath, options, EditorUserBuildSettings.activeBuildTarget);
-        File.Delete(luapath + ".bytes");
-        AssetDatabase.Refresh();
-        IsCompiling = false;
+        //BuildPipeline.BuildAssetBundle(asset, new Object[] { asset }, outputPath, options, EditorUserBuildSettings.activeBuildTarget);
+        //File.Delete(luapath + ".bytes");
+        //AssetDatabase.Refresh();
+        //IsCompiling = false;
     }
 
     public static string GetRelativePath(string assetPath)
@@ -178,7 +215,7 @@ public class LuaTools
         return assetPath.Substring(Application.dataPath.Length + 1);
     }
 
-    private static List<string> CollectLuaFiles(string directory, List<string> output, string extension = "*.lua")
+    private static List<string> CollecFiles(string directory, List<string> output, string extension = "*.lua")
     {
         if (Directory.Exists(directory))
         {
@@ -191,7 +228,7 @@ public class LuaTools
             string[] dirs = Directory.GetDirectories(directory);
             for (int i = 0; i < dirs.Length; i++)
             {
-                CollectLuaFiles(dirs[i], output);
+                CollecFiles(dirs[i], output);
             }
         }
         return output;

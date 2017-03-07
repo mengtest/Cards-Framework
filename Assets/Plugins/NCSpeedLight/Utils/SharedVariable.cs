@@ -48,12 +48,31 @@ public static class SharedVariable
             }
             else if (Application.isEditor)
             {
-                return "C:/" + GAME_NAME + "/";
+                return "C:/" + GAME_NAME + "/" + PLATFORM_NAME + "/";
             }
             else if (Application.platform == RuntimePlatform.OSXEditor)
             {
                 int i = Application.dataPath.LastIndexOf('/');
                 return Application.dataPath.Substring(0, i + 1) + GAME_NAME + "/";
+            }
+            else
+            {
+                return "C:/" + GAME_NAME + "/";
+            }
+        }
+    }
+
+    public static string LUA_BUNDLE_PATH
+    {
+        get
+        {
+            if (Application.isMobilePlatform || Application.platform == RuntimePlatform.WindowsPlayer)
+            {
+                return Application.persistentDataPath + "/Lua/";
+            }
+            else if (Application.isEditor)
+            {
+                return Application.streamingAssetsPath + "/Lua/";
             }
             else
             {

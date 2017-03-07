@@ -14,8 +14,8 @@ using LuaInterface;
 
 public class LuaBehaviour : MonoBehaviour
 {
-    public string LuaPath = "Modules/Test/";
-    public string LuaName = "Hello";
+    public string LuaPath;
+    public string LuaName;
 
     private LuaFunction m_AwakeFunction;
     private LuaFunction m_StartFunction;

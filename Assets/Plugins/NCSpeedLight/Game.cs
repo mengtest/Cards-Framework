@@ -9,6 +9,7 @@
             //
 //----------------------------------------------------------------*/
 
+using System.IO;
 using UnityEngine;
 
 public class Game : LuaBehaviour
@@ -16,8 +17,11 @@ public class Game : LuaBehaviour
     public static Game Instance { get; set; }
     protected override void Awake()
     {
+        LuaName = "Game";
+        LuaPath = string.Empty;
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        ExtractAssets();
         LuaManager.Initialize();
         base.Awake();
     }
@@ -36,5 +40,22 @@ public class Game : LuaBehaviour
     protected override void OnDestroy()
     {
         base.OnDestroy();
+    }
+
+    private void ExtractAssets()
+    {
+        if (Application.isEditor == false)
+        {
+            string directory = SharedVariable.DATA_PATH + "/" + SharedVariable.PLATFORM_NAME + "/Lua/";
+            if (Directory.Exists(directory) == false)
+            {
+                Directory.CreateDirectory(directory);
+            }
+            else
+            {
+                Directory.Delete(directory);
+                Directory.CreateDirectory(directory);
+            }
+        }
     }
 }
