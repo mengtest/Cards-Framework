@@ -778,7 +778,7 @@ public class HelperWrap
 		{
 			ToLua.CheckArgsCount(L, 1);
 			string arg0 = ToLua.CheckString(L, 1);
-			string o = Helper.GetFileNameFromFullPath(arg0);
+			string o = Helper.GetFileNameFromPath(arg0);
 			LuaDLL.lua_pushstring(L, o);
 			return 1;
 		}

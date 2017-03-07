@@ -54,7 +54,6 @@ public class LuaManager : MonoBehaviour
 
         LuaState = new LuaState();
 
-        //LuaLoader = new LuaLoader();
 
         InitializeLibs();
         InitializeCJson();
@@ -63,7 +62,8 @@ public class LuaManager : MonoBehaviour
         LuaCoroutine.Register(LuaState, Instance);
 
         InitializeLuaDirectory();
-        InitializeCoreLuaBundle();
+        InitializeToLuaBundle();
+        InitializeGameLuaBundle();
 
         LuaState.Start();
 
@@ -102,8 +102,34 @@ public class LuaManager : MonoBehaviour
         //LuaState.AddSearchPath(Application.dataPath + "/Scripts/Lua/");
     }
 
-    private static void InitializeCoreLuaBundle()
+    private static void InitializeToLuaBundle()
     {
+        LuaLoader = new LuaLoader();
+
+        LuaLoader.AddBundle("tolua");
+        LuaLoader.AddBundle("tolua_system");
+        LuaLoader.AddBundle("tolua_system_reflection");
+        LuaLoader.AddBundle("tolua_unityengine");
+        LuaLoader.AddBundle("tolua_misc");
+    }
+
+    private static void InitializeGameLuaBundle()
+    {
+        LuaLoader.AddBundle("ncspeedlight");
+
+        LuaLoader.AddBundle("ncspeedlight_3rd_cjson");
+        LuaLoader.AddBundle("ncspeedlight_3rd_luabitop");
+        LuaLoader.AddBundle("ncspeedlight_3rd_pbc");
+        LuaLoader.AddBundle("ncspeedlight_3rd_pblua");
+        LuaLoader.AddBundle("ncspeedlight_3rd_sproto");
+
+        LuaLoader.AddBundle("ncspeedlight_modules_dialog");
+        LuaLoader.AddBundle("ncspeedlight_modules_login");
+
+        LuaLoader.AddBundle("ncspeedlight_protocol");
+
+        LuaLoader.AddBundle("ncspeedlight_scenes");
+        LuaLoader.AddBundle("ncspeedlight_utils");
 
     }
 
@@ -168,15 +194,19 @@ public class LuaLoader : LuaFileUtils
     /// <param name="bundleName"></param>
     public void AddBundle(string bundleName)
     {
-        string url = SharedVariable.DATA_PATH + bundleName.ToLower();
+        string fileName = bundleName.ToLower() + ".unity3d";
+        string url = SharedVariable.DATA_PATH + SharedVariable.PLATFORM_NAME + "/Lua/" + fileName;
         if (File.Exists(url))
         {
             AssetBundle bundle = AssetBundle.LoadFromFile(url);
-            if (bundle)
+            if (bundle != null)
             {
-                bundleName = bundleName.Replace("lua/", "");
-                base.AddSearchBundle(bundleName.ToLower(), bundle);
+                base.AddSearchBundle(bundleName, bundle);
             }
+        }
+        else
+        {
+            Helper.LogError("Add lua bundle fail caused by null file: " + url);
         }
     }
 

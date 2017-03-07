@@ -42,13 +42,13 @@ public static class SharedVariable
     {
         get
         {
-            if (Application.isMobilePlatform)
+            if (Application.isMobilePlatform || Application.platform == RuntimePlatform.WindowsPlayer)
             {
-                return Application.persistentDataPath + "/" + GAME_NAME + "/";
+                return Application.persistentDataPath + "/";
             }
-            else if (Application.platform == RuntimePlatform.WindowsPlayer || Application.isEditor)
+            else if (Application.isEditor)
             {
-                return Application.streamingAssetsPath + "/";
+                return "C:/" + GAME_NAME + "/";
             }
             else if (Application.platform == RuntimePlatform.OSXEditor)
             {
@@ -58,7 +58,6 @@ public static class SharedVariable
             else
             {
                 return "C:/" + GAME_NAME + "/";
-
             }
         }
     }
@@ -86,4 +85,41 @@ public static class SharedVariable
             return path;
         }
     }
+
+    public static RuntimePlatform PLATFORM
+    {
+        get
+        {
+#if UNITY_EDITOR || UNITY_STANDALONE_WINDSOWS
+            return RuntimePlatform.WindowsPlayer;
+#elif UNITY_ANDROID
+            return RuntimePlatform.Android;
+#elif UNITY_IOS
+            return RuntimePlatform.IPhonePlayer;
+#endif
+
+        }
+    }
+
+    public static string PLATFORM_NAME
+    {
+        get
+        {
+#if UNITY_STANDALONE
+   return "Win";
+#elif UNITY_ANDROID
+            return "Android";
+#elif UNITY_IPHONE
+    return "iOS";        
+#else
+    return string.Empty;        
+#endif
+        }
+
+    }
+
+    /// <summary>
+    /// 是否加密Lua文件.
+    /// </summary>
+    public static bool ENCRYPT_LUA = true;
 }

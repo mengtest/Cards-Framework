@@ -677,18 +677,23 @@ public class Helper
         return ((int)c > 127);
     }
 
-    public static string GetFileNameFromFullPath(string varPath)
+    public static string GetFileNameFromPath(string path)
     {
-        if (string.IsNullOrEmpty(varPath))
+        if (string.IsNullOrEmpty(path))
         {
-            return null;
+            return string.Empty;
         };
-        string[] paths = varPath.Split(new char[] { '/' });
+        string[] paths = path.Split(new char[] { '/' });
         if (paths.Length == 0)
         {
-            return null;
+            return string.Empty;
         }
         return paths[paths.Length - 1];
+    }
+
+    public static string SplitPathExtension(string path)
+    {
+        return path.Substring(0, path.LastIndexOf("."));
     }
 
     /// <summary>

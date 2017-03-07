@@ -2,13 +2,13 @@
 
 public static class LuaConst
 {
-    public static string luaDir = Application.streamingAssetsPath + "/Lua";                //lua逻辑代码目录
+    public static string luaDir = Application.dataPath + "/Scripts/Lua";                //lua逻辑代码目录
     public static string toluaDir = Application.dataPath + "/Plugins/NCSpeedLight/3rd/ToLua/Lua";        //tolua lua文件目录
 
 #if UNITY_STANDALONE
     public static string osDir = "Win";
 #elif UNITY_ANDROID
-    public static string osDir = "Android";            
+    public static string osDir = "Android";
 #elif UNITY_IPHONE
     public static string osDir = "iOS";        
 #else

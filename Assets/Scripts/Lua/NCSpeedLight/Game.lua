@@ -9,6 +9,8 @@
 --
 ----------------------------------------------- 
 
+require 'NCSpeedLight/Utils/Define'
+
 Game = {
 }
 
