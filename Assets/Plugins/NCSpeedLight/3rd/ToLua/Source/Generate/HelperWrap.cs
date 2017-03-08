@@ -38,7 +38,8 @@ public class HelperWrap
 		L.RegFunction("CreateDirectory", CreateDirectory);
 		L.RegFunction("FilePathToMD5", FilePathToMD5);
 		L.RegFunction("CheckChinese", CheckChinese);
-		L.RegFunction("GetFileNameFromFullPath", GetFileNameFromFullPath);
+		L.RegFunction("GetFileNameFromPath", GetFileNameFromPath);
+		L.RegFunction("SplitPathExtension", SplitPathExtension);
 		L.RegFunction("ColorToStr", ColorToStr);
 		L.RegFunction("DeleteNullChar", DeleteNullChar);
 		L.RegFunction("StrToColor", StrToColor);
@@ -54,6 +55,7 @@ public class HelperWrap
 		L.RegFunction("GenerateAssetPathByAbsolutelyDir", GenerateAssetPathByAbsolutelyDir);
 		L.RegFunction("DeleteDirectory", DeleteDirectory);
 		L.RegFunction("GoldReturnStr", GoldReturnStr);
+		L.RegFunction("MD5File", MD5File);
 		L.RegFunction("New", _CreateHelper);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegFunction("ChildDelegate", Helper_ChildDelegate);
@@ -772,13 +774,30 @@ public class HelperWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int GetFileNameFromFullPath(IntPtr L)
+	static int GetFileNameFromPath(IntPtr L)
 	{
 		try
 		{
 			ToLua.CheckArgsCount(L, 1);
 			string arg0 = ToLua.CheckString(L, 1);
 			string o = Helper.GetFileNameFromPath(arg0);
+			LuaDLL.lua_pushstring(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SplitPathExtension(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			string arg0 = ToLua.CheckString(L, 1);
+			string o = Helper.SplitPathExtension(arg0);
 			LuaDLL.lua_pushstring(L, o);
 			return 1;
 		}
@@ -1047,6 +1066,23 @@ public class HelperWrap
 			ToLua.CheckArgsCount(L, 1);
 			double arg0 = (double)LuaDLL.luaL_checknumber(L, 1);
 			string o = Helper.GoldReturnStr(arg0);
+			LuaDLL.lua_pushstring(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int MD5File(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			string arg0 = ToLua.CheckString(L, 1);
+			string o = Helper.MD5File(arg0);
 			LuaDLL.lua_pushstring(L, o);
 			return 1;
 		}

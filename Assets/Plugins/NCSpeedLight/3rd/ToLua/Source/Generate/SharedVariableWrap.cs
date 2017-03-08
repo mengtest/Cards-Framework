@@ -14,9 +14,13 @@ public class SharedVariableWrap
 		L.RegVar("LOGIN_SERVER_ADDRESS", get_LOGIN_SERVER_ADDRESS, set_LOGIN_SERVER_ADDRESS);
 		L.RegVar("IsSinglePlayer", get_IsSinglePlayer, set_IsSinglePlayer);
 		L.RegVar("GAME_NAME", get_GAME_NAME, set_GAME_NAME);
+		L.RegVar("ENCRYPT_LUA", get_ENCRYPT_LUA, set_ENCRYPT_LUA);
 		L.RegVar("SCREEN_SCALE", get_SCREEN_SCALE, null);
 		L.RegVar("DATA_PATH", get_DATA_PATH, null);
+		L.RegVar("LUA_BUNDLE_PATH", get_LUA_BUNDLE_PATH, null);
 		L.RegVar("APP_CONTENT_PATH", get_APP_CONTENT_PATH, null);
+		L.RegVar("PLATFORM", get_PLATFORM, null);
+		L.RegVar("PLATFORM_NAME", get_PLATFORM_NAME, null);
 		L.EndStaticLibs();
 	}
 
@@ -63,6 +67,20 @@ public class SharedVariableWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_ENCRYPT_LUA(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushboolean(L, SharedVariable.ENCRYPT_LUA);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_SCREEN_SCALE(IntPtr L)
 	{
 		try
@@ -91,11 +109,53 @@ public class SharedVariableWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_LUA_BUNDLE_PATH(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, SharedVariable.LUA_BUNDLE_PATH);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_APP_CONTENT_PATH(IntPtr L)
 	{
 		try
 		{
 			LuaDLL.lua_pushstring(L, SharedVariable.APP_CONTENT_PATH);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_PLATFORM(IntPtr L)
+	{
+		try
+		{
+			ToLua.Push(L, SharedVariable.PLATFORM);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_PLATFORM_NAME(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, SharedVariable.PLATFORM_NAME);
 			return 1;
 		}
 		catch(Exception e)
@@ -141,6 +201,21 @@ public class SharedVariableWrap
 		{
 			string arg0 = ToLua.CheckString(L, 2);
 			SharedVariable.GAME_NAME = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_ENCRYPT_LUA(IntPtr L)
+	{
+		try
+		{
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			SharedVariable.ENCRYPT_LUA = arg0;
 			return 0;
 		}
 		catch(Exception e)

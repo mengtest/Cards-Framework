@@ -126,8 +126,6 @@ public class LuaManager : MonoBehaviour
         LuaLoader.AddBundle("ncspeedlight_modules_dialog");
         LuaLoader.AddBundle("ncspeedlight_modules_login");
 
-        LuaLoader.AddBundle("ncspeedlight_protocol");
-
         LuaLoader.AddBundle("ncspeedlight_scenes");
         LuaLoader.AddBundle("ncspeedlight_utils");
 

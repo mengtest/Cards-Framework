@@ -15,11 +15,11 @@ function DownloadScene.OnCreate(obj)
 end 
 
 function DownloadScene.Begin()
-    if UnityEngine.Application.platform == UnityEngine.RuntimePlatform.Android or UnityEngine.Application.platform == UnityEngine.RuntimePlatform.IPhonePlayer then
-        UIManager.OpenWindow("Login/Tencent/QQWXBG")
-    else
-        UIManager.OpenWindow("Login/ui_loginBk")
-    end
+    --    if UnityEngine.Application.platform == UnityEngine.RuntimePlatform.Android or UnityEngine.Application.platform == UnityEngine.RuntimePlatform.IPhonePlayer then
+    --        UIManager.OpenWindow("Login/Tencent/QQWXBG")
+    --    else
+    UIManager.OpenWindow("Login/ui_loginBk")
+    --    end
     coroutine.start(this.CheckVersion)
 end
 

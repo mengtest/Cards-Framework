@@ -52,10 +52,10 @@ function LoginScene.RequestLogin(account, password)
     {
         m_AccountName = account,
         m_Password = password,
-        platform = 2,
+        platform = 0,
         accountLogInfo =
         {
-            platformID = 14546765,
+            platformID = 1,
             ditchID = "2",
             version = "1.0.1",
             accountID = 99988254,
@@ -94,7 +94,7 @@ function LoginScene.RequestRegister(account, password)
         m_Password = password,
         accountLogInfo =
         {
-            platformID = 14546765,
+            platformID = 1,
             ditchID = "2",
             version = "1.0.1",
             accountID = 99988254,

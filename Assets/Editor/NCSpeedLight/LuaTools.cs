@@ -42,6 +42,8 @@ public class LuaTools
 
         ProcessBuild();
 
+        CopyProtocolFiles();
+
         DeleteLuaBytesFiles(byteFiles);
 
         GenerateLuaFileIndex();
@@ -109,6 +111,17 @@ public class LuaTools
         }
     }
 
+    private static void CopyProtocolFiles()
+    {
+        List<string> files = new List<string>();
+        CollecFiles(LUA_SCRIPT_DIRECTORY, files, "*.pb");
+        for (int i = 0; i < files.Count; i++)
+        {
+            string outputPath = SharedVariable.LUA_BUNDLE_PATH + Path.GetFileName(files[i]);
+            File.Copy(files[i], outputPath, true);
+        }
+    }
+
     private static void BuildLuaBundle(string directory)
     {
         directory = directory.Replace('\\', '/');
@@ -167,14 +180,14 @@ public class LuaTools
         }
 
         List<string> files = new List<string>();
-        CollecFiles(directory, files, "*.unity3d");
+        CollecFiles(directory, files, "*");
 
         FileStream fs = new FileStream(filePath, FileMode.CreateNew);
         StreamWriter sw = new StreamWriter(fs);
         for (int i = 0; i < files.Count; i++)
         {
             string file = files[i];
-
+            if (file.EndsWith(".meta")) continue;
             string md5 = Helper.MD5File(file);
             string value = file.Replace(directory, string.Empty);
             sw.WriteLine(value + "|" + md5);
@@ -217,6 +230,10 @@ public class LuaTools
 
     private static List<string> CollecFiles(string directory, List<string> output, string extension = "*.lua")
     {
+        if (output == null)
+        {
+            output = new List<string>();
+        }
         if (Directory.Exists(directory))
         {
             string[] files = Directory.GetFiles(directory, extension);
@@ -228,7 +245,7 @@ public class LuaTools
             string[] dirs = Directory.GetDirectories(directory);
             for (int i = 0; i < dirs.Length; i++)
             {
-                CollecFiles(dirs[i], output);
+                CollecFiles(dirs[i], output, extension);
             }
         }
         return output;

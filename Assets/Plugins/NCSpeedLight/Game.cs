@@ -21,17 +21,12 @@ public class Game : LuaBehaviour
         LuaPath = string.Empty;
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        ExtractAssets();
         LuaManager.Initialize();
         base.Awake();
     }
     protected override void Start()
     {
         base.Start();
-    }
-    protected override void Update()
-    {
-        base.Update();
     }
     protected override void OnDisable()
     {
@@ -42,20 +37,18 @@ public class Game : LuaBehaviour
         base.OnDestroy();
     }
 
-    private void ExtractAssets()
+    protected override void Update()
     {
-        if (Application.isEditor == false)
+        base.Update();
+        if (Application.platform == RuntimePlatform.Android && (Input.GetKeyDown(KeyCode.Escape)))
         {
-            string directory = SharedVariable.DATA_PATH + "/" + SharedVariable.PLATFORM_NAME + "/Lua/";
-            if (Directory.Exists(directory) == false)
+            UIManager.OpenStandardDialog(new UIManager.StandardDialogOption()
             {
-                Directory.CreateDirectory(directory);
-            }
-            else
-            {
-                Directory.Delete(directory);
-                Directory.CreateDirectory(directory);
-            }
+                Title = "提  示",
+                Content = "你确定退出游戏吗？",
+                DoubleButton = true,
+                OnClickOK = delegate (GameObject go) { Application.Quit(); }
+            });
         }
     }
 }

@@ -227,6 +227,9 @@ public static class UIManager
 
             if (option.DoubleButton)
             {
+                UIHelper.SetActiveState(dialog.transform, "DoubleBtn", true);
+                UIHelper.SetActiveState(dialog.transform, "SingleBtn", false);
+
                 UIHelper.SetButtonEvent(dialog.transform, "DoubleBtn/OK", (go) => { CloseDialog(DialogType.StandardDialog.ToString()); });
                 UIHelper.SetButtonEvent(dialog.transform, "DoubleBtn/Cancel", (go) => { CloseDialog(DialogType.StandardDialog.ToString()); });
 
@@ -235,6 +238,9 @@ public static class UIManager
             }
             else
             {
+                UIHelper.SetActiveState(dialog.transform, "DoubleBtn", false);
+                UIHelper.SetActiveState(dialog.transform, "SingleBtn", true);
+
                 UIHelper.SetButtonEvent(dialog.transform, "SingleBtn/OK", (go) => { CloseDialog(DialogType.StandardDialog.ToString()); });
 
                 UIHelper.SetButtonEvent(dialog.transform, "SingleBtn/OK", option.OnClickOK);
