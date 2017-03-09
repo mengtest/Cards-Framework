@@ -1,4 +1,5 @@
-﻿jsonProcessor = require 'cjson'
+﻿
+jsonProcessor = require 'cjson'
 
 DownloadScene = {
 }

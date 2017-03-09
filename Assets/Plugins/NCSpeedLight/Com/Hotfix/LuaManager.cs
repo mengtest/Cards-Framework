@@ -62,8 +62,12 @@ public class LuaManager : MonoBehaviour
         LuaCoroutine.Register(LuaState, Instance);
 
         InitializeLuaDirectory();
-        InitializeToLuaBundle();
-        InitializeGameLuaBundle();
+
+        if (SharedVariable.LUA_BUNDLE_MODE)
+        {
+            InitializeToLuaBundle();
+            InitializeGameLuaBundle();
+        }
 
         LuaState.Start();
 

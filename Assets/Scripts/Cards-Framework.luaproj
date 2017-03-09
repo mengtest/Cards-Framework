@@ -69,8 +69,6 @@
     <Content Include="Lua\NCSpeedLight\3rd\luabitop\msvcbuild.bat" />
     <Content Include="Lua\NCSpeedLight\3rd\luabitop\msvctest.bat" />
     <Content Include="Lua\NCSpeedLight\3rd\luabitop\README" />
-    <Content Include="Lua\NCSpeedLight\3rd\pbc\addressbook.pb" />
-    <Content Include="Lua\NCSpeedLight\3rd\pbc\addressbook.proto" />
     <Content Include="Lua\NCSpeedLight\3rd\pblua\login.proto" />
   </ItemGroup>
   <ItemGroup>

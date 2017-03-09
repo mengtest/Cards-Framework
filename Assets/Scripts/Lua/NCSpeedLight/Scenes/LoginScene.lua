@@ -1,4 +1,5 @@
-﻿LoginScene = {
+﻿
+LoginScene = {
 }
 
 local this = LoginScene

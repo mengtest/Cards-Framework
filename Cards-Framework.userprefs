@@ -2,8 +2,7 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Plugins\NCSpeedLight\3rd\NGUI\ReadMe - 3.7.8.txt">
     <Files>
-      <File FileName="Assets\Plugins\NCSpeedLight\3rd\NGUI\ReadMe - 3.7.8.txt" Line="26" Column="20" />
-      <File FileName="Assets\Editor\NCSpeedLight\LuaCompiler.cs" Line="1" Column="1" />
+      <File FileName="Assets\Plugins\NCSpeedLight\3rd\NGUI\ReadMe - 3.7.8.txt" Line="1" Column="1" />
       <File FileName="Assets\Editor\NCSpeedLight\LuaPBProcessor.cs" Line="1" Column="1" />
       <File FileName="Assets\Plugins\NCSpeedLight\Game.cs" Line="1" Column="1" />
     </Files>

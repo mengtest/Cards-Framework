@@ -1,4 +1,5 @@
-﻿UI_Register = {
+﻿
+UI_Register = {
 }
 
 local this = UI_Register

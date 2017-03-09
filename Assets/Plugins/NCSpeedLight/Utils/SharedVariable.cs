@@ -141,4 +141,6 @@ public static class SharedVariable
     /// 是否加密Lua文件.
     /// </summary>
     public static bool ENCRYPT_LUA = true;
+
+    public static bool LUA_BUNDLE_MODE = false;
 }
