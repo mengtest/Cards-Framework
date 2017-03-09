@@ -1,4 +1,3 @@
-﻿
 UI_Register = {
 }
 
