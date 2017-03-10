@@ -9,12 +9,12 @@
             //
 //----------------------------------------------------------------*/
 
-using System.IO;
 using UnityEngine;
 
 public class Game : LuaBehaviour
 {
     public static Game Instance { get; set; }
+
     protected override void Awake()
     {
         LuaName = "Game";
@@ -24,17 +24,10 @@ public class Game : LuaBehaviour
         LuaManager.Initialize();
         base.Awake();
     }
+
     protected override void Start()
     {
         base.Start();
-    }
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-    }
-    protected override void OnDestroy()
-    {
-        base.OnDestroy();
     }
 
     protected override void Update()
@@ -51,4 +44,15 @@ public class Game : LuaBehaviour
             });
         }
     }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+    }
+
 }

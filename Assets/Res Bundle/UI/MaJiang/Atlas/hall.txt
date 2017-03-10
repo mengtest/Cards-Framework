@@ -1,0 +1,68 @@
+{"frames": {
+
+"BJ-10.png":
+{
+	"frame": {"x":2,"y":451,"w":350,"h":447},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":2,"w":350,"h":447},
+	"sourceSize": {"w":350,"h":451}
+},
+"BJ-11.png":
+{
+	"frame": {"x":2,"y":2,"w":350,"h":447},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":2,"w":350,"h":447},
+	"sourceSize": {"w":350,"h":451}
+},
+"BJ-13.png":
+{
+	"frame": {"x":762,"y":44,"w":121,"h":39},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":121,"h":39},
+	"sourceSize": {"w":121,"h":39}
+},
+"BJ-9.png":
+{
+	"frame": {"x":410,"y":2,"w":350,"h":447},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":2,"w":350,"h":447},
+	"sourceSize": {"w":350,"h":451}
+},
+"CJFJ-1.png":
+{
+	"frame": {"x":762,"y":2,"w":177,"h":40},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":177,"h":40},
+	"sourceSize": {"w":177,"h":40}
+},
+"CJFJ-2.png":
+{
+	"frame": {"x":2,"y":988,"w":32,"h":28},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":28},
+	"sourceSize": {"w":32,"h":28}
+},
+"CJFJ-4.png":
+{
+	"frame": {"x":2,"y":900,"w":406,"h":86},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":406,"h":86},
+	"sourceSize": {"w":406,"h":86}
+}},
+"meta": {
+	"app": "http://www.texturepacker.com",
+	"version": "1.0",
+	"image": "hall.png",
+	"format": "RGBA8888",
+	"size": {"w":1024,"h":1024},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:00cfabedc21342adfe2c5ba82fe9c8cf$"
+}
+}

@@ -1,0 +1,20 @@
+{"frames": {
+
+"ZJM-25.png":
+{
+	"frame": {"x":2,"y":2,"w":422,"h":422},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":422,"h":422},
+	"sourceSize": {"w":422,"h":422}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker ",
+	"version": "1.0",
+	"image": "publicDynamic.png",
+	"format": "RGBA8888",
+	"size": {"w":512,"h":512},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:815cec2cc0a3004d2e9da0d75e8180b5:1/1$"
+}
+}

@@ -1,0 +1,20 @@
+﻿//共用部分
+useful sure=确 定
+useful cancle=取 消
+
+// 陈伟超--资源更新
+resource checking=正在检查更新
+resource download or update=正在下载更新：
+resource extract zip package=正在解压资源, 此过程不消耗流量
+resource go game=正在进入游戏
+
+account connect error=无法连接服务器，请检查网络
+
+account inform 1=温馨提示
+network disconnect=网络异常，请检查网络情况
+network exception=网络异常，请您重新登录
+download inform=需要下载{0}更新文件，是否继续？（取消更新将会退出游戏）
+download inform 2=网络错误，更新中断，请检查网络
+
+download inform 3=储存空间不足，请先退出游戏清理设备储存空间
+version download=发现新版本，请前往下载

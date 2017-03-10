@@ -1,0 +1,736 @@
+//共用部分
+useful sure=确 定
+useful cancle=取 消
+useful ten thousand=万
+useful Lack of gold=钱币不足
+useful Lack of spar=晶石不足
+useful inform 1=是否确认购买{0}
+useful inform 2=购买{0}成功
+useful inform 3=晶石不足，是否前往充值？
+ZQtemp = 此功能暂未开放
+load text 1=等待中
+network disconnect=网络异常，请检查网络情况
+client exception=客户端检测异常！
+login fail=登录失败,请重新创建
+Re_Register = 你的角色已在其他设备上登录，请退出重新登录
+TeamCombat LatencyTime = Ping:{0}ms
+time out=请求超时
+json resolve fail=json解析失败，请重新登录
+
+// 陈伟超--账号模块
+version download=发现新版本，请前往下载
+version error=发现新版本，更新完成后才可继续游戏。
+account connect error=连接服务器失败，请检查网络情况
+
+account create error 1=存在账号
+account create error 2=账号长度4-14之间
+account create error 3=密码长度6-14之间
+account create error 4=输入的内容中存在非法字符
+ 
+account bind error 1=试玩账号有误
+account bind error 2=绑定的账号已存在
+  
+account login error 1=账号密码错误
+account login error 2=验证错误
+account login error 3=此账号已暂时冻结
+account login error 4=账号长度不符合
+account login error 5=密码长度不符合
+account login error 6=此账号已永久冻结
+
+choose area error 1=与服务器断开连接，正在重连
+choose area error 2=服务器维护中
+choose area error 3=服务器即将开放
+network exception=网络异常，请您重新登录
+
+account password inconsistent=密码不一致
+
+account guest=游客@{0}
+account area={0}区
+
+account inform 1=温馨提示
+account inform 2=确认后删除
+account text 1=登 录
+account text 2=注 册
+account text 3=快速开始
+account text 4=绑定账号
+account text 5=返 回
+account text 6=提 交
+account text 7=绑 定
+account text 8=其他账号
+account text 9=点击输入账号
+account text 10=点击输入密码
+account text 11=再次输入密码
+account text 12=点击屏幕开始游戏
+
+player login error 1=你的账号已在其他设备上登录
+player login error 2=你被踢下线
+
+player login inform 1=服务器已满，您现在在队列中
+player login inform 2=您在队列中的位置：{0}
+player login inform 3=估计等待时间：
+
+player forbid=该角色被冻结
+wx not install=您还没有安装微信，请前往下载
+connecting server=正在连接服务器...
+
+// 陈伟超--系统解锁
+lock text 1=您已解锁
+system is lock=系统未解锁
+
+// 陈伟超--下载
+download text1=正在下载新版本：
+
+//系统推送
+LocalNotification_1 = 巫蛮之战即将开始,快和你的小伙伴并肩作战吧.
+LocalNotification_2 = 古神来袭,勇士们随我出战!
+LocalNotification_3 = 冲榜时间到了,双倍积分等你来拿,快来加入天寒战场!
+LocalNotification_4 = 部族战争即将开始,拿起武器为部族而战吧!
+LocalNotification_5 = 您的体力值已接近爆棚,快回来继续战斗吧!
+LocalNotification_6 = 您的历练值已接近爆棚,快回来继续战斗吧!
+
+//开始---钟建辉----开始;
+
+//公用弹框;
+PublicDialog_1=提 示
+PublicDialog_2=确 认
+PublicDialog_3=取 消
+PublicDialog_4 = 跳过指引
+PublicDialog_5 =跳过指引会帮助老玩家快速通过新手副本，并关闭5级之前的强制指引，是否确定操作？
+GuideOnclickAnyWhere=获得物品时，点击获得物品横条外的任意地方都可以关闭弹窗。
+RewardDialogTips=点击获得奖励弹框以外的区域可关闭界面
+RewardDialog_1 = 恭喜您获得金花荷官-亦非
+RewardDialog_2 = 恭喜您获得金花荷官-雨琦
+RewardDialog_3 = 恭喜您获得金花荷官-冰冰
+
+//掉线重连弹框
+ReconnectWords_1=正在连接中
+
+//创建角色的返回结果提示文字
+CreateRoleResult_1=有相同用户名
+CreateRoleResult_2=已经有3个角色了
+CreateRoleResult_3=名字包含非法字符
+CreateRoleResult_4=名字长度过短或过长
+CreateRoleResult_5=该职业已存在
+
+//结束---钟建辉----结束;
+
+//麻将正式开始
+//陈伟超--水果机
+FruitEnter ERR_Error=服务器错误
+enter status=入场资格
+enter ante=底注
+
+//房间进入公用
+charge inform 1=亲，你太穷了，无法进入此房间！是否前往充值？
+exit room inform=如果您坚持退出，您付出的底金将不再返还并且不再获得当局效益，您的牌组将会由机器人接管
+exit room inform2=确定退出吗？
+exit room inform3=现在退出将被托管，报名费不予退回。本轮结束会被淘汰，淘汰前不能参加其他比赛。是否离开比赛？
+exit room inform4=您参与的比赛活动即将开始，是否确定现在离开游戏？
+exit room inform5=返回大厅您的房间仍会保留哦!
+
+// 麻将
+zheng jing=正精
+fu jing=副精
+up jing=上 精
+down jing=下 精
+MaJiang text 1=昵称
+MaJiang text 2=下精:
+MaJiang text 3=上精和杠:
+MaJiang text 4=胡分:
+MaJiang text 5=总分:
+MaJiang text 6=金币
+MaJiang text 7=底金：{0}
+MaJiang text 8=共计{0}番
+MaJiang text 9=返回大厅
+MaJiang text 10=继续游戏
+MaJiang text 11=再来一局
+MaJiang text 12={0}:邀请你加入他的麻将包间,赶紧前往吧!
+MaJiang text 13=已准备
+MaJiang text 14=准备
+MaJiang text 15=取消准备
+MaJiang text 16=邀请好友
+MaJiang text 17=邀请QQ好友一起玩
+MaJiang text 18=邀请微信好友一起玩
+MaJiang text 19=底分： {0}
+MaJiang text 20=当前局数
+MaJiang text 21=下家
+MaJiang text 22=对家
+MaJiang text 23=上家
+MaJiang text 24=开房消耗
+MaJiang text 25=房卡不足，请去商城购买。
+MaJiang text 26=重新匹配
+MaJiang text 27=老板，开包间需要一张开房卡~
+MaJiang text 28=是否打出精牌
+MaJiang text 29=是否续费
+MaJiang text 30=是否前往商城购买房卡？
+MaJiang text 31=立即支付
+MaJiang text 32=他人代付
+MaJiang text 33=解散房间
+MaJiang text 34=您还没有好友哦~
+MaJiang text 35=房主正在结账，请稍后
+MaJiang text 36={0}:邀请你加入他的麻将包间,是否放弃当前比赛去包间
+MaJiang text 37=你有一位QQ好友邀请你加入他的包间，是否加入？
+MaJiang text 38=你有一位微信好友邀请你加入他的包间，是否加入？
+MaJiang text 39=你有一位QQ好友邀请你加入他的包间，是否切换到QQ登录？
+MaJiang text 40=你有一位微信好友邀请你加入他的包间，是否切换到微信登录？
+
+MaJiang text 41=是否使用精牌碰
+MaJiang text 42=是否使用精牌杠
+MaJiang text 43=是否使用精牌吃
+MaJiang text 44=重 输
+MaJiang text 45=删 除
+MaJiang text 46=复制这条信息，打开【南昌麻将】即可进入好友的房间，￥{0}/{1}￥
+MaJiang text 47=已打局数
+
+MaJiang chat 1=快点打牌！天都亮了!
+MaJiang chat 2=看不清楚就戴副眼镜好不好？
+MaJiang chat 3=出牌慢，就是笨！
+MaJiang chat 4=现在流行换脸，你也去整容院搞一下好波？
+MaJiang chat 5=你也摸不到牌啊，是不是上厕所没有洗手哦？
+MaJiang chat 6=你胡啦？是不是假胡哦！
+MaJiang chat 7=大清早，鸡都还没叫，慌什么！
+MaJiang chat 8=这是什么手噢，摸不到牌，就是臭手！
+MaJiang chat 9=我这里顺风顺水，想不胡都可以！
+MaJiang chat 10=要什么来什么！
+MaJiang Kick 1=你是否确定把该玩家踢出去房间
+MaJiang Kick 2=你已经被那个房主请出房间
+
+ZJH inform 1=是否继续进入炸金花开包间！
+MaJiang inform 1=别着急，您上一把的麻将还没打完！
+MaJiang inform 2=房间已解散
+MaJiang enter error 1=角色不存在
+MaJiang enter error 2=副本类型错误
+MaJiang enter error 3=房卡不足
+MaJiang enter error 4=金币不足
+
+UI_MaJiang_1=上精：
+UI_MaJiang_2=下精：
+UI_MaJiang_3=胡牌：
+UI_MaJiang_4=杠分：
+UI_MaJiang_5=埋雷：
+UI_MaJiang_6=回头：
+UI_MaJiang_7=三歌：
+UI_MaJiang_8=得分：
+UI_MaJiang_9=总分：
+UI_MaJiang_10=总成绩：
+UI_MaJiang_11=抄庄：
+UI_MaJiang_12=皇妃：
+UI_MaJiang_13=爬楼层数：
+UI_MaJiang_14=奖码：
+
+MaJiang Result A=第
+MaJiang Result B=局
+MaJiang Result 0=一
+MaJiang Result 1=二
+MaJiang Result 2=三
+MaJiang Result 3=四
+MaJiang Result 4=五
+MaJiang Result 5=六
+MaJiang Result 6=七
+MaJiang Result 7=八
+MaJiang Result 8=九
+MaJiang Result 9=十
+
+MaJiang PlayWay 1=一码全中
+MaJiang PlayWay 2=扎2码
+MaJiang PlayWay 3=扎4码
+MaJiang PlayWay 4=扎6码
+MaJiang PlayWay 5=可胡七对
+MaJiang PlayWay 6=抄庄
+MaJiang PlayWay 7=皇帝妃子
+MaJiang PlayWay 8=爬楼
+
+//麻将规则------彭钢------麻将规则
+MaJiang Rule 1 = 客服QQ： 155628935
+MaJiang Rule 2 = 微信公众号：nanchangqipai
+MaJiang Rule 3 = 一.精牌介绍
+MaJiang Rule 4 = 1.精：就是万能牌，可以代替任何一张牌（杠除外）。精分为正精和副精，正精和副精都是上精，都可以作为万能牌使用；下精仅在下番的时候算分用。
+MaJiang Rule 5 = 2.精的使用：精牌可以作为万能牌的解释，也可以作为本身牌解释。
+MaJiang Rule 6 = 3.当精牌被当做万能解释，则可以代替手牌中一个存在或者不存在的牌型参与到胡牌中去。
+MaJiang Rule 7 = 若本局正副精为
+MaJiang Rule 8 = 手牌为
+MaJiang Rule 9 = 此时胡牌
+MaJiang Rule 10 = 4.当精牌被当做本张含义解释，则可能满足德国条件（详见后文）精也可以被打出，可参与吃碰杠。当精牌被打出时，不再发挥万能牌的功能。
+MaJiang Rule 11 = 5.精的计算：计算奖励时正精2子，副精1子。每盘结束时，将精牌单独拿出来结算，与胡牌无关。
+MaJiang Rule 12 = 6.冲关：手中精的奖励分合计超过5分时称为“冲关”，冲关时奖励分再翻番，具体如下：
+MaJiang Rule 13 = 若手中
+MaJiang Rule 14 = 则基础分为2x2+3x1=7子，由于冲四关的奖励则是7x4=28，即向其余每家收取28个子。
+MaJiang Rule 15 = 7.霸王精：四个玩家仅一个有精称为霸王，另外三家需要支付给霸王精双倍的结算（正常算子x2）
+MaJiang Rule 16 = 8.杠精：四张相同的精牌开杠
+MaJiang Rule 17 = 二.胡牌分数
+MaJiang Rule 18 = [686775]奖励分[-]
+MaJiang Rule 19 = [686775]1.明杠、暗杠：[-][409f4d]2分  可累加[-]
+MaJiang Rule 20 = [686775]2.杠精：[-][409f4d]10分  同时参与正常精结算[-]
+MaJiang Rule 21 = [686775]3.正精：[-][409f4d]2分  可累加[-]
+MaJiang Rule 22 = [686775]4.副精：[-][409f4d]1分  可累加[-]
+MaJiang Rule 23 = [686775]5.霸王精：[-][409f4d]X2  可累加[-]
+MaJiang Rule 24 = [686775]6.冲关：[-][409f4d]由手中精分决定，手中精超过5分为冲关，只是打出精的玩家独自获得冲关的奖励。[-]
+MaJiang Rule 26 = 牌型分
+MaJiang Rule 27 = 1.胡分三家都要给，庄家输赢翻倍。
+MaJiang Rule 28 = 2.点炮（x2）  点炮玩家给2番，其他玩家各给1番，不支持一炮多响
+MaJiang Rule 29 = 3.自摸（x2）  自己补牌而胡
+MaJiang Rule 30 = 4.庄家（x2）  庄家胡牌
+MaJiang Rule 31 = 5.抢杠（x4）  玩家补杠，此时正好有玩家胡这张牌，胡这张牌的玩家可以点胡，算抢杠。补杠玩家给4番，其他玩家各给一番。
+MaJiang Rule 32 = 6.杠上开花（x4）  杠了之后补牌而胡。
+MaJiang Rule 33 = 7.天胡（x20）  不算自摸，打牌过程中庄家第一次摸完牌后，就胡牌。
+MaJiang Rule 34 = 8.地胡（x20）  不算点炮，打牌过程中非庄家在第一次摸完牌后就可以下叫，第一轮摸牌后就胡牌，叫地胡。
+MaJiang Rule 35 = 9.平胡（x1）  四坎牌加一对将
+MaJiang Rule 36 = 10.小七对（x2）  玩家的手牌全部是两张一对的，没有碰过和杠过
+MaJiang Rule 37 = （放炮或自摸）
+MaJiang Rule 38 = 11.大七对（x2）  四副刻字加一对将
+MaJiang Rule 39 = 12.十三烂（x2）  手中14张牌中，序数牌间间隔大于2，字牌没有重复所组成的牌型。
+MaJiang Rule 40 = 13.七星十三烂（x4）  手中14张牌中，序数牌间间隔大于2，字牌东南西北中发白各一张，且这几张牌不能用精牌来代替，组成的牌型，不允许吃碰杠。
+MaJiang Rule 41 = 14.精钓：自摸的一种特殊型，即手牌已满足听牌要求，并有多的一张精牌能和任意一张摸进的牌凑齐。一旦精钓牌已听，则不可和他家放炮而只能自摸。
+MaJiang Rule 42 = 若本局精为
+MaJiang Rule 43 = 之后摸进任何牌都能胡
+MaJiang Rule 44 = 15.德国（x2+5）  胡牌牌形中没有出现“精”，或有精但并未发挥精的效应。精照算奖励分 。如果是炮胡，5分由放炮者给。如果是自摸胡，三家都要给5分。
+MaJiang Rule 45 = 16.德中德（x4+5）  自己胡“德国”，并且其他三家手中都没有“精”（包过吃碰杠）。
+MaJiang Rule 46 = 三.胡牌算分
+MaJiang Rule 47 = 1.上精分计算：\n上精分=自己上精分数-别人上精分数\n最高奖励得分：8个上精共12分，冲关X7，霸王X2\n共12X7X2 = 168分
+MaJiang Rule 48 = 2.下精分计算(在下翻的时候计算)：\n下精分=自己下精的分数-别人下精的分数\n最高下精分：7个下精共7分，冲关X10，霸王X2\n共7X10X2 = 140分
+MaJiang Rule 49 = 3.牌型分计算：\n最高牌型得分：德中德X4+5，精吊X2+5，天胡X20，170番\n非天胡最高牌型得分：庄家X2，德中德X4+5，精吊X2+5，小七对X4，共74番
+MaJiang Rule 50 = 4.总分\n总分 = 下精分+奖励分+牌型分
+
+XuFeiResult XFR_RoleNotExist=角色不存在;
+XuFeiResult XFR_FbNotExist=副本不存在
+XuFeiResult XFR_RoomCardNoEnough=房卡不足
+
+// 副本公用
+FBEnterResult ER_RoomNotExist=房间不存在
+FBEnterResult ER_HasInRoom=你已经在房间
+FBEnterResult ER_RoomFull=房间不够
+FBEnterResult ER_RoomPersonFull=房间人数已满
+FBEnterResult ER_LackGold=金币不足
+FBEnterResult ER_LackRoomCard=房卡不足
+
+// 语音
+voice text 1=向上滑动，取消发送
+voice text 2=松开手指，取消发送
+chat CR_SensitiveWord=有敏感字符
+chat CR_NoTalk=你已被禁言
+chat CR_LackServerSuona=频道喇叭不足
+chat CR_LengthToLong=发送文字过长
+chat CR_PersonalNotOnline=私聊玩家不在线
+chat CR_CantTalkToSelf=不能对自己私聊
+chat CR_RoleNotExist=私聊玩家不存在
+chat CR_ChatError=未知错误
+
+chat voice error 1=录音时间过短
+chat voice error 2=角色10级后才能发送语音内容
+chat voice error 3=未找到用户
+chat voice error 4=设备未授权该应用使用麦克风，无法录音
+
+chat voice ios = ，请在“设置-隐私-麦克风”选项中允许访问。
+
+//好友模块 ----方赛宇------好友模块;
+
+friendadd_1 = 邀请已发送
+friendadd_2 = 邀请中
+friendadd_3 = 已成为好友
+friendadd_4 = 非法字符
+friendadd_5 = 邀请次数不足
+friendadd_6 = 未知错误
+
+friend text 1 = 我的好友
+friend text 2 = 推荐好友
+friend text 3 = 领取馈赠
+friend text 4 = 好友申请
+friend text 5 = 领 取
+friend text 6 = 馈赠
+friend text 7 = 私聊
+friend text 8 = 在线
+friend text 9 = 离线
+friend text 10 = 查找
+friend text 11 = 更多好友
+friend text 12 = 最近在玩:
+friend text 13 = 添 加
+friend text 14 = 今日剩余次数
+friend text 15 = 全部回馈
+friend text 16 = 个好友邀请
+friend text 17 = 一键接受
+friend text 18 = 确 定
+friend text 19 = 比赛信息:
+friend text 20 = 删除好友
+friend text 21 = 没有此玩家
+friend text 22 = {0}已经成为你的好友
+friend text 23 = 自己好友列表已满
+friend text 24 = 对方好友列表已满暂无好友
+friend text 25 = 暂无好友
+friend text 26 = 已经成功接受所有好友申请
+friend text 27 = 好友列表已满,无法添加好友
+friend text 28 = 已在好友列表
+friend text 29 = 添加好友失败
+friend text 30 = 馈赠已成功送出
+friend text 31 = 你今天已经馈赠过了
+friend text 32 = 当前不能馈赠
+friend text 33 = {0}天前
+friend text 34 = {0}小时前
+friend text 35 = {0}分钟前
+friend text 36 = 刚刚
+friend text 37 = 已领取100金币
+friend text 38 = 次数不足
+friend text 39 = 已领取
+friend text 40 = 领取错误
+friend text 41 = 当前没有金币可领取
+friend text 42 = 已获得{0}点金币
+friend text 43 = 今日已无剩余次数,无法领取金币
+friend text 44 = 功能暂未完成
+friend text 45 = 您还没有好友呢,快去添加好友吧~
+friend text 46 = 还没有好友给您送金币呢~
+friend text 47 = 您还没有好友申请呢~
+friend text 48 = [564A4AFF]每日凌晨[-][00921FFF]3[-][564A4AFF]点刷新[-]
+
+//救济-------方赛宇---------救济;
+relief_1 = 呦,客人您没钱啦？来领取今天的救济金吧!
+relief_2 = 领取次数:
+relief_3 = 领 取
+relief_4 = 还想领取救济金,那就快去提升您的VIP等级吧!
+relief_5 = 前往购买
+relief_6 = 下次再说
+relief_7 = 领取成功
+relief_8 = 领取次数不足
+relief_9 = 服务器错误
+relief_10 = 数据错误
+relief_11 = 金币过多
+
+
+//------分享------
+UI_Share_1=微信
+UI_Share_2=朋友圈
+Share text 1=立刻加入啪啪麻将
+Share text 2=最牛逼的南昌麻将游戏，土生土长原汁原味的特色玩法随时来战，点击立刻下载！
+Share text 3=[{0}]邀你加入:{1}局，{2}人场，{3}
+Share text 4=口令：{0}
+Share text 5=快乐休闲每一天
+Share text 6=注：每日分享朋友圈加一张房卡
+Share result 1=恭喜获得一张房卡
+Share result 99=今天已获得房卡
+
+//------消息------
+//表情
+Message_01=/01
+Message_02=/02
+Message_03=/03
+Message_04=/04
+Message_05=/05
+Message_06=/06
+Message_07=/07
+Message_08=/08
+Message_09=/09
+Message_10=/10
+Message_11=/11
+Message_12=/12
+Message_13=/13
+Message_14=/14
+Message_15=/15
+Message_16=/16
+Message_17=/17
+Message_18=/18
+Message_19=/19
+Message_20=/20
+
+Message_A=你暂时没有邮件~
+Message_B=请选择要阅读的邮件~
+Message_C=赶快开始和好友私聊吧~
+Message_D=你暂时还没有组队消息~
+Message_-1=敏感字符
+Message_-4=对话信息过长
+Message_-5=私聊玩家不在线
+Message_-6=不能对自己私聊
+Message_-7=不存在的玩家
+Message_-100=数据错误
+Message_E=输入信息不能为空
+UI_Message_1=暂无邮件，快去喊小伙伴一起玩吧:）
+//------结束------
+
+//----活动----曹泉恩----活动;
+Activity_1=金币
+Activity_2=投资计划
+Activity_3=幸运翻牌
+Activity_4=登录签到
+Activity_5=版本更新
+Activity_6=成功
+Activity_7=已经购买
+Activity_8=资产不足
+Activity_9=还未达到领取要求
+Activity_10=服务器错误
+Activity_11=还未购买
+Activity_13=当前牌局:
+Activity_14=[3d3231]累计麻将牌局：[-]
+Activity_15=每天凌晨3点刷新
+Activity_16=试试手气
+Activity_17=[660150]每胜利[-][489721]5[-][660150]局麻将，即可领取[-][428bb1]30000[-][660150]金币[-]
+Activity_18=/5
+Activity_19=每[00ff00]30[-]分钟刷新一次
+Activity_20=免费翻牌
+Activity_21=[666774]免费翻牌每日凌晨[-][00921f]3[-][666774]点刷新[-]
+Activity_22=累计胜利牌局:
+Activity_23=x3万
+Activity_24=每胡
+Activity_25=5
+Activity_26=局麻将，即可领取
+ 
+Activity_Day1=第一天
+Activity_Day2=第二天
+Activity_Day3=第三天
+Activity_Day4=第四天
+Activity_Day5=第五天
+Activity_Day6=第六天
+Activity_Day7=第七天
+
+Activity_Num= x 
+Activity_Money=张
+
+//----商城----曹泉恩----------商城https://img.alicdn.com/tps/TB19dBMLpXXXXc7aXXXXXXXXXXX-268-268.jpg_q80.jpg
+shop_1 = 您剩余天数大于30天无法购买
+shop_2=赌城丽影
+shop_3=金 币
+shop_4=双卡惊喜
+shop_5=剩余天数：
+shop_6=(永久有效可与月卡叠加)
+shop_7=元
+shop_8=已购买
+shop_9=支付宝
+shop_10=微信支付
+shop_11=QQ钱包
+shop_12=话费支付
+shop_13=推荐有支付宝账号的用户使用
+shop_14=推荐有微信账号的用户使用
+shop_15=推荐有财付通/QQ账号的用户使用
+shop_16=支持移动、联通、电信的用户使用
+shop_17=客服电话
+shop_18=确认支付
+shop_19=房 卡
+shop_20=月卡、尊享卡每日奖励通过任务领取哦~
+shop_21=元
+shop_22=天
+shop_23 = 金币x{0} 房卡x{1}
+//---任务----------
+Task_1=完 成
+Task_2=前 往
+Task_3=奖励：
+Task_4=当前没有任务指派给您哦~
+Task_5=任务提交失败
+//----------排行榜------------------
+Rank_1=[666774]每日凌晨[-][00921f]3[-][666774]点刷新[-]
+Rank_2=[666774]每过[-][00921f]30[-][666774]分钟刷新一次[-]
+Rank_3=排名
+Rank_4=角色名
+Rank_5=会员等级
+Rank_6=资产
+Rank_7=今日赢钱
+Rank_8=胜利场次
+Rank_9=场
+//---------兑换中心----------------
+Exchange_1=兑换记录
+Exchange_2=信息绑定
+Exchange_3=规 则
+Exchange_4=奖励种类
+Exchange_5=奖品
+Exchange_6=兑换时间
+Exchange_7=状态
+Exchange_8=兑换中心使用说明:
+Exchange_9=1.通过分享平台获得反馈现金,现金可以用于兑换系统购买相应实物以及非实物奖励.
+Exchange_10=2.玩家兑换奖品前必须绑定收获地址,因信息错误而导致发奖失败,由玩家自己承担.
+Exchange_11=3.实物奖品将在玩家兑换15个工作日内统一发出,非实物奖品将在玩家兑换3个工作日内到账.
+Exchange_12=姓 名：
+Exchange_13=手 机：
+Exchange_15=地 址：
+Exchange_16=[4f5d7e]邀请码:[-]
+Exchange_17=请输入验证码:
+Exchange_18=重新发送>>>>
+Exchange_19=秒后可重新发送
+Exchange_20=实物
+Exchange_21=非实物
+Exchange_22=已下单
+Exchange_23=发货成功
+Exchange_24=立即绑定
+Exchange_25=修改信息
+Exchange_26=您还没有兑奖记录哦!
+Exchange_27=请输入您的姓名
+Exchange_28=请输入您的手机号码
+Exchange_29=QQ为空
+Exchange_30=请输入您的地址
+Exchange_31=姓名有非法字符
+Exchange_32=手机格式错误
+Exchange_33=QQ格式错误
+Exchange_34=邀请码格式错误
+Exchange_35=邀请码不存在
+Exchange_36=服务器错误
+Exchange_37=邀请码已经填写不可更改
+Exchange_38=名字过长
+Exchange_39=地址过长
+Exchange_40=地址有非法字符
+Exchange_41=所需物品不足
+Exchange_42=数据表错误
+Exchange_43=减钱错误
+Exchange_44=添加物品错误
+Exchange_45=未绑定信息
+Exchange_46=请输入您的详细收货地址
+Exchange_47=充值成功
+Exchange_48=商品订单
+Exchange_49=请输入要进行充值的手机号码
+Exchange_50=通讯录
+Exchange_51=是否消耗{0}现金购买该道具非实物奖品将在玩家兑换3个工作日内充值到账
+Exchange_52=是否消耗{0}现金购买该道具实物奖品将在15个工作日内统一发出
+Exchange_53=兑换价格：
+Exchange_54=邮寄信息
+Exchange_55=点击添加备用邮寄信息
+Exchange_56=确认订单
+Exchange_57=确认兑换
+Exchange_58=充值信息
+Exchange_59=充值手机：
+Exchange_60=添加备选手机号
+Exchange_61=兑换成功
+Exchange_62 = **
+
+//个人信息--------方赛宇-------个人信息;
+Personal Information_1 = 更换头像
+Personal Information_2 = 比赛信息:
+Personal Information_3 = 南昌麻将:
+Personal Information_4 = 比赛场冠军次数:
+Personal Information_5 = 炸金花:
+Personal Information_6 = 麻将包间场次数:
+Personal Information_7 = 金花包间场次数:
+Personal Information_8 = 水果机跑灯次数:
+Personal Information_9 = ID:
+Personal Information_10 = 更改
+Personal Information_11 = 改 名
+Personal Information_12 = 确 定
+Personal Information_13 = 选择性别:
+Personal Information_14 = 选择头相框:
+Personal Information_15 = 选择头像:
+Personal Information_16 = {0}场/{1}%
+Personal Information_17 = 修改姓名成功
+Personal Information_18 = 金币不足
+Personal Information_19 = 姓名超出长度
+Personal Information_20 = 改名字已存在
+Personal Information_21 = 修改个性签名成功
+Personal Information_22 = 含有非法字符
+Personal Information_23 = 签名字符太长
+Personal Information_24 = 修改成功
+Personal Information_25 = 头像VIP等级不足
+Personal Information_26 = 更换头像错误
+Personal Information_27 = 相框VIP等级不足
+Personal Information_28 = 更换相框错误
+Personal Information_29 = 性别不存在
+Personal Information_30 = 服务器错误
+Personal Information_31 = 性别不符 修改失败
+Personal Information_33 = 请编写个性签名
+Personal Information_34 = 心诺向阳,无畏悲伤
+Personal Information_35 = 你是否将该玩家请出房间
+Personal Information_36 = ID: {0}
+Personal Information_37 = IP: {0}
+
+delete friend Information_1 = 删除好友成功
+delete friend Information_2 = 删除好友失败
+delete friend Information_3 = 确定删除好友[0FB060FF]{0}[-]吗?
+
+//Vip特权-------方赛宇-------Vip特权;
+Vip Privilege_1 = VIP{0}专属每日福利:
+Vip Privilege_2 = 每日凌晨[E8E10AFF]3[-]点更新
+Vip Privilege_3 = 领 取
+Vip Privilege_4 = 明天继续
+Vip Privilege_5 = [747682FF]再消费[-][097ac6]{0}[-][747682FF]元即获得[-][E43B0FFF]VIP{1}[-]
+Vip Privilege_6 = {0}/{1}
+Vip Privilege_7 = [949797FF]已升到最高等级[-]
+Vip Privilege_8 = 领取成功
+Vip Privilege_9 = VIP {0} 特权一览
+Vip Privilege_10 = 亲,VIP0没有资格领取VIP的奖励哟,快来充值吧!
+Vip Privilege_11 = 领取失败
+Vip Privilege_12 = 金币x{0} 房卡x{1}
+Vip Privilege_13 = 金币x{0}
+Vip Privilege_14 = X{0}万
+
+//设置----------彭钢--------设置
+Setting Text 1 = OFF
+Setting Text 2 = NO
+Setting Text 3 = 滑动
+Setting Text 4 = 双击
+Setting Text 5 = 音乐
+Setting Text 6 = 音效
+Setting Text 7 = 震动
+Setting Text 8 = 特效
+Setting Text 9 = 比赛提醒
+Setting Text 10 = 活动提醒
+Setting Text 11 = 推广提醒
+Setting Text 12 = 公告提醒
+Setting Text 13 = 好友提醒
+Setting Text 14 = 礼包兑换
+Setting Text 15 = 问题反馈
+Setting Text 16 = 音效设置
+Setting Text 17 = 推送中心
+Setting Text 18 = 确定
+Setting Text 19 = 此卡已被使用
+Setting Text 20 = 输入道具卡卡号
+Setting Text 21 = 发送
+Setting Text 22 = 编辑标题......
+Setting Text 23 = 编辑消息发送给GM......
+Setting Text 24 = 已发送
+Setting Text 25 = 已回复
+Setting Text 26 = 出牌方式
+Setting Text 27 = 南昌方言
+Setting Text 28 = 您暂时还没消息哦~
+
+Setting Error 0 = 成功
+Setting Error 1 = 无效的激活码
+Setting Error 2 = 时间无效
+Setting Error 3 = 已经被使用
+Setting Error 4 = 区号限制
+Setting Error 5 = 格子不够
+Setting Error 6 = 已经使用过相同的Key
+Setting Error 7 = 没有找到奖励ID
+
+Setting_1=开
+Setting_2=关
+Setting_3=方 言
+Setting_4=普通话
+Setting_5=屏蔽语音
+
+//-----分享邀请微信好友玩麻将的步骤-----
+ShareWeiXin_1 = 第一步: 选择需要邀请的好友
+ShareWeiXin_2 = 第二步: 长按此处复制链接
+ShareWeiXin_3 = 第三步: 点击分享按纽
+ShareWeiXin_4 = 去邀请
+ShareWeiXin_5 = 知道了,下次不用提示
+ShareWeiXin_6 =长按此处复制ID
+ShareWeiXin_7 =复制ID成功
+ShareWeiXin_8 =复制微信号成功
+
+//--------包间记录战绩---------
+recordUI_1 = [AD2630FF]{0}[-][1C1110FF]号房间[-]
+recordUI_2 = 对战时间
+recordUI_3 = 序号
+recordUI_4 = 暂无战绩,快去喊小伙伴一起玩吧
+record error 1=无此回放
+
+//--------解散房间---------
+Dissolve Room 1=玩家【{0}】申请解散房间，请等待其他玩家选择（超过5分钟未做选择）则默认同意
+Dissolve Room 2=等待选择
+Dissolve Room 3=[00cd6b]同意[-]
+Dissolve Room 4=[0A0456]拒绝[-]
+Dissolve Room 5=【】
+Dissolve Room 6=解散房间不扣房卡，是否确定解散？
+Dissolve Room 7=房间已解散,点击确认退出房间
+Dissolve Room Error 1=操作无效
+Dissolve Room Error 2=经玩家{0}同意，房间解散成功
+Dissolve Room Error 3=没有权限
+Dissolve Room Error 4=房间已解散
+Dissolve Room Error 5=因玩家{0}不同意，解散失败
+Dissolve Room Error 6=房间已解散,点击确认退出房间！
+Dissolve Room Error 7=没有权限，点击退出房间！
+
+//----------提示--------
+hint UI_1 = 代理招募: {0}【微信】
+hint UI_2 = 投诉举报: {0}【微信公众号】
+
+//-------问题反馈-------- 
+issue_0 = 请留下您的电话号码
+//------微信登入BG------
+QQWXBG_1=抵制不良游戏，拒绝盗版游戏，注意自我保护，谨防上当受骗
+QQWXBG_2=适度游戏益脑，沉迷游戏伤身，合理安排时间，享受快乐生活
+
+//------公告-------
+Notice text 1=详情请[fffd66]关注[-]游戏公众号，[fffd66]点击[-]申请代理
+//------版本号-----
+TVersionTag=版本号：

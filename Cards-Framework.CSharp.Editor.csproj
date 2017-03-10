@@ -103,6 +103,10 @@
       <Project>{4BBE1FB9-4A43-07E5-D1A6-B430F1A61F0F}</Project>
       <Name>Cards-Framework.CSharp.Plugins</Name>
     </ProjectReference>
+    <ProjectReference Include="Cards-Framework.CSharp.csproj">
+      <Project>{0F958834-A47C-D795-26DE-1F5F9B6A391D}</Project>
+      <Name>Cards-Framework.CSharp</Name>
+    </ProjectReference>
     <ProjectReference Include="Cards-Framework.CSharp.Editor.Plugins.csproj">
       <Project>{1361DACE-2F66-FCB1-A14A-BEB8386B16FA}</Project>
       <Name>Cards-Framework.CSharp.Editor.Plugins</Name>
@@ -145,10 +149,32 @@
     <None Include="Assets\Plugins\NCSpeedLight\3rd\NGUI\Resources\Shaders\Unlit - Transparent Packed.shader" />
     <None Include="Assets\Plugins\NCSpeedLight\3rd\RongCloud\Android\AndroidManifest.xml" />
     <None Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\readme.txt" />
-    <None Include="Assets\Raw Resources\Atlas\Dialog\Dialog.txt" />
-    <None Include="Assets\Raw Resources\Atlas\Login\QQlogin.txt" />
-    <None Include="Assets\Raw Resources\Atlas\Login\login.txt" />
-    <None Include="Assets\Raw Resources\Atlas\Login\text.txt" />
+    <None Include="Assets\Res Bundle\Text\Chinese.txt" />
+    <None Include="Assets\Res Bundle\Text\Light xml\majiangzhuo.txt" />
+    <None Include="Assets\Res Bundle\UI\Center\Atlas\Center.txt" />
+    <None Include="Assets\Res Bundle\UI\Dialog\Atlas\Dialog.txt" />
+    <None Include="Assets\Res Bundle\UI\MaJiang\Atlas\OperatorPrompt.txt" />
+    <None Include="Assets\Res Bundle\UI\MaJiang\Atlas\chat.txt" />
+    <None Include="Assets\Res Bundle\UI\MaJiang\Atlas\hall.txt" />
+    <None Include="Assets\Res Bundle\UI\MaJiang\Atlas\mj.txt" />
+    <None Include="Assets\Res Bundle\UI\MaJiang\Atlas\result.txt" />
+    <None Include="Assets\Res Bundle\UI\MaJiang\Atlas\start.txt" />
+    <None Include="Assets\Res Bundle\UI\MaJiang\View\Atlas\record.txt" />
+    <None Include="Assets\Res Bundle\UI\Main\Atlas\Main.txt" />
+    <None Include="Assets\Res Bundle\UI\Problem\Atlas\Problem.txt" />
+    <None Include="Assets\Res Raw\Atlas\Dialog\Dialog.txt" />
+    <None Include="Assets\Res Raw\Atlas\JoinRoom\JoinRoom.txt" />
+    <None Include="Assets\Res Raw\Atlas\Login\QQlogin.txt" />
+    <None Include="Assets\Res Raw\Atlas\Login\login.txt" />
+    <None Include="Assets\Res Raw\Atlas\Login\text.txt" />
+    <None Include="Assets\Res Raw\Atlas\Public\public 1.txt" />
+    <None Include="Assets\Res Raw\Atlas\Public\publicDynamic.txt" />
+    <None Include="Assets\Res Raw\Atlas\Record\Record.txt" />
+    <None Include="Assets\Res Raw\Effect\MaJiang\BianKuang\jinyu\Add Lv3.shader" />
+    <None Include="Assets\Res Raw\Model\MaJiang\majiang_clips.txt" />
+    <None Include="Assets\Res Raw\Model\MaJiang\majiangzhuo_clips.txt" />
+    <None Include="Assets\Res Raw\Shader\SM_TransparentRim.shader" />
+    <None Include="Assets\Resources\UI\text.txt" />
     <None Include="Assets\StreamingAssets\Lua\files.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
