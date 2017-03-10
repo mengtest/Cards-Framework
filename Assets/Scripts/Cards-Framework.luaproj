@@ -32,7 +32,6 @@
     <Folder Include="Lua\NCSpeedLight\3rd\pbc\" />
     <Folder Include="Lua\NCSpeedLight\3rd\pblua\" />
     <Folder Include="Lua\NCSpeedLight\3rd\sproto\" />
-    <Folder Include="Lua\NCSpeedLight\Interface\" />
     <Folder Include="Lua\NCSpeedLight\Modules\" />
     <Folder Include="Lua\NCSpeedLight\Modules\Dialog\" />
     <Folder Include="Lua\NCSpeedLight\Modules\Login\" />
@@ -70,6 +69,7 @@
     <Content Include="Lua\NCSpeedLight\3rd\luabitop\msvctest.bat" />
     <Content Include="Lua\NCSpeedLight\3rd\luabitop\README" />
     <Content Include="Lua\NCSpeedLight\3rd\pblua\login.proto" />
+    <Content Include="Lua\NCSpeedLight\Protocol\PBMessage.pb" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Lua\NCSpeedLight\3rd\cjson\json2lua.lua" />
@@ -95,19 +95,11 @@
     <Compile Include="Lua\NCSpeedLight\3rd\sproto\testall.lua" />
     <Compile Include="Lua\NCSpeedLight\3rd\sproto\testrpc.lua" />
     <Compile Include="Lua\NCSpeedLight\Game.lua" />
-    <Compile Include="Lua\NCSpeedLight\Interface\IAudioManager.lua" />
-    <Compile Include="Lua\NCSpeedLight\Interface\IDBManager.lua" />
-    <Compile Include="Lua\NCSpeedLight\Interface\IGlobalEventManager.lua" />
-    <Compile Include="Lua\NCSpeedLight\Interface\INetEventManager.lua" />
-    <Compile Include="Lua\NCSpeedLight\Interface\INetManager.lua" />
-    <Compile Include="Lua\NCSpeedLight\Interface\IResManager.lua" />
-    <Compile Include="Lua\NCSpeedLight\Interface\IUIManager.lua" />
     <Compile Include="Lua\NCSpeedLight\Modules\Dialog\ConfirmDialog.lua" />
     <Compile Include="Lua\NCSpeedLight\Modules\Dialog\NetConnectDialog.lua" />
     <Compile Include="Lua\NCSpeedLight\Modules\Dialog\TipsDialog.lua" />
     <Compile Include="Lua\NCSpeedLight\Modules\Login\UI_NormalLogin.lua" />
     <Compile Include="Lua\NCSpeedLight\Modules\Login\UI_Register.lua" />
-    <Compile Include="Lua\NCSpeedLight\Protocol\account_pb.lua" />
     <Compile Include="Lua\NCSpeedLight\Scenes\DownloadScene.lua" />
     <Compile Include="Lua\NCSpeedLight\Scenes\GameScene.lua" />
     <Compile Include="Lua\NCSpeedLight\Scenes\HallScene.lua" />
