@@ -235,6 +235,7 @@
     <None Include="Assets\Plugins\NCSpeedLight\3rd\NGUI\Resources\Shaders\Unlit - Transparent Packed 3.shader" />
     <None Include="Assets\Plugins\NCSpeedLight\3rd\NGUI\Resources\Shaders\Unlit - Transparent Packed.shader" />
     <None Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\readme.txt" />
+    <None Include="Assets\Plugins\RongCloud\Android\AndroidManifest.xml" />
     <None Include="Assets\Raw Resources\Atlas\Dialog\Dialog.txt" />
     <None Include="Assets\Raw Resources\Atlas\Login\QQlogin.txt" />
     <None Include="Assets\Raw Resources\Atlas\Login\login.txt" />

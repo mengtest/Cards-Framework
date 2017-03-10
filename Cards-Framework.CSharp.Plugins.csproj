@@ -712,6 +712,17 @@
     <Compile Include="Assets\Plugins\NCSpeedLight\Utils\View\TipsDialog.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Utils\View\UIGaussianBlurEffect.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Utils\View\VisiableTest.cs" />
+    <Compile Include="Assets\Plugins\ShareSDK\Android\AndroidImpl.cs" />
+    <Compile Include="Assets\Plugins\ShareSDK\ContentType.cs" />
+    <Compile Include="Assets\Plugins\ShareSDK\MiniJSON.cs" />
+    <Compile Include="Assets\Plugins\ShareSDK\PCShaderSDK.cs" />
+    <Compile Include="Assets\Plugins\ShareSDK\PlatformType.cs" />
+    <Compile Include="Assets\Plugins\ShareSDK\ResponseState.cs" />
+    <Compile Include="Assets\Plugins\ShareSDK\ShareContent.cs" />
+    <Compile Include="Assets\Plugins\ShareSDK\ShareSDK.cs" />
+    <Compile Include="Assets\Plugins\ShareSDK\ShareSDKDevInfo.cs" />
+    <Compile Include="Assets\Plugins\ShareSDK\ShareSDKImpl.cs" />
+    <Compile Include="Assets\Plugins\ShareSDK\iOS\iOSImpl.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\NCSpeedLight\3rd\AudioToolkit\Readme.txt" />
@@ -740,6 +751,7 @@
     <None Include="Assets\Plugins\NCSpeedLight\3rd\NGUI\Resources\Shaders\Unlit - Transparent Packed 3.shader" />
     <None Include="Assets\Plugins\NCSpeedLight\3rd\NGUI\Resources\Shaders\Unlit - Transparent Packed.shader" />
     <None Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\readme.txt" />
+    <None Include="Assets\Plugins\RongCloud\Android\AndroidManifest.xml" />
     <None Include="Assets\Raw Resources\Atlas\Dialog\Dialog.txt" />
     <None Include="Assets\Raw Resources\Atlas\Login\QQlogin.txt" />
     <None Include="Assets\Raw Resources\Atlas\Login\login.txt" />
