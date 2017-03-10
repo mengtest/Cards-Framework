@@ -128,7 +128,7 @@ public class SharedVariableWrap
 	{
 		try
 		{
-			LuaDLL.lua_pushstring(L, SharedVariable.LUA_BUNDLE_PATH);
+			LuaDLL.lua_pushstring(L, SharedVariable.SCRIPT_BUNDLE_PATH);
 			return 1;
 		}
 		catch(Exception e)

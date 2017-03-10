@@ -7,18 +7,58 @@ public class ResManagerWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(ResManager), typeof(UnityEngine.MonoBehaviour));
+		L.RegFunction("GetStreamingAssetsURL", GetStreamingAssetsURL);
+		L.RegFunction("GetStreamingAssetsPath", GetStreamingAssetsPath);
 		L.RegFunction("Initialize", Initialize);
+		L.RegFunction("AssemblyAssetBundle", AssemblyAssetBundle);
+		L.RegFunction("GetLoadedAssetBundle", GetLoadedAssetBundle);
+		L.RegFunction("UnloadAssetBundle", UnloadAssetBundle);
 		L.RegFunction("LoadAssetSync", LoadAssetSync);
 		L.RegFunction("LoadAssetAsync", LoadAssetAsync);
-		L.RegFunction("InProgress", InProgress);
+		L.RegFunction("LoadLevelAsync", LoadLevelAsync);
+		L.RegFunction("IsInProgress", IsInProgress);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("AssetBundleSourceURL", get_AssetBundleSourceURL, set_AssetBundleSourceURL);
 		L.RegVar("AssetBundleSourceDirectory", get_AssetBundleSourceDirectory, set_AssetBundleSourceDirectory);
 		L.RegVar("Instance", get_Instance, set_Instance);
 		L.RegVar("IsInitialized", get_IsInitialized, set_IsInitialized);
+		L.RegVar("IsResourceMode", get_IsResourceMode, null);
+		L.RegVar("IsCompressedBundle", get_IsCompressedBundle, null);
 		L.RegVar("PostResManagerInitialized", get_PostResManagerInitialized, set_PostResManagerInitialized);
 		L.EndClass();
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetStreamingAssetsURL(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 0);
+			string o = ResManager.GetStreamingAssetsURL();
+			LuaDLL.lua_pushstring(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetStreamingAssetsPath(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 0);
+			string o = ResManager.GetStreamingAssetsPath();
+			LuaDLL.lua_pushstring(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -37,32 +77,70 @@ public class ResManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int AssemblyAssetBundle(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			string arg0 = ToLua.CheckString(L, 1);
+			string arg1 = null;
+			LoadedAssetBundle o = ResManager.AssemblyAssetBundle(arg0, out arg1);
+			ToLua.PushObject(L, o);
+			LuaDLL.lua_pushstring(L, arg1);
+			return 2;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetLoadedAssetBundle(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			string arg0 = ToLua.CheckString(L, 1);
+			string arg1 = null;
+			LoadedAssetBundle o = ResManager.GetLoadedAssetBundle(arg0, out arg1);
+			ToLua.PushObject(L, o);
+			LuaDLL.lua_pushstring(L, arg1);
+			return 2;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int UnloadAssetBundle(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			string arg0 = ToLua.CheckString(L, 1);
+			ResManager.UnloadAssetBundle(arg0);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int LoadAssetSync(IntPtr L)
 	{
 		try
 		{
-			int count = LuaDLL.lua_gettop(L);
-
-			if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(string), typeof(System.Type)))
-			{
-				string arg0 = ToLua.ToString(L, 1);
-				System.Type arg1 = (System.Type)ToLua.ToObject(L, 2);
-				UnityEngine.Object o = ResManager.LoadAssetSync(arg0, arg1);
-				ToLua.Push(L, o);
-				return 1;
-			}
-			else if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(string), typeof(string)))
-			{
-				string arg0 = ToLua.ToString(L, 1);
-				string arg1 = ToLua.ToString(L, 2);
-				UnityEngine.Object o = ResManager.LoadAssetSync(arg0, arg1);
-				ToLua.Push(L, o);
-				return 1;
-			}
-			else
-			{
-				return LuaDLL.luaL_throw(L, "invalid arguments to method: ResManager.LoadAssetSync");
-			}
+			ToLua.CheckArgsCount(L, 2);
+			string arg0 = ToLua.CheckString(L, 1);
+			System.Type arg1 = (System.Type)ToLua.CheckObject(L, 2, typeof(System.Type));
+			UnityEngine.Object o = ResManager.LoadAssetSync(arg0, arg1);
+			ToLua.Push(L, o);
+			return 1;
 		}
 		catch(Exception e)
 		{
@@ -75,57 +153,26 @@ public class ResManagerWrap
 	{
 		try
 		{
-			int count = LuaDLL.lua_gettop(L);
+			ToLua.CheckArgsCount(L, 4);
+			string arg0 = ToLua.CheckString(L, 1);
+			System.Type arg1 = (System.Type)ToLua.CheckObject(L, 2, typeof(System.Type));
+			LoadAssetCallback arg2 = null;
+			LuaTypes funcType3 = LuaDLL.lua_type(L, 3);
 
-			if (count == 4 && TypeChecker.CheckTypes(L, 1, typeof(string), typeof(System.Type), typeof(LoadAssetCallback), typeof(object)))
+			if (funcType3 != LuaTypes.LUA_TFUNCTION)
 			{
-				string arg0 = ToLua.ToString(L, 1);
-				System.Type arg1 = (System.Type)ToLua.ToObject(L, 2);
-				LoadAssetCallback arg2 = null;
-				LuaTypes funcType3 = LuaDLL.lua_type(L, 3);
-
-				if (funcType3 != LuaTypes.LUA_TFUNCTION)
-				{
-					 arg2 = (LoadAssetCallback)ToLua.ToObject(L, 3);
-				}
-				else
-				{
-					LuaFunction func = ToLua.ToLuaFunction(L, 3);
-					arg2 = DelegateFactory.CreateDelegate(typeof(LoadAssetCallback), func) as LoadAssetCallback;
-				}
-
-				object arg3 = ToLua.ToVarObject(L, 4);
-				LoadAssetOperation o = ResManager.LoadAssetAsync(arg0, arg1, arg2, arg3);
-				ToLua.Push(L, o);
-				return 1;
-			}
-			else if (count == 5 && TypeChecker.CheckTypes(L, 1, typeof(string), typeof(System.Type), typeof(bool), typeof(LoadAssetCallback), typeof(object)))
-			{
-				string arg0 = ToLua.ToString(L, 1);
-				System.Type arg1 = (System.Type)ToLua.ToObject(L, 2);
-				bool arg2 = LuaDLL.lua_toboolean(L, 3);
-				LoadAssetCallback arg3 = null;
-				LuaTypes funcType4 = LuaDLL.lua_type(L, 4);
-
-				if (funcType4 != LuaTypes.LUA_TFUNCTION)
-				{
-					 arg3 = (LoadAssetCallback)ToLua.ToObject(L, 4);
-				}
-				else
-				{
-					LuaFunction func = ToLua.ToLuaFunction(L, 4);
-					arg3 = DelegateFactory.CreateDelegate(typeof(LoadAssetCallback), func) as LoadAssetCallback;
-				}
-
-				object arg4 = ToLua.ToVarObject(L, 5);
-				LoadAssetOperation o = ResManager.LoadAssetAsync(arg0, arg1, arg2, arg3, arg4);
-				ToLua.Push(L, o);
-				return 1;
+				 arg2 = (LoadAssetCallback)ToLua.CheckObject(L, 3, typeof(LoadAssetCallback));
 			}
 			else
 			{
-				return LuaDLL.luaL_throw(L, "invalid arguments to method: ResManager.LoadAssetAsync");
+				LuaFunction func = ToLua.ToLuaFunction(L, 3);
+				arg2 = DelegateFactory.CreateDelegate(typeof(LoadAssetCallback), func) as LoadAssetCallback;
 			}
+
+			object arg3 = ToLua.ToVarObject(L, 4);
+			EasyAB.LoadAssetOperation o = ResManager.LoadAssetAsync(arg0, arg1, arg2, arg3);
+			ToLua.Push(L, o);
+			return 1;
 		}
 		catch(Exception e)
 		{
@@ -134,13 +181,33 @@ public class ResManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int InProgress(IntPtr L)
+	static int LoadLevelAsync(IntPtr L)
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 1);
+			ToLua.CheckArgsCount(L, 3);
 			string arg0 = ToLua.CheckString(L, 1);
-			LoadAssetOperation o = ResManager.InProgress(arg0);
+			string arg1 = ToLua.CheckString(L, 2);
+			bool arg2 = LuaDLL.luaL_checkboolean(L, 3);
+			EasyAB.LoadOperation o = ResManager.LoadLevelAsync(arg0, arg1, arg2);
+			ToLua.Push(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int IsInProgress(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			string arg0 = ToLua.CheckString(L, 1);
+			string arg1 = ToLua.CheckString(L, 2);
+			EasyAB.LoadAssetOperation o = ResManager.IsInProgress(arg0, arg1);
 			ToLua.Push(L, o);
 			return 1;
 		}
@@ -216,6 +283,34 @@ public class ResManagerWrap
 		try
 		{
 			LuaDLL.lua_pushboolean(L, ResManager.IsInitialized);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_IsResourceMode(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushboolean(L, ResManager.IsResourceMode);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_IsCompressedBundle(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushboolean(L, ResManager.IsCompressedBundle);
 			return 1;
 		}
 		catch(Exception e)

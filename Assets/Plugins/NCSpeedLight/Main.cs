@@ -23,7 +23,7 @@ public class Main : MonoBehaviour
 
     IEnumerator OnExtractAssets()
     {
-        string dataPath = SharedVariable.LUA_BUNDLE_PATH;  //数据目录
+        string dataPath = SharedVariable.SCRIPT_BUNDLE_PATH;  //数据目录
         string resPath = SharedVariable.APP_CONTENT_PATH + "Lua/"; //游戏包资源目录
 
         if (Directory.Exists(dataPath))

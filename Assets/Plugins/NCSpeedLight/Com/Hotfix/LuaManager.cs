@@ -196,8 +196,8 @@ public class LuaLoader : LuaFileUtils
     /// <param name="bundleName"></param>
     public void AddBundle(string bundleName)
     {
-        string fileName = bundleName.ToLower() + ".unity3d";
-        string url = SharedVariable.LUA_BUNDLE_PATH + fileName;
+        string fileName = bundleName.ToLower();
+        string url = SharedVariable.SCRIPT_BUNDLE_PATH + fileName;
         if (File.Exists(url))
         {
             AssetBundle bundle = AssetBundle.LoadFromFile(url);

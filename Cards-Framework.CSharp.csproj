@@ -105,19 +105,6 @@
     <None Include="Assets\Plugins\NCSpeedLight\3rd\NGUI\Resources\Shaders\Unlit - Transparent Packed.shader" />
     <None Include="Assets\Plugins\NCSpeedLight\3rd\RongCloud\Android\AndroidManifest.xml" />
     <None Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\readme.txt" />
-    <None Include="Assets\Res Bundle\Text\Chinese.txt" />
-    <None Include="Assets\Res Bundle\Text\Light xml\majiangzhuo.txt" />
-    <None Include="Assets\Res Bundle\UI\Center\Atlas\Center.txt" />
-    <None Include="Assets\Res Bundle\UI\Dialog\Atlas\Dialog.txt" />
-    <None Include="Assets\Res Bundle\UI\MaJiang\Atlas\OperatorPrompt.txt" />
-    <None Include="Assets\Res Bundle\UI\MaJiang\Atlas\chat.txt" />
-    <None Include="Assets\Res Bundle\UI\MaJiang\Atlas\hall.txt" />
-    <None Include="Assets\Res Bundle\UI\MaJiang\Atlas\mj.txt" />
-    <None Include="Assets\Res Bundle\UI\MaJiang\Atlas\result.txt" />
-    <None Include="Assets\Res Bundle\UI\MaJiang\Atlas\start.txt" />
-    <None Include="Assets\Res Bundle\UI\MaJiang\View\Atlas\record.txt" />
-    <None Include="Assets\Res Bundle\UI\Main\Atlas\Main.txt" />
-    <None Include="Assets\Res Bundle\UI\Problem\Atlas\Problem.txt" />
     <None Include="Assets\Res Raw\Atlas\Dialog\Dialog.txt" />
     <None Include="Assets\Res Raw\Atlas\JoinRoom\JoinRoom.txt" />
     <None Include="Assets\Res Raw\Atlas\Login\QQlogin.txt" />
@@ -130,8 +117,20 @@
     <None Include="Assets\Res Raw\Model\MaJiang\majiang_clips.txt" />
     <None Include="Assets\Res Raw\Model\MaJiang\majiangzhuo_clips.txt" />
     <None Include="Assets\Res Raw\Shader\SM_TransparentRim.shader" />
+    <None Include="Assets\Resources\Bundle\Text\Chinese.txt" />
+    <None Include="Assets\Resources\Bundle\Text\Light xml\majiangzhuo.txt" />
+    <None Include="Assets\Resources\Bundle\UI\Center\Atlas\Center.txt" />
+    <None Include="Assets\Resources\Bundle\UI\Dialog\Atlas\Dialog.txt" />
+    <None Include="Assets\Resources\Bundle\UI\MaJiang\Atlas\OperatorPrompt.txt" />
+    <None Include="Assets\Resources\Bundle\UI\MaJiang\Atlas\chat.txt" />
+    <None Include="Assets\Resources\Bundle\UI\MaJiang\Atlas\hall.txt" />
+    <None Include="Assets\Resources\Bundle\UI\MaJiang\Atlas\mj.txt" />
+    <None Include="Assets\Resources\Bundle\UI\MaJiang\Atlas\result.txt" />
+    <None Include="Assets\Resources\Bundle\UI\MaJiang\Atlas\start.txt" />
+    <None Include="Assets\Resources\Bundle\UI\MaJiang\View\Atlas\record.txt" />
+    <None Include="Assets\Resources\Bundle\UI\Main\Atlas\Main.txt" />
+    <None Include="Assets\Resources\Bundle\UI\Problem\Atlas\Problem.txt" />
     <None Include="Assets\Resources\UI\text.txt" />
-    <None Include="Assets\StreamingAssets\Lua\files.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

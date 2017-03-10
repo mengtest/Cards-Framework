@@ -62,22 +62,49 @@ public static class SharedVariable
         }
     }
 
-    public static string LUA_BUNDLE_PATH
+    public static string SCRIPT_BUNDLE_PATH
     {
         get
         {
-            if (Application.isMobilePlatform || Application.platform == RuntimePlatform.WindowsPlayer)
+            if (Application.isMobilePlatform || Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.OSXPlayer)
             {
-                return Application.persistentDataPath + "/Lua/";
+                return Application.persistentDataPath + "/Scripts/";
             }
             else if (Application.isEditor)
             {
-                return Application.streamingAssetsPath + "/Lua/";
+                return Application.dataPath.Substring(0, Application.dataPath.IndexOf("/Assets")) + "/AssetBundles/" + PLATFORM_NAME + "/Scripts/";
             }
             else
             {
-                return "C:/" + GAME_NAME + "/";
+                return string.Empty;
             }
+        }
+    }
+
+    public static string ASSET_BUNDLE_PATH
+    {
+        get
+        {
+            if (Application.isMobilePlatform || Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.OSXPlayer)
+            {
+                return Application.persistentDataPath + "/Assets/";
+            }
+            else if (Application.isEditor)
+            {
+                return Application.dataPath.Substring(0, Application.dataPath.IndexOf("/Assets")) + "/AssetBundles/" + PLATFORM_NAME + "/Assets/";
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+    }
+
+    public static string BUILD_BUNDLE_LOG_PATH
+    {
+        get
+        {
+            return Application.dataPath.Substring(0, Application.dataPath.IndexOf("/Assets")) + "/AssetBundles/" + PLATFORM_NAME + "/Log/";
         }
     }
 
