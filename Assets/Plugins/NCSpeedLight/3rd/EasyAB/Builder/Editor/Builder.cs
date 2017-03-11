@@ -37,7 +37,11 @@ namespace EasyAB
 
         private string m_OutputDirectory;
 
-        private BuildAssetBundleOptions m_BuildOptions = BuildAssetBundleOptions.DeterministicAssetBundle | BuildAssetBundleOptions.UncompressedAssetBundle;
+        private BuildAssetBundleOptions m_BuildOptions =
+                BuildAssetBundleOptions.CollectDependencies |
+                BuildAssetBundleOptions.CompleteAssets |
+                BuildAssetBundleOptions.DeterministicAssetBundle |
+                BuildAssetBundleOptions.UncompressedAssetBundle;
 
         private List<string> m_PreSharedAssets = new List<string>();
 
@@ -351,26 +355,34 @@ namespace EasyAB
 
                         m_TempObjects[0] = AssetDatabase.LoadAssetAtPath(path, typeof(Object));
 
+
                         string md5 = AssetBundleManifest.GetAssetBundleMD5(path);
                         string outFile = folder + md5;
 
 
                         if (File.Exists(outFile) == false)
                         {
-                            Debug.Log("Build assetbundle targetfile: " + outFile + ",assetpath: " + path + ",push level:" + nowLevel.ToString() + " " + m_BuildTarget);
-
-                            md5TW.Write(path);
-                            md5TW.Write("  ||  ");
-                            md5TW.Write(md5);
-                            md5TW.WriteLine();
-
-                            if (path.EndsWith(".unity"))
+                            if (m_TempObjects[0] == null)
                             {
-                                BuildPipeline.BuildStreamedSceneAssetBundle(new string[1] { path }, outFile, m_BuildTarget);
+                                Debug.LogError("Build assetbundle fail caused by null asset: " + path);
                             }
                             else
                             {
-                                BuildPipeline.BuildAssetBundle(m_TempObjects[0], m_TempObjects, outFile, m_BuildOptions, m_BuildTarget);
+                                Debug.Log("Build assetbundle targetfile: " + outFile + ",assetpath: " + path + ",push level:" + nowLevel.ToString() + " " + m_BuildTarget);
+
+                                md5TW.Write(path);
+                                md5TW.Write("  ||  ");
+                                md5TW.Write(md5);
+                                md5TW.WriteLine();
+
+                                if (path.EndsWith(".unity"))
+                                {
+                                    BuildPipeline.BuildStreamedSceneAssetBundle(new string[1] { path }, outFile, m_BuildTarget);
+                                }
+                                else
+                                {
+                                    BuildPipeline.BuildAssetBundle(m_TempObjects[0], m_TempObjects, outFile, m_BuildOptions, m_BuildTarget);
+                                }
                             }
                         }
                     }
@@ -381,7 +393,8 @@ namespace EasyAB
                     BuildPipeline.PopAssetDependencies();
                 }
 
-                UnityEditor.EditorUtility.UnloadUnusedAssetsImmediate();
+                UnityEditor.EditorUtility.UnloadUnusedAssets();
+                UnityEditor.EditorUtility.UnloadUnusedAssetsIgnoreManagedReferences();
             }
             md5TW.Close();
         }

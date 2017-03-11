@@ -459,7 +459,6 @@ public class ResManager : MonoBehaviour
 
             string bundleMD5 = EasyAB.AssetBundleManifest.GetAssetBundleMD5(bundleName);
             string filePath = AssetBundleSourceDirectory + bundleMD5;
-
             AssetBundle bundle = null;
             bundle = AssetBundle.LoadFromFile(filePath);
             m_LoadedAssetBundles.Add(bundleName, new LoadedAssetBundle(bundleName)

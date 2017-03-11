@@ -169,5 +169,5 @@ public static class SharedVariable
     /// </summary>
     public static bool ENCRYPT_LUA = true;
 
-    public static bool LUA_BUNDLE_MODE = true;
+    public static bool LUA_BUNDLE_MODE = false;
 }
