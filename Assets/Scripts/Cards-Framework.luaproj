@@ -32,9 +32,13 @@
     <Folder Include="Lua\NCSpeedLight\3rd\pbc\" />
     <Folder Include="Lua\NCSpeedLight\3rd\pblua\" />
     <Folder Include="Lua\NCSpeedLight\3rd\sproto\" />
+    <Folder Include="Lua\NCSpeedLight\Core\Event\" />
+    <Folder Include="Lua\NCSpeedLight\Framework\Player\" />
     <Folder Include="Lua\NCSpeedLight\Modules\" />
     <Folder Include="Lua\NCSpeedLight\Modules\Dialog\" />
     <Folder Include="Lua\NCSpeedLight\Modules\Login\" />
+    <Folder Include="Lua\NCSpeedLight\Framework\" />
+    <Folder Include="Lua\NCSpeedLight\Core\" />
     <Folder Include="Lua\NCSpeedLight\Protocol\" />
     <Folder Include="Lua\NCSpeedLight\Scenes\" />
     <Folder Include="Lua\NCSpeedLight\Utils\" />
@@ -94,6 +98,11 @@
     <Compile Include="Lua\NCSpeedLight\3rd\sproto\test.lua" />
     <Compile Include="Lua\NCSpeedLight\3rd\sproto\testall.lua" />
     <Compile Include="Lua\NCSpeedLight\3rd\sproto\testrpc.lua" />
+    <Compile Include="Lua\NCSpeedLight\Core\Event\Evt.lua" />
+    <Compile Include="Lua\NCSpeedLight\Core\Event\EvtQueue.lua" />
+    <Compile Include="Lua\NCSpeedLight\Core\Event\EvtProcessor.lua" />
+    <Compile Include="Lua\NCSpeedLight\Framework\Player\Player.lua" />
+    <Compile Include="Lua\NCSpeedLight\Framework\Player\PlayerManager.lua" />
     <Compile Include="Lua\NCSpeedLight\Game.lua" />
     <Compile Include="Lua\NCSpeedLight\Modules\Dialog\ConfirmDialog.lua" />
     <Compile Include="Lua\NCSpeedLight\Modules\Dialog\NetConnectDialog.lua" />
@@ -104,8 +113,8 @@
     <Compile Include="Lua\NCSpeedLight\Scenes\GameScene.lua" />
     <Compile Include="Lua\NCSpeedLight\Scenes\HallScene.lua" />
     <Compile Include="Lua\NCSpeedLight\Scenes\LoginScene.lua" />
-    <Compile Include="Lua\NCSpeedLight\Test.lua" />
     <Compile Include="Lua\NCSpeedLight\Utils\Define.lua" />
+    <Compile Include="Lua\NCSpeedLight\Utils\Map.lua" />
     <Compile Include="Lua\NCSpeedLight\Utils\UrlKeeper.lua" />
     <Compile Include="Lua\ToLua\cjson\util.lua" />
     <Compile Include="Lua\ToLua\event.lua" />

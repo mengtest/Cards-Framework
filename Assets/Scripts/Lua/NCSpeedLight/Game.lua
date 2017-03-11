@@ -9,10 +9,9 @@
 --
 ----------------------------------------------- 
 
-require 'NCSpeedLight/Utils/Define'
+require 'NCSpeedLight.Utils.Define'
 
-Game = {
-}
+Game = { }
 
 local this = Game
 local transform
@@ -50,4 +49,30 @@ function Game.Initialize()
     UIManager.Initialize()
     SceneManager.Initialize()
     NetManager.Initialize()
+    this.TestEvent()
+end
+
+function Game.TestEvent()
+--    require 'NCSpeedLight.Core.Event.EvtProcessor'
+--    require 'NCSpeedLight.Utils.Map'
+
+    local processor = EvtProcessor:New();
+
+    processor:Register(1, this.TestEventCallback1);
+    processor:Register(1, this.TestEventCallback2);
+    processor:Notify(1, 'Hello EvtProcessor');
+
+    processor:Unregister(1, this.TestEventCallback1);
+    processor:UnregisterAll();
+    --    processor:N();
+    processor:Notify(1, 'Hello EvtProcessor');
+
+end
+
+function Game.TestEventCallback1(param)
+    print("Game.TestEventCallback1,param is " .. param);
+end
+
+function Game.TestEventCallback2(param)
+    print("Game.TestEventCallback2,param is " .. param);
 end

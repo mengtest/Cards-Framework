@@ -14,8 +14,8 @@ using LuaInterface;
 
 public class LuaBehaviour : MonoBehaviour
 {
-    public string LuaPath;
-    public string LuaName;
+    public string Module;
+    public string Script;
 
     private LuaFunction m_AwakeFunction;
     private LuaFunction m_StartFunction;
@@ -27,15 +27,24 @@ public class LuaBehaviour : MonoBehaviour
 
     protected virtual void Awake()
     {
-        LuaManager.DoString(string.Format("require 'NCSpeedLight/{0}{1}'", LuaPath, LuaName));
+        string str = string.Empty;
+        if (string.IsNullOrEmpty(Module))
+        {
+            str = Script;
+        }
+        else
+        {
+            str = Helper.StringFormat("require '{0}.{1}'", Module, Script);
+        }
+        LuaManager.DoString(str);
 
-        m_AwakeFunction = LuaManager.LuaState.GetFunction(LuaName + ".Awake", false);
-        m_StartFunction = LuaManager.LuaState.GetFunction(LuaName + ".Start", false);
-        m_OnEnableFunction = LuaManager.LuaState.GetFunction(LuaName + ".OnEnable", false);
-        m_OnDisableFunction = LuaManager.LuaState.GetFunction(LuaName + ".OnDisable", false);
-        m_UpdateFunction = LuaManager.LuaState.GetFunction(LuaName + ".Update", false);
-        m_LateUpdateFunction = LuaManager.LuaState.GetFunction(LuaName + ".LateUpdate", false);
-        m_OnDestroyFunction = LuaManager.LuaState.GetFunction(LuaName + ".OnDestroy", false);
+        m_AwakeFunction = LuaManager.LuaState.GetFunction(Script + ".Awake", false);
+        m_StartFunction = LuaManager.LuaState.GetFunction(Script + ".Start", false);
+        m_OnEnableFunction = LuaManager.LuaState.GetFunction(Script + ".OnEnable", false);
+        m_OnDisableFunction = LuaManager.LuaState.GetFunction(Script + ".OnDisable", false);
+        m_UpdateFunction = LuaManager.LuaState.GetFunction(Script + ".Update", false);
+        m_LateUpdateFunction = LuaManager.LuaState.GetFunction(Script + ".LateUpdate", false);
+        m_OnDestroyFunction = LuaManager.LuaState.GetFunction(Script + ".OnDestroy", false);
 
         if (m_AwakeFunction != null)
         {

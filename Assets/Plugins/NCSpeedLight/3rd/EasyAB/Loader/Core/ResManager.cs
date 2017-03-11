@@ -97,7 +97,7 @@ public class ResManager : MonoBehaviour
 #if ASSETBUNDLE_MODE
             return false;
 #else
-                return true;
+            return true;
 #endif
         }
     }
@@ -304,7 +304,14 @@ public class ResManager : MonoBehaviour
             Utility.Log("AssetBundle Mode");
             go = new GameObject("ResManager [Mode: AssetBundle]");
         }
-        DontDestroyOnLoad(go);
+        if (Game.Instance)
+        {
+            go.transform.SetParent(Game.Instance.transform);
+        }
+        else
+        {
+            DontDestroyOnLoad(go);
+        }
         go.SetActive(true);
         go.AddComponent<ResManager>();
         SetupAssetBundleEnv();

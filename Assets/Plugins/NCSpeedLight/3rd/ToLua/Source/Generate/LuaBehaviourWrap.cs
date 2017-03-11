@@ -41,7 +41,7 @@ public class LuaBehaviourWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			LuaBehaviour obj = (LuaBehaviour)o;
-			string ret = obj.LuaPath;
+			string ret = obj.Module;
 			LuaDLL.lua_pushstring(L, ret);
 			return 1;
 		}
@@ -60,7 +60,7 @@ public class LuaBehaviourWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			LuaBehaviour obj = (LuaBehaviour)o;
-			string ret = obj.LuaName;
+			string ret = obj.Script;
 			LuaDLL.lua_pushstring(L, ret);
 			return 1;
 		}
@@ -80,7 +80,7 @@ public class LuaBehaviourWrap
 			o = ToLua.ToObject(L, 1);
 			LuaBehaviour obj = (LuaBehaviour)o;
 			string arg0 = ToLua.CheckString(L, 2);
-			obj.LuaPath = arg0;
+			obj.Module = arg0;
 			return 0;
 		}
 		catch(Exception e)
@@ -99,7 +99,7 @@ public class LuaBehaviourWrap
 			o = ToLua.ToObject(L, 1);
 			LuaBehaviour obj = (LuaBehaviour)o;
 			string arg0 = ToLua.CheckString(L, 2);
-			obj.LuaName = arg0;
+			obj.Script = arg0;
 			return 0;
 		}
 		catch(Exception e)

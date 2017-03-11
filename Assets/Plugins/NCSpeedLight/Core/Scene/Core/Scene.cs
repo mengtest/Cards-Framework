@@ -49,7 +49,7 @@ public class Scene : State
         : base(name)
     {
         m_EventManager = new SceneEventManager(this);
-        LuaManager.DoString(string.Format("require 'NCSpeedLight/Scenes/{0}'", Name));
+        LuaManager.DoString(string.Format("require 'NCSpeedLight.Scenes.{0}'", Name));
 
         m_OnCreateFunction = LuaManager.LuaState.GetFunction(Name + ".OnCreate", false);
         m_BeginFunction = LuaManager.LuaState.GetFunction(Name + ".Begin", false);

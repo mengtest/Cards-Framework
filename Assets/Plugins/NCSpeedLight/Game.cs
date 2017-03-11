@@ -17,8 +17,8 @@ public class Game : LuaBehaviour
 
     protected override void Awake()
     {
-        LuaName = "Game";
-        LuaPath = string.Empty;
+        Module = "NCSpeedLight";
+        Script = "Game";
         Instance = this;
         DontDestroyOnLoad(gameObject);
         LuaManager.Initialize();
