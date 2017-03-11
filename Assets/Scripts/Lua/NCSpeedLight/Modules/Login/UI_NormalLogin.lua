@@ -56,7 +56,7 @@ end
 
 function UI_NormalLogin.onClickRegister(go)
     UIManager.CloseWindow("Login/ui_normalLogin")
-    UIManager.OpenWindow("Login/ui_regist")
+    UIManager.OpenWindow("Login/ui_register")
 end
 
 function UI_NormalLogin.TestOpenStandardDialog()
