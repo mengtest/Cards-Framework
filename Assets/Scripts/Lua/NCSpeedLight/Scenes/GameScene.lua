@@ -1,25 +1,23 @@
-GameScene = {
-}
+GameScene = { }
 
 local this = GameScene
-local instance
 
-function GameScene.New()
-    return this
+function this:New()
+	o = { };
+	setmetatable(o, self);
+	self.__index = self;
+	self.Name = SceneType.GameScene;
+	return o;
 end
 
-function GameScene.OnCreate(obj)
-    instance = obj
-    print("GameScene.OnCreate()")
+function this:OnInit()
 end 
 
-function GameScene.Begin()
-    print("GameScene.Begin()")
+function this:Begin()
 end
 
-function GameScene.Update()
+function this:Update()
 end
 
-function GameScene.End()
-    print("GameScene.End()")
+function this:End()
 end

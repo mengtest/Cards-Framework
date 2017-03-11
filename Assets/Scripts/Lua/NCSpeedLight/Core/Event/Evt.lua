@@ -9,26 +9,26 @@
 --          //
 ----------------------------------------------------------------
 
-Evt = { };
+--Evt = { };
 
-local this = Evt;
+--local this = Evt;
 
-function this:New(id)
-    o = { };
-    setmetatable(o, self);
-    self.__index = self;
-    self.count = 0;
-    self.ID = id;
-    self.Param = nil;
-    return o;
-end
+--function this:New(id)
+--    o = { };
+--    setmetatable(o, self);
+--    self.__index = self;
+--    self.count = 0;
+--    self.ID = id;
+--    self.Param = nil;
+--    return o;
+--end
 
-function this:New(id, param)
-    o = { };
-    setmetatable(o, self);
-    self.__index = self;
-    self.count = 0;
-    self.ID = id;
-    self.Param = param;
-    return o;
-end
+--function this:New(id, param)
+--    o = { };
+--    setmetatable(o, self);
+--    self.__index = self;
+--    self.count = 0;
+--    self.ID = id;
+--    self.Param = param;
+--    return o;
+--end

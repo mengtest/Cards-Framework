@@ -18,7 +18,9 @@ public class SharedVariableWrap
 		L.RegVar("LUA_BUNDLE_MODE", get_LUA_BUNDLE_MODE, set_LUA_BUNDLE_MODE);
 		L.RegVar("SCREEN_SCALE", get_SCREEN_SCALE, null);
 		L.RegVar("DATA_PATH", get_DATA_PATH, null);
-		L.RegVar("LUA_BUNDLE_PATH", get_LUA_BUNDLE_PATH, null);
+		L.RegVar("SCRIPT_BUNDLE_PATH", get_SCRIPT_BUNDLE_PATH, null);
+		L.RegVar("ASSET_BUNDLE_PATH", get_ASSET_BUNDLE_PATH, null);
+		L.RegVar("BUILD_BUNDLE_LOG_PATH", get_BUILD_BUNDLE_LOG_PATH, null);
 		L.RegVar("APP_CONTENT_PATH", get_APP_CONTENT_PATH, null);
 		L.RegVar("PLATFORM", get_PLATFORM, null);
 		L.RegVar("PLATFORM_NAME", get_PLATFORM_NAME, null);
@@ -124,11 +126,39 @@ public class SharedVariableWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_LUA_BUNDLE_PATH(IntPtr L)
+	static int get_SCRIPT_BUNDLE_PATH(IntPtr L)
 	{
 		try
 		{
 			LuaDLL.lua_pushstring(L, SharedVariable.SCRIPT_BUNDLE_PATH);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_ASSET_BUNDLE_PATH(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, SharedVariable.ASSET_BUNDLE_PATH);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_BUILD_BUNDLE_LOG_PATH(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, SharedVariable.BUILD_BUNDLE_LOG_PATH);
 			return 1;
 		}
 		catch(Exception e)

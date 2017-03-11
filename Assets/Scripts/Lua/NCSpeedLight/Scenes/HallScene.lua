@@ -1,25 +1,23 @@
-HallScene = {
-}
+HallScene = { }
 
 local this = HallScene
-local instance
 
-function HallScene.New()
-    return this
+function this:New()
+	o = { };
+	setmetatable(o, self);
+	self.__index = self;
+	self.Name = SceneType.HallScene;
+	return o;
 end
 
-function HallScene.OnCreate(obj)
-    instance = obj
-    print("HallScene.OnCreate()")
+function this:OnInit()
 end 
 
-function HallScene.Begin()
-    print("HallScene.Begin()")
+function this:Begin()
 end
 
-function HallScene.Update()
+function this:Update()
 end
 
-function HallScene.End()
-    print("HallScene.End()")
+function this:End()
 end

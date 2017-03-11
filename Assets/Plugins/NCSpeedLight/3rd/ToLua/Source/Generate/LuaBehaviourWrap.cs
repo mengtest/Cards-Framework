@@ -9,8 +9,8 @@ public class LuaBehaviourWrap
 		L.BeginClass(typeof(LuaBehaviour), typeof(UnityEngine.MonoBehaviour));
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
-		L.RegVar("LuaPath", get_LuaPath, set_LuaPath);
-		L.RegVar("LuaName", get_LuaName, set_LuaName);
+		L.RegVar("Module", get_Module, set_Module);
+		L.RegVar("Script", get_Script, set_Script);
 		L.EndClass();
 	}
 
@@ -33,7 +33,7 @@ public class LuaBehaviourWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_LuaPath(IntPtr L)
+	static int get_Module(IntPtr L)
 	{
 		object o = null;
 
@@ -47,12 +47,12 @@ public class LuaBehaviourWrap
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index LuaPath on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index Module on a nil value" : e.Message);
 		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_LuaName(IntPtr L)
+	static int get_Script(IntPtr L)
 	{
 		object o = null;
 
@@ -66,12 +66,12 @@ public class LuaBehaviourWrap
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index LuaName on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index Script on a nil value" : e.Message);
 		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_LuaPath(IntPtr L)
+	static int set_Module(IntPtr L)
 	{
 		object o = null;
 
@@ -85,12 +85,12 @@ public class LuaBehaviourWrap
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index LuaPath on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index Module on a nil value" : e.Message);
 		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_LuaName(IntPtr L)
+	static int set_Script(IntPtr L)
 	{
 		object o = null;
 
@@ -104,7 +104,7 @@ public class LuaBehaviourWrap
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index LuaName on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index Script on a nil value" : e.Message);
 		}
 	}
 }

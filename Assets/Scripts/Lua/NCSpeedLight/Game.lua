@@ -18,61 +18,67 @@ local transform
 local gameObject
 
 function Game.New()
-    return this
+	return this
 end
 
 function Game.Awake(go)
-    gameObject = go
-    transform = go.transform
-    this.Initialize()
+	gameObject = go
+	transform = go.transform
+	this.Initialize()
 end 
 
 function Game.Start()
-    SceneManager.GotoScene(Scene.Type.DownloadScene)
+	SceneManager:GotoScene(SceneType.DownloadScene);
 end
 
 function Game.Update()
-    NetManager.Update()
-    SceneManager.Instance:Update()
+	NetManager.Update()
+	SceneManager:Update()
 end
 
 function Game.OnDestroy()
-    NetManager.Destroy()
+	NetManager.Destroy()
 end
 
 function Game.Initialize()
-    UnityEngine.Application.targetFrameRate = 30
-    UnityEngine.Screen.sleepTimeout = UnityEngine.SleepTimeout.NeverSleep
-    ResManager.Initialize()
-    PersistentManager.Initialize()
-    VersionManager.Initialize()
-    UIManager.Initialize()
-    SceneManager.Initialize()
-    NetManager.Initialize()
-    this.TestEvent()
+	UnityEngine.Application.targetFrameRate = 30
+	UnityEngine.Screen.sleepTimeout = UnityEngine.SleepTimeout.NeverSleep
+	ResManager.Initialize()
+	PersistentManager.Initialize()
+	VersionManager.Initialize()
+	UIManager.Initialize()
+	SceneManager.Initialize()
+	NetManager.Initialize()
+	this.TestEvent()
+	-- this.TestSceneManager()
 end
 
 function Game.TestEvent()
---    require 'NCSpeedLight.Core.Event.EvtProcessor'
---    require 'NCSpeedLight.Utils.Map'
+	--    require 'NCSpeedLight.Core.Event.EvtProcessor'
+	--    require 'NCSpeedLight.Utils.Map'
 
-    local processor = EvtProcessor:New();
+	local processor = EvtProcessor:New();
 
-    processor:Register(1, this.TestEventCallback1);
-    processor:Register(1, this.TestEventCallback2);
-    processor:Notify(1, 'Hello EvtProcessor');
+	processor:Register(1, this.TestEventCallback1);
+	processor:Register(1, this.TestEventCallback2);
+	processor:Notify(1, 'Hello EvtProcessor');
 
-    processor:Unregister(1, this.TestEventCallback1);
-    processor:UnregisterAll();
-    --    processor:N();
-    processor:Notify(1, 'Hello EvtProcessor');
+	processor:Unregister(1, this.TestEventCallback1);
+	processor:UnregisterAll();
+	--    processor:N();
+	processor:Notify(1, 'Hello EvtProcessor');
 
 end
 
 function Game.TestEventCallback1(param)
-    print("Game.TestEventCallback1,param is " .. param);
+	print("Game.TestEventCallback1,param is " .. param);
 end
 
 function Game.TestEventCallback2(param)
-    print("Game.TestEventCallback2,param is " .. param);
+	print("Game.TestEventCallback2,param is " .. param);
+end
+
+function Game.TestSceneManager()
+	SceneManager:Initialize();
+	SceneManager:GotoScene(SceneType.DownloadScene);
 end

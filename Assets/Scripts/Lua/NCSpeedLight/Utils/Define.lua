@@ -12,15 +12,18 @@
 require 'NCSpeedLight.Utils.UrlKeeper'
 require 'NCSpeedLight.3rd.pbc.protobuf'
 require 'NCSpeedLight.Core.Event.EvtProcessor'
+require 'NCSpeedLight.Core.Scene.SceneManager'
+require 'NCSpeedLight.Scenes.SceneType'
+require 'NCSpeedLight.Utils.Log'
 
 protobuf = require 'protobuf'
 
 function InitPBMessage()
-    local path = SharedVariable.LUA_BUNDLE_PATH .. "PBMessage.pb";
-    local addr = io.open(path, "rb")
-    local buffer = addr:read "*a"
-    addr:close()
-    protobuf.register(buffer)
+	local path = SharedVariable.SCRIPT_BUNDLE_PATH .. "PBMessage.pb";
+	local addr = io.open(path, "rb")
+	local buffer = addr:read "*a"
+	addr:close()
+	protobuf.register(buffer)
 end
 
 InitPBMessage()

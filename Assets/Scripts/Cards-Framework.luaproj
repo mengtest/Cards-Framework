@@ -33,6 +33,7 @@
     <Folder Include="Lua\NCSpeedLight\3rd\pblua\" />
     <Folder Include="Lua\NCSpeedLight\3rd\sproto\" />
     <Folder Include="Lua\NCSpeedLight\Core\Event\" />
+    <Folder Include="Lua\NCSpeedLight\Core\Scene\" />
     <Folder Include="Lua\NCSpeedLight\Framework\Player\" />
     <Folder Include="Lua\NCSpeedLight\Modules\" />
     <Folder Include="Lua\NCSpeedLight\Modules\Dialog\" />
@@ -101,6 +102,7 @@
     <Compile Include="Lua\NCSpeedLight\Core\Event\Evt.lua" />
     <Compile Include="Lua\NCSpeedLight\Core\Event\EvtQueue.lua" />
     <Compile Include="Lua\NCSpeedLight\Core\Event\EvtProcessor.lua" />
+    <Compile Include="Lua\NCSpeedLight\Core\Scene\SceneManager.lua" />
     <Compile Include="Lua\NCSpeedLight\Framework\Player\Player.lua" />
     <Compile Include="Lua\NCSpeedLight\Framework\Player\PlayerManager.lua" />
     <Compile Include="Lua\NCSpeedLight\Game.lua" />
@@ -113,7 +115,9 @@
     <Compile Include="Lua\NCSpeedLight\Scenes\GameScene.lua" />
     <Compile Include="Lua\NCSpeedLight\Scenes\HallScene.lua" />
     <Compile Include="Lua\NCSpeedLight\Scenes\LoginScene.lua" />
+    <Compile Include="Lua\NCSpeedLight\Scenes\SceneType.lua" />
     <Compile Include="Lua\NCSpeedLight\Utils\Define.lua" />
+    <Compile Include="Lua\NCSpeedLight\Utils\Log.lua" />
     <Compile Include="Lua\NCSpeedLight\Utils\Map.lua" />
     <Compile Include="Lua\NCSpeedLight\Utils\UrlKeeper.lua" />
     <Compile Include="Lua\ToLua\cjson\util.lua" />
