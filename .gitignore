@@ -10,4 +10,8 @@
 /Assets/StreamingAssets/Lua
 /Assets/Scripts/obj
 /Bin
-/AssetBundles/Android
+/AssetBundles/
+/AssetBundles/Android/
+/AssetBundles/iOS/
+/AssetBundles/Win/
+/AssetBundles/Windows/
