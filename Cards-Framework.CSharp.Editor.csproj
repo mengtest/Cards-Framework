@@ -94,9 +94,6 @@
     <Reference Include="Debugger">
       <HintPath>Assets\Plugins\Debugger.dll</HintPath>
     </Reference>
-    <Reference Include="JsonFx.Json">
-      <HintPath>Assets\Plugins\NCSpeedLight\3rd\JsonFx\JsonFx.Json.dll</HintPath>
-    </Reference>
     <Reference Include="QuickGraph">
       <HintPath>Assets\Plugins\NCSpeedLight\Core\Res\Builder\Editor\QuickGraph.dll</HintPath>
     </Reference>
@@ -127,8 +124,6 @@
   <ItemGroup>
     <None Include="Assets\Plugins\NCSpeedLight\3rd\AudioToolkit\Readme.txt" />
     <None Include="Assets\Plugins\NCSpeedLight\3rd\FingerGestures\Readme.txt" />
-    <None Include="Assets\Plugins\NCSpeedLight\3rd\JsonFx\License.txt" />
-    <None Include="Assets\Plugins\NCSpeedLight\3rd\JsonFx\Readme.txt" />
     <None Include="Assets\Plugins\NCSpeedLight\3rd\NGUI\ReadMe - 3.7.8.txt" />
     <None Include="Assets\Plugins\NCSpeedLight\3rd\NGUI\Resources\Shaders\Unlit - Premultiplied Colored (TextureClip).shader" />
     <None Include="Assets\Plugins\NCSpeedLight\3rd\NGUI\Resources\Shaders\Unlit - Premultiplied Colored 1.shader" />
