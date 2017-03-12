@@ -45,6 +45,12 @@ function CheckVersion()
 	coroutine.wait(0.5)
 	UIManager.CloseProgressDialog()
 
+--	if www.error ~= '' then
+--		UIManager.OpenTipsDialog('网络错误！')
+--		Log:Error('WWW Error: ' .. www.error);
+--		return;
+--	end
+
 	local str = tolua.tolstring(www.bytes)
 	local json = jsonProcessor.decode(str)
 	print("Account server ip is " .. json.accountserverip)

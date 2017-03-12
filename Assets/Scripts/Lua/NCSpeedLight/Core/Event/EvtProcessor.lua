@@ -9,8 +9,8 @@
 --          //
 ----------------------------------------------------------------
 
-require 'NCSpeedLight.Core.Event.Evt'
 require 'NCSpeedLight.Core.Event.EvtQueue'
+
 EvtProcessor = { };
 
 local this = EvtProcessor;
@@ -19,53 +19,53 @@ function this:New()
     o = { }
     setmetatable(o, self)
     self.__index = self
-    self.m_Listeners = { }
+    self.Listeners = { }
     return o
 end
 
 function this:Register(id, func)
     local index = 1
-    if self.m_Listeners[id] == nil then
-        self.m_Listeners[id] = { }
+    if self.Listeners[id] == nil then
+        self.Listeners[id] = { }
     else
         local existIndex = this:EventIndex(id, func)
         if existIndex ~= -1 then
             return
         end
-        index = #self.m_Listeners[id] + 1
+        index = #self.Listeners[id] + 1
     end
-    self.m_Listeners[id][index] = func
+    self.Listeners[id][index] = func
 end
 
 function this:Unregister(id, func)
-    if self.m_Listeners[id] == nil then
+    if self.Listeners[id] == nil then
         return
     end
     local existIndex = self:EventIndex(id, func)
     if existIndex == -1 then return end
-    table.remove(self.m_Listeners[id], existIndex)
+    table.remove(self.Listeners[id], existIndex)
 end
 
 function this:UnregisterAll()
-    table.remove(self.m_Listeners)
+    table.remove(self.Listeners)
 end
 
 
 function this:Notify(id, param)
-    if self.m_Listeners[id] == nil then
+    if self.Listeners[id] == nil then
         return
     end
-    for k, v in pairs(self.m_Listeners[id]) do
+    for k, v in pairs(self.Listeners[id]) do
         v(param)
     end
 end
 
 function this:EventIndex(id, func)
-    if self.m_Listeners[id] == nil then
+    if self.Listeners[id] == nil then
         return -1
     end
-    for i = 1, #self.m_Listeners[id] do
-        if self.m_Listeners[id][i] == func then
+    for i = 1, #self.Listeners[id] do
+        if self.Listeners[id][i] == func then
             return i
         end
     end

@@ -99,7 +99,6 @@
     <Compile Include="Lua\NCSpeedLight\3rd\sproto\test.lua" />
     <Compile Include="Lua\NCSpeedLight\3rd\sproto\testall.lua" />
     <Compile Include="Lua\NCSpeedLight\3rd\sproto\testrpc.lua" />
-    <Compile Include="Lua\NCSpeedLight\Core\Event\Evt.lua" />
     <Compile Include="Lua\NCSpeedLight\Core\Event\EvtQueue.lua" />
     <Compile Include="Lua\NCSpeedLight\Core\Event\EvtProcessor.lua" />
     <Compile Include="Lua\NCSpeedLight\Core\Scene\SceneManager.lua" />

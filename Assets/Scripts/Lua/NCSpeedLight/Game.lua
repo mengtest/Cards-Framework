@@ -54,19 +54,19 @@ function Game.Initialize()
 end
 
 function Game.TestEvent()
-	--    require 'NCSpeedLight.Core.Event.EvtProcessor'
-	--    require 'NCSpeedLight.Utils.Map'
 
 	local processor = EvtProcessor:New();
+	local evtQ = EvtQueue:New(processor);
 
-	processor:Register(1, this.TestEventCallback1);
-	processor:Register(1, this.TestEventCallback2);
+	evtQ:Add(1, this.TestEventCallback1);
+	evtQ:Add(2, this.TestEventCallback2);
 	processor:Notify(1, 'Hello EvtProcessor');
-
-	processor:Unregister(1, this.TestEventCallback1);
-	processor:UnregisterAll();
+	processor:Notify(2, 'Hello 32525');
+	-- evtQ:Remove(1, this.TestEventCallback1);
+	evtQ:Clear();
 	--    processor:N();
 	processor:Notify(1, 'Hello EvtProcessor');
+	processor:Notify(2, 'Hello 32525');
 
 end
 
