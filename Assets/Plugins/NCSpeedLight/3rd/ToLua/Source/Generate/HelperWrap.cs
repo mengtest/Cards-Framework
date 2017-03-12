@@ -128,7 +128,7 @@ public class HelperWrap
 		{
 			ToLua.CheckArgsCount(L, 2);
 			UnityEngine.GameObject arg0 = (UnityEngine.GameObject)ToLua.CheckUnityObject(L, 1, typeof(UnityEngine.GameObject));
-			Scene.LAYER arg1 = (Scene.LAYER)ToLua.CheckObject(L, 2, typeof(Scene.LAYER));
+			int arg1 = (int)LuaDLL.luaL_checknumber(L, 2);
 			Helper.SetLayer(arg0, arg1);
 			return 0;
 		}

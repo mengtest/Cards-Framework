@@ -68,9 +68,9 @@ public class Helper
     /// </summary>
     /// <param name="go"></param>
     /// <param name="layer"></param>
-    public static void SetLayer(GameObject go, Scene.LAYER layer)
+    public static void SetLayer(GameObject go, int layer)
     {
-        NGUITools.SetLayer(go, (int)layer);
+        NGUITools.SetLayer(go, layer);
         return;
     }
 

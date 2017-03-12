@@ -150,7 +150,7 @@ public static class CustomSettings
 
         #region NCSpeedLight
         _GT(typeof(GlobalEventManager)),
-         _GT(typeof( Evt)),
+         _GT(typeof(Evt)),
          _GT(typeof(ResManager)),
 
          _GT(typeof(UIManager)),
@@ -162,7 +162,6 @@ public static class CustomSettings
          _GT(typeof(AudioManager)),
          _GT(typeof(LuaManager)),
          _GT(typeof(LuaBehaviour)),
-         _GT(typeof(LuaUtils)),
          _GT(typeof(LuaView)),
 
          _GT(typeof(NetManager)),
@@ -178,10 +177,10 @@ public static class CustomSettings
          _GT(typeof(AndroidAdapter)),
          _GT(typeof(iOSAdapter)),
 
-         _GT(typeof(SceneManager)),
-         _GT(typeof(Scene)),
-         _GT(typeof(Scene.LAYER)),
-         _GT(typeof(Scene.Type)),
+         //_GT(typeof(SceneManager)),
+         //_GT(typeof(Scene)),
+         //_GT(typeof(Scene.LAYER)),
+         //_GT(typeof(Scene.Type)),
 
 
          _GT(typeof(PersistentManager)),

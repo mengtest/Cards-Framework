@@ -17,7 +17,6 @@ public static class LuaBinder
 		AudioManagerWrap.Register(L);
 		LuaManagerWrap.Register(L);
 		LuaBehaviourWrap.Register(L);
-		LuaUtilsWrap.Register(L);
 		LuaViewWrap.Register(L);
 		NetManagerWrap.Register(L);
 		ServerConnectionWrap.Register(L);
@@ -26,8 +25,6 @@ public static class LuaBinder
 		SDKManagerWrap.Register(L);
 		AndroidAdapterWrap.Register(L);
 		iOSAdapterWrap.Register(L);
-		SceneManagerWrap.Register(L);
-		SceneWrap.Register(L);
 		PersistentManagerWrap.Register(L);
 		VersionManagerWrap.Register(L);
 		SharedVariableWrap.Register(L);
@@ -112,8 +109,6 @@ public static class LuaBinder
 		UITooltipWrap.Register(L);
 		UIViewportWrap.Register(L);
 		EventManagerWrap.Register(L);
-		StateMachineWrap.Register(L);
-		StateWrap.Register(L);
 		UIBasicSpriteWrap.Register(L);
 		UIWidgetWrap.Register(L);
 		UIRectWrap.Register(L);
@@ -192,10 +187,6 @@ public static class LuaBinder
 		L.BeginModule("ServerConnection");
 		ServerConnection_ListenerWrap.Register(L);
 		L.RegFunction("ConnectionDelegate", ServerConnection_ConnectionDelegate);
-		L.EndModule();
-		L.BeginModule("Scene");
-		Scene_LAYERWrap.Register(L);
-		Scene_TypeWrap.Register(L);
 		L.EndModule();
 		L.BeginModule("System");
 		System_DateTimeWrap.Register(L);

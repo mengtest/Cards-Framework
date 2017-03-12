@@ -94,11 +94,11 @@
     <Reference Include="Debugger">
       <HintPath>Assets\Plugins\Debugger.dll</HintPath>
     </Reference>
-    <Reference Include="QuickGraph">
-      <HintPath>Assets\Plugins\NCSpeedLight\3rd\EasyAB\Builder\Editor\QuickGraph.dll</HintPath>
-    </Reference>
     <Reference Include="JsonFx.Json">
       <HintPath>Assets\Plugins\NCSpeedLight\3rd\JsonFx\JsonFx.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="QuickGraph">
+      <HintPath>Assets\Plugins\NCSpeedLight\Core\Res\Builder\Editor\QuickGraph.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -116,9 +116,6 @@
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\AudioToolkit\AudioToolkit\Editor\AudioItemOverview.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\AudioToolkit\AudioToolkit\Editor\AudioLogView.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\AudioToolkit\AudioToolkit\Editor\AudioObject_Editor.cs" />
-    <Compile Include="Assets\Plugins\NCSpeedLight\3rd\EasyAB\Builder\Editor\Builder.cs" />
-    <Compile Include="Assets\Plugins\NCSpeedLight\3rd\EasyAB\Builder\Editor\BuilderTools.cs" />
-    <Compile Include="Assets\Plugins\NCSpeedLight\3rd\EasyAB\Builder\Editor\EditorUtility.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\NGUI\Scripts\Editor\ActiveAnimationEditor.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\NGUI\Scripts\Editor\BMFontReader.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\NGUI\Scripts\Editor\ComponentSelector.cs" />
@@ -217,6 +214,9 @@
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Editor\ToLuaExport.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Editor\ToLuaMenu.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Editor\ToLuaTree.cs" />
+    <Compile Include="Assets\Plugins\NCSpeedLight\Core\Res\Builder\Editor\Builder.cs" />
+    <Compile Include="Assets\Plugins\NCSpeedLight\Core\Res\Builder\Editor\BuilderTools.cs" />
+    <Compile Include="Assets\Plugins\NCSpeedLight\Core\Res\Builder\Editor\EditorUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\NCSpeedLight\3rd\AudioToolkit\Readme.txt" />

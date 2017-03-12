@@ -94,11 +94,11 @@
     <Reference Include="Debugger">
       <HintPath>Assets\Plugins\Debugger.dll</HintPath>
     </Reference>
-    <Reference Include="QuickGraph">
-      <HintPath>Assets\Plugins\NCSpeedLight\3rd\EasyAB\Builder\Editor\QuickGraph.dll</HintPath>
-    </Reference>
     <Reference Include="JsonFx.Json">
       <HintPath>Assets\Plugins\NCSpeedLight\3rd\JsonFx\JsonFx.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="QuickGraph">
+      <HintPath>Assets\Plugins\NCSpeedLight\Core\Res\Builder\Editor\QuickGraph.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
