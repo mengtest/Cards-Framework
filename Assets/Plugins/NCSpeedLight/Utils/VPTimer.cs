@@ -217,9 +217,9 @@ public class VPTimer : MonoBehaviour
         {
             m_MainObject = new GameObject("VPTimer");
             m_MainObject.AddComponent<VPTimer>();
-            if (Game.Instance)
+            if (NCSpeedLight.Game.Instance)
             {
-                m_MainObject.transform.SetParent(Game.Instance.transform);
+                m_MainObject.transform.SetParent(NCSpeedLight.Game.Instance.transform);
             }
             else
             {

@@ -9,7 +9,10 @@
            //
 //----------------------------------------------------------------*/
 
-public class AndroidAdapter
+namespace NCSpeedLight
 {
-    public static void Initialize() { }
+    public class AndroidAdapter
+    {
+        public static void Initialize() { }
+    }
 }

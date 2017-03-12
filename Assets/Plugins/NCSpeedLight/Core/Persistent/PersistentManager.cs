@@ -14,7 +14,10 @@ using System.Reflection;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PersistentManager
+namespace NCSpeedLight
 {
-    public static void Initialize() { }
+    public class PersistentManager
+    {
+        public static void Initialize() { }
+    }
 }

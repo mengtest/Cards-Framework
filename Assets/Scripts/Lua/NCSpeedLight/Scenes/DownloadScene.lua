@@ -19,7 +19,7 @@ function this:Begin()
 	--    if UnityEngine.Application.platform == UnityEngine.RuntimePlatform.Android or UnityEngine.Application.platform == UnityEngine.RuntimePlatform.IPhonePlayer then
 	--        UIManager.OpenWindow("Login/Tencent/QQWXBG")
 	--    else
-	UIManager.OpenWindow("Login/ui_loginBk")
+	NCSpeedLight.UIManager.OpenWindow("Login/ui_loginBk")
 	--    end
 	coroutine.start(CheckVersion)
 end
@@ -35,38 +35,38 @@ function CheckVersion()
 	Log:Info('Request json url at ' .. url);
 	local www = UnityEngine.WWW(url)
 
-	local option = UIManager.ProgressDialogOption()
+	local option = NCSpeedLight.UIManager.ProgressDialogOption()
 	option.Content = "正在检查更新..."
 	option.AutoClose = true
 	option.Cancelable = false
-	UIManager.OpenProgressDialog(option)
+	NCSpeedLight.UIManager.OpenProgressDialog(option)
 
 	coroutine.www(www)
 	coroutine.wait(0.5)
-	UIManager.CloseProgressDialog()
+	NCSpeedLight.UIManager.CloseProgressDialog()
 
 --	if www.error ~= '' then
 --		UIManager.OpenTipsDialog('网络错误！')
 --		Log:Error('WWW Error: ' .. www.error);
 --		return;
---	end
+--	NCSpeedLight.end
 
 	local str = tolua.tolstring(www.bytes)
 	local json = jsonProcessor.decode(str)
 	print("Account server ip is " .. json.accountserverip)
 	print("Account server port is " .. json.accountserverport)
-	local listener = ServerConnection.Listener()
+	local listener = NCSpeedLight.ServerConnection.Listener()
 	listener.OnConnect = OnConnectLoginServer
 	listener.OnDisconnect = OnDisconnectLoginServer
-	NetManager.CreateConnection(NetManager.ServerType.Login, json.accountserverip, json.accountserverport, listener)
+	NCSpeedLight.NetManager.CreateConnection(NCSpeedLight.NetManager.ServerType.Login, json.accountserverip, json.accountserverport, listener)
 end
 
 
 function OnConnectLoginServer(connection)
-	UIManager.OpenTipsDialog("成功连接至登录服务器")
+	NCSpeedLight.UIManager.OpenTipsDialog("成功连接至登录服务器")
 	SceneManager:GotoScene(SceneType.LoginScene);
 end
 
 function OnDisconnectLoginServer(connection)
-	UIManager.OpenTipsDialog("已经断开与登录服务器的连接")
+	NCSpeedLight.UIManager.OpenTipsDialog("已经断开与登录服务器的连接")
 end

@@ -8,61 +8,65 @@
            // Modify History:
            //
 //----------------------------------------------------------------*/
-public class GlobalEventManager : EventManager
+
+namespace NCSpeedLight
 {
-    public static GlobalEventManager m_Instance;
-    public static GlobalEventManager Instance
+    public class GlobalEventManager : EventManager
     {
-        get
+        public static GlobalEventManager m_Instance;
+        public static GlobalEventManager Instance
         {
-            if (m_Instance == null)
+            get
             {
-                m_Instance = new GlobalEventManager();
+                if (m_Instance == null)
+                {
+                    m_Instance = new GlobalEventManager();
+                }
+                return m_Instance;
             }
-            return m_Instance;
         }
+
+        //public static GlobalEventManager GetInstance()
+        //{
+        //    return Instance;
+        //}
+        //private GlobalEventManager() { }
+
+        //public override void Register(int eventID, EventHandlerDelegate handler)
+        //{
+        //    base.Register(eventID, handler);
+        //}
+        //public override void Unregister(int eventID, EventHandlerDelegate handler)
+        //{
+        //    base.Unregister(eventID, handler);
+        //}
+        //public override void UnregisterAll()
+        //{
+        //    base.UnregisterAll();
+        //}
+        //public override void Notify(Event eventObj)
+        //{
+        //    base.Notify(eventObj);
+        //}
     }
 
-    //public static GlobalEventManager GetInstance()
-    //{
-    //    return Instance;
-    //}
-    //private GlobalEventManager() { }
+    public enum GlobalEventType
+    {
+        GE_HeroChange,//角色发生切换
+        GE_SceneBegin, //场景开始
+        GE_LevelWasLoaded, //关卡加载完成
+        GE_SceneWasLoaded, //场景加载完成
+        GE_SceneEnd, //场景结束
 
-    //public override void Register(int eventID, EventHandlerDelegate handler)
-    //{
-    //    base.Register(eventID, handler);
-    //}
-    //public override void Unregister(int eventID, EventHandlerDelegate handler)
-    //{
-    //    base.Unregister(eventID, handler);
-    //}
-    //public override void UnregisterAll()
-    //{
-    //    base.UnregisterAll();
-    //}
-    //public override void Notify(Event eventObj)
-    //{
-    //    base.Notify(eventObj);
-    //}
-}
+        /// <summary>
+        /// 主界面蒙板打开/关闭
+        /// </summary>
+        GE_SetMainMask,
 
-public enum GlobalEventType
-{
-    GE_HeroChange,//角色发生切换
-    GE_SceneBegin, //场景开始
-    GE_LevelWasLoaded, //关卡加载完成
-    GE_SceneWasLoaded, //场景加载完成
-    GE_SceneEnd, //场景结束
+        GE_ClientCommond,
 
-    /// <summary>
-    /// 主界面蒙板打开/关闭
-    /// </summary>
-    GE_SetMainMask,
+        GE_NetWorkState,
 
-    GE_ClientCommond,
-
-    GE_NetWorkState,
-
-    GE_EditorCreateCharacter,
+        GE_EditorCreateCharacter,
+    }
 }

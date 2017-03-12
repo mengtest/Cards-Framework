@@ -33,6 +33,7 @@
     <Folder Include="Lua\NCSpeedLight\3rd\pblua\" />
     <Folder Include="Lua\NCSpeedLight\3rd\sproto\" />
     <Folder Include="Lua\NCSpeedLight\Core\Event\" />
+    <Folder Include="Lua\NCSpeedLight\Core\View\" />
     <Folder Include="Lua\NCSpeedLight\Core\Scene\" />
     <Folder Include="Lua\NCSpeedLight\Framework\Player\" />
     <Folder Include="Lua\NCSpeedLight\Modules\" />

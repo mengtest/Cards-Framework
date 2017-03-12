@@ -17,7 +17,7 @@ using System.IO;
 using System.Collections.Generic;
 using System;
 
-namespace EasyAB
+namespace NCSpeedLight
 {
     public static class EditorUtility
     {

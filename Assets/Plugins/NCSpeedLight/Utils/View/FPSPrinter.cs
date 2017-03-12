@@ -10,36 +10,40 @@
 //----------------------------------------------------------------*/
 using UnityEngine;
 
-public class FPSPrinter : MonoBehaviour
+namespace NCSpeedLight
 {
-    public float CurrentFPS;
-    private float UpdateInterval = 1f;
-    private float TotalTime = .0f;
-    private int TotalFrames = 0;
-    private float TimeLeft;
-    private string StrFPS;
-    void Start()
-    {
-        TimeLeft = UpdateInterval;
-    }
 
-    void Update()
+    public class FPSPrinter : MonoBehaviour
     {
-        TimeLeft -= Time.deltaTime;
-        TotalTime += Time.timeScale / Time.deltaTime;
-        ++TotalFrames;
-        if (TimeLeft <= 0)
+        public float CurrentFPS;
+        private float UpdateInterval = 1f;
+        private float TotalTime = .0f;
+        private int TotalFrames = 0;
+        private float TimeLeft;
+        private string StrFPS;
+        void Start()
         {
-            CurrentFPS = TotalTime / TotalFrames;
-            StrFPS = CurrentFPS.ToString("f" + Mathf.Clamp(1, 0, 10));
             TimeLeft = UpdateInterval;
-            TotalTime = .0f;
-            TotalFrames = 0;
         }
-    }
 
-    void OnGUI()
-    {
-        GUI.Box(new Rect(10, 10, 70, 25), StrFPS + " FPS");
+        void Update()
+        {
+            TimeLeft -= Time.deltaTime;
+            TotalTime += Time.timeScale / Time.deltaTime;
+            ++TotalFrames;
+            if (TimeLeft <= 0)
+            {
+                CurrentFPS = TotalTime / TotalFrames;
+                StrFPS = CurrentFPS.ToString("f" + Mathf.Clamp(1, 0, 10));
+                TimeLeft = UpdateInterval;
+                TotalTime = .0f;
+                TotalFrames = 0;
+            }
+        }
+
+        void OnGUI()
+        {
+            GUI.Box(new Rect(10, 10, 70, 25), StrFPS + " FPS");
+        }
     }
 }

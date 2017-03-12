@@ -13,7 +13,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace EasyAB
+namespace NCSpeedLight
 {
     public class ResLoadExample : MonoBehaviour
     {

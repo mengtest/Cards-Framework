@@ -1,18 +1,17 @@
 ﻿/*----------------------------------------------------------------
-            // Copyright © Wells Hsu
-            // Email: wellshsu1004@gmail.com
-            //
-            // FileName: AssetBundleLoadLevelOperation.cs
-			// Describle:
-			// Created By:  Wells Hsu
-			// Date&Time:  
-            // Modify History:
-            //
+           // Copyright © 2014-2017 NCSpeedLight
+           // 
+           // FileName: AssetBundleLoadLevelOperation.cs
+           // Describle:  
+           // Created By:  Wells Hsu
+           // Date&Time:  2016/1/19 10:03:15
+           // Modify History:
+           //
 //----------------------------------------------------------------*/
 
 using UnityEngine;
 
-namespace EasyAB
+namespace NCSpeedLight
 {
     public class AssetBundleLoadLevelOperation : LoadOperation
     {

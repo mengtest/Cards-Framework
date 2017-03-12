@@ -32,7 +32,7 @@ function Game.Start()
 end
 
 function Game.Update()
-	NetManager.Update()
+	NCSpeedLight.NetManager.Update()
 	SceneManager:Update()
 end
 
@@ -43,12 +43,12 @@ end
 function Game.Initialize()
 	UnityEngine.Application.targetFrameRate = 30
 	UnityEngine.Screen.sleepTimeout = UnityEngine.SleepTimeout.NeverSleep
-	ResManager.Initialize()
-	PersistentManager.Initialize()
-	VersionManager.Initialize()
-	UIManager.Initialize()
+	NCSpeedLight.ResManager.Initialize()
+	NCSpeedLight.PersistentManager.Initialize()
+	NCSpeedLight.VersionManager.Initialize()
+	NCSpeedLight.UIManager.Initialize()
 	SceneManager.Initialize()
-	NetManager.Initialize()
+	NCSpeedLight.NetManager.Initialize()
 	this.TestEvent()
 	-- this.TestSceneManager()
 end

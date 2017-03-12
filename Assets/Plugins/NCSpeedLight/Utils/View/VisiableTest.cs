@@ -10,12 +10,16 @@
 //----------------------------------------------------------------*/
 using UnityEngine;
 
-public class VisiableTest : MonoBehaviour
+namespace NCSpeedLight
 {
-    public static bool IsVisible(Renderer renderer, Camera camera)
+
+    public class VisiableTest : MonoBehaviour
     {
-        if (renderer == null || camera == null) return true;
-        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(camera);
-        return GeometryUtility.TestPlanesAABB(planes, renderer.bounds);
+        public static bool IsVisible(Renderer renderer, Camera camera)
+        {
+            if (renderer == null || camera == null) return true;
+            Plane[] planes = GeometryUtility.CalculateFrustumPlanes(camera);
+            return GeometryUtility.TestPlanesAABB(planes, renderer.bounds);
+        }
     }
 }

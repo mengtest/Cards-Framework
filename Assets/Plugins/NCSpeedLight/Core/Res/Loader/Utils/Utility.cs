@@ -17,7 +17,7 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-namespace EasyAB
+namespace NCSpeedLight
 {
     public class Utility
     {

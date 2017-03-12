@@ -14,7 +14,10 @@ using System.Reflection;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VersionManager
+namespace NCSpeedLight
 {
-    public static void Initialize() { }
+    public class VersionManager
+    {
+        public static void Initialize() { }
+    }
 }

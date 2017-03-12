@@ -17,7 +17,7 @@ using QuickGraph;
 using UnityEngine;
 using UnityEditor;
 
-namespace EasyAB
+namespace NCSpeedLight
 {
     public class Builder
     {

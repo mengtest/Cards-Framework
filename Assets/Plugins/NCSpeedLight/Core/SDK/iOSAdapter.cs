@@ -9,7 +9,10 @@
            //
 //----------------------------------------------------------------*/
 
-public class iOSAdapter
+namespace NCSpeedLight
 {
-    public static void Initialize() { }
+    public class iOSAdapter
+    {
+        public static void Initialize() { }
+    }
 }

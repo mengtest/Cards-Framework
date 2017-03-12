@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using LuaInterface;
+using NCSpeedLight;
 
 using BindType = ToLuaMenu.BindType;
 using System.Reflection;

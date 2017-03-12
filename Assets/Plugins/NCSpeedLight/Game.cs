@@ -11,48 +11,52 @@
 
 using UnityEngine;
 
-public class Game : LuaBehaviour
+namespace NCSpeedLight
 {
-    public static Game Instance { get; set; }
 
-    protected override void Awake()
+    public class Game : LuaBehaviour
     {
-        Module = "NCSpeedLight";
-        Script = "Game";
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-        LuaManager.Initialize();
-        base.Awake();
-    }
+        public static Game Instance { get; set; }
 
-    protected override void Start()
-    {
-        base.Start();
-    }
-
-    protected override void Update()
-    {
-        base.Update();
-        if (Application.platform == RuntimePlatform.Android && (Input.GetKeyDown(KeyCode.Escape)))
+        protected override void Awake()
         {
-            UIManager.OpenStandardDialog(new UIManager.StandardDialogOption()
-            {
-                Title = "提  示",
-                Content = "你确定退出游戏吗？",
-                DoubleButton = true,
-                OnClickOK = delegate (GameObject go) { Application.Quit(); }
-            });
+            Module = "NCSpeedLight";
+            Script = "Game";
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+            LuaManager.Initialize();
+            base.Awake();
         }
-    }
 
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-    }
+        protected override void Start()
+        {
+            base.Start();
+        }
 
-    protected override void OnDestroy()
-    {
-        base.OnDestroy();
-    }
+        protected override void Update()
+        {
+            base.Update();
+            if (Application.platform == RuntimePlatform.Android && (Input.GetKeyDown(KeyCode.Escape)))
+            {
+                UIManager.OpenStandardDialog(new UIManager.StandardDialogOption()
+                {
+                    Title = "提  示",
+                    Content = "你确定退出游戏吗？",
+                    DoubleButton = true,
+                    OnClickOK = delegate (GameObject go) { Application.Quit(); }
+                });
+            }
+        }
 
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+        }
+
+    }
 }

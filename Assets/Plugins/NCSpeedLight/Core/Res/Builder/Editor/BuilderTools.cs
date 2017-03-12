@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-namespace EasyAB
+namespace NCSpeedLight
 {
     public class BuilderTools
     {
