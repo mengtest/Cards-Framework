@@ -132,15 +132,6 @@ namespace NCSpeedLight
             DialogGO.transform.SetParent(UIRootGO.transform);
         }
 
-        public static GameObject HideWindow(string windowName)
-        {
-            return null;
-        }
-
-        public static void HideAllWindows()
-        {
-        }
-
         public static GameObject OpenWindow(string windowName)
         {
             GameObject window = GetWindow(windowName);

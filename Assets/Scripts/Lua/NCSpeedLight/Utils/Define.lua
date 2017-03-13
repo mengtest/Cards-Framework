@@ -17,6 +17,8 @@ require 'NCSpeedLight.Scenes.SceneType'
 require 'NCSpeedLight.Utils.Log'
 
 require 'NCSpeedLight.Core.Network.NetManager'
+require 'NCSpeedLight.Core.View.UIManager'
+
 
 protobuf = require 'protobuf'
 

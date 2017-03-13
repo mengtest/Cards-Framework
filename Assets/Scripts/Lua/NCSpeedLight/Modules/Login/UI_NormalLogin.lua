@@ -45,18 +45,18 @@ end
 
 function UI_NormalLogin.onClickLogin(go)
     if string.len(lbAccount.text) == 0 then
-        UIManager.OpenTipsDialog("请输入账号")
+        UIManager:OpenTipsDialog("请输入账号")
         return
     elseif string.len(ipPassword.value) == 0 then
-        UIManager.OpenTipsDialog("请输入密码")
+        UIManager:OpenTipsDialog("请输入密码")
         return
     end
     LoginScene.RequestLogin(lbAccount.text, ipPassword.value)
 end
 
 function UI_NormalLogin.onClickRegister(go)
-    UIManager.CloseWindow("Login/ui_normalLogin")
-    UIManager.OpenWindow("Login/ui_register")
+    UIManager:CloseWindow("Login/ui_normalLogin")
+    UIManager:OpenWindow("Login/ui_register")
 end
 
 function UI_NormalLogin.TestOpenStandardDialog()

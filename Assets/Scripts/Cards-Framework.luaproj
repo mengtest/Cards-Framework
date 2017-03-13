@@ -105,6 +105,7 @@
     <Compile Include="Lua\NCSpeedLight\Core\Event\EvtProcessor.lua" />
     <Compile Include="Lua\NCSpeedLight\Core\Network\NetManager.lua" />
     <Compile Include="Lua\NCSpeedLight\Core\Scene\SceneManager.lua" />
+    <Compile Include="Lua\NCSpeedLight\Core\View\UIManager.lua" />
     <Compile Include="Lua\NCSpeedLight\Framework\Player\Player.lua" />
     <Compile Include="Lua\NCSpeedLight\Framework\Player\PlayerManager.lua" />
     <Compile Include="Lua\NCSpeedLight\Game.lua" />

@@ -42,7 +42,7 @@ end
 function OnVerifyVersionReturn(evt)
     local obj = protobuf.decode("GM_VerifyVersionReturn", evt.LuaParam)
     if obj.result == 0 then
-        UIManager.OpenWindow("Login/ui_normalLogin")
+        UIManager:OpenWindow("Login/ui_normalLogin")
     else
         print("LoginScene: Version doesn't match,can not enter game,please update.");
     end

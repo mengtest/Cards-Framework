@@ -8,8 +8,6 @@ public class NCSpeedLight_UIManagerWrap
 	{
 		L.BeginStaticLibs("UIManager");
 		L.RegFunction("Initialize", Initialize);
-		L.RegFunction("HideWindow", HideWindow);
-		L.RegFunction("HideAllWindows", HideAllWindows);
 		L.RegFunction("OpenWindow", OpenWindow);
 		L.RegFunction("OpenDialog", OpenDialog);
 		L.RegFunction("CloseWindow", CloseWindow);
@@ -42,38 +40,6 @@ public class NCSpeedLight_UIManagerWrap
 		{
 			ToLua.CheckArgsCount(L, 0);
 			NCSpeedLight.UIManager.Initialize();
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int HideWindow(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 1);
-			string arg0 = ToLua.CheckString(L, 1);
-			UnityEngine.GameObject o = NCSpeedLight.UIManager.HideWindow(arg0);
-			ToLua.Push(L, o);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int HideAllWindows(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 0);
-			NCSpeedLight.UIManager.HideAllWindows();
 			return 0;
 		}
 		catch(Exception e)
