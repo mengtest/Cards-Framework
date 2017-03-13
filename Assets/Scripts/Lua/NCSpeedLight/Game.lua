@@ -13,7 +13,7 @@ require 'NCSpeedLight.Utils.Define'
 
 Game = {}
 
-function Initialize(go)
+function Initialize()
 	-- 固定帧率至30
 	UnityEngine.Application.targetFrameRate = 30
 	-- 设置屏幕不关闭
@@ -26,8 +26,7 @@ function Initialize(go)
 	TestEvent();
 end
 
-function Game.Awake(go)
-	Initialize();
+function Game.Awake()
 	Initialize(go);
 end
 
