@@ -12,12 +12,14 @@
 require 'NCSpeedLight.Utils.Define'
 
 Game = {}
-
+local platform;
 function Initialize()
 	-- 固定帧率至30
 	UnityEngine.Application.targetFrameRate = 30
 	-- 设置屏幕不关闭
 	UnityEngine.Screen.sleepTimeout = UnityEngine.SleepTimeout.NeverSleep
+	
+	platform = UnityEngine.Application.platform;
 	
 	NCSpeedLight.ResManager.Initialize()
 	UIManager:Initialize()
@@ -27,7 +29,7 @@ function Initialize()
 end
 
 function Game.Awake()
-	Initialize(go);
+	Initialize();
 end
 
 function Game.Start()
@@ -37,8 +39,7 @@ end
 function Game.Update()
 	NetManager:Update();
 	SceneManager:Update();
-	local platform = UnityEngine.Application.platform;
-	if UnityEngine.Application.platform == UnityEngine.RuntimePlatform.Android then
+	if platform == UnityEngine.RuntimePlatform.Android then
 		if UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Escape) == true then
 			local option = StandardDialogOption:New();
 			option.Title = '提示';

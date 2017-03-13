@@ -14,7 +14,7 @@ require 'NCSpeedLight.Scenes.LoginScene'
 require 'NCSpeedLight.Scenes.HallScene'
 require 'NCSpeedLight.Scenes.GameScene'
 
-SceneManager = { };
+SceneManager = {};
 
 function SceneManager:Instance()
 	if self == nil then
@@ -37,10 +37,10 @@ end
 
 function SceneManager:New()
 	Log:Info('SceneManager:New() -- constructor.')
-	o = { };
+	o = {};
 	setmetatable(o, self);
 	self.__index = self;
-	self.Scenes = { };
+	self.Scenes = {};
 	self.LastScene = nil;
 	self.CurrentScene = nil;
 	self.NextScene = nil;
@@ -51,7 +51,7 @@ function SceneManager:Update()
 	if self.CurrentScene ~= nil then
 		self.CurrentScene:Update();
 	end
-
+	
 	if self.NextScene ~= nil then
 		if self.CurrentScene ~= nil then
 			self.CurrentScene:End();

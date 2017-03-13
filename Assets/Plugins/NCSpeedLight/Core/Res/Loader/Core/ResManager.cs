@@ -96,7 +96,7 @@ namespace NCSpeedLight
             get
             {
 #if ASSETBUNDLE_MODE
-            return false;
+                return false;
 #else
                 return true;
 #endif
@@ -316,7 +316,7 @@ namespace NCSpeedLight
             go.SetActive(true);
             go.AddComponent<ResManager>();
 
-            if(IsResourceMode == false)
+            if (IsResourceMode == false)
             {
                 SetupAssetBundleEnv();
                 NCSpeedLight.AssetBundleManifest.Initialize();
@@ -457,6 +457,7 @@ namespace NCSpeedLight
                     string filePath = AssetBundleSourceDirectory + bundleMD5;
 
                     AssetBundle bundle = AssetBundle.LoadFromFile(filePath);
+                  
                     loadedBundle.Bundle = bundle;
 
                 }

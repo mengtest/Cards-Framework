@@ -23,20 +23,5 @@ namespace NCSpeedLight
             Instance = this;
             base.Awake();
         }
-        protected override void Update()
-        {
-            base.Update();
-            if (Application.platform == RuntimePlatform.Android && (Input.GetKeyDown(KeyCode.Escape)))
-            {
-                UIManager.OpenStandardDialog(new UIManager.StandardDialogOption()
-                {
-                    Title = "提  示",
-                    Content = "你确定退出游戏吗？",
-                    DoubleButton = true,
-                    OnClickOK = delegate (GameObject go) { Application.Quit(); }
-                });
-            }
-        }
-
     }
 }
