@@ -110,6 +110,7 @@
     <Compile Include="Lua\NCSpeedLight\Core\Player\Player.lua" />
     <Compile Include="Lua\NCSpeedLight\Core\Player\PlayerManager.lua" />
     <Compile Include="Lua\NCSpeedLight\Game.lua" />
+    <Compile Include="Lua\NCSpeedLight\Utils\LuaDebug.lua" />
     <Compile Include="Lua\NCSpeedLight\Main.lua" />
     <Compile Include="Lua\NCSpeedLight\Modules\Dialog\ConfirmDialog.lua" />
     <Compile Include="Lua\NCSpeedLight\Modules\Dialog\NetConnectDialog.lua" />

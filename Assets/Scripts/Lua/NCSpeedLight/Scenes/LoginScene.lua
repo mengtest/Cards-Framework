@@ -1,8 +1,6 @@
 LoginScene = { };
 
-local this = LoginScene;
-
-function this:New()
+function LoginScene:New()
     o = { };
     setmetatable(o, self);
     self.__index = self;
@@ -10,10 +8,10 @@ function this:New()
     return o;
 end
 
-function this:OnInit()
+function LoginScene:OnInit()
 end 
 
-function this:Begin()
+function LoginScene:Begin()
     NetManager:RegisterEvent(211, OnVerifyVersionReturn)
     NetManager:RegisterEvent(203, OnLoginReturn)
     NetManager:RegisterEvent(205, OnRegisterReturn)
@@ -21,10 +19,10 @@ function this:Begin()
     RequestVerifyVersion()
 end
 
-function this:Update()
+function LoginScene:Update()
 end
 
-function this:End()
+function LoginScene:End()
     NetManager:UnregisterEvent(211, OnVerifyVersionReturn)
     NetManager:UnregisterEvent(203, OnLoginReturn)
     NetManager:UnregisterEvent(205, OnRegisterReturn)

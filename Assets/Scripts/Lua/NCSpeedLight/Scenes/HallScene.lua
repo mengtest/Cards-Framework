@@ -1,8 +1,6 @@
 HallScene = { }
 
-local this = HallScene
-
-function this:New()
+function HallScene:New()
 	o = { };
 	setmetatable(o, self);
 	self.__index = self;
@@ -10,14 +8,14 @@ function this:New()
 	return o;
 end
 
-function this:OnInit()
+function HallScene:OnInit()
 end 
 
-function this:Begin()
+function HallScene:Begin()
 end
 
-function this:Update()
+function HallScene:Update()
 end
 
-function this:End()
+function HallScene:End()
 end

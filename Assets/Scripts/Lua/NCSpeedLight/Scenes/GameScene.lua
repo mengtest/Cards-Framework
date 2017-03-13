@@ -1,23 +1,21 @@
-GameScene = { }
+GameScene = {}
 
-local this = GameScene
-
-function this:New()
-	o = { };
+function GameScene:New()
+	o = {};
 	setmetatable(o, self);
 	self.__index = self;
 	self.Name = SceneType.GameScene;
 	return o;
 end
 
-function this:OnInit()
-end 
-
-function this:Begin()
+function GameScene:OnInit()
 end
 
-function this:Update()
+function GameScene:Begin()
 end
 
-function this:End()
+function GameScene:Update()
+end
+
+function GameScene:End()
 end

@@ -23,6 +23,7 @@ function Initialize(go)
 	UIManager:Initialize()
 	SceneManager.Initialize()
 	NetManager:Initialize()
+	TestEvent();
 end
 
 function Game.Awake(go)
