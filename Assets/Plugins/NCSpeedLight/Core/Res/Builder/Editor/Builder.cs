@@ -19,7 +19,7 @@ using UnityEditor;
 
 namespace NCSpeedLight
 {
-    public class Builder
+    public class AssetBuilder
     {
         #region Fields
 
@@ -40,8 +40,8 @@ namespace NCSpeedLight
         private BuildAssetBundleOptions m_BuildOptions =
                 BuildAssetBundleOptions.CollectDependencies |
                 BuildAssetBundleOptions.CompleteAssets |
-                BuildAssetBundleOptions.DeterministicAssetBundle |
-                BuildAssetBundleOptions.UncompressedAssetBundle;
+                BuildAssetBundleOptions.DeterministicAssetBundle;
+
 
         private List<string> m_PreSharedAssets = new List<string>();
 
@@ -53,7 +53,7 @@ namespace NCSpeedLight
 
         #region Public Methods
 
-        public Builder(IEnumerable<string> assets, string outputDirectory, List<string> preSharedAssets = null)
+        public AssetBuilder(IEnumerable<string> assets, string outputDirectory, List<string> preSharedAssets = null)
         {
             if (!Directory.Exists(outputDirectory))
                 Directory.CreateDirectory(outputDirectory);
@@ -374,16 +374,16 @@ namespace NCSpeedLight
                                 md5TW.Write("  ||  ");
                                 md5TW.Write(md5);
                                 md5TW.WriteLine();
-
-                                if (path.EndsWith(".unity"))
-                                {
-                                    BuildPipeline.BuildStreamedSceneAssetBundle(new string[1] { path }, outFile, m_BuildTarget);
-                                }
-                                else
-                                {
-                                    BuildPipeline.BuildAssetBundle(m_TempObjects[0], m_TempObjects, outFile, m_BuildOptions, m_BuildTarget);
-                                }
                             }
+                        }
+
+                        if (path.EndsWith(".unity"))
+                        {
+                            BuildPipeline.BuildStreamedSceneAssetBundle(new string[1] { path }, outFile, m_BuildTarget);
+                        }
+                        else
+                        {
+                            BuildPipeline.BuildAssetBundle(m_TempObjects[0], m_TempObjects, outFile, m_BuildOptions, m_BuildTarget);
                         }
                     }
                 }

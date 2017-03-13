@@ -25,8 +25,8 @@ function UI_Register.Start()
     ipPassword = transform:Find("Input (password)"):GetComponent('UIInput');
     ipPassword2 = transform:Find("Input (password2)"):GetComponent('UIInput');
 
-    UIHelper.SetButtonEvent(transform, 'Button (back)', this.onClickBack)
-    UIHelper.SetButtonEvent(transform, 'Button (submit)', this.onClickSubmit)
+    NCSpeedLight.UIHelper.SetButtonEvent(transform, 'Button (back)', this.onClickBack)
+    NCSpeedLight.UIHelper.SetButtonEvent(transform, 'Button (submit)', this.onClickSubmit)
 
 end
 

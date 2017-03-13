@@ -323,7 +323,6 @@
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\AnimatedColorWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\AnimatedWidgetWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\DelegateFactory.cs" />
-    <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\HelperWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\LanguageSelectionWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\LuaBinder.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\LuaInterface_DebuggerWrap.cs" />
@@ -332,6 +331,7 @@
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NCSpeedLight_EventManagerWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NCSpeedLight_EvtWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NCSpeedLight_GlobalEventManagerWrap.cs" />
+    <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NCSpeedLight_HelperWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NCSpeedLight_LuaBehaviourWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NCSpeedLight_LuaManagerWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NCSpeedLight_LuaViewWrap.cs" />
@@ -341,13 +341,14 @@
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NCSpeedLight_SDKManagerWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NCSpeedLight_ServerConnectionWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NCSpeedLight_ServerConnection_ListenerWrap.cs" />
+    <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NCSpeedLight_SharedVariableWrap.cs" />
+    <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NCSpeedLight_UIHelperWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NCSpeedLight_UIManagerWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NCSpeedLight_UIManager_DialogTypeWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NCSpeedLight_UIManager_ProgressDialogOptionWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NCSpeedLight_UIManager_StandardDialogOptionWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NCSpeedLight_VersionManagerWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NCSpeedLight_iOSAdapterWrap.cs" />
-    <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\SharedVariableWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\SpringPositionWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\System_DateTimeWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\TweenAlphaWrap.cs" />
@@ -392,7 +393,6 @@
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\UIFontWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\UIForwardEventsWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\UIGridWrap.cs" />
-    <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\UIHelperWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\UIImageButtonWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\UIInputOnGUIWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\UIInputWrap.cs" />

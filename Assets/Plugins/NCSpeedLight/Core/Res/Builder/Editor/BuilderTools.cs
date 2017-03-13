@@ -18,97 +18,15 @@ using UnityEditor;
 
 namespace NCSpeedLight
 {
-    public class BuilderTools
-    {
-        private static List<string> m_WaitingBuildAssets;
-
-        [MenuItem("EasyAB/Readme")]
-        public static void Readme()
-        {
-
-        }
-
-        [MenuItem("Assets/EasyAB/Build All", false, 0)]
-        public static void BuildAll()
-        {
-            m_WaitingBuildAssets = new List<string>();
-            string directory = EditorUtility.NormallizePath(Application.dataPath + "/Res Bundle");
-            CollectAssets(directory);
-            Builder builder = new Builder(m_WaitingBuildAssets, SharedVariable.ASSET_BUNDLE_PATH, m_WaitingBuildAssets);
-            builder.BuildAll();
-        }
-
-        [MenuItem("Assets/EasyAB/Build Graph", false, 1)]
-        public static void BuildGraph()
-        {
-            m_WaitingBuildAssets = new List<string>();
-            string directory = EditorUtility.NormallizePath(Application.dataPath + "/Res Bundle");
-            CollectAssets(directory);
-            Builder builder = new Builder(m_WaitingBuildAssets, SharedVariable.ASSET_BUNDLE_PATH, m_WaitingBuildAssets);
-            builder.BuildGraph();
-        }
-
-        [MenuItem("Assets/EasyAB/Build All By Graph", false, 2)]
-        public static void BuildAllByGraph()
-        {
-            m_WaitingBuildAssets = new List<string>();
-            Builder builder = new Builder(m_WaitingBuildAssets, SharedVariable.ASSET_BUNDLE_PATH, m_WaitingBuildAssets);
-            builder.BuildAllByGraph();
-        }
-
-        [MenuItem("Assets/EasyAB/Build dependency.txt", false, 3)]
-        public static void BuildDependency()
-        {
-            m_WaitingBuildAssets = new List<string>();
-            string directory = EditorUtility.NormallizePath(Application.dataPath + "/Res Bundle");
-            CollectAssets(directory);
-            Builder builder = new Builder(m_WaitingBuildAssets, SharedVariable.ASSET_BUNDLE_PATH, m_WaitingBuildAssets);
-            builder.BuildDependency();
-        }
-
-        [MenuItem("Assets/EasyAB/Clean up AssetBundle", false, 4)]
-        public static void CleanupAssetBundle()
-        {
-            if (Directory.Exists(SharedVariable.ASSET_BUNDLE_PATH))
-            {
-                Directory.Delete(SharedVariable.ASSET_BUNDLE_PATH, true);
-            }
-        }
-
-        /// <summary>
-        /// 收集目录下的所有资源文件
-        /// </summary>
-        /// <param name="directory"></param>
-        private static void CollectAssets(string directory)
-        {
-            if (Directory.Exists(directory))
-            {
-                string[] files = Directory.GetFiles(directory);
-                for (int i = 0; i < files.Length; i++)
-                {
-                    string file = EditorUtility.NormallizePath(files[i]);
-                    if (!file.EndsWith(".meta"))
-                    {
-                        file = "Assets" + file.Substring(EditorUtility.NormallizePath(Application.dataPath).Length);
-                        m_WaitingBuildAssets.Add(file);
-                    }
-                }
-                string[] dirs = Directory.GetDirectories(directory);
-                for (int i = 0; i < dirs.Length; i++)
-                {
-                    CollectAssets(dirs[i]);
-                }
-            }
-            else if (File.Exists(directory))
-            {
-                m_WaitingBuildAssets.Add("Assets" + directory.Substring(EditorUtility.NormallizePath(Application.dataPath).Length));
-            }
-        }
-    }
-
     public class ControlPanel : EditorWindow
     {
         private static List<string> m_WaitingBuildAssets;
+
+        [MenuItem("NCSpeedLight/Builder Panel")]
+        public static void OpenWindow()
+        {
+            GetWindowWithRect<ControlPanel>(new Rect(10, 10, 300, 250), false, "Builder");
+        }
 
         private void OnGUI()
         {
@@ -119,40 +37,22 @@ namespace NCSpeedLight
                 EditorUtility.BeginContents(false);
                 if (GUILayout.Button("Build Lua", GUILayout.Width(295)))
                 {
-                    LuaCompiler.Compile();
+                    LuaBuilder.Build();
                 }
                 if (GUILayout.Button("Build Assets", GUILayout.Width(295)))
                 {
-                    m_WaitingBuildAssets = new List<string>();
-                    string directory = EditorUtility.NormallizePath(Application.dataPath + "/Resources/Bundle/");
-                    CollectAssets(directory);
-                    Builder builder = new Builder(m_WaitingBuildAssets, SharedVariable.ASSET_BUNDLE_PATH, m_WaitingBuildAssets);
-                    builder.BuildAll();
+                    BuildAssets();
                 }
-
-                //if (GUILayout.Button("Build Graph", GUILayout.Width(295)))
-                //{
-                //    m_WaitingBuildAssets = new List<string>();
-                //    string directory = EditorUtility.NormallizePath(Application.dataPath + "/Res Bundle");
-                //    CollectAssets(directory);
-                //    Builder builder = new Builder(m_WaitingBuildAssets, EditorUtility.ASSERBUNDLE_OUTPUT_DIRECTORY, m_WaitingBuildAssets);
-                //    builder.BuildGraph();
-                //}
-                //if (GUILayout.Button("Build All By Graph", GUILayout.Width(295)))
-                //{
-                //    m_WaitingBuildAssets = new List<string>();
-                //    Builder builder = new Builder(m_WaitingBuildAssets, EditorUtility.ASSERBUNDLE_OUTPUT_DIRECTORY, m_WaitingBuildAssets);
-                //    builder.BuildAllByGraph();
-                //}
-                //if (GUILayout.Button("Build dependency.txt", GUILayout.Width(295)))
-                //{
-                //    m_WaitingBuildAssets = new List<string>();
-                //    string directory = EditorUtility.NormallizePath(Application.dataPath + "/Res Bundle");
-                //    CollectAssets(directory);
-                //    Builder builder = new Builder(m_WaitingBuildAssets, EditorUtility.ASSERBUNDLE_OUTPUT_DIRECTORY, m_WaitingBuildAssets);
-                //    builder.BuildDependency();
-                //}
-
+                if (GUILayout.Button("Build Apk", GUILayout.Width(295)))
+                {
+                    LuaBuilder.Build();
+                    BuildAssets();
+                    CopyScripts();
+                    CopyAssets();
+                    MoveResourcesToR();
+                    ApkBuilder.Build();
+                    MoveRToResources();
+                }
                 EditorUtility.EndContents();
             }
 
@@ -161,31 +61,163 @@ namespace NCSpeedLight
             if (EditorUtility.DrawHeader("Ease"))
             {
                 EditorUtility.BeginContents(false);
-                if (GUILayout.Button("Clean up AssetBundle", GUILayout.Width(295)))
+                if (GUILayout.Button("Delete AssetBundle/Assets", GUILayout.Width(295)))
                 {
                     if (Directory.Exists(SharedVariable.ASSET_BUNDLE_PATH))
                     {
                         Directory.Delete(SharedVariable.ASSET_BUNDLE_PATH, true);
                     }
                 }
-
-                if (GUILayout.Button("Assets/Resource/Bundle -> Assets/Res Bundle", GUILayout.Width(295)))
+                if (GUILayout.Button("Delete AssetBundle/Scripts", GUILayout.Width(295)))
                 {
-                    if (Directory.Exists(SharedVariable.ASSET_BUNDLE_PATH))
+                    if (Directory.Exists(SharedVariable.SCRIPT_BUNDLE_PATH))
                     {
-                        Directory.Delete(SharedVariable.ASSET_BUNDLE_PATH, true);
+                        Directory.Delete(SharedVariable.SCRIPT_BUNDLE_PATH, true);
                     }
+                }
+                if (GUILayout.Button("Copy Assets To Streaming", GUILayout.Width(295)))
+                {
+                    CopyAssets();
+                }
+                if (GUILayout.Button("Copy Scripts To Streaming", GUILayout.Width(295)))
+                {
+                    CopyScripts();
                 }
                 EditorUtility.EndContents();
             }
         }
 
-        [MenuItem("EasyAB/Control Panel")]
-        public static void OpenWindow()
+        private static void BuildAssets()
         {
-            GetWindowWithRect<ControlPanel>(new Rect(10, 10, 300, 200), false, "Control Panel");
+            m_WaitingBuildAssets = new List<string>();
+            string directory = EditorUtility.NormallizePath(Application.dataPath + "/Resources/Bundle/");
+            CollectAssets(directory);
+            AssetBuilder builder = new AssetBuilder(m_WaitingBuildAssets, SharedVariable.ASSET_BUNDLE_PATH, m_WaitingBuildAssets);
+            builder.BuildAll();
         }
 
+        private static void CopyScripts()
+        {
+            if (Directory.Exists(Application.streamingAssetsPath + "/Scripts/") == false)
+            {
+                Directory.CreateDirectory(Application.streamingAssetsPath + "/Scripts/");
+            }
+            else
+            {
+                Directory.Delete(Application.streamingAssetsPath + "/Scripts/", true);
+                Directory.CreateDirectory(Application.streamingAssetsPath + "/Scripts/");
+            }
+            List<string> files = new List<string>();
+            LuaBuilder.CollectFiles(SharedVariable.SCRIPT_BUNDLE_PATH, files, "*.");
+            for (int i = 0; i < files.Count; i++)
+            {
+                string file = files[i];
+                string targetFile = string.Empty;
+                targetFile = Application.streamingAssetsPath + "/Scripts/" + file.Substring(SharedVariable.SCRIPT_BUNDLE_PATH.Length);
+                File.Copy(file, targetFile, true);
+            }
+            AssetDatabase.Refresh();
+        }
+
+        private static void CopyAssets()
+        {
+            if (Directory.Exists(Application.streamingAssetsPath + "/Assets/") == false)
+            {
+                Directory.CreateDirectory(Application.streamingAssetsPath + "/Assets/");
+            }
+            else
+            {
+                Directory.Delete(Application.streamingAssetsPath + "/Assets/", true);
+                Directory.CreateDirectory(Application.streamingAssetsPath + "/Assets/");
+            }
+            List<string> files = new List<string>();
+            LuaBuilder.CollectFiles(SharedVariable.ASSET_BUNDLE_PATH, files, "*.");
+            for (int i = 0; i < files.Count; i++)
+            {
+                string file = files[i];
+                string targetFile = string.Empty;
+                targetFile = Application.streamingAssetsPath + "/Assets/" + file.Substring(SharedVariable.ASSET_BUNDLE_PATH.Length);
+                File.Copy(file, targetFile, true);
+            }
+            AssetDatabase.Refresh();
+        }
+
+        public static void MoveResourcesToR()
+        {
+            string tempProjectPath = Application.dataPath;
+            string tempDirectory = string.Format("{0}/R", tempProjectPath);
+            if (Directory.Exists(tempDirectory) == false)
+            {
+                AssetDatabase.CreateFolder("Assets", "R");
+            }
+            tempDirectory = string.Format("{0}/Resources", tempProjectPath);
+            try
+            {
+                string[] tempArray = Directory.GetDirectories(tempDirectory);
+                for (int i = 0; i < tempArray.Length; i++)
+                {
+                    tempDirectory = tempArray[i];
+                    tempDirectory = tempDirectory.Replace("\\", "/");
+                    int tempIndex = tempDirectory.LastIndexOf("/");
+                    if (tempIndex < 0)
+                    {
+                        continue;
+                    }
+                    string tempFolderName = tempDirectory.Substring(tempIndex + 1);
+                    if (tempFolderName == "majorUI")
+                    {
+                        continue;
+                    }
+                    string tempOldPath = string.Format("Assets/Resources/{0}", tempFolderName);
+                    string tempNewPath = string.Format("Assets/R/{0}", tempFolderName);
+                    AssetDatabase.MoveAsset(tempOldPath, tempNewPath);
+                }
+            }
+            catch (DirectoryNotFoundException e)
+            {
+                Debug.LogError("Resources Folder is not exist !");
+                Debug.LogError(e.Message);
+            }
+            AssetDatabase.Refresh();
+        }
+
+        public static void MoveRToResources()
+        {
+            string tempProjectPath = Application.dataPath;
+            string tempDirectory = string.Format("{0}/Resources", tempProjectPath);
+            if (Directory.Exists(tempDirectory) == false)
+            {
+                AssetDatabase.CreateFolder("Assets", "Resources");
+            }
+            tempDirectory = string.Format("{0}/R", tempProjectPath);
+            try
+            {
+                string[] tempArray = Directory.GetDirectories(tempDirectory);
+
+                for (int i = 0; i < tempArray.Length; i++)
+                {
+                    tempDirectory = tempArray[i];
+                    tempDirectory = tempDirectory.Replace("\\", "/");
+                    int tempIndex = tempDirectory.LastIndexOf("/");
+                    if (tempIndex < 0)
+                    {
+                        continue;
+                    }
+                    string tempFolderName = tempDirectory.Substring(tempIndex + 1);
+                    string tempOldPath = string.Format("Assets/R/{0}", tempFolderName);
+                    string tempNewPath = string.Format("Assets/Resources/{0}", tempFolderName);
+                    AssetDatabase.MoveAsset(tempOldPath, tempNewPath);
+                }
+
+                Directory.Delete(Application.dataPath + "/R/");
+            }
+            catch (DirectoryNotFoundException e)
+            {
+                Debug.LogError("R Folder is not exist !");
+                Debug.LogError(e.Message);
+            }
+            AssetDatabase.Refresh();
+        }
 
         /// <summary>
         /// 收集目录下的所有资源文件
@@ -470,7 +502,7 @@ namespace NCSpeedLight
         }
     }
 
-    public class LuaCompiler
+    public static class LuaBuilder
     {
         public static bool IsCompiling = false;
 
@@ -478,7 +510,7 @@ namespace NCSpeedLight
 
         //public static string LUA_BUNDLE_OUTPUT_DIRECTORY = SharedVariable.DATA_PATH +   "/Lua/";
 
-        public static void Compile()
+        public static void Build()
         {
             if (!PrepareDirectory()) return;
 
@@ -523,7 +555,7 @@ namespace NCSpeedLight
             {
                 files = new List<string>();
             }
-            CollecFiles(LUA_SCRIPT_DIRECTORY, files);
+            CollectFiles(LUA_SCRIPT_DIRECTORY, files);
             if (files != null && files.Count >= 0)
             {
                 for (int i = 0; i < files.Count; i++)
@@ -555,7 +587,7 @@ namespace NCSpeedLight
         private static void CopyProtocolFiles()
         {
             List<string> files = new List<string>();
-            CollecFiles(LUA_SCRIPT_DIRECTORY, files, "*.pb");
+            CollectFiles(LUA_SCRIPT_DIRECTORY, files, "*.pb");
             for (int i = 0; i < files.Count; i++)
             {
                 string outputPath = SharedVariable.SCRIPT_BUNDLE_PATH + Path.GetFileName(files[i]);
@@ -619,7 +651,7 @@ namespace NCSpeedLight
                 File.Delete(filePath);
             }
             List<string> files = new List<string>();
-            CollecFiles(directory, files, "*");
+            CollectFiles(directory, files, "*");
             FileStream fs = new FileStream(filePath, FileMode.CreateNew);
             StreamWriter sw = new StreamWriter(fs);
             for (int i = 0; i < files.Count; i++)
@@ -665,7 +697,7 @@ namespace NCSpeedLight
             return assetPath.Substring(Application.dataPath.Length + 1);
         }
 
-        private static List<string> CollecFiles(string directory, List<string> output, string extension = "*.lua")
+        public static List<string> CollectFiles(string directory, List<string> output, string extension = "*.lua")
         {
             if (output == null)
             {
@@ -682,7 +714,7 @@ namespace NCSpeedLight
                 string[] dirs = Directory.GetDirectories(directory);
                 for (int i = 0; i < dirs.Length; i++)
                 {
-                    CollecFiles(dirs[i], output, extension);
+                    CollectFiles(dirs[i], output, extension);
                 }
             }
             return output;

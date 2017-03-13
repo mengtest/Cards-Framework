@@ -24,8 +24,8 @@ end
 function UI_NormalLogin.Start()
     lbAccount = transform:Find("Input (account)/Label"):GetComponent('UILabel');
     ipPassword = transform:Find("Input (password)"):GetComponent('UIInput');
-    UIHelper.SetButtonEvent(transform, 'Btn/Button (login)', this.onClickLogin)
-    UIHelper.SetButtonEvent(transform, 'Btn/Button (regist)', this.onClickRegister)
+    NCSpeedLight.UIHelper.SetButtonEvent(transform, 'Btn/Button (login)', this.onClickLogin)
+    NCSpeedLight.UIHelper.SetButtonEvent(transform, 'Btn/Button (regist)', this.onClickRegister)
 end
 
 function UI_NormalLogin.OnEnable()

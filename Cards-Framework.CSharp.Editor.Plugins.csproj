@@ -211,6 +211,7 @@
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Editor\ToLuaExport.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Editor\ToLuaMenu.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Editor\ToLuaTree.cs" />
+    <Compile Include="Assets\Plugins\NCSpeedLight\Core\Res\Builder\Editor\ApkBuilder.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Core\Res\Builder\Editor\Builder.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Core\Res\Builder\Editor\BuilderTools.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\Core\Res\Builder\Editor\EditorUtility.cs" />

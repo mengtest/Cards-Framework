@@ -20,10 +20,11 @@ require 'NCSpeedLight.Core.Network.NetManager'
 require 'NCSpeedLight.Core.View.UIManager'
 
 
+
 protobuf = require 'protobuf'
 
 function InitPBMessage()
-    local path = SharedVariable.SCRIPT_BUNDLE_PATH .. "PBMessage.pb";
+    local path = NCSpeedLight.SharedVariable.SCRIPT_BUNDLE_PATH .. "PBMessage.pb";
     local addr = io.open(path, "rb")
     local buffer = addr:read "*a"
     addr:close()

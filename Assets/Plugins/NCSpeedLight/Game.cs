@@ -13,26 +13,16 @@ using UnityEngine;
 
 namespace NCSpeedLight
 {
-
     public class Game : LuaBehaviour
     {
         public static Game Instance { get; set; }
-
         protected override void Awake()
         {
             Module = "NCSpeedLight";
             Script = "Game";
             Instance = this;
-            DontDestroyOnLoad(gameObject);
-            LuaManager.Initialize();
             base.Awake();
         }
-
-        protected override void Start()
-        {
-            base.Start();
-        }
-
         protected override void Update()
         {
             base.Update();
@@ -46,16 +36,6 @@ namespace NCSpeedLight
                     OnClickOK = delegate (GameObject go) { Application.Quit(); }
                 });
             }
-        }
-
-        protected override void OnDisable()
-        {
-            base.OnDisable();
-        }
-
-        protected override void OnDestroy()
-        {
-            base.OnDestroy();
         }
 
     }

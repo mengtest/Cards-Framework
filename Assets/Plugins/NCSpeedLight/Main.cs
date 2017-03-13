@@ -1,18 +1,33 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿/*----------------------------------------------------------------
+            // Copyright © 2014-2017 NCSpeedLight
+            // 
+            // FileName: Main.cs
+			// Describle:
+			// Created By:  Wells Hsu
+			// Date&Time:  10/12 星期三 11:49:46
+            // Modify History:
+            //
+//----------------------------------------------------------------*/
+
 using System.IO;
+using System.Collections;
+using UnityEngine;
+using LuaInterface;
 
 namespace NCSpeedLight
 {
-
     public class Main : MonoBehaviour
     {
-        void Awake()
+        private void Awake()
         {
-            CheckExtractAssets();
+            DontDestroyOnLoad(gameObject);
+            Application.targetFrameRate = 30;
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
+            CheckExtractInternalScripts();
         }
-        public void CheckExtractAssets()
+
+        private void CheckExtractInternalScripts()
         {
             if (Application.isEditor == true)
             {
@@ -20,11 +35,11 @@ namespace NCSpeedLight
             }
             else
             {
-                StartCoroutine(OnExtractAssets());
+                StartCoroutine(OnExtractInternalScripts());
             }
         }
 
-        IEnumerator OnExtractAssets()
+        private IEnumerator OnExtractInternalScripts()
         {
             string dataPath = SharedVariable.SCRIPT_BUNDLE_PATH;  //数据目录
             string resPath = SharedVariable.APP_CONTENT_PATH + "Scripts/"; //游戏包资源目录
@@ -108,7 +123,20 @@ namespace NCSpeedLight
 
         private void StartGame()
         {
-            gameObject.AddComponent<Game>();
+            Destroy(this);
+            LuaManager.Initialize();
+            LuaManager.Root.transform.SetParent(transform);
+            if (SharedVariable.LUA_BUNDLE_MODE)
+            {
+                LuaManager.LuaLoader.AddBundle("ncspeedlight");
+                LuaManager.LuaLoader.AddBundle("ncspeedlight_core_hotfix");
+            }
+            LuaManager.DoString("require 'NCSpeedLight.Main'");
+            LuaFunction func = LuaManager.LuaState.GetFunction("Main.StartGame");
+            if (func != null)
+            {
+                func.Call(gameObject);
+            }
         }
     }
 }

@@ -48,10 +48,7 @@ namespace NCSpeedLight
         public static void Initialize()
         {
             Root = new GameObject("LuaManager");
-            if (Game.Instance)
-            {
-                Root.transform.SetParent(Game.Instance.transform);
-            }
+
             Root.AddComponent<LuaManager>();
 
             LuaState = new LuaState();
@@ -59,6 +56,7 @@ namespace NCSpeedLight
 
             InitializeLibs();
             InitializeCJson();
+            InitializeLuaSocket();
             LuaState.LuaSetTop(0);
             LuaBinder.Bind(LuaState);
             LuaCoroutine.Register(LuaState, Instance);
@@ -68,7 +66,6 @@ namespace NCSpeedLight
             if (SharedVariable.LUA_BUNDLE_MODE)
             {
                 InitializeToLuaBundle();
-                InitializeGameLuaBundle();
             }
 
             LuaState.Start();
@@ -98,6 +95,16 @@ namespace NCSpeedLight
             LuaState.LuaSetField(-2, "cjson.safe");
         }
 
+        private static void InitializeLuaSocket()
+        {
+            LuaConst.openLuaSocket = true;
+
+            LuaState.BeginPreLoad();
+            LuaState.RegFunction("socket.core", LuaDLL.luaopen_socket_core);
+            LuaState.RegFunction("mime.core", LuaDLL.luaopen_mime_core);
+            LuaState.EndPreLoad();
+        }
+
         private static void InitializeLuaFiles()
         {
             //DoString("require 'NCSpeedLight/Utils/Define'");
@@ -117,31 +124,6 @@ namespace NCSpeedLight
             LuaLoader.AddBundle("tolua_system_reflection");
             LuaLoader.AddBundle("tolua_unityengine");
             LuaLoader.AddBundle("tolua_misc");
-        }
-
-        private static void InitializeGameLuaBundle()
-        {
-            LuaLoader.AddBundle("ncspeedlight");
-
-            LuaLoader.AddBundle("ncspeedlight_3rd_cjson");
-            LuaLoader.AddBundle("ncspeedlight_3rd_luabitop");
-            LuaLoader.AddBundle("ncspeedlight_3rd_pbc");
-            LuaLoader.AddBundle("ncspeedlight_3rd_pblua");
-            LuaLoader.AddBundle("ncspeedlight_3rd_sproto");
-
-            LuaLoader.AddBundle("ncspeedlight_core_event");
-            LuaLoader.AddBundle("ncspeedlight_core_network");
-            LuaLoader.AddBundle("ncspeedlight_core_player");
-            LuaLoader.AddBundle("ncspeedlight_core_scene");
-            LuaLoader.AddBundle("ncspeedlight_core_view");
-
-
-            LuaLoader.AddBundle("ncspeedlight_modules_dialog");
-            LuaLoader.AddBundle("ncspeedlight_modules_login");
-
-            LuaLoader.AddBundle("ncspeedlight_scenes");
-            LuaLoader.AddBundle("ncspeedlight_utils");
-
         }
 
         public static object[] DoFile(string filename)
