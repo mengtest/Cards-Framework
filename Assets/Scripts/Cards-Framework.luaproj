@@ -33,6 +33,7 @@
     <Folder Include="Lua\NCSpeedLight\3rd\pblua\" />
     <Folder Include="Lua\NCSpeedLight\3rd\sproto\" />
     <Folder Include="Lua\NCSpeedLight\Core\Event\" />
+    <Folder Include="Lua\NCSpeedLight\Core\Network\" />
     <Folder Include="Lua\NCSpeedLight\Core\View\" />
     <Folder Include="Lua\NCSpeedLight\Core\Scene\" />
     <Folder Include="Lua\NCSpeedLight\Framework\Player\" />
@@ -102,6 +103,7 @@
     <Compile Include="Lua\NCSpeedLight\3rd\sproto\testrpc.lua" />
     <Compile Include="Lua\NCSpeedLight\Core\Event\EvtQueue.lua" />
     <Compile Include="Lua\NCSpeedLight\Core\Event\EvtProcessor.lua" />
+    <Compile Include="Lua\NCSpeedLight\Core\Network\NetManager.lua" />
     <Compile Include="Lua\NCSpeedLight\Core\Scene\SceneManager.lua" />
     <Compile Include="Lua\NCSpeedLight\Framework\Player\Player.lua" />
     <Compile Include="Lua\NCSpeedLight\Framework\Player\PlayerManager.lua" />

@@ -166,7 +166,6 @@ public static class CustomSettings
          _GT(typeof(LuaView)),
 
          _GT(typeof(NetManager)),
-         _GT(typeof(NetManager.ServerType)),
          _GT(typeof(ServerConnection)),
          _GT(typeof(ServerConnection.Listener)),
 

@@ -15,17 +15,11 @@ namespace NCSpeedLight
 {
     public class NetManager : EventManager
     {
-        public enum ServerType
-        {
-            Login,
-            Logic,
-        }
-
         private static NetManager m_Instance;
 
-        private static Dictionary<ServerType, ServerConnection> m_Connections = null;
+        private static Dictionary<int, ServerConnection> m_Connections = null;
 
-        private static Dictionary<ServerType, ServerConnection>.Enumerator m_Enumerator;
+        private static Dictionary<int, ServerConnection>.Enumerator m_Enumerator;
 
         private static List<ServerConnection> m_Buffer = null;
 
@@ -45,11 +39,11 @@ namespace NCSpeedLight
 
         public static void Initialize()
         {
-            m_Connections = new Dictionary<ServerType, ServerConnection>();
+            m_Connections = new Dictionary<int, ServerConnection>();
             m_Buffer = new List<ServerConnection>();
         }
 
-        public static bool CreateConnection(ServerType type, string host, int port, ServerConnection.Listener listener)
+        public static bool CreateConnection(int type, string host, int port, ServerConnection.Listener listener)
         {
             DeleteConnection(type);
             ServerConnection connection = new ServerConnection();
@@ -58,7 +52,7 @@ namespace NCSpeedLight
             return connection.Connect(host, port);
         }
 
-        public static void DeleteConnection(ServerType type)
+        public static void DeleteConnection(int type)
         {
             ServerConnection connection;
             if (m_Connections.TryGetValue(type, out connection))
@@ -68,7 +62,7 @@ namespace NCSpeedLight
             }
         }
 
-        public static ServerConnection GetConnection(ServerType type)
+        public static ServerConnection GetConnection(int type)
         {
             ServerConnection connection;
             m_Connections.TryGetValue(type, out connection);
@@ -92,9 +86,9 @@ namespace NCSpeedLight
             }
         }
 
-        public static void Destroy()
+        public static void DeleteAllConnections()
         {
-            Dictionary<ServerType, ServerConnection>.Enumerator it = m_Connections.GetEnumerator();
+            Dictionary<int, ServerConnection>.Enumerator it = m_Connections.GetEnumerator();
             for (int i = 0; i < m_Connections.Count; i++)
             {
                 it.MoveNext();
@@ -106,7 +100,7 @@ namespace NCSpeedLight
             m_Connections = null;
         }
 
-        public static void SendEvent(int id, byte[] buffer, int playerID, int serverID, ServerType type = ServerType.Logic)
+        public static void SendEvent(int id, byte[] buffer, int playerID, int serverID, int type = 1)
         {
             ServerConnection connection = GetConnection(type);
             if (connection != null && connection.IsConnected())

@@ -534,7 +534,7 @@ namespace NCSpeedLight
 
         private void OnConnected()
         {
-            if (m_ConnectionStateListener != null)
+            if (m_ConnectionStateListener != null && m_ConnectionStateListener.OnConnect != null)
             {
                 m_ConnectionStateListener.OnConnect(this);
             }
@@ -542,7 +542,7 @@ namespace NCSpeedLight
 
         private void OnDisconnected()
         {
-            if (m_ConnectionStateListener != null)
+            if (m_ConnectionStateListener != null && m_ConnectionStateListener.OnDisconnect != null)
             {
                 m_ConnectionStateListener.OnDisconnect(this);
             }

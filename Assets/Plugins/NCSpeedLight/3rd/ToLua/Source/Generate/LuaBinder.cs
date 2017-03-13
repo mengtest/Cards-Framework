@@ -182,9 +182,6 @@ public static class LuaBinder
 		NCSpeedLight_UIManager_ProgressDialogOptionWrap.Register(L);
 		NCSpeedLight_UIManager_DialogTypeWrap.Register(L);
 		L.EndModule();
-		L.BeginModule("NetManager");
-		NCSpeedLight_NetManager_ServerTypeWrap.Register(L);
-		L.EndModule();
 		L.BeginModule("ServerConnection");
 		NCSpeedLight_ServerConnection_ListenerWrap.Register(L);
 		L.RegFunction("ConnectionDelegate", NCSpeedLight_ServerConnection_ConnectionDelegate);

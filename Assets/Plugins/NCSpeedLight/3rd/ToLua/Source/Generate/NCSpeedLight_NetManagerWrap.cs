@@ -12,7 +12,7 @@ public class NCSpeedLight_NetManagerWrap
 		L.RegFunction("DeleteConnection", DeleteConnection);
 		L.RegFunction("GetConnection", GetConnection);
 		L.RegFunction("Update", Update);
-		L.RegFunction("Destroy", Destroy);
+		L.RegFunction("DeleteAllConnections", DeleteAllConnections);
 		L.RegFunction("SendEvent", SendEvent);
 		L.RegFunction("RegisterEvent", RegisterEvent);
 		L.RegFunction("UnregisterEvent", UnregisterEvent);
@@ -43,7 +43,7 @@ public class NCSpeedLight_NetManagerWrap
 		try
 		{
 			ToLua.CheckArgsCount(L, 4);
-			NCSpeedLight.NetManager.ServerType arg0 = (NCSpeedLight.NetManager.ServerType)ToLua.CheckObject(L, 1, typeof(NCSpeedLight.NetManager.ServerType));
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
 			string arg1 = ToLua.CheckString(L, 2);
 			int arg2 = (int)LuaDLL.luaL_checknumber(L, 3);
 			NCSpeedLight.ServerConnection.Listener arg3 = (NCSpeedLight.ServerConnection.Listener)ToLua.CheckObject(L, 4, typeof(NCSpeedLight.ServerConnection.Listener));
@@ -63,7 +63,7 @@ public class NCSpeedLight_NetManagerWrap
 		try
 		{
 			ToLua.CheckArgsCount(L, 1);
-			NCSpeedLight.NetManager.ServerType arg0 = (NCSpeedLight.NetManager.ServerType)ToLua.CheckObject(L, 1, typeof(NCSpeedLight.NetManager.ServerType));
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
 			NCSpeedLight.NetManager.DeleteConnection(arg0);
 			return 0;
 		}
@@ -79,7 +79,7 @@ public class NCSpeedLight_NetManagerWrap
 		try
 		{
 			ToLua.CheckArgsCount(L, 1);
-			NCSpeedLight.NetManager.ServerType arg0 = (NCSpeedLight.NetManager.ServerType)ToLua.CheckObject(L, 1, typeof(NCSpeedLight.NetManager.ServerType));
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
 			NCSpeedLight.ServerConnection o = NCSpeedLight.NetManager.GetConnection(arg0);
 			ToLua.PushObject(L, o);
 			return 1;
@@ -106,12 +106,12 @@ public class NCSpeedLight_NetManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int Destroy(IntPtr L)
+	static int DeleteAllConnections(IntPtr L)
 	{
 		try
 		{
 			ToLua.CheckArgsCount(L, 0);
-			NCSpeedLight.NetManager.Destroy();
+			NCSpeedLight.NetManager.DeleteAllConnections();
 			return 0;
 		}
 		catch(Exception e)
@@ -130,7 +130,7 @@ public class NCSpeedLight_NetManagerWrap
 			byte[] arg1 = ToLua.CheckByteBuffer(L, 2);
 			int arg2 = (int)LuaDLL.luaL_checknumber(L, 3);
 			int arg3 = (int)LuaDLL.luaL_checknumber(L, 4);
-			NCSpeedLight.NetManager.ServerType arg4 = (NCSpeedLight.NetManager.ServerType)ToLua.CheckObject(L, 5, typeof(NCSpeedLight.NetManager.ServerType));
+			int arg4 = (int)LuaDLL.luaL_checknumber(L, 5);
 			NCSpeedLight.NetManager.SendEvent(arg0, arg1, arg2, arg3, arg4);
 			return 0;
 		}
