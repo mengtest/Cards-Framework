@@ -1,3 +1,5 @@
+require 'NCSpeedLight.Framework.Player.Player'
+
 PlayerType =
 {
     PT_Hero = 0,
@@ -13,11 +15,10 @@ PlayerState =
 
 PlayerManager =
 {
-    Players = { },
+    Players,
 }
 
-
-function PlayerManager:New()
+function PlayerManager.New()
     local obj = { };
     obj.Players = { };
     return obj;

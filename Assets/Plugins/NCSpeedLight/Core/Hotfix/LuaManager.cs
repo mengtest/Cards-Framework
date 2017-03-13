@@ -100,7 +100,7 @@ namespace NCSpeedLight
 
         private static void InitializeLuaFiles()
         {
-            //DoString("require 'NCSpeedLight/Utils/Define'");
+            DoString("require 'NCSpeedLight/Utils/Define'");
         }
 
         private static void InitializeLuaDirectory()
@@ -128,13 +128,6 @@ namespace NCSpeedLight
             LuaLoader.AddBundle("ncspeedlight_3rd_pbc");
             LuaLoader.AddBundle("ncspeedlight_3rd_pblua");
             LuaLoader.AddBundle("ncspeedlight_3rd_sproto");
-
-            LuaLoader.AddBundle("ncspeedlight_core_event");
-            LuaLoader.AddBundle("ncspeedlight_core_network");
-            LuaLoader.AddBundle("ncspeedlight_core_player");
-            LuaLoader.AddBundle("ncspeedlight_core_scene");
-            LuaLoader.AddBundle("ncspeedlight_core_view");
-
 
             LuaLoader.AddBundle("ncspeedlight_modules_dialog");
             LuaLoader.AddBundle("ncspeedlight_modules_login");

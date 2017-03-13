@@ -27,7 +27,7 @@ namespace NCSpeedLight
         IEnumerator OnExtractAssets()
         {
             string dataPath = SharedVariable.SCRIPT_BUNDLE_PATH;  //数据目录
-            string resPath = SharedVariable.APP_CONTENT_PATH + "Scripts/"; //游戏包资源目录
+            string resPath = SharedVariable.APP_CONTENT_PATH + "Lua/"; //游戏包资源目录
 
             if (Directory.Exists(dataPath))
             {
@@ -35,14 +35,14 @@ namespace NCSpeedLight
             }
             Directory.CreateDirectory(dataPath);
 
-            string infile = resPath + "manifest.txt";
-            string outfile = dataPath + "manifest.txt";
+            string infile = resPath + "files.txt";
+            string outfile = dataPath + "files.txt";
             if (File.Exists(outfile))
             {
                 File.Delete(outfile);
             }
 
-            string message = "正在解包文件:>manifest.txt";
+            string message = "正在解包文件:>files.txt";
             Debug.Log(message);
 
             if (Application.platform == RuntimePlatform.Android)
