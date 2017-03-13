@@ -120,6 +120,7 @@
     <Compile Include="Assets\Editor\NCSpeedLight\LuaPBProcessor.cs" />
     <Compile Include="Assets\Editor\NCSpeedLight\LuaTools.cs" />
     <Compile Include="Assets\Editor\NCSpeedLight\SVNProcessor.cs" />
+    <Compile Include="Assets\Editor\VSCode\Plugins\Editor\VSCode.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\NCSpeedLight\3rd\AudioToolkit\Readme.txt" />
