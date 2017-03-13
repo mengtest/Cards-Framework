@@ -326,6 +326,7 @@
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\LanguageSelectionWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\LuaBinder.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\LuaInterface_DebuggerWrap.cs" />
+    <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\LuaInterface_LuaFileUtilsWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NCSpeedLight_AndroidAdapterWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NCSpeedLight_AudioManagerWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NCSpeedLight_EventManagerWrap.cs" />
@@ -333,6 +334,7 @@
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NCSpeedLight_GlobalEventManagerWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NCSpeedLight_HelperWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NCSpeedLight_LuaBehaviourWrap.cs" />
+    <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NCSpeedLight_LuaLoaderWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NCSpeedLight_LuaManagerWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NCSpeedLight_LuaViewWrap.cs" />
     <Compile Include="Assets\Plugins\NCSpeedLight\3rd\ToLua\Source\Generate\NCSpeedLight_NetManagerWrap.cs" />

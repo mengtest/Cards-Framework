@@ -161,9 +161,12 @@ public static class CustomSettings
 
 
          _GT(typeof(AudioManager)),
+
          _GT(typeof(LuaManager)),
          _GT(typeof(LuaBehaviour)),
          _GT(typeof(LuaView)),
+         _GT(typeof(LuaLoader)),
+
 
          _GT(typeof(NetManager)),
          _GT(typeof(ServerConnection)),

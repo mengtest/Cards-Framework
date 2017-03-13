@@ -163,6 +163,7 @@ public static class LuaBinder
 		NCSpeedLight_LuaManagerWrap.Register(L);
 		NCSpeedLight_LuaBehaviourWrap.Register(L);
 		NCSpeedLight_LuaViewWrap.Register(L);
+		NCSpeedLight_LuaLoaderWrap.Register(L);
 		NCSpeedLight_NetManagerWrap.Register(L);
 		NCSpeedLight_ServerConnectionWrap.Register(L);
 		NCSpeedLight_HelperWrap.Register(L);
@@ -197,6 +198,9 @@ public static class LuaBinder
 		L.RegFunction("Action_int", System_Action_int);
 		L.RegFunction("Comparison_int", System_Comparison_int);
 		L.RegFunction("Comparison_UnityEngine_Transform", System_Comparison_UnityEngine_Transform);
+		L.EndModule();
+		L.BeginModule("LuaInterface");
+		LuaInterface_LuaFileUtilsWrap.Register(L);
 		L.EndModule();
 		L.BeginModule("UIEventListener");
 		L.RegFunction("VoidDelegate", UIEventListener_VoidDelegate);
