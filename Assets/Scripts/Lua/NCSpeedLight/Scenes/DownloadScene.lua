@@ -2,9 +2,7 @@ jsonProcessor = require 'cjson'
 
 DownloadScene = { };
 
-local this = DownloadScene;
-
-function this:New()
+function DownloadScene:New()
     o = { };
     setmetatable(o, self);
     self.__index = self;
@@ -12,10 +10,10 @@ function this:New()
     return o;
 end
 
-function this:OnInit()
+function DownloadScene:OnInit()
 end 
 
-function this:Begin()
+function DownloadScene:Begin()
     --    if UnityEngine.Application.platform == UnityEngine.RuntimePlatform.Android or UnityEngine.Application.platform == UnityEngine.RuntimePlatform.IPhonePlayer then
     --        UIManager.OpenWindow("Login/Tencent/QQWXBG")
     --    else
@@ -24,10 +22,10 @@ function this:Begin()
     coroutine.start(CheckVersion)
 end
 
-function this:Update()
+function DownloadScene:Update()
 end
 
-function this:End()
+function DownloadScene:End()
 end
 
 function CheckVersion()

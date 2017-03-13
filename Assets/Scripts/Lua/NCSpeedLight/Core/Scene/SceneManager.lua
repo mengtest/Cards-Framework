@@ -16,28 +16,26 @@ require 'NCSpeedLight.Scenes.GameScene'
 
 SceneManager = { };
 
-local this = SceneManager;
-
-function this:Instance()
+function SceneManager:Instance()
 	if self == nil then
-		this:New();
+		SceneManager:New();
 	end
 	return self;
 end
 
-function this:Initialize()
+function SceneManager:Initialize()
 	if self == nil then
-		this:New();
-		this:RegisterScene(DownloadScene:New());
-		this:RegisterScene(LoginScene:New());
-		this:RegisterScene(HallScene:New());
-		this:RegisterScene(GameScene:New());
+		SceneManager:New();
+		SceneManager:RegisterScene(DownloadScene:New());
+		SceneManager:RegisterScene(LoginScene:New());
+		SceneManager:RegisterScene(HallScene:New());
+		SceneManager:RegisterScene(GameScene:New());
 	else
 		Log:Warning('SceneManager has already been initialized.')
 	end
 end
 
-function this:New()
+function SceneManager:New()
 	Log:Info('SceneManager:New() -- constructor.')
 	o = { };
 	setmetatable(o, self);
@@ -49,7 +47,7 @@ function this:New()
 	return o;
 end
 
-function this:Update()
+function SceneManager:Update()
 	if self.CurrentScene ~= nil then
 		self.CurrentScene:Update();
 	end
@@ -64,7 +62,7 @@ function this:Update()
 	end
 end
 
-function this:RegisterScene(scene)
+function SceneManager:RegisterScene(scene)
 	if scene == nil then
 		Log:Error('SceneManager: can not register scene caused by nil scene.')
 		return;
@@ -72,7 +70,7 @@ function this:RegisterScene(scene)
 	self.Scenes[scene.Name] = scene;
 end
 
-function this:GotoScene(name)
+function SceneManager:GotoScene(name)
 	scene = self.Scenes[name];
 	if scene == nil then
 		Log:Error('SceneManager: can not GotoScene caused by nil scene,name is ' .. name)
@@ -92,14 +90,14 @@ function this:GotoScene(name)
 	end
 end
 
-function this:GetLastScene()
+function SceneManager:GetLastScene()
 	return Instance().LastScene;
 end
 
-function this:GetCurrentScene()
+function SceneManager:GetCurrentScene()
 	return Instance().CurrentScene;
 end
 
-function this:GetNextScene()
+function SceneManager:GetNextScene()
 	return Instance().NextScene;
 end

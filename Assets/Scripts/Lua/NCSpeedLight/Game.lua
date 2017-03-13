@@ -26,7 +26,7 @@ function Initialize(go)
 end
 
 function Game.Awake(go)
-Initialize();
+    Initialize();
     Initialize(go);
 end
 
@@ -37,6 +37,7 @@ end
 function Game.Update()
     NetManager:Update();
     SceneManager:Update();
+    local platform = UnityEngine.Application.platform;
     if UnityEngine.Application.platform == UnityEngine.RuntimePlatform.Android then
         if UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Escape) == true then
             local option = StandardDialogOption:New();
