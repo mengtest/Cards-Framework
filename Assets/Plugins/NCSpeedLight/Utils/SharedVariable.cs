@@ -169,5 +169,23 @@ public static class SharedVariable
     /// </summary>
     public static bool ENCRYPT_LUA = true;
 
-    public static bool LUA_BUNDLE_MODE = false;
+    public static bool LUA_BUNDLE_MODE
+    {
+        get
+        {
+            if (Application.isMobilePlatform || Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.OSXPlayer)
+            {
+               
+                return true;
+            }
+            else if (Application.isEditor)
+            {
+                return false;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
 }

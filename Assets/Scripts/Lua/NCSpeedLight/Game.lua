@@ -82,3 +82,4 @@ function Game.TestSceneManager()
     SceneManager:Initialize();
     SceneManager:GotoScene(SceneType.DownloadScene);
 end
+

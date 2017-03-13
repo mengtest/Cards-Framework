@@ -90,6 +90,7 @@ function this:OpenStandardDialog(option)
     csOption.DoubleButton = option.DoubleButton;
     csOption.OnClickOK = option.OnClickOK;
     csOption.OnClickCancel = option.OnClickCancel;
+    return NCSpeedLight.UIManager.OpenStandardDialog(csOption);
 end
 
 function this:CloseStandardDialog()
@@ -110,6 +111,7 @@ function this:OpenProgressDialog(option)
     csOption.OnClose = option.OnClose;
     csOption.OnAutoClose = option.OnAutoClose;
     csOption.OnCancel = option.OnCancel;
+    return NCSpeedLight.UIManager.OpenProgressDialog(csOption);
 end
 
 function this:CloseProgressDialog()

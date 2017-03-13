@@ -36,11 +36,10 @@
     <Folder Include="Lua\NCSpeedLight\Core\Network\" />
     <Folder Include="Lua\NCSpeedLight\Core\View\" />
     <Folder Include="Lua\NCSpeedLight\Core\Scene\" />
-    <Folder Include="Lua\NCSpeedLight\Framework\Player\" />
+    <Folder Include="Lua\NCSpeedLight\Core\Player\" />
     <Folder Include="Lua\NCSpeedLight\Modules\" />
     <Folder Include="Lua\NCSpeedLight\Modules\Dialog\" />
     <Folder Include="Lua\NCSpeedLight\Modules\Login\" />
-    <Folder Include="Lua\NCSpeedLight\Framework\" />
     <Folder Include="Lua\NCSpeedLight\Core\" />
     <Folder Include="Lua\NCSpeedLight\Protocol\" />
     <Folder Include="Lua\NCSpeedLight\Scenes\" />
@@ -106,8 +105,8 @@
     <Compile Include="Lua\NCSpeedLight\Core\Network\NetManager.lua" />
     <Compile Include="Lua\NCSpeedLight\Core\Scene\SceneManager.lua" />
     <Compile Include="Lua\NCSpeedLight\Core\View\UIManager.lua" />
-    <Compile Include="Lua\NCSpeedLight\Framework\Player\Player.lua" />
-    <Compile Include="Lua\NCSpeedLight\Framework\Player\PlayerManager.lua" />
+    <Compile Include="Lua\NCSpeedLight\Core\Player\Player.lua" />
+    <Compile Include="Lua\NCSpeedLight\Core\Player\PlayerManager.lua" />
     <Compile Include="Lua\NCSpeedLight\Game.lua" />
     <Compile Include="Lua\NCSpeedLight\Modules\Dialog\ConfirmDialog.lua" />
     <Compile Include="Lua\NCSpeedLight\Modules\Dialog\NetConnectDialog.lua" />

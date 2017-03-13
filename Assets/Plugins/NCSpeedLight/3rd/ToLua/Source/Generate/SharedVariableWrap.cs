@@ -15,7 +15,6 @@ public class SharedVariableWrap
 		L.RegVar("IsSinglePlayer", get_IsSinglePlayer, set_IsSinglePlayer);
 		L.RegVar("GAME_NAME", get_GAME_NAME, set_GAME_NAME);
 		L.RegVar("ENCRYPT_LUA", get_ENCRYPT_LUA, set_ENCRYPT_LUA);
-		L.RegVar("LUA_BUNDLE_MODE", get_LUA_BUNDLE_MODE, set_LUA_BUNDLE_MODE);
 		L.RegVar("SCREEN_SCALE", get_SCREEN_SCALE, null);
 		L.RegVar("DATA_PATH", get_DATA_PATH, null);
 		L.RegVar("SCRIPT_BUNDLE_PATH", get_SCRIPT_BUNDLE_PATH, null);
@@ -24,6 +23,7 @@ public class SharedVariableWrap
 		L.RegVar("APP_CONTENT_PATH", get_APP_CONTENT_PATH, null);
 		L.RegVar("PLATFORM", get_PLATFORM, null);
 		L.RegVar("PLATFORM_NAME", get_PLATFORM_NAME, null);
+		L.RegVar("LUA_BUNDLE_MODE", get_LUA_BUNDLE_MODE, null);
 		L.EndStaticLibs();
 	}
 
@@ -75,20 +75,6 @@ public class SharedVariableWrap
 		try
 		{
 			LuaDLL.lua_pushboolean(L, SharedVariable.ENCRYPT_LUA);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_LUA_BUNDLE_MODE(IntPtr L)
-	{
-		try
-		{
-			LuaDLL.lua_pushboolean(L, SharedVariable.LUA_BUNDLE_MODE);
 			return 1;
 		}
 		catch(Exception e)
@@ -210,6 +196,20 @@ public class SharedVariableWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_LUA_BUNDLE_MODE(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushboolean(L, SharedVariable.LUA_BUNDLE_MODE);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_LOGIN_SERVER_ADDRESS(IntPtr L)
 	{
 		try
@@ -261,21 +261,6 @@ public class SharedVariableWrap
 		{
 			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
 			SharedVariable.ENCRYPT_LUA = arg0;
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_LUA_BUNDLE_MODE(IntPtr L)
-	{
-		try
-		{
-			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
-			SharedVariable.LUA_BUNDLE_MODE = arg0;
 			return 0;
 		}
 		catch(Exception e)

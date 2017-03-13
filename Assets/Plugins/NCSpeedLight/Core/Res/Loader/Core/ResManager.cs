@@ -315,8 +315,12 @@ namespace NCSpeedLight
             }
             go.SetActive(true);
             go.AddComponent<ResManager>();
-            SetupAssetBundleEnv();
-            NCSpeedLight.AssetBundleManifest.Initialize();
+
+            if(IsResourceMode == false)
+            {
+                SetupAssetBundleEnv();
+                NCSpeedLight.AssetBundleManifest.Initialize();
+            }
 
             IsInitialized = true;
             if (PostResManagerInitialized != null)
