@@ -11,80 +11,80 @@
 
 require 'NCSpeedLight.Utils.Define'
 
-Game = { }
+Game = {}
 
 function Initialize(go)
-    -- 固定帧率至30
-    UnityEngine.Application.targetFrameRate = 30
-    -- 设置屏幕不关闭
-    UnityEngine.Screen.sleepTimeout = UnityEngine.SleepTimeout.NeverSleep
-
-    NCSpeedLight.ResManager.Initialize()
-    UIManager:Initialize()
-    SceneManager.Initialize()
-    NetManager:Initialize()
+	-- 固定帧率至30
+	UnityEngine.Application.targetFrameRate = 30
+	-- 设置屏幕不关闭
+	UnityEngine.Screen.sleepTimeout = UnityEngine.SleepTimeout.NeverSleep
+	
+	NCSpeedLight.ResManager.Initialize()
+	UIManager:Initialize()
+	SceneManager.Initialize()
+	NetManager:Initialize()
 end
 
 function Game.Awake(go)
-    Initialize();
-    Initialize(go);
+	Initialize();
+	Initialize(go);
 end
 
 function Game.Start()
-    SceneManager:GotoScene(SceneType.DownloadScene);
+	SceneManager:GotoScene(SceneType.DownloadScene);
 end
 
 function Game.Update()
-    NetManager:Update();
-    SceneManager:Update();
-    local platform = UnityEngine.Application.platform;
-    if UnityEngine.Application.platform == UnityEngine.RuntimePlatform.Android then
-        if UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Escape) == true then
-            local option = StandardDialogOption:New();
-            option.Title = '提示';
-            option.Content = '你确定退出游戏吗？';
-            option.DoubleButton = true;
-            option.OnClickOK = function(go)
-                UnityEngine.Application.Quit();
-            end;
-            UIManager:OpenStandardDialog(option);
-        end
-    end
+	NetManager:Update();
+	SceneManager:Update();
+	local platform = UnityEngine.Application.platform;
+	if UnityEngine.Application.platform == UnityEngine.RuntimePlatform.Android then
+		if UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Escape) == true then
+			local option = StandardDialogOption:New();
+			option.Title = '提示';
+			option.Content = '你确定退出游戏吗？';
+			option.DoubleButton = true;
+			option.OnClickOK = function(go)
+				UnityEngine.Application.Quit();
+			end;
+			UIManager:OpenStandardDialog(option);
+		end
+	end
 end
 
 function Game.OnDestroy()
-    NetManager:DeleteAllConnections()
+	NetManager:DeleteAllConnections()
 end
 
 
 
 function TestEvent()
-
-    local processor = EvtProcessor:New();
-    local evtQ = EvtQueue:New(processor);
-
-    evtQ:Add(1, TestEventCallback1);
-    evtQ:Add(2, TestEventCallback2);
-    processor:Notify(1, 'Hello EvtProcessor');
-    processor:Notify(2, 'Hello 32525');
-    -- evtQ:Remove(1, this.TestEventCallback1);
-    evtQ:Clear();
-    --    processor:N();
-    processor:Notify(1, 'Hello EvtProcessor');
-    processor:Notify(2, 'Hello 32525');
-
+	
+	local processor = EvtProcessor:New();
+	local evtQ = EvtQueue:New(processor);
+	
+	evtQ:Add(1, TestEventCallback1);
+	evtQ:Add(2, TestEventCallback2);
+	processor:Notify(1, 'Hello EvtProcessor');
+	processor:Notify(2, 'Hello 32525');
+	-- evtQ:Remove(1, this.TestEventCallback1);
+	evtQ:Clear();
+	--    processor:N();
+	processor:Notify(1, 'Hello EvtProcessor');
+	processor:Notify(2, 'Hello 32525');
+	
 end
 
 function TestEventCallback1(param)
-    print("Game.TestEventCallback1,param is " .. param);
+	print("Game.TestEventCallback1,param is " .. param);
 end
 
 function TestEventCallback2(param)
-    print("Game.TestEventCallback2,param is " .. param);
+	print("Game.TestEventCallback2,param is " .. param);
 end
 
 function TestSceneManager()
-    SceneManager:Initialize();
-    SceneManager:GotoScene(SceneType.DownloadScene);
+	SceneManager:Initialize();
+	SceneManager:GotoScene(SceneType.DownloadScene);
 end
 
