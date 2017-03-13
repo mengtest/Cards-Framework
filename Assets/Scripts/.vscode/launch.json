@@ -46,7 +46,7 @@
             "port": 7003,
             "scripts": [
                 "${workspaceRoot}",
-                "${workspaceRoot}/Scripts/Lua/"
+                "${workspaceRoot}/lua/"
             ],
             "printType": 1
         }
