@@ -55,20 +55,19 @@ function LoginScene:GetLoginRecord()
 	return self.LoginRecord;
 end
 
-function LoginScene:UpdateLoginRecord(accoutnStr, passwordStr)
-	
-	local path = NCSpeedLight.SharedVariable.DATA_PATH .. "Config/LoginRecord.bytes";
-	
+function LoginScene:AddLoginRecord(accountStr, passwordStr)
+	if LoginScene:ExistRecord(accountStr) then
+		return
+	end
 	local info = {
 		loginInfo =
 		{
 			{
-				account = accoutnStr,
+				account = accountStr,
 				password = passwordStr,
 			}
 		}
 	}
-	
 	if self.LoginRecord ~= nil then
 		for i = 1, # self.LoginRecord.loginInfo do
 			if i > 2 then break end
@@ -79,7 +78,38 @@ function LoginScene:UpdateLoginRecord(accoutnStr, passwordStr)
 		end
 	end
 	self.LoginRecord = info;
-	local buffer = NetManager.EncodePB('LoginRecord', info);
+	LoginScene:SaveLoginRecordFile();
+end
+
+function LoginScene:ExistRecord(accountStr)
+	if self.LoginRecord ~= nil then
+		for i = 1, # self.LoginRecord.loginInfo do
+			local info = self.LoginRecord.loginInfo[i];
+			if info ~= nil and info.account == accountStr then
+				return true;
+			end
+		end
+	else
+		return false;
+	end
+end
+
+function LoginScene:RemoveLoginRecord(accountStr, passwordStr)
+	if self.LoginRecord ~= nil then
+		for i = # self.LoginRecord.loginInfo, 1, - 1 do
+			local item = self.LoginRecord.loginInfo[i];
+			if item.account == accountStr and item.password == passwordStr then
+				table.remove(self.LoginRecord.loginInfo, i);
+				break;
+			end
+		end
+	end
+	LoginScene:SaveLoginRecordFile();
+end
+
+function LoginScene:SaveLoginRecordFile()
+	local path = NCSpeedLight.SharedVariable.DATA_PATH .. "Config/LoginRecord.bytes";
+	local buffer = NetManager.EncodePB('LoginRecord', self.LoginRecord);
 	Utility.SaveFile(path, buffer);
 end
 

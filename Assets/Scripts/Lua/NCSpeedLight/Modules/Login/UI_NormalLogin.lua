@@ -15,7 +15,6 @@ local btnRegister;
 local isRecordPanelOpen;
 
 local recordLoginInfo = {
-	
 };
 
 function UI_NormalLogin.New()
@@ -31,6 +30,16 @@ end
 function UI_NormalLogin.Start()
 	lbAccount = transform:Find("Input (account)/Label"):GetComponent('UILabel');
 	ipPassword = transform:Find("Input (password)"):GetComponent('UIInput');
+	local loginScene = LoginScene:Instance();
+	if loginScene ~= nil and loginScene.LoginRecord ~= nil and # loginScene.LoginRecord.loginInfo >= 1 then
+		local firstInfo = loginScene.LoginRecord.loginInfo[1];
+		if lbAccount ~= nil then
+			lbAccount.text = firstInfo.account;
+		end
+		if ipPassword ~= nil then
+			ipPassword.value = firstInfo.password;
+		end
+	end
 	NCSpeedLight.UIHelper.SetButtonEvent(transform, 'Btn/Button (login)', onClickLogin);
 	NCSpeedLight.UIHelper.SetButtonEvent(transform, 'Btn/Button (regist)', onClickRegister);
 	NCSpeedLight.UIHelper.SetButtonEvent(transform, 'Input (account)', onClickArrow);
@@ -59,7 +68,7 @@ function onClickLogin(go)
 		UIManager.OpenTipsDialog("请输入密码");
 		return;
 	end
-	LoginScene:UpdateLoginRecord(lbAccount.text, ipPassword.value);
+	LoginScene:AddLoginRecord(lbAccount.text, ipPassword.value);
 	LoginScene:RequestLogin(lbAccount.text, ipPassword.value);
 end
 
@@ -72,29 +81,42 @@ function onClickArrow(go)
 	isRecordPanelOpen = not isRecordPanelOpen;
 	if isRecordPanelOpen == true then
 		recordLoginInfo = {};
-		local loginScene = LoginScene:Instance();
-		if loginScene ~= nil and loginScene.LoginRecord ~= nil and loginScene.LoginRecord.loginInfo ~= nil then
-			local bgHeight = 55;
-			local bg = transform:Find('Panel/Sprite'):GetComponent('UISprite');
-			local panel = transform:Find('Panel/Accounts');
-			local item = transform:Find('Panel/CloneAccount');
-			local otherAccountItem = transform:Find('Panel/CloneAccount2');
-			if bg == nil or panel == nil or item == nil or otherAccountItem == nil then return end;
-			local index = 1;
-			for i = 1, # loginScene.LoginRecord.loginInfo do
-				local info = loginScene.LoginRecord.loginInfo[i];
-				local childItem = UnityEngine.GameObject.Instantiate(item);
-				childItem:SetParent(panel);
-				childItem.localPosition = UnityEngine.Vector3.zero;
-				childItem.localScale = UnityEngine.Vector3.one;
-				childItem.gameObject:SetActive(true);
-				childItem.name = info.account;
-				NCSpeedLight.UIHelper.SetLabelText(childItem, 'Label', info.account);
-				NCSpeedLight.UIHelper.SetButtonEvent(childItem, 'Label', onClickAccountItem);
-				bgHeight = bgHeight + 55;
-				recordLoginInfo[i] = {childItem, info};
-				index = i;
-			end
+		displayRecordPanel();
+	else
+		clearRecordPanel();
+		recordLoginInfo = nil;
+	end
+end
+
+function displayRecordPanel()
+	local loginScene = LoginScene:Instance();
+	if loginScene ~= nil and loginScene.LoginRecord ~= nil and loginScene.LoginRecord.loginInfo ~= nil then
+		local bg = transform:Find('Panel/Sprite'):GetComponent('UISprite');
+		local panel = transform:Find('Panel/Accounts');
+		local item = transform:Find('Panel/CloneAccount');
+		local otherAccountItem = transform:Find('Panel/CloneAccount2');
+		if bg == nil or panel == nil or item == nil or otherAccountItem == nil then return end;
+		local index = 0;
+		for i = 1, # loginScene.LoginRecord.loginInfo do
+			local info = loginScene.LoginRecord.loginInfo[i];
+			local childItem = UnityEngine.GameObject.Instantiate(item);
+			childItem:SetParent(panel);
+			childItem.localPosition = UnityEngine.Vector3.zero;
+			childItem.localScale = UnityEngine.Vector3.one;
+			childItem.gameObject:SetActive(true);
+			childItem.name = info.account;
+			NCSpeedLight.UIHelper.SetLabelText(childItem, 'Label', info.account);
+			NCSpeedLight.UIHelper.SetButtonEvent(childItem, 'Label', onClickAccountItem);
+			NCSpeedLight.UIHelper.SetButtonEvent(childItem, 'Delete', onClickDeleteItem);
+			local delete = childItem:Find('Delete');
+			local label = childItem:Find('Label');
+			recordLoginInfo[i] = {childItem.gameObject, label.gameObject, delete.gameObject, info};
+			index = i;
+		end
+		
+		if index > 0 then
+			
+			bg.enabled = true;
 			
 			-- 其他账号按钮
 			local otherAccountItemClone = UnityEngine.GameObject.Instantiate(otherAccountItem);
@@ -107,25 +129,79 @@ function onClickArrow(go)
 			if grid ~= nil then
 				grid.enabled = true;
 			end
+			local bgHeight = getRecordPanelHeight(index);
 			bg.height = bgHeight;
 			index = index + 1;
-			recordLoginInfo[index] = {otherAccountItemClone, nil};
+			recordLoginInfo[index] = {otherAccountItemClone.gameObject, nil, nil, nil};
+		else
+			bg.enabled = false;
 		end
+	end
+end
+
+function getRecordPanelHeight(count)
+	if count == 1 then
+		return 130;
+	elseif count == 2 then
+		return 175;
+	elseif count == 3 then
+		return 220;
 	else
-		for i = 1, # recordLoginInfo do
-			local item = recordLoginInfo[i];
-			if item[1] ~= nil then
-				UnityEngine.GameObject.Destroy(item[1].gameObject);
-			end
+		return 0;
+	end
+end
+
+function clearRecordPanel()
+	for i = 1, # recordLoginInfo do
+		local item = recordLoginInfo[i];
+		if item ~= nil and item[1] ~= nil then
+			UnityEngine.GameObject.Destroy(item[1]);
 		end
-		recordLoginInfo = nil;
 	end
 end
 
 function onClickAccountItem(go)
-	Log.Info("onClickAccountItem" .. go.name);
+	isRecordPanelOpen = not isRecordPanelOpen;
+	local info = TryGetLoginRecordInfo(go);
+	if info ~= nill then
+		if lbAccount ~= nil then
+			lbAccount.text = info.account;
+		end
+		if ipPassword ~= nil then
+			ipPassword.value = info.password;
+		end
+	end
+	local alphaTweener = transform:Find('Panel/Sprite'):GetComponent('TweenAlpha');
+	if alphaTweener ~= nil then
+		alphaTweener:Play(false);
+	end
+	clearRecordPanel();
 end
 
+function onClickDeleteItem(go)
+	local info = TryGetLoginRecordInfo(go);
+	if info ~= nil then
+		LoginScene:RemoveLoginRecord(info.account, info.password);
+	end
+	clearRecordPanel();
+	isRecordPanelOpen = true;
+	displayRecordPanel();
+end
+
+
 function onClickOtherAccount(go)
-	Log.Info("onClickOtherAccount" .. go.name);
+end
+
+function TryGetLoginRecordInfo(go)
+	UnityEngine.GameObject.Destroy(go);
+	for i = 1, # recordLoginInfo do
+		local info = recordLoginInfo[i];
+		local item1 = info[1];
+		local item2 = info[2];
+		local item3 = info[3];
+		local item4 = info[4];
+		if item1 == go or item2 == go or item3 == go then
+			return item4;
+		end
+	end
 end
