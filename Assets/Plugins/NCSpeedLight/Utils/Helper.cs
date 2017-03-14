@@ -1109,5 +1109,54 @@ namespace NCSpeedLight
                 throw new Exception("MD5File() fail, error:" + ex.Message);
             }
         }
+
+        [LuaInterface.LuaByteBuffer]
+        public static byte[] OpenFile(string path)
+        {
+            if (File.Exists(path) == false)
+            {
+                return null;
+            }
+            using (var file = File.Open(path, FileMode.Open))
+            {
+                if (file != null)
+                {
+                    byte[] bytes = new byte[file.Length];
+                    file.Read(bytes, 0, (int)file.Length);
+                    file.Close();
+                    file.Dispose();
+                    return bytes;
+                }
+            }
+            return null;
+        }
+
+        public static bool SaveFile(string path, byte[] buffer)
+        {
+            if (string.IsNullOrEmpty(path) || buffer == null)
+            {
+                return false;
+            }
+            string directory = path.Substring(0, path.IndexOf(Path.GetFileName(path)));
+            if (Directory.Exists(directory) == false)
+            {
+                Directory.CreateDirectory(directory);
+            }
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+            using (var file = File.Open(path, FileMode.CreateNew))
+            {
+                if (file != null)
+                {
+                    file.Write(buffer, 0, buffer.Length);
+                    file.Close();
+                    file.Dispose();
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

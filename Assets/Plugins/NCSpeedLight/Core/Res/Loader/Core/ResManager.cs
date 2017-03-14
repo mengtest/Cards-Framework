@@ -9,7 +9,7 @@
            //
 //----------------------------------------------------------------*/
 
-#define ASSETBUNDLE_MODE
+//#define ASSETBUNDLE_MODE
 //#define COMPRESSED_BUNDLE
 
 using System;

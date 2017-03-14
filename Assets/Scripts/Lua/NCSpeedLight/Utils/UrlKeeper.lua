@@ -1,12 +1,12 @@
 UrlKeeper = {}
 
-CompanyName = 'jinxian'
-Version = '1.6.2'
-Channel = 'jinxian'
+CompanyName = 'papa'
+Version = '1.7.2'
+Channel = 'papa'
 Platform = 'Android'
 
 function UrlKeeper.JsonUrl()
-	local str = "http://jinxianmajiangcdn.damaigame.com/json/{0}/{1}/{2}/v{3}/qiumo.db?v={4}";
+	local str = "http://papamajiangcdn.damaigame.com/json/{0}/{1}/{2}/v{3}/qiumo.db?v={4}";
 	str = NCSpeedLight.Helper.StringFormat(str, CompanyName, Platform, Channel, Version, System.DateTime.Now.Ticks)
 	return str
 end

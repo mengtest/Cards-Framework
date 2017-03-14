@@ -50,7 +50,14 @@ public class NCSpeedLight_UIHelperWrap
 		{
 			int count = LuaDLL.lua_gettop(L);
 
-			if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Transform), typeof(UIEventListener.VoidDelegate)))
+			if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Transform), typeof(LuaInterface.LuaFunction)))
+			{
+				UnityEngine.Transform arg0 = (UnityEngine.Transform)ToLua.ToObject(L, 1);
+				LuaFunction arg1 = ToLua.ToLuaFunction(L, 2);
+				NCSpeedLight.UIHelper.SetButtonEvent(arg0, arg1);
+				return 0;
+			}
+			else if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Transform), typeof(UIEventListener.VoidDelegate)))
 			{
 				UnityEngine.Transform arg0 = (UnityEngine.Transform)ToLua.ToObject(L, 1);
 				UIEventListener.VoidDelegate arg1 = null;

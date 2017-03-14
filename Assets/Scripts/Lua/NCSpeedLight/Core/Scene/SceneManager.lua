@@ -30,6 +30,10 @@ function SceneManager:Initialize()
 		SceneManager:RegisterScene(LoginScene:New());
 		SceneManager:RegisterScene(HallScene:New());
 		SceneManager:RegisterScene(GameScene:New());
+		DownloadScene:OnInit();
+		LoginScene:OnInit();
+		HallScene:OnInit();
+		GameScene:OnInit();
 	else
 		Log.Warning('SceneManager has already been initialized.')
 	end

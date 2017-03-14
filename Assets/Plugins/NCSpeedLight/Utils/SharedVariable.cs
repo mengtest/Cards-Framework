@@ -35,11 +35,8 @@ namespace NCSpeedLight
 
         public const int COPY_ID = 10001;
 
-        public static string GAME_NAME = "Cards Framework";
+        public static string GAME_NAME = "Cards";
 
-        /// <summary>
-        /// 数据读取路径
-        /// </summary>
         public static string DATA_PATH
         {
             get
@@ -50,7 +47,7 @@ namespace NCSpeedLight
                 }
                 else if (Application.isEditor)
                 {
-                    return "C:/" + GAME_NAME + "/" + PLATFORM_NAME + "/";
+                    return "C:/" + GAME_NAME + "/";
                 }
                 else if (Application.platform == RuntimePlatform.OSXEditor)
                 {

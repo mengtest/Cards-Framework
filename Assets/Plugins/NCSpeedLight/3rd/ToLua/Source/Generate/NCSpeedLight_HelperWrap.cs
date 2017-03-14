@@ -56,6 +56,8 @@ public class NCSpeedLight_HelperWrap
 		L.RegFunction("DeleteDirectory", DeleteDirectory);
 		L.RegFunction("GoldReturnStr", GoldReturnStr);
 		L.RegFunction("MD5File", MD5File);
+		L.RegFunction("OpenFile", OpenFile);
+		L.RegFunction("SaveFile", SaveFile);
 		L.RegFunction("New", _CreateNCSpeedLight_Helper);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegFunction("ChildDelegate", NCSpeedLight_Helper_ChildDelegate);
@@ -1084,6 +1086,41 @@ public class NCSpeedLight_HelperWrap
 			string arg0 = ToLua.CheckString(L, 1);
 			string o = NCSpeedLight.Helper.MD5File(arg0);
 			LuaDLL.lua_pushstring(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int OpenFile(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			string arg0 = ToLua.CheckString(L, 1);
+			byte[] o = NCSpeedLight.Helper.OpenFile(arg0);
+			LuaDLL.tolua_pushlstring(L, o, o.Length);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SaveFile(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			string arg0 = ToLua.CheckString(L, 1);
+			byte[] arg1 = ToLua.CheckByteBuffer(L, 2);
+			bool o = NCSpeedLight.Helper.SaveFile(arg0, arg1);
+			LuaDLL.lua_pushboolean(L, o);
 			return 1;
 		}
 		catch(Exception e)

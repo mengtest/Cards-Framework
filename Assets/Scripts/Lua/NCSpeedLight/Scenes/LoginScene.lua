@@ -8,7 +8,12 @@ function LoginScene:New()
 	return o;
 end
 
+function LoginScene:Instance()
+	return self;
+end
+
 function LoginScene:OnInit()
+	LoginScene:OpenLoginRecord();
 end
 
 function LoginScene:Begin()
@@ -26,6 +31,56 @@ function LoginScene:End()
 	NetManager.UnregisterEvent(211, OnVerifyVersionReturn)
 	NetManager.UnregisterEvent(203, OnLoginReturn)
 	NetManager.UnregisterEvent(205, OnRegisterReturn)
+end
+
+function LoginScene:OpenLoginRecord()
+	local path = NCSpeedLight.SharedVariable.DATA_PATH .. "Config/LoginRecord.bytes";
+	local buffer = Utility.OpenFile(path);
+	if buffer == nil then
+		Log.Error('Can not open login record file,is this file exists?  ' .. path);
+	else
+		local record = NetManager.DecodePB('LoginRecord', buffer);
+		if record == false then
+			Log.Error('Decode login record fail.')
+		else
+			self.LoginRecord = record;
+			for i = 1, # record.loginInfo do
+				Log.Info("Recorded Account: " .. record.loginInfo[i].account .. ",Password: " .. record.loginInfo[i].password);
+			end
+		end
+	end
+end
+
+function LoginScene:GetLoginRecord()
+	return self.LoginRecord;
+end
+
+function LoginScene:UpdateLoginRecord(accoutnStr, passwordStr)
+	
+	local path = NCSpeedLight.SharedVariable.DATA_PATH .. "Config/LoginRecord.bytes";
+	
+	local info = {
+		loginInfo =
+		{
+			{
+				account = accoutnStr,
+				password = passwordStr,
+			}
+		}
+	}
+	
+	if self.LoginRecord ~= nil then
+		for i = 1, # self.LoginRecord.loginInfo do
+			if i > 2 then break end
+			info.loginInfo[i + 1] = {
+				account = self.LoginRecord.loginInfo[i].account,
+				password = self.LoginRecord.loginInfo[i].password,
+			};
+		end
+	end
+	self.LoginRecord = info;
+	local buffer = NetManager.EncodePB('LoginRecord', info);
+	Utility.SaveFile(path, buffer);
 end
 
 function LoginScene:RequestVerifyVersion()

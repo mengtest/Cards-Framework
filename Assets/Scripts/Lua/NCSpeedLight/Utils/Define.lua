@@ -19,7 +19,9 @@ require 'NCSpeedLight.Utils.Log'
 require 'NCSpeedLight.Core.Network.NetManager'
 require 'NCSpeedLight.Core.View.UIManager'
 
-require("NCSpeedLight.Utils.LuaDebug")("localhost", 7003);
+require('NCSpeedLight.Utils.LuaDebug')('localhost', 7003);
+
+require 'NCSpeedLight.Utils.Utility'
 
 
 protobufProcessor = require 'protobuf'

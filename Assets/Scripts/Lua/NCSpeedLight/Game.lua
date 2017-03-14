@@ -15,17 +15,18 @@ Game = {}
 local platform;
 function Initialize()
 	-- 固定帧率至30
-	UnityEngine.Application.targetFrameRate = 30
+	UnityEngine.Application.targetFrameRate = 30;
 	-- 设置屏幕不关闭
-	UnityEngine.Screen.sleepTimeout = UnityEngine.SleepTimeout.NeverSleep
+	UnityEngine.Screen.sleepTimeout = UnityEngine.SleepTimeout.NeverSleep;
 	
 	platform = UnityEngine.Application.platform;
 	
-	NCSpeedLight.ResManager.Initialize()
-	UIManager:Initialize()
-	SceneManager.Initialize()
-	NetManager:Initialize()
-	TestEvent();
+	NCSpeedLight.ResManager.Initialize();
+	UIManager:Initialize();
+	NetManager:Initialize();
+	SceneManager.Initialize();
+	
+-- TestEvent();
 end
 
 function Game.Awake()

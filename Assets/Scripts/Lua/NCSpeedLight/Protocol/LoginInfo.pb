@@ -1,9 +1,9 @@
 
 o
-LoginInfo.proto",
-LoginRecord
-	loginInfo (2
-.LoginInfo".
+LoginInfo.proto".
 	LoginInfo
 account (	
-password (	
+password (	",
+LoginRecord
+	loginInfo (2
+.LoginInfo

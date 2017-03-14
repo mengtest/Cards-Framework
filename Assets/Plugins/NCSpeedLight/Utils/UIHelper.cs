@@ -36,6 +36,14 @@ namespace NCSpeedLight
             }
         }
 
+        public static void SetButtonEvent(Transform transform, LuaFunction func)
+        {
+            if (transform != null)
+            {
+                SetButtonEvent(transform, (go) => { if (func != null) { func.Call(go); } });
+            }
+        }
+
         public static void SetButtonEvent(Transform parent, string path, LuaFunction func)
         {
             if (parent != null)
