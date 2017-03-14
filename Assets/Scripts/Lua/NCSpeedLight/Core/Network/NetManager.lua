@@ -20,11 +20,18 @@ end
 
 -- 初始化PB文件，注册lua解析
 function InitPBMessage()
-	local path = NCSpeedLight.SharedVariable.SCRIPT_BUNDLE_PATH .. "PBMessage.pb";
-	local addr = io.open(path, "rb")
-	local buffer = addr:read "*a"
-	addr:close()
-	protobufProcessor.register(buffer)
+	paths =
+	{
+		NCSpeedLight.SharedVariable.SCRIPT_BUNDLE_PATH .. "PBMessage.pb",
+		NCSpeedLight.SharedVariable.SCRIPT_BUNDLE_PATH .. "LoginInfo.pb",
+	};
+	for i = 1, # paths do
+		path = paths[i];
+		addr = io.open(path, "rb")
+		buffer = addr:read "*a"
+		addr:close()
+		protobufProcessor.register(buffer)
+	end
 end
 
 function NetManager.CreateConnection(serverType, host, port, onConnected, onDisconnected)
@@ -76,4 +83,14 @@ function NetManager.DecodeJson(bytes)
 	str = tolua.tolstring(bytes);
 	obj = jsonProcessor.decode(str);
 	return obj;
+end
+
+function NetManager.DecodePB(structName, buffer)
+	obj = protobufProcessor.decode(structName, buffer);
+	return obj;
+end
+
+function NetManager.EncodePB(structName, msg)
+	buffer = protobufProcessor.encode(structName, msg);
+	return buffer;
 end

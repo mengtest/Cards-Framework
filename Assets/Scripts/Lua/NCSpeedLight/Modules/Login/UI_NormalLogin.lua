@@ -19,6 +19,7 @@ end
 function UI_NormalLogin.Awake(go)
 	gameObject = go
 	transform = go.transform
+	OpenConfig();
 end
 
 function UI_NormalLogin.Start()
@@ -51,6 +52,7 @@ function UI_NormalLogin.onClickLogin(go)
 		UIManager.OpenTipsDialog("请输入密码")
 		return
 	end
+	SaveConfig();
 	LoginScene:RequestLogin(lbAccount.text, ipPassword.value)
 end
 
@@ -82,3 +84,31 @@ function UI_NormalLogin.TestOpenProgressDialog()
 	UIManager.OpenProgressDialog(option)
 end
 
+
+-- 读取登录信息的配置
+function OpenConfig()
+	path = "D:/LoginInfo.txt";
+	file = io.open(path, "rb");
+	if file == nil then
+		Log.Error('Can not open login record file,is this file exists?  ' .. path);
+	else
+		buffer = file:read("*a");
+		file:close();
+		info = NetManager.DecodePB('LoginRecord', buffer);
+	end
+end
+
+function SaveConfig()
+	-- path = UnityEngine.Application.persistentDataPath .. "/Config/LoginInfo";
+	path = "D:/LoginInfo.txt";
+	file = io.open(path, "w");
+	info = {
+		loginInfo = {
+			account = lbAccount.text,
+			password = ipPassword.value,
+		},
+	}
+	buffer = NetManager.EncodePB('LoginRecord', info);
+	file:write(buffer);
+	file:close();
+end
