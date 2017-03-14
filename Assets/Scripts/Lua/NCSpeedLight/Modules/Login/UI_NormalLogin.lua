@@ -68,7 +68,10 @@ function onClickLogin(go)
 		UIManager.OpenTipsDialog("请输入密码");
 		return;
 	end
-	LoginScene:AddLoginRecord(lbAccount.text, ipPassword.value);
+	local loginScene = LoginScene:Instance();
+	loginScene.currentAccount = lbAccount.text;
+	loginScene.currentPassword = ipPassword.value;
+	-- LoginScene:AddLoginRecord(lbAccount.text, ipPassword.value);
 	LoginScene:RequestLogin(lbAccount.text, ipPassword.value);
 end
 
@@ -90,11 +93,11 @@ end
 
 function displayRecordPanel()
 	local loginScene = LoginScene:Instance();
+	local bg = transform:Find('Panel/Sprite'):GetComponent('UISprite');
+	local panel = transform:Find('Panel/Accounts');
+	local item = transform:Find('Panel/CloneAccount');
+	local otherAccountItem = transform:Find('Panel/CloneAccount2');
 	if loginScene ~= nil and loginScene.LoginRecord ~= nil and loginScene.LoginRecord.loginInfo ~= nil then
-		local bg = transform:Find('Panel/Sprite'):GetComponent('UISprite');
-		local panel = transform:Find('Panel/Accounts');
-		local item = transform:Find('Panel/CloneAccount');
-		local otherAccountItem = transform:Find('Panel/CloneAccount2');
 		if bg == nil or panel == nil or item == nil or otherAccountItem == nil then return end;
 		local index = 0;
 		for i = 1, # loginScene.LoginRecord.loginInfo do
@@ -136,6 +139,8 @@ function displayRecordPanel()
 		else
 			bg.enabled = false;
 		end
+	else
+		bg.enabled = false;
 	end
 end
 

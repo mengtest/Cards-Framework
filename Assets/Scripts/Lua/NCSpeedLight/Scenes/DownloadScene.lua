@@ -45,16 +45,24 @@ function CheckVersion()
 	
 	Log.Info("Account server ip is " .. json.accountserverip);
 	Log.Info("Account server port is " .. json.accountserverport);
-	
+	local option = ProgressDialogOption:New();
+	option.AutoClose = true;
+	option.Timeout = 10;
+	option.Content = '连接服务器中...';
+	option.OnAutoClose = function()
+		UIManager.OpenTipsDialog('请求超时，请检查设备的网络状况');
+	end;
+	UIManager.OpenProgressDialog(option);
 	NetManager.CreateConnection(ServerType.Login, json.accountserverip, json.accountserverport, OnConnectLoginServer, OnDisconnectLoginServer);
 end
 
 
 function OnConnectLoginServer(connection)
-	UIManager.OpenTipsDialog("成功连接至登录服务器")
+	UIManager.CloseProgressDialog();
+	UIManager.OpenTipsDialog("成功连接至登录服务器");
 	SceneManager:GotoScene(SceneType.LoginScene);
 end
 
 function OnDisconnectLoginServer(connection)
-	UIManager.OpenTipsDialog("已经断开与登录服务器的连接")
+	UIManager.OpenTipsDialog("已经断开与登录服务器的连接");
 end

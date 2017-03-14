@@ -149,12 +149,24 @@ function LoginScene:RequestLogin(account, password)
 	}
 	buffer = NetManager.EncodeMsg('GM_AccountRequest', msg);
 	NetManager.SendEvent(202, buffer, 0, 1, ServerType.Login)
+	local option = ProgressDialogOption:New();
+	option.AutoClose = true;
+	option.Timeout = 10;
+	option.Content = '正在登录中...';
+	option.OnAutoClose = function()
+		UIManager.OpenTipsDialog('请求超时，请检查设备的网络状况');
+	end;
+	UIManager.OpenProgressDialog(option);
 end
 
 function OnLoginReturn(evt)
+	UIManager.CloseProgressDialog();
 	local obj = NetManager.DecodeMsg("GM_AccountReturn", evt)
 	if obj.m_Result == 0 then
 		UIManager.OpenTipsDialog("登录成功")
+		-- 保存账号信息至本地
+		local loginScene = LoginScene:Instance();
+		LoginScene:AddLoginRecord(loginScene.currentAccount, loginScene.currentPassword);
 	elseif obj.m_Result == 1 then
 		UIManager.OpenTipsDialog("账号密码错误")
 	elseif obj.m_Result == 2 then
@@ -190,12 +202,22 @@ function LoginScene:RequestRegister(account, password)
 	NetManager.SendEvent(204, buffer, 0, 1, ServerType.Login)
 end
 
-function LoginScene.OnRegisterReturn(evt)
+function OnRegisterReturn(evt)
 	local obj = NetManager.DecodeMsg("GM_AccountCreateReturn", evt)
 	if obj.m_Result == 0 then
 		UIManager.OpenTipsDialog("创建成功")
+		-- 保存账号信息至本地
+		local loginScene = LoginScene:Instance();
+		LoginScene:AddLoginRecord(loginScene.currentAccount, loginScene.currentPassword);
+		UIManager.CloseWindow("Login/ui_register")
+		UIManager.OpenWindow("Login/ui_normalLogin")
 	elseif obj.m_Result == 1 then
 		UIManager.OpenTipsDialog("存在账号")
+		-- 保存账号信息至本地
+		local loginScene = LoginScene:Instance();
+		LoginScene:AddLoginRecord(loginScene.currentAccount, loginScene.currentPassword);
+		UIManager.CloseWindow("Login/ui_register")
+		UIManager.OpenWindow("Login/ui_normalLogin")
 	elseif obj.m_Result == 2 then
 		UIManager.OpenTipsDialog("账号长度不符合")
 	elseif obj.m_Result == 3 then

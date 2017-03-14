@@ -49,7 +49,7 @@ function Game.Update()
 			option.OnClickOK = function(go)
 				UnityEngine.Application.Quit();
 			end;
-			UIManager:OpenStandardDialog(option);
+			UIManager.OpenStandardDialog(option);
 		end
 	end
 end

@@ -108,7 +108,7 @@ namespace NCSpeedLight
                 Directory.CreateDirectory(Application.streamingAssetsPath + "/Scripts/");
             }
             List<string> files = new List<string>();
-            LuaBuilder.CollectFiles(SharedVariable.SCRIPT_BUNDLE_PATH, files, "*.");
+            LuaBuilder.CollectFiles(SharedVariable.SCRIPT_BUNDLE_PATH, files, "*.*");
             for (int i = 0; i < files.Count; i++)
             {
                 string file = files[i];
@@ -131,7 +131,7 @@ namespace NCSpeedLight
                 Directory.CreateDirectory(Application.streamingAssetsPath + "/Assets/");
             }
             List<string> files = new List<string>();
-            LuaBuilder.CollectFiles(SharedVariable.ASSET_BUNDLE_PATH, files, "*.");
+            LuaBuilder.CollectFiles(SharedVariable.ASSET_BUNDLE_PATH, files, "*.*");
             for (int i = 0; i < files.Count; i++)
             {
                 string file = files[i];
