@@ -90,7 +90,7 @@ function onClickArrow(go)
 				childItem.gameObject:SetActive(true);
 				childItem.name = info.account;
 				NCSpeedLight.UIHelper.SetLabelText(childItem, 'Label', info.account);
-				NCSpeedLight.UIHelper.SetButtonEvent(childItem, onClickAccountItem);
+				NCSpeedLight.UIHelper.SetButtonEvent(childItem, 'Label', onClickAccountItem);
 				bgHeight = bgHeight + 55;
 				recordLoginInfo[i] = {childItem, info};
 				index = i;
@@ -123,7 +123,9 @@ function onClickArrow(go)
 end
 
 function onClickAccountItem(go)
+	Log.Info("onClickAccountItem" .. go.name);
 end
 
 function onClickOtherAccount(go)
+	Log.Info("onClickOtherAccount" .. go.name);
 end
