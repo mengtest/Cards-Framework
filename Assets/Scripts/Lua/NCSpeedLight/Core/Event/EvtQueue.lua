@@ -11,33 +11,31 @@
 
 EvtQueue = { };
 
-local this = EvtQueue;
-
-function this:New(processor)
+function EvtQueue:New(processor)
 	o = { };
 	setmetatable(o, self);
 	self.__index = self;
-	self.count = 0;
-	self.Listeners = { }
+	o.count = 0;
+	o.Listeners = { }
 	o.Processor = processor;
 	return o;
 end
 
-function this:Add(id, func)
+function EvtQueue:Add(id, func)
 	if self.Processor ~= nil then
 		self.Processor:Register(id, func);
 		self:Record(id, func);
 	end
 end
 
-function this:Remove(id, func)
+function EvtQueue:Remove(id, func)
 	if self.Processor ~= nil then
 		self.Processor:Unregister(id, func);
 		self:Unrecord(id, func);
 	end
 end
 
-function this:Clear()
+function EvtQueue:Clear()
 	for k0, v0 in pairs(self.Listeners) do
 		for k1, v1 in pairs(self.Listeners[k0]) do
 			self.Processor:Unregister(k0, v1)
@@ -45,7 +43,7 @@ function this:Clear()
 	end
 end
 
-function this:Record(id, func)
+function EvtQueue:Record(id, func)
 	local index = 1
 	if self.Listeners[id] == nil then
 		self.Listeners[id] = { }
@@ -59,7 +57,7 @@ function this:Record(id, func)
 	self.Listeners[id][index] = func
 end
 
-function this:Unrecord(id, func)
+function EvtQueue:Unrecord(id, func)
 	if self.Listeners[id] == nil then
 		return
 	end
@@ -68,7 +66,7 @@ function this:Unrecord(id, func)
 	table.remove(self.Listeners[id], existIndex)
 end
 
-function this:EventIndex(id, func)
+function EvtQueue:EventIndex(id, func)
 	if self.Listeners[id] == nil then
 		return -1
 	end

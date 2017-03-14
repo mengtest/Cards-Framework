@@ -45,18 +45,18 @@ end
 
 function UI_NormalLogin.onClickLogin(go)
 	if string.len(lbAccount.text) == 0 then
-		UIManager:OpenTipsDialog("请输入账号")
+		UIManager.OpenTipsDialog("请输入账号")
 		return
 	elseif string.len(ipPassword.value) == 0 then
-		UIManager:OpenTipsDialog("请输入密码")
+		UIManager.OpenTipsDialog("请输入密码")
 		return
 	end
-	LoginScene.RequestLogin(lbAccount.text, ipPassword.value)
+	LoginScene:RequestLogin(lbAccount.text, ipPassword.value)
 end
 
 function UI_NormalLogin.onClickRegister(go)
-	UIManager:CloseWindow("Login/ui_normalLogin")
-	UIManager:OpenWindow("Login/ui_register")
+	UIManager.CloseWindow("Login/ui_normalLogin")
+	UIManager.OpenWindow("Login/ui_register")
 end
 
 function UI_NormalLogin.TestOpenStandardDialog()
@@ -64,7 +64,7 @@ function UI_NormalLogin.TestOpenStandardDialog()
 	option.Title = "提示"
 	option.Content = "你确定登录吗？"
 	option.OnClickOK = function(obj)
-		print("OnClickOK")
+		Log.Info("OnClickOK")
 	end
 	UIManager.OpenStandardDialog(option)
 end
@@ -74,10 +74,10 @@ function UI_NormalLogin.TestOpenProgressDialog()
 	option.Content = "正在登录中..."
 	option.AutoClose = true
 	option.OnAutoClose = function()
-		print("Progress dialog has been auto closed.");
+		Log.Info("Progress dialog has been auto closed.");
 	end
 	option.OnCancel = function()
-		print("Progress dialog has been canceled.")
+		Log.Info("Progress dialog has been canceled.")
 	end
 	UIManager.OpenProgressDialog(option)
 end

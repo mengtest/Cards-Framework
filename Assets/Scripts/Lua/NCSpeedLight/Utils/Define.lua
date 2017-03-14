@@ -22,14 +22,5 @@ require 'NCSpeedLight.Core.View.UIManager'
 require("NCSpeedLight.Utils.LuaDebug")("localhost", 7003);
 
 
-protobuf = require 'protobuf'
-
-function InitPBMessage()
-    local path = NCSpeedLight.SharedVariable.SCRIPT_BUNDLE_PATH .. "PBMessage.pb";
-    local addr = io.open(path, "rb")
-    local buffer = addr:read "*a"
-    addr:close()
-    protobuf.register(buffer)
-end
-
-InitPBMessage()
+protobufProcessor = require 'protobuf'
+jsonProcessor = require 'cjson'

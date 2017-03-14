@@ -31,12 +31,12 @@ function SceneManager:Initialize()
 		SceneManager:RegisterScene(HallScene:New());
 		SceneManager:RegisterScene(GameScene:New());
 	else
-		Log:Warning('SceneManager has already been initialized.')
+		Log.Warning('SceneManager has already been initialized.')
 	end
 end
 
 function SceneManager:New()
-	Log:Info('SceneManager:New() -- constructor.')
+	Log.Info('SceneManager:New() -- constructor.')
 	o = {};
 	setmetatable(o, self);
 	self.__index = self;
@@ -64,7 +64,7 @@ end
 
 function SceneManager:RegisterScene(scene)
 	if scene == nil then
-		Log:Error('SceneManager: can not register scene caused by nil scene.')
+		Log.Error('SceneManager: can not register scene caused by nil scene.')
 		return;
 	end
 	self.Scenes[scene.Name] = scene;
@@ -73,7 +73,7 @@ end
 function SceneManager:GotoScene(name)
 	scene = self.Scenes[name];
 	if scene == nil then
-		Log:Error('SceneManager: can not GotoScene caused by nil scene,name is ' .. name)
+		Log.Error('SceneManager: can not GotoScene caused by nil scene,name is ' .. name)
 		return;
 	end
 	if scene == self.NextScene then
@@ -86,7 +86,7 @@ function SceneManager:GotoScene(name)
 		self.LastScene = self.CurrentScene;
 		self.NextScene = scene;
 	else
-		Log:Error("SceneManager: can not go to same scene,name is " .. name);
+		Log.Error("SceneManager: can not go to same scene,name is " .. name);
 	end
 end
 

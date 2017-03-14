@@ -37,7 +37,7 @@ function Game.Start()
 end
 
 function Game.Update()
-	NetManager:Update();
+	NetManager.Update();
 	SceneManager:Update();
 	if platform == UnityEngine.RuntimePlatform.Android then
 		if UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Escape) == true then
@@ -54,7 +54,7 @@ function Game.Update()
 end
 
 function Game.OnDestroy()
-	NetManager:DeleteAllConnections()
+	NetManager.DeleteAllConnections()
 end
 
 
@@ -77,11 +77,11 @@ function TestEvent()
 end
 
 function TestEventCallback1(param)
-	print("Game.TestEventCallback1,param is " .. param);
+	Log.Info("Game.TestEventCallback1,param is " .. param);
 end
 
 function TestEventCallback2(param)
-	print("Game.TestEventCallback2,param is " .. param);
+	Log.Info("Game.TestEventCallback2,param is " .. param);
 end
 
 function TestSceneManager()

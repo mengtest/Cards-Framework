@@ -17,7 +17,7 @@ function EvtProcessor:New()
 	o = {}
 	setmetatable(o, self)
 	self.__index = self
-	self.Listeners = {}
+	o.Listeners = {}
 	return o
 end
 

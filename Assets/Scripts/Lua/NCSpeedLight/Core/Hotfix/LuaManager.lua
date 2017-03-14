@@ -9,35 +9,33 @@
 --          //
 ----------------------------------------------------------------
 
-LuaManager = { };
+-- lua 管理器
+LuaManager = {};
 
-local this = LuaManager;
-
-function this.Initialize()
-    LoadLuaBundle();
+function LuaManager.Initialize()
+	LoadLuaBundle();
 end
 
 function LoadLuaBundle()
-    if NCSpeedLight.SharedVariable.LUA_BUNDLE_MODE == true then
-        NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_3rd_cjson");
-        NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_3rd_luabitop");
-        NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_3rd_pbc");
-        NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_3rd_pblua");
-        NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_3rd_sproto");
-
-        NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_core_event");
-        NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_core_network");
-        NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_core_player");
-        NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_core_scene");
-        NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_core_view");
-
-
-        NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_modules_dialog");
-        NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_modules_login");
-
-        NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_scenes");
-        NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_utils");
-    end
+	if NCSpeedLight.SharedVariable.LUA_BUNDLE_MODE == true then
+		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_3rd_cjson");
+		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_3rd_luabitop");
+		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_3rd_pbc");
+		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_3rd_pblua");
+		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_3rd_sproto");
+		
+		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_core_event");
+		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_core_network");
+		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_core_player");
+		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_core_scene");
+		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_core_view");
+		
+		
+		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_modules_dialog");
+		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_modules_login");
+		
+		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_scenes");
+		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_utils");
+	end
 end
 
- 

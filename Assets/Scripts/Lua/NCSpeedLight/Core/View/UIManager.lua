@@ -61,21 +61,19 @@ end
 
 UIManager = {};
 
-local this = UIManager;
-
-function this:Initialize()
+function UIManager.Initialize()
 	return NCSpeedLight.UIManager.Initialize();
 end
 
-function this:OpenWindow(windowName)
+function UIManager.OpenWindow(windowName)
 	return NCSpeedLight.UIManager.OpenWindow(windowName);
 end
 
-function this:CloseWindow(windowName)
+function UIManager.CloseWindow(windowName)
 	return NCSpeedLight.UIManager.CloseWindow(windowName);
 end
 
-function this:OpenStandardDialog(option)
+function UIManager.OpenStandardDialog(option)
 	if option == nil then
 		Log:Error('Can not open standardDialog,please input option.');
 		return;
@@ -93,11 +91,11 @@ function this:OpenStandardDialog(option)
 	return NCSpeedLight.UIManager.OpenStandardDialog(csOption);
 end
 
-function this:CloseStandardDialog()
+function UIManager.CloseStandardDialog()
 	return NCSpeedLight.UIManager.CloseStandardDialog();
 end
 
-function this:OpenProgressDialog(option)
+function UIManager.OpenProgressDialog(option)
 	if option == nil then
 		Log:Error('Can not open progressdialog,please input option.');
 		return;
@@ -114,10 +112,10 @@ function this:OpenProgressDialog(option)
 	return NCSpeedLight.UIManager.OpenProgressDialog(csOption);
 end
 
-function this:CloseProgressDialog()
+function UIManager.CloseProgressDialog()
 	return NCSpeedLight.UIManager.CloseProgressDialog();
 end
 
-function this:OpenTipsDialog(content)
+function UIManager.OpenTipsDialog(content)
 	return NCSpeedLight.UIManager.OpenTipsDialog(content);
 end
