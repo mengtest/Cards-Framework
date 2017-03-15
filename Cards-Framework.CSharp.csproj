@@ -116,6 +116,7 @@
     <None Include="Assets\Resources\Bundle\Text\Light xml\majiangzhuo.txt" />
     <None Include="Assets\Resources\Bundle\UI\Center\Atlas\Center.txt" />
     <None Include="Assets\Resources\Bundle\UI\Dialog\Atlas\Dialog.txt" />
+    <None Include="Assets\Resources\Bundle\UI\Hall\Atlas\Main.txt" />
     <None Include="Assets\Resources\Bundle\UI\MaJiang\Atlas\OperatorPrompt.txt" />
     <None Include="Assets\Resources\Bundle\UI\MaJiang\Atlas\chat.txt" />
     <None Include="Assets\Resources\Bundle\UI\MaJiang\Atlas\hall.txt" />
@@ -123,7 +124,6 @@
     <None Include="Assets\Resources\Bundle\UI\MaJiang\Atlas\result.txt" />
     <None Include="Assets\Resources\Bundle\UI\MaJiang\Atlas\start.txt" />
     <None Include="Assets\Resources\Bundle\UI\MaJiang\View\Atlas\record.txt" />
-    <None Include="Assets\Resources\Bundle\UI\Main\Atlas\Main.txt" />
     <None Include="Assets\Resources\Bundle\UI\Problem\Atlas\Problem.txt" />
     <None Include="Assets\Resources\UI\text.txt" />
     <None Include="Assets\StreamingAssets\Scripts\manifest.txt" />

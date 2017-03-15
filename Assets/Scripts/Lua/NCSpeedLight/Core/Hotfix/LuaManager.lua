@@ -32,7 +32,10 @@ function LoadLuaBundle()
 		
 		
 		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_modules_dialog");
+		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_modules_hall");
 		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_modules_login");
+		
+		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_protocol");
 		
 		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_scenes");
 		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_utils");

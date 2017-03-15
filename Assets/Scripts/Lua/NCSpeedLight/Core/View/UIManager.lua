@@ -73,6 +73,10 @@ function UIManager.CloseWindow(windowName)
 	return NCSpeedLight.UIManager.CloseWindow(windowName);
 end
 
+function UIManager.CloseAllWindows()
+	return NCSpeedLight.UIManager.CloseAllWindows();
+end
+
 function UIManager.OpenStandardDialog(option)
 	if option == nil then
 		Log:Error('Can not open standardDialog,please input option.');

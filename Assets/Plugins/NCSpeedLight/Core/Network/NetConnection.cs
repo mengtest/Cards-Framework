@@ -585,8 +585,14 @@ namespace NCSpeedLight
                             NetPacket packet = m_PacketsBuffer[i];
                             if (packet != null)
                             {
+                                //if (packet.GetMessageID() == 401)
+                                //{
+                                //    byte[] bytes = packet.GetBuffer();
+                                //    int a = 1;
+                                //}
                                 //Debug.LogError("Reveive a net message,id is " + packet.GetMessageID());
-                                NetManager.NotifyEvent(new Evt(packet.GetMessageID(), packet, packet.GetBuffer()));
+                                //  =-= GetBuffer GetBody .......
+                                NetManager.NotifyEvent(new Evt(packet.GetMessageID(), packet, packet.GetBody()));
                             }
                         }
                         m_PacketsBuffer.Clear();

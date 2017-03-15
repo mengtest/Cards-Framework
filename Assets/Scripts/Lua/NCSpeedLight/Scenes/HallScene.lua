@@ -1,7 +1,7 @@
-HallScene = { }
+HallScene = {}
 
 function HallScene:New()
-	o = { };
+	o = {};
 	setmetatable(o, self);
 	self.__index = self;
 	self.Name = SceneType.HallScene;
@@ -9,9 +9,11 @@ function HallScene:New()
 end
 
 function HallScene:OnInit()
-end 
+end
 
 function HallScene:Begin()
+	UIManager.CloseAllWindows();
+	UIManager.OpenWindow('Hall/UI_Main');
 end
 
 function HallScene:Update()

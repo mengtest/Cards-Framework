@@ -1,4 +1,12 @@
-LoginScene = {Token};
+LoginScene =
+{
+	Token = {
+		AccountID,
+		AccountToken,
+		LatestArea,
+		RoleID,
+	}
+};
 
 function LoginScene:New()
 	o = {};
@@ -22,6 +30,8 @@ function LoginScene:Begin()
 	NetManager.RegisterEvent(GameMessage.GM_ACCOUNT_CREATE_RETURN, LoginScene.OnRegisterReturn);
 	NetManager.RegisterEvent(GameMessage.GM_CHOOSE_AREA_RETURN, LoginScene.OnChoseAreaReturn);
 	NetManager.RegisterEvent(GameMessage.GM_ROLELIST_RETURN, LoginScene.OnAccountRolesReturn);
+	NetManager.RegisterEvent(GameMessage.GM_ROLE_LOGIN_RETURN, LoginScene.OnRoleLoginReturn);
+	NetManager.RegisterEvent(GameMessage.GM_ROLE_CREATE_RETURN, LoginScene.OnCreateRoleReturn);
 	LoginScene:RequestVerifyVersion()
 end
 
@@ -34,6 +44,8 @@ function LoginScene:End()
 	NetManager.UnregisterEvent(GameMessage.GM_ACCOUNT_CREATE_RETURN, LoginScene.OnRegisterReturn);
 	NetManager.UnregisterEvent(GameMessage.GM_CHOOSE_AREA_RETURN, LoginScene.OnChoseAreaReturn);
 	NetManager.UnregisterEvent(GameMessage.GM_ROLELIST_RETURN, LoginScene.OnAccountRolesReturn);
+	NetManager.UnregisterEvent(GameMessage.GM_ROLE_LOGIN_RETURN, LoginScene.OnRoleLoginReturn);
+	NetManager.UnregisterEvent(GameMessage.GM_ROLE_CREATE_RETURN, LoginScene.OnCreateRoleReturn);
 end
 
 function LoginScene:OpenLoginRecord()
@@ -279,7 +291,8 @@ end
 function LoginScene.OnConnectLogicServer(connection)
 	UIManager.CloseProgressDialog();
 	UIManager.OpenTipsDialog("成功连接至逻辑服务器");
-	SceneManager:GotoScene(SceneType.HallScene);
+	-- SceneManager:GotoScene(SceneType.HallScene);
+	LoginScene.RequestAccountRoles();
 end
 
 function LoginScene.OnDisconnectLogicServer(connection)
@@ -290,11 +303,169 @@ function LoginScene.RequestAccountRoles()
 	local loginScene = LoginScene:Instance();
 	local msg = {
 		m_accountID = loginScene.Token.AccountID,
-		m_ared = loginScene.Token.LatestArea,
+		m_area = loginScene.Token.LatestArea,
 	};
-	local buffer = NetManager.EncodeMsg('GM_ROLELIST_REQUEST', msg);
+	local buffer = NetManager.EncodeMsg('GMRoleListRequest', msg);
 	NetManager.SendEvent(GameMessage.GM_ROLELIST_REQUEST, buffer, 0, 1, ServerType.Logic)
 end
 
 function LoginScene.OnAccountRolesReturn(evt)
+	local obj = NetManager.DecodeMsg('GMRoleListEx', evt);
+	if obj.m_roleid ~= 0 then
+		local loginScene = LoginScene:Instance();
+		loginScene.Token.RoleID = obj.m_roleid;
+		LoginScene.RequestRoleLogin();
+	else
+		LoginScene.RequestCreateRole();
+	end
+end
+
+function LoginScene.RequestRoleLogin()
+	local loginScene = LoginScene:Instance();
+	local msg = {
+		m_AccountID = loginScene.Token.AccountID,
+		m_RoleID = loginScene.Token.RoleID,
+		m_randstr = loginScene.Token.AccountToken,
+		m_info = nil,
+	};
+	local buffer = NetManager.EncodeMsg('GMRoleLogin', msg);
+	NetManager.SendEvent(GameMessage.GM_ROLE_LOGIN, buffer, 0, 1, ServerType.Logic);
+end
+
+function LoginScene.OnRoleLoginReturn(evt)
+	local obj = NetManager.DecodeMsg('GM_FullRoleInfo', evt);
+	if obj ~= nil then
+		if obj.id > 0 then
+			Log.Info("OnRoleLoginReturn,id is " .. obj.id .. ',name is ' .. obj.name);
+			SelfInfo.FullInfo = info;
+			SelfInfo.ID = obj.id;
+			SelfInfo.AccountID = obj.accountid;
+			SceneManager:GotoScene(SceneType.HallScene);
+		else
+			Log.Error('Role login fail.');
+		end
+	else
+		Log.Error('Role login fail.');
+	end
+-- Helper.Log ("hzh: ReturnRoleLogin");
+-- 			SceneType tempSceneType = CustomGame.GetSingleton().GetCurrentSceneType;
+-- 			if(tempSceneType == SceneType.RoleSelect)
+-- 			{
+-- 				return;
+-- 			}
+-- 			NetWorkEventEx<NetPacket> param = varPacket as NetWorkEventEx<NetPacket>;
+-- 			PBMessage.GM_FullRoleInfo tempResult = GameClient.DeserializeProtoBuf<PBMessage.GM_FullRoleInfo> (param.GetData());
+-- 			if (tempResult != null) 
+-- 			{
+-- 				if(tempResult.id > 0)
+-- 				{
+-- 					Helper.Log ("NCMJ :"+tempResult.id);
+
+-- 					LoginAccount.GetSingleton().SaveLastLoginRole(tempResult.id);
+-- 					LoginAccount.GetSingleton().WriteLoginInfo();
+--                     ModelManager.GetSingleton().DestroyAllModel();
+
+--                     PlayerManager.GetSingleton().InitHeroData(tempResult);
+--                     ModelManager.GetSingleton().InitModel();
+--                     Player tempHero = PlayerManager.GetSingleton().pCurPlayer;
+--                     if (tempHero != null)
+--                     {
+--                         tempHero.pNickName = GameApplicationInformation.GetSingleton().TGetNickName();
+--                         string tempHeadPhotoUrl = GameApplicationInformation.GetSingleton().TGetHeadImageUrl(40);
+--                         if (string.IsNullOrEmpty(tempHeadPhotoUrl))
+--                         {
+--                             tempHeadPhotoUrl = GameApplicationInformation.GetSingleton().TGetDefaultHeadImageUrl();
+--                         }
+--                         tempHero.pHeadPhotoUrl = tempHeadPhotoUrl;
+-- 						if (tempResult.headPhotoUrl != tempHero.pHeadPhotoUrl) 
+-- 						{
+-- 							PBMessage.GM_Player_changeSex tempData = new PBMessage.GM_Player_changeSex ();
+-- 							tempData.sex = GameApplicationInformation.GetSingleton().TGetSex();
+--                             tempData.head = 0;
+-- 							tempData.frame = 0;
+-- 							tempData.headurl = tempHero.pHeadPhotoUrl;
+-- 							tempHero.NofityPlayerEvent(new PlayerEventEx<PBMessage.GM_Player_changeSex> (PlayerEventType.PE_UI_GenderPortraitFrame_request , tempData));
+-- 						}
+-- 						if (tempResult.nickName !=  tempHero.pNickName)
+-- 						{
+-- 							PBMessage.GMRoleNameReturn tempDataName = new PBMessage.GMRoleNameReturn ();
+-- 							tempDataName.Name = tempHero.pNickName;
+-- 							//	tempDataName.result = 2;
+-- 							tempDataName.type = 2;
+
+-- 							tempHero.NofityPlayerEvent (new PlayerEventEx<PBMessage.GMRoleNameReturn> (PlayerEventType.PE_UI_ChangeName_request , tempDataName));
+-- 						}
+
+--                         //	tempHero.SendMessageEmpty ((int)GameMessage.GM_COMMON_PLAYER_LOGIN_REQUEST);
+--                         //	tempHero.SendMessageEmpty ((int)GameMessage.GM_COMMON_IP_CLIENT_REQUEST);
+
+--                         GameApplicationInformation.GetSingleton().TRoleLogin(1, (int)tempHero.pRoomCard, tempHero.pTypeId.ToString(),
+--                             tempHero.pShowName, 1, "1", false, GameApplicationInformation.GetSingleton().TGetSex(), 
+--                             0, 0, 0, (int)tempHero.pGold);
+--                         GameApplicationInformation.GetSingleton().GetRoleID(tempResult.id.ToString());
+
+--                         RongCloudChat tempRcc = RongCloudChat.GetSingleton();
+--                         tempRcc.StartCoroutine(tempRcc.RequestToken(tempResult.id.ToString(), tempHero.pName, tempHeadPhotoUrl));
+--                     }
+
+--                     if (tempSceneType == SceneType.MainScene)
+--                     {
+--                         WindowManager.GetSingleton().CloseAllDialogs();
+--                         Helper.Log("hzh:onCity");
+
+--                         //请求进入游戏场景;
+--                         GameClient tempClient = ClientManager.GetManager().GetClient(ClientManager.ClientId.Logic);
+--                         if (tempClient != null)
+--                         {
+--                             tempClient.SendMessageEmpty((int)GameMessage.GM_REQUEST_LOGIN_SCENE);
+--                         }
+--                         return;
+--                     }
+
+--                     WindowManager.GetSingleton().CloseAllDialogs();
+-- 					//Wait.Begin(Localization.Get("load text 1"), 15, TimeOut);
+
+-- 					if(tempSceneType == SceneType.Login)
+-- 					{
+-- 						CustomGame.GetSingleton().GotoScene(SceneType.MainScene);
+-- 					}
+
+-- 					ServerTimer.GetSingleton().InitNetWork();
+--                     Wait.Stop();
+-- 				}
+-- 				else
+-- 				{
+-- 					// 角色登录失败，可能本地记录上次登录的角色，服务器已经不存在了;
+-- 					WindowManager.GetSingleton().OpenSmallTipsDialog(Localization.Get("login fail"));
+-- 					//CustomGame.GetSingleton().GotoScene(SceneType.RoleSelect);
+-- 				}
+
+-- 			}
+end
+
+function LoginScene.RequestCreateRole()
+	local loginScene = LoginScene:Instance();
+	local msg = {
+		m_AccountID = loginScene.Token.AccountID,
+		m_info = nil,
+		m_NickName = 'hello world',
+		m_HeadPhotoUrl = 'qq.com',
+		m_sex = 1,
+		m_UnionID = '10086',
+	};
+	local buffer = NetManager.EncodeMsg('GMRoleCreate', msg);
+	NetManager.SendEvent(GameMessage.GM_ROLE_CREATE, buffer, 0, 1, ServerType.Logic);
+end
+
+function LoginScene.OnCreateRoleReturn(evt)
+	local obj = NetManager.DecodeMsg('GMRoleCreateReturn', evt);
+	if obj ~= nil then
+		if obj.m_Result == 0 then
+			LoginScene.RequestRoleLogin();
+		else
+			Log.Error('Create role error!');
+		end
+	else
+		Log.Error('decode role create msg error!');
+	end
 end

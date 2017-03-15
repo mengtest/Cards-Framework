@@ -11,6 +11,7 @@ public class NCSpeedLight_UIManagerWrap
 		L.RegFunction("OpenWindow", OpenWindow);
 		L.RegFunction("OpenDialog", OpenDialog);
 		L.RegFunction("CloseWindow", CloseWindow);
+		L.RegFunction("CloseAllWindows", CloseAllWindows);
 		L.RegFunction("CloseDialog", CloseDialog);
 		L.RegFunction("OpenStandardDialog", OpenStandardDialog);
 		L.RegFunction("OpenProgressDialog", OpenProgressDialog);
@@ -90,6 +91,21 @@ public class NCSpeedLight_UIManagerWrap
 			ToLua.CheckArgsCount(L, 1);
 			string arg0 = ToLua.CheckString(L, 1);
 			NCSpeedLight.UIManager.CloseWindow(arg0);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int CloseAllWindows(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 0);
+			NCSpeedLight.UIManager.CloseAllWindows();
 			return 0;
 		}
 		catch(Exception e)

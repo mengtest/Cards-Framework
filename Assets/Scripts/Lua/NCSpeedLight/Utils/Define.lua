@@ -28,3 +28,12 @@ require 'NCSpeedLight.Protocol.GameMessage'
 
 protobufProcessor = require 'protobuf'
 jsonProcessor = require 'cjson'
+
+SelfInfo =
+{
+	ID = - 1,
+	Token = '',
+	AccountID = '',
+	AreaID = - 1,
+	FullInfo = nil,
+}

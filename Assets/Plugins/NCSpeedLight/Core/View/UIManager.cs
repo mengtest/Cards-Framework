@@ -185,6 +185,21 @@ namespace NCSpeedLight
             }
         }
 
+        public static void CloseAllWindows()
+        {
+            Dictionary<string, GameObject>.Enumerator it = m_ShownWindows.GetEnumerator();
+            for(int i = 0; i < m_ShownWindows.Count; i++)
+            {
+                it.MoveNext();
+                KeyValuePair<string, GameObject> kv = it.Current;
+                if (kv.Value)
+                {
+                    GameObject.DestroyImmediate(kv.Value);
+                }
+            }
+            m_ShownWindows.Clear();
+        }
+
         public static void CloseDialog(string dialogName)
         {
             GameObject go = GetDialog(dialogName);
