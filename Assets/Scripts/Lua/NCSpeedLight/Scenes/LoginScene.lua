@@ -21,7 +21,7 @@ function LoginScene:Begin()
 	NetManager.RegisterEvent(GameMessage.GM_ACCOUNT_VERIFY_RETURN, LoginScene.OnLoginReturn);
 	NetManager.RegisterEvent(GameMessage.GM_ACCOUNT_CREATE_RETURN, LoginScene.OnRegisterReturn);
 	NetManager.RegisterEvent(GameMessage.GM_CHOOSE_AREA_RETURN, LoginScene.OnChoseAreaReturn);
-	-- NetManager.RegisterEvent(GameMessage.GM_CHOOSE_AREA_RETURN, LoginScene.OnChoseAreaReturn);
+	NetManager.RegisterEvent(GameMessage.GM_ROLELIST_RETURN, LoginScene.OnAccountRolesReturn);
 	LoginScene:RequestVerifyVersion()
 end
 
@@ -33,6 +33,7 @@ function LoginScene:End()
 	NetManager.UnregisterEvent(GameMessage.GM_ACCOUNT_VERIFY_RETURN, LoginScene.OnLoginReturn);
 	NetManager.UnregisterEvent(GameMessage.GM_ACCOUNT_CREATE_RETURN, LoginScene.OnRegisterReturn);
 	NetManager.UnregisterEvent(GameMessage.GM_CHOOSE_AREA_RETURN, LoginScene.OnChoseAreaReturn);
+	NetManager.UnregisterEvent(GameMessage.GM_ROLELIST_RETURN, LoginScene.OnAccountRolesReturn);
 end
 
 function LoginScene:OpenLoginRecord()
@@ -57,7 +58,7 @@ function LoginScene:GetLoginRecord()
 	return self.LoginRecord;
 end
 
-function LoginScene:AddLoginRecord(accountStr, passwordStr, latestAreaStr)
+function LoginScene:AddLoginRecord(accountStr, passwordStr, latestAreaStr, latestRoleIDStr)
 	if LoginScene:ExistRecord(accountStr) then
 		return
 	end
@@ -68,6 +69,7 @@ function LoginScene:AddLoginRecord(accountStr, passwordStr, latestAreaStr)
 				account = accountStr,
 				password = passwordStr,
 				latestArea = latestAreaStr,
+				latestRoleID = latestRoleIDStr,
 			}
 		}
 	}
@@ -78,6 +80,7 @@ function LoginScene:AddLoginRecord(accountStr, passwordStr, latestAreaStr)
 				account = self.LoginRecord.loginInfo[i].account,
 				password = self.LoginRecord.loginInfo[i].password,
 				latestArea = self.LoginRecord.loginInfo[i].latestArea,
+				latestRoleID = self.LoginRecord.loginInfo[i].latestRoleID,
 			};
 		end
 	end
@@ -167,7 +170,7 @@ function LoginScene.OnLoginReturn(evt)
 	UIManager.CloseProgressDialog();
 	local obj = NetManager.DecodeMsg("GM_AccountReturn", evt)
 	if obj.m_Result == 0 then
-		UIManager.OpenTipsDialog("登录成功")
+		UIManager.OpenTipsDialog("登录成功");
 		local loginScene = LoginScene:Instance();
 		
 		-- 记录至内存中
@@ -290,5 +293,8 @@ function LoginScene.RequestAccountRoles()
 		m_ared = loginScene.Token.LatestArea,
 	};
 	local buffer = NetManager.EncodeMsg('GM_ROLELIST_REQUEST', msg);
-	NetManager.SendEvent(ServerType.Logic, loginScene.Token.AccountID)
+	NetManager.SendEvent(GameMessage.GM_ROLELIST_REQUEST, buffer, 0, 1, ServerType.Logic)
+end
+
+function LoginScene.OnAccountRolesReturn(evt)
 end

@@ -2389,11 +2389,15 @@ m_objectid (
 result (
 objectid (
 	objectnum (
-u
-Proto/loginRecord.txt".
+±
+Proto/loginRecord.txt"j
 	LoginInfo
 account (	
-password (	",
+password (	
+loginWay (	
+
+latestArea (	
+latestRoleId (	",
 LoginRecord
 	loginInfo (2
 .LoginInfo
