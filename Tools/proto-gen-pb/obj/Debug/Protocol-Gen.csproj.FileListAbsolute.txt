@@ -1,0 +1,1 @@
+H:\Personal\Github\Cards-Framework\Tools\proto-gen-pb\bin\Debug\Protocol-Gen.exe.config
