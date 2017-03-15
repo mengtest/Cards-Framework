@@ -1,0 +1,42 @@
+///排行榜信息
+message GM_RankInfo
+{
+	required int32 m_place=1;		//玩家排名位置,从1开始,如果为0表示无排名
+	optional int32 m_roleID=2;		//玩家id
+	optional string m_roleName=3;	//玩家名称
+	optional int32 m_vip=4;			//vip等级
+	optional int32 m_value=5;		//所在排行榜的值（如：等级排行榜就是玩家等级值，战力排行榜就是玩家战力值）
+	optional int32 m_headphoto=6;	//头像
+	optional int32 m_headFrame=7;	//相框;
+	optional string m_qqhead=8;//qq头像;
+	optional string m_nickname=9;//昵称;
+}
+
+///客户端请求单个排行榜信息
+message GM_RankPageRequest
+{
+   required int32 m_RoleID=1;	//玩家id
+   required int32 m_RankType=2;//排行榜类型,0等级,1战力,2巅峰,3副本,4擂台 5姻缘
+   required int32 m_pagenum=3;//请求排行榜的第几页，从0开始，一页暂定10个
+}
+
+message GM_RankListReturn
+{
+   required int32 m_RankType=1;//排行榜类型,0等级,1战力,2巅峰,3副本,4擂台
+   optional GM_RankInfo m_SelfInfo=2;//玩家自身排名
+   //optional int32 m_myplace=3;//玩家自身排名
+   repeated GM_RankInfo m_RankInfo=4;//其他玩家排名  
+}
+
+///客户端请求所有的排行榜信息
+message GM_AllRankListRequest
+{
+   required int32  m_RoleID=1;//玩家id
+}
+
+///客户端请求所有的排行榜信息
+message GM_AllRankTypeListReturn
+{
+   required int32  count=1;//排行榜个数
+   repeated GM_RankListReturn ranklist=2;
+}

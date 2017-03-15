@@ -1,0 +1,9 @@
+message GM_Sold_Obj_Request
+{    
+ repeated int64 m_gmid =1;    //出售物品的gmid
+}
+message GM_Sold_Obj_Return
+{                                                                                                                               
+ required int32 m_gold=1;     //出售得到金币
+ repeated int64 m_gmid=2;	  //成功出售的物品gmid
+}

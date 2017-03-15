@@ -1,0 +1,188 @@
+message GMConTreeDataReturn
+{
+	required int32 isMarry = 1;	//0未结婚1已结婚
+	optional int64 treeId = 2;	//同心树id
+	optional int32 treeLv = 3;	//同心树等级
+	optional int32 treeExp = 4;	//同心树总经验
+	optional int32 companionId = 5;	//伴侣角色id
+	optional int32 isCanGet = 6;	//是否可以领取奖励（0不可以 显示倒计时 1可以)
+	optional int32 leftTime = 7;	//如果不可以则显示这个到下一次领取奖励的冷却时间
+	repeated GMConTreeObj item = 8;	//产出物品信息
+	optional int32 matNum = 9;	//玫瑰花语数量
+	optional int32 leftDivorceTime = 10;	//请求离婚cd
+	optional string companionName = 11;	//伴侣角色名字
+	optional int32 isDivorce = 12;		//是否曲终人散
+	optional int32 beDivorced = 13;		//被请求协商离婚1是2否
+	optional int32 isOrder = 14;		//是否已经预约1是2否
+	optional int32 isCanJoin = 15;		//是否可以进入喜宴场景1是2否
+	optional int32 compProfession = 16;	//伴侣职业
+}
+
+message GMConTreeObj
+{
+	required int32 objectid = 1;	//产出物品id
+	optional int32 objectnum = 2;	//产出物品数量 
+}
+
+message GMConTreeGetReturn
+{
+	required int32 result = 1;	//0成功1不在领取时间
+	optional int32 leftTime = 2;	//如果领取成功则回一个距离下一次领取的时间
+	repeated GMConTreeObj item = 3;	//产出物品信息
+	optional int32 getGold = 4;	//领取获得的金币 
+}
+
+message GMConTreeIrrigateReturn
+{
+	required int32 result = 1;	//0成功1材料不足
+	optional int32 treeLv = 2;	//成功则返回同心树等级
+	optional int32 treeExp = 3;	//同心树总经验
+}
+
+message GMConTreeDivorceRequest
+{
+	required int32 type = 1;		//离婚类型1协商离婚2单方背誓
+	optional int32 companionId = 2;	//对象id
+}
+
+message GMConTreeDivorceReturn
+{
+	required int32 result = 1;	//0成功1晶石不足2在冷却时间内3非法请求
+}
+
+message GMAgreeDivorceRequest
+{
+	required int32 isAgree = 1;	//1同意协商离婚2不同意协商离婚
+}
+
+
+
+//提亲部分
+message GMMarryRequest
+{
+	required int32 companionId = 1;		//提亲对象角色id
+	optional int32 type = 2;		//1  888提亲 2 2888提亲 3 8888提亲
+}
+
+message GMNotifyTargetMarry
+{
+	required int32 companionId = 1;      //请求提亲者id;
+ 	optional string name = 2;        //请求提亲名字;
+	optional int32 type = 3;	//提亲类型
+}
+
+message GMAgreeMarryRequest
+{
+ 	required int32 isAgree = 1; 		//1同意结婚2不同意结婚
+	optional int32 companionId = 2;		//请求提亲的角色id
+	optional string name = 3;			//被请求提亲者的名字
+	optional int32 type = 4;	//提亲类型
+}
+
+message	GMMarryReturn
+{
+	required int32 marryResult = 1;		//提亲结果1提亲成功2提亲失败3晶石不足4发出提亲成功5女方同意对方提亲失败6女方同意对方提亲成功7拒绝协商离婚成功8同意协商离婚成功
+	optional string name = 2;			//被请求提亲者的名字
+}
+
+
+
+//排行榜部分
+message GM_MarryRankRequest
+{
+   required int32 m_RoleID=1; //玩家id
+   required int32 m_pagenum=3;//请求排行榜的第几页，从0开始，一页暂定10个
+}
+
+message GM_MarryRankListReturn
+{
+   //optional GM_RankInfo m_SelfInfo=2;//玩家自身排名
+   required int32 m_myplace=2;//玩家自身排名
+   repeated GM_MarryRankInfo m_RankInfo=3;//其他玩家排名
+}
+
+///排行榜信息
+message GM_MarryRankInfo
+{
+ 	required int32 m_place=1;  //玩家排名位置,从1开始,如果为0表示无排名
+	optional int32 m_roleid = 2;	//玩家id	
+ 	optional string m_roleName=3; //玩家名称
+ 	optional int32 m_Profession=4; //玩家职业
+ 	optional int32 m_value=5;  //所在排行榜的值（如：等级排行榜就是玩家等级值，战力排行榜就是玩家战力值）
+ 	optional string m_gangname=6; //玩家所在帮派
+ 	optional string m_otherroleName = 7; //其他玩家名字
+ 	optional int32 m_otherProfession = 8; //其他玩家职业
+ 	optional string m_othergangname = 9; //其他玩家公会名字
+	required int64 tree_gmid = 10;//同心树gmid
+	optional int32 m_otherroleid = 11;	//其他玩家id
+}
+
+//请求预约日历信息
+message GM_OrderCalendar_Return
+{
+	required int32 marrytype = 1;	//喜宴类型1心心相映2举案齐眉
+	repeated OrderCalendarItem item = 2;
+	optional int32 coldTime = 3;	//如果在冷却期则发送一个冷却时间0表示不处在冷却
+}
+
+message OrderCalendarItem
+{
+	required int32 days = 1;	//几号
+	optional int32 isafternoon = 2;	//中午是否已经预约1是2否
+	optional int32  isnight = 3;	//晚上是否已经预约1是2否
+}
+
+message GM_Order_Request
+{
+	required int32 months = 1;	//几月
+	required int32 days = 2;	//几号
+	required int32 isNoonOrNight = 3;	//中午场还是下午场
+}
+
+message GM_Order_Return
+{
+	required int32 result = 1;	//预约结果0成功1该时间已经被预约2你已经预约过了3时间已经过去了4超过预约时间范围5没有结婚无法预约6在冷却时间内
+}
+
+message GM_WeddingCalendar_Return
+{
+	required int32 count = 1;	//预约的数量
+	repeated WeddingCalendarItem item = 2;
+}
+
+message WeddingCalendarItem
+{
+	required int32 marrytype = 1;	//喜宴类型1心心相映2举案齐眉
+	required int32 mtime = 2;	//预约时间
+	optional string manname = 3;	//男方昵称
+	optional string womanname = 4;	//女方昵称
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

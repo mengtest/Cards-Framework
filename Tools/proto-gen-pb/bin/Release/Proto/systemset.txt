@@ -1,0 +1,20 @@
+//激活码请求
+message GM_SystemSet_CDKey_Request
+{
+  required string m_cdkey = 1;	//激活码
+}
+
+//登陆数据请求小结构体
+message GM_SystemSet_subData
+{
+	required int32 m_type = 1;	//类型
+	required int32 m_value = 2;	//值
+}
+
+//登陆数据请求
+message GM_SystemSet_Data_Return
+{
+	required int32 m_request = 1;	//结果返回 1：成功 0：失败
+	repeated GM_SystemSet_subData m_subdata = 2;	//小结构体
+}
+

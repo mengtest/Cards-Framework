@@ -1,0 +1,73 @@
+//包间;
+message GM_Room_record_request
+{
+//第几页(从一开始);
+required int32 page=1;
+//副本id;
+optional int32 battletype=2;
+}
+
+
+message GM_Room_role
+{
+//名字;
+required string rolename=1;
+//积分;
+optional int32 wingolde=2;  
+}
+
+//每一局的信息;
+message GM_Room_playerCount
+{
+//开始时间;
+required int32 begintime=1;  
+//结束时间;
+optional int32 endtime=2;
+//玩家输赢的详细信息;
+repeated GM_Room_role role=3; 
+
+optional int32 increid = 4; 
+}
+
+message GM_Room_room
+{
+//开始时间;
+required int32 begintime=1;  
+//结束时间;
+optional int32 endtime=2;
+//牌桌地注;   
+optional int32 rate=3;
+//房主id;
+optional int32 roleid=4;
+//房主名字;
+optional string name=5;
+//每一局的信息;
+repeated GM_Room_playerCount playercount=6;   
+}
+
+//包间记录回包;
+message GM_Room_record_return
+{
+required int32 errorid=1;
+repeated GM_Room_room data=2;
+}
+
+
+//今天分数
+message GM_Room_dayscore_return
+{
+   required int32 score=1;    			
+}  
+
+message GM_PlayBack
+{
+	required int32 m_Result = 1;//结果 0成功，1失败
+	repeated int32 m_MessageID = 2;//消息ID
+	repeated bytes m_ByteData = 3; //包内容
+}
+
+message SM_PlayBack
+{
+	required int32 m_Increid = 1;//自增ID
+	optional GM_PlayBack m_PlaybackData = 2;//一局的回放数据
+}

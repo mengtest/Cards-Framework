@@ -1,0 +1,77 @@
+///角色外观改变;
+message GM_RoleShowChange
+{
+	required int32 id = 1;				///角色id;
+	required int32 equippos = 2;		///武器位置;
+	required int32 equipid = 3;			///装备ID
+}
+
+///角色称号改变 ;
+message GM_RoleTitleChange
+{
+	required int32 id = 1;		///角色id;
+	required int32 titleId = 2;	///新称号;
+}
+
+///角色公会改变;
+message GM_RoleGangChange
+{
+	required int32 id = 1;		///角色id;
+	required string gangName = 2;	///公会名;
+}
+
+///vip信息改变
+message GM_VIPChange
+{
+	required int32 id = 1;		///角色id;
+	required int32 viplv=2;        //0就是不是vip否则就是vip等级
+}
+
+
+///角色动作改变包;
+message GM_NetRoleAction
+{
+	required int32 id = 1;          	///非战斗中用角色id,战斗中为战斗id;
+	required int32 motionType = 2;	        ///动作id或者命令id;
+	optional float posX = 4;		///动作执行的位置;
+	optional float posZ = 5;		///动作执行的位置;
+	optional float vecX = 6;		///方向向量;
+	optional float vecZ = 7;		///方向向量;
+	required int32 time = 8;		///时间戳;
+	required int32 sceneID = 9;		///场景原型ID  客户端验证用
+	required int32 type = 10;	        ///角色类型：0、玩家，1、怪，2、场景破坏物
+	optional int32 isCommand = 11;		///决定广播的是命令id还是动作id，0为命令，1为动作;
+}
+
+///蓝量变化通知包;
+message GM_MpChangeNotify
+{
+	required int32 roleId = 1;
+	required int32 roleType = 2;
+	required int32 mpChange = 3;
+}
+
+message GM_RequestResetPos
+{
+  required int32 sceneID=1;
+}
+
+message GM_ReturnResetPos
+{
+   required int32 posx=1;
+   required int32 posz=2;
+}
+
+
+///角色姓名更改 ;
+message GM_RoleNameChange
+{
+	required int32 roleID = 1;	///角色id;
+	optional string roleName = 2;///新名字;
+}
+//角色段位变化;
+message GM_RoleTopGradeChange
+{
+	required int32 roleid = 1;//角色id;
+	required int32 newgradelv = 2;//新段位;
+}

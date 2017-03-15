@@ -1,0 +1,377 @@
+
+Þ3
+Proto/battle.txt"º
+GM_BattleFBServerInfo
+m_Result (
+m_FBID (
+m_FBServerID (
+
+m_FBTypeID (
+m_increidmatch (
+	m_playWay (	
+m_playerCount (
+m_gameCount ("r
+GM_LoginFBServer
+m_RoleID (
+m_FBID (
+m_Longitude (
+
+m_Latitude (
+m_reallyPos (	">
+GM_LoginFBServerResult
+result (
+m_battletype ("i
+GM_BattleEntryInfo
+m_isSelf (
+m_RoomMasterID ()
+m_Character (2.GM_EntryInfo_Single"2
+GM_ItemDrop
+
+m_ObjectID (
+m_Count ("4
+GM_SkillInfo
+	m_SkillID (
+	m_SkillLv ("æ
+GM_RoleBaseInfo
+m_Roleid (
+m_Gold (
+m_HeadPhoto (
+m_CataterType (
+	m_Postion (
+m_Name (	
+m_Sex (
+
+m_viplevel (
+m_HeadFrame	 (
+
+m_NickName
+ (	
+m_HeadPhotoUrl (	")
+GM_Buff
+buffid (
+fromid ("<
+GM_ClientBuffs
+ownerid (
+m_Buffs
+ (2.GM_Buff"Z
+GM_ClientAllBuffs
+count (
+	needClear (#
+
+m_RoleBuff
+ (2.GM_ClientBuffs"¢
+GM_EntryInfo_Single$
+
+m_RoleData (2.GM_RoleBaseInfo
+	m_isReady (
+m_totalScore (
+m_Longitude (
+
+m_Latitude (
+m_reallyPos (	"<
+GM_EnterSceneInfo'
+	entryInfo (2.GM_EntryInfo_Single"ã
+GM_FullRoleInfo
+
+id (
+name (	
+	accountid (
+sex (
+level (
+sign (	
+	headpotot (
+viplv	 (
+gold
+ (
+diamond (
+roomcard (
+mjAllNum (
+mjWinNum (
+	zjhAllNum (
+	zjhWinNum (
+fishGet (
+fruitGet (
+	headframe (
+nickName (	
+headPhotoUrl (	"B
+GM_SendReady
+m_Resutl (
+m_RoleID (
+m_FBID ("+
+GM_NotifyBattleEndTime
+	m_EndTime ("5
+GM_ActiveBigWave
+m_FBID (
+	m_BigWave ("7
+GM_ActiveMonster
+m_resutl (
+	monsterID ("I
+GM_ClientNotifyDied
+m_BattleObjectID (
+m_AttackObjectID ("ƒ
+GM_BattleInfo_Result
+m_Result (
+m_name (	
+m_level (
+m_val (
+	m_killnum (
+	m_deadnum (
+m_hurt (
+m_RoleID (
+m_point	 (
+m_parentName
+ (	
+	m_toprank (
+	m_areanid (
+m_percentage ("±
+GM_BattleResult
+m_Result (
+m_BattleType (
+
+m_FBTypeID (
+	m_UseTime (
+	m_StarNum (
+m_laterRank (
+m_arenaPres (
+
+m_topscore
+ (
+m_errorcode (
+m_isDoubleActivity (+
+m_BattleData	 (2.GM_BattleInfo_Result 
+
+m_DropData (2.GM_ItemDrop"Œ
+SM_BattleRequest
+m_FBID (
+
+m_FBTypeID (
+rate (
+m_increMatchid (
+m_copyAILevel (
+m_FBPlayWay (	
+m_RoomCount (
+m_PlayerCount (*
+m_PlayerData
+ (2.GM_EntryInfo_Single*
+m_WhiteListInfo (2.GM_WhiteListInfo"‚
+GM_WhiteListInfo
+roleid (
+isSelf (
+
+szMinCount (
+
+szMaxCount (
+
+sfMinCount (
+
+sfMaxCount ("6
+GM_DrawCardRequest
+m_CardID (
+m_FBID ("b
+GM_ReplacePet
+m_roleid (
+m_FBID (
+m_TeamID (
+m_petid (
+m_hp ("F
+GM_DrawCardReturn
+m_Resul ( 
+
+m_DropData (2.GM_ItemDrop"ô
+	GM_Damage
+fbid (
+	damagerId (
+
+attackerId (
+	damageVal (
+vecX (
+vecY (
+vecZ (
+
+damageType (
+isDodge	 (
+isBlock
+ (
+
+isCritical (
+nowtime (
+attackBreakDefense ("B
+GM_NotifyHPMPChange
+type (
+value (
+roleid (" 
+GM_LeaveBattle
+roleID ("2
+GM_RoleLeave"
+	leaveInfo (2.GM_LeaveBattle"»
+SM_BattleInfo
+m_RoleID (
+m_Camp (
+
+m_RemainHP (
+	m_HurtVal (
+	m_killNum (
+m_dieNum (
+m_name (	
+m_level (
+
+m_fightval	 (
+m_point
+ (
+m_CharacterType (
+
+m_parentID (
+
+m_exitType (
+m_parentName (	
+
+m_topgrade (
+
+m_serverid (
+
+m_topsocre (
+m_bosspercentage ( 
+
+m_DropData (2.GM_ItemDrop'
+m_KillMonsterData (2.GM_ItemDrop"™
+SM_BattleResult
+	m_WinCamp (
+m_BattleType (
+
+m_FBTypeID (
+	m_UseTime (
+m_BossHP ($
+m_PlayerData (2.SM_BattleInfo"`
+SyncMovement
+m_roleid (
+m_PosX (
+m_PosZ (
+m_VecX (
+m_VecZ ("_
+GM_FBSweepRequest
+
+m_fbtypeid (
+m_fbid (
+m_repeat (
+m_profession ("‡
+GM_FBSweepReturn
+
+m_fbtypeid (
+m_sweepcount ( 
+
+m_DropData (2.GM_ItemDrop'
+m_KillMonsterData (2.GM_ItemDrop"J
+GM_PetBattleInfo
+m_roleID (
+m_typeID (
+
+m_position ("I
+GM_AllPetBattleInfo
+m_count (!
+m_Data (2.GM_PetBattleInfo"»
+GM_RealTime_SendPoint
+m_point (
+m_type (
+m_serialkill (
+m_attackname (	
+	m_diename (	
+m_bekilledid (
+m_attackpoint (
+m_battlepoint ("i
+GM_NotifyBuff
+m_roleid (
+
+m_attackid (
+m_buffid (
+m_time (
+m_extend ("d
+GM_ClientHpNotify
+
+m_attackID (
+m_beAttackID (
+	m_hurtVal (
+
+m_hurtType ("6
+GM_ClientMpNotify
+m_roleid (
+m_value (":
+GM_Notify_Specialskill
+m_roleid (
+m_type ("5
+GM_CenterBattle
+m_fbIp (	
+
+m_rolegmid ("Š
+SM_TeamMatchData
+	m_areanID (
+m_nleaderid (
+m_nfbtypeid (
+m_nmembernum (#
+m_member (2.SM_BattleRequest"a
+GM_ClientRelive
+m_roleid (
+m_fbid (
+m_hpPercent (
+m_attackPercent ("—
+SM_majiang_role_battleresult
+m_roleid (
+	m_allGold (
+	m_winGold (
+m_character (
+	m_winType (	
+m_sjChongGuan (
+
+m_sjBaWang (
+m_xjChongGuan (
+
+m_xjBaWang	 (
+	m_cartype
+ (
+	m_room_id (
+m_room_bnote (
+
+m_win_type (
+m_is_blasting (
+m_is_washedoff (
+m_left_card (
+m_chow (
+m_pong (
+	m_exposed (
+m_concealed_kong (
+m_patch (
+
+m_up_score (
+m_down_score (
+m_result (
+m_Exposed_score (
+m_smile_score (
+m_mines_score (
+m_song_score (
+
+m_hu_score (
+g_card_type (
+g_player_num (
+g_rolecard_type  (
+g_is_win! (
+g_is_dealer" (
+g_is_discard# (
+g_fill_counts$ (
+g_compare_counts% (
+g_look_counts& (
+g_call_counts' (
+g_role_counts( (
+g_total_counts) (
+g_exit_type* ("›
+SM_majiang_battleResult
+m_BattleType (
+
+m_FBTypeID (
+m_increMatchid (
+m_isMatchOverGolden (
+m_isReallyResult (
+m_playcount (
+m_monsterid (
+m_roomcount (3
+m_roleresult	 (2.SM_majiang_role_battleresult
+m_is_dealer
+ (

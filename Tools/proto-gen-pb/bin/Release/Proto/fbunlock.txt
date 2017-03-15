@@ -1,0 +1,107 @@
+
+///1副本解锁信息;
+message GM_UnlockReturn
+{
+ required int32 m_lastfbid=1;				//当前进行的副本id;
+ required int32 m_maxelite=2;				//精英副本总次数;
+ repeated GM_UnlockFB m_fbdata=3;			//解锁的副本信息;
+ repeated GM_ChestsData m_chestsData=4;		//副本宝箱信息;
+}
+
+message GM_UnlockFB
+{
+ required int32 m_chapterId=1;		//章节id;
+ required int32 m_fbid=2;			//副本id;
+ required int32 m_star=3;			//该副本获得的星级;
+ required int32 m_fight=4;			//已挑战次数;
+ required int32 m_maxfight=5;		//最大的挑战次数;
+}
+
+message GM_ChestsData
+{
+  required int32 m_chapterId=1;		//章节id
+  required int32 m_starCount=2;		//星星数;
+  repeated GM_cChests m_chests =3;	//该章节中宝箱信息;
+}
+
+message GM_cChests
+{
+  required int32 m_chestsId=1;	//宝箱id;
+  required int32 m_state=2;		//0不可领取1可领取2已领取;
+}
+
+
+
+
+
+
+
+
+///2副本星星排行榜
+message GM_StarRank
+{
+	required int32 m_myrank=1;		///我的排名;
+	required int32 m_mystar=2;		///我的星星数;
+	repeated GM_StarInfo m_data=3;	///上榜角色信息;
+}
+
+message GM_StarInfo
+{
+	required string m_rolename=1;	//角色名;
+	required int32 m_rolelv=2;		//等级;
+	required int32 m_starcount=3;	//星星数量;
+	required int32 m_roleid=4;		//角色id;
+	required int32 m_profession=5;	//职业;
+}
+
+//3\副本扫荡
+message GM_SweepResult
+{
+	required int32 m_result=1;			//扫荡结果;1成功\2未达到3星\3vip等级不够
+										//\4扫荡次数不够5\体力不够6\背包格子不够\7临时背包有物品\8数据错误.\9服务器错误
+	repeated GM_SweepObject m_objects=2;	//获得的物品;	
+}
+
+message GM_SweepObject
+{
+	required int32 m_objid=1;		//物品id;
+	required int32 m_count=2;		//数量;
+}
+
+//4\通知副本星星变化
+message GM_FBNotify
+{
+  required int32 m_chapterId=1;//章节id;
+  required int32 m_fbId = 2;//副本id;
+  required int32 m_starcount=3;//星星数量;
+}
+
+//5\通知章节宝箱变化;
+message GM_ChestsNotify
+{
+  required int32 m_chapterId=1;//章节id;
+  required int32 m_chestsId=2;//宝箱id;
+  required int32 m_state = 3;//;0不可领取1可领取2已领取;
+}
+
+
+
+
+///征战三荒副本信息;
+message GM_SanHuangReturn
+{
+ required int32 m_totalcount=1;  //总共次数;
+ repeated GM_SanHuang m_fbdata=2; //副本数据;（只发解锁）
+
+ optional int32 matchtime=5; 		 // 匹配时间
+}   
+
+message GM_SanHuang
+{
+ required int32 m_fbid=1;   //副本id;
+ required int32 m_fightcount=2;  //副本剩余挑战次数;
+} 
+
+
+
+

@@ -1,0 +1,73 @@
+
+„
+Proto/gangwar.txt"b
+GM_Gangwar_Open_Return%
+m_data (2.GM_Gangwar_Open_Data
+m_state (
+m_second ("M
+GM_Gangwar_Open_Data
+m_id (
+m_mineralgang (	
+m_gangid ("9
+GM_Gangwar_Rankings
+m_mineid (
+m_gangid ("X
+GM_Gangwar_Rankings_Return
+m_count ()
+m_data (2.GM_Gangwar_Rankings_Data"R
+GM_Gangwar_Rankings_Data
+
+m_gangname (	
+
+mine_price (
+m_rank ("Z
+GM_Gangwar_Bidding
+m_mineid (
+m_unit (
+m_roleid (
+m_gangid ("$
+GM_Bidding_Result
+m_state ("°
+GM_Gangwar_WarOpen
+m_othername (	$
+
+m_Roomdata (2.GM_Gangwar_Data
+m_state (
+	m_myscore (
+m_otherscore (
+m_minestate (
+m_second ("}
+GM_Gangwar_Data
+m_mynum (
+m_maxnum (
+m_state (
+m_roomid (
+m_score (
+m_wingangid ("L
+GM_Gangwar_CheckRoom
+m_mineid (
+m_roomid (
+m_gangid ("
+GM_Gangwar_CheckRoom_Return
+m_count (*
+m_data (2.GM_Gangwar_CheckRoom_Data
+m_state (
+
+m_roomname (	"
+GM_Gangwar_CheckRoom_Data
+
+m_rolename (	
+
+m_fightval (
+m_level (
+m_profession (
+m_entertime ("L
+GM_Gangwar_EnterRoom
+m_mineid (
+m_roomid (
+m_gangid ("Z
+GM_Gangwar_EnterRoom_Return
+m_state (*
+m_data (2.GM_Gangwar_CheckRoom_Data"%
+GM_Gangwar_Testing
+m_state (

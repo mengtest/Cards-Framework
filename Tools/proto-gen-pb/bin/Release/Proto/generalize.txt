@@ -1,0 +1,84 @@
+
+message GM_Generalize_Code_Return
+{                                                                                                                               
+  required int32 m_getgold =1;    //获得的金币数
+  required int32 m_totalgold =2;  //总共能获得的金币数
+  repeated GM_Generalize_Code_Data m_codedata= 3;   //扫描好友信息
+}
+
+message GM_Generalize_Code_Data
+{
+  optional int32 m_roleid = 1;       //扫描玩家的角色id
+  optional string m_name = 2;        //玩家名字
+  optional int32 m_headid =3;        //头像id
+  optional int32 m_time =4;          //从绑定到当前的秒数
+}
+
+message GM_Generalize_Feedback_Return
+{                                                                                                                               
+
+  required int32 m_hasgetone =1;    //一级反馈已领取金额
+  required int32 m_cangetone =2;    //一级反馈可领取金额
+  required int32 m_hasgettwo =3;    //二级反馈已领取金额
+  required int32 m_cangettwo =4;    //二级反馈可领取金额
+  required int32 m_viplevelone = 5; //领取一级反馈需要的vip等级
+  required int32 m_vipleveltwo = 6; //领取二级反馈需要的vip等级
+  repeated GM_Feedback_One_Data m_feedbackone= 7;   //一级反馈玩家信息
+  repeated GM_Feedback_Two_Data m_feedbacktwo= 8;   //二级反馈玩家信息
+}
+
+message GM_Feedback_One_Data
+{
+  optional int32 m_roleid = 1;       //扫描玩家的角色id
+  optional string m_name = 2;        //玩家名字
+  optional int32 m_headid =3;        //头像id
+  optional int32 m_level =4;         //玩家等级
+  optional int32 m_viplevel =5;      //玩家VIP等级
+  optional float m_canget =6;        //从该玩家除获取的一级总返利
+}
+message GM_Feedback_Two_Data
+{
+  optional int32 m_roleid = 1;       //扫描玩家的角色id
+  optional string m_name = 2;        //玩家名字
+  optional int32 m_headid =3;        //头像id
+  optional int32 m_level =4;         //玩家等级
+  optional int32 m_viplevel =5;      //玩家VIP等级
+  optional float m_canget =6;        //从该玩家除获取的二级总返利
+}
+message GM_Generalize_GetReward
+{                                                                                                                               
+  required int32 m_tag =1;    //要领取反馈的类型 1:一级反馈 2:二级反馈
+}
+
+message GM_Generalize_GetReward_Result
+{   
+  required int32 m_tag =1;       //1:一级反馈 2:二级反馈
+  required int32 m_result =2;    //1成功   2vip等级不足  3没有余额 4系统错误
+}
+
+message GM_Generalize_Bind
+{                                                                                                                               
+  required int32 m_bindid =1;    //要绑定的推广码id
+  required int32 m_roleid =2;    //自己的角色id
+}
+message GM_Generalize_Bind_Return
+{                                                                                                                               
+  required int32 m_result =1;    //结果
+}
+
+message GM_Generalize_Center_Data
+{
+   required int32 m_roleid = 1;//玩家id
+   repeated GM_Generalize_Center_One_Data m_OneData = 2;//好友馈赠中心的一条数据（单个玩家可以多条数据）
+}
+
+message GM_Generalize_Center_One_Data
+{
+  optional int32 m_roleid = 1;       //id
+  optional string m_name = 2;        //玩家名字
+  optional int32 m_headid =3;        //头像id
+  optional int32 m_level =4;         //玩家等级
+  optional int32 m_viplevel =5;      //玩家VIP等级
+  optional int32 m_timenow =6;       //产生数据的时间
+  optional float m_canget =7;        //从该玩家获取当前一次的返利;
+}

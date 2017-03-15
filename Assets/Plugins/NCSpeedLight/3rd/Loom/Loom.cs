@@ -38,6 +38,10 @@ public class Loom : MonoBehaviour
                 return;
             initialized = true;
             var g = new GameObject("Loom");
+            if (NCSpeedLight.Game.Instance)
+            {
+                g.transform.SetParent(NCSpeedLight.Game.Instance.transform);
+            }
             _current = g.AddComponent<Loom>();
         }
 

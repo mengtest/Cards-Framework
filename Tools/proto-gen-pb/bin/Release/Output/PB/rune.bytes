@@ -1,0 +1,35 @@
+
+š
+Proto/rune.txt"V
+GM_RuneItem
+runegmid (
+objectid (
+	runelevel (
+totalexp ("B
+GM_AllRuneItem_Return
+count (
+item (2.GM_RuneItem"9
+GM_RuneFeed_Request
+runegmid (
+material ("R
+GM_RuneFeed_Return
+result (
+material (
+item (2.GM_RuneItem"5
+GM_RuneMatchItem
+runenum (
+runegmid ("I
+GM_RuneDress_Request
+bodytype (
+item (2.GM_RuneMatchItem"X
+GM_RuneDress_Return
+result (
+bodytype (
+item (2.GM_RuneMatchItem"8
+GM_RuneDown_Request
+bodytype (
+runenum ("G
+GM_RuneDown_Return
+result (
+bodytype (
+runenum (

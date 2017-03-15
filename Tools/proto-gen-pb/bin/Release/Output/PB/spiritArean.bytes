@@ -1,0 +1,37 @@
+
+ë
+Proto/spiritArean.txt"„
+GM_AreanReturn
+m_costExper (
+m_lasttimes (
+	m_curRank (
+	m_toprank ("
+m_areandata (2.GM_AreanData"Ä
+GM_AreanData
+m_roleId (
+m_roleLv (
+
+m_rolename (	
+m_profession (
+m_rank (
+m_rewardPrest (
+m_rewardGold (
+
+m_fightval (
+m_equiptypeid	 ("H
+GM_RankReturn
+m_pagecount ("
+m_areandata (2.GM_AreanData"B
+GM_AreanShop
+m_roleid ( 
+
+m_shopdata (2.GM_ShopData"v
+GM_ShopData
+
+m_objectid (
+
+m_showtype (
+
+m_buycount (
+m_exchangeid (
+m_exchangenum (

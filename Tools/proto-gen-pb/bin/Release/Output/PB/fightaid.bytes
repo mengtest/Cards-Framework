@@ -1,0 +1,18 @@
+
+¬
+Proto/fightaid.txt"’
+GMFightAidReturn
+isAid (
+bagName (	
+bagId (
+leftTime (
+value (
+	chargeNum (
+Item (2.GMObjectData"3
+GMObjectData
+objectId (
+	objectNum ("%
+GMFightAidGetRequest
+bagid ("%
+GMFightAidGetReturn
+result (

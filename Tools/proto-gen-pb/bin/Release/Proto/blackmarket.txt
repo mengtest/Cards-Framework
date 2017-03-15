@@ -1,0 +1,79 @@
+
+//黑市货物信息
+message GM_BlackMarketObjInfo
+{
+	required int32 m_objPos=1;		//物品位置
+	optional int32 m_objId=2;		//黑市物品的type id 
+	optional int32 m_objBuy=3;		//物品是否购买0未购买1购买
+	optional int32 m_objectId=4;	//物品id
+	optional int32 m_objectNum=5;	//物品数量
+	optional int32 m_price=6;		//价格值
+	optional int32 m_costId=7;		//消耗货币类型(晶石 默认设置为4)
+}
+
+//黑市整体信息
+message GM_BlackMarketInfo_Return
+{
+	required int32 m_refreshMaxTime=1;  //当前用户可以刷新的总次数
+	optional int32 m_refreshCount=2;    //用户已刷新次数
+	optional int32 m_spar=3;    		//拥有晶石
+	optional int32 m_refreshCost=4;    	//刷新所需的晶石
+	optional int32 m_tokenCount=5;    	//黑市交易令个数
+	optional int32 m_leftTime=6;    	//下一次刷新的时间 秒数
+	optional int32 m_count=7;    		//物品个数
+	repeated GM_BlackMarketObjInfo m_blackMarketObjInfo=8; //物品集合
+}
+
+//黑市刷新返回
+message GM_BlackMarket_Refresh_Return
+{
+	required int32 m_result=1;	//0成功 1 砖石不足 2 刷新次数不足3 没有黑市交易令 
+}
+
+//黑市购买物品
+message GM_BlackMarket_Buy_Request
+{
+	required int32 m_objPos=1;	//物品位置
+	optional int32 m_objId=2;	//物品id（防止自动刷新刷掉了，物品id不一致）
+}
+
+//黑市购买返回
+message GM_BlackMarket_Buy_Return
+{
+	required int32 m_result=1;//0成功 1,晶石不足 2,已被购买 3,未找到该物品 4, 物品过期(自动刷新把该位置的物品刷掉了) 5,设置购买状态失败  6,临时背包有物品 7,没有背包位
+	optional int32 m_spar=2;	//晶石数目
+	optional int32 m_objPos=3;	//物品位置
+	optional int32 m_objectId=4;	//物品id
+}
+
+message GM_BlackMarket_Return_obj
+{
+	required int32 objectid=1;		//物品id
+	optional int32 number=2;		//物品数量
+}
+
+//黑市熔炼 重铸消息
+message GM_BlackMarket_SmeltRecast_Request     // 需要变化
+{
+	repeated int64 m_gmid=1;		//gmid
+}
+
+//黑市熔炼返回
+message GM_BlackMarket_Smelt_Return
+{
+	required int32 m_result=1;  //结果  0成功 1物品不存在 2物品不满足要求 3精炼过 4增加晶石失败 5 物品已经装备了 6 空集合 7 临时背包有物品 11 表错,12背包数据错误 13背包没东西化晶
+	optional int32 sparTotal=2;		// 巫晶总数
+	repeated GM_BlackMarket_Return_obj data=3;	//获得物品集合
+}
+
+//黑市重铸
+message GM_BlackMarket_Recast_Return
+{
+	required int32 m_result=1;	//结果 0成功 1物品不存在 2未精炼 3砖石不足 5 物品已经装备了	6 重铸一次一个物品	7 临时背包有物品 8 没有突破过 9 该物品不能重铸	11 表错了
+	repeated GM_BlackMarket_Return_obj data=2; //返回的集合
+}
+
+
+
+
+

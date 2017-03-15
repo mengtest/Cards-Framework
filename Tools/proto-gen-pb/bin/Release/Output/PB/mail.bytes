@@ -1,0 +1,27 @@
+
+Ž
+Proto/mail.txt"<
+GM_PlayerMailPack
+roleId (
+mails (2.GM_Mail"„
+GM_Mail
+subject (	
+word (	
+time (	
+state (
+items (2.GM_MailItem
+gmid
+ (
+
+mailSource (";
+GM_MailItem
+typeId (
+num (
+equiplv ("
+GM_MailOperate
+gmid ("Z
+GM_SystemMail
+type (
+userData (	
+data (2.GM_Mail
+	rolenames (	

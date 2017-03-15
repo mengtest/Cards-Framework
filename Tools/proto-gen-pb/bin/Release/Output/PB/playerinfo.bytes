@@ -1,0 +1,79 @@
+
+ü
+
+Proto/playerinfo.txt"Þ
+GM_EquipData
+m_Gmid (
+m_typeid (
+m_forginglevel (
+m_breaklevel (
+m_refinelevel (
+m_winglevel (
+m_linkid
+ ($
+
+m_allawake (2.GM_EquipAwakens
+m_playerprofession ("=
+GM_EquipAwakens
+m_propertyid (
+m_propertyLv ("X
+GM_RuneData
+m_Gmid (
+m_grid ()
+m_allruneofequip (2.GM_RuneOfEquip"C
+GM_RuneOfEquip
+m_Gmid (
+m_typeid (
+m_level ("‰
+
+GM_PetData
+m_GMid (
+m_type (
+m_level (
+m_riselevel (
+m_grade (
+m_hp (
+m_attack (
+m_fight (,
+m_allpetskill	 (2.GM_PetSkillLevelType1
+m_allpetskillrealize
+ (2.GM_PetSkillRealize
+
+m_onbattle ("@
+GM_PetSkillLevelType
+	m_skillid (
+m_skill_level ("A
+GM_PetSkillRealize
+m_propertyid (
+m_propertylvl ("¦
+GM_Player_Data_Return
+m_state (
+
+m_playerid (
+m_playername (	
+m_level (
+m_power (
+
+m_gangname (	
+m_gangprofession (
+m_profession (
+m_equipCount	 (
+m_runecount
+ (
+
+m_petcount (
+
+m_addcount (!
+
+m_allequip (2.GM_EquipData
+m_allpet (2.GM_PetData
+	m_allrune (2.GM_RuneData$
+m_alladdequip (2.GM_EquipData
+isfriend (",
+GM_Player_Data_Request
+
+m_playerid ("=
+GM_Player_Equip_Request
+
+m_playerid (
+m_gmid (

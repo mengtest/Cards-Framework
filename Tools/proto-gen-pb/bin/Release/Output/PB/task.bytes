@@ -1,0 +1,54 @@
+
+ë
+Proto/task.txt"W
+GMTaskCondition
+m_ID (
+m_Type (
+m_FinishNum (
+	m_NeedNum ("V
+GMTaskFinishObject
+m_ObjectTypeID (
+m_ObjectNum (
+m_ObjecRank ("Ð
+GMTask
+
+m_PlayerID (
+m_TaskID (
+m_GMID (
+m_State (
+m_Name (	
+m_AcceptDescrible (	
+m_AcceptTaskDescribe (	
+m_FinishDescribe (	
+	m_guideid	 (
+m_guidetype
+ (
+m_guidelevel (
+m_rank (
+
+m_Category (
+m_LVNeed (%
+m_Condition (2.GMTaskCondition+
+m_FinishObject (2.GMTaskFinishObject
+m_AcceptNPC (
+m_CommitNPC (
+m_UnAcceptDescribe (	
+m_kind (":
+GMTaskCollect
+m_Count (
+m_Tasks (2.GMTask"!
+GM_Task_Finsh
+m_TaskID ("E
+GM_TaskResult
+m_byte (
+m_gmid (
+m_task_state ("
+GM_CommitTask
+m_gmid ("
+GM_AcceptTask
+m_gmid ("N
+GMUpdateTaskCondition
+m_GMID (%
+m_condition (2.GMTaskCondition"
+GM_TalkEvent
+NPCID (

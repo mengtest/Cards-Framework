@@ -1,0 +1,100 @@
+
+Â
+Proto/concentrictree.txt"Ð
+GMConTreeDataReturn
+isMarry (
+treeId (
+treeLv (
+treeExp (
+companionId (
+isCanGet (
+leftTime (
+item (2.GMConTreeObj
+matNum	 (
+leftDivorceTime
+ (
+companionName (	
+	isDivorce (
+
+beDivorced (
+isOrder (
+	isCanJoin (
+compProfession ("3
+GMConTreeObj
+objectid (
+	objectnum ("d
+GMConTreeGetReturn
+result (
+leftTime (
+item (2.GMConTreeObj
+getGold ("J
+GMConTreeIrrigateReturn
+result (
+treeLv (
+treeExp ("<
+GMConTreeDivorceRequest
+type (
+companionId ("(
+GMConTreeDivorceReturn
+result ("(
+GMAgreeDivorceRequest
+isAgree ("3
+GMMarryRequest
+companionId (
+type ("F
+GMNotifyTargetMarry
+companionId (
+name (	
+type ("W
+GMAgreeMarryRequest
+isAgree (
+companionId (
+name (	
+type ("2
+GMMarryReturn
+marryResult (
+name (	":
+GM_MarryRankRequest
+m_RoleID (
+	m_pagenum ("R
+GM_MarryRankListReturn
+	m_myplace (%
+
+m_RankInfo (2.GM_MarryRankInfo"û
+GM_MarryRankInfo
+m_place (
+m_roleid (
+
+m_roleName (	
+m_Profession (
+m_value (
+
+m_gangname (	
+m_otherroleName (	
+m_otherProfession (
+m_othergangname	 (	
+	tree_gmid
+ (
+m_otherroleid ("`
+GM_OrderCalendar_Return
+	marrytype ( 
+item (2.OrderCalendarItem
+coldTime ("G
+OrderCalendarItem
+days (
+isafternoon (
+isnight ("G
+GM_Order_Request
+months (
+days (
+isNoonOrNight ("!
+GM_Order_Return
+result ("N
+GM_WeddingCalendar_Return
+count ("
+item (2.WeddingCalendarItem"[
+WeddingCalendarItem
+	marrytype (
+mtime (
+manname (	
+	womanname (	

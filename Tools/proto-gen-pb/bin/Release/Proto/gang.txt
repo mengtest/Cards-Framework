@@ -1,0 +1,312 @@
+
+///公会信息数据包;
+message GM_GangInfo
+{
+	required int64 gmid = 1;			///公会gmid;
+	optional int32 rank = 2;			///公会排名;
+	optional string name = 3;			///公会名字;
+	optional string leaderName = 4;		///公会会长名字;
+	optional int32 lv = 5;				///公会的等级;
+	optional int32 memberNum = 6;		///公会人数;
+	optional int32 maxMember = 7;		///公会可容纳总人数;
+	optional string pronoce = 8;		///公会宣言;
+	optional int32 isApply = 9;			///是否已经申请加入：0、已申请，1、未申请;
+}
+
+message GM_MyGang
+{
+	required int32 roleId = 1;			///1有公会\2无公会;
+	optional GM_GangInfo baseInfo = 2;	///公会基本信息;
+	optional int32 pow = 3;				///公会战斗力;
+	optional int32 richies = 4;			///个人剩余贡献度;
+//	optional int32 hisRichies = 5;		///公会历史建设度;
+	optional string notice = 6;			///公会公告;
+	optional int32 exp = 7;				///公会建设度;
+//	optional int32 nextExp = 8;			///公会升级所需建设度;
+//	optional int32 areanrank=9;			///竞技场排名;
+	repeated GM_GangRole roles = 11;  	///角色信息;
+}
+
+///所有公会信息回调;
+message GM_AllGangInfo
+{
+	required int32 roleId = 1;			///角色id;（申请数量）
+	optional int32 m_allgangcount=2;	///公会总数;
+	repeated GM_GangInfo gang = 3;		///公会数据;
+}
+
+///所有公会申请数据包;
+message GM_AllGangApply
+{
+	required int32 roleId = 1;			///角色id;
+	repeated GM_GangRole roles = 2;		///申请信息;
+}
+
+///请求创建公会数据包;
+message GM_CreateGang
+{
+	required int32 roleId = 1;		///角色id;
+	optional string name = 2;		///公会名;
+}
+
+///公会角色操作数据包;
+message GM_GangRoleOperate
+{
+	required int32 roleId = 1;		///角色id;
+	optional int32 operId = 2;		///目标操作角色的角色id;
+	optional int32 job = 3;			///公会职务：0、会长，1代理族长、2副会长，3、精英会员，4、普通会员;
+	optional int32 isAgree = 4;		///是否同意加入申请：0、同意，1、拒绝，2是一键拒绝;
+}
+
+///公会成员信息;
+message GM_GangRole
+{
+	required int32 roleId = 1;			///成员角色id;
+	optional int32 rank = 2;			///成员排名;
+	optional string name = 3;			///成员名字;
+	optional int32 lv = 5;				///成员等级;
+	optional int32 vocation = 6;		///职业;
+	optional int32 job = 7;				///公会职务：0、会长，1、副会长，2、精英会员，3、普通会员;
+	optional int32 lastLogin = 8;		///最后一次下线距离现在的天数：-1、在线;
+	optional int32 hisRichies = 9;		///个人总贡献度;
+	optional int32 power =10;			///角色战斗力;
+	optional int32 richies = 11;		///可用贡献度;
+	optional int32 flag=12;				///1是添加成员信息，2是删除成员信息，3是修改了成员信息;
+	optional int32 contype=13;			///0无建设，1初级建设，2中级建设，3高级建设，4特级建设
+	optional int32 isfriend=14;		//1 是自己的朋友 ，0 不是;
+}
+
+///所有公会成员数据包;
+message GM_AllGangRole
+{
+	required int32 roleId = 1;			///角色id;
+	repeated GM_GangRole roles = 2;		///角色信息;
+}
+
+///修改公会公告数据包;
+message GM_GangNoticeChange
+{
+	required int32 roleId = 1;		///修改者的角色id;	
+	optional string notice = 2;		///修改的公告内容;
+}
+
+///快速加入公会回调数据包;
+message GM_GangQuickJoin
+{
+	required int32 result = 1;		///操作结果回调：0、请求成功，-1、已加入公会，-2、已达到申请最大上限，-100、请求失败;
+	repeated int64 gangGmid = 2;	///所有申请了的公会gmid;
+}
+
+
+
+///公会日志;
+message GM_GangLog
+{
+	required string log = 1;		///日志字符串;
+	optional string time = 2;		///日志生成时间;
+	optional int32 m_roleId=3;
+	optional int32 m_profession=4;
+	optional string m_rolename=5;
+	optional int32 m_rolelv=6;
+}
+
+///公会日志数据包;
+message GM_AllGangLog
+{
+	required int64 gmid = 1;		///公会的gmid;
+	repeated GM_GangLog logs = 2;	///公会日志数据;
+}
+
+message GM_GangRankInfo
+{
+	required int32  m_place=6;			//排名;
+	optional string m_gangName=2;		///公会名;
+	optional int32  m_level=4;			///等级;
+	optional int32  m_value=5;			//得分;	
+	optional int32 	m_people=1;			///人数;
+}
+
+message GM_GangRank
+{
+	required int32 count=1;
+	repeated GM_GangRankInfo gangrank=2;
+	optional int32 m_myGangRank = 3;	///我的公会排名;
+	optional string m_myGangName = 4;	///我的公会名;
+}
+
+
+
+///客户端;
+
+
+message GM_GangIntroduction
+{
+	optional int32 gangLevel = 1;		///公会等级;
+	required int32 gangMembers = 2;		///成员数量;
+	optional string gangLeader = 3;		///会长名;
+	optional string gangNotice = 4;		//公告;
+	optional string gangName = 5;		///公会名;
+	optional int32 maxMembers = 6;		///最大;
+	optional int32 gangRank = 7;		///排名;
+}
+
+
+
+
+
+////////公会副本使用////////////
+//GM_GANGFB_FBINFO_REQUEST
+//请求一个公会副本所有BOSS信息
+message GM_GangFB_FBInfo_Request
+{
+ required int32 fbid=1;
+}
+
+message GM_GangFB_FBInfo
+{
+ required int32 fbid=1;  //
+ optional int32 challenge=2;//0，未解锁，1，已解锁，2，通关咯
+ optional int32 lefttimes=3;//剩余挑战次数
+ optional float percent=4;//副本进度百分比
+}
+
+
+//GM_GANGFB_FBINFO_RETURN
+//返回一个公会副本所有BOSS信息
+message GM_GangFB_FBInfo_Return
+{
+ required int32 result=1;   //操作结果0,成功，1，请加入一个公会，2，公会等级不足
+ repeated GM_GangFB_FBInfo fbinfo=2;  //副本信息
+}
+
+//GM_GANGFB_FBRANK_REQUEST
+//请求一个公会副本中某个副本的伤害排名信息
+message GM_GangFB_RankInfo_Request
+{
+ 	required int32 fbid=1;//请求的哪个副本
+}
+
+//GM_GANGFB_FBRANK_RETURN
+//返回一个公会副本某个副本的伤害排行信息
+message GM_GangFB_RankInfo
+{
+ required int32 fbid=1;  //
+ optional int32 rank=2;  //排名第几
+ optional string rolename=3;  //角色名
+ optional int32 totalmage=4; //总伤害
+}
+message GM_GangFB_RankInfo_Return
+{
+ required int32 result=1;   //操作结果0,成功，1，请加入一个公会，2，公会等级不足，3，通关上一副本可解锁，4，该副本未开放
+ repeated GM_GangFB_RankInfo rankinfo=2;
+}
+
+//GM_GANGFB_FIGHT_REQUEST
+//请求挑战公会副本中某个副本
+message GM_GangFB_Fight_Request
+{
+ 	required int32 fbid=1;//请求的哪个副本
+}
+//GM_GANGFB_FIGHT_REUTRN
+//返回挑战公会副本结果
+message GM_GangFB_Fight_Return
+{
+  required int32 result=1;   //操作结果0,成功，1，请加入一个公会，2，公会等级不足，3，通关上一副本可解锁，4，该副本未开放，5，挑战次数不足，6已经有队伍在挑战了，7，已击杀
+}
+//GM_GANGFB_TAKEFIGHT_REWARD
+//参与公会副本的奖励
+message GM_GangFB_Reward
+{
+	required int32 objectid=1;
+	optional int32 number=2;
+}
+message GM_GangFB_TakeFight
+{
+	required int32 damage=1;	//本次造成的伤害量
+	repeated GM_GangFB_Reward rewards=2;	//获得的奖励
+}
+
+///////////////////////////////////////////////////////////////////////////////////
+message GM_GangShop
+{
+	required int32 m_lv=1;				///建筑等级;
+	optional int32 m_uplecost = 2;		//升级所需;
+	repeated GM_GangShopObj m_shopobj= 3;	//公会商店物品;
+}
+
+message GM_GangShopObj
+{
+	required int32 m_objid=1;			//物品id;
+	optional int32 m_showtype=2;  		///1是剩余购买次数,2是总共购买次数;
+	optional int32 m_remain=3;			//剩余次数;
+}
+
+message  GM_GangModuleInfo
+{
+    required int32  moduleid=1;			///模块id
+	optional int32  isUnlock=2;			///是否已经解锁,0/已经解锁,1.没有解锁
+	optional GM_GangHall m_HallData=3;	///部族大厅数据;
+	optional GM_GangTemp m_TempData=4;	///祈福殿数据;
+	optional GM_GangShop m_ShopData=5;	///商店数据;
+	optional int32 	maxlv=6;			///最大等级;
+}
+
+message GM_GangHall
+{
+	required int32 m_lv=1;			///建筑等级;
+	optional int32 m_uplecost = 2;	//升级所需;
+	optional int32 m_ishall=4;		///1未建设，2已建设;
+	repeated string m_hallLog=5;	//建设大厅的日志;
+}
+
+message GM_GangTemp
+{
+	required int32 m_lv=1;			///建筑等级;
+	optional int32 m_uplecost = 2;	//升级所需;
+	optional int32 m_remain=3;		//剩余祈福奖励;
+	optional int32 m_cost=4;		//消耗贡献;
+	optional int32 m_isbless=5;		//1未祈福，2已祈福;
+}
+
+message GM_BlessResult
+{
+	required int32 m_result=1;
+	repeated GM_BlessObj m_objs=2;
+}
+
+message GM_BlessObj
+{
+	required int32 m_objid=1;		///物品id;
+	required int32 m_objcount=2;	///数量;
+}
+
+
+message GM_GangModuleInfoList
+{
+    required  int32  hasGang=1;						///是否有公会,0.有公会,1.没有公会
+	repeated  GM_GangModuleInfo  gangModuleInfo=2;	///公会模块解锁信息
+}
+//GM_GANGFB_FBINFOCHANGE
+//通知公会玩家boss信息改变
+//使用以上定义的GM_GangFB_FBInfo message
+////////公会副本结束////////////
+
+//——————————————————————————————————————————————————————————————
+///公会信息变化通知;
+message GM_GangNotify
+{
+	required int64 m_ganggmid = 1;	///公会gmid;
+	optional int32 m_gangexp = 2;	///公会经验：
+	optional int32 m_ganglv = 3;	///公会等级;
+}
+
+
+message GM_ApplyResult
+{
+	required int32 m_result=1; 			///0申请成功\-1申请同时数不能超过3个\-2玩家已属于其它公会\
+		///-3该公会正在被申请\-4上次退出工会的五天禁止申请\-5公会已满员\-100数据操作失败
+	optional int64 m_preganggmid=2;		///之前公会;
+	optional int64 m_nowganggmid=3;		///现在公会;
+	optional int32 m_applycount=4;		///已申请的公会数;
+}
+

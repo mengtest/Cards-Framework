@@ -1,0 +1,45 @@
+
+²
+Proto/blackmarket.txt"˜
+GM_BlackMarketObjInfo
+m_objPos (
+m_objId (
+m_objBuy (
+
+m_objectId (
+m_objectNum (
+m_price (
+m_costId ("å
+GM_BlackMarketInfo_Return
+m_refreshMaxTime (
+m_refreshCount (
+m_spar (
+m_refreshCost (
+m_tokenCount (
+
+m_leftTime (
+m_count (4
+m_blackMarketObjInfo (2.GM_BlackMarketObjInfo"1
+GM_BlackMarket_Refresh_Return
+m_result ("?
+GM_BlackMarket_Buy_Request
+m_objPos (
+m_objId ("c
+GM_BlackMarket_Buy_Return
+m_result (
+m_spar (
+m_objPos (
+
+m_objectId ("=
+GM_BlackMarket_Return_obj
+objectid (
+number ("4
+"GM_BlackMarket_SmeltRecast_Request
+m_gmid ("l
+GM_BlackMarket_Smelt_Return
+m_result (
+	sparTotal ((
+data (2.GM_BlackMarket_Return_obj"Z
+GM_BlackMarket_Recast_Return
+m_result ((
+data (2.GM_BlackMarket_Return_obj

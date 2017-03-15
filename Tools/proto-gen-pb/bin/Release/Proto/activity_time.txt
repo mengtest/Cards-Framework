@@ -1,0 +1,30 @@
+message GM_ActivityDataList
+{
+	required int32 count=1;
+	repeated GM_ActivityData data=2;
+}
+
+message GM_ActivityData
+{
+	required int32 activityid=1;
+	required string name=9;
+	required int32 isactivity=2;	//是否开启
+	required int32 activity_type=3;	//1、限时活动 2、日常活动
+	required string strtime=10;	//活动时间
+	required int32 isEver=11;		//0、永久活动 1、每日活动 2、每周活动 3、一次性活动
+	required int32 level=4;
+	required string rules=5;
+	required string describe=6;
+	required int32 times=7;		//活动最大可参加次数
+	required int32 jointimes=8;	//玩家参加了的次数
+	required int32 buttontype=13;	//按钮类型
+	repeated GM_TimeLimit timelist=12;		//活动时间列表
+	optional bool isadd=14;				//是否加了次数
+	optional int32 addtimes=15;			//当前加的还剩多少次	
+}
+
+message GM_TimeLimit
+{
+	required int32 starttime=1;
+	required int32 endtime=2;
+}

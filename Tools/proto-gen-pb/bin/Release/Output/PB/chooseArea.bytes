@@ -1,0 +1,42 @@
+
+Ž
+Proto/chooseArea.txt"8
+SD_AreaList
+m_Count (
+m_Area (2.SD_Area"H
+SD_Area
+m_id (
+
+m_AreaName (	
+state (
+flag ("G
+GM_ChooseArea
+	m_Account (
+m_AreaID (
+	m_RandStr (	"e
+GM_ChooseAreaReturn
+m_Result (
+
+m_ServerIP (	
+
+m_Password (	
+m_PortNumber ("Î
+SM_DBAreaAccount
+m_roleCount (
+serverId (
+serverState (
+onlinePlayer (
+useip (	
+areaId ("
+
+dbAreaInfo (2.SM_DBAreaInfo
+
+serverFlag (
+	accountId	 ("q
+SM_DBAreaInfo
+m_roleLevel (
+
+m_roleName (	
+m_accountId (
+m_roleID (
+m_areaid (

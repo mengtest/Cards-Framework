@@ -1,0 +1,353 @@
+
+
+// 宠物界面返回
+message GM_Pet_UI_Open_Return
+{
+	required int32 m_Result=1;			// 0 成功   1 未解锁5级
+	repeated GM_Pet_info m_PetInfos=2;			// 宠物信息
+}
+message GM_Pet_info
+{
+	required int32 m_PetId=1;			// 宠物id
+	optional int32 m_bHadSummon=2;		// 类型  1 已经召唤   0 没有召唤
+	optional int32 m_Fragment=3;		// 碎片个数
+	optional int32 m_PetLevel=4;		// 宠物等级
+	optional int32 m_PetEvolveLvl=5;	// 宠物进化等级
+	optional int32 m_OnBattle=6;		// 上阵  0 没有上阵   11 12 21 22  对应槽位
+	optional int32 m_quality=7;			// 品质
+	optional int64 gmid=8;				// gmid
+	optional int32 fightig=9;			// 战斗力
+}
+
+// 宠物上阵
+message GM_Pet_OnBattle_Request
+{
+	required int32 m_PetId=1;			// 宠物id
+	optional int32 m_BattleHole=2;		// 上阵槽位  11  12  21  22   
+}
+
+// 宠物上阵返回
+message GM_Pet_OnBattle_Return
+{
+	required int32 m_Result=1;			// 0 成功 1 槽位未解锁 2 没有该宠物 3 没有该宠物表信息 
+										// 4 宠物已经在其他组上阵 5 错误的槽位   6 宠物技能设置错误
+	optional int32 m_Fightvalue=2;		// 战斗力变化
+	repeated GM_Pet_OnBattle_Info m_DataInfo=3;		// 信息
+}
+
+message GM_Pet_OnBattle_Info
+{
+	required int32 m_PetId=1;			// 宠物id
+	optional int32 m_BattleHole=2;		// 槽位 0  11  12  21  22 
+}
+
+// 单个宠物详细信息
+message GM_Pet_Info_Request
+{
+	required int32 m_PetId=1;			// 宠物id
+}
+
+// 单个宠物详细信息返回
+message GM_Pet_Info_Return
+{
+	required int32 m_Result=1;			// 0 成功 1 没有该宠物 2 没有宠物合成信息 3 没有该宠物技能信息 4 属性信息获取错误
+	optional int32 m_PetId=2;			// 宠物id
+	optional int32 m_PetLevel=3;		// 宠物等级
+	optional int32 m_PetEvolveLvl=4;	// 宠物进化等级
+	optional int32 m_Fightvalue=5;		// 战斗力
+	optional int32 m_Quality=6;			// 品质  6
+	optional int32 m_fragment=7;		// 碎片个数
+	optional GM_Property_Info data=8;	// 基本属性信息
+	repeated GM_Pet_Normal_Skill_Info m_PetSkills=9;		// 宠物技能集合
+	repeated GM_Pet_Realize_Skill_Info m_PetRealSkills=10;	// 宠物领悟技能
+}
+// 装备的领悟技能
+message GM_Pet_Realize_Skill_Info
+{
+	required int32 m_SkillId=1;			// 宠物技能id
+	optional int32 m_SkillLvl=2;		// 宠物技能等级
+}
+// 宠物普通技能
+message GM_Pet_Normal_Skill_Info
+{
+	required int32 m_SkillId=1;			// 宠物技能id
+	optional int32 m_SkillLvl=2;		// 宠物技能等级  被动技能 0 未激活 1激活  主动  表示等级
+}
+
+// 宠物详细属性
+message GM_Pet_Detail_Property_Request
+{
+	required int32 m_PetId=1;			// 宠物id
+}
+
+// 单个宠物详细信息返回
+message GM_Pet_Detail_Property_Return
+{
+	required int32 m_Result=1;				// 0 成功 1 宠物id错误
+	optional int32 m_PetId=2;				// 宠物id
+	repeated GM_Pet_Property_Info data=3;	// 宠物属性
+}
+message GM_Pet_Property_Info
+{
+	required int32 propertyId=1;
+	optional int32 propertyValue=2;
+}
+
+// 宠物召唤
+message GM_Pet_Summon_Request
+{
+	required int32 m_PetId=1;			//宠物id
+}
+
+// 宠物召唤返回
+message GM_Pet_Summon_Return
+{
+	required int32 m_Result=1;			//0 成功 1 碎片不足 2 没有该宠物表信息 3 已经存在该宠物 4 没有该宠物
+	optional int32 m_PetId=2;			//宠物id
+	optional int64 gmid=3;				// gmid
+	optional int32 fightig=4;			// 战斗力
+}
+
+// 宠物升级(突破)
+message GM_Pet_Upgrade_Request
+{
+	required int32 m_PetId=1;			//宠物id
+}
+
+// 宠物升级(突破)返回
+message GM_Pet_Upgrade_Return
+{
+	required int32 m_Result=1;			// 0 成功 1 钱不足 2 紫凝丹不足 3 满级或不能大于人物等级
+										// 4 没有召唤该宠物 5 没有该宠物表信息 6 没有宠物升级信息 
+										// 7 碎片不足 8 宠物升级表错误 9 进化等级不足
+	optional int32 m_PetId=2;			// 宠物id
+	optional int32 m_Level=3;			// 宠物等级
+	optional GM_Property_Info data=4;	
+}
+
+// 宠物进化
+message GM_Pet_Evolve_Request
+{
+	required int32 m_PetId=1;			//id
+}
+
+// 宠物进化返回
+message GM_Pet_Evolve_Return
+{
+	required int32 m_Result=1;			// 0 成功 1 碎片不足 2 没有召唤该宠物 3 没有宠物进化信息 4 达到最大等级
+	optional int32 m_PetId=2;			// 宠物id
+	optional int32 m_EvolveLvl=3;		// 宠物进化等级
+	optional GM_Property_Info data=4;
+}
+message GM_Property_Info
+{
+	required int32 attack=1;
+	optional int32 hp=2;
+}
+
+
+// 宠物福源 GM_PET_FATE_REQUEST
+//message GM_Pet_Info_Request
+// 返回 GM_PET_FATE_RETURN
+message GM_Pet_Fate_Info
+{
+	required int32 result=1;			//0 模块未解锁 1 成功 2 没有该宠物 3 宠物表错误 4 福源表错误 20 服务器错误
+	required int32 petid=2;
+	repeated GM_Pet_Fate_Pet info=5;
+}
+
+message GM_Pet_Fate_Pet
+{
+	required int32 petid=1;		// 相关宠物id
+	optional int32 level=2;		// 相关宠物福源等级
+	optional int32 unlock=3;	// 是否解锁 0 未解锁 1 解锁
+}
+
+
+
+// 领悟技能
+message GM_PetEquip_UI_Request
+{
+	required int32 petid = 1;				/// 宠物petid
+}
+
+message GM_PetEquip_UI_Return
+{
+	required int32 result=1;				// 0 成功   1 宠物未解锁42级 
+											// 2 没有该装备或宠物 3 总数据初始化错误
+											// 4 钻石花费表错误 5 属性表错误
+											// 6 槽位解锁信息错误 7 背包槽位解锁信息错误
+											// 8 无法读取宠物信息 
+	optional int32 petid=2;					// 宠物petid
+	optional int32 experience=3;			// 领悟经验
+	optional int32 pillNum=4;				// 领悟丹个数
+	optional int32 diamondTotal=5;			// 砖石领悟剩余次数
+	optional int32 diamondNeed=6;			// 当前钻石花费
+	optional float discount=7;				// 砖石折扣
+	repeated GM_PetEquip_Hole_Detail data=8;// 领悟技能
+}
+message GM_PetEquip_Hole_Detail
+{
+	required int32 holenum=1;			// 槽位  1-6    100-103
+	optional int32 propertyId=2;		//属性id 技能id
+	optional int32 propertyLevel=3;		//属性等级 技能等级
+	optional int32 maxlevel=4;			//最高等级;
+	optional int32 state=5;				// 0未解锁1可升级2不可升级;
+}
+
+
+// 领悟技能  升级
+message GM_PetEquip_Upgrade_Request
+{
+	required int32 petid = 1;				///宠物petid
+	optional int32 holenum=2;				// 槽位
+}
+// 返回结果
+message GM_PetEquip_Upgrade_Return
+{
+	required int32 result=1;		// 0 成功  1 槽位没技能 2 装备最大等级   3 领悟经验不足
+									// 4 等级限制  5 槽位错误  6 宠物petid错误 
+									//  8 升级信息表错误   7 装备表信息错误
+									// 9 总数据初始化错误
+	optional int32 petid=2;    		// 宠物petid
+	optional int32 holenum=3;
+	optional int32 propertyId=4;
+	optional int32 propertyLevel=5;
+	optional int32 experience=6;	// 剩余领悟经验
+	optional int32 canupgrade=7;    // 1 能 0 不能
+}
+
+// 领悟技能 
+message GM_PetEquip_Obtain_Request
+{
+	required int32 petid=1;    		// 宠物petid
+	optional int32 obtainType=2;  	// 1 一次   10 十次 
+}
+// 返回结果
+message GM_PetEquip_Obtain_Return
+{
+	required int32 result=1;  		// 0成功 1 没有钻石 2 没钻石领悟次数  3 没有花费表数据  
+									// 4 技能概率表错误 5 宠物petid错误 6 抽取次数错误
+									// 7 临时技能存在,无法领悟 8 没有该槽位信息
+									// 9 没有技能等级信息 10 总数据错误  11 消耗药丸错误
+									//12 系统错误吗，13不存在 该冥魂 装备13
+	optional int32 petid=2;    		// 宠物petid
+	optional int32 obtainType=3;  	// 1 一次   10 十次
+	optional int32 pillNum=4;  		// 领悟丹个数
+	optional int32 diamondTotal=5;	// 砖石领悟  剩余次数
+	optional int32 diamondNeed=6;	// 砖石领悟  当前需要个数
+	optional int32 getexp=7;  		// 获取的领悟经验
+	optional int32 experience=8;  	// 总领悟总经验
+	optional GM_PetEquip_Hole_Detail data=9;   //得到的技能
+}
+
+// 领悟技能  添加或替换
+message GM_PetEquip_AddSwap_Request
+{
+	required int32 petid=1;    			// 宠物petid
+	required int32 holenum=2;   		// 槽位			1-6   
+	required int32 replaceholenum=3;   	// 替换的槽位   100-103
+}
+// 返回结果
+message GM_PetEquip_AddSwap_Return
+{
+	required int32 result=1;  	// 0成功 1  临时或背包没技能 2 没有宠物petid
+								// 3 目标槽位技能类型重复 4 槽位错误 5  表错误
+								// 6 总数据错误
+	optional int32 petid=2;    		// 宠物petid
+	optional int32 holenum=3;		// 槽位			1-6   
+	optional int32 replaceholenum=4;// 替换的槽位   100-103
+	optional int32 getexp=5;  		// 获取领悟经验
+	optional int32 experience=6;  	// 总领悟总经验
+	repeated GM_PetEquip_Hole_Detail data=7;  // 技能信息 
+}
+
+// 领悟技能 放入背包
+message GM_PetEquip_Store_Request
+{
+	required int32 petid=1;    			// 宠物petid
+}
+// 
+message GM_PetEquip_Store_Return
+{
+	required int32 result=1;  			// 0成功 1 没有空间了 2 没有获得临时领悟技能 3 宠物petid 5 表错误 6 总数据错误    15 装备不是金色
+	optional int32 petid=2;    			// 物品gmidid  宠物petid
+	optional GM_PetEquip_Hole_Detail data=3;  // 技能信息
+}
+
+//  领悟技能  炼化
+message GM_PetEquip_Refine_Request
+{
+	required int32 petid=1;    			// 宠物petid
+	optional int32 holenum=3;			// 炼化槽位  背包或临时技能槽的技能 100+
+}
+// 
+message GM_PetEquip_Refine_Return
+{
+	required int32 result=1;  		// 0成功  1 没有槽位信息   2 宠物petid错误
+									// 5 表错误 6 总数据初始化错误 7  槽位错误
+	optional int32 petid=2;    		// 宠物petid
+	optional int32 holenum=3;		// 炼化槽位  100 就不需要读data了
+	optional int32 getexp=4;		// 获得的经验
+	optional int32 experience=5;  	// 技能总经验
+	repeated GM_PetEquip_Hole_Detail data=6; // 返回结果槽 
+}
+
+// 领悟技能 背包槽位解锁
+// 
+message GM_PetEquip_Unlock_Request
+{
+	required int32 petid=1;
+}
+message GM_PetEquip_Unlock_Return
+{
+	required int32 result=1;  		// 0成功 1 砖石不够 2 全部解锁了 3 错误id错误 5 表信息错误
+	optional int32 holenum=2;		// 解锁槽位
+	optional int32 petid=3;
+}
+
+// 升级状态改变
+message GM_PetEquip_Upgrade_Change
+{
+	repeated GM_PetEquip_Upgrade_Info data=1;
+}
+message GM_PetEquip_Upgrade_Info
+{
+	required int32 holenum=1;
+	optional int32 state=2;
+}
+
+// 碎片变化 GM_PET_FRAGMENT_CHANGE
+message GM_Notify_FragmentChange
+{
+	required int32 petid=1;			// 宠物id
+	optional int32 fragmentnum=2;	// 碎片总数量
+}
+
+
+
+
+//宠物灵绝 信息;
+message GM_PetSkillCount
+{
+required int32 petid=1;//宠物的petid;
+required int32 x=2;//装备的技能数目;
+required int32 y=3;//可装备的技能数量;
+required int32 isfull=4;//0临时槽位有技能，1没有;
+optional int32 level=5;//宠物的进化等级;
+}
+//宠物技能数量消息返回;  
+message GM_PetSkillCountReturn
+{
+
+required int32 result=1;//0 成功，1未达到42级，2系统错误;
+repeated GM_PetSkillCount petdata=2;//信息;
+}
+
+
+//客户端请求灵绝;
+message GM_EquipPetSkillRequest
+{
+required int64 equipGmid=1;//灵绝道具的gmid;
+required int32 idskilledpetid=2;//被灵绝的gmid;
+}

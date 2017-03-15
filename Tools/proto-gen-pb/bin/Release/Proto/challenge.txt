@@ -1,0 +1,276 @@
+// 打开道海试炼界面  GM_CHALLENGE_OPEN_REQUEST
+//message GM_Challenge_Open_Request
+//{
+//
+//}
+
+// GM_CHALLENGE_OPEN_RETURN
+message GM_Challenge_Open_Return
+{
+	required int32 result=1;      // 0 难度选择界面 1 普通 2 困难 3 噩梦 10 错误;
+
+	optional int32 roleHP=2;  		// 自己当前血量
+
+	optional string matchName=3;		// 对手名字
+	optional int32 matchlevel=4;		// 对手等级
+	optional int32 matchfightvalue=5;	// 对手战斗力
+
+	optional int32 matchtime=6;			// 挑战次数
+	optional int32 matchprofession=7;	// 对手职业
+}
+
+
+
+// 选择难度界面 GM_CHALLENGE_CHOOSE_REQUEST
+message GM_Challenge_Choose_Request
+{
+	required int32 degree=1;		// 困难程度  1 普通 2 困难 3 噩梦
+}
+//GM_CHALLENGE_CHOOSE_RETURN
+message GM_Challenge_Choose_Return
+{
+	required int32 result=1;      // 0 成功 1 错误难度 2 已经选择过难度 3 该难度未解锁 10 服务器错误;
+									// 成功还会发送 打开界面消息
+}
+
+
+
+// 试炼重置  GM_CHALLENGE_RESET_REQUEST
+//message GM_Challenge_Reset_Request
+//{
+//
+//}
+// GM_CHALLENGE_RESET_RETURN
+message GM_Challenge_Reset_Return
+{
+	required int32 result=1;      // 0 成功 	1 vip等级不足 2 今日无重置次数 		 10 服务器错误;
+}
+
+
+
+// 运势界面  GM_CHALLENGE_FORTUNE_OPEN_REQUEST
+//message GM_Challenge_Fortune_Open_Request
+//{
+//
+//}
+// GM_CHALLENGE_FORTUNE_OPEN_RETURN
+message GM_Challenge_Fortune_Open_Return
+{
+	required int32 remaintime=1;	// 剩余秒数
+	optional GM_Challenge_Fortune_Info fortuneInfo=2;  // 运势信息
+}
+
+
+// 运势重置   GM_CHALLENGE_RESET_FORTUNE_REQUEST
+//message GM_Challenge_Reset_Fortune_Request
+//{
+//
+//}
+// GM_CHALLENGE_RESET_FORTUNE_RETURN
+message GM_Challenge_Reset_Fortune_Return
+{
+	required int32 result=1;      // 0 成功 	1 钻石不足		 10 服务器错误;
+	optional int32 remaintime=2;	// 剩余时间
+	optional GM_Challenge_Fortune_Info fortuneInfo=8;  // 运势信息
+}
+
+message GM_Challenge_Fortune_Info
+{
+	required int32 fbtypeid=1;	// 地势
+	required int32 role_fortune=2;
+	required int32 pet_fortune=3;
+}
+
+
+
+// 开始试炼  GM_CHALLEBGE_START_REQUEST
+//message GM_Challenge_Start_Request
+//{
+//
+//}
+//  GM_CHALLEBGE_START_RETURN
+message GM_Challenge_Start_Return
+{
+	required int32 result=1;      // 0 成功 	1 挑战已经完 2 挑战失败 3 历练值不足 4 在其他副本中 10 服务器错误  11 临时背包有物品
+}
+
+
+
+// 试炼 宠物选择 GM_CHALLEBGE_READY_REQUEST
+//message GM_Challenge_Ready_Request
+//{
+//
+//}
+//  GM_CHALLEBGE_READY_RETURN
+message GM_Challenge_Ready_Return
+{
+	required int32 result=1;      // 0 成功 	1 挑战已经完成 2 挑战失败		 10 服务器错误;
+	repeated GM_Challenge_Pet_Info data=2; //宠物信息
+}
+
+message GM_Challenge_Pet_Info
+{
+	required int32 roleid=1;      		//
+	optional int64 gmid=2;				// 宠物gmid
+	optional int32 hpdecrease=3;		// 消耗血量
+	optional int32 ownerid=4;			// 0 自己的  雇佣的填拥有者的roleid
+	optional int32 onbattle=5;			// 上阵  0 未  11 12 21 22
+	optional int32 petid=6;				// 宠物id
+}
+
+
+message GM_Challenge_Proof_Notify
+{
+	required int32 proof=1;				// 试炼凭证
+}
+
+
+// 打开商店	GM_CHALLENGE_STORE_REQUEST
+//GM_Challenge_Store_Open_Request
+//{
+//}
+// GM_CHALLENGE_STORE_RETURN
+message GM_Challenge_Store_Open_Return
+{
+	required int32 proof=1;				// 试炼凭证
+	repeated GM_Challenge_Store_Object data=2;
+	optional int32 resetcost=3;			// 重置消耗
+}
+message GM_Challenge_Store_Object
+{                    
+	required int32 objectid=1;               //物品ID                                                                                            
+  	required int32 remaindercount=2;          //剩余购买次数
+  	required int32 costnum=3;					// 兑换消耗凭证数量
+}
+
+
+
+// 重置试炼商店 	GM_CHALLENGE_STORE_RESET_REQUEST 
+// GM_CHALLENGE_STORE_RESET_RETURN
+message GM_Challenge_Store_Reset_Return
+{
+	required int32 result=1;              //重置结果  0成功   1试炼凭证不足   10服务器内部错误 
+	required int32 proof=2;         		//当前试炼凭证               
+}
+
+
+
+// 商店购买
+message GM_Challenge_Store_Buy_Return
+{
+	required int32 objectid=1;               //物品ID                   
+}
+
+message GM_Challenge_Store_Buy_Result
+{
+	required int32 result=1;              //购买结果，0成功， 1试炼凭证不足  2可购买次数不足  3物品不存在， 
+											//  4临时背包有物品  10内部服务器错误 
+	required int32 objectid=2;            //物品ID 
+	required int32 proof=3;        		//当前试炼凭证                 
+}
+
+
+
+// 上下阵宠物 自己的  结构使用宠物的上阵 
+message GM_Challenge_OnBattle
+{
+	required int64 gmid=1;			// 宠物gmid
+	optional int32 battleHole=2;	// 上阵槽位  11  12  21  22   
+}
+
+// 宠物上阵返回
+message GM_Challenge_OnBattle_Return
+{
+	required int32 result=1;			// 0 成功 1 没有该宠物 2 错误的槽位 3 宠物已经在其他组上阵
+										// 4 宠物类型相同不可上阵 5槽位未解锁  10 服务器错误
+	optional int32 battleHole=2;		// 0 下阵 上阵槽位  11  12  21  22   
+	repeated GM_Challenge_OnBattle dataInfo=3;		// 信息
+}
+
+
+// 出租宠物界面		GM_CHALLENGE_RENTPET_REQUEST
+//message GM_Challenge_RentPet_Request
+//{
+//}
+//	GM_CHALLENGE_RENTPET_RETURN,
+message GM_Challenge_RentPet_Return
+{
+	required int32 result=1;		// 0 成功 1 无公会  10 服务器错误
+ 	optional int64 gmid=2;			// 出租的宠物信息
+	optional int32 money=4;			// 价格
+}
+
+
+
+// 出租宠物	GM_CHALLENGE_RENTPET_RENT_REQUEST,
+message GM_Challenge_RentPet_Rent_Request
+{
+	required int64 gmid=1;
+	required int32 operate=2;   // 0 出租  1 撤下
+}
+//	GM_CHALLENGE_RENTPET_RENT_RETURN,
+message GM_Challenge_RentPet_Rent_Return
+{
+	required int32 result=1;		// 0 成功 1 gmid错误 2 无公会 3操作数错误 10 服务器错误
+ 	optional int64 gmid=2;			// 结果
+ 	required int32 operate=3;		// 0 出租  1 撤下
+	optional int32 money=4;			// 价格
+}
+
+// 宠物租赁  租赁后出现在自己的宠物当中
+
+// 租赁界面		GM_CHALLENGE_RENTPET_OPEN_REQUEST
+//message GM_Challenge_RentPet_Open_Request
+//{
+//}
+//	GM_CHALLENGE_RENTPET_OPEN_RETURN,
+message GM_Challenge_RentPet_Open_Return
+{
+	required int32 result=1;		// 0 成功 1 无公会 2 已经雇佣 10 服务器错误
+	required int32 count=2;
+	repeated GM_Challenge_RentPet_Info data=3;
+}
+message GM_Challenge_RentPet_Info
+{
+	required int64 gmid=1;
+	optional int32 petid=2;
+	optional int32 level=3;
+	optional int32 evolve=4;		// 进化等级
+	optional int32 money=5;			// 价格
+	optional string ownerName=6;	// 拥有者名字
+}
+
+
+//雇宠物 GM_CHALLENGE_RENTPET_HIRE_REQUEST,
+message GM_Challenge_RentPet_Hire_Request
+{
+	required int64 gmid=1;
+}
+//	GM_CHALLENGE_RENTPET_HIRE_RETURN,
+message GM_Challenge_RentPet_Hire_Return
+{
+	required int32 result=1;		// 0 成功 1 gmid错误 2 无公会 3 已经租过宠物 4 没钱  10 服务器错误
+ 	optional int64 gmid=2;			// 结果
+ 	optional GM_Challenge_Pet_Info data=3; //成功 宠物信息
+}
+
+
+message GM_Challenge_SwitchCardItem
+{
+	required int32 pos=1;//请求翻牌的位置(0,1,2)
+	required int32 objectid=2;//物品id
+	required int32 objectnum=3;//物品数量
+}
+//请求翻牌
+message GM_Challenge_SwitchCard_Request
+{
+	required int32 pos=1;//请求翻牌的位置(0,1,2)
+}
+
+message GM_Challenge_SwitchCard_Return
+{
+	required int32 result=1; //操作结果(0成功,其他为错误返回值)
+	required int32 pos=2;	//翻牌的位置
+	repeated GM_Challenge_SwitchCardItem item=3;//物品
+}
+

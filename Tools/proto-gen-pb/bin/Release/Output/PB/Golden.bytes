@@ -1,0 +1,194 @@
+
+©
+Proto/Golden.txt"I
+GM_CREATEROOM_Golden_Return
+result (
+
+ID (
+areaid ("<
+GM_CREATEROOM_Golden_Request
+areaid (
+rate ("J
+GM_LOGINROOM_Golden_Return
+m_result (
+
+ID (
+areaid ("9
+GM_LOGINROOM_Golden_Request
+
+ID (
+areaid ("9
+GM_LOGINCOPY_Golden_Request
+
+ID (
+areaid (",
+GM_LOGINCOPY_Golden_Return
+result ("‡
+GM_GoldenData
+playerid (
+name (	
+place (
+golde (
+head (
+frame (
+sex (
+qqhead (	"R
+GM_Room_GoldenData
+
+ID (
+ownid (!
+	m_fishman (2.GM_GoldenData"R
+GM_AreaAllinfoGolden_Return
+areaid (#
+m_data (2.GM_Room_GoldenData"-
+GM_AreaAllinfoGoldenRequest
+areaid ("7
+GM_leaveGoldenRequest
+areaid (
+roomid ("S
+GM_leaveGoldenReturn
+errorid (
+roleid (
+areaid (
+
+id ("3
+GM_Golden_All_request
+areaid (
+
+id ("*
+GM_Golden_Begin_return
+backerid ("L
+GM_Golden_Card
+roleid (
+type_id (
+card (
+pos ("&
+GM_Golden_Broad_Card
+roleid ("&
+GM_Golden_add_request
+money ("F
+GM_Golden_add_return
+errorid (
+roleid (
+money ("<
+GM_Golden_Compare_request
+roleid (
+nomoney ("m
+GM_Golden_Compare_return
+winid (
+	failureid (
+money (
+errorid (
+nomoney (")
+GM_Golden_maker_return
+makerid ("l
+GM_Golden_allCard_return
+winerid (
+	shouldget (
+get (
+m_data (2.GM_Golden_Card";
+GM_Golden_abandon_return
+errorid (
+roleid (")
+GM_Golden_gamble_return
+gamble ("=
+GM_Golden_selfGamble_return
+gamble (
+roleid ("%
+SM_Golden_Boun_return
+bout ("+
+GM_Golden_Begin_Time_return
+time ("1
+!GM_Golden_Begin_Singletime_return
+time ("(
+GM_Golden_pause_request
+pause ("'
+GM_Golden_pause_return
+pause (" 
+GM_Golden_show
+roleid ("F
+GM_Golden_show_return
+roleid (
+data (2.GM_Golden_Card")
+GM_Golden_private_request
+rate ("G
+GM_Golden_private_return
+errorid (
+
+id (
+areaid ("7
+GM_Godlen_invite_requrest
+
+id (
+roleid ("*
+GM_Golden_invite_return
+errorid ("u
+GM_Golden_invitate_roler_eturn
+roleid (
+name (	
+rate (
+head (
+frame (
+
+id ("<
+GM_Golden_kick
+roleid (
+makeid (
+
+id ("H
+GM_Golden_kick_return
+errorid (
+roleid (
+makeid ("*
+GM_Golden_switch_return
+errorid ("F
+SM_Golden_Notify_leave
+copyid (
+fbid (
+roleid ("‚
+GM_GodlenMan_state
+roleid (
+m_gamble (
+	m_abandon (
+	m_hascard (
+m_isCompare (
+m_money ("¸
+GM_GoldenRoom_state
+m_singgamble (
+m_totalgamble (
+m_Singroleid (#
+m_data (2.GM_GodlenMan_state
+m_groupgamble (
+
+m_singtime (
+m_bout ("*
+GM_Golden_offline_return
+roleid (")
+GM_Godlen_Charge_return
+roleid ("5
+GM_Golden_prepare_request
+
+id (
+type ("I
+GM_Godlen_prepare_return
+errorid (
+roleid (
+type ("%
+GM_Golden_start_request
+
+id ("K
+GM_Godlen_start_return
+errorid (
+roleid (
+lasttime (".
+GM_Golden_charge_request
+
+typecharge ("%
+GM_Godlen_room_role
+roleid ("„
+GM_Golden_roomcard_return
+	monsterid (
+roomid (
+copyid (
+rate (&
+roleinfo (2.GM_Godlen_room_role

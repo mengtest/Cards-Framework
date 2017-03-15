@@ -21,6 +21,7 @@ function LoginScene:Begin()
 	NetManager.RegisterEvent(GameMessage.GM_ACCOUNT_VERIFY_RETURN, LoginScene.OnLoginReturn);
 	NetManager.RegisterEvent(GameMessage.GM_ACCOUNT_CREATE_RETURN, LoginScene.OnRegisterReturn);
 	NetManager.RegisterEvent(GameMessage.GM_CHOOSE_AREA_RETURN, LoginScene.OnChoseAreaReturn);
+	-- NetManager.RegisterEvent(GameMessage.GM_CHOOSE_AREA_RETURN, LoginScene.OnChoseAreaReturn);
 	LoginScene:RequestVerifyVersion()
 end
 
@@ -275,9 +276,19 @@ end
 function LoginScene.OnConnectLogicServer(connection)
 	UIManager.CloseProgressDialog();
 	UIManager.OpenTipsDialog("成功连接至逻辑服务器");
-	SceneManager:GotoScene(SceneType.LoginScene);
+	SceneManager:GotoScene(SceneType.HallScene);
 end
 
 function LoginScene.OnDisconnectLogicServer(connection)
 	UIManager.OpenTipsDialog("已经断开与逻辑服务器的连接");
+end
+
+function LoginScene.RequestAccountRoles()
+	local loginScene = LoginScene:Instance();
+	local msg = {
+		m_accountID = loginScene.Token.AccountID,
+		m_ared = loginScene.Token.LatestArea,
+	};
+	local buffer = NetManager.EncodeMsg('GM_ROLELIST_REQUEST', msg);
+	NetManager.SendEvent(ServerType.Logic, loginScene.Token.AccountID)
 end

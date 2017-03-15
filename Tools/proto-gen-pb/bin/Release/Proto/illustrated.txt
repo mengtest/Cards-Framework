@@ -1,0 +1,25 @@
+//玩家好友数据
+message GM_Illustrated_Open_Return
+{          
+  required int32 m_result=1;    //请求结果  0成功  1错误                                                                                                                     
+  repeated int32 m_objectid=2;  //已收集的物品id
+}
+
+message GM_Illustrated_ObjectGet_Return
+{          
+  required int32 m_type=1;   	//收集到的物品类型                                                                                                                    
+  optional int32 m_objectid=2;  	//收集到的物品id
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
