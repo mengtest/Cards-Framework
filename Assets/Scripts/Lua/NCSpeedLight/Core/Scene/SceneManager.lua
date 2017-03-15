@@ -75,7 +75,7 @@ function SceneManager:RegisterScene(scene)
 end
 
 function SceneManager:GotoScene(name)
-	scene = self.Scenes[name];
+	local scene = self.Scenes[name];
 	if scene == nil then
 		Log.Error('SceneManager: can not GotoScene caused by nil scene,name is ' .. name)
 		return;
@@ -83,10 +83,10 @@ function SceneManager:GotoScene(name)
 	if scene == self.NextScene then
 		return
 	end
-	if self.LastScene == nil then
+	if self.CurrentScene == nil then
 		self.LastScene = self.CurrentScene;
 		self.NextScene = scene;
-	elseif Instance.m_LastState.Name ~= name then
+	elseif self.CurrentScene.Name ~= name then
 		self.LastScene = self.CurrentScene;
 		self.NextScene = scene;
 	else

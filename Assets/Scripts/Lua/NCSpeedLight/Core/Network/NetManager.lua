@@ -20,18 +20,9 @@ end
 
 -- 初始化PB文件，注册lua解析
 function InitPBMessage()
-	paths =
-	{
-		NCSpeedLight.SharedVariable.SCRIPT_BUNDLE_PATH .. "PBMessage.pb",
-		NCSpeedLight.SharedVariable.SCRIPT_BUNDLE_PATH .. "LoginInfo.pb",
-	};
-	for i = 1, # paths do
-		path = paths[i];
-		addr = io.open(path, "rb")
-		buffer = addr:read "*a"
-		addr:close()
-		protobufProcessor.register(buffer)
-	end
+	local path = NCSpeedLight.SharedVariable.SCRIPT_BUNDLE_PATH .. "PBMessage.pb";
+	local buffer = Utility.OpenFile(path);
+	protobufProcessor.register(buffer)
 end
 
 function NetManager.CreateConnection(serverType, host, port, onConnected, onDisconnected)

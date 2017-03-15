@@ -4,35 +4,78 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Diagnostics;
 
 class Program
 {
-    public const string PROTO_FILE_DIRECTORY = "C:/Users/威/Desktop/客户端热更新/protoc-gen-lua/public/protoc/proto";
-    public const string PB_PROTO_FILE_NAME = "C:/Users/威/Desktop/客户端热更新/protoc-gen-lua/public/protoc/proto/PBMessage.proto";
-    static void Main(string[] args)
+    public const string OUTPUT_DIRECTORY = "Output";
+    public const string PROTOC_EXE = "protoc.exe";
+    public static void Main(string[] args)
     {
-        string[] filePaths = Directory.GetFiles(PROTO_FILE_DIRECTORY, "*txt");
-        if (File.Exists(PB_PROTO_FILE_NAME))
+        GeneratePBFile();
+        MergePBFile();
+    }
+
+    private static void GeneratePBFile()
+    {
+        string outputPath = OUTPUT_DIRECTORY + "/PB";
+        try
         {
-            File.Delete(PB_PROTO_FILE_NAME);
-        }
-        FileStream pbFile = File.Create(PB_PROTO_FILE_NAME);
-        StringWriter sw = new StringWriter();
-        if (filePaths != null && filePaths.Length > 0)
-        {
-            for (int i = 0; i < filePaths.Length; i++)
+            if (Directory.Exists(outputPath))
             {
-                string filePath = filePaths[i];
+                Directory.Delete(outputPath, true);
+                Directory.CreateDirectory(outputPath);
+            }
+            else
+            {
+                Directory.CreateDirectory(outputPath);
+            }
+        }
+        catch (Exception e) { Console.Write(e.Message); }
+        string[] protoFiles = Directory.GetFiles("Proto", "*.txt");
+        if (protoFiles != null && protoFiles.Length > 0)
+        {
+            for (int i = 0; i < protoFiles.Length; i++)
+            {
+                string filePath = protoFiles[i];
                 if (File.Exists(filePath) == false)
                 {
                     continue;
                 }
-                using (var file = File.Open(filePath, FileMode.Open))
+                string fileName = Path.GetFileName(filePath);
+                string outFileName = Path.GetFileNameWithoutExtension(fileName) + ".bytes";
+                string cmd = "--descriptor_set_out=./{0}/{1} ./{2}";
+                cmd = string.Format(cmd, outputPath, outFileName, "Proto/" + fileName);
+                Process.Start(PROTOC_EXE, cmd);
+            }
+        }
+    }
+
+    private static void MergePBFile()
+    {
+        string pbmessageFile = OUTPUT_DIRECTORY + "/PBMessage.pb";
+        if (File.Exists(pbmessageFile))
+        {
+            File.Delete(pbmessageFile);
+        }
+        using (var file = File.Open(pbmessageFile, FileMode.CreateNew))
+        {
+            BinaryWriter writer = new BinaryWriter(file);
+            string[] pbFiles = Directory.GetFiles("Output/PB", "*.bytes");
+            if (pbFiles != null && pbFiles.Length > 0)
+            {
+                for (int i = 0; i < pbFiles.Length; i++)
                 {
-                    byte[] bytes = new byte[file.Length];
-                    file.Read(bytes, 0, (int)file.Length);
+                    string filePath = pbFiles[i];
+                    if (File.Exists(filePath) == false)
+                    {
+                        continue;
+                    }
+                    byte[] bytes = File.ReadAllBytes(filePath);
+                    writer.Write(bytes);
                 }
             }
+            file.Close();
         }
     }
 }

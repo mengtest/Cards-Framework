@@ -45,11 +45,15 @@ namespace NCSpeedLight
 
         public static bool CreateConnection(int type, string host, int port, ServerConnection.Listener listener)
         {
-            DeleteConnection(type);
-            ServerConnection connection = new ServerConnection();
-            m_Connections.Add(type, connection);
-            connection.SetNetStateListener(listener);
-            return connection.Connect(host, port);
+            Loom.QueueOnMainThread(delegate
+            {
+                DeleteConnection(type);
+                ServerConnection connection = new ServerConnection();
+                m_Connections.Add(type, connection);
+                connection.SetNetStateListener(listener);
+                connection.Connect(host, port);
+            });
+            return true;
         }
 
         public static void DeleteConnection(int type)

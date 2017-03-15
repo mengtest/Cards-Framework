@@ -1,4 +1,4 @@
-LoginScene = {};
+LoginScene = {Token};
 
 function LoginScene:New()
 	o = {};
@@ -17,10 +17,10 @@ function LoginScene:OnInit()
 end
 
 function LoginScene:Begin()
-	NetManager.RegisterEvent(211, OnVerifyVersionReturn)
-	NetManager.RegisterEvent(203, OnLoginReturn)
-	NetManager.RegisterEvent(205, OnRegisterReturn)
-	
+	NetManager.RegisterEvent(GameMessage.GM_VERSION_RETURN, LoginScene.OnVerifyVersionReturn);
+	NetManager.RegisterEvent(GameMessage.GM_ACCOUNT_VERIFY_RETURN, LoginScene.OnLoginReturn);
+	NetManager.RegisterEvent(GameMessage.GM_ACCOUNT_CREATE_RETURN, LoginScene.OnRegisterReturn);
+	NetManager.RegisterEvent(GameMessage.GM_CHOOSE_AREA_RETURN, LoginScene.OnChoseAreaReturn);
 	LoginScene:RequestVerifyVersion()
 end
 
@@ -28,9 +28,10 @@ function LoginScene:Update()
 end
 
 function LoginScene:End()
-	NetManager.UnregisterEvent(211, OnVerifyVersionReturn)
-	NetManager.UnregisterEvent(203, OnLoginReturn)
-	NetManager.UnregisterEvent(205, OnRegisterReturn)
+	NetManager.UnregisterEvent(GameMessage.GM_VERSION_RETURN, LoginScene.OnVerifyVersionReturn);
+	NetManager.UnregisterEvent(GameMessage.GM_ACCOUNT_VERIFY_RETURN, LoginScene.OnLoginReturn);
+	NetManager.UnregisterEvent(GameMessage.GM_ACCOUNT_CREATE_RETURN, LoginScene.OnRegisterReturn);
+	NetManager.UnregisterEvent(GameMessage.GM_CHOOSE_AREA_RETURN, LoginScene.OnChoseAreaReturn);
 end
 
 function LoginScene:OpenLoginRecord()
@@ -55,7 +56,7 @@ function LoginScene:GetLoginRecord()
 	return self.LoginRecord;
 end
 
-function LoginScene:AddLoginRecord(accountStr, passwordStr)
+function LoginScene:AddLoginRecord(accountStr, passwordStr, latestAreaStr)
 	if LoginScene:ExistRecord(accountStr) then
 		return
 	end
@@ -65,6 +66,7 @@ function LoginScene:AddLoginRecord(accountStr, passwordStr)
 			{
 				account = accountStr,
 				password = passwordStr,
+				latestArea = latestAreaStr,
 			}
 		}
 	}
@@ -74,6 +76,7 @@ function LoginScene:AddLoginRecord(accountStr, passwordStr)
 			info.loginInfo[i + 1] = {
 				account = self.LoginRecord.loginInfo[i].account,
 				password = self.LoginRecord.loginInfo[i].password,
+				latestArea = self.LoginRecord.loginInfo[i].latestArea,
 			};
 		end
 	end
@@ -119,10 +122,10 @@ function LoginScene:RequestVerifyVersion()
 		version = UrlKeeper.GetVersion()
 	}
 	local buffer = NetManager.EncodeMsg("GM_VerifyVersion", msg)
-	NetManager.SendEvent(210, buffer, 0, 1, ServerType.Login)
+	NetManager.SendEvent(GameMessage.GM_VERIFY_VERSION, buffer, 0, 1, ServerType.Login)
 end
 
-function OnVerifyVersionReturn(evt)
+function LoginScene.OnVerifyVersionReturn(evt)
 	local obj = NetManager.DecodeMsg("GM_VerifyVersionReturn", evt)
 	if obj.result == 0 then
 		UIManager.OpenWindow("Login/ui_normalLogin")
@@ -148,7 +151,7 @@ function LoginScene:RequestLogin(account, password)
 		}
 	}
 	buffer = NetManager.EncodeMsg('GM_AccountRequest', msg);
-	NetManager.SendEvent(202, buffer, 0, 1, ServerType.Login)
+	NetManager.SendEvent(GameMessage.GM_ACCOUNT_VERIFY, buffer, 0, 1, ServerType.Login)
 	local option = ProgressDialogOption:New();
 	option.AutoClose = true;
 	option.Timeout = 10;
@@ -159,14 +162,24 @@ function LoginScene:RequestLogin(account, password)
 	UIManager.OpenProgressDialog(option);
 end
 
-function OnLoginReturn(evt)
+function LoginScene.OnLoginReturn(evt)
 	UIManager.CloseProgressDialog();
 	local obj = NetManager.DecodeMsg("GM_AccountReturn", evt)
 	if obj.m_Result == 0 then
 		UIManager.OpenTipsDialog("登录成功")
-		-- 保存账号信息至本地
 		local loginScene = LoginScene:Instance();
-		LoginScene:AddLoginRecord(loginScene.currentAccount, loginScene.currentPassword);
+		
+		-- 记录至内存中
+		loginScene.Token = {};
+		loginScene.Token.AccountID = obj.m_AccountID;
+		loginScene.Token.AccountToken = obj.m_RandStr;
+		loginScene.Token.LatestArea = obj.m_lastloginServerID;
+		
+		-- 保存至本地
+		LoginScene:AddLoginRecord(loginScene.currentAccount, loginScene.currentPassword, obj.m_lastloginServerID);
+		
+		-- 请求选区
+		LoginScene:RequestChooseArea();
 	elseif obj.m_Result == 1 then
 		UIManager.OpenTipsDialog("账号密码错误")
 	elseif obj.m_Result == 2 then
@@ -199,10 +212,10 @@ function LoginScene:RequestRegister(account, password)
 		}
 	}
 	local buffer = NetManager.EncodeMsg("GM_AccountCreate", msg)
-	NetManager.SendEvent(204, buffer, 0, 1, ServerType.Login)
+	NetManager.SendEvent(GameMessage.GM_ACCOUNT_CREATE, buffer, 0, 1, ServerType.Login)
 end
 
-function OnRegisterReturn(evt)
+function LoginScene.OnRegisterReturn(evt)
 	local obj = NetManager.DecodeMsg("GM_AccountCreateReturn", evt)
 	if obj.m_Result == 0 then
 		UIManager.OpenTipsDialog("创建成功")
@@ -226,4 +239,45 @@ function OnRegisterReturn(evt)
 		UIManager.OpenTipsDialog("是关键字")
 	else
 	end
+end
+
+function LoginScene:RequestChooseArea()
+	local loginScene = LoginScene:Instance();
+	local msg = {
+		m_Account = loginScene.Token.AccountID,
+		m_AreaID = loginScene.Token.LatestArea,
+		m_RandStr = loginScene.Token.AccountToken,
+	};
+	local buffer = NetManager.EncodeMsg('GM_ChooseArea', msg);
+	NetManager.SendEvent(GameMessage.GM_CHOOSE_AREA, buffer, 0, 1, ServerType.Login);
+end
+
+function LoginScene.OnChoseAreaReturn(evt)
+	local obj = NetManager.DecodeMsg('GM_ChooseAreaReturn', evt);
+	if obj.m_Result == 0 then
+		UIManager.OpenTipsDialog('选区成功');
+		local option = ProgressDialogOption:New();
+		option.AutoClose = true;
+		option.Timeout = 10;
+		option.Content = '连接服务器中...';
+		option.OnAutoClose = function()
+			UIManager.OpenTipsDialog('请求超时，请检查设备的网络状况');
+		end;
+		UIManager.OpenProgressDialog(option);
+		Log.Info("Logic server ip is " .. obj.m_ServerIP);
+		Log.Info("Logic server port is " .. obj.m_PortNumber);
+		NetManager.CreateConnection(ServerType.Logic, obj.m_ServerIP, obj.m_PortNumber, LoginScene.OnConnectLogicServer, LoginScene.OnDisconnectLogicServer);
+	else
+		UIManager.OpenTipsDialog('选区失败');
+	end
+end
+
+function LoginScene.OnConnectLogicServer(connection)
+	UIManager.CloseProgressDialog();
+	UIManager.OpenTipsDialog("成功连接至逻辑服务器");
+	SceneManager:GotoScene(SceneType.LoginScene);
+end
+
+function LoginScene.OnDisconnectLogicServer(connection)
+	UIManager.OpenTipsDialog("已经断开与逻辑服务器的连接");
 end

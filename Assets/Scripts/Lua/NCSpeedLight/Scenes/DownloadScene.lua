@@ -17,7 +17,7 @@ function DownloadScene:Begin()
 	--    else
 	UIManager.OpenWindow("Login/ui_loginBk")
 	--    end
-	coroutine.start(CheckVersion)
+	coroutine.start(DownloadScene.CheckVersion)
 end
 
 function DownloadScene:Update()
@@ -26,7 +26,7 @@ end
 function DownloadScene:End()
 end
 
-function CheckVersion()
+function DownloadScene.CheckVersion()
 	local url = UrlKeeper.JsonUrl();
 	Log.Info('Request json url at ' .. url);
 	local www = UnityEngine.WWW(url);
@@ -53,16 +53,16 @@ function CheckVersion()
 		UIManager.OpenTipsDialog('请求超时，请检查设备的网络状况');
 	end;
 	UIManager.OpenProgressDialog(option);
-	NetManager.CreateConnection(ServerType.Login, json.accountserverip, json.accountserverport, OnConnectLoginServer, OnDisconnectLoginServer);
+	NetManager.CreateConnection(ServerType.Login, json.accountserverip, json.accountserverport, DownloadScene.OnConnectLoginServer, DownloadScene.OnDisconnectLoginServer);
 end
 
 
-function OnConnectLoginServer(connection)
+function DownloadScene.OnConnectLoginServer(connection)
 	UIManager.CloseProgressDialog();
 	UIManager.OpenTipsDialog("成功连接至登录服务器");
 	SceneManager:GotoScene(SceneType.LoginScene);
 end
 
-function OnDisconnectLoginServer(connection)
+function DownloadScene.OnDisconnectLoginServer(connection)
 	UIManager.OpenTipsDialog("已经断开与登录服务器的连接");
 end

@@ -23,6 +23,8 @@ require('NCSpeedLight.Utils.LuaDebug')('localhost', 7003);
 
 require 'NCSpeedLight.Utils.Utility'
 
+require 'NCSpeedLight.Protocol.GameMessage'
+
 
 protobufProcessor = require 'protobuf'
 jsonProcessor = require 'cjson'
