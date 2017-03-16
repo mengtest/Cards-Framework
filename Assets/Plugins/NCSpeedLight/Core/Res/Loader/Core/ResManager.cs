@@ -9,7 +9,7 @@
            //
 //----------------------------------------------------------------*/
 
-#define ASSETBUNDLE_MODE
+//#define ASSETBUNDLE_MODE
 //#define COMPRESSED_BUNDLE
 
 using System;
@@ -457,7 +457,7 @@ namespace NCSpeedLight
                     string filePath = AssetBundleSourceDirectory + bundleMD5;
 
                     AssetBundle bundle = AssetBundle.LoadFromFile(filePath);
-                  
+
                     loadedBundle.Bundle = bundle;
 
                 }
