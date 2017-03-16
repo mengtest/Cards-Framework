@@ -1,11 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2015
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cards-Framework.CSharp.Plugins", "Cards-Framework.CSharp.Plugins.csproj", "{4BBE1FB9-4A43-07E5-D1A6-B430F1A61F0F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cards-Framework.CSharp", "Cards-Framework.CSharp.csproj", "{0F958834-A47C-D795-26DE-1F5F9B6A391D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cards-Framework.CSharp.Editor.Plugins", "Cards-Framework.CSharp.Editor.Plugins.csproj", "{1361DACE-2F66-FCB1-A14A-BEB8386B16FA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cards-Framework.CSharp.Editor", "Cards-Framework.CSharp.Editor.csproj", "{0E315512-58BB-045F-E4D2-FFDD8BC7102E}"
 EndProject
@@ -15,18 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4BBE1FB9-4A43-07E5-D1A6-B430F1A61F0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4BBE1FB9-4A43-07E5-D1A6-B430F1A61F0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4BBE1FB9-4A43-07E5-D1A6-B430F1A61F0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4BBE1FB9-4A43-07E5-D1A6-B430F1A61F0F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0F958834-A47C-D795-26DE-1F5F9B6A391D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0F958834-A47C-D795-26DE-1F5F9B6A391D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F958834-A47C-D795-26DE-1F5F9B6A391D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F958834-A47C-D795-26DE-1F5F9B6A391D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1361DACE-2F66-FCB1-A14A-BEB8386B16FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1361DACE-2F66-FCB1-A14A-BEB8386B16FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1361DACE-2F66-FCB1-A14A-BEB8386B16FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1361DACE-2F66-FCB1-A14A-BEB8386B16FA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0E315512-58BB-045F-E4D2-FFDD8BC7102E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0E315512-58BB-045F-E4D2-FFDD8BC7102E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E315512-58BB-045F-E4D2-FFDD8BC7102E}.Release|Any CPU.ActiveCfg = Release|Any CPU
