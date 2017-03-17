@@ -1,0 +1,42 @@
+//捕鱼 db请求;
+message SM_FishDb_request
+{
+//人物id;
+required int32 roleid=1;
+}
+
+
+//捕鱼返回;
+message SM_FishDb_return
+{
+//人物id -1没有数据;
+required int32 roleid=1;
+optional string debockgun=2;
+optional int32 gunid=3;
+optional int32 debolckrate=4;
+optional int32 rate=5;
+optional int32 power=6;
+}
+
+
+//db 共用信息请求;
+message SM_Fish_CommonDb
+{
+required int32 roleid=1;
+}
+
+
+
+message SM_Fish_Common_info
+{
+required int32 type_id=1;
+optional int32 type_value=2;
+optional int32 value=3;
+}
+//共用信息 返回;
+message SM_Fish_Common_return
+{
+//-1 表示 没有数据;
+required int32 roleid=1;
+repeated SM_Fish_Common_info data=2;
+}

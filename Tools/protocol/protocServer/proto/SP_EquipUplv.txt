@@ -1,0 +1,48 @@
+
+message DB_RequestData
+{
+	required int32 m_roleid=1;			//角色id;
+}
+
+message DB_EquipUplvReturn
+{
+	required int32 m_roleid=1;				//角色id;
+	repeated DB_EquipUplv m_equiplvdatas=2;	//装备升级信息;
+}
+
+message DB_EquipUplv
+{
+	required int32 m_roleid=1;			///角色id;
+	required int64 m_gmid=2;			///装备gmid;
+	required int32 m_equipid=3;			///装备typeid;
+	required int32 m_refinlevel=4;		///精练等级;
+	required int32 m_forgelevel=5;		///强化等级;
+	required int32 m_forgeexp=6;		///强化经验;	
+	required int32 m_awakenlevel=7;		///突破等级;
+	optional int32 packageunlock=8;		// 觉醒背包解锁,默认第一个解锁的
+	optional int32 winglevel=9;		//羽化等级;
+	required int32 isdelete=10;			///0未删除1删除
+}
+
+message DB_EquipAwakenReturn
+{
+	required int32 count=1;				// 个数
+	repeated DB_EquipAwakenEntry data=2; // 集合
+}
+
+message DB_EquipAwakenEntry
+{
+	required int64 gmid=1;					// 装备gmid
+	optional int32 roleid=2;					// 角色id
+	optional int32 holenum=3;					// 槽位 1-6 可装备槽位  100 临时 100+ 背包
+	optional int32 awakenid=4;					// 觉醒id
+	optional int32 awakenlevel=5;				// 觉醒等级
+}
+
+message DB_EquipAwakenInfoReturn
+{
+	required int32 result=1;				// 结果 0 没数据 1 有数据
+	optional int32 roleid=2;				// 角色id
+	optional int64 experience=3;			// 总灵性
+	optional int32 count=4;					// 钻石觉醒次数
+}

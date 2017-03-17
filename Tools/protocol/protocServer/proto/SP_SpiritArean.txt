@@ -1,0 +1,39 @@
+message DB_AreanRequest
+{
+	required int32 m_roleid=1;			///角色id;
+}
+
+
+///竞技场数据;
+message DB_AreanReturn
+{
+	required int32 m_count=1;				///数量;
+	repeated DB_AreanData m_areanDatas=2;	///竞技场数据;
+}
+
+message DB_AreanData
+{
+	required int32 m_roleid=1;			///角色id;
+	optional int32 m_rank=2;			///角色竞技场排名;
+	optional int32 m_rolelv=3;			///角色等级;
+	optional int32 m_profession=4;		///角色职业;
+	optional string m_rolename=5;		///角色名;
+	optional int32 m_playertype=6;		///玩家类型
+}
+
+///竞技场商店数据;
+message DB_AreanShopReturn
+{
+	required int32 m_roleid=1;				///角色id;
+	repeated DB_AreanShop m_areanShops=2;	///商店数据;
+}
+
+message DB_AreanShop
+{
+	optional int32 m_objectid=1;	///物品id;
+	optional int32 m_buytype=2;		///购买类型：0是总购买剩余次数,1是今日购买剩余次数;
+	optional int32 m_buycount=3;	///购买剩余次数;
+	optional int32 m_moduletype=4;	///1:竞技场商店;2:公会商店;
+}
+
+

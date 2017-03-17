@@ -1,0 +1,5 @@
+message SM_Task_Collect
+{
+  required uint32  m_RoleID=2;          ///角色ID
+  repeated bytes   m_Task=1;          ///任务动态数组
+}

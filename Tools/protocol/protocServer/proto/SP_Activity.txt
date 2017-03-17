@@ -1,0 +1,15 @@
+message GM_ChargeActivityData
+{
+	required int64 gmid=1;
+	required int32 roleid=2;
+	required int32 chargecount=3;
+	required int32 giftbagid=4;
+	required int32 kind=5;
+	required int32 status=6;
+}
+
+message GM_ChargeActivityDataList
+{
+	required int32 count=1;
+    repeated GM_ChargeActivityData datalist=2;
+}

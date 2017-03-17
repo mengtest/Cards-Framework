@@ -1,0 +1,46 @@
+message DB_TopfightRequest
+{
+	required int32 m_roleid=1;			///角色id;
+}
+
+///决战天寒;
+message DB_TopfightReturn
+{
+	required int32 m_count=1;				///数量;
+	repeated DB_TopfightData m_topfightDatas=2;	///竞技场数据;
+}
+
+message DB_TopfightData
+{
+	required int32 m_roleid=1;			///角色id;
+	optional int32 m_toptime=2;			///上次战斗时间;
+	optional int32 m_rolelv=3;			///角色等级;
+	optional int32 m_profession=4;		///角色职业;
+	optional string m_rolename=5;		///角色名;
+	optional int32 m_socre=6;			///角色积分;
+	optional int32 m_gradelv=7;			///角色段位;
+	optional int32 m_ischam=8;			///是否上届冠军，123,0表示不是
+	optional int32 m_isfirst=9;			//是否是前三次战斗1，2，3;
+}
+
+
+///决战天寒数据;
+message DB_TopfightShopReturn
+{
+	required int32 m_roleid=1;					///角色id;
+	repeated DB_TopfightShop m_topfightShops=2;	///商店数据;
+}
+
+message DB_TopfightShop
+{
+	optional int32 m_objectid=1;	///物品id;
+	optional int32 m_buytype=2;		///购买类型：0是总购买剩余次数,1是今日购买剩余次数;
+	optional int32 m_buycount=3;	///购买剩余次数;
+}
+
+message SM_CancleMatch
+{
+	required int32 m_roleid=1;		///角色id
+	optional int32 m_gradeLv=2;		///级数
+	optional int32 m_areaNum=3;		///区号
+}

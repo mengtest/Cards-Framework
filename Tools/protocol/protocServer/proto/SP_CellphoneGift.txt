@@ -1,0 +1,17 @@
+
+///数据库返回记录
+message SM_CellphoneGift_Record
+{
+	required int64 phoneNum = 1;		//手机号
+	required int32 isBind = 2;		//是否绑定
+	required int32 code = 3;		//验证码
+	required int32 getCodeTime = 4;		//获取验证码时间
+	required int32 isGet = 5;		//是否已领取奖励
+}
+
+///向HTTP服务器请求发送短信
+message GM_CellphoneGift_SendShortMessage_Request
+{
+	required int64 phoneNum = 1;		//手机号
+	required int32 verifCode =2;		//验证码
+}

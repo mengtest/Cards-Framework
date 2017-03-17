@@ -1,0 +1,21 @@
+message SM_SendClickDataToGs
+{
+	required int32 m_roleid = 1;				//角色id
+	required int32 m_firstclicked =2;				//一级已领取金额
+	required int32 m_secondclicked=3;				//二级已领取金额
+}
+
+message SM_SendAllDataToGs
+{
+	required int32 m_roleid = 1;			//角色id
+	repeated SM_OneData_Proto m_onedata = 2;		//一条推广信息
+}
+
+message SM_OneData_Proto
+{
+ 	optional int32 m_roleid = 1;      			 //id
+	optional int32 m_nextroleid = 2;			//下级id
+ 	optional int32 m_level =5;         			//玩家等级
+ 	optional int32 m_timenow =7;      			 //产生数据的时间
+  	optional float m_canget =8;        			//从该玩家获取当前一次的返利;
+}

@@ -1,0 +1,66 @@
+
+message SM_Pet_Data_Request    					// 3个消息都用着一个request 
+{
+	required int32 m_nRoleid=1;
+}
+
+message SM_Pet_Data
+{
+	required int32 m_nCount=1; 					// 结果集合
+	repeated SM_Pet_Info m_vecData=2; 			// 宠物信息
+}
+
+message SM_Pet_Info
+{
+	required int64 gmid=1;						// 宠物的gmid
+	optional int32 roleid=2;					// 宠物所属角色id
+	optional int32 petid=3;						// 宠物id
+	optional int32 level=6;						// 物宠当前等级
+	optional int32 evolveLvl=7;					// 进化等级
+	optional int32 quality=8;					// 品质
+	optional int32 onbattle=9;					// 上阵
+	optional int32 packageunlock=10;			// 背包砖石解锁计数
+}
+
+message SM_Pet_Fragment_Data
+{
+	required int32 m_nCount=1; 						// 结果集合
+	repeated SM_Pet_Fragment_Info m_vecData=2; 		// 宠物碎片信息
+}
+
+message SM_Pet_Fragment_Info
+{
+	required int64 gmid=1;						// 宠物的gmid
+	optional int32 roleid=2;					// 宠物所属角色id
+	optional int32 fragmentid=3;				// 宠物碎片id
+	optional int32 num=4;						// 数目
+	optional int32 quality=5;					// 品质
+}
+
+message SM_PetEquip_extend_Data
+{
+	required int32 m_nCount=1; 						// 结果集合
+	repeated SM_PetEquip_extend_Info m_vecData=2; 	// 宠物信息
+}
+
+message SM_PetEquip_extend_Info
+{
+	required int32 roleid=1;					// 宠物所属角色id
+	optional int32 experience=3;				// 宠物技能经验
+	optional int32 count=4;						// 宠物技能砖石领悟次数
+}
+
+message SM_PetEquip_Info_Data
+{
+	required int32 m_nCount=1; 				// 结果集合
+	repeated SM_PetEquip_Info m_vecData=2; 	// 技能集合 或者 装备属性集合
+}
+
+message SM_PetEquip_Info
+{
+	required int64 gmid=1;						// gmid
+	optional int32 roleid=2;					// 所属角色ID
+	optional int32 holenum=3;					// 槽位 0-N  100-+
+	optional int32 propertyid=5;				// 属性或技能id
+	optional int32 propertylvl=6;				// 属性等级
+}

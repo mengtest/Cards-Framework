@@ -1,0 +1,30 @@
+///---------------------------------数据库服务器----------------------------------
+///数据库服务器使用ProtoBuf
+
+
+//黑市信息返回
+message SM_BlackMarket_DB_Return
+{
+	required int32 m_roleid =1;//当前刷新次数(只记录手动刷新的次数)
+	optional int32 m_refreshCount=2;//当前刷新次数(只记录手动刷新的次数)
+	optional int32 m_spar=3;//拥有的晶石个数
+	optional int32 m_count=4;//判断是否有数据
+}
+
+//黑市物品信息
+message SM_BlackMarketObj
+{
+	required int32 m_RoleId=1;	//角色id
+	optional int32 m_ObjPos=2;	//物品位置(从1开始)
+	optional int32 m_ObjId=3;	//物品id
+	optional int32 m_ObjBuy=4;	//是否购买(0未购买,1购买)
+	optional int32 m_ObjNum=5;	//数量
+};
+
+//黑市商品信息返回
+message SM_BlackMarket_Obj_DB_Return
+{
+	required int32 m_roleid=1;//当前刷新次数(只记录手动刷新的次数)
+	optional int32 m_Count=2; //数目
+	repeated SM_BlackMarketObj m_blackMarketObj=3; //物品集合
+}

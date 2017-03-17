@@ -1,0 +1,11 @@
+message SM_LimitPetMemRequest
+{
+	required int32 m_roleid = 1;
+}
+
+message SM_LimitPetMemReturn
+{
+	required int32 m_CurBeginTime = 1;
+	required int32 m_CurEndTime = 2;
+	required int32 m_CurTimes = 3;
+}

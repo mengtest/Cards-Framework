@@ -1,0 +1,42 @@
+message GM_GiftBagData
+{
+	required int32 type_id=2;			//请求要获得信息的动态礼包type_id
+	repeated GM_GiftBagItem giftbag_item=1;		//动态包
+}
+
+message GM_GiftBagItem
+{
+	required int32 objectid=1;	//礼包中物品id
+	required int32 objcount=2;	//该物品的个数
+	required int32 objlevel=3;	//该物品的等级
+}
+
+//请求某一个礼包id的信息
+message GM_GiftBagTypeId
+{
+	required int32 type_id=1;	//请求要获得信息的动态礼包type_id
+}
+
+//物品详情
+message GM_GiftBagRecord
+{
+	required int32 type_id=1;	//礼包id
+	required int32 objectid=2;			//礼包中物品id   其他为物品的typeid
+	required int32 objcount=3;			//该物品的个数
+	required int32 objlevel=4;				//获得的最小数量
+	required int32 profession=5;	//职业
+	required int32 validtime=6;			//有限时间(0,不限制;其他为限制时间,单位秒)
+}
+//每个礼包的信息
+message GM_GiftBagGift
+{
+	required int32 giftid = 1;//礼包id
+	repeated GM_GiftBagRecord gift=2;//礼包详细物品内容
+}
+//整个大包
+message GM_GiftBagList
+{
+	required uint32 count=1;
+	required uint32 version=2;
+	repeated GM_GiftBagGift gifts=3;
+}

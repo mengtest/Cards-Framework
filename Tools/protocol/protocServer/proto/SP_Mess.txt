@@ -1,0 +1,74 @@
+//自己包间信息;
+message SM_Room_role
+{
+required int32 roleid=1;
+optional int32 createtime=2;
+optional int64 increid=3;
+optional int32 score=4;
+}
+
+message SM_Room_roleVec
+{
+required int32 roleid=1;
+repeated SM_Room_role data=2;
+}
+
+message SM_Room_db_request
+{
+required int32 roleid=1;
+}
+    
+
+
+//包间共有信息;
+message SM_Room_common
+{
+required int64 increid=1;
+optional string roleid=2;
+optional int32 begintime=3;
+optional int32 endtime=4;
+optional int32 monsterid=5;
+optional int32 rate=6;
+optional int32 roomid=7;
+optional string protol = 8; //包内容
+}
+
+message SM_Room_commonVec
+{
+required int32 roleid=1;
+repeated SM_Room_common data=2;
+}
+
+
+//麻将包间每条包的信息;  
+message SM_Mj_protocol
+{
+//操着者id;
+required int32 roleid=1;
+//屏蔽者id;
+optional int32 avoid=2;  
+//消息id;
+optional int32 messageid=3;
+//当前时间;
+optional int32 	nowtime=4;    
+//protocol;
+optional bytes protocol=5;
+//发包的自增id（顺序id）;  
+optional int32 increidproto=6;
+//包的长度;
+optional int32 length=7;
+}
+
+
+//麻将包间房间信息;
+message SM_Mj_RoomCommon
+{
+//自增id;
+required int64 increid=1;
+//局数;
+optional int32 playercout=2;
+//roleid;
+repeated int32 roleidvec=3;
+//每条包;
+repeated SM_Mj_protocol proto=4;
+}

@@ -1,0 +1,94 @@
+
+message SM_AppStore_Verify_Order
+{
+	required int32 m_result=1;
+	required int32 getroleid=2; 
+	required string jsonStr=3;
+}
+
+message SM_AppStore_Verify_Order_Return
+{
+	required int32 m_result=1;
+	required int32 getroleid=2;
+	required string money=3;
+	
+	optional string transaction_id=5;
+	optional uint32 quantity=4;
+	optional string purchase_date=7;
+	optional int32 productid=6;
+	optional string jsonStr=8;
+	optional int32 diamond=9;
+}
+
+
+message SM_ChargeData
+{
+	required int32 roleid=1;
+	required int32 product_id=2;
+	required int32 times=3;
+	required string end_time=4;
+}
+
+message SM_ChargeDataList
+{
+	required int32 count=1;
+	repeated SM_ChargeData list=2;
+}
+
+message GM_PayCallBack
+{
+	required float money=1;
+	required string orderid=3;
+	required string channel=4;
+	optional int32 platform=5;
+	//optional int32 result=6;
+	required int32 roleid=7;
+	required string finish_time=8;
+	optional int32 productID=9;
+}
+
+message GM_GetPayments
+{
+	required int32 count=1;
+	required uint32 connect=3;
+	required bool ishttprequest=4;
+	repeated GM_PayCallBack payments=2;
+}
+
+message GM_PayCallBackRes
+{
+	required int32 m_result=1;		//0、成功
+	required uint32 connect=2;
+}
+
+//master/duoluotaitanGM/api/createPayRecord?orderid=123&serverid=150&roleid=18888&accountid=1777&channel=0&platform=0&appid=0&money=10；
+message GM_PayFinish
+{
+	required string orderid=1;
+	optional int32 platform=2;
+	optional string channel=3;
+	optional string finish_time=4;
+}
+
+//谷歌支付验证
+message SM_GooglePlay_Verify_Order
+{
+	required int32 m_result=1;
+	required int32 getroleid=2;
+	required string jsonStr=3;
+}
+
+//返回谷歌支付验证
+message SM_GooglePlay_Verify_Order_Return
+{
+	required int32 m_result=1;
+	required int32 getroleid=2;
+	required string money=3;
+	
+	optional string transaction_id=5;
+	optional uint32 quantity=4;
+	optional string purchase_date=7;
+	optional int32 productid=6;
+	optional string jsonStr=8;
+	optional int32 diamond=9;
+}

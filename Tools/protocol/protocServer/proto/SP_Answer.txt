@@ -1,0 +1,12 @@
+message SM_AnswerData
+{
+required int32 roleid=1;//人物id;
+optional int32 joinTime=2;//参加了几次;
+optional int32 successNum=3;//上次答对了几道;
+optional int32 issend=4;//;
+}
+
+message SM_AnswerDataRequest
+{
+required int32 roleid=1;//人物id;
+}

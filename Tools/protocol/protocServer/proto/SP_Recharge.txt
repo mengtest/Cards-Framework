@@ -1,0 +1,43 @@
+
+message SM_SendRechargeToGs
+{
+	required int32 m_roleid = 1;				//角色id
+	repeated SM_SendRechargeData m_rechargedata =2;
+}
+
+
+message SM_SendRechargeData
+{
+	required  int32 m_roleid =1;				//玩家id
+	required  int32 m_productid =2;				//商品id
+	required  int32 m_times=3;					//该商品已购买次数
+	required  int32 m_endtime=4;				//结束时间
+	required  int32 m_lastclick=5;				//上次领取时间
+	required int32 m_chargetype=6;				//0 普通充值  1月卡  2尊享卡
+};
+
+
+message SM_SendWalfareToGs
+{
+	optional int32 roleid =1;				//角色id
+	repeated SM_SendWalfareData m_data =2;			//礼包购买信息
+};
+
+message SM_SendWalfareData
+{
+	optional int32 m_objectid =1;				//礼包id
+	optional int32 m_buycount = 2;				//购买次数	
+};
+
+
+message SM_SendShopobjToGs
+{
+	optional int32 roleid =1;				//角色id
+	repeated SM_SendShopobjData m_data =2;			//礼包购买信息
+};
+message SM_SendShopobjData 
+{
+	optional int32 m_objectid =1;				//礼包id
+	optional int32 m_buytimes= 2;				//购买次数
+	optional int32 m_objtype = 3;				//类型 0总共  1每日
+};

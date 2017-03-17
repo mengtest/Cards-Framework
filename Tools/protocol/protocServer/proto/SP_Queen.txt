@@ -1,0 +1,4 @@
+message GM_NotifyDisconnect
+{
+    required  int32  tempid=1;//连接的临时id
+}

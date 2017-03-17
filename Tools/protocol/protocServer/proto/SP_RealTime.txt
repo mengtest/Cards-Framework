@@ -1,0 +1,28 @@
+
+message SM_RealTime_Data_Request    					// 消息都用着一个request 
+{
+	required int32 roleid=1;
+}
+
+
+// 巫蛮总数据
+message SM_RealTime_Data_Return
+{
+	required int32 result=1;			// 存在数据 0 有 1 无
+	optional int32 roleid=2;			// 角色id
+	optional int32 fighttimes=4;		// 匹配次数
+	optional int32 proof=5;	// 三荒令个数
+}
+
+// 巫蛮商店数据
+message SM_RealTime_Store_Data_Return
+{
+	required int32 count=1;
+	repeated SM_RealTime_Store_Info data=2;
+}
+message SM_RealTime_Store_Info
+{
+	required int32 roleid=1;			// 角色id
+	optional int32 itemid=2;			// 记录id
+	optional int32 count=3;			// 已经兑换次数
+}

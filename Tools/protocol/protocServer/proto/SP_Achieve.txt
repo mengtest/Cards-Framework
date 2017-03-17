@@ -1,0 +1,28 @@
+//子类型;
+message GM_db_Achieve_Data
+{
+//人物id;
+required int32 roleid=1;
+//频道;
+optional int32 channel=2;
+//子类型 id;
+optional int32 type_id=3;
+//达到的次数;
+optional int32 times=4;
+}   
+
+
+
+//自己信息的集合;
+message GM_db_Achieve_return
+{
+required int32 roleid=1;
+repeated GM_db_Achieve_Data data=2;
+}
+
+
+//请求自己的信息;
+message GM_db_Achieve_request
+{
+required int32 roleid=1;
+}   

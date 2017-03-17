@@ -1,0 +1,115 @@
+//请求进入房间;
+message GM_Fruit_Login_request
+{
+//房间类型;
+required int32 roomtype=1;
+}
+//请求进入房间回包;
+message GM_Fruit_Login_return
+{
+//1 成功，2资产不足，3服务器错误;
+required int32 errorid=1;
+//房间倍率;
+optional int32 rate=2;
+}
+
+
+//每注的信息;
+message SM_Fruit_Gamble
+{
+//类型id;
+required int32 objecytype=1;
+//加的注的数量;
+optional int32 monrey=2;
+}
+
+//请求水果加注;
+message SM_Fruit_Gamble_Request
+{
+//站位作用 不读;
+required int32 id=1;
+//压的注;
+repeated SM_Fruit_Gamble data=2;
+}
+
+//请求水果家注返回;
+message SM_Fruit_Gamble_return
+{
+//1 成功，2资产不足，3服务器错误;
+required int32 errorid=1;
+}
+
+
+//请求转动 返回;
+message SM_Fruit_Gamble_Go_Return
+{
+//如果为-1 的话 为 服务器错误 ，为0 时表示得到的普通等， 其他值为得到fortuntype;   
+required int32 fortuntype=1;
+//如果是送灯的 话 是 type_fruit_circle 中的pos;
+repeated GM_Fruit_Pos pos=2;
+}
+
+
+//位置信息;
+message GM_Fruit_Pos
+{
+//位置;
+required int32 pos=1;
+//位置对应的倍率;
+optional int32 rate=2;
+//得到多少钱;
+optional int32 get=3;
+}
+
+
+
+//请求猜大小 加倍 减倍;
+message SM_Fruit_plus_request
+{
+//1 加倍，2 减倍;
+required int32 plusmin=1;
+}
+
+//加倍 减倍返回;
+message SM_Fruit_plus_return
+{
+//1 成功 ，2 资产不足，3服务器错误;
+required int32 errorid=1;
+}
+
+
+//请求猜大小结果;
+message SM_Fruit_Figure_return
+{
+//是否 获胜 1胜 2败;
+required int32 success=1;
+//赢了多少钱;
+optional int32 win=2;
+}
+
+
+
+
+//资产变化返回;
+message SM_Fruit_Money_return
+{
+//当前值，  不是变化值;
+required int32 money=1;
+}
+
+
+//资产变化;
+message GM_Fruit_Money_return
+{
+//总值;
+required int32 money=1;
+//嬴的钱;
+optional int32 win=2;
+}
+
+
+
+
+
+
+

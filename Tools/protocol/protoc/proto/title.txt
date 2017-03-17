@@ -1,0 +1,8 @@
+
+///玩家称号总信息;
+message GM_TitleInfoPack
+{
+	required int32 roleId = 1;		///角色id;
+	required int32 equipId = 2;		///玩家装备的称号id;
+	repeated int32 titleId = 3;		///玩家拥有的所有称号id;
+}

@@ -1,0 +1,27 @@
+message GM_DynamicObject
+{
+	required int32	m_TypeID=1;							///类型ID
+	required string m_Name=2;							///物品名称
+	required int32	m_UsedLevel=3;						///使用最低等级
+	required int32	m_bagType=4;								///所属分类
+	required int32	m_objType=5;							///物品子类型
+	required int32	m_Color=6;							///物品颜色
+	required int32	m_StackLimit=7;						///堆叠上限
+	required int32	m_BuyGold=8;							///购买金币
+	required string m_Icon=9;							///图标			
+	required int32	m_SellGold=10;							///出售金币
+	required int32  m_ValidTime=11;						///有效时间，单位暂未定义
+	required string m_Describe=12;							///物品描述
+}
+
+message GM_DynamicObjectTypeId
+{
+	required int32 type_id=1;
+}
+
+message GM_DynObjects
+{
+	required int32 count=1;
+	required int32 version=2;	//版本号
+	repeated GM_DynamicObject object=3;
+}

@@ -1,0 +1,17 @@
+message SM_ChallengeReturn
+{
+	repeated uint32 roleList=1;					//玩家列表
+	required uint32 fbAllPlayerNum=2;			//副本服务器总人数，用于校对
+	optional string m_fbIp=3;     				///中心服务器副本ip;
+	optional int32 m_addfbid=4;					///中心服务器中副本房间的自增id;
+	optional int32 m_fbtypeid=5;				///副本typeid;
+	repeated GM_CenterGmidVServer m_roleinfo=6;	///角色在中心服务器的唯一id;
+	optional string m_playWay = 7;				///副本玩法;
+	optional int32 m_playerCount = 8;			///麻将的人数（4表示4人场，2表示2人场）
+}
+
+message GM_CenterGmidVServer
+{
+	required int32 m_serverId=1;
+	optional int32 m_rolegmid=2;
+}

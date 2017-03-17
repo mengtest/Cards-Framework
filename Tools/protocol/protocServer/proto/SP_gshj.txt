@@ -1,0 +1,12 @@
+message GM_Gshj_ChallengeInfo
+{
+	required int32 joined=1;
+	required int32 lasttime=2;
+	required int32 moralelv=3;
+}
+
+message GM_Gshj_ChallengeInfo_Result
+{
+	required int32 count=1; 
+	optional GM_Gshj_ChallengeInfo info=2;//
+}

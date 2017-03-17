@@ -1,0 +1,54 @@
+///确认选择分区
+message GM_EnsureChooseArea
+{
+  required int32  m_Account = 1; ///账号ID
+  required int32  m_AreaID = 2;    ///区号ID
+}
+
+///客户端请求服务器地址,用于服务器与客户端通信
+message GM_RequestGameServerConnect
+{
+   required int32 m_Account = 1;///账号ID
+   required string m_RandStr = 2;///随机产生的字符串，用于客户端与服务器的通信
+}
+
+
+///客户端请求服务器地址返回,用于服务器与客户端通信
+message GM_GameServerIpReturn
+{
+   required int32  m_Result = 1; ///0、正常请求，1、非法请求
+   required string m_ServerIP= 2; ///服务器地址
+   required string m_Password= 3;///服务器密码
+   required int32  m_PortNumber = 4;///端口号 
+}
+
+message SM_ServerInfoProto
+{
+	required int32 serverState = 1;			///服务器状态;
+	optional int32 serverFlag = 2;			///服务器标签;
+}
+
+message GM_DeleteRoleNotify
+{
+	required int32 m_accountID = 1;
+	required int32 m_roleID = 2;
+	optional int32 m_areaid = 3;
+}
+
+message GM_LevelChange
+{
+	required int32 m_accountId = 1;
+	required int32 m_roleId = 2;
+	required int32 m_level = 3;
+	optional int32 m_areaid = 4;
+}
+
+message GM_ChooseAreaToGate
+{
+	required uint32 m_account=1;
+	required uint32 m_area=2;
+	required string m_randstr=3;
+	required string m_clientip=4;
+	optional string m_gateserverip=5;
+	optional uint32 m_gateserverport=6;
+}

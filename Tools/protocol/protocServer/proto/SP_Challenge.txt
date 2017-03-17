@@ -1,0 +1,88 @@
+
+message SM_Challenge_Data_Request
+{
+	required int32 roleid=1;
+}
+
+
+// 道海试炼数据返回
+message SM_Challenge_Data_Return
+{
+	required int32 roleid=1;						// 角色id
+	optional int32 degree=2;						// 难度 0 未选择 1 普通 2困难
+	optional int32 times=3;							// 试炼凭证数目
+	optional int32 proof=4;							// 试炼凭证数目
+	optional int32 resettimes=5;					// 重置次数
+	optional int32 fighttime=6;						// 累积挑战时间
+	optional int32 fbtypeid=7;						// 地图id 5种
+	optional int32 rolefortuneid=8;					// 角色运势id
+	optional int32 petfortuneid=9;					// 宠物运势id
+	optional int64 fortunereset=10;					// 运势和地势刷新时间
+	optional int64 rentgmid=11;						// 雇佣的宠物gmid
+	optional int64 sendgmid=12;						// 出租的宠物gmid
+	optional int32 hpdecrease=13;					// 血量消耗% 0-100
+	optional int32 matcher=14;						// 对手id
+}
+
+// 道海试炼商店数据返回
+message SM_Challenge_Store_Return
+{
+	required int32 count=1;
+	repeated SM_Challenge_Store_Info data=2;
+}
+message SM_Challenge_Store_Info
+{
+	required int32 roleid=1;			// 角色id
+	optional int32 itemid=2;			// 记录id
+	optional int32 count=3;			// 已经兑换次数
+}
+
+// 试炼 宠物数据返回
+message SM_Challenge_Pet_Return
+{
+	required int32 count=1;
+	repeated SM_Challenge_Pet_Info data=2;
+}
+message SM_Challenge_Pet_Info
+{
+	required int32 roleid=1;			// 角色id
+	optional int64 gmid=2;				// 宠物gmid
+	optional int32 hpdecrease=3;		// 消耗血量
+	optional int32 ownerid=4;			// 0 自己的  雇佣的填拥有者的roleid
+	optional int32 onbattle=5;			// 上阵  0 未  11 12 21 22
+	optional int32 petid=6;				// 宠物id
+}
+
+
+// 试炼 租赁数据返回
+message SM_Challenge_Rent_Return
+{
+	required int32 count=1;
+	repeated SM_Challenge_Rent_Info data=2;
+}
+message SM_Challenge_Rent_Info
+{
+	required int64 gangid=1;				// 公会id
+	optional int32 roleid=2;				// 角色id
+	optional int64 gmid=3;					// 宠物gmid
+	optional int32 level=4;					// 等级
+	optional int32 evolve=5;				// 进化等级
+	optional int32 petid=6;					// 宠物id
+	optional string ownername=7;			// 名字
+	optional int32 renttimes=8;				// 宠物租赁次数
+}
+
+
+// 道海试炼 对手数据
+message SM_Challenge_Battle_Entry
+{
+	required int32 roleid=1;				// 角色id
+	optional int32 index=2;					// 对手序号 1 - 10
+	optional int32 battleid=3;				// 对手id
+}
+
+message SM_Challenge_Battle_Return
+{
+	required int32 count = 1;
+	repeated SM_Challenge_Battle_Entry data=5;
+}

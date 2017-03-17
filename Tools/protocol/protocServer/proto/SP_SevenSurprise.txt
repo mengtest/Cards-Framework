@@ -1,0 +1,30 @@
+message DB_SevenSurprise
+{
+	required int32 roleid = 1;
+	optional int32 hadreceive = 2;
+	optional int32 canreceive = 3;
+	optional int32 loginday = 4;
+	optional int32 lastgettime = 5;
+}
+
+///客户端用，七天惊喜的奖励信息;
+message GM_SevenInfo
+{
+   required int32 m_Result = 1;///已领取天数
+   required int32 totalDay = 2;//总天数
+   required int32 getState =3;//状态
+   required int32 getTime =4;//秒数
+   repeated GM_SevenObject objects=5;
+}
+
+message GM_SevenObject
+{
+   required int32 objectId = 1;
+   required int32 objectCount = 2;
+}
+
+message GM_SevenResult
+{
+	required int32 m_Result =1;
+	repeated GM_SevenObject object=2;
+}

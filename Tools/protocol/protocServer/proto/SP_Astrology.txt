@@ -1,0 +1,11 @@
+message DB_AstrologyHis
+{
+  required int32 m_roleId = 1;
+  repeated DB_Astrology m_data = 2;	///占星历史记录;
+}
+
+message DB_Astrology
+{
+  required int32 m_enumId = 1;		///属性枚举值;
+  required int32 m_value = 2;		///属性加成值;
+}

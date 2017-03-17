@@ -1,0 +1,50 @@
+message GMRoleList
+{
+  required int32 m_Account = 1;			///账号id	-1、表示服务器满载
+  required int32 m_Area = 2;			///区号
+  required int32 m_Count = 3;			///角色数量
+  repeated GMRoleSimpleInf m_RoleSimpleInf = 4;	///角色信息（动态数组）
+}
+
+message GMRoleSimpleInf 
+{
+  required int32 m_Roleid = 1;							///角色id
+  required string m_Name = 2;			///角色名字
+  required int32 m_Profession = 3;						///角色的职业
+  required int32 m_LV = 4;		
+}
+
+message GM_SigleSystemUnlockRequest
+{
+	required uint32 enumID=1;//枚举ID
+}
+message GM_SigleSystemUnlockReturn
+{
+	required bool state=1;//true解锁了,false没解锁
+}
+
+message GM_OnlinePlayerReturn
+{
+	repeated uint32 roleid=1;
+}
+
+
+message GM_ClearPlayer
+{
+	repeated int32 roleID=1;
+}
+
+
+message GM_PlayerDeleteList
+{ 
+	required int32 count=1;				//数量
+	repeated GM_PlayerDelete playerDeletes=2;	//删除角色列表
+}
+
+message GM_PlayerDelete 
+{
+	required uint32 roleid=1; 
+	required uint32 accountid=2;
+	required uint32 deletetime=3;
+}
+ 

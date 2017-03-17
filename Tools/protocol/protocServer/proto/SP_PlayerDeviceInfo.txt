@@ -1,0 +1,17 @@
+///日志服务器用
+message SP_PlayerDeviceInfo
+{
+	required int32 platformid = 1;		//平台id
+	required string ditchid = 2;		//渠道id
+	required string version = 3;		//版本
+	optional int32 serverid = 4;		//服务器id
+	optional string ipaddress = 5;		//角色ip
+	optional string macAddress = 6;		//登入设备MAC地址
+	optional string deviceUUID = 7;		//登入设备UUID
+	optional string token = 8;		//令牌，ios专用
+	optional string idfa = 9;		//登入设备UUID
+	optional string devicetype = 10;	//登陆设备类型
+	required int32  accountid=11;///账号id
+	required int32  roleid=12;///角色id
+	optional string rolename=13;///角色名
+}

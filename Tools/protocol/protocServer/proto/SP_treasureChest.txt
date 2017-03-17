@@ -1,0 +1,19 @@
+
+
+//宝箱数据
+message SM_TreasureChestDatabaseInfo
+{
+	required int32 m_nChestType=1;		// 宝箱类型 10001初级 10002高级
+	optional int32 m_nFreeTimes=2;		// 免费次数
+	optional int32 m_nStartTime=3;		// 开启宝箱的时间
+	optional int64 m_nOpenCount=4;		// 砖石抽奖计数  金币默认0
+	optional int32 bronze=5;		// 砖石抽奖计数  金币默认0
+}
+
+// 宝箱数据集合
+message SM_TreasureChestDatabaseInfoReturn
+{
+	required int32 m_nRoleId=1;			// 角色id
+	optional int32 m_nCount=2;		//数据的个数
+	repeated SM_TreasureChestDatabaseInfo m_stTreasureChestInfo=3;	//物品的信息
+}

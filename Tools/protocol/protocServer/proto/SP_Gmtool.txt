@@ -1,0 +1,162 @@
+message GMTool_GetOnline
+{
+	required uint32 connect=3;
+	required uint32 MaxOnline=1;	//最大在线人数
+	required uint32 CurrentOnline=2;
+	required string HttpServerIp=4;
+}
+
+message GMTool_CurrentData
+{
+	required uint32 connect=3;
+	required uint32 MaxOnline=1;	//最大在线人数
+	required uint32 CurrentOnline=2;
+	required uint32 RegisterCount=4;	//注册玩家数
+	required string HttpServerIp=5;
+}
+
+message GMTool_Request
+{
+	required uint32 roleid=1;	//空包
+}
+
+//封角色操作
+message GMTool_Seal_Player_Request
+{
+	optional string role_name=1;		//需要封的角色名
+	optional int32 seal_end_time=2;		//封号结束时间
+	required uint32 connect=3;
+	optional int32 action=4;		//封禁操作 1、禁登陆 2、禁言 3、禁交易 4、禁pvp
+	optional int32 role_id=5;		//需要封的角色id
+	optional string role_desc=6;		//描述
+}
+
+message GMTool_Operation_result
+{
+	required int32 operation_result=1;		//操作结果
+	required uint32 connect=2;
+}
+
+message GiftBagItem
+{
+	required uint32 objectid=1;	//礼包中物品id
+	required uint32 objcount=2;	//该物品的个数
+	required uint32 objlevel=3;	//该物品的等级
+}
+
+message GMTool_GiftBag
+{
+	required	uint32 m_typeid=2;
+	required	string m_name=3;
+	required	string m_iconurl=4;
+	required	string m_describe=5;
+	required 	uint32 connect=6;
+	repeated 	GiftBagItem m_giftBagItem=1;
+}
+
+
+//gm工具的请求
+message GMTool_OperateRequest
+{
+	required uint32 connect=1;	//http服务器的connect
+	optional int32 int_param=2;	//整型参数1
+	optional string str_param=3;	//字符串参数
+	optional string str_param2=4;	//字符串参数2
+	optional int32 int_param2=5;	//整形参数2
+	optional int32 int_param3=6;	//整形参数3
+	optional string str_param3=7;	//字符串参数3 unionid
+	optional string str_param4=8;	//字符串参数4 邮件title
+	optional string str_param5=9;	//字符串参数5 邮件内容
+	optional int32 int_param4=10;	//整形参数4 是否需要发送邮件
+}
+
+//gm公告
+
+message GMTool_noticeRequest
+{
+	required uint32 connect=1;	//http服务器的connect
+	optional int32 int_param=2;	//整型参数1
+	optional string str_param=3;	//字符串参数
+	
+}
+
+
+message GMTool_SystemWord
+{
+	required string word=1;		//公告文字
+	repeated int32 channels=3;	//所选频道
+	optional int32 repeatCount=2;	//重复次数
+	required uint32 connect=4;
+	optional int32 interval=5;	//间隔时间 秒	
+}
+
+message GMTool_SealAccountReturn
+{
+	required uint32 connect=1;
+	required int32 operation_result=2;
+	required int32 accountid=3;
+}
+
+//发送邮件
+///单发邮件数据包;
+message GMTool_Mail
+{
+	optional string m_rolename=1;	//角色名
+	optional int32 m_roleid=2;	//角色id
+	required string m_subject = 3;	///主题;
+	required string m_word = 4;		///邮件的内容;
+	required int32 m_time = 5;		///邮件保留时间
+	required int32 m_connect=6;	//http服务器的connect
+	repeated GMTool_MailItem m_items = 7;	///邮件道具
+	optional int32 m_isonline = 8;                           ///是否只发送在线玩家  1是  0否
+	optional int32 m_sendtime = 9;		///定时邮件发送时间
+	optional int32 m_gmid = 10;			///gm工具生成的唯一id
+}
+//道具物品
+message GMTool_MailItem
+{
+	required int32 m_typeid = 1;	//道具id
+	required int32 m_num = 2; 	//道具数量
+	required int32 m_level=3;		//道具等级
+}
+
+message GMTool_DynTable
+{                                                                                                                               
+  repeated bytes m_data =1;   	//礼包数据
+  optional int32 m_lastupdate = 2;	//上次更新时间
+  optional string m_tablename = 3;	//要刷新表名
+}
+
+message GM_FreshTable
+{
+	required string m_table = 1;		//刷新成功的表
+	required int32 m_lastupdate = 2;	//刷新时间
+	required int32 m_serverid = 3;		//服务器id
+}
+
+message GM_SealAll
+{
+	required string m_rolename = 1;   		//角色名字
+	required int32 m_serverid = 2;			//服务器id
+	required int32 m_sealendtime = 3;		//封禁结束时间
+	optional string m_seal_desc = 4;		//封禁描述
+	required int32 m_sealtype = 5;			//封禁类型
+	optional int32 m_accountid = 6;			//账号id
+	optional int32 m_result = 7;			//封号结果
+	required uint32 connect=8;
+	optional int32 m_roleid = 9;			//角色id
+}
+
+message GMTool_UpdateArea
+{
+	required int32 m_id = 1;   				//服务器id
+	optional int32 m_state = 2;				//服务器状态
+	optional int32 m_flag = 3;				//服务器标识
+	required int32 m_connect=4;				//http服务器的connect
+}
+
+message GMTool_Acitveshare
+{
+	required string unionid= 1; //账号unionid
+
+}

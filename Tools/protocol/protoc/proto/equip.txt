@@ -1,0 +1,41 @@
+
+message GMMountEquip
+{
+	required int64 m_gmid=1;	  //需要安装的装备
+	required int32 m_packagetype=2;   //装备背包，附属装备背包
+	optional int32 m_position=3 [default = -1];      //需要安装的位置
+}
+
+message GMEquipResult
+{
+	required int32 m_result=1;		   //0成功，1装备不存在，2不是装备，3职业不符，4不是紫装，金装，5未解锁，6其他，7背包已满
+	required int64 m_gmid=2;
+	required int32 m_packagetype=3;   //装备背包，附属装备背包
+	optional int32 m_position=4;      //需要安装的位置
+}
+
+
+message GMUnmountEquip
+{
+	required int64 m_gmid=1;          //需要卸载的装备
+	required int32 m_packagetype=2;   //装备背包，附属装备背包
+	optional int32 m_position=3 [default = -1];      //需要卸载的位置
+}
+
+message GMEquipLinkInfo
+{        
+	required int64 m_equipgmid=1;      //装备的gmid;
+	required int32 m_equiptypeid=2;    //装备原型Id
+	required int32 m_linkid=3;	   //链接Id
+}
+
+
+message GMEquipLinkList
+{	
+	required int32  m_useness=1;         //服务器不能发空包
+	repeated GMEquipLinkInfo m_equiplink=2;
+}
+
+
+
+

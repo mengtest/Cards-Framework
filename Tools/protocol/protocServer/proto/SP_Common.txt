@@ -1,0 +1,14 @@
+message GM_MessageStatiData
+{
+	required int32 message_id=1;
+	required int32 receive_count=2;
+	required float total_use_time=3;
+	required float max_use_time=4;
+	required int32 record_time=5;
+}
+
+message GM_MessageStatistics
+{
+	required int32 count=1;
+	repeated GM_MessageStatiData datalist=2;
+}

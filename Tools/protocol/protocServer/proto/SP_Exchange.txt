@@ -1,0 +1,90 @@
+//兑换信息;
+message SM_Exchange
+{
+required int32 roleid=1;
+	optional int32 state=2;//物品状态,1下单，2发货成功，3已签收;
+	optional int32 objectid=3;//物品id;
+	optional int32 num=4;//无品数量;
+	optional int32 createtime=5;//创建时间;
+
+	optional int32 tag=6;//标签页（1实物，2非实物）;
+
+	optional string name=7;//名字;
+	optional string phone=8;//手机号码;
+
+	optional string address=9;//地址;	
+
+	optional string phonecharge=10;//手机号码;
+
+	optional int32 id=11;
+}
+
+message SM_Exchange_return
+{
+required int32 rolieid=1;
+repeated SM_Exchange data=2;
+}
+
+message SM_exchange_requrest
+{
+required int32 roleid=1;
+}
+
+
+
+
+//救济 db回包;
+message SM_Relief_DB_return
+{
+//人物id，-1表示 没有数据;
+required int32 roleid=1;
+//vip等级;
+optional int32 vip=2;
+//该vip 下的已经领取次数;
+optional int32 times=3;
+}
+
+
+
+message SM_Exchange_info
+{
+required int32 roleid=1;
+repeated SM_Exchange_info_db data=2;
+}
+
+
+//绑定 信息返回;
+message SM_Exchange_info_db  
+{
+//人物id -1表示没有信息;
+required int32 roleid=1;
+//名字;
+optional string name=2;
+//qq;
+optional int64 qq=3;
+//邀请码;
+optional string invite=4;
+//住址;
+optional string address=5;
+//电话号码;
+optional string phone=6;
+optional int32 createtime=7;
+optional int32 usetime=8;
+}
+
+
+message SM_Exchange_phone
+{
+required int32 roleid=1;
+repeated SM_Exchange_phone_info data=2;
+}
+
+//手机信息;
+message SM_Exchange_phone_info
+{
+required int32 roleid=1;
+optional int32 usetime=2;
+optional int32 createtime=3;
+optional string phone=4;
+}
+

@@ -1,0 +1,15 @@
+message SP_PlayerState
+{
+   required int32 roleid = 1;///角色id
+   required int32 state = 2;///角色的状态,0/在线,1/离线
+}
+message SP_PlayerOnlineCheck  ///检查角色的状态
+{
+    repeated SP_PlayerState   playerStateS=1;///角色的状态,动态数组
+}
+
+message SP_UpdateIncrement
+{
+    required int64 incrementid=1;///gmid
+	required  int32  roleid=2;///角色id
+}

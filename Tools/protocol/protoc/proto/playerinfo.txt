@@ -1,0 +1,116 @@
+//装备频道请求返回
+message GM_EquipData
+{
+	required int64 m_Gmid=1;	//装备id
+	optional int32 m_typeid=2;	//类型id
+
+	optional int32 m_forginglevel=4;//强化等级;
+	optional int32 m_breaklevel=5;	//强化突破等级
+	optional int32 m_refinelevel=6;	//精炼等级
+	
+	optional int32 m_winglevel=7;	//羽化等级;
+	
+	repeated int32 m_linkid=10;	//链接id
+
+	repeated GM_EquipAwakens m_allawake=11;//觉醒
+
+	optional int32 m_playerprofession=12;	  //人物的职业
+}
+message GM_EquipAwakens
+{
+	required int32 m_propertyid=1;			//觉醒id;
+	optional int32 m_propertyLv=2;			//觉醒等级;
+}
+
+//-------------
+
+//符文频道
+message GM_RuneData
+{
+	required int64 m_Gmid=1;			//装备id
+	optional int32 m_grid=4;			//所在的槽位
+	repeated GM_RuneOfEquip m_allruneofequip=3;	//该装备佩戴的符文
+}
+//装备佩戴的符文请求返回
+message GM_RuneOfEquip
+{
+	required int64 m_Gmid=1;		//符文id , 0没有该装备
+	optional int32 m_typeid=2;		//符文属性
+	optional int32 m_level=3;		//符文等级
+	
+}
+
+//----------
+
+//宠物频道请求返回
+message GM_PetData
+{
+	required int64 m_GMid=1;		//宠物id , 0没有该装备
+	optional int32 m_type=2;		//宠物类型
+	optional int32 m_level=3;		//等级
+	optional int32 m_riselevel=4;		//进化等级
+	optional int32 m_grade=5;		//品质
+	optional int32 m_hp=6;			//生命值
+	optional int32 m_attack=7;		//伤害
+	optional int32 m_fight=8;		//战斗力
+	
+	repeated GM_PetSkillLevelType m_allpetskill=9;		//宠物技能
+	repeated GM_PetSkillRealize m_allpetskillrealize=10;	//宠物领悟技能
+	//上阵位置 11,12，21，22;
+	optional int32 m_onbattle=11;		
+	
+}
+//宠物技能
+message GM_PetSkillLevelType
+{
+	required int32 m_skillid=1;			//技能id
+	optional int32 m_skill_level=2;			//技能等级
+}
+//宠物领悟技能
+message GM_PetSkillRealize
+{	
+	required int32 m_propertyid=1;		// 属性或技能id
+	optional int32 m_propertylvl=2;		// 属性等级
+}
+
+
+//-------------
+//-------------
+
+//共用模块人物信息返回
+message GM_Player_Data_Return
+{
+	required int32 m_state=1;	  //0人物id错误 1成功 2未知错误失败
+	optional int32 m_playerid=2;	  //要处理人物的id
+	optional string m_playername=3;	  //要处理人物的名字
+	optional int32 m_level=4;	  //要处理人物的等级
+	optional int32 m_power=5;	  //战斗力
+	optional string m_gangname=6;	  //公会名字 没有公会设为0
+	optional int32 m_gangprofession=7;//所在公会职务 没有公会设为-1
+	optional int32 m_profession=8;	  //职业;
+
+	optional int32 m_equipCount=9;    //装备的数量
+	optional int32 m_runecount=10;	  //符文装备的数量
+	optional int32 m_petcount=11;	  //宠物的数量
+	optional int32 m_addcount=12;	  //附属装备的数量
+
+	repeated GM_EquipData m_allequip=13;	//装备频道
+	repeated GM_PetData m_allpet=14;	//宠物频道
+	repeated GM_RuneData m_allrune=15;	//符文频道
+	repeated GM_EquipData m_alladdequip=16;//附属装备
+
+	optional int32 isfriend=17;	//1 是朋友 ,2 机器人，0 不是朋友;
+}
+
+
+//共用模块人物信息请求
+message GM_Player_Data_Request
+{
+ 	required int32 m_playerid=1; 	//要处理人物的id
+}
+//人物装备信息请求
+message GM_Player_Equip_Request
+{
+	required int32 m_playerid=1;	//人物id
+	optional int64 m_gmid=2;	//装备的gmid
+}

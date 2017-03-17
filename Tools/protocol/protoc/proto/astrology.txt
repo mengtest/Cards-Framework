@@ -1,0 +1,13 @@
+message GM_AstrologyHis
+{
+  required int32 m_hisStar = 1;		///当前星id;
+  optional int32 m_own=2;			///拥有的占星令数量;
+  repeated GM_Astrology m_data = 3;	///占星历史记录;
+}
+
+message GM_Astrology
+{
+  required int32 m_enumId = 1;		///属性枚举值;
+  optional int32 m_enumtype = 2;	///属性类型：0是数值\1是百分比;
+  optional int32 m_value = 3;		///属性加成值;
+}

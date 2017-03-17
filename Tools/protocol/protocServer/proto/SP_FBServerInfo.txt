@@ -1,0 +1,5 @@
+message SM_FBServerLoadInfo
+{
+  required int32 m_ServerID = 1;	//副本服务器ID
+  required int32 m_ActiveNum = 2;	//当前人数
+}

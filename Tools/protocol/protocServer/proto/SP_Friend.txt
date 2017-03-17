@@ -1,0 +1,58 @@
+
+///---------------------------------数据库服务器----------------------------------
+
+message SM_SendFriendToGs
+{
+	required int32 m_roleid = 1;				//角色id
+	repeated SM_FriendData_Proto m_frienddata =2;
+}
+message SM_FriendData_Proto
+{
+	required int32 m_roleid1= 1;		//自己的角色id
+	required int32 m_roleid2= 2;		//好友的角色id
+	required int32 m_friend_state= 3;		//好友关系状态    0 已成为好友  1 正在申请中  
+	required int32 m_friend_time= 4;	                  //提交好友申请的时间
+	required int32 m_give_state= 5;		//馈赠好友状态   0可馈赠  1不可馈赠
+	required int32 m_receive_state= 6;		//获取馈赠状态: 0未馈赠  1已馈赠 2已领取完
+	required int32 m_receive_time= 7;		//从好友处获取馈赠时间   
+	required string m_friend_content =8;	//添加好友时说得话
+}
+
+message SM_FriendReciveToGs
+{
+	required int32 m_roleid =1;			//玩家角色id
+	required int32 m_recieve_times = 2;	//玩家已用馈赠次数 最多25次
+	required int32 m_invite_times =3;	//玩家已用邀请次数 最多50次
+}
+
+message  SM_ChangeFriendData
+{
+	required int32 m_event =1;		//要做的操作 0删除好友  1收到馈赠  2拒绝好友 5查看好友的好友数量并添加
+	required int32 m_roleid1 =2;	//要操作的玩家id
+	required int32 m_roleid2 =3;	//发出操作的玩家
+}
+
+message  SM_ChangeFriendDataReturn
+{
+	required int32 m_result =1;		//操作结果 : 0成功  1失败
+	required int32 m_roleid1 =2;	//发出操作的玩家
+	required int32 m_roleid2 =3;	//要操作的玩家id
+}
+
+message SM_GetFriendNumReturn
+{
+	required int32 m_state =1;		//0成功  1查询失败   2修改状态失败  3超过数量限制
+	required int32 m_roleid = 2;	//操作的角色
+}
+
+message SM_GetFriendNumALL
+{
+	required int32 m_friendnum =1;		//已有好友个数
+	repeated int32 m_roleid = 2;		//要操作的角色id
+	repeated int32 m_roleid2 =3; 		//已操作成功的角色id
+}
+
+message SM_GetFriendNumALLRetuen
+{
+	repeated int32 m_roleid = 1;		//操作成功的角色id
+}

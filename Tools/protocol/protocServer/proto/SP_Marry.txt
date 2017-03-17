@@ -1,0 +1,30 @@
+message DB_MarryDataRequest
+{
+	required int32 m_roleId =1;		///角色id;
+}
+
+message DB_ConTreeDataReturn
+{
+	required int64 m_count = 1;	//同心树数量
+	repeated ConTreeData item = 2;	//同心树数据	
+}
+
+message ConTreeData
+{
+	required int64 gmid = 1;	//同心树gmid
+	required int32 treelv = 2;	//同心树等级
+	required int32 treeexp = 3;	//同心树总经验
+}
+
+message DB_CoupleDataReturn
+{
+	required int32 roleid = 1;	//角色id
+	optional int64	tree_gmid = 2;	//
+	optional int32	marrytype = 3;	//提亲类型
+	optional int32 marriagetime = 4;	//最近一次提亲时间
+	optional int32 lastgettime = 5;		//最近一次领取奖励时间
+	optional int32 divorcetime = 6;		//最近一次请求协商离婚时间
+	optional int32 marrystate= 7;
+	optional int32 ordertime=8;
+	optional int32 ordercount=9;
+}

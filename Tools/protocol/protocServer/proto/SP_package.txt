@@ -1,0 +1,20 @@
+
+message SM_PackageGrid
+{
+	required int32 m_RoleID = 1;
+	required int64 m_GMID = 2;						///物品id
+  	required int32 m_TypeID = 3;					///物品类型ID
+  	required int32 m_PackID = 4;					///所在背包ID
+  	required int32 m_Grid = 5;						///所在网格，从0开始计数
+ 	required int32 m_Count = 6;						///物品数量
+ 	required int32 m_Bind = 7;						///是否绑定
+ 	required int32 m_Seal = 8;
+  	required int32 m_Indate = 9;          ///有效时间
+}
+
+
+message SM_PackageData
+{
+	required int32 count =1;							//数量
+	repeated SM_PackageGrid grid=2;				//格子
+}

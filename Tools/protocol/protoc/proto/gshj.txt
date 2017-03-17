@@ -1,0 +1,71 @@
+//客户端请求古神浩劫boss信息,发空包
+//服务器返回结果,或主动通知玩家
+message GM_Gshj_OpenTime
+{
+	required int32 starttime=1;
+	required int32 endtime=2;
+}
+
+message GM_Gshj_BossInfo
+{
+	required int32 bossid=1;	//boss的id
+	required int64 bosscurhp=2;	//boss当前血量
+	required int64 bosstotalhp=3;	//boss总血量
+	required int32 joined=4;//0,未参加，1，在时间段1参加了，依次类推
+	required int32 cooltime=5;//挑战剩余冷却时间
+	required int32 moralelv=6;//士气等级，0，士气等级0（未鼓舞），1，士气等级1
+}
+
+message GM_Gshj_BossInfo_Result
+{
+	required int32 times=1;	//值，0,未开启,1,开启了,2,今天活动已结束
+	optional GM_Gshj_BossInfo boss=2;	//开启了，才设置
+	optional GM_Gshj_OpenTime time=3;		//未开启表示下一次开启时间，开启表示这次时间
+	optional int32 openlefttime=4;		//开启剩余时间
+}
+
+//客户端请求参加古神浩劫,发空包
+//服务器返回参加结果，如果成功则会跳到匹配界面,否则提示错误
+message GM_Gshj_Join_Result
+{
+	required int32 result=1;//0,成功，1，不在活动时间内，2，已参加过该活动，3，boss已死亡,4,挑战冷却中（每次退出副本开始冷却计时，最长30秒冷却时间），5，已经在副本中？,9,匹配失败
+	optional int32 teamid=2;//如果成功，这里会设置一个teamid
+}
+//？？？匹配怎么设计,走通用匹配流程
+
+//客户端请求取消挑战冷却倒计时，发空包
+//服务器返回操作结果
+message GM_Gshj_CoolDown_Result
+{
+	required int32 result=1;//0,成功，//包含上面定义的错误返回值，6，不在冷却时间内,7,晶石不足
+	required int32 cooltime=2;	//当前剩余冷却时间
+}
+
+//客户端请求花费晶石来鼓舞士气，，提升自己的战斗力。发空包
+//服务器返回操作结果
+message GM_Gshj_Inspire_Result
+{
+	required int32 result=1;//0,成功，//包含上面定义的错误返回值，8，士气已经最高,去战斗吧
+	required int32 moralelv=2;	//士气等级，0，士气等级0（未鼓舞），1，士气等级1
+}
+
+//客户端请求gshj伤害排名信息，发空包
+//服务器返回排名信息
+message GM_Gshj_RankItem
+{
+	required int32 roleid=1;
+	required string rolename=2;
+	required int32 profession=3;
+	required int32 rolelv=4;
+	required int64 damage=5;
+	required int32 position=6;	//排名位置
+}
+
+message GM_Gshj_Rank_Result
+{
+	optional GM_Gshj_RankItem myrank=1;
+	required int32 count=2;//最大为10
+	repeated GM_Gshj_RankItem item=3;	//伤害排名信息
+}
+
+//

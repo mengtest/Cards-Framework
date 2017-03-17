@@ -1,0 +1,51 @@
+///————————————————————————————————————————————————————————————————————————————————————————————————；
+///DB数据库交互：
+message DB_MailDataRequest
+{
+	required int32 m_roleId =1;		///角色id;
+}
+
+message DB_MailDataReturn
+{
+	required int32 m_roleId = 1;			///角色id;
+	repeated DB_MailData m_mailData = 2;	///邮件数据;
+}
+
+message DB_MailData
+{
+	required int64 m_mailgmid = 1;	///邮件gmid;
+	required int32 m_state = 2;		///邮件状态1未读0已读;
+	required int32 m_source = 3;	///邮件来源;
+	required int32 m_time = 4;		///邮件时间;
+	required string m_name = 5;		///邮件名称;
+	required string m_subject =6;	///邮件内容;
+	required string m_item = 7;		///邮件附件物品;<物品id,物品count,物品level;>
+	optional int32 m_endtime = 8;	//邮件的到期时间;
+}
+
+message DB_GlobalMailCount
+{
+	required int32 m_globalcount = 1;				///全局邮件数量;
+}
+
+
+message DB_GlobalMailReturn
+{
+	required int32 m_count = 1;						//发包用：
+	repeated DB_GlobalMail m_maildatas = 2;			//邮件信息：
+}
+
+message DB_GlobalMail
+{
+	required int32 m_time = 1;			//时间;
+	required string m_name = 2;			//名称;
+	required string m_subject =3;		//内容;
+	required string m_item = 4;			//物品;
+}
+
+message DB_OfflineMail
+{
+	optional int32	m_roleid = 1;		///角色id; 
+	optional string m_rolename =2;		///角色名;
+	repeated DB_MailData m_maildata=3;	///邮件数据;
+}

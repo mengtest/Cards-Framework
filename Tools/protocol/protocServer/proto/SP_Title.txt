@@ -1,0 +1,29 @@
+///玩家已装备称号;
+message DB_EquipTitle
+{
+	required int32 m_roleId=1;
+	repeated int32 m_equipId=2;    	
+}
+
+///玩家所有称号集合;
+message DB_AllTitle
+{
+	required int32 m_roleId = 1;
+	repeated GM_Title m_titles = 2;
+}
+
+message GM_Title
+{
+	required int32 titleId = 1;
+	optional int32 titletype=2;
+	optional int32 endtime=3;
+}
+
+///修改限时称号;
+message DB_LimitTitleNotify
+{
+	required int32 m_roleid=1;		///角色id;
+	optional int32 m_isdelete=2;	///0插入1删除2更新;
+	optional int32 m_titleids=3;	///称号id集合;
+	optional int32 m_titletype=4;	//称号的类型;
+}

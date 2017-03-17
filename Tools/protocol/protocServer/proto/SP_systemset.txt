@@ -1,0 +1,33 @@
+//激活码请求
+message SM_SystemSet_cdkey_request
+{
+	required int32 m_serverid=1;	//区号
+	required int32 m_roleid=2;	//角色id
+	required string m_cdkey=3;	//激活码
+}
+
+//礼包信息
+message SM_SystemSet_cdkey_subdata
+{
+	required int32 m_objectid=1;	//物品id
+	required int32 m_objectnum=2;	//物品数量
+}
+
+//激活码使用返回
+message SM_SystemSet_cdkey_return
+{
+	required int32 m_result=1;	//结果
+	optional int32 m_typeid=2;	//物品id
+	optional string m_cdkey=3;	//激活码
+	optional int32 m_cdtype=4;	//激活码类型
+	optional string m_name=5;	//礼包名字
+	//repeated SM_SystemSet_cdkey_subdata m_subdata = 5;		//物品信息
+}
+
+//系统设置信息请求
+message SM_SystemSet_data_request
+{
+	required int32 m_serverid=1;	//区号
+	required int32 m_accountid=2;	//账号id
+	required int32 m_roleid=3;	//角色id
+}

@@ -1,0 +1,28 @@
+
+///1\副本解锁信息;
+message DB_FBUnlock
+{
+	required int32 m_roleid=1;		///角色id;
+	repeated GM_FBData m_data=2;	///副本信息;
+}
+
+message GM_FBData
+{
+	required int32 m_fbid=1;		///副本id;
+	required int32 m_starlv=2;		//获得的星星数量;
+	required int32 m_fightcount=3;	///已经战斗次数；
+}
+
+///2副本宝箱信息;
+message DB_FBChests
+{
+	required int32 m_roleid=1;		///角色id;
+	repeated GM_Chests m_chests=2;	///宝箱数据;
+}
+
+message GM_Chests
+{
+	optional int32 m_chapterid=1;	///章节id;
+	optional int32 m_chestsid=2;	///宝箱id;
+	optional int32 m_state=3;		///状态;
+}

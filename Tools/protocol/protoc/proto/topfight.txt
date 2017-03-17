@@ -1,0 +1,37 @@
+
+///天寒信息回调;
+message GM_TopfightInfo
+{
+	required int32 m_roleid=1;			//玩家id;
+	optional string m_rolename=2;		//玩家名字;
+	optional int32 m_profession=3;		//玩家职业;
+	optional int32 m_toptime=4;			//最近一次的战斗时间;
+	optional int32 m_score=5;			//玩家积分;
+	optional int32 m_grade=6;			//玩家段位/级;			
+	optional int32 m_level=7;			//玩家等级;
+	optional int32 m_reward=8;			//奖励天寒令牌数;
+	optional int32 m_pagecnt=9;			//玩家所在的页数,从1开始;
+	optional int32 m_hadrank=10;		//1表示有排名，0表示没有;
+}
+
+message GM_TopfightReturn
+{
+	required int32 m_totalcount=1;				//总人数;
+	repeated GM_TopfightInfo m_curRank=2;		//当前排名;
+	repeated GM_TopfightInfo m_hisRank=3;		//上届排名;
+	optional int32 m_matchtime=4;				//匹配时间
+}
+
+//天寒商店;
+message GM_TopshopReturn
+{
+	required int32 m_ownwand=1;			//拥有的天寒令牌数;
+	optional int32 m_resetcost=2;		//重置消耗;
+	repeated GM_ShopObject m_objs=3;	//天寒商店物品;
+}
+
+message GM_ShopObject
+{
+	required int32 m_objectid=1;		//物品id;
+	optional int32 m_count=2;			//剩余购买次数;
+}

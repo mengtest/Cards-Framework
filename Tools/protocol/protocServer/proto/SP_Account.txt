@@ -1,0 +1,10 @@
+message GM_AccountExistRequestReturn
+{
+   required int32 m_Result= 1; ///0,可以创建，1，存在账号 2,账号长度不符合 3,是关键字
+}
+
+message SP_BindTestAccountReturn
+{
+   required  int32 result=1;///0绑定成功,1试玩账号有误,2新账号有误
+   required  string clientIP=2;///客户端ip
+}

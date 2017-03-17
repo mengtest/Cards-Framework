@@ -1,0 +1,248 @@
+
+///请求购买公会道具;
+message GM_GangBuyRequest
+{
+	required int32 roleId = 1;			///角色id;
+	required int32 itemId = 2;			///购买的道具id;
+	required int32 count = 3;			///购买的道具数量;
+}
+
+///公会矿石操作数据包;
+message GM_GangOreOperate
+{
+	required int32 roleId = 1;		///角色id;
+	required int32 type = 2;		///操作的矿石类型;
+	required int32 num = 3;			///操作的矿石数量;
+}
+
+///请求开始挖矿数据包;
+message GM_MiningRequest
+{
+	required int32 roleId = 1;		///角色id;
+	required int32 mineId = 2;		///所挖的矿山id：0、铜矿，1、银矿，2、金矿;
+	required int64 pickaxeId = 3;	///使用的镐的gmid;
+}
+
+/////////////gang fight//////////////
+//报名期工会战页面信息
+message GM_GangSimpleInfo
+{
+	required int64 gmid=1;
+	required string name=2;
+	required int32 rank=3;//当前排名
+	required int32 power=4;
+}
+
+message GM_GangApplyInfo
+{
+   required int32 result=1;//0已报名,其他则没报名
+   repeated GM_GangSimpleInfo gangsinfo=2;///帮派信息,已经报名的帮派信息
+   repeated GM_GangSimpleInfo myganginfo=3;//自己帮会信息,没报名这个就是空
+   optional int32 totalapply=4;//当前赛季总报名数
+}
+//已经开赛时的工会战页面信息
+message GM_MarchInfo
+{
+	required int32 round=1;//第几轮,1,16进8;2,8进4;3,4进2;4,决赛;
+	required int32 weekstart=2;//周几
+	required int32 starttime=3;//开始时间,从00:00开始的秒单位,例如20:00就是20*60*60
+}
+
+
+message GM_GangRaceSimpleInfo
+{
+	required int32 roleid=1;//会长角色id
+	required int32 equipId = 3;		///会长 武器id;
+	repeated int32 fashionInfo = 4;	///会长 时装信息,信息顺序id分别是武器、头、上身、下身;
+	required int32 profession=2;//会长职业
+	required int64 ganggmid=5;//公会gmid
+}
+
+message GM_GangRaceData
+{
+   required int32 result=3;//同GM_GangRaceResult
+   required int32 race=2;///当前处于哪个赛场:2,16进8;3,8进4;4,4进2;5,决赛
+   repeated GM_MarchInfo marchinfo=4;//比赛日程表
+   required int32 joinedpeople=5;//已经加入战斗的人
+   required int64 yourgangid=7;//你所在的公会gmid
+   required string yourgangname=9;
+   optional int64 othergangid=10;
+   optional string othergangname=11;
+   optional int32 readyTime=8;//准备剩余时间
+}
+///对战表
+message GM_GangRace
+{
+   required int64 gmid=1;////对手1帮派GMID
+   optional int64 targetgmid=3;///对手2帮派GMID
+   optional int32 level=2;///比赛状态:0没资格;1,16进8;2,8进4;3,4进2;4,决赛;5,冠军(若决赛结束了4是亚军)
+   optional string name=4;
+   optional int32 power=5;
+   optional int32 people=6;//人数
+}
+
+
+message GM_GangRacePare
+{
+	required int32 result=2;//同GM_GangRaceResult
+	required int32 race=3;//当前赛事
+	repeated GM_GangRace racelist=1;
+	optional int32 timelast=7;//离开战还有多长时间,如果没有则已经开战
+}
+//准备时
+
+
+message GM_PlayerReady
+{
+	required uint32 roleID=1;
+	required string name=2;
+	required int64 ganggmid=3;
+}
+
+message GM_ReturnGangFightJoin
+{
+	required int32 result=1;//0成功,1你不是公会成员,2你所在公会没有比赛资格,3时间不符合,4你已经报名了
+	repeated GM_PlayerReady playerList=2;
+}
+
+message GM_NewReadyPlayer
+{
+	required GM_PlayerReady newplayer=1;
+}
+
+message GM_PlayerQuitReady
+{
+	required uint32 quitplayer=1;
+}
+
+message GM_GangRaceResult
+{
+   required int32 result=1;///0成功;1不在比赛中;2,没在报名时间,3,不符合条件;4,已经报名了;5没钱
+}
+
+
+
+
+message GM_GangFightTime
+{
+   required int32 apply_time=1;///报名剩余时间
+   repeated int32   race_time=2;///比赛剩余时间
+   required int32  race_state=3;///比赛状态:0非比赛;1,报名;2,16进8;3,8进4;4,4进2;5,决赛
+}
+
+message GM_GangFightResultMember
+{
+	required string name=1;///队员名称
+	required int32 kill=2;//队员杀人数
+	required int32 die=3;//队员死亡数
+	required int32 honor=4;//队员荣誉
+	required int32 persent=5;//贡献
+}
+
+message GM_GangFightResult
+{
+	repeated GM_GangFightResultMember ourteam=1;//我方战斗结果
+	//repeated GM_GangFightResultMember targetteam=2;//敌方战斗结果
+	required int32 usetime=3;//使用时间
+	required int32 result=4;//0胜利,1,失败
+	required int32 ourpeople=5;//我方人数
+	required string ourname=6;//我方公会名称
+	required int32 otherpeople=7;//对方人数
+	required string othername=8;//对方名称
+}
+
+message GM_GangFightPeopleCount
+{
+	required int32 camp=1;//阵营
+	required int32 people=2;//人数
+}
+
+message GM_GangFightPeople
+{
+	repeated GM_GangFightPeopleCount peopledata=1;
+}
+
+//数据库到逻辑服务器的protobuf;
+message GM_DBGangActive
+{
+  	required int32 roleId=1;	//玩家角色Id;
+	required int32 luckNum=2;	//抽奖次数;
+	required int32 luckTime=3;	//抽奖时间;
+}
+
+message GM_DBAllGangSkill
+{
+	required int32 roleId=1;
+	required int32 count=2;
+	repeated GM_DBGangSkill skills=3;
+}
+
+message GM_DBGangSkill
+{
+	required int32 roleId=1;	//角色id;
+	required int32 skillId=2;	//公会技能id;
+	required int32 skillLv=3;	//玩家公会技能的等级;
+}
+
+message GM_DBGangExit
+{
+	required int32 roleId=1;
+	required int32 exitTime=2;	///离会时间;
+}
+
+///数据库;
+message GM_AllGangInvite
+{
+	required int32 count=1;		///数量;
+	repeated GM_GangInvite invites=2;	///邀请的单封数据;
+}
+
+message GM_GangInvite	
+{
+	required int32 roleId=1;	///发送邀请的角色id;
+	optional string roleName=2;	///发送邀请的角色名字;
+	required int64 gangGmid=3;	///公会的gmid;
+	required int32 operId=4;	///被邀请的角色id;
+	optional string operName=5;	///被邀请的名字
+	optional int32 flag=6;
+}
+
+message GM_GangDataChange
+
+{
+   
+	required int32 roleId=1;     ///角色id;
+   
+	optional int32 signFlag=2;    ///公会活动签到标志;
+   
+	optional int32 skillLevel=3;  	///公会技能当前等级;
+	optional int32 gangContribute=4;	///捐献额发生改变
+}
+
+message DB_tAllGangData
+{
+	required int32 count = 1;				//数量;
+	repeated DB_tGangData gangdata = 2;		//公会数据;
+}
+
+message DB_tGangData
+{
+	required int64 gmid=1;			///公会gmid;
+	optional string name=2;			///公会名称;
+	optional int32 exp=3;			///公会经验;	
+	optional int32 lv=4;			///公会等级;
+	optional int32 templv=5;		///祈福殿等级;
+	optional int32 shoplv=6;		///商店等级;
+	optional string notice=7;		///公会公告;
+	optional string pronoce=8;		///公会公告;
+	optional int32 uplvtime=9;		///上次升级时间;
+	optional int32 blesscnt=10;		///祈福殿次数;
+}
+
+message DB_LifeTreeRoleInfo_Return
+{
+	required int32 m_RoleId=1;//角色id
+	required int32 m_LastTime=2;//冷却到期时间
+	required int32 m_Count=3;//次数
+}
+

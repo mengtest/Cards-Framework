@@ -1,0 +1,11 @@
+message SMFightAidReturn
+{
+	required int32 roleid = 1;
+	optional string bagState = 2;	//礼包礼包状态
+	optional int32 leftTime = 3;	//剩余援助时间
+}
+
+message DB_FightAidDataRequest
+{
+	required int32 m_roleId =1;		///角色id;
+}

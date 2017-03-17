@@ -1,0 +1,18 @@
+
+
+message SM_Skill_Info_Return
+{
+	required int32 m_nRoleId=1;
+	optional int32 m_nCount=2;
+	repeated SM_Skill_Info m_nSkillInfo=3;
+}
+	
+
+message SM_Skill_Info
+{
+	required int64 m_nGmid=1;
+	optional int32 m_nProfession=2;			//职业 宠物是id
+	optional int32 m_nSkillid=3;			//技能ID
+	optional int32 m_nLevel=4;			//技能级别
+}
+

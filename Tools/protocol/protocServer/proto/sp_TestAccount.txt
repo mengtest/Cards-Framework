@@ -1,0 +1,16 @@
+message SP_TestAccountReturn
+{
+    required string accountName=1;///账号名
+    required  string password=2;///密码
+    required  string clientIP=3;///客户端ip地址 
+	optional int32 accountType = 4;					//0正式账号 1测试账号
+	optional int32 createTime = 5;//账号创建时间
+}
+
+message SP_ClientIP
+{
+     required string clientIP=1;///客户端ip地址
+     optional string mac=2;///mac
+	 optional string idfa=3;///idfa
+	 optional string deviceid=4;///设备ID
+}

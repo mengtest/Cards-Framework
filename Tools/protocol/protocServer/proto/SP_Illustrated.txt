@@ -1,0 +1,8 @@
+
+///---------------------------------数据库服务器----------------------------------
+
+message SM_SendIllustratedToGs
+{
+	required int32 m_roleid = 1;				//角色id
+	repeated int32 m_objectid =2;
+}

@@ -1,0 +1,41 @@
+
+
+
+// CS副本结果
+message SM_CS_MatchReuslt
+{
+	required int32 m_nresult=1;  //0 成功 1 失败  2 没有找到队伍信息 3 已经进副本了
+	required int32 m_nleaderid=2;  //队员id
+
+}
+
+// 通知CS取消副本
+message SM_CS_CancelMatch
+{
+	required int32 m_nroleid=1;  ///队员id
+}
+
+
+// CS副本进入队伍通知gameserver
+message SM_TeamFB_InFB
+{
+	required int32 m_nleaderid=1;  //队长id
+}
+
+// CS副本进入队伍通知gameserver
+message SM_TeamFight_FirstBlood
+{
+	required int32 m_nleaderid=1;  		//队长id
+	required int32 m_nfbtypeid=2;  		//副本id
+	required int64 m_nfighttime=3;  	//挑战完成时间
+
+	repeated SM_FirstBlood_Member m_member=10;
+}
+
+message SM_FirstBlood_Member
+{
+	required int32 m_roleid=1;					///玩家角色id;
+	optional string m_name=2;					///角色名称;
+	optional int32 m_rolelv=3;					///角色等级;
+	optional int32 m_fightpow=4;				///角色战力
+}

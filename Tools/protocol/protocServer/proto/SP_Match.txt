@@ -1,0 +1,54 @@
+//每个人的报名信息;
+message SM_MatchRole_info
+{
+	required int32 roleid=1;
+	optional int32 createtime=2;//创建时间;
+	optional int32 matchid=3;//比赛id;
+	optional int32 score=4;//该场次中自己的积分;	
+	//optional int32 starttime=5;//比赛开始时间;
+	optional int32 isdeleate=6;//0正常，1删除;
+	optional int32 ID=7;//比赛场次，自增值;
+	optional int32 state=8;
+	optional int32 updatetime=10;
+	optional string name=11;
+	optional int32 robot=12;
+}
+
+
+//报名信息;
+message SM_MatchRole
+{
+required int32 roleid=1;
+repeated SM_MatchRole_info data=2;
+}
+
+
+
+//请求信息;
+message SM_Match_request
+{
+required int32 roleid=1;
+}
+
+
+
+
+//比赛信息;
+message SM_match_game_info
+{
+	required int32 ID=1;//比赛场次，自增值;
+	optional int32 matchid=2;//比赛id;
+	optional int32 begintime=3;//该比赛开始的时间;
+	optional int32 isdeleate=4;//0正常，1删除;
+	optional int32 state=5;//0正常，1正在比赛;
+	optional int32 endtime=6;
+}
+
+//比赛信息;
+message SM_match_game
+{
+required int32 roleid=1;
+repeated SM_match_game_info data=2;
+}    
+
+

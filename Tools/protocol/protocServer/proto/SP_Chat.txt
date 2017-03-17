@@ -1,0 +1,22 @@
+///发送系统
+message GM_SystemChatPack
+{
+	required int32 colorType = 1;		///颜色类型;
+	required int32 sendType = 2;		///发送目标类型;
+	optional string userData = 3;		///用户自定义数据;
+	repeated string sendStr = 4;		///发送的数据，数组，对应颜色;
+	required int32 channel = 5;		///频道：5、系统频道，7、系统公告;
+}
+
+///监控工具通信;
+message GM_ToolAudios
+{
+	required int32 audioStart = 1;		///起始数;
+	required int32 audioEnd = 2;		///终止数;
+}
+
+message GM_AudiosContent
+{
+	required int32 audiosNum = 1;		///发送的数量;
+	repeated bytes audios = 2;	///语音内容;
+}

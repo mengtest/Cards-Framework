@@ -1,0 +1,10 @@
+
+///≈≈––∞Ò–≈œ¢
+message SM_RankTime_Return
+{
+	required int32 m_roleid=1;
+	optional int32 m_goldtime=2;
+	optional int32 m_winnumtime=3;
+	optional int32 m_daygoldval=4;
+	optional int32 m_daygoldtime=5;
+}

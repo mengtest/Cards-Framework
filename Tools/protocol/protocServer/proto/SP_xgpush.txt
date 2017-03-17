@@ -1,0 +1,8 @@
+///信鸽推送数据包;
+message SM_XgPushToHTTP
+{
+	required string m_title=1;		//标题
+	optional string m_content=2;	//内容
+	optional int32 m_account = 3;	//账号;
+	optional int32 m_action = 4;	//推送行为
+}

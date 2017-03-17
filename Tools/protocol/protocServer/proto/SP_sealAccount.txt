@@ -1,0 +1,11 @@
+
+message  SP_SealAccount
+{
+     required  int32  accountid=1;///被封的账号id
+	 required  string sealTime=2;///解封的时间
+}
+
+message SP_SealAccountReturn
+{
+    repeated SP_SealAccount sealAccount=1;///被封账号信息动态包
+}
