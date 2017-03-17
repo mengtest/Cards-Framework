@@ -158,7 +158,6 @@ public static class LuaBinder
 		NCSpeedLight_GlobalEventManagerWrap.Register(L);
 		NCSpeedLight_EvtWrap.Register(L);
 		NCSpeedLight_ResManagerWrap.Register(L);
-		NCSpeedLight_UIManagerWrap.Register(L);
 		NCSpeedLight_AudioManagerWrap.Register(L);
 		NCSpeedLight_LuaManagerWrap.Register(L);
 		NCSpeedLight_LuaBehaviourWrap.Register(L);
@@ -174,17 +173,20 @@ public static class LuaBinder
 		NCSpeedLight_PersistentManagerWrap.Register(L);
 		NCSpeedLight_VersionManagerWrap.Register(L);
 		NCSpeedLight_SharedVariableWrap.Register(L);
+		NCSpeedLight_VPTimerWrap.Register(L);
+		NCSpeedLight_TipsDialogWrap.Register(L);
 		NCSpeedLight_EventManagerWrap.Register(L);
 		L.RegFunction("EventHandlerDelegate", NCSpeedLight_EventHandlerDelegate);
 		L.RegFunction("LoadAssetCallback", NCSpeedLight_LoadAssetCallback);
-		L.BeginModule("UIManager");
-		NCSpeedLight_UIManager_StandardDialogOptionWrap.Register(L);
-		NCSpeedLight_UIManager_ProgressDialogOptionWrap.Register(L);
-		NCSpeedLight_UIManager_DialogTypeWrap.Register(L);
-		L.EndModule();
 		L.BeginModule("ServerConnection");
 		NCSpeedLight_ServerConnection_ListenerWrap.Register(L);
 		L.RegFunction("ConnectionDelegate", NCSpeedLight_ServerConnection_ConnectionDelegate);
+		L.EndModule();
+		L.BeginModule("VPTimer");
+		NCSpeedLight_VPTimer_HandleWrap.Register(L);
+		NCSpeedLight_VPTimer_StatsWrap.Register(L);
+		L.RegFunction("ArgCallback", NCSpeedLight_VPTimer_ArgCallback);
+		L.RegFunction("Callback", NCSpeedLight_VPTimer_Callback);
 		L.EndModule();
 		L.BeginModule("Helper");
 		L.RegFunction("ChildDelegate", NCSpeedLight_Helper_ChildDelegate);
@@ -527,6 +529,60 @@ public static class LuaBinder
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
 				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.ServerConnection.ConnectionDelegate), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int NCSpeedLight_VPTimer_ArgCallback(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.VPTimer.ArgCallback), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.VPTimer.ArgCallback), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int NCSpeedLight_VPTimer_Callback(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.VPTimer.Callback), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.VPTimer.Callback), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;

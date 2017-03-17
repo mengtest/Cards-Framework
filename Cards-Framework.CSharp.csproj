@@ -255,7 +255,6 @@
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Core\SDK\iOSAdapter.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Core\Version\VersionManager.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Core\View\LuaView.cs" />
-    <Compile Include="Assets\Scripts\C#\NCSpeedLight\Core\View\UIManager.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Game.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Main.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\Helper.cs" />
@@ -382,11 +381,11 @@
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_ServerConnectionWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_ServerConnection_ListenerWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_SharedVariableWrap.cs" />
+    <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_TipsDialogWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_UIHelperWrap.cs" />
-    <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_UIManagerWrap.cs" />
-    <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_UIManager_DialogTypeWrap.cs" />
-    <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_UIManager_ProgressDialogOptionWrap.cs" />
-    <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_UIManager_StandardDialogOptionWrap.cs" />
+    <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_VPTimerWrap.cs" />
+    <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_VPTimer_HandleWrap.cs" />
+    <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_VPTimer_StatsWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_VersionManagerWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_iOSAdapterWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\SpringPositionWrap.cs" />

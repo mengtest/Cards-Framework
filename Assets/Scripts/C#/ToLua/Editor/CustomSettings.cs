@@ -39,6 +39,8 @@ public static class CustomSettings
         _DT(typeof(System.Comparison<int>)),
         _DT(typeof(ServerConnection.ConnectionDelegate)),
         _DT(typeof(UIEventListener.VoidDelegate)),
+        _DT(typeof(VPTimer.ArgCallback)),
+        _DT(typeof(VPTimer.Callback)),
 
     };
 
@@ -154,10 +156,10 @@ public static class CustomSettings
          _GT(typeof(Evt)),
          _GT(typeof(ResManager)),
 
-         _GT(typeof(UIManager)),
-         _GT(typeof(UIManager.StandardDialogOption)),
-         _GT(typeof(UIManager.ProgressDialogOption)),
-         _GT(typeof(UIManager.DialogType)),
+         //_GT(typeof(UIManager)),
+         //_GT(typeof(UIManager.StandardDialogOption)),
+         //_GT(typeof(UIManager.ProgressDialogOption)),
+         //_GT(typeof(UIManager.DialogType)),
 
 
          _GT(typeof(AudioManager)),
@@ -193,6 +195,12 @@ public static class CustomSettings
          _GT(typeof(SharedVariable)),
 
          //_GT(typeof(Game)),
+
+         _GT(typeof(VPTimer)),
+         _GT(typeof(VPTimer.Handle)),
+         _GT(typeof(VPTimer.Stats)),
+
+         _GT(typeof(TipsDialog)),
 
 
 #endregion

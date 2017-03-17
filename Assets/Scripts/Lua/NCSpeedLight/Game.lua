@@ -66,6 +66,14 @@ function Game.Update()
 		end;
 		UIManager.OpenStandardDialog(option);
 	end
+	
+	if UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.E) == true then
+		local option = ProgressDialogOption:New();
+		option.Content = "333333...";
+		option.AutoClose = true;
+		option.Cancelable = true;
+		UIManager.OpenProgressDialog(option);
+	end
 end
 
 function Game.OnDestroy()
