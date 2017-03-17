@@ -6,6 +6,7 @@ BundleInfo = {
 AssetManager =
 {
 	loadedBundles = {},
+	Manifest = nil,
 	Instance = nil,
 };
 
@@ -26,15 +27,13 @@ function AssetManager:New()
 end
 
 function AssetManager.LoadAssetbundleManifest()
-end
-
-function AssetManager:Instance()
-	if self == nil then
-		o = {}
-		setmetatable(o, self)
-		self.__index = self
+	local path = NCSpeedLight.SharedVariable.ASSET_BUNDLE_PATH .. NCSpeedLight.SharedVariable.PLATFORM_NAME;
+	local bundle = UnityEngine.AssetBundle.LoadFromFile(path);
+	if bundle ~= nil then
+		AssetManager.Instance.Manifest = bundle.LoadAsset("AssetBundleManifest", "UnityEngine.AssetBundleManifest");
+	else
+		Log.Error("Init assetbundle manifest error.");
 	end
-	return self;
 end
 
 function AssetManager.LoadAsset(assetPath, type)

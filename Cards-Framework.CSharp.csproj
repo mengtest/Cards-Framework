@@ -475,6 +475,7 @@
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_AnimationWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_AnimatorWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_ApplicationWrap.cs" />
+    <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_AssetBundleManifestWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_AssetBundleWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_AsyncOperationWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_AudioClipWrap.cs" />
