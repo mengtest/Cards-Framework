@@ -52,6 +52,17 @@ function Game.Update()
 			UIManager.OpenStandardDialog(option);
 		end
 	end
+	
+	if UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.W) == true then
+		local option = StandardDialogOption:New();
+		option.Title = '提示';
+		option.Content = '你确定退出游戏吗？';
+		option.DoubleButton = true;
+		option.OnClickOK = function(go)
+			UnityEngine.Application.Quit();
+		end;
+		UIManager.OpenStandardDialog(option);
+	end
 end
 
 function Game.OnDestroy()

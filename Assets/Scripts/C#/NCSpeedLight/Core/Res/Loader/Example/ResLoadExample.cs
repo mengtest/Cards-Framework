@@ -24,9 +24,9 @@ namespace NCSpeedLight
         }
         void OnResManagerInitFinish()
         {
-            StartCoroutine(CoroutineLoad());
-            AsyncLoad();
-            SyncLoad();
+            //StartCoroutine(CoroutineLoad());
+            //AsyncLoad();
+            //SyncLoad();
         }
 
         /// <summary>
@@ -89,11 +89,32 @@ namespace NCSpeedLight
 
         void OnGUI()
         {
-            if (GUI.Button(new Rect(10, 10, 150, 30), "Unload UI_2.prefab"))
+            if (GUI.Button(new Rect(10, 10, 150, 30), "Load UI_Main"))
             {
-                for(int i = 0; i < 100; i++)
+                GameObject go = ResManager.LoadAssetSync<GameObject>("Bundle/UI/Dialog/ProgressDialog.prefab");
+                if (go)
                 {
-                    ResManager.UnloadAssetBundle("UI_2.prefab");
+                    Instantiate(go);
+                }
+            }
+
+            if (GUI.Button(new Rect(10, 50, 150, 30), "Load Single"))
+            {
+                string path = "H:/Personal/Github/Cards-Framework/AssetBundles/Android/Assets/ec76e6065938994e525fd3ffa85a18a3";
+                AssetBundle bundle = AssetBundle.LoadFromFile(path);
+                GameObject go = bundle.mainAsset as GameObject;
+                if (go)
+                {
+                    Instantiate(go);
+                }
+            }
+
+            if (GUI.Button(new Rect(10, 90, 150, 30), "Load UI_2"))
+            {
+                GameObject go = ResManager.LoadAssetSync<GameObject>("Bundle/BundleTest/UI_2.prefab");
+                if (go)
+                {
+                    Instantiate(go);
                 }
             }
         }

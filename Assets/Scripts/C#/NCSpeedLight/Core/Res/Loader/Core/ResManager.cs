@@ -9,7 +9,7 @@
            //
 //----------------------------------------------------------------*/
 
-#define ASSETBUNDLE_MODE
+//#define ASSETBUNDLE_MODE
 //#define COMPRESSED_BUNDLE
 
 using System;
@@ -563,7 +563,7 @@ namespace NCSpeedLight
                 if (loadedBundle != null && loadedBundle.IsDone)
                 {
                     string assetName = Utility.GetFileNameWithoutExtFromFullPath(assetPath);
-                    return loadedBundle.Bundle.LoadAsset(assetName, type);
+                    return loadedBundle.Bundle.LoadAsset(assetName);
                 }
                 return null;
             }

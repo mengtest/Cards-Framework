@@ -9,7 +9,7 @@
             // Modify History:
             //
 //----------------------------------------------------------------*/
-
+#pragma warning disable 0618
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
@@ -33,7 +33,7 @@ namespace NCSpeedLight
 
         private string[] m_TempStr = new string[1];
 
-        private Object[] m_TempObjects = new Object[1];
+        //private Object[] m_TempObjects = new Object[1];
 
         private string m_OutputDirectory;
 
@@ -41,7 +41,8 @@ namespace NCSpeedLight
                 BuildAssetBundleOptions.CollectDependencies |
                 BuildAssetBundleOptions.CompleteAssets |
                 BuildAssetBundleOptions.DeterministicAssetBundle |
-                BuildAssetBundleOptions.UncompressedAssetBundle;
+                BuildAssetBundleOptions.UncompressedAssetBundle |
+                BuildAssetBundleOptions.ForceRebuildAssetBundle;
 
 
         private List<string> m_PreSharedAssets = new List<string>();
@@ -96,6 +97,22 @@ namespace NCSpeedLight
 
             BuildAssets(minimumGraph, m_SourceAssets, m_OutputDirectory);
         }
+
+        public void BuildSingle()
+        {
+            Caching.CleanCache();
+
+            BuildFullAssetsGraph();
+            ComputeSourceAndSharedAssets();
+
+            AdjacencyGraph<string, Edge<string>> minimumGraph = GenerateMinimumGraph();
+
+            //OutputDendency(minimumGraph, "dependency.txt");
+            //OutputDendency(m_FullGraph, "dependencyFull.txt");
+
+            BuildAssets(minimumGraph, m_SourceAssets, m_OutputDirectory);
+        }
+
         /// <summary>
         /// 读取资源关系图并且构建
         /// </summary>
@@ -323,7 +340,7 @@ namespace NCSpeedLight
                 Directory.CreateDirectory(folder);
             }
 
-            string md5File = SharedVariable.BUILD_BUNDLE_LOG_PATH + "/MD5Index.txt";
+            string md5File = SharedVariable.BUILD_BUNDLE_LOG_PATH + "/MD5Index.txt"; // 输出md5值索引
             var dir = new FileInfo(md5File).Directory;
             if (!dir.Exists)
             {
@@ -340,6 +357,7 @@ namespace NCSpeedLight
 
                 int preLevel = -1;
                 int pushCount = 0;
+                List<UnityEngine.Object> refPrefabs = new List<UnityEngine.Object>(); // 防止贴图丢失引用
                 foreach (var path in buildList)
                 {
                     if (IsNotScript(path))
@@ -354,29 +372,37 @@ namespace NCSpeedLight
 
                         preLevel = nowLevel;
 
-                        m_TempObjects[0] = AssetDatabase.LoadAssetAtPath(path, typeof(Object));
-
+                        UnityEngine.Object mainAssets = AssetDatabase.LoadAssetAtPath(path, typeof(Object));
+                        List<UnityEngine.Object> assets = new List<Object>();
+                        assets.Add(mainAssets);
 
                         string md5 = AssetBundleManifest.GetAssetBundleMD5(path);
                         string outFile = folder + md5;
 
-
                         if (File.Exists(outFile) == false)
                         {
-                            if (m_TempObjects[0] == null)
-                            {
-                                Debug.LogError("Build assetbundle fail caused by null asset: " + path);
-                            }
-                            else
-                            {
-                                Debug.Log("Build assetbundle targetfile: " + outFile + ",assetpath: " + path + ",push level:" + nowLevel.ToString() + " " + m_BuildTarget);
 
-                                md5TW.Write(path);
-                                md5TW.Write("  ||  ");
-                                md5TW.Write(md5);
-                                md5TW.WriteLine();
-                            }
+                            md5TW.Write(path);
+                            md5TW.Write("  ||  ");
+                            md5TW.Write(md5);
+                            md5TW.WriteLine();
                         }
+                        else
+                        {
+                            //outFile += "____________new";
+                            //File.Delete(outFile);
+                        }
+
+                        if (path.EndsWith(".prefab") && nowLevel > 0)
+                        {
+                            refPrefabs.Add(mainAssets);
+                        }
+
+                        if (nowLevel == 0)
+                        {
+                            assets.AddRange(refPrefabs);
+                        }
+                        Debug.Log("Build assetbundle targetfile: " + outFile + ",assetpath: " + path + ",push level:" + nowLevel.ToString() + " " + m_BuildTarget);
 
                         if (path.EndsWith(".unity"))
                         {
@@ -384,7 +410,7 @@ namespace NCSpeedLight
                         }
                         else
                         {
-                            BuildPipeline.BuildAssetBundle(m_TempObjects[0], m_TempObjects, outFile, m_BuildOptions, m_BuildTarget);
+                            BuildPipeline.BuildAssetBundle(mainAssets, assets.ToArray(), outFile, m_BuildOptions, m_BuildTarget);
                         }
                     }
                 }

@@ -58,12 +58,6 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
@@ -72,7 +66,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Res Raw\Effect\MaJiang\InitEffectLayer.cs" />
+    <Compile Include="Assets\Resources\Raw\Effect\MaJiang\InitEffectLayer.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\3rd\AudioToolkit\AudioToolkit\AudioController.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\3rd\AudioToolkit\AudioToolkit\AudioFader.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\3rd\AudioToolkit\AudioToolkit\AudioItem.cs" />
@@ -534,18 +528,6 @@
     <Compile Include="Assets\Scripts\C#\ToLua\Source\LuaConst.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Res Raw\Atlas\Dialog\Dialog.txt" />
-    <None Include="Assets\Res Raw\Atlas\JoinRoom\JoinRoom.txt" />
-    <None Include="Assets\Res Raw\Atlas\Login\QQlogin.txt" />
-    <None Include="Assets\Res Raw\Atlas\Login\login.txt" />
-    <None Include="Assets\Res Raw\Atlas\Login\text.txt" />
-    <None Include="Assets\Res Raw\Atlas\Public\public 1.txt" />
-    <None Include="Assets\Res Raw\Atlas\Public\publicDynamic.txt" />
-    <None Include="Assets\Res Raw\Atlas\Record\Record.txt" />
-    <None Include="Assets\Res Raw\Effect\MaJiang\BianKuang\jinyu\Add Lv3.shader" />
-    <None Include="Assets\Res Raw\Model\MaJiang\majiang_clips.txt" />
-    <None Include="Assets\Res Raw\Model\MaJiang\majiangzhuo_clips.txt" />
-    <None Include="Assets\Res Raw\Shader\SM_TransparentRim.shader" />
     <None Include="Assets\Resources\Bundle\Text\Chinese.txt" />
     <None Include="Assets\Resources\Bundle\Text\Light xml\majiangzhuo.txt" />
     <None Include="Assets\Resources\Bundle\UI\Center\Atlas\Center.txt" />
@@ -559,7 +541,19 @@
     <None Include="Assets\Resources\Bundle\UI\MaJiang\Atlas\start.txt" />
     <None Include="Assets\Resources\Bundle\UI\MaJiang\View\Atlas\record.txt" />
     <None Include="Assets\Resources\Bundle\UI\Problem\Atlas\Problem.txt" />
-    <None Include="Assets\Resources\UI\text.txt" />
+    <None Include="Assets\Resources\Internal\UI\text.txt" />
+    <None Include="Assets\Resources\Raw\Atlas\Dialog\Dialog.txt" />
+    <None Include="Assets\Resources\Raw\Atlas\JoinRoom\JoinRoom.txt" />
+    <None Include="Assets\Resources\Raw\Atlas\Login\QQlogin.txt" />
+    <None Include="Assets\Resources\Raw\Atlas\Login\login.txt" />
+    <None Include="Assets\Resources\Raw\Atlas\Login\text.txt" />
+    <None Include="Assets\Resources\Raw\Atlas\Public\public 1.txt" />
+    <None Include="Assets\Resources\Raw\Atlas\Public\publicDynamic.txt" />
+    <None Include="Assets\Resources\Raw\Atlas\Record\Record.txt" />
+    <None Include="Assets\Resources\Raw\Effect\MaJiang\BianKuang\jinyu\Add Lv3.shader" />
+    <None Include="Assets\Resources\Raw\Model\MaJiang\majiang_clips.txt" />
+    <None Include="Assets\Resources\Raw\Model\MaJiang\majiangzhuo_clips.txt" />
+    <None Include="Assets\Resources\Raw\Shader\SM_TransparentRim.shader" />
     <None Include="Assets\Scripts\C#\NCSpeedLight\3rd\AudioToolkit\Readme.txt" />
     <None Include="Assets\Scripts\C#\NCSpeedLight\3rd\FingerGestures\Readme.txt" />
     <None Include="Assets\Scripts\C#\NCSpeedLight\3rd\NGUI\ReadMe - 3.7.8.txt" />

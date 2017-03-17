@@ -23,5 +23,21 @@ namespace NCSpeedLight
             Instance = this;
             base.Awake();
         }
+
+        protected override void Update()
+        {
+            base.Update();
+            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.E) == true)
+            {
+
+                //var option = new UIManager.StandardDialogOption();
+                //option.Title = "提示";
+                //option.Content = "你确定退出游戏吗？";
+                //option.DoubleButton = true;
+                //UIManager.OpenStandardDialog(option);
+
+                UIManager.OpenWindow("Hall/UI_Main");
+            }
+        }
     }
 }

@@ -140,15 +140,6 @@ namespace NCSpeedLight
                 return window;
             }
             string assetPath = Helper.StringFormat("Bundle/UI/{0}.prefab", windowName);
-            //ResManager.LoadAssetAsync(assetPath, typeof(GameObject), (obj, param) =>
-            //{
-            //    GameObject go = obj as GameObject;
-            //    go = SetupWindow(go);
-            //    if (go)
-            //    {
-            //        m_ShownWindows.Add(windowName, go);
-            //    }
-            //});
             GameObject go = ResManager.LoadAssetSync<GameObject>(assetPath);
             go = SetupWindow(go);
             if (go)

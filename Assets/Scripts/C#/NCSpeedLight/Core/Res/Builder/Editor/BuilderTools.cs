@@ -9,7 +9,7 @@
             // Modify History:
             //
 //----------------------------------------------------------------*/
-
+#pragma warning disable 0618
 using System;
 using System.IO;
 using System.Collections.Generic;
@@ -41,7 +41,8 @@ namespace NCSpeedLight
                 }
                 if (GUILayout.Button("Build Assets", GUILayout.Width(295)))
                 {
-                    BuildAssets();
+                    //BuildAssets();
+                    BuildAssetBundle();
                 }
                 if (GUILayout.Button("Build Apk", GUILayout.Width(295)))
                 {
@@ -85,6 +86,40 @@ namespace NCSpeedLight
                 }
                 EditorUtility.EndContents();
             }
+        }
+
+        [MenuItem("Assets/Builder/Build")]
+        public static void BuildSingleAssets()
+        {
+            UnityEngine.Object[] assets = Selection.objects;
+            if (assets != null && assets.Length > 0)
+            {
+                m_WaitingBuildAssets = new List<string>();
+                for (int i = 0; i < assets.Length; i++)
+                {
+                    string path = AssetDatabase.GetAssetPath(assets[i]);
+                    m_WaitingBuildAssets.Add(path);
+                }
+                AssetBuilder builder = new AssetBuilder(m_WaitingBuildAssets, SharedVariable.ASSET_BUNDLE_PATH, m_WaitingBuildAssets);
+                builder.BuildSingle();
+            }
+        }
+
+
+        [MenuItem("Assets/Builder/Map Assetbundle Name")]
+        public static void MapAssetBundleName()
+        {
+
+        }
+
+        public static void BuildAssetBundle()
+        {
+            string outputPath = Path.Combine(Utility.AssetBundlesOutputPath, Utility.GetPlatformName());
+            if (!Directory.Exists(outputPath))
+                Directory.CreateDirectory(outputPath);
+
+            //@TODO: use append hash... (Make sure pipeline works correctly with it.)
+            BuildPipeline.BuildAssetBundles(outputPath, BuildAssetBundleOptions.None, EditorUserBuildSettings.activeBuildTarget);
         }
 
         private static void BuildAssets()

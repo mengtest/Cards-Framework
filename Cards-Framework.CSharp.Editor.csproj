@@ -91,30 +91,6 @@
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>Library\UnityAssemblies\SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor.EditorTestsRunner">
-      <HintPath>Library\UnityAssemblies\UnityEditor.EditorTestsRunner.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEditor.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>Library\UnityAssemblies\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.UI">
-      <HintPath>Library\UnityAssemblies\UnityEditor.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.Advertisements">
-      <HintPath>Library\UnityAssemblies\UnityEditor.Advertisements.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.TreeEditor">
-      <HintPath>Library\UnityAssemblies\UnityEditor.TreeEditor.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="Debugger">
       <HintPath>Assets\Plugins\Debugger.dll</HintPath>
     </Reference>
@@ -244,18 +220,6 @@
     <Compile Include="Assets\Scripts\C#\ToLua\Editor\ToLuaTree.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Res Raw\Atlas\Dialog\Dialog.txt" />
-    <None Include="Assets\Res Raw\Atlas\JoinRoom\JoinRoom.txt" />
-    <None Include="Assets\Res Raw\Atlas\Login\QQlogin.txt" />
-    <None Include="Assets\Res Raw\Atlas\Login\login.txt" />
-    <None Include="Assets\Res Raw\Atlas\Login\text.txt" />
-    <None Include="Assets\Res Raw\Atlas\Public\public 1.txt" />
-    <None Include="Assets\Res Raw\Atlas\Public\publicDynamic.txt" />
-    <None Include="Assets\Res Raw\Atlas\Record\Record.txt" />
-    <None Include="Assets\Res Raw\Effect\MaJiang\BianKuang\jinyu\Add Lv3.shader" />
-    <None Include="Assets\Res Raw\Model\MaJiang\majiang_clips.txt" />
-    <None Include="Assets\Res Raw\Model\MaJiang\majiangzhuo_clips.txt" />
-    <None Include="Assets\Res Raw\Shader\SM_TransparentRim.shader" />
     <None Include="Assets\Resources\Bundle\Text\Chinese.txt" />
     <None Include="Assets\Resources\Bundle\Text\Light xml\majiangzhuo.txt" />
     <None Include="Assets\Resources\Bundle\UI\Center\Atlas\Center.txt" />
@@ -269,7 +233,19 @@
     <None Include="Assets\Resources\Bundle\UI\MaJiang\Atlas\start.txt" />
     <None Include="Assets\Resources\Bundle\UI\MaJiang\View\Atlas\record.txt" />
     <None Include="Assets\Resources\Bundle\UI\Problem\Atlas\Problem.txt" />
-    <None Include="Assets\Resources\UI\text.txt" />
+    <None Include="Assets\Resources\Internal\UI\text.txt" />
+    <None Include="Assets\Resources\Raw\Atlas\Dialog\Dialog.txt" />
+    <None Include="Assets\Resources\Raw\Atlas\JoinRoom\JoinRoom.txt" />
+    <None Include="Assets\Resources\Raw\Atlas\Login\QQlogin.txt" />
+    <None Include="Assets\Resources\Raw\Atlas\Login\login.txt" />
+    <None Include="Assets\Resources\Raw\Atlas\Login\text.txt" />
+    <None Include="Assets\Resources\Raw\Atlas\Public\public 1.txt" />
+    <None Include="Assets\Resources\Raw\Atlas\Public\publicDynamic.txt" />
+    <None Include="Assets\Resources\Raw\Atlas\Record\Record.txt" />
+    <None Include="Assets\Resources\Raw\Effect\MaJiang\BianKuang\jinyu\Add Lv3.shader" />
+    <None Include="Assets\Resources\Raw\Model\MaJiang\majiang_clips.txt" />
+    <None Include="Assets\Resources\Raw\Model\MaJiang\majiangzhuo_clips.txt" />
+    <None Include="Assets\Resources\Raw\Shader\SM_TransparentRim.shader" />
     <None Include="Assets\Scripts\C#\NCSpeedLight\3rd\AudioToolkit\Readme.txt" />
     <None Include="Assets\Scripts\C#\NCSpeedLight\3rd\FingerGestures\Readme.txt" />
     <None Include="Assets\Scripts\C#\NCSpeedLight\3rd\NGUI\ReadMe - 3.7.8.txt" />
