@@ -1,4 +1,3 @@
-
 BundleInfo = {
 	Bundle = nil,
 	RefCount = 0,
@@ -6,19 +5,27 @@ BundleInfo = {
 
 AssetManager =
 {
-	loadedBundles = {}
+	loadedBundles = {},
+	Instance = nil,
 };
 
-local this = AssetManager;
-
 function AssetManager:Initialize()
-	this:Instance();
-	if ASSETBUNDLE_MODE then
-		AssetManager:LoadAssetbundleManifest();
+	if self.Instance == nil then
+		AssetManager:New();
+		if SharedVariable.ASSETBUNDLE_MODE then
+			AssetManager.LoadAssetbundleManifest();
+		end
 	end
 end
 
-function AssetManager:LoadAssetbundleManifest()
+function AssetManager:New()
+	o = {}
+	setmetatable(o, self)
+	self.__index = self
+	self.Instance = o;
+end
+
+function AssetManager.LoadAssetbundleManifest()
 end
 
 function AssetManager:Instance()
@@ -31,7 +38,7 @@ function AssetManager:Instance()
 end
 
 function AssetManager.LoadAsset(assetPath, type)
-	if ASSETBUNDLE_MODE then
+	if SharedVariable.ASSETBUNDLE_MODE then
 	else
 		return UnityEngine.Resources.Load(assetPath, type);
 	end

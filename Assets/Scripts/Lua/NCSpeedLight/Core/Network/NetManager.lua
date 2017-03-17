@@ -22,7 +22,7 @@ end
 function InitPBMessage()
 	local path = NCSpeedLight.SharedVariable.SCRIPT_BUNDLE_PATH .. "PBMessage.pb";
 	local buffer = Utility.OpenFile(path);
-	protobufProcessor.register(buffer)
+	SharedVariable.ProtobufProcessor.register(buffer)
 end
 
 function NetManager.CreateConnection(serverType, host, port, onConnected, onDisconnected)
@@ -61,27 +61,27 @@ function NetManager.UnregisterEvent(id, func)
 end
 
 function NetManager.DecodeMsg(structName, evt)
-	obj = protobufProcessor.decode(structName, evt.LuaParam);
+	obj = SharedVariable.ProtobufProcessor.decode(structName, evt.LuaParam);
 	return obj;
 end
 
 function NetManager.EncodeMsg(structName, msg)
-	buffer = protobufProcessor.encode(structName, msg);
+	buffer = SharedVariable.ProtobufProcessor.encode(structName, msg);
 	return buffer;
 end
 
 function NetManager.DecodeJson(bytes)
 	str = tolua.tolstring(bytes);
-	obj = jsonProcessor.decode(str);
+	obj = SharedVariable.JsonProcessor.decode(str);
 	return obj;
 end
 
 function NetManager.DecodePB(structName, buffer)
-	obj = protobufProcessor.decode(structName, buffer);
+	obj = SharedVariable.ProtobufProcessor.decode(structName, buffer);
 	return obj;
 end
 
 function NetManager.EncodePB(structName, msg)
-	buffer = protobufProcessor.encode(structName, msg);
+	buffer = SharedVariable.ProtobufProcessor.encode(structName, msg);
 	return buffer;
 end

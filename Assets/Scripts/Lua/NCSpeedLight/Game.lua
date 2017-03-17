@@ -9,13 +9,13 @@
 --
 -----------------------------------------------
 
-require 'NCSpeedLight.Utils.Define'
+require 'NCSpeedLight.Utils.Include'
 
 Game = {}
 local platform;
 function Initialize()
 	-- 固定帧率至30
-	UnityEngine.Application.targetFrameRate = 30;
+	UnityEngine.Application.targetFrameRate = SharedVariable.TargetFramerate;
 	-- 设置屏幕不关闭
 	UnityEngine.Screen.sleepTimeout = UnityEngine.SleepTimeout.NeverSleep;
 	

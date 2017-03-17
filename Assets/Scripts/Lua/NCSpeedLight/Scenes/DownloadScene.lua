@@ -27,7 +27,7 @@ function DownloadScene:End()
 end
 
 function DownloadScene.CheckVersion()
-	local url = UrlKeeper.JsonUrl();
+	local url = SharedVariable.JsonUrl;
 	Log.Info('Request json url at ' .. url);
 	local www = UnityEngine.WWW(url);
 	

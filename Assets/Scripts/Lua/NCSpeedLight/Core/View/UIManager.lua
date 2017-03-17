@@ -127,7 +127,7 @@ function UIManager.OpenWindow(windowName)
 		return window;
 	else
 		local assetPath;
-		if ASSETBUNDLE_MODE then
+		if SharedVariable.ASSETBUNDLE_MODE then
 			assetPath = "UI/" .. windowName;
 		else
 			assetPath = "Bundle/UI/" .. windowName;
@@ -165,7 +165,7 @@ function UIManager.OpenStandardDialog(option)
 	end
 	if UIManager.Instance.StandardDialog == nil then
 		local assetPath;
-		if ASSETBUNDLE_MODE then
+		if SharedVariable.ASSETBUNDLE_MODE then
 			assetPath = "UI/Dialog/StandardDialog";
 		else
 			assetPath = "Bundle/UI/Dialog/StandardDialog";
@@ -247,7 +247,7 @@ function UIManager.OpenProgressDialog(option)
 	end
 	if UIManager.Instance.ProgressDialog == nil then
 		local assetPath;
-		if ASSETBUNDLE_MODE then
+		if SharedVariable.ASSETBUNDLE_MODE then
 			assetPath = "UI/Dialog/ProgressDialog";
 		else
 			assetPath = "Bundle/UI/Dialog/ProgressDialog";
@@ -311,7 +311,7 @@ end
 
 function UIManager.OpenTipsDialog(content)
 	local assetPath;
-	if ASSETBUNDLE_MODE then
+	if SharedVariable.ASSETBUNDLE_MODE then
 		assetPath = "UI/Dialog/TipsDialog";
 	else
 		assetPath = "Bundle/UI/Dialog/TipsDialog";

@@ -133,9 +133,9 @@ function LoginScene:SaveLoginRecordFile()
 end
 
 function LoginScene:RequestVerifyVersion()
-	Log.Info("LoginScene: Send verify version msg,current version is " .. UrlKeeper.GetVersion())
+	Log.Info("LoginScene: Send verify version msg,current version is " .. SharedVariable.Version);
 	local msg = {
-		version = UrlKeeper.GetVersion()
+		version = SharedVariable.Version;
 	}
 	local buffer = NetManager.EncodeMsg("GM_VerifyVersion", msg)
 	NetManager.SendEvent(GameMessage.GM_VERIFY_VERSION, buffer, 0, 1, ServerType.Login)
