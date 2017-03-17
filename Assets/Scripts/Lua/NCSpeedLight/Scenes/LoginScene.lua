@@ -128,7 +128,7 @@ end
 
 function LoginScene:SaveLoginRecordFile()
 	local path = NCSpeedLight.SharedVariable.DATA_PATH .. "Config/LoginRecord.bytes";
-	local buffer = NetManager.EncodePB('LoginRecord', self.LoginRecord);
+	local buffer = NetManager.EncodePB(PBMessage.LoginRecord, self.LoginRecord);
 	Utility.SaveFile(path, buffer);
 end
 
