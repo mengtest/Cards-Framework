@@ -1,78 +1,0 @@
-
-¯
-Proto/team.txt"y
-GMTeamPerson
-roleID (
-rolename (	
-rolelv (
-
-fightvalue (
-
-profession (
-mStatus
- ("A
-GMCreateTeam
-teamtype (
-	matchtype (
-fbid ("[
-GMCreateTeamResult
-m_result (
-teamid (
-teamtype (
-	matchtype (")
-GMInviteFriendListRequest
-fbid ("@
-GMInviteFriendList
-count (
-data (2.GMTeamPerson"¸
-GMInviteRoleInTeam
-inviteroleid (
-inviterolename (	
-beinvitedroleid (
-beinvitedrolename (	
-teamid (
-teamtype (
-fbid (
-timemark
- ("p
-GMInviteRoleInTeamResult
-m_result (
-beinvitedroleid (
-beinvitedrolename (	
-teamid ("®
-GMAnswerRoleInTeam
-answerresult (
-inviteroleid (
-inviterolename (	
-beinvitedroleid (
-beinvitedrolename (	
-teamid (
-teamtype ("H
-GMChatRoleInTeam
-answerresult (
-roleid (
-teamid ("\
-GMAnswerRoleInTeamResult
-m_result (
-teamid (
-fbid (
-teamtype ("[
-GMRoleTeamNotify
-m_result (
-m_teamleader (
-m_person (2.GMTeamPerson"6
-GMKickoutTeam
-m_outroleid (
-m_teamid ("<
-GMKickoutTeamResult
-m_result (
-m_outroleid ("
-GMLeaveTeam
-m_teamid ("%
-GMLeaveTeamResult
-m_result ("*
-GM_NotifyActiveOver
-m_nFbTypeId ("H
-GM_NotifyInviteData
-count ("
-mdata (2.GMInviteRoleInTeam

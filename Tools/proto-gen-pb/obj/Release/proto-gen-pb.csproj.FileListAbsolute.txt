@@ -3,4 +3,3 @@ H:\Personal\Github\Cards-Framework\Tools\proto-gen-pb\bin\Release\proto-gen-pb.e
 H:\Personal\Github\Cards-Framework\Tools\proto-gen-pb\bin\Release\proto-gen-pb.pdb
 H:\Personal\Github\Cards-Framework\Tools\proto-gen-pb\obj\Release\proto-gen-pb.exe
 H:\Personal\Github\Cards-Framework\Tools\proto-gen-pb\obj\Release\proto-gen-pb.pdb
-H:\Personal\Github\Cards-Framework\Tools\proto-gen-pb\obj\Release\proto-gen-pb.csprojResolveAssemblyReference.cache

@@ -1,29 +1,0 @@
-
-½
-Proto/activity_time.txt"D
-GM_ActivityDataList
-count (
-data (2.GM_ActivityData"§
-GM_ActivityData
-
-activityid (
-name	 (	
-
-isactivity (
-activity_type (
-strtime
- (	
-isEver (
-level (
-rules (	
-describe (	
-times (
-	jointimes (
-
-buttontype (
-timelist (2.GM_TimeLimit
-isadd (
-addtimes ("2
-GM_TimeLimit
-	starttime (
-endtime (

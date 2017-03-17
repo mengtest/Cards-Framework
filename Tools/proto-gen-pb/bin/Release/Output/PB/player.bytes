@@ -1,141 +1,0 @@
-
-Î
-Proto/player.txt"8
-GMRoleListRequest
-m_accountID (
-m_area ("2
-GMRoleListEx
-m_roleid (
-communid ("G
-GMEquipInfo
-packid (
-grid (
-type (
-gmid ("Ú
-GMLogServerInfo
-
-platformid (
-ditchid (	
-version (	
-serverid (
-	ipaddress (	
-
-macAddress (	
-
-deviceUUID (	
-token (	
-idfa	 (	
-
-devicetype
- (	
-networktype (	"“
-GMRoleCreate
-m_AccountID ( 
-m_info (2.GMLogServerInfo
-
-m_NickName (	
-m_HeadPhotoUrl (	
-m_sex (
-	m_UnionID (	"a
-GMRoleCreateReturn
-m_Result (
-m_RoleID (
-m_accountid (
-
-m_rolename (	"i
-GMRoleLogin
-m_AccountID (
-m_RoleID (
-	m_randstr (	 
-m_info (2.GMLogServerInfo"N
-GMOffLineReconnect
-m_AccountID (
-m_RoleID (
-	m_randstr (	"-
-GMRoleNameRequest
-m_RoleProfession (">
-GMRoleNameReturn
-Name (	
-result (
-type ("%
-GM_UPDATEFightVal
-fightval ("+
-GM_ProfessionChange
-professionID ("+
-GM_ProfessionChangeReturn
-result ("?
-GM_FightDataChangeItem
-property (
-changevalue ("n
-GM_FightDataChangeNotifyInFB
-roleID (
-roleType (,
-changeitems (2.GM_FightDataChangeItem"H
-GM_FightDataChangeNotify,
-changeitems (2.GM_FightDataChangeItem":
-GM_UnlockSystem
-enumID (
-isSpecialEffect ("4
-GM_UnlockSystemList
-count (
-enumID ("=
-GM_Commonint32ChangeNotify
-property (
-value (">
-GM_CommonLONG64ChangeNotify
-property (
-value ("=
-GM_CommonfloatChangeNotify
-property (
-value ("\
-GM_RoleDelete_Request
-	accountid (
-roleID ( 
-m_info (2.GMLogServerInfo"6
-GM_RoleDelete_Return
-result (
-roleid (">
-GM_TiredValueInfo
-tiredvaluemax (
-
-tiredvalue ("'
-GM_QueryOtherPlayer
-targetid ("6
-GM_GangInfoResult
-gangname (	
-gangjob (".
-	GM_Crckey
-crcKey (
-	messageid ("B
-GM_Recover_DeleteRole_Request
-	accountid (
-roleid (".
-GM_Recover_DeleteRole_Return
-result ("6
-$GM_Cancel_Recover_DeleteRole_Request
-roleid ("5
-#GM_Cancel_Recover_DeleteRole_Return
-result (".
-GM_Recover_DeleteRole_Notify
-roleid ("š
-GM_Player_Recovery
-tiredremainder (
-chastenremainder (
-tiredRecover (
-chastenRecover (
-tirednum (
-
-chastennum ("a
-GM_Player_changeSex
-sex (
-head (
-frame (
-errorid (
-headurl (	"1
-GM_Ip_request
-serverid (
-roleid ("*
-GM_Ip_return
-
-ip (	
-roleid (

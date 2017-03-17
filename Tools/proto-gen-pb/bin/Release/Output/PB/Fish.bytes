@@ -1,116 +1,0 @@
-
- 
-Proto/Fish.txt"B
-GM_CREATEROOM_Return
-result (
-
-ID (
-areaid ("'
-GM_CREATEROOM_Request
-areaid ("3
-GM_LOGINROOM_Return
-m_result (
-
-ID ("2
-GM_LOGINROOM_Request
-
-ID (
-areaid ("2
-GM_LOGINCOPY_Request
-
-ID (
-areaid ("%
-GM_LOGINCOPY_Return
-result ("<
-GM_FishData
-playerid (
-name (	
-place ("X
-GM_RoomData
-
-ID (
-ownid (
-place (
-	m_fishman (2.GM_FishData"D
-GM_AreaAllinfoReturn
-areaid (
-m_data (2.GM_RoomData"'
-GM_AreaAllinfoRequest
-areaid ("1
-GM_Fish_All_request
-areaid (
-
-id ("P
-GM_IsKilled_info
-roleid (
-	monsterid (
-monclassification (" 
-GM_Killer_info
-roleid ("t
-GM_Kill_Return
-
-m_iskiller (
-m_killer (
-m_is (
-m_state (
-data (2.SM_Fish_Object"1
-GM_leaveRequest
-areaid (
-roomid ("1
-GM_leaveReturn
-errorid (
-roleid ("}
-GM_Fish_RoleAttack
-roleid (
-posX (
-posZ (
-time (
-guntype (
-gunid (
-iscan ("B
-GM_Fish_Gun_request
-gunid (
-gunrate (
-buy ("U
-GM_Fish_Gun_return
-errorid (
-gunid (
-gunrate (
-roleid ("/
-SM_Fish_Object
-objectid (
-num ("4
-GM_FishMoney_return
-roleid (
-money ("$
-GM_FishGun_Request
-roleid ("
-GM_Fish_Gun
-gunid ("‡
-GM_FishGun_Return
-	selfgunid (
-selfgunrate (
-guntate (
-roleid (
-power (
-data (2.GM_Fish_Gun"0
-GM_Fish_attack
-roleid (
-fishid ("~
-GM_Fish_RoleAttack_request
-roleid (
-time (
-guntype (
-iscan (
-firetime (
-firelast ("z
-GM_Fish_Kill_Return
-m_killer (
-m_deadid (
-errorid (
-m_state (
-data (2.SM_Fish_Object"*
-GM_Fish_power_set_request
-power ("*
-GM_Fish_power_set_rturn
-errorid (

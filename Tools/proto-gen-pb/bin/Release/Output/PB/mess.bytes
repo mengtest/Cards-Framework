@@ -1,35 +1,0 @@
-
-ø
-Proto/mess.txt":
-GM_Room_record_request
-page (
-
-battletype ("2
-GM_Room_role
-rolename (	
-wingolde ("g
-GM_Room_playerCount
-	begintime (
-endtime (
-role (2.GM_Room_role
-increid ("‰
-GM_Room_room
-	begintime (
-endtime (
-rate (
-roleid (
-name (	)
-playercount (2.GM_Room_playerCount"E
-GM_Room_record_return
-errorid (
-data (2.GM_Room_room"(
-GM_Room_dayscore_return
-score ("H
-GM_PlayBack
-m_Result (
-m_MessageID (
-
-m_ByteData ("F
-SM_PlayBack
-	m_Increid ($
-m_PlaybackData (2.GM_PlayBack

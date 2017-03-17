@@ -1,73 +1,0 @@
-
-Š
-
-Proto/exchange.txt"V
-GM_Exchange_object
-objectid (
-num (
-
-createtime (
-state ("P
-GM_Exchange_object_reqruest
-roleid (!
-data (2.GM_Exchange_object"2
-GM_Exchange_Exchange_request
-
-requerstid (".
-GM_Exchange_Exchange_return
-errorid ("4
-GM_Relief_login_return
-times (
-all ("'
-GM_Relief_get_return
-errorid ("|
-GM_ExchangeInfo
-roleid (
-name (	
-phone (	
-
-qq (
-invite (	
-address (	
-usetime ("3
-GM_Exchange_phone
-phone (	
-usetime ("o
-GM_ExchangeInfo_return
-isBind (
-data (2.GM_ExchangeInfo%
-	dataPhone (2.GM_Exchange_phone"R
-GM_EXchangeInfo_exchange_return
-errorid (
-data (2.GM_ExchangeInfo"Å
-GM_Exchange_self
-roleid (
-state (
-objectid (
-num (
-
-createtime (
-tag (
-name (	
-phone (	
-address	 (	
-phonecharge
- (	
-errorid ("J
-GM_Exchange_self_return
-roleid (
-data (2.GM_Exchange_self"V
-GM_EXchange_info_begin_return
-roleid (%
-data (2.GM_Exchange_objectinfo"¢
-GM_Exchange_objectinfo
-tag (
-objectid (
-num (
-costobjectid (
-costnum (
-rank (
-
-id (
-remark (	
-www	 (	

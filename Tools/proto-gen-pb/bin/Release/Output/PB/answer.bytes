@@ -1,62 +1,0 @@
-
-û	
-Proto/answer.txt"b
-GM_AnswerOpenGateReturn
-	optentime (
-endtime (
-lasttime (
-	iscanjoin ("E
-GM_AnswerGiftRetuen
-gift ( 
-data (2.GM_AnswerGiftInfo"A
-GM_AnswerGiftInfo
-index (
-objectid (
-num ("2
-GM_AnswerSingGift
-objectid (
-num ("&
-GM_AnswerMatchReturn
-result ("O
-GM_AnswerQuestionAllReturn
-num ($
-data (2.GM_AnswerQuestionInfo"ù
-GM_AnswerQuestionReturn
-num (
-nownumn (
-
-successnum (*
-
-answerdata (2.GM_AnswerQuestionInfo$
-giftdata (2.GM_AnswerSingGift"7
-GM_AnswerQuestionInfo
-index (
-otypeid ("Ä
-GM_AnswerTimeReturn
-next (
-	begintime (
-
-istruelast ($
-datagift (2.GM_AnswerSingGift
-answer ("9
-GM_AnswerAnswerReauest
-otypeid (
-answer ("A
-GM_AnswerRankReturn
-last (
-data (2.GM_AnswerRank"9
-GM_AnswerRank
-index (
-name (	
-num ("8
-GM_AnswerFaceRequest
-faceid (
-faceName (	"Z
-GM_AnswerFaceReturn
-faceid (
-roleid (
-faceName (	
-	receiveid ("D
-GM_AnswerEndReturn
-last ( 
-data (2.GM_AnswerSingGift

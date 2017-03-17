@@ -1,203 +1,0 @@
-
-³
-Proto/pet.txt"K
-GM_Pet_UI_Open_Return
-m_Result ( 
-
-m_PetInfos (2.GM_Pet_info"º
-GM_Pet_info
-m_PetId (
-m_bHadSummon (
-
-m_Fragment (
-
-m_PetLevel (
-m_PetEvolveLvl (
-
-m_OnBattle (
-	m_quality (
-gmid (
-fightig	 ("@
-GM_Pet_OnBattle_Request
-m_PetId (
-m_BattleHole ("k
-GM_Pet_OnBattle_Return
-m_Result (
-m_Fightvalue ()
-
-m_DataInfo (2.GM_Pet_OnBattle_Info"=
-GM_Pet_OnBattle_Info
-m_PetId (
-m_BattleHole ("&
-GM_Pet_Info_Request
-m_PetId ("¦
-GM_Pet_Info_Return
-m_Result (
-m_PetId (
-
-m_PetLevel (
-m_PetEvolveLvl (
-m_Fightvalue (
-	m_Quality (
-
-m_fragment (
-data (2.GM_Property_Info.
-m_PetSkills	 (2.GM_Pet_Normal_Skill_Info3
-m_PetRealSkills
- (2.GM_Pet_Realize_Skill_Info"B
-GM_Pet_Realize_Skill_Info
-	m_SkillId (
-
-m_SkillLvl ("A
-GM_Pet_Normal_Skill_Info
-	m_SkillId (
-
-m_SkillLvl ("1
-GM_Pet_Detail_Property_Request
-m_PetId ("g
-GM_Pet_Detail_Property_Return
-m_Result (
-m_PetId (#
-data (2.GM_Pet_Property_Info"A
-GM_Pet_Property_Info
-
-propertyId (
-propertyValue ("(
-GM_Pet_Summon_Request
-m_PetId ("X
-GM_Pet_Summon_Return
-m_Result (
-m_PetId (
-gmid (
-fightig (")
-GM_Pet_Upgrade_Request
-m_PetId ("l
-GM_Pet_Upgrade_Return
-m_Result (
-m_PetId (
-m_Level (
-data (2.GM_Property_Info"(
-GM_Pet_Evolve_Request
-m_PetId ("o
-GM_Pet_Evolve_Return
-m_Result (
-m_PetId (
-m_EvolveLvl (
-data (2.GM_Property_Info".
-GM_Property_Info
-attack (
-
-hp ("Q
-GM_Pet_Fate_Info
-result (
-petid (
-info (2.GM_Pet_Fate_Pet"?
-GM_Pet_Fate_Pet
-petid (
-level (
-unlock ("'
-GM_PetEquip_UI_Request
-petid ("À
-GM_PetEquip_UI_Return
-result (
-petid (
-
-experience (
-pillNum (
-diamondTotal (
-diamondNeed (
-discount (&
-data (2.GM_PetEquip_Hole_Detail"v
-GM_PetEquip_Hole_Detail
-holenum (
-
-propertyId (
-propertyLevel (
-maxlevel (
-state ("=
-GM_PetEquip_Upgrade_Request
-petid (
-holenum ("Ÿ
-GM_PetEquip_Upgrade_Return
-result (
-petid (
-holenum (
-
-propertyId (
-propertyLevel (
-
-experience (
-
-canupgrade ("?
-GM_PetEquip_Obtain_Request
-petid (
-
-obtainType ("Ö
-GM_PetEquip_Obtain_Return
-result (
-petid (
-
-obtainType (
-pillNum (
-diamondTotal (
-diamondNeed (
-getexp (
-
-experience (&
-data	 (2.GM_PetEquip_Hole_Detail"U
-GM_PetEquip_AddSwap_Request
-petid (
-holenum (
-replaceholenum ("°
-GM_PetEquip_AddSwap_Return
-result (
-petid (
-holenum (
-replaceholenum (
-getexp (
-
-experience (&
-data (2.GM_PetEquip_Hole_Detail"*
-GM_PetEquip_Store_Request
-petid ("a
-GM_PetEquip_Store_Return
-result (
-petid (&
-data (2.GM_PetEquip_Hole_Detail"<
-GM_PetEquip_Refine_Request
-petid (
-holenum ("—
-GM_PetEquip_Refine_Return
-result (
-petid (
-holenum (
-getexp (
-
-experience (&
-data (2.GM_PetEquip_Hole_Detail"+
-GM_PetEquip_Unlock_Request
-petid ("K
-GM_PetEquip_Unlock_Return
-result (
-holenum (
-petid ("E
-GM_PetEquip_Upgrade_Change'
-data (2.GM_PetEquip_Upgrade_Info":
-GM_PetEquip_Upgrade_Info
-holenum (
-state (">
-GM_Notify_FragmentChange
-petid (
-fragmentnum ("V
-GM_PetSkillCount
-petid (	
-x (	
-y (
-isfull (
-level ("L
-GM_PetSkillCountReturn
-result ("
-petdata (2.GM_PetSkillCount"D
-GM_EquipPetSkillRequest
-	equipGmid (
-idskilledpetid (

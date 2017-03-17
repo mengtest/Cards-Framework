@@ -1,5 +1,3 @@
 H:\Personal\Github\Cards-Framework\Tools\proto-gen-pb\bin\Debug\proto-gen-pb.exe.config
 H:\Personal\Github\Cards-Framework\Tools\proto-gen-pb\bin\Debug\proto-gen-pb.exe
 H:\Personal\Github\Cards-Framework\Tools\proto-gen-pb\bin\Debug\proto-gen-pb.pdb
-H:\Personal\Github\Cards-Framework\Tools\proto-gen-pb\obj\Debug\proto-gen-pb.exe
-H:\Personal\Github\Cards-Framework\Tools\proto-gen-pb\obj\Debug\proto-gen-pb.pdb

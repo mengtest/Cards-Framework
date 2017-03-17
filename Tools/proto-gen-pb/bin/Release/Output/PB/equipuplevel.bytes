@@ -1,157 +1,0 @@
-
-õ
-Proto/equipuplevel.txt"ž
-GM_EquipInfoReturn
-m_roleid (
-m_ironcount (
-m_elitestone (
-m_animalbone (
-m_ironid (#
-m_equipinfo (2.GM_EquipForge"§
-GM_EquipForge
-m_gmid (
-	m_forgeLv (
-
-m_forgeExp (
-	m_refinLv (
-	m_gradeLv ($
-m_awkenInfo (2.GM_EquipAwaken
-m_winglevel ("<
-GM_EquipAwaken
-m_propertyid (
-m_propertyLv ("S
-GM_OneKeyInfoReturn
-
-m_costGold (
-
-m_costIron (
-m_maxForgeLv ("2
-GM_ForgeRequest
-m_gmid (
-m_gmids ("E
-GM_EquipNotify
-m_type (#
-m_equipinfo (2.GM_EquipForge")
-GM_EquipAwaken_UI_Request
-gmid ("Å
-GM_EquipAwaken_UI_Return
-result (
-gmid (
-
-experience (
-pillNum (
-diamondTotal (
-diamondNeed (
-discount ()
-data (2.GM_EquipAwaken_Hole_Detail"y
-GM_EquipAwaken_Hole_Detail
-holenum (
-
-propertyId (
-propertyLevel (
-maxlevel (
-state ("?
-GM_EquipAwaken_Upgrade_Request
-gmid (
-holenum ("¡
-GM_EquipAwaken_Upgrade_Return
-result (
-gmid (
-holenum (
-
-propertyId (
-propertyLevel (
-
-experience (
-
-canupgrade ("A
-GM_EquipAwaken_Obtain_Request
-gmid (
-
-obtainType ("î
-GM_EquipAwaken_Obtain_Return
-result (
-gmid (
-
-obtainType (
-pillNum (
-diamondTotal (
-diamondNeed (
-getexp (
-
-experience ()
-data	 (2.GM_EquipAwaken_Hole_Detail
-	realtimes
- ("W
-GM_EquipAwaken_AddSwap_Request
-gmid (
-holenum (
-replaceholenum ("µ
-GM_EquipAwaken_AddSwap_Return
-result (
-gmid (
-holenum (
-replaceholenum (
-getexp (
-
-experience ()
-data (2.GM_EquipAwaken_Hole_Detail",
-GM_EquipAwaken_Store_Request
-gmid ("f
-GM_EquipAwaken_Store_Return
-result (
-gmid ()
-data (2.GM_EquipAwaken_Hole_Detail">
-GM_EquipAwaken_Refine_Request
-gmid (
-holenum ("œ
-GM_EquipAwaken_Refine_Return
-result (
-gmid (
-holenum (
-getexp (
-
-experience ()
-data (2.GM_EquipAwaken_Hole_Detail"-
-GM_EquipAwaken_Unlock_Request
-gmid ("M
-GM_EquipAwaken_Unlock_Return
-result (
-holenum (
-gmid (",
-GM_EquipAwaken_Info_Request
-nGmid ("`
-GM_EquipAwaken_Info_Return
-nresult (
-nGmid ("
-data (2.GM_EquipAwaken_Info"<
-GM_EquipAwaken_Info
-awakenid (
-awakenlevel ("D
-GM_EquipAwaken_Swap_Request
-	nLeftGmid (
-
-nRightGmid ("-
-GM_EquipAwaken_Swap_Return
-nResult ("[
-GM_EquipAwaken_Upgrade_Change
-result (*
-data (2.GM_EquipAwaken_Upgrade_Info"=
-GM_EquipAwaken_Upgrade_Info
-holenum (
-state ("I
-GM_EquipWing_Request
-gmid (
-	winglevel (
-issucess ("C
-GM_AwakeEquip
-gmid (	
-x (	
-y (
-isFull ("E
-GM_AwakeEquipAll
-return (!
-	awakedata (2.GM_AwakeEquip"A
-GM_AwakeEquipRequest
-awakeequipgmid (
-	equipgmid (

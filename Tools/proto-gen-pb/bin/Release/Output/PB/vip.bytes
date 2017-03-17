@@ -1,32 +1,0 @@
-
-Á
-Proto/vip.txt"ž
-GM_Vip_Return
-m_roleid (
-
-m_viplevel (
-m_vipexp (
-m_day (
-m_nowexp (
-	m_nextexp (
-m_state (
-m_reward (	"G
-GM_GetVipExp_Return
-m_roleid (
-m_exp (
-m_state ("9
-GM_GetReward_Return"
-m_data (2.GM_GetReward_Data"O
-GM_GetReward_Data
-
-m_viplevel (&
-m_detail (2.GM_GetReward_Detail"5
-GM_GetReward_Detail
-m_objid (
-m_num (" 
-GM_GetVipReward
-m_vip ("a
-GM_GetVipReward_return
-m_vip (
-m_result (&
-m_detail (2.GM_GetReward_Detail

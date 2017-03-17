@@ -1,39 +1,0 @@
-
-á
-Proto/gshj.txt"6
-GM_Gshj_OpenTime
-	starttime (
-endtime ("~
-GM_Gshj_BossInfo
-bossid (
-	bosscurhp (
-bosstotalhp (
-joined (
-cooltime (
-moralelv ("€
-GM_Gshj_BossInfo_Result
-times (
-boss (2.GM_Gshj_BossInfo
-time (2.GM_Gshj_OpenTime
-openlefttime ("5
-GM_Gshj_Join_Result
-result (
-teamid (";
-GM_Gshj_CoolDown_Result
-result (
-cooltime (":
-GM_Gshj_Inspire_Result
-result (
-moralelv ("z
-GM_Gshj_RankItem
-roleid (
-rolename (	
-
-profession (
-rolelv (
-damage (
-position ("h
-GM_Gshj_Rank_Result!
-myrank (2.GM_Gshj_RankItem
-count (
-item (2.GM_Gshj_RankItem

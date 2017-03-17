@@ -1,55 +1,0 @@
-
-Ó
-Proto/payment.txt"©
-GM_AppStore_Verify_Order
-transaction_id (	
-platform (
-channel (	
-appid (
-buffer (	
-roleid (
-serverid (
-	accountid ("¥
-GM_AppStore_Verify_Order_Return
-transaction_id (	
-m_result (
-roleid (
-quantity (
-gold (
-	productid (	
-purchase_date (	"|
-
-GM_Product
-	productid (
-icon (	
-name (	
-moneystr (	
-desc (	
-canclick (
-money (")
-GM_ProductList_Request
-channel (	":
-GM_ProductList
-count (
-list (2.GM_Product"Û
-GM_GooglePlay_Verify_Order
-googleorderid (	
-platform (
-channel (	
-appid (
-randstr (	
-roleid (
-serverid (
-	accountid (
-orderid	 (	
-itemid
- (	
-token (	"¦
-!GM_GooglePlay_Verify_Order_Return
-googleorderid (	
-m_result (
-roleid (
-quantity (
-gold (
-	productid (	
-purchase_date (	
