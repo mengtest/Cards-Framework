@@ -24,6 +24,7 @@ public class NCSpeedLight_SharedVariableWrap
 		L.RegVar("PLATFORM", get_PLATFORM, null);
 		L.RegVar("PLATFORM_NAME", get_PLATFORM_NAME, null);
 		L.RegVar("LUA_BUNDLE_MODE", get_LUA_BUNDLE_MODE, null);
+		L.RegVar("GameHolder", get_GameHolder, null);
 		L.EndStaticLibs();
 	}
 
@@ -201,6 +202,20 @@ public class NCSpeedLight_SharedVariableWrap
 		try
 		{
 			LuaDLL.lua_pushboolean(L, NCSpeedLight.SharedVariable.LUA_BUNDLE_MODE);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_GameHolder(IntPtr L)
+	{
+		try
+		{
+			ToLua.Push(L, NCSpeedLight.SharedVariable.GameHolder);
 			return 1;
 		}
 		catch(Exception e)

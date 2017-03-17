@@ -192,6 +192,9 @@ public static class CustomSettings
 
          _GT(typeof(SharedVariable)),
 
+         //_GT(typeof(Game)),
+
+
 #endregion
 
         #region NGUI Component
@@ -270,6 +273,7 @@ public static class CustomSettings
          _GT(typeof(UILocalize)),
          _GT(typeof(UIPanel)),
          _GT(typeof(UIRoot)),
+         _GT(typeof(UIRoot.Scaling)),
          _GT(typeof(UISprite)),
          _GT(typeof(UISpriteAnimation)),
          _GT(typeof(UISpriteData)),

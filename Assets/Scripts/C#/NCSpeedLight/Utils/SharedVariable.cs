@@ -86,11 +86,13 @@ namespace NCSpeedLight
             {
                 if (Application.isMobilePlatform || Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.OSXPlayer)
                 {
-                    return Application.persistentDataPath + "/Assets/";
+                    //return Application.persistentDataPath + "/Assets/";
+                    return Application.persistentDataPath + "/";
                 }
                 else if (Application.isEditor)
                 {
-                    return Application.dataPath.Substring(0, Application.dataPath.IndexOf("/Assets")) + "/AssetBundles/" + PLATFORM_NAME + "/Assets/";
+                    //return Application.dataPath.Substring(0, Application.dataPath.IndexOf("/Assets")) + "/AssetBundles/" + PLATFORM_NAME + "/Assets/";
+                    return Application.dataPath.Substring(0, Application.dataPath.IndexOf("/Assets")) + "/AssetBundles/" + PLATFORM_NAME + "/";
                 }
                 else
                 {
@@ -184,6 +186,14 @@ namespace NCSpeedLight
                 {
                     return false;
                 }
+            }
+        }
+
+        public static GameObject GameHolder
+        {
+            get
+            {
+                return Game.Instance == null ? null : Game.Instance.gameObject;
             }
         }
     }

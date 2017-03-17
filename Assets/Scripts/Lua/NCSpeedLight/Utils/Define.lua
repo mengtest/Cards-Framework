@@ -25,9 +25,13 @@ require 'NCSpeedLight.Utils.Utility'
 
 require 'NCSpeedLight.Protocol.GameMessage'
 
+require 'NCSpeedLight.Core.Asset.AssetManager'
+
 
 protobufProcessor = require 'protobuf'
 jsonProcessor = require 'cjson'
+
+ASSETBUNDLE_MODE = false;
 
 SelfInfo =
 {

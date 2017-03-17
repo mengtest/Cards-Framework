@@ -19,7 +19,6 @@ namespace NCSpeedLight
     {
         void Start()
         {
-            ResManager.PostResManagerInitialized += OnResManagerInitFinish;
             ResManager.Initialize();
         }
         void OnResManagerInitFinish()
@@ -91,7 +90,15 @@ namespace NCSpeedLight
         {
             if (GUI.Button(new Rect(10, 10, 150, 30), "Load UI_Main"))
             {
-                GameObject go = ResManager.LoadAssetSync<GameObject>("Bundle/UI/Dialog/ProgressDialog.prefab");
+                ResManager.LoadAssetAsync("UI/Dialog/StandardDialog.prefab", typeof(GameObject), (loadedObj, param) =>
+                {
+                    if (loadedObj)
+                    {
+                        Instantiate(loadedObj);
+                    }
+                });
+
+                GameObject go = ResManager.LoadAssetSync<GameObject>("UI/Dialog/ProgressDialog.prefab");
                 if (go)
                 {
                     Instantiate(go);

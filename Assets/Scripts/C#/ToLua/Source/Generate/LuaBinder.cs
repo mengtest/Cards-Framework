@@ -176,7 +176,6 @@ public static class LuaBinder
 		NCSpeedLight_SharedVariableWrap.Register(L);
 		NCSpeedLight_EventManagerWrap.Register(L);
 		L.RegFunction("EventHandlerDelegate", NCSpeedLight_EventHandlerDelegate);
-		L.RegFunction("PostResManagerInitializedDelegate", NCSpeedLight_PostResManagerInitializedDelegate);
 		L.RegFunction("LoadAssetCallback", NCSpeedLight_LoadAssetCallback);
 		L.BeginModule("UIManager");
 		NCSpeedLight_UIManager_StandardDialogOptionWrap.Register(L);
@@ -190,6 +189,9 @@ public static class LuaBinder
 		L.BeginModule("Helper");
 		L.RegFunction("ChildDelegate", NCSpeedLight_Helper_ChildDelegate);
 		L.EndModule();
+		L.EndModule();
+		L.BeginModule("UIRoot");
+		UIRoot_ScalingWrap.Register(L);
 		L.EndModule();
 		L.BeginModule("System");
 		System_DateTimeWrap.Register(L);
@@ -471,33 +473,6 @@ public static class LuaBinder
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
 				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.EventHandlerDelegate), func, self);
-				ToLua.Push(L, arg1);
-			}
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int NCSpeedLight_PostResManagerInitializedDelegate(IntPtr L)
-	{
-		try
-		{
-			int count = LuaDLL.lua_gettop(L);
-			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
-
-			if (count == 1)
-			{
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.PostResManagerInitializedDelegate), func);
-				ToLua.Push(L, arg1);
-			}
-			else
-			{
-				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.PostResManagerInitializedDelegate), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;

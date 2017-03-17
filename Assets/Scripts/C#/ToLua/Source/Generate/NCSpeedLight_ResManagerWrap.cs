@@ -10,6 +10,7 @@ public class NCSpeedLight_ResManagerWrap
 		L.RegFunction("GetStreamingAssetsURL", GetStreamingAssetsURL);
 		L.RegFunction("GetStreamingAssetsPath", GetStreamingAssetsPath);
 		L.RegFunction("Initialize", Initialize);
+		L.RegFunction("LoadAssetBundleManifest", LoadAssetBundleManifest);
 		L.RegFunction("AssemblyAssetBundle", AssemblyAssetBundle);
 		L.RegFunction("GetLoadedAssetBundle", GetLoadedAssetBundle);
 		L.RegFunction("UnloadAssetBundle", UnloadAssetBundle);
@@ -25,7 +26,6 @@ public class NCSpeedLight_ResManagerWrap
 		L.RegVar("IsInitialized", get_IsInitialized, set_IsInitialized);
 		L.RegVar("IsResourceMode", get_IsResourceMode, null);
 		L.RegVar("IsCompressedBundle", get_IsCompressedBundle, null);
-		L.RegVar("PostResManagerInitialized", get_PostResManagerInitialized, set_PostResManagerInitialized);
 		L.EndClass();
 	}
 
@@ -68,6 +68,21 @@ public class NCSpeedLight_ResManagerWrap
 		{
 			ToLua.CheckArgsCount(L, 0);
 			NCSpeedLight.ResManager.Initialize();
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int LoadAssetBundleManifest(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 0);
+			NCSpeedLight.ResManager.LoadAssetBundleManifest();
 			return 0;
 		}
 		catch(Exception e)
@@ -320,13 +335,6 @@ public class NCSpeedLight_ResManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_PostResManagerInitialized(IntPtr L)
-	{
-		ToLua.Push(L, new EventObject("NCSpeedLight.ResManager.PostResManagerInitialized"));
-		return 1;
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_AssetBundleSourceURL(IntPtr L)
 	{
 		try
@@ -378,57 +386,6 @@ public class NCSpeedLight_ResManagerWrap
 		{
 			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
 			NCSpeedLight.ResManager.IsInitialized = arg0;
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_PostResManagerInitialized(IntPtr L)
-	{
-		try
-		{
-			EventObject arg0 = null;
-
-			if (LuaDLL.lua_isuserdata(L, 2) != 0)
-			{
-				arg0 = (EventObject)ToLua.ToObject(L, 2);
-			}
-			else
-			{
-				return LuaDLL.luaL_throw(L, "The event 'NCSpeedLight.ResManager.PostResManagerInitialized' can only appear on the left hand side of += or -= when used outside of the type 'NCSpeedLight.ResManager'");
-			}
-
-			if (arg0.op == EventOp.Add)
-			{
-				NCSpeedLight.PostResManagerInitializedDelegate ev = (NCSpeedLight.PostResManagerInitializedDelegate)DelegateFactory.CreateDelegate(typeof(NCSpeedLight.PostResManagerInitializedDelegate), arg0.func);
-				NCSpeedLight.ResManager.PostResManagerInitialized += ev;
-			}
-			else if (arg0.op == EventOp.Sub)
-			{
-				NCSpeedLight.PostResManagerInitializedDelegate ev = (NCSpeedLight.PostResManagerInitializedDelegate)LuaMisc.GetEventHandler(null, typeof(NCSpeedLight.ResManager), "PostResManagerInitialized");
-				Delegate[] ds = ev.GetInvocationList();
-				LuaState state = LuaState.Get(L);
-
-				for (int i = 0; i < ds.Length; i++)
-				{
-					ev = (NCSpeedLight.PostResManagerInitializedDelegate)ds[i];
-					LuaDelegate ld = ev.Target as LuaDelegate;
-
-					if (ld != null && ld.func == arg0.func)
-					{
-						NCSpeedLight.ResManager.PostResManagerInitialized -= ev;
-						state.DelayDispose(ld.func);
-						break;
-					}
-				}
-
-				arg0.func.Dispose();
-			}
-
 			return 0;
 		}
 		catch(Exception e)

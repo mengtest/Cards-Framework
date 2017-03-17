@@ -33,7 +33,7 @@ TextureImporter:
     aniso: 16
     mipBias: -1
     wrapMode: 1
-  nPOTScale: 1
+  nPOTScale: 0
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
@@ -49,9 +49,10 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
+    serializedVersion: 2
     sprites: []
     outline: []
   spritePackingTag: 
   userData: 
-  assetBundleName: 
+  assetBundleName: assets_resources_bundle_ui_hall_atlas_main
   assetBundleVariant: 

@@ -21,8 +21,11 @@ function Initialize()
 	
 	platform = UnityEngine.Application.platform;
 	
-	NCSpeedLight.ResManager.Initialize();
+	-- NCSpeedLight.ResManager.Initialize();
+	AssetManager:Initialize();
+	
 	UIManager:Initialize();
+	print("panel== " .. UIManager.Instance.UIPanel.name);
 	NetManager:Initialize();
 	SceneManager.Initialize();
 	

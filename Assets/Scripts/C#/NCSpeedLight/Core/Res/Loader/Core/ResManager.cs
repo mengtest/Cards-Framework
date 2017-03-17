@@ -9,7 +9,7 @@
            //
 //----------------------------------------------------------------*/
 
-//#define ASSETBUNDLE_MODE
+#define ASSETBUNDLE_MODE
 //#define COMPRESSED_BUNDLE
 
 using System;
@@ -55,7 +55,6 @@ namespace NCSpeedLight
             set
             {
                 m_RefCount = value;
-                //Debug.LogError(BundleName + "'s refcount is: " + m_RefCount);
             }
         }
         public bool IsDone { get { return Bundle == null ? false : true; } }
@@ -83,11 +82,11 @@ namespace NCSpeedLight
 
         private static Dictionary<string, WWW>.Enumerator m_DownloadingEnumerator;
 
-        public static event PostResManagerInitializedDelegate PostResManagerInitialized;
-
         public static string AssetBundleSourceURL;
 
         public static string AssetBundleSourceDirectory;
+
+        private static AssetBundleManifest m_Manifest;
 
         public static ResManager Instance { set; get; }
         public static bool IsInitialized { get; set; }
@@ -117,14 +116,14 @@ namespace NCSpeedLight
 
         #endregion
 
-        #region [Functions]
+        #region internal
 
-        #region monobehaviour
         void Awake()
         {
             Instance = this;
             StartCoroutine(LoadLooper());
         }
+
         IEnumerator LoadLooper()
         {
             while (true)
@@ -161,6 +160,7 @@ namespace NCSpeedLight
                 yield return null;
             }
         }
+
         void Update()
         {
             m_KeysToRemove.Clear();
@@ -213,12 +213,18 @@ namespace NCSpeedLight
                     m_KeysToRemove.Add(keyValue.Key);
                 }
             }
+
             for (int i = 0; i < m_KeysToRemove.Count; i++)
             {
                 WWW download = m_Downloadings[m_KeysToRemove[i]];
+
                 m_Downloadings.Remove(m_KeysToRemove[i]);
-                download.Dispose();
+                Loom.QueueOnMainThread(() =>
+                {
+                    download.Dispose();
+                });
             }
+
             for (int i = 0; i < m_InProgressOperations.Count;)
             {
                 if (m_InProgressOperations[i].Update() == false)
@@ -229,9 +235,8 @@ namespace NCSpeedLight
                     i++;
             }
         }
-        #endregion
 
-        #region utility
+
         private static void SetupAssetBundleEnv()
         {
             string str = Utility.StringFormat("{0}/AssetBundles/{1}/", GetStreamingAssetsURL(), Utility.GetPlatformName());
@@ -283,9 +288,7 @@ namespace NCSpeedLight
             }
         }
 
-        #endregion
 
-        #region initialize
         public static void Initialize()
         {
             if (IsInitialized)
@@ -293,7 +296,6 @@ namespace NCSpeedLight
                 Utility.LogWarning("Already initialized");
                 return;
             }
-
             GameObject go = null;
             if (IsResourceMode)
             {
@@ -319,13 +321,21 @@ namespace NCSpeedLight
             if (IsResourceMode == false)
             {
                 SetupAssetBundleEnv();
-                NCSpeedLight.AssetBundleManifest.Initialize();
+                LoadAssetBundleManifest();
             }
-
             IsInitialized = true;
-            if (PostResManagerInitialized != null)
+        }
+        public static void LoadAssetBundleManifest()
+        {
+            string path = SharedVariable.ASSET_BUNDLE_PATH + SharedVariable.PLATFORM_NAME;
+            AssetBundle bundle = AssetBundle.LoadFromFile(path);
+            if (bundle)
             {
-                PostResManagerInitialized();
+                m_Manifest = bundle.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
+            }
+            else
+            {
+                Helper.LogError("Init assetbundle manifest error.");
             }
         }
         #endregion
@@ -349,7 +359,7 @@ namespace NCSpeedLight
             {
                 return null;
             }
-            string[] dependencies = NCSpeedLight.AssetBundleManifest.GetAllDependencies(bundleName);
+            string[] dependencies = m_Manifest.GetAllDependencies(bundleName);
             if (dependencies == null || dependencies.Length == 0) // no dependency.
             {
                 return bundle;
@@ -361,7 +371,6 @@ namespace NCSpeedLight
                 {
                     return bundle;
                 }
-
                 LoadedAssetBundle dependentBundle;
                 if (m_LoadedAssetBundles.TryGetValue(dependencies[i], out dependentBundle) == false)
                 {
@@ -401,15 +410,14 @@ namespace NCSpeedLight
                 return true;
             }
 
-            string[] dependencies = NCSpeedLight.AssetBundleManifest.GetAllDependencies(bundleName);
+            string[] dependencies = m_Manifest.GetAllDependencies(bundleName);
             if (dependencies != null && dependencies.Length > 0)
             {
                 LoadDependenciesAsync(bundleName, dependencies);
             }
 
             WWW download = null;
-            string bundleMD5 = NCSpeedLight.AssetBundleManifest.GetAssetBundleMD5(bundleName);
-            string url = AssetBundleSourceURL + bundleMD5;
+            string url = AssetBundleSourceURL + bundleName;
             download = WWW.LoadFromCacheOrDownload(url, 0);
 
             m_Downloadings.Add(bundleName, download);
@@ -417,7 +425,6 @@ namespace NCSpeedLight
             {
                 RefCount = 1
             });
-
             return false;
         }
         private static void LoadDependenciesAsync(string bundleName, string[] dependencies)
@@ -446,32 +453,25 @@ namespace NCSpeedLight
                 {
                     if (m_Downloadings.ContainsKey(bundleName) == false)
                     {
-                        string[] dependencies = NCSpeedLight.AssetBundleManifest.GetAllDependencies(bundleName);
+                        string[] dependencies = m_Manifest.GetAllDependencies(bundleName);
                         if (dependencies != null && dependencies.Length > 0)
                         {
                             LoadDependenciesSync(bundleName, dependencies);
                         }
                     }
-
-                    string bundleMD5 = NCSpeedLight.AssetBundleManifest.GetAssetBundleMD5(bundleName);
-                    string filePath = AssetBundleSourceDirectory + bundleMD5;
-
+                    string filePath = AssetBundleSourceDirectory + bundleName;
                     AssetBundle bundle = AssetBundle.LoadFromFile(filePath);
-
                     loadedBundle.Bundle = bundle;
-
                 }
             }
             else
             {
-                string[] dependencies = NCSpeedLight.AssetBundleManifest.GetAllDependencies(bundleName);
+                string[] dependencies = m_Manifest.GetAllDependencies(bundleName);
                 if (dependencies != null && dependencies.Length > 0)
                 {
                     LoadDependenciesSync(bundleName, dependencies);
                 }
-
-                string bundleMD5 = NCSpeedLight.AssetBundleManifest.GetAssetBundleMD5(bundleName);
-                string filePath = AssetBundleSourceDirectory + bundleMD5;
+                string filePath = AssetBundleSourceDirectory + bundleName;
                 AssetBundle bundle = null;
                 bundle = AssetBundle.LoadFromFile(filePath);
                 m_LoadedAssetBundles.Add(bundleName, new LoadedAssetBundle(bundleName)
@@ -517,7 +517,7 @@ namespace NCSpeedLight
                     bundle.Bundle.Unload(true);
                     m_LoadedAssetBundles.Remove(bundleName);
                     Utility.Log(Utility.StringFormat("{0} has been unloaded successfully", bundleName));
-                    string[] dependencies = NCSpeedLight.AssetBundleManifest.GetAllDependencies(bundleName);
+                    string[] dependencies = m_Manifest.GetAllDependencies(bundleName);
                     if (dependencies != null && dependencies.Length > 0)
                     {
                         UnloadDependencies(dependencies);
@@ -529,24 +529,12 @@ namespace NCSpeedLight
 
         #region load method
 
-        /// <summary>
-        /// 同步加载资源.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="assetPath"></param>
-        /// <returns></returns>
         public static T LoadAssetSync<T>(string assetPath)
             where T : UnityEngine.Object
         {
             return LoadAssetSync(assetPath, typeof(T)) as T;
         }
 
-        /// <summary>
-        /// 同步加载资源.
-        /// </summary>
-        /// <param name="assetPath"></param>
-        /// <param name="type"></param>
-        /// <returns></returns>
         public static UnityEngine.Object LoadAssetSync(string assetPath, System.Type type)
         {
             if (IsResourceMode)
@@ -556,31 +544,37 @@ namespace NCSpeedLight
             }
             else
             {
-                assetPath = Utility.StringFormat("Assets/Resources/{0}", assetPath);
-                LoadAssetBundleSync(assetPath);
+                string assetName = assetPath.Substring(assetPath.LastIndexOf("/") + 1);
+                assetName = assetName.Substring(0, assetName.LastIndexOf("."));
+                string bundleName = assetPath.Substring(0, assetPath.LastIndexOf("/"));
+                bundleName = bundleName.Replace("/", "_");
+                LoadAssetBundleSync(bundleName);
                 string error = string.Empty;
-                LoadedAssetBundle loadedBundle = GetLoadedAssetBundle(assetPath, out error);
+                LoadedAssetBundle loadedBundle = GetLoadedAssetBundle(bundleName, out error);
                 if (loadedBundle != null && loadedBundle.IsDone)
                 {
-                    string assetName = Utility.GetFileNameWithoutExtFromFullPath(assetPath);
                     return loadedBundle.Bundle.LoadAsset(assetName);
                 }
                 return null;
             }
         }
+
         public static LoadAssetOperation LoadAssetAsync(string assetPath, System.Type type, LoadAssetCallback callback = null, object callbackParam = null)
         {
             return LoadAssetAsync(assetPath, type, false, callback, callbackParam);
         }
+
         private static LoadAssetOperation LoadAssetAsync(string assetPath, System.Type type, bool preferential, LoadAssetCallback callback = null, object callbackParam = null)
         {
             string assetName = Utility.GetFileNameWithoutExtFromFullPath(assetPath);
             return LoadAssetAsync(assetPath, assetName, type, preferential, callback, callbackParam);
         }
+
         private static LoadAssetOperation LoadAssetAsync(string assetPath, string assetName, System.Type type, LoadAssetCallback callback = null, object callbackParam = null)
         {
             return LoadAssetAsync(assetPath, assetName, type, false, callback, callbackParam);
         }
+
         private static LoadAssetOperation LoadAssetAsync(string assetPath, string assetName, System.Type type, bool preferential, LoadAssetCallback callback = null, object callbackParam = null)
         {
             LoadAssetOperation operation = null;
@@ -601,9 +595,12 @@ namespace NCSpeedLight
             }
             else
             {
-                assetPath = Utility.StringFormat("Assets/Resources/{0}", assetPath);
-                LoadAssetBundleAsync(assetPath);
-                operation = new AssetBundleLoadAssetOperation(assetPath, assetName, type);
+
+                string bundleName = assetPath.Substring(0, assetPath.LastIndexOf("/"));
+                bundleName = bundleName.Replace("/", "_");
+
+                LoadAssetBundleAsync(bundleName);
+                operation = new AssetBundleLoadAssetOperation(bundleName, assetName, type);
                 operation.Callback = callback;
                 operation.CallbackParam = callbackParam;
                 if (preferential)
@@ -617,6 +614,7 @@ namespace NCSpeedLight
             }
             return operation;
         }
+
         public static LoadOperation LoadLevelAsync(string bundleName, string levelName, bool isAdditive)
         {
             bundleName = Utility.StringFormat("Assets/Resources/{0}", bundleName);
@@ -634,15 +632,10 @@ namespace NCSpeedLight
             }
             return operation;
         }
+
         #endregion
 
         #region other functions
-        /// <summary>
-        /// 判断某个资源是否正在加载
-        /// </summary>
-        /// <param name="bundleName"></param>
-        /// <param name="assetName"></param>
-        /// <returns></returns>
         public static LoadAssetOperation IsInProgress(string bundleName, string assetName)
         {
             if (m_InProgressOperations != null && m_InProgressOperations.Count > 0)
@@ -683,8 +676,6 @@ namespace NCSpeedLight
             }
             return null;
         }
-        #endregion
-
         #endregion
     }
 }

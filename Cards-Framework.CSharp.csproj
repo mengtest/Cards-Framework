@@ -448,6 +448,7 @@
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UIProgressBarWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UIRectWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UIRootWrap.cs" />
+    <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UIRoot_ScalingWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UISavedOptionWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UIScrollBarWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UIScrollViewWrap.cs" />

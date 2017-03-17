@@ -30,7 +30,6 @@ public static class DelegateFactory
 		dict.Add(typeof(UnityEngine.AudioClip.PCMReaderCallback), UnityEngine_AudioClip_PCMReaderCallback);
 		dict.Add(typeof(UnityEngine.AudioClip.PCMSetPositionCallback), UnityEngine_AudioClip_PCMSetPositionCallback);
 		dict.Add(typeof(NCSpeedLight.EventHandlerDelegate), NCSpeedLight_EventHandlerDelegate);
-		dict.Add(typeof(NCSpeedLight.PostResManagerInitializedDelegate), NCSpeedLight_PostResManagerInitializedDelegate);
 		dict.Add(typeof(NCSpeedLight.LoadAssetCallback), NCSpeedLight_LoadAssetCallback);
 		dict.Add(typeof(NCSpeedLight.Helper.ChildDelegate), NCSpeedLight_Helper_ChildDelegate);
 		dict.Add(typeof(UIEventListener.BoolDelegate), UIEventListener_BoolDelegate);
@@ -799,49 +798,6 @@ public static class DelegateFactory
 		{
 			NCSpeedLight_EventHandlerDelegate_Event target = new NCSpeedLight_EventHandlerDelegate_Event(func, self);
 			NCSpeedLight.EventHandlerDelegate d = target.CallWithSelf;
-			target.method = d.Method;
-			return d;
-		}
-	}
-
-	class NCSpeedLight_PostResManagerInitializedDelegate_Event : LuaDelegate
-	{
-		public NCSpeedLight_PostResManagerInitializedDelegate_Event(LuaFunction func) : base(func) { }
-		public NCSpeedLight_PostResManagerInitializedDelegate_Event(LuaFunction func, LuaTable self) : base(func, self) { }
-
-		public void Call()
-		{
-			func.Call();
-		}
-
-		public void CallWithSelf()
-		{
-			func.BeginPCall();
-			func.Push(self);
-			func.PCall();
-			func.EndPCall();
-		}
-	}
-
-	public static Delegate NCSpeedLight_PostResManagerInitializedDelegate(LuaFunction func, LuaTable self, bool flag)
-	{
-		if (func == null)
-		{
-			NCSpeedLight.PostResManagerInitializedDelegate fn = delegate() { };
-			return fn;
-		}
-
-		if(!flag)
-		{
-			NCSpeedLight_PostResManagerInitializedDelegate_Event target = new NCSpeedLight_PostResManagerInitializedDelegate_Event(func);
-			NCSpeedLight.PostResManagerInitializedDelegate d = target.Call;
-			target.method = d.Method;
-			return d;
-		}
-		else
-		{
-			NCSpeedLight_PostResManagerInitializedDelegate_Event target = new NCSpeedLight_PostResManagerInitializedDelegate_Event(func, self);
-			NCSpeedLight.PostResManagerInitializedDelegate d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}

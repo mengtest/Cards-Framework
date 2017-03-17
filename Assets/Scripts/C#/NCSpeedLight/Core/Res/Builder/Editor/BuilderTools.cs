@@ -109,7 +109,32 @@ namespace NCSpeedLight
         [MenuItem("Assets/Builder/Map Assetbundle Name")]
         public static void MapAssetBundleName()
         {
+            m_WaitingBuildAssets = new List<string>();
+            string directory = EditorUtility.NormallizePath(Application.dataPath + "/Resources/Bundle/");
+            CollectAssets(directory);
+            for (int i = 0; i < m_WaitingBuildAssets.Count; i++)
+            {
+                string path = m_WaitingBuildAssets[i];
 
+                if (path.EndsWith(".mat") || path.EndsWith(".jpg") || path.EndsWith(".png"))
+                {
+                    continue;
+                }
+
+                AssetImporter assetImporter = AssetImporter.GetAtPath(path);
+
+
+                path = path.Substring(path.IndexOf("Assets/Resources/Bundle/") + "Assets/Resources/Bundle/".Length);
+                path = path.Substring(0, path.LastIndexOf("/"));
+                path = path.Replace("\\", "/");
+                path = path.Replace("/", "_");
+
+
+                assetImporter.assetBundleName = path; //设置Bundle文件的名称
+                assetImporter.assetBundleVariant = "";//设置Bundle文件的扩展名
+                assetImporter.SaveAndReimport();
+            }
+            //AssetDatabase.Refresh();
         }
 
         public static void BuildAssetBundle()
@@ -120,6 +145,13 @@ namespace NCSpeedLight
 
             //@TODO: use append hash... (Make sure pipeline works correctly with it.)
             BuildPipeline.BuildAssetBundles(outputPath, BuildAssetBundleOptions.None, EditorUserBuildSettings.activeBuildTarget);
+
+            //string outputPath = SharedVariable.ASSET_BUNDLE_PATH;
+            //if (Directory.Exists(outputPath) == false)
+            //{
+            //    Directory.CreateDirectory(outputPath);
+            //}
+            //BuildPipeline.BuildAssetBundles(outputPath, BuildAssetBundleOptions.None, EditorUserBuildSettings.activeBuildTarget);
         }
 
         private static void BuildAssets()

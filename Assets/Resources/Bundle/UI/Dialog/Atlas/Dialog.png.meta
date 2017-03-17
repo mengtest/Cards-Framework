@@ -49,9 +49,10 @@ TextureImporter:
   textureType: 5
   buildTargetSettings: []
   spriteSheet:
+    serializedVersion: 2
     sprites: []
     outline: []
   spritePackingTag: 
   userData: 
-  assetBundleName: 
+  assetBundleName: assets_resources_bundle_ui_dialog_atlas_dialog
   assetBundleVariant: 
