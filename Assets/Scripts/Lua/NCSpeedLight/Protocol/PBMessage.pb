@@ -1,6 +1,6 @@
 
-˝
-Proto/account.txt"∑
+˜
+account.txt"∑
 GM_AccountLog
 
 platformID (
@@ -83,8 +83,8 @@ createTime ("â
 op_type (
 device_guid (	&
 accountLogInfo (2.GM_AccountLog
-ø
-Proto/achivev.txt"-
+π
+achivev.txt"-
 SM_Achieve_channel_request
 channel ("f
 SM_Achieve_data
@@ -117,8 +117,8 @@ createTime ("â
 tag (
 	condition (
 num (
-æ
-Proto/activity.txt",
+∏
+activity.txt",
 GM_RewardObj
 objid (
 count ("≠
@@ -165,8 +165,8 @@ oncecharge (2.GM_RewardInfo#
 m_objectid (2.GM_RewardObj"&
 GM_GetWeaponResult
 m_result (
-Ω
-Proto/activity_time.txt"D
+∑
+activity_time.txt"D
 GM_ActivityDataList
 count (
 data (2.GM_ActivityData"ß
@@ -193,8 +193,9 @@ buttontype (
 GM_TimeLimit
 	starttime (
 endtime (
-û	
-Proto/answer.txt"b
+ò	
+
+answer.txt"b
 GM_AnswerOpenGateReturn
 	optentime (
 endtime (
@@ -254,8 +255,8 @@ istruelast ($
 GM_AnswerEndReturn
 last ( 
 data (2.GM_AnswerSingGift
-∞
-Proto/astrology.txt"R
+™
+astrology.txt"R
 GM_AstrologyHis
 	m_hisStar (
 m_own (
@@ -265,8 +266,9 @@ istruelast ($
 
 m_enumtype (
 m_value (
-ﬁ3
-Proto/battle.txt"∫
+ÿ3
+
+battle.txt"∫
 GM_BattleFBServerInfo
 m_Result (
 m_FBID (
@@ -641,8 +643,8 @@ m_FBTypeID (
 m_roleresult	 (2.SM_majiang_role_battleresult
 m_is_dealer
  (
-≤
-Proto/blackmarket.txt"ò
+¨
+blackmarket.txt"ò
 GM_BlackMarketObjInfo
 m_objPos (
 m_objId (
@@ -685,8 +687,8 @@ m_objectId ("=
 GM_BlackMarket_Recast_Return
 m_result ((
 data (2.GM_BlackMarket_Return_obj
-≈
-Proto/challenge.txt"¶
+ø
+challenge.txt"¶
 GM_Challenge_Open_Return
 result (
 roleHP (
@@ -795,8 +797,8 @@ battleHole ((
 result (
 pos (*
 item (2.GM_Challenge_SwitchCardItem
-˚
-Proto/chat.txt"ﬁ
+ı
+chat.txt"ﬁ
 GM_GetChatInfo
 roleId (
 channel (
@@ -859,12 +861,12 @@ profession ("÷
 GM_CfgInfo
 m_typeId (
 m_state (
-8
-Proto/checkTime.txt"!
+2
+checkTime.txt"!
 GM_ServerTime_t
 time_t (
-é
-Proto/chooseArea.txt"8
+à
+chooseArea.txt"8
 SD_AreaList
 m_Count (
 m_Area (2.SD_Area"H
@@ -904,8 +906,9 @@ m_roleName (	
 m_accountId (
 m_roleID (
 m_areaid (
-¶
-Proto/common.txt"D
+†
+
+common.txt"D
 	GM_Result
 m_Result (
 userData (	
@@ -973,8 +976,8 @@ matchscore (
 qqhead (	
 
 ip (	
-≠
-Proto/commonmove.txt"B
+ß
+commonmove.txt"B
 GM_RoleShowChange
 
 id (
@@ -1022,8 +1025,8 @@ motionType (
 roleid (
 
 newgradelv (
-º
-Proto/commonteamfight.txt"p
+∂
+commonteamfight.txt"p
 GMFirstBloodPerson
 rolename (	
 rolelv (
@@ -1049,8 +1052,8 @@ m_fbtypeid (%
 m_teamid (
 m_name (	
 m_time (
-¬
-Proto/concentrictree.txt"–
+º
+concentrictree.txt"–
 GMConTreeDataReturn
 isMarry (
 treeId (
@@ -1148,8 +1151,8 @@ m_gangname (	
 mtime (
 manname (	
 	womanname (	
-≠
-Proto/equip.txt"M
+ß
+	equip.txt"M
 GMMountEquip
 m_gmid (
 m_packagetype (
@@ -1173,8 +1176,8 @@ m_position (:-1"O
 GMEquipLinkList
 	m_useness (%
 m_equiplink (2.GMEquipLinkInfo
-ı
-Proto/equipuplevel.txt"û
+Ô
+equipuplevel.txt"û
 GM_EquipInfoReturn
 m_roleid (
 m_ironcount (
@@ -1329,9 +1332,9 @@ nRightGmid ("-
 GM_AwakeEquipRequest
 awakeequipgmid (
 	equipgmid (
-ä
+Ñ
 
-Proto/exchange.txt"V
+exchange.txt"V
 GM_Exchange_object
 objectid (
 num (
@@ -1401,8 +1404,8 @@ createtime (
 id (
 remark (	
 www	 (	
-Û
-Proto/fbunlock.txt"
+Ì
+fbunlock.txt"
 GM_UnlockReturn
 
 m_lastfbid (
@@ -1459,8 +1462,8 @@ m_chestsId (
 GM_SanHuang
 m_fbid (
 m_fightcount (
-¨
-Proto/fightaid.txt"í
+¶
+fightaid.txt"í
 GMFightAidReturn
 isAid (
 bagName (	
@@ -1476,8 +1479,8 @@ m_chestsId (
 bagid ("%
 GMFightAidGetReturn
 result (
-˜
-Proto/fightrealtime.txt"`
+Ò
+fightrealtime.txt"`
 GMRealTimeOpen
 
 fighttimes (
@@ -1503,8 +1506,8 @@ fighttimes (
 result (
 objectid (
 proof (
-Ç
-Proto/fightSanHuang.txt"B
+¸
+fightSanHuang.txt"B
 GMBraveStoreObject
 
 m_objectid (
@@ -1524,8 +1527,8 @@ m_objectid ("U
 
 m_objectid (
 m_sanhuangling (
-†
-Proto/Fish.txt"B
+ö
+Fish.txt"B
 GM_CREATEROOM_Return
 result (
 
@@ -1639,8 +1642,9 @@ m_iskiller (
 power ("*
 GM_Fish_power_set_rturn
 errorid (
-÷
-Proto/friend.txt"T
+–
+
+friend.txt"T
 	GM_Friend
 m_count (
 coldtime ($
@@ -1761,8 +1765,8 @@ m_friendid (";
 m_id (
 
 m_rolename (	
-ã
-Proto/Fruit.txt"*
+Ö
+	Fruit.txt"*
 GM_Fruit_Login_request
 roomtype ("6
 GM_Fruit_Login_return
@@ -1798,8 +1802,8 @@ fortuntype (
 GM_Fruit_Money_return
 money (
 win (
-ö
-Proto/gang.txt"ü
+î
+gang.txt"ü
 GM_GangInfo
 gmid (
 rank (
@@ -1979,8 +1983,9 @@ m_ganggmid (
 m_preganggmid (
 m_nowganggmid (
 m_applycount (
-Ñ
-Proto/gangwar.txt"b
+˛
+
+gangwar.txt"b
 GM_Gangwar_Open_Return%
 m_data (2.GM_Gangwar_Open_Data
 m_state (
@@ -2051,8 +2056,8 @@ m_fightval (
 m_data (2.GM_Gangwar_CheckRoom_Data"%
 GM_Gangwar_Testing
 m_state (
-»	
-Proto/generalize.txt"q
+¬	
+generalize.txt"q
 GM_Generalize_Code_Return
 	m_getgold (
 m_totalgold (,
@@ -2110,8 +2115,9 @@ m_viplevel (
 m_viplevel (
 	m_timenow (
 m_canget (
-©
-Proto/Golden.txt"I
+£
+
+Golden.txt"I
 GM_CREATEROOM_Golden_Return
 result (
 
@@ -2303,8 +2309,8 @@ typecharge ("%
 copyid (
 rate (&
 roleinfo (2.GM_Godlen_room_role
-·
-Proto/gshj.txt"6
+€
+gshj.txt"6
 GM_Gshj_OpenTime
 	starttime (
 endtime ("~
@@ -2341,8 +2347,8 @@ profession (
 myrank (2.GM_Gshj_RankItem
 count (
 item (2.GM_Gshj_RankItem
-ù
-Proto/guide.txt"I
+ó
+	guide.txt"I
 GM_Guide_System_Item
 level (
 systemid (
@@ -2361,8 +2367,8 @@ profession (
 result ("+
 GM_GuideClose_level_Return
 level (
-¢
-Proto/illustrated.txt"B
+ú
+illustrated.txt"B
 GM_Illustrated_Open_Return
 m_result (
 
@@ -2371,8 +2377,8 @@ m_objectid ("E
 m_type (
 
 m_objectid (
-Ï
-Proto/itemuse.txt":
+Ê
+itemuse.txt":
 GM_ItemUse_Open_Request
 objectid (
 count ("`
@@ -2389,20 +2395,8 @@ m_objectid (
 result (
 objectid (
 	objectnum (
-±
-Proto/loginRecord.txt"j
-	LoginInfo
-account (	
-password (	
-loginWay (	
-
-latestArea (	
-latestRoleId (	",
-LoginRecord
-	loginInfo (2
-.LoginInfo
-é
-Proto/mail.txt"<
+à
+mail.txt"<
 GM_PlayerMailPack
 roleId (
 mails (2.GM_Mail"Ñ
@@ -2427,8 +2421,8 @@ mailSource (";
 userData (	
 data (2.GM_Mail
 	rolenames (	
-ˇ!
-Proto/majiang.txt"t
+˘!
+majiang.txt"t
 GMMJRequest
 m_roleid (
 
@@ -2659,8 +2653,8 @@ m_vipLevel (
 m_roleid (
 
 m_packFlag (
-»
-Proto/match.txt"Æ
+¬
+	match.txt"Æ
 GM_match_UI_info
 
 ID (
@@ -2776,8 +2770,8 @@ createtime (
 	begintime ("$
 GM_Match_rate_return
 rate (
-¯
-Proto/mess.txt":
+Ú
+mess.txt":
 GM_Room_record_request
 page (
 
@@ -2810,8 +2804,8 @@ m_ByteData ("F
 SM_PlayBack
 	m_Increid ($
 m_PlaybackData (2.GM_PlayBack
-¨
-Proto/package.txt"6
+¶
+package.txt"6
 GMPackObjectList"
 
 m_Packages (2.GMUserPackage"O
@@ -2872,8 +2866,8 @@ ValidCount ("
 gmid (",
 GM_PickUpTempPackageResult
 result (
-”
-Proto/payment.txt"©
+Õ
+payment.txt"©
 GM_AppStore_Verify_Order
 transaction_id (	
 platform (
@@ -2926,8 +2920,8 @@ GM_Product
 gold (
 	productid (	
 purchase_date (	
-≥
-Proto/pet.txt"K
+≠
+pet.txt"K
 GM_Pet_UI_Open_Return
 m_Result ( 
 
@@ -3128,8 +3122,9 @@ experience (&
 GM_EquipPetSkillRequest
 	equipGmid (
 idskilledpetid (
-Œ
-Proto/player.txt"8
+»
+
+player.txt"8
 GMRoleListRequest
 m_accountID (
 m_area ("2
@@ -3268,9 +3263,9 @@ chastennum ("a
 
 ip (	
 roleid (
-¸
+ˆ
 
-Proto/playerinfo.txt"ﬁ
+playerinfo.txt"ﬁ
 GM_EquipData
 m_Gmid (
 m_typeid (
@@ -3346,14 +3341,14 @@ m_playerid ("=
 
 m_playerid (
 m_gmid (
-]
-Proto/queen.txt"J
+W
+	queen.txt"J
 GM_LoginQueen_Info
 queenlen (
 	yourplace (
 waitsec (
-ˇ
-Proto/rank.txt"¥
+˘
+rank.txt"¥
 GM_RankInfo
 m_place (
 m_roleID (
@@ -3383,8 +3378,8 @@ m_RankInfo (2.GM_RankInfo")
 GM_AllRankTypeListReturn
 count ($
 ranklist (2.GM_RankListReturn
-Í
-Proto/recharge.txt"Ñ
+‰
+recharge.txt"Ñ
 GM_Recharge_Data
 	m_goodsid (
 m_price (
@@ -3540,8 +3535,8 @@ m_serverid
 m_state (
 m_orderdata (	
 userData (	
-ö
-Proto/rune.txt"V
+î
+rune.txt"V
 GM_RuneItem
 runegmid (
 objectid (
@@ -3574,8 +3569,8 @@ m_serverid
 result (
 bodytype (
 runenum (
-õ
-Proto/scene.txt"B
+ï
+	scene.txt"B
 GM_LoginSceneReturn
 sceneID (
 posx (
@@ -3583,15 +3578,15 @@ m_serverid
 GM_BroadCast_PeopleChange
 roleid (
 broadcastpeople (
-m
-Proto/sell.txt"%
+g
+sell.txt"%
 GM_Sold_Obj_Request
 m_gmid ("4
 GM_Sold_Obj_Return
 m_gold (
 m_gmid (
-Æ
-Proto/skill.txt"Ä
+®
+	skill.txt"Ä
 GM_Skill_Info_return
 result (.
 playerskillinfo (2.GM_Player_Skill_Info(
@@ -3613,8 +3608,9 @@ skilllevel (
 skillid (
 skilllvl (
 	skillType (
-¯
-Proto/snatch.txt"1
+Ú
+
+snatch.txt"1
 GM_Snatch_Item
 objectid (
 count ("]
@@ -3689,8 +3685,8 @@ costexpval (
 item (2.GM_Snatch_SwitchCardItem"/
 GM_Snatch_PeaceTime_Return
 	peacetime (
-Î
-Proto/spiritArean.txt"Ñ
+Â
+spiritArean.txt"Ñ
 GM_AreanReturn
 m_costExper (
 m_lasttimes (
@@ -3725,8 +3721,8 @@ m_showtype (
 m_buycount (
 m_exchangeid (
 m_exchangenum (
-÷
-Proto/systemset.txt"-
+–
+systemset.txt"-
 GM_SystemSet_CDKey_Request
 m_cdkey (	"7
 GM_SystemSet_subData
@@ -3735,8 +3731,8 @@ m_buycount (
 GM_SystemSet_Data_Return
 	m_request ((
 	m_subdata (2.GM_SystemSet_subData
-Î
-Proto/task.txt"W
+Â
+task.txt"W
 GMTaskCondition
 m_ID (
 m_Type (
@@ -3788,8 +3784,8 @@ m_Category (
 m_condition (2.GMTaskCondition"
 GM_TalkEvent
 NPCID (
-Ø
-Proto/team.txt"y
+©
+team.txt"y
 GMTeamPerson
 roleID (
 rolename (	
@@ -3865,14 +3861,14 @@ profession (
 GM_NotifyInviteData
 count ("
 mdata (2.GMInviteRoleInTeam
-W
-Proto/title.txt"D
+Q
+	title.txt"D
 GM_TitleInfoPack
 roleId (
 equipId (
 titleId (
-ˇ
-Proto/topfight.txt"À
+˘
+topfight.txt"À
 GM_TopfightInfo
 m_roleid (
 
@@ -3899,8 +3895,8 @@ m_rolename (	
 
 m_objectid (
 m_count (
-⁄
-Proto/treasureChest.txt"V
+‘
+treasureChest.txt"V
 GM_TreasureChestInfo_Return
 count ((
 subBox (2.GM_TreasureChestSubInfo"¬
@@ -3933,8 +3929,8 @@ boxTokenID ("r
 result (
 count (0
 	subObject (2.GM_TreasureChestGetSubObject
-¡
-Proto/vip.txt"û
+ª
+vip.txt"û
 GM_Vip_Return
 m_roleid (
 
@@ -3964,3 +3960,128 @@ m_viplevel (&
 m_vip (
 m_result (&
 m_detail (2.GM_GetReward_Detail
+◊
+wedding.txt"/
+GM_Notify_JoinWedding
+canJoinWedding ("9
+GM_JoinWedding_Return
+result (
+lastTime ("s
+GM_Notify_BeginProcess
+process (
+lastTime (
+canWorldInvite (
+manid (
+womanid ("%
+GM_InviteOpen_Request
+kind ("O
+GM_InviteOpenFriend_Return
+result (!
+item (2.GMInviteFriendItem"6
+GM_InviteFriend_Request
+count (
+item ("y
+GMInviteFriendItem
+friendid (
+friendprofession (
+
+friendname (	
+	hasInvite (
+isOnline ("5
+GM_InviteFriend_Return
+count (
+item ("&
+GM_FlowerBless_Request
+kind ("≥
+GM_SimilarOperate_Return
+result (
+hasCount (
+getDiamonds (
+objectid (
+	objectnum (
+canHideActivity (
+celeType (
+coldTime ("'
+GM_FireWork_Request
+firekind ("O
+GM_BlessRank_Return
+myRank (
+myBless (
+item (2	.RankItem"8
+RankItem
+rank (
+name (	
+getCount ("O
+GM_TimeAndCount_Return
+count (
+lastTime (
+isCompOnline ("ó
+GM_ProcessData_Request
+lastTime (
+process (
+item (2	.ColdTime
+man (
+woman (
+	hasGetRed (
+
+isProhibit ("@
+ColdTime
+celeType (
+coldtime (
+hasCount ("&
+GM_BigMeal_Request
+eatValue ("Z
+GM_BigMeal_Return
+result (
+coldTime (
+objectid (
+	objectnum ("?
+GM_SlotMachineObject_Return 
+item (2.SlotMachineObject"G
+SlotMachineObject
+place (
+objectid (
+	objectnum ("#
+GM_SlotTurn_Return
+place ("0
+GM_ObjectSee_Return
+item (2.ObjectData"1
+
+ObjectData
+objectid (
+	objectnum ("(
+InstanceInviteFriend
+friendid (""
+GMKickOutRequest
+roleid ("$
+GMReserchDataRequest
+name (	".
+GMReserchDataReturn
+item (2	.RoleData":
+RoleData
+isFriend (
+roleid (
+name (	"!
+GMProhibitRequest
+kind ("7
+GMManagerProceeReturn
+result (
+roleid ("Ã
+GMWeddingChat
+roleId (
+name (	
+vip (
+word (	
+receName (	
+repeatTimes (
+intervalTime (
+
+receroleid	 (
+recevip
+ (
+kind (
+
+profession ("#
+GMGiftRequest
+
+blessValue (
