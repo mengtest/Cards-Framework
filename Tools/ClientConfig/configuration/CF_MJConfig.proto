@@ -1,0 +1,16 @@
+message CF_MJConfig
+{
+	required int32 id = 1;
+	required int32 type_id = 2;
+	required string type_name = 3;
+	required int32 hp_id = 4;
+	required int32 fp_id = 5;
+	required int32 get_score = 6;
+	required int32 fp_score = 7;
+	required int32 zj_score = 8;
+	required int32 xj_score = 9;
+	required string get_remark = 10;
+	required string fp_remark = 11;
+	required string zj_remark = 12;
+	required string xj_remark = 13;
+};

@@ -21,3 +21,7 @@
 /Assets/StreamingAssets/Assets.meta
 /Tools/proto-gen-pb/bin/Debug/
 /Tools/proto-gen-pb/.vs
+/Tools/protocol/protocLua/Temp
+/Tools/protocol/protocLua/PBMessage.pb
+/Tools/protocol/protocLua/PBMessage.lua
+/Tools/protocol/protocLua/GameMessage.lua
