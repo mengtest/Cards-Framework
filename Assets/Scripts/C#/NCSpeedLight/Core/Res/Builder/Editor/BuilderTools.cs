@@ -84,6 +84,13 @@ namespace NCSpeedLight
                 {
                     CopyScripts();
                 }
+                if (GUILayout.Button("Setup Assetbundle Tag", GUILayout.Width(295)))
+                {
+                    MapAssetBundleName();
+                }
+                if (GUILayout.Button("Remove Assetbundle Tag", GUILayout.Width(295)))
+                {
+                }
                 EditorUtility.EndContents();
             }
         }
@@ -136,6 +143,7 @@ namespace NCSpeedLight
             }
             //AssetDatabase.Refresh();
         }
+
 
         public static void BuildAssetBundle()
         {
