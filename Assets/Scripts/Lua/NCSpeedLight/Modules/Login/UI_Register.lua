@@ -61,10 +61,10 @@ function UI_Register.onClickSubmit(go)
 		UIManager.OpenTipsDialog("两次输入的账号不一致")
 		return
 	end
-	local loginScene = LoginScene:Instance();
+	local loginScene = LoginScene.Instance;
 	loginScene.currentAccount = ipAccount.value;
 	loginScene.currentPassword = ipPassword.value;
-	LoginScene:RequestRegister(ipAccount.value, ipPassword.value)
+	LoginScene.RequestRegister(ipAccount.value, ipPassword.value)
 end
 
 

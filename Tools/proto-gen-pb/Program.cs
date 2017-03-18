@@ -2,6 +2,7 @@
 using System.IO;
 using System.Diagnostics;
 using System.Collections.Generic;
+using System.Threading;
 
 class Program
 {
@@ -68,6 +69,7 @@ class Program
                 Process.Start(PROTOC_EXE, cmd);
             }
         }
+        Thread.Sleep(1000);
         MergePBFile();
     }
 
@@ -87,6 +89,10 @@ class Program
                 for (int i = 0; i < pbFiles.Length; i++)
                 {
                     string filePath = pbFiles[i];
+                    if (filePath.Contains("loginRecord"))
+                    {
+                        int a = 2;
+                    }
                     if (File.Exists(filePath) == false)
                     {
                         continue;

@@ -1,9 +1,6 @@
 message LoginInfo{
 	required string account = 1;
 	required string password = 2;
-	optional string loginWay = 3;
-	optional string latestArea = 4;
-	optional string latestRoleId = 5;
 }
 
 message LoginRecord

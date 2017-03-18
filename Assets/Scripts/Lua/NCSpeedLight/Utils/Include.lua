@@ -23,6 +23,7 @@ require('NCSpeedLight.Utils.LuaDebug')('localhost', 7003);
 require 'NCSpeedLight.Utils.Utility'
 
 require 'NCSpeedLight.Protocol.GameMessage'
+require 'NCSpeedLight.Protocol.PBMessage'
 
 require 'NCSpeedLight.Core.Asset.AssetManager'
 

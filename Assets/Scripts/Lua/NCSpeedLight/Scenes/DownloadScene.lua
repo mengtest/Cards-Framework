@@ -1,17 +1,22 @@
 DownloadScene = {};
 
+function DownloadScene:Initialize()
+	if self.Instance == nil then
+		DownloadScene:New();
+	end
+	return self.Instance;
+end
+
 function DownloadScene:New()
-	o = {};
-	setmetatable(o, self);
-	self.__index = self;
-	self.Name = SceneType.DownloadScene;
+	o = {}
+	setmetatable(o, self)
+	self.__index = self
+	self.Instance = o;
+	self.Instance.Name = SceneType.DownloadScene;
 	return o;
 end
 
-function DownloadScene:OnInit()
-end
-
-function DownloadScene:Begin()
+function DownloadScene.Begin()
 	--    if UnityEngine.Application.platform == UnityEngine.RuntimePlatform.Android or UnityEngine.Application.platform == UnityEngine.RuntimePlatform.IPhonePlayer then
 	--        UIManager.OpenWindow("Login/Tencent/QQWXBG")
 	--    else
@@ -20,10 +25,10 @@ function DownloadScene:Begin()
 	coroutine.start(DownloadScene.CheckVersion)
 end
 
-function DownloadScene:Update()
+function DownloadScene.Update()
 end
 
-function DownloadScene:End()
+function DownloadScene.End()
 end
 
 function DownloadScene.CheckVersion()

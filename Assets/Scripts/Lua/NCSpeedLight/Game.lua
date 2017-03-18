@@ -74,7 +74,46 @@ function Game.Update()
 		option.Cancelable = true;
 		UIManager.OpenProgressDialog(option);
 	end
+	
+	
 end
+
+-- function Game.OnGUI()
+-- 	if UnityEngine.GUI.Button(UnityEngine.Rect(10, 10, 150, 30), "Encode LoginRecord") then
+-- 		-- local msg = {
+-- 		-- 	m_AccountID = 889525,
+-- 		-- 	m_info = nil,
+-- 		-- 	m_NickName = 'hello world',
+-- 		-- 	m_HeadPhotoUrl = 'qq.com',
+-- 		-- 	m_sex = 1,
+-- 		-- 	m_UnionID = '10086',
+-- 		-- };
+-- 		-- local buffer = NetManager.EncodeMsg(PBMessage.GMRoleCreate, msg);
+-- 		-- msg = NetManager.DecodePB(PBMessage.GMRoleCreate, buffer);
+-- 		-- local a = 1;
+-- 		-- local msg =
+-- 		-- {
+-- 		-- 	m_AccountName = account,
+-- 		-- 	m_Password = password,
+-- 		-- 	accountLogInfo = nil,
+-- 		-- }
+-- 		-- local buffer = NetManager.EncodeMsg(PBMessage.GM_AccountCreate, msg)
+-- 		-- msg = NetManager.DecodeMsg(PBMessage.GM_AccountCreate, buffer);
+-- 		-- local a = 1;
+-- 		local loginRecord = {
+-- 			infos =
+-- 			{
+-- 				{
+-- 					account = "hsu1994",
+-- 					password = "3778774",
+-- 				}
+-- 			}
+-- 		}
+-- 		local buffer = NetManager.EncodePB("LoginRecord", loginRecord);
+-- 		loginRecord = NetManager.DecodePB(PBMessage.LoginRecord, buffer);
+-- 		local a = 1;
+-- 	end
+-- end
 
 function Game.OnDestroy()
 	NetManager.DeleteAllConnections()

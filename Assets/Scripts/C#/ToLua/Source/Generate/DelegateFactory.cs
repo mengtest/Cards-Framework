@@ -31,6 +31,7 @@ public static class DelegateFactory
 		dict.Add(typeof(UnityEngine.Application.AdvertisingIdentifierCallback), UnityEngine_Application_AdvertisingIdentifierCallback);
 		dict.Add(typeof(UnityEngine.AudioClip.PCMReaderCallback), UnityEngine_AudioClip_PCMReaderCallback);
 		dict.Add(typeof(UnityEngine.AudioClip.PCMSetPositionCallback), UnityEngine_AudioClip_PCMSetPositionCallback);
+		dict.Add(typeof(UnityEngine.GUI.WindowFunction), UnityEngine_GUI_WindowFunction);
 		dict.Add(typeof(NCSpeedLight.EventHandlerDelegate), NCSpeedLight_EventHandlerDelegate);
 		dict.Add(typeof(NCSpeedLight.LoadAssetCallback), NCSpeedLight_LoadAssetCallback);
 		dict.Add(typeof(NCSpeedLight.Helper.ChildDelegate), NCSpeedLight_Helper_ChildDelegate);
@@ -843,6 +844,53 @@ public static class DelegateFactory
 		{
 			UnityEngine_AudioClip_PCMSetPositionCallback_Event target = new UnityEngine_AudioClip_PCMSetPositionCallback_Event(func, self);
 			UnityEngine.AudioClip.PCMSetPositionCallback d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	class UnityEngine_GUI_WindowFunction_Event : LuaDelegate
+	{
+		public UnityEngine_GUI_WindowFunction_Event(LuaFunction func) : base(func) { }
+		public UnityEngine_GUI_WindowFunction_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(int param0)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(int param0)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public static Delegate UnityEngine_GUI_WindowFunction(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			UnityEngine.GUI.WindowFunction fn = delegate(int param0) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			UnityEngine_GUI_WindowFunction_Event target = new UnityEngine_GUI_WindowFunction_Event(func);
+			UnityEngine.GUI.WindowFunction d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			UnityEngine_GUI_WindowFunction_Event target = new UnityEngine_GUI_WindowFunction_Event(func, self);
+			UnityEngine.GUI.WindowFunction d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}

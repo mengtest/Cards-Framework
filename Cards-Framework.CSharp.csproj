@@ -490,6 +490,8 @@
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_ColliderWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_ComponentWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_Experimental_Director_DirectorPlayerWrap.cs" />
+    <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_GUIContentWrap.cs" />
+    <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_GUIWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_GameObjectWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_InputWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_KeyCodeWrap.cs" />
@@ -507,6 +509,7 @@
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_PlayModeWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_QualitySettingsWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_QueueModeWrap.cs" />
+    <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_RectWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_RenderSettingsWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_RenderTextureWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_RendererWrap.cs" />

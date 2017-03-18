@@ -30,7 +30,7 @@ end
 function UI_NormalLogin.Start()
 	lbAccount = transform:Find("Input (account)/Label"):GetComponent('UILabel');
 	ipPassword = transform:Find("Input (password)"):GetComponent('UIInput');
-	local loginScene = LoginScene:Instance();
+	local loginScene = LoginScene.Instance;
 	if loginScene ~= nil and loginScene.LoginRecord ~= nil and # loginScene.LoginRecord.loginInfo >= 1 then
 		local firstInfo = loginScene.LoginRecord.loginInfo[1];
 		if lbAccount ~= nil then
@@ -68,11 +68,11 @@ function onClickLogin(go)
 		UIManager.OpenTipsDialog("请输入密码");
 		return;
 	end
-	local loginScene = LoginScene:Instance();
+	local loginScene = LoginScene.Instance;
 	loginScene.currentAccount = lbAccount.text;
 	loginScene.currentPassword = ipPassword.value;
 	-- LoginScene:AddLoginRecord(lbAccount.text, ipPassword.value);
-	LoginScene:RequestLogin(lbAccount.text, ipPassword.value);
+	LoginScene.RequestLogin(lbAccount.text, ipPassword.value);
 end
 
 function onClickRegister(go)
@@ -92,7 +92,7 @@ function onClickArrow(go)
 end
 
 function displayRecordPanel()
-	local loginScene = LoginScene:Instance();
+	local loginScene = LoginScene.Instance;
 	local bg = transform:Find('Panel/Sprite'):GetComponent('UISprite');
 	local panel = transform:Find('Panel/Accounts');
 	local item = transform:Find('Panel/CloneAccount');

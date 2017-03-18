@@ -151,6 +151,11 @@ public static class CustomSettings
         _GT(typeof(RenderTexture)),
         _GT(typeof(Resources)),
 
+        _GT(typeof(UnityEngine.GUI)),
+        _GT(typeof(UnityEngine.GUIContent)),
+        _GT(typeof(UnityEngine.Rect)),
+
+
 
         #region NCSpeedLight
         _GT(typeof(GlobalEventManager)),

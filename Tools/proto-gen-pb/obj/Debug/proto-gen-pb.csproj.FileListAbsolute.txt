@@ -1,3 +1,10 @@
 H:\Personal\Github\Cards-Framework\Tools\proto-gen-pb\bin\Debug\proto-gen-pb.exe.config
 H:\Personal\Github\Cards-Framework\Tools\proto-gen-pb\bin\Debug\proto-gen-pb.exe
 H:\Personal\Github\Cards-Framework\Tools\proto-gen-pb\bin\Debug\proto-gen-pb.pdb
+C:\Users\威\Desktop\客户端热更新\protoc-gen-lua\public\protocLua\proto-gen-pb.exe.config
+H:\Personal\Github\Cards-Framework\Tools\protocol\protocLua\proto-gen-pb.exe.config
+H:\Personal\Github\Cards-Framework\Tools\protocol\protocLua\proto-gen-pb.exe
+H:\Personal\Github\Cards-Framework\Tools\protocol\protocLua\proto-gen-pb.pdb
+H:\Personal\Github\Cards-Framework\Tools\proto-gen-pb\obj\Debug\proto-gen-pb.csprojResolveAssemblyReference.cache
+H:\Personal\Github\Cards-Framework\Tools\proto-gen-pb\obj\Debug\proto-gen-pb.exe
+H:\Personal\Github\Cards-Framework\Tools\proto-gen-pb\obj\Debug\proto-gen-pb.pdb

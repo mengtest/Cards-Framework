@@ -26,14 +26,10 @@ end
 function SceneManager:Initialize()
 	if self == nil then
 		SceneManager:New();
-		SceneManager:RegisterScene(DownloadScene:New());
-		SceneManager:RegisterScene(LoginScene:New());
-		SceneManager:RegisterScene(HallScene:New());
-		SceneManager:RegisterScene(GameScene:New());
-		DownloadScene:OnInit();
-		LoginScene:OnInit();
-		HallScene:OnInit();
-		GameScene:OnInit();
+		SceneManager:RegisterScene(DownloadScene:Initialize());
+		SceneManager:RegisterScene(LoginScene:Initialize());
+		SceneManager:RegisterScene(HallScene:Initialize());
+		SceneManager:RegisterScene(GameScene:Initialize());
 	else
 		Log.Warning('SceneManager has already been initialized.')
 	end
@@ -53,16 +49,16 @@ end
 
 function SceneManager:Update()
 	if self.CurrentScene ~= nil then
-		self.CurrentScene:Update();
+		self.CurrentScene.Update();
 	end
 	
 	if self.NextScene ~= nil then
 		if self.CurrentScene ~= nil then
-			self.CurrentScene:End();
+			self.CurrentScene.End();
 		end
 		self.CurrentScene = self.NextScene;
 		self.NextScene = nil;
-		self.CurrentScene:Begin();
+		self.CurrentScene.Begin();
 	end
 end
 
