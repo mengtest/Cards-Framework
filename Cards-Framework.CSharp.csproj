@@ -516,6 +516,7 @@
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_ResourcesWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_RigidbodyWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_RuntimePlatformWrap.cs" />
+    <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_SceneManagement_SceneManagerWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_ScreenWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_ShaderWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_SkinnedMeshRendererWrap.cs" />

@@ -155,6 +155,7 @@ public static class CustomSettings
         _GT(typeof(UnityEngine.GUIContent)),
         _GT(typeof(UnityEngine.Rect)),
 
+        _GT(typeof(UnityEngine.SceneManagement.SceneManager)),
 
 
         #region NCSpeedLight

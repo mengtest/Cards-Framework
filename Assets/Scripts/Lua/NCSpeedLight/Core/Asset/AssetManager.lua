@@ -54,6 +54,7 @@ function AssetManager.LoadAsset(assetPath, type)
 end
 
 function AssetManager.LoadScene(sceneName)
+	return UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
 end
 
 function AssetManager.LoadAssetBundle(bundleName)

@@ -17,6 +17,7 @@ function GameScene:New()
 end
 
 function GameScene.Begin()
+	AssetManager.LoadScene(SceneType.GameScene);
 end
 
 function GameScene.Update()

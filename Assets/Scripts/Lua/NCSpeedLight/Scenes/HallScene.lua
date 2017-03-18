@@ -19,6 +19,7 @@ end
 
 function HallScene.Begin()
 	UIManager.CloseAllWindows();
+	AssetManager.LoadScene(SceneType.HallScene);
 	UIManager.OpenWindow('Hall/UI_Main');
 end
 
