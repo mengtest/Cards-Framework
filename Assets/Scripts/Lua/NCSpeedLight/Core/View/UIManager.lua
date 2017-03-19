@@ -83,7 +83,7 @@ function UIManager:Initialize()
 		self.Instance.UIRoot.maximumHeight = 720;
 		self.Instance.UIRoot.minimumHeight = 640;
 		
-		self.Instance.UIPanel = go:AddComponent(typeof(UIRoot));
+		self.Instance.UIPanel = go:AddComponent(typeof(UIPanel));
 		
 		local cameraGO = UnityEngine.GameObject("UICamera");
 		cameraGO.transform:SetParent(go.transform);
@@ -135,7 +135,8 @@ function UIManager.OpenWindow(windowName)
 		local go = AssetManager.LoadAsset(assetPath, typeof(UnityEngine.GameObject));
 		go = UIManager.SetupWindow(go);
 		if go ~= nil then
-			table.insert(UIManager.Instance.Windows, go);
+			UIManager.Instance.Windows[windowName] = go;
+		-- table.insert(UIManager.Instance.Windows, windowName, go);
 		end
 	end
 	return go;
@@ -145,16 +146,16 @@ function UIManager.CloseWindow(windowName)
 	local window = UIManager.Instance.Windows[windowName];
 	if window ~= nil then
 		UnityEngine.GameObject.Destroy(window);
-		table.remove(UIManager.Instance.windowName);
+		UIManager.Instance.Windows[windowName] = nil;
 	end
 end
 
 function UIManager.CloseAllWindows()
-	for i = 1, # UIManager.Instance.Windows do
-		local window = UIManager.Instance.Windows[i];
-		if window ~= nil then
-			UnityEngine.GameObject.Destroy(window);
+	for key, value in pairs(UIManager.Instance.Windows) do
+		if value ~= nil then
+			UnityEngine.GameObject.Destroy(value);
 		end
+		UIManager.Instance.Windows[key] = nil;
 	end
 end
 
