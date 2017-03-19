@@ -58,6 +58,7 @@ public class NCSpeedLight_HelperWrap
 		L.RegFunction("MD5File", MD5File);
 		L.RegFunction("OpenFile", OpenFile);
 		L.RegFunction("SaveFile", SaveFile);
+		L.RegFunction("LoadAssetFromBundle", LoadAssetFromBundle);
 		L.RegFunction("New", _CreateNCSpeedLight_Helper);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegFunction("ChildDelegate", NCSpeedLight_Helper_ChildDelegate);
@@ -1121,6 +1122,25 @@ public class NCSpeedLight_HelperWrap
 			byte[] arg1 = ToLua.CheckByteBuffer(L, 2);
 			bool o = NCSpeedLight.Helper.SaveFile(arg0, arg1);
 			LuaDLL.lua_pushboolean(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int LoadAssetFromBundle(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			string arg0 = ToLua.CheckString(L, 1);
+			System.Type arg1 = (System.Type)ToLua.CheckObject(L, 2, typeof(System.Type));
+			UnityEngine.AssetBundle arg2 = (UnityEngine.AssetBundle)ToLua.CheckUnityObject(L, 3, typeof(UnityEngine.AssetBundle));
+			UnityEngine.Object o = NCSpeedLight.Helper.LoadAssetFromBundle(arg0, arg1, arg2);
+			ToLua.Push(L, o);
 			return 1;
 		}
 		catch(Exception e)

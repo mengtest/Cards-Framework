@@ -1158,5 +1158,21 @@ namespace NCSpeedLight
             }
             return false;
         }
+
+        /// <summary>
+        /// 解决AssetBundle.LoadAsset(string,type) 无法映射lua的问题.
+        /// </summary>
+        /// <param name="assetName"></param>
+        /// <param name="type"></param>
+        /// <param name="bundle"></param>
+        /// <returns></returns>
+        public static UnityEngine.Object LoadAssetFromBundle(string assetName,Type type,AssetBundle bundle)
+        {
+            if (bundle)
+            {
+                return bundle.LoadAsset(assetName, type);
+            }
+            return null;
+        }
     }
 }

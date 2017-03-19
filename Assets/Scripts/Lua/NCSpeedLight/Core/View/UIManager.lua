@@ -136,7 +136,6 @@ function UIManager.OpenWindow(windowName)
 		go = UIManager.SetupWindow(go);
 		if go ~= nil then
 			UIManager.Instance.Windows[windowName] = go;
-		-- table.insert(UIManager.Instance.Windows, windowName, go);
 		end
 	end
 	return go;
@@ -148,13 +147,14 @@ function UIManager.CloseWindow(windowName)
 		UnityEngine.GameObject.Destroy(window);
 		UIManager.Instance.Windows[windowName] = nil;
 	end
+	if SharedVariable.ASSETBUNDLE_MODE then
+		AssetManager.UnloadAssetBundle("UI/" .. windowName);
+	end
 end
 
 function UIManager.CloseAllWindows()
 	for key, value in pairs(UIManager.Instance.Windows) do
-		if value ~= nil then
-			UnityEngine.GameObject.Destroy(value);
-		end
+		UIManager.CloseWindow(key);
 		UIManager.Instance.Windows[key] = nil;
 	end
 end

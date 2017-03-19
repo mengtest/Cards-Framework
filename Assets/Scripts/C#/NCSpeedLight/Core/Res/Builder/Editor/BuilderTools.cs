@@ -137,6 +137,7 @@ namespace NCSpeedLight
             //AssetDatabase.Refresh();
         }
 
+
         public static void BuildAssetBundle()
         {
             string outputPath = Path.Combine(Utility.AssetBundlesOutputPath, Utility.GetPlatformName());

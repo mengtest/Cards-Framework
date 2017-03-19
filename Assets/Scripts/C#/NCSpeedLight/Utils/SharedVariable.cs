@@ -153,7 +153,7 @@ namespace NCSpeedLight
             get
             {
 #if UNITY_STANDALONE
-   return "Win";
+   return "Windows";
 #elif UNITY_ANDROID
                 return "Android";
 #elif UNITY_IPHONE
