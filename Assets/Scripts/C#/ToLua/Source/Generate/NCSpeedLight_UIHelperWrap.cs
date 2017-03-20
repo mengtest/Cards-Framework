@@ -122,19 +122,19 @@ public class NCSpeedLight_UIHelperWrap
 		{
 			int count = LuaDLL.lua_gettop(L);
 
-			if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Transform), typeof(string)))
+			if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Transform), typeof(object)))
 			{
 				UnityEngine.Transform arg0 = (UnityEngine.Transform)ToLua.ToObject(L, 1);
-				string arg1 = ToLua.ToString(L, 2);
+				object arg1 = ToLua.ToVarObject(L, 2);
 				UILabel o = NCSpeedLight.UIHelper.SetLabelText(arg0, arg1);
 				ToLua.Push(L, o);
 				return 1;
 			}
-			else if (count == 3 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Transform), typeof(string), typeof(string)))
+			else if (count == 3 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Transform), typeof(string), typeof(object)))
 			{
 				UnityEngine.Transform arg0 = (UnityEngine.Transform)ToLua.ToObject(L, 1);
 				string arg1 = ToLua.ToString(L, 2);
-				string arg2 = ToLua.ToString(L, 3);
+				object arg2 = ToLua.ToVarObject(L, 3);
 				UILabel o = NCSpeedLight.UIHelper.SetLabelText(arg0, arg1, arg2);
 				ToLua.Push(L, o);
 				return 1;

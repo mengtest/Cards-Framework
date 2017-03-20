@@ -335,9 +335,9 @@ function LoginScene.OnRoleLoginReturn(evt)
 	if obj ~= nil then
 		if obj.id > 0 then
 			Log.Info("OnRoleLoginReturn,id is " .. obj.id .. ',name is ' .. obj.name);
-			SelfInfo.FullInfo = info;
-			SelfInfo.ID = obj.id;
-			SelfInfo.AccountID = obj.accountid;
+			SharedVariable.SelfInfo.FullInfo = obj;
+			SharedVariable.SelfInfo.ID = obj.id;
+			SharedVariable.SelfInfo.AccountID = obj.accountid;
 			SceneManager:GotoScene(SceneType.HallScene);
 		else
 			Log.Error('Role login fail.');

@@ -25,8 +25,9 @@ function Initialize()
 	AssetManager:Initialize();
 	
 	UIManager:Initialize();
-	print("panel== " .. UIManager.Instance.UIPanel.name);
+	
 	NetManager:Initialize();
+	
 	SceneManager.Initialize();
 	
 -- TestEvent();

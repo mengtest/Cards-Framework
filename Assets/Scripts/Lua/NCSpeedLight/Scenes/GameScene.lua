@@ -17,8 +17,9 @@ function GameScene:New()
 end
 
 function GameScene.Begin()
-	-- UIManager.CloseAllWindows();
+	UIManager.CloseAllWindows();
 	AssetManager.LoadScene(SceneType.GameScene);
+	UIManager.OpenWindow(UIType.UI_MaJiang);
 end
 
 function GameScene.Update()

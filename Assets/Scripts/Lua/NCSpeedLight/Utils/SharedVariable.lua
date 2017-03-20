@@ -7,7 +7,15 @@ SharedVariable =
 	TargetFramerate = 30,
 	ProtobufProcessor = require 'protobuf',
 	JsonProcessor = require 'cjson',
-	ASSETBUNDLE_MODE = true,
+	ASSETBUNDLE_MODE = false,
+	SelfInfo =
+	{
+		ID = - 1,
+		Token = '',
+		AccountID = '',
+		AreaID = - 1,
+		FullInfo = nil,
+	}
 }
 
 SharedVariable.JsonUrl = "http://papamajiangcdn.damaigame.com/json/" .. SharedVariable.CompanyName .. "/" .. SharedVariable.Platform .. "/" .. SharedVariable.Channel .. "/v" .. SharedVariable.Version .. "/qiumo.db?v=" .. tostring(System.DateTime.Now.Ticks);

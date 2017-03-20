@@ -29,14 +29,5 @@ require 'NCSpeedLight.Core.Asset.AssetManager'
 
 require "NCSpeedLight.Utils.SharedVariable"
 
+require 'NCSpeedLight.Modules.UIType'
 
-
-
-SelfInfo =
-{
-	ID = - 1,
-	Token = '',
-	AccountID = '',
-	AreaID = - 1,
-	FullInfo = nil,
-}

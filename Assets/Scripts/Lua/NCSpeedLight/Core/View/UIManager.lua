@@ -91,13 +91,12 @@ function UIManager:Initialize()
 		self.Instance.Camera = cameraGO:AddComponent(typeof(UnityEngine.Camera));
 		self.Instance.Camera.orthographic = true;
 		self.Instance.Camera.orthographicSize = 1;
-		-- self.Instance.Camera.cullingMask = NCSpeedLight.Helper.OnlyIncluding("UI");
 		self.Instance.Camera.nearClipPlane = - 10;
 		self.Instance.Camera.depth = 1;
 		self.Instance.Camera.clearFlags = UnityEngine.CameraClearFlags.Depth; --CameraClearFlags.Nothing;
-		
+		-- self.Instance.Camera.cullingMask = NCSpeedLight.Helper.OnlyIncluding("UI");
 		self.Instance.UICamera = cameraGO:AddComponent(typeof(UICamera));
-		-- self.  UICamera.eventReceiverMask = Helper.EverythingBut(mUILayer);
+		-- self.Instance.UICamera.eventReceiverMask = Helper.EverythingBut(mUILayer);
 
 		-- Window root.
 		self.Instance.WindowRoot = UnityEngine.GameObject("Window");

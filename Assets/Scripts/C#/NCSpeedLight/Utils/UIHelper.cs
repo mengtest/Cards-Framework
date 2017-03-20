@@ -52,27 +52,27 @@ namespace NCSpeedLight
             }
         }
 
-        public static UILabel SetLabelText(Transform transform, string path, string content)
+        public static UILabel SetLabelText(Transform transform, string path, object content)
         {
             UILabel label = GetComponent<UILabel>(transform, path);
-            if (label == null)
+            if (label == null || content == null)
             {
                 return null;
             }
-            label.text = content;
+            label.text = content.ToString();
             return label;
         }
 
-        public static UILabel SetLabelText(Transform transform, string content)
+        public static UILabel SetLabelText(Transform transform, object content)
         {
-            if (transform == null)
+            if (transform == null || content == null)
             {
                 return null;
             }
             UILabel label = transform.GetComponent<UILabel>();
             if (label)
             {
-                label.text = content;
+                label.text = content.ToString();
                 return label;
             }
             return null;
