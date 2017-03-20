@@ -1,36 +1,44 @@
 UI_Main = {
 }
 
-local this = UI_Main;
-
 local transform;
 local gameObject;
 
-function this.Awake(go)
+function UI_Main.Awake(go)
 	gameObject = go;
 	transform = go.transform;
 	isRecordPanelOpen = false;
 end
 
-function this.Start()
-	NCSpeedLight.UIHelper.SetButtonEvent(transform, 'bottom/function/Share', OnClickShare);
-	NCSpeedLight.UIHelper.SetButtonEvent(transform, 'bottom/function/Record', OnClickRecord);
-	NCSpeedLight.UIHelper.SetButtonEvent(transform, 'bottom/function/Message', OnClickMessage);
-	NCSpeedLight.UIHelper.SetButtonEvent(transform, 'bottom/function/More', OnClickMore);
+function UI_Main.Start()
+	NCSpeedLight.UIHelper.SetButtonEvent(transform, 'bottom/function/Share', UI_Main.OnClickShare);
+	NCSpeedLight.UIHelper.SetButtonEvent(transform, 'bottom/function/Record', UI_Main.OnClickRecord);
+	NCSpeedLight.UIHelper.SetButtonEvent(transform, 'bottom/function/Message', UI_Main.OnClickMessage);
+	NCSpeedLight.UIHelper.SetButtonEvent(transform, 'bottom/function/More', UI_Main.OnClickMore);
+	NCSpeedLight.UIHelper.SetButtonEvent(transform, 'right/rightButton/CreateRoom', UI_Main.OnClickCreateRoom);
+	NCSpeedLight.UIHelper.SetButtonEvent(transform, 'right/rightButton/JoinRoom', UI_Main.OnClickJoinRoom);
 end
 
-function OnClickShare(go)
+function UI_Main.OnClickShare(go)
 	UIManager.OpenWindow('Hall/UI_Share');
 end
 
-function OnClickRecord(go)
+function UI_Main.OnClickRecord(go)
 	UIManager.OpenWindow('Hall/UI_Record');
 end
 
-function OnClickMessage(go)
+function UI_Main.OnClickMessage(go)
 	UIManager.OpenWindow('Hall/UI_Share');
 end
 
-function OnClickMore(go)
+function UI_Main.OnClickMore(go)
+	UIManager.OpenWindow('Hall/UI_Share');
+end
+
+function UI_Main.OnClickCreateRoom(go)
+	SceneManager:GotoScene(SceneType.GameScene);
+end
+
+function UI_Main.OnClickJoinRoom(go)
 	UIManager.OpenWindow('Hall/UI_Share');
 end

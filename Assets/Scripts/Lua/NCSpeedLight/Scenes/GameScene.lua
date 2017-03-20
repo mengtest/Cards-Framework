@@ -17,6 +17,7 @@ function GameScene:New()
 end
 
 function GameScene.Begin()
+	-- UIManager.CloseAllWindows();
 	AssetManager.LoadScene(SceneType.GameScene);
 end
 

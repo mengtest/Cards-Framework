@@ -69,9 +69,10 @@ namespace NCSpeedLight
         /// 设置GameObject对象层级
         /// </summary>
         /// <param name="go"></param>
-        /// <param name="layer"></param>
-        public static void SetLayer(GameObject go, int layer)
+        /// <param name="layerName"></param>
+        public static void SetLayer(GameObject go, string layerName)
         {
+            int layer = LayerMask.NameToLayer(layerName);
             NGUITools.SetLayer(go, layer);
             return;
         }
@@ -444,22 +445,22 @@ namespace NCSpeedLight
             return false;
         }
 
-        public static int OnlyIncluding(params int[] layers)
+        public static int OnlyIncluding(params string[] layers)
         {
             return MakeMask(layers);
         }
 
-        public static int EverythingBut(params int[] layers)
+        public static int EverythingBut(params string[] layers)
         {
-            return ~MakeMask(layers);
+            return MakeMask(layers);
         }
 
-        static int MakeMask(params int[] layers)
+        static int MakeMask(params string[] layers)
         {
             int mask = 0;
             for (int i = 0; i < layers.Length; i++)
             {
-                mask |= 1 << layers[i];
+                mask |= 1 << LayerMask.NameToLayer(layers[i]);
             }
             return mask;
         }
@@ -1166,7 +1167,7 @@ namespace NCSpeedLight
         /// <param name="type"></param>
         /// <param name="bundle"></param>
         /// <returns></returns>
-        public static UnityEngine.Object LoadAssetFromBundle(string assetName,Type type,AssetBundle bundle)
+        public static UnityEngine.Object LoadAssetFromBundle(string assetName, Type type, AssetBundle bundle)
         {
             if (bundle)
             {

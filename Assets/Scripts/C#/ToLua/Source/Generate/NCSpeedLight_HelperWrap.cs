@@ -131,7 +131,7 @@ public class NCSpeedLight_HelperWrap
 		{
 			ToLua.CheckArgsCount(L, 2);
 			UnityEngine.GameObject arg0 = (UnityEngine.GameObject)ToLua.CheckUnityObject(L, 1, typeof(UnityEngine.GameObject));
-			int arg1 = (int)LuaDLL.luaL_checknumber(L, 2);
+			string arg1 = ToLua.CheckString(L, 2);
 			NCSpeedLight.Helper.SetLayer(arg0, arg1);
 			return 0;
 		}
@@ -538,7 +538,7 @@ public class NCSpeedLight_HelperWrap
 		try
 		{
 			int count = LuaDLL.lua_gettop(L);
-			int[] arg0 = ToLua.CheckParamsNumber<int>(L, 1, count);
+			string[] arg0 = ToLua.CheckParamsString(L, 1, count);
 			int o = NCSpeedLight.Helper.OnlyIncluding(arg0);
 			LuaDLL.lua_pushinteger(L, o);
 			return 1;
@@ -555,7 +555,7 @@ public class NCSpeedLight_HelperWrap
 		try
 		{
 			int count = LuaDLL.lua_gettop(L);
-			int[] arg0 = ToLua.CheckParamsNumber<int>(L, 1, count);
+			string[] arg0 = ToLua.CheckParamsString(L, 1, count);
 			int o = NCSpeedLight.Helper.EverythingBut(arg0);
 			LuaDLL.lua_pushinteger(L, o);
 			return 1;

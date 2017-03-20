@@ -91,7 +91,7 @@ function UIManager:Initialize()
 		self.Instance.Camera = cameraGO:AddComponent(typeof(UnityEngine.Camera));
 		self.Instance.Camera.orthographic = true;
 		self.Instance.Camera.orthographicSize = 1;
-		-- self. Camera.cullingMask = Helper.OnlyIncluding(mCustomUILayer, mUILayer, mDialogLayer);
+		-- self.Instance.Camera.cullingMask = NCSpeedLight.Helper.OnlyIncluding("UI");
 		self.Instance.Camera.nearClipPlane = - 10;
 		self.Instance.Camera.depth = 1;
 		self.Instance.Camera.clearFlags = UnityEngine.CameraClearFlags.Depth; --CameraClearFlags.Nothing;
@@ -356,6 +356,7 @@ function UIManager.SetupWindow(go)
 	root:SetParent(UIManager.Instance.WindowRoot.transform);
 	root.localScale = UnityEngine.Vector3.one;
 	UnityEngine.GameObject.Destroy(go);
+	NCSpeedLight.Helper.SetLayer(window, "UI");
 	return window;
 end
 
@@ -387,5 +388,6 @@ function UIManager.SetupDialog(go)
 	root:SetParent(UIManager.Instance.DialogRoot.transform);
 	root.localScale = UnityEngine.Vector3.one;
 	UnityEngine.GameObject.Destroy(go);
+	NCSpeedLight.Helper.SetLayer(dialog, "UI");
 	return dialog;
 end
