@@ -39,7 +39,10 @@ function LoadLuaBundle()
 		
 		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_protocol");
 		
-		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_scenes");
+		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_scenes_download");
+		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_scenes_hall");
+		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_scenes_login");
+		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_scenes_majiang");
 		
 		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_utils");
 	end

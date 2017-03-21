@@ -9,10 +9,6 @@
 --          //
 ----------------------------------------------------------------
 
-require 'NCSpeedLight.Scenes.DownloadScene'
-require 'NCSpeedLight.Scenes.LoginScene'
-require 'NCSpeedLight.Scenes.HallScene'
-require 'NCSpeedLight.Scenes.MaJiangScene'
 
 SceneManager =
 {

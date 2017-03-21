@@ -23,7 +23,7 @@ namespace NCSpeedLight
                 UIEventListener listener = UIEventListener.Get(transform.gameObject);
                 if (listener)
                 {
-                    listener.onClick += func;
+                    listener.onClick = func;
                 }
             }
         }

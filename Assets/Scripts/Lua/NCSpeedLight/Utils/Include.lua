@@ -14,7 +14,14 @@ require "NCSpeedLight.3rd.pbc.protobuf"
 require 'NCSpeedLight.Core.Event.EvtQueue'
 require "NCSpeedLight.Core.Event.EvtProcessor"
 
+
+require 'NCSpeedLight.Scenes.Download.DownloadScene'
+require 'NCSpeedLight.Scenes.Login.LoginScene'
+require 'NCSpeedLight.Scenes.Hall.HallScene'
+require 'NCSpeedLight.Scenes.MaJiang.MaJiangScene'
 require "NCSpeedLight.Core.Scene.SceneManager"
+
+
 -- require "NCSpeedLight.Scenes.SceneType"
 require "NCSpeedLight.Utils.Log"
 
