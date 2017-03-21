@@ -263,6 +263,7 @@
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\VPTimer.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\View\FPSPrinter.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\View\GetBlurBackground.cs" />
+    <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\View\ModifyRenderQ.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\View\TipsDialog.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\View\UIGaussianBlurEffect.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\View\VisiableTest.cs" />
