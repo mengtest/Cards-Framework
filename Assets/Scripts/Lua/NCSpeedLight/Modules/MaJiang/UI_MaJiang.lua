@@ -20,5 +20,5 @@ function UI_MaJiang.Start()
 end
 
 function UI_MaJiang.DissolveRoom(go)
-	SceneManager:GotoScene(SceneType.HallScene);
+	SceneManager.GotoScene(SceneType.HallScene);
 end

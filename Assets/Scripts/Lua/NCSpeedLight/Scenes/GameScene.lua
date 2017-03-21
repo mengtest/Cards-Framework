@@ -8,7 +8,7 @@ function GameScene:Initialize()
 end
 
 function GameScene:New()
-	o = {}
+	local o = {}
 	setmetatable(o, self)
 	self.__index = self
 	self.Instance = o;

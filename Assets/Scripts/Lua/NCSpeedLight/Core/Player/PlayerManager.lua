@@ -13,31 +13,48 @@ PlayerState =
 
 PlayerManager =
 {
-	Players = {},
+	Instance = nil,
 }
 
 function PlayerManager:Initialize()
-	PlayerManager:Instance();
-end
-
-function PlayerManager:Instance()
-	if self == nil then
-		PlayerManager:New()
+	if self.Instance == nil then
+		PlayerManager:New();
 	end
-	return self;
+	return PlayerManager.Instance;
 end
 
 function PlayerManager:New()
-	local obj = {};
-	obj.Players = {};
-	return obj;
+	local o = {};
+	setmetatable(o, self);
+	self.Instance = o;
+	self.Instance.Players = {};
+	return o;
 end
 
-function PlayerManager:AddPlayer(playerData)
-	if playerData == nil then
-		Log.Error('Can not add player because of nil playerdata,please check it.');
+function PlayerManager.SetHero(player)
+	if Player.Hero ~= nil then
+		Player.Hero:UpdateData(player.Data);
+	else
+		Player.Hero = player;
 	end
 end
 
-function PlayerManager:RemovePlayer(id)
+function PlayerManager.AddPlayer(player)
+	if player == nil then
+		Log.Error('Can not add player because of nil player,please check it.');
+	end
+	if player.Data == nil then
+		Log.Error("Can not add player because of nil player data,please check it.")
+	end
+	if PlayerManager.Instance.Players[player.Data.id] ~= nil then
+		PlayerManager.Instance.Players[player.Data.id].UpdateData(player.Data);
+	else
+		PlayerManager.Instance.Players[player.Data.id] = player;
+	end
+end
+
+function PlayerManager.RemovePlayer(id)
+	if PlayerManager.Instance.Players[id] ~= nil then
+		table.remove(PlayerManager.Instance.Players, id);
+	end
 end

@@ -1,9 +1,9 @@
-message LoginInfo{
+message CFG_LoginInfo{
 	required string account = 1;
 	required string password = 2;
 }
 
-message LoginRecord
+message CFG_LoginRecord
 {
 	repeated LoginInfo loginInfo = 1;
 }

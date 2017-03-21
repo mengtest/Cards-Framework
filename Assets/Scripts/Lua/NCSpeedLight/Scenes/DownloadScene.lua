@@ -65,7 +65,7 @@ end
 function DownloadScene.OnConnectLoginServer(connection)
 	UIManager.CloseProgressDialog();
 	UIManager.OpenTipsDialog("成功连接至登录服务器");
-	SceneManager:GotoScene(SceneType.LoginScene);
+	SceneManager.GotoScene(SceneType.LoginScene);
 end
 
 function DownloadScene.OnDisconnectLoginServer(connection)

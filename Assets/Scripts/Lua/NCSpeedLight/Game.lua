@@ -28,7 +28,9 @@ function Initialize()
 	
 	NetManager:Initialize();
 	
-	SceneManager.Initialize();
+	SceneManager:Initialize();
+	
+	PlayerManager:Initialize();
 	
 -- TestEvent();
 end
@@ -38,12 +40,12 @@ function Game.Awake()
 end
 
 function Game.Start()
-	SceneManager:GotoScene(SceneType.DownloadScene);
+	SceneManager.GotoScene(SceneType.DownloadScene);
 end
 
 function Game.Update()
 	NetManager.Update();
-	SceneManager:Update();
+	SceneManager.Update();
 	if platform == UnityEngine.RuntimePlatform.Android then
 		if UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Escape) == true then
 			local option = StandardDialogOption:New();
@@ -149,6 +151,6 @@ end
 
 function TestSceneManager()
 	SceneManager:Initialize();
-	SceneManager:GotoScene(SceneType.DownloadScene);
+	SceneManager.GotoScene(SceneType.DownloadScene);
 end
 

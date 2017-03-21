@@ -14,90 +14,78 @@ require 'NCSpeedLight.Scenes.LoginScene'
 require 'NCSpeedLight.Scenes.HallScene'
 require 'NCSpeedLight.Scenes.GameScene'
 
-SceneManager = {};
-
-function SceneManager:Instance()
-	if self == nil then
-		SceneManager:New();
-	end
-	return self;
-end
+SceneManager =
+{
+	Instance = nil,
+};
 
 function SceneManager:Initialize()
-	if self == nil then
+	if self.Instance == nil then
 		SceneManager:New();
-		SceneManager:RegisterScene(DownloadScene:Initialize());
-		SceneManager:RegisterScene(LoginScene:Initialize());
-		SceneManager:RegisterScene(HallScene:Initialize());
-		SceneManager:RegisterScene(GameScene:Initialize());
+		SceneManager.RegisterScene(DownloadScene:Initialize());
+		SceneManager.RegisterScene(LoginScene:Initialize());
+		SceneManager.RegisterScene(HallScene:Initialize());
+		SceneManager.RegisterScene(GameScene:Initialize());
 	else
 		Log.Warning('SceneManager has already been initialized.')
 	end
 end
 
 function SceneManager:New()
-	Log.Info('SceneManager:New() -- constructor.')
-	o = {};
+	local o = {};
 	setmetatable(o, self);
 	self.__index = self;
-	self.Scenes = {};
-	self.LastScene = nil;
-	self.CurrentScene = nil;
-	self.NextScene = nil;
+	self.Instance = o;
+	self.Instance.Scenes = {};
+	self.Instance.LastScene = nil;
+	self.Instance.CurrentScene = nil;
+	self.Instance.NextScene = nil;
 	return o;
 end
 
-function SceneManager:Update()
-	if self.CurrentScene ~= nil then
-		self.CurrentScene.Update();
+function SceneManager.Update()
+	if SceneManager.Instance == nil then
+		return
 	end
 	
-	if self.NextScene ~= nil then
-		if self.CurrentScene ~= nil then
-			self.CurrentScene.End();
+	if SceneManager.Instance.CurrentScene ~= nil then
+		SceneManager.Instance.CurrentScene.Update();
+	end
+	
+	if SceneManager.Instance.NextScene ~= nil then
+		if SceneManager.Instance.CurrentScene ~= nil then
+			SceneManager.Instance.CurrentScene.End();
 		end
-		self.CurrentScene = self.NextScene;
-		self.NextScene = nil;
-		self.CurrentScene.Begin();
+		SceneManager.Instance.CurrentScene = SceneManager.Instance.NextScene;
+		SceneManager.Instance.NextScene = nil;
+		SceneManager.Instance.CurrentScene.Begin();
 	end
 end
 
-function SceneManager:RegisterScene(scene)
+function SceneManager.RegisterScene(scene)
 	if scene == nil then
 		Log.Error('SceneManager: can not register scene caused by nil scene.')
 		return;
 	end
-	self.Scenes[scene.Name] = scene;
+	SceneManager.Instance.Scenes[scene.Name] = scene;
 end
 
-function SceneManager:GotoScene(name)
-	local scene = self.Scenes[name];
+function SceneManager.GotoScene(name)
+	local scene = SceneManager.Instance.Scenes[name];
 	if scene == nil then
 		Log.Error('SceneManager: can not GotoScene caused by nil scene,name is ' .. name)
 		return;
 	end
-	if scene == self.NextScene then
+	if scene == SceneManager.Instance.NextScene then
 		return
 	end
-	if self.CurrentScene == nil then
-		self.LastScene = self.CurrentScene;
-		self.NextScene = scene;
-	elseif self.CurrentScene.Name ~= name then
-		self.LastScene = self.CurrentScene;
-		self.NextScene = scene;
+	if SceneManager.Instance.CurrentScene == nil then
+		SceneManager.Instance.LastScene = SceneManager.Instance.CurrentScene;
+		SceneManager.Instance.NextScene = scene;
+	elseif SceneManager.Instance.CurrentScene.Name ~= name then
+		SceneManager.Instance.LastScene = SceneManager.Instance.CurrentScene;
+		SceneManager.Instance.NextScene = scene;
 	else
 		Log.Error("SceneManager: can not go to same scene,name is " .. name);
 	end
-end
-
-function SceneManager:GetLastScene()
-	return Instance().LastScene;
-end
-
-function SceneManager:GetCurrentScene()
-	return Instance().CurrentScene;
-end
-
-function SceneManager:GetNextScene()
-	return Instance().NextScene;
 end

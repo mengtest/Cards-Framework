@@ -24,20 +24,23 @@ function LoadLuaBundle()
 		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_3rd_pblua");
 		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_3rd_sproto");
 		
+		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_core_asset");
 		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_core_event");
 		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_core_network");
 		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_core_player");
 		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_core_scene");
 		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_core_view");
 		
-		
+		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_modules");
 		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_modules_dialog");
 		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_modules_hall");
 		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_modules_login");
+		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_modules_majiang");
 		
 		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_protocol");
 		
 		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_scenes");
+		
 		NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_utils");
 	end
 end

@@ -14,10 +14,9 @@ require 'NCSpeedLight.Core.Event.EvtQueue'
 EvtProcessor = {};
 
 function EvtProcessor:New()
-	o = {}
+	local o = {}
 	setmetatable(o, self)
-	self.__index = self
-	o.Listeners = {}
+	self.Listeners = {}
 	return o
 end
 

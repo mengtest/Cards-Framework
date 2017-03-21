@@ -48,7 +48,8 @@ function UI_Main.OnClickMore(go)
 end
 
 function UI_Main.OnClickCreateRoom(go)
-	SceneManager:GotoScene(SceneType.GameScene);
+	UIManager.OpenWindow(UIType.UI_CreateRoom);
+-- SceneManager.GotoScene(SceneType.GameScene);
 end
 
 function UI_Main.OnClickJoinRoom(go)

@@ -48,6 +48,32 @@ function NetManager.DeleteAllConnections()
 	return NCSpeedLight.NetManager.DeleteAllConnections();
 end
 
+-- 发送消息至登录服务器
+function NetManager.SendEventToLoginServer(id, structName, msg)
+	local buffer = SharedVariable.ProtobufProcessor.encode(structName, msg);
+	if buffer == false then
+		Log.Error("NetManager.SendEventToLoginServer error.");
+		return false;
+	else
+		return NetManager.SendEvent(id, buffer, 0, 1, ServerType.Login);
+	end
+end
+
+-- 发送消息至逻辑服务器
+function NetManager.SendEventToLogicServer(id, structName, msg)
+	local buffer = SharedVariable.ProtobufProcessor.encode(structName, msg);
+	if buffer == false then
+		Log.Error("NetManager.SendEventToLogicServer error.");
+		return false;
+	else
+		local roleID = 0;
+		if SharedVariable.SelfInfo ~= nil and SharedVariable.SelfInfo.FullInfo ~= nil then
+			roleID = SharedVariable.SelfInfo.FullInfo.id;
+		end
+		return NetManager.SendEvent(id, buffer, roleID, 1, ServerType.Logic);
+	end
+end
+
 function NetManager.SendEvent(id, buffer, playerID, serverID, serverType)
 	return NCSpeedLight.NetManager.SendEvent(id, buffer, playerID, serverID, serverType);
 end

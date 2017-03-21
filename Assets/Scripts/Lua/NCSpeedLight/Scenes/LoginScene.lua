@@ -135,8 +135,7 @@ function LoginScene.RequestVerifyVersion()
 	local msg = {
 		version = SharedVariable.Version;
 	}
-	local buffer = NetManager.EncodeMsg(PBMessage.GM_VerifyVersion, msg)
-	NetManager.SendEvent(GameMessage.GM_VERIFY_VERSION, buffer, 0, 1, ServerType.Login)
+	NetManager.SendEventToLoginServer(GameMessage.GM_VERIFY_VERSION, PBMessage.GM_VerifyVersion, msg)
 end
 
 function LoginScene.OnVerifyVersionReturn(evt)
@@ -164,8 +163,7 @@ function LoginScene.RequestLogin(account, password)
 			deviceUUID = "547SFHBSDFHESYHTRY",
 		}
 	}
-	buffer = NetManager.EncodeMsg(PBMessage.GM_AccountRequest, msg);
-	NetManager.SendEvent(GameMessage.GM_ACCOUNT_VERIFY, buffer, 0, 1, ServerType.Login)
+	NetManager.SendEventToLoginServer(GameMessage.GM_ACCOUNT_VERIFY, PBMessage.GM_AccountRequest, msg)
 	local option = ProgressDialogOption:New();
 	option.AutoClose = true;
 	option.Timeout = 10;
@@ -225,8 +223,7 @@ function LoginScene.RequestRegister(account, password)
 			deviceUUID = "547SFHBSDFHESYHTRY",
 		}
 	}
-	local buffer = NetManager.EncodeMsg(PBMessage.GM_AccountCreate, msg)
-	NetManager.SendEvent(GameMessage.GM_ACCOUNT_CREATE, buffer, 0, 1, ServerType.Login)
+	NetManager.SendEventToLoginServer(GameMessage.GM_ACCOUNT_CREATE, PBMessage.GM_AccountCreate, msg)
 end
 
 function LoginScene.OnRegisterReturn(evt)
@@ -262,8 +259,7 @@ function LoginScene.RequestChooseArea()
 		m_AreaID = loginScene.Token.LatestArea,
 		m_RandStr = loginScene.Token.AccountToken,
 	};
-	local buffer = NetManager.EncodeMsg(PBMessage.GM_ChooseArea, msg);
-	NetManager.SendEvent(GameMessage.GM_CHOOSE_AREA, buffer, 0, 1, ServerType.Login);
+	NetManager.SendEventToLoginServer(GameMessage.GM_CHOOSE_AREA, PBMessage.GM_ChooseArea, msg);
 end
 
 function LoginScene.OnChoseAreaReturn(evt)
@@ -289,7 +285,7 @@ end
 function LoginScene.OnConnectLogicServer(connection)
 	UIManager.CloseProgressDialog();
 	UIManager.OpenTipsDialog("成功连接至逻辑服务器");
-	-- SceneManager:GotoScene(SceneType.HallScene);
+	-- SceneManager.GotoScene(SceneType.HallScene);
 	LoginScene.RequestAccountRoles();
 end
 
@@ -303,8 +299,7 @@ function LoginScene.RequestAccountRoles()
 		m_accountID = loginScene.Token.AccountID,
 		m_area = loginScene.Token.LatestArea,
 	};
-	local buffer = NetManager.EncodeMsg(PBMessage.GMRoleListRequest, msg);
-	NetManager.SendEvent(GameMessage.GM_ROLELIST_REQUEST, buffer, 0, 1, ServerType.Logic)
+	NetManager.SendEventToLogicServer(GameMessage.GM_ROLELIST_REQUEST, PBMessage.GMRoleListRequest, msg)
 end
 
 function LoginScene.OnAccountRolesReturn(evt)
@@ -326,8 +321,7 @@ function LoginScene.RequestRoleLogin()
 		m_randstr = loginScene.Token.AccountToken,
 		m_info = nil,
 	};
-	local buffer = NetManager.EncodeMsg(PBMessage.GMRoleLogin, msg);
-	NetManager.SendEvent(GameMessage.GM_ROLE_LOGIN, buffer, 0, 1, ServerType.Logic);
+	NetManager.SendEventToLogicServer(GameMessage.GM_ROLE_LOGIN, PBMessage.GMRoleLogin, msg);
 end
 
 function LoginScene.OnRoleLoginReturn(evt)
@@ -338,7 +332,11 @@ function LoginScene.OnRoleLoginReturn(evt)
 			SharedVariable.SelfInfo.FullInfo = obj;
 			SharedVariable.SelfInfo.ID = obj.id;
 			SharedVariable.SelfInfo.AccountID = obj.accountid;
-			SceneManager:GotoScene(SceneType.HallScene);
+			
+			local player = Player:New(obj);
+			PlayerManager.SetHero(player);
+			PlayerManager.AddPlayer(player);
+			SceneManager.GotoScene(SceneType.HallScene);
 		else
 			Log.Error('Role login fail.');
 		end
@@ -357,8 +355,7 @@ function LoginScene.RequestCreateRole()
 		m_sex = 1,
 		m_UnionID = '10086',
 	};
-	local buffer = NetManager.EncodeMsg(PBMessage.GMRoleCreate, msg);
-	NetManager.SendEvent(GameMessage.GM_ROLE_CREATE, buffer, 0, 1, ServerType.Logic);
+	NetManager.SendEventToLogicServer(GameMessage.GM_ROLE_CREATE, PBMessage.GMRoleCreate, msg);
 end
 
 function LoginScene.OnCreateRoleReturn(evt)
