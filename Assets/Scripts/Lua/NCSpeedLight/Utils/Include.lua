@@ -32,8 +32,6 @@ require "NCSpeedLight.Core.Asset.AssetManager"
 
 require "NCSpeedLight.Utils.SharedVariable"
 
-require "NCSpeedLight.Modules.UIType"
-
 require "NCSpeedLight.Core.Player.Player"
 
 require "NCSpeedLight.Core.Player.PlayerManager"

@@ -12,6 +12,15 @@ SceneType =
 	GameScene = 'GameScene',
 }
 
+UIType = {
+	UI_MaJiang = "MaJiang/UI_MaJiang",
+	UI_Share = "Hall/UI_Share",
+	UI_Record = "Hall/UI_Record",
+	UI_CreateRoom = "Hall/UI_CreateRoom",
+	UI_JoinRoom = "Hall/UI_JoinRoom",
+	UI_Load = "Dialog/UI_Load",
+}
+
 PlayerEventType =
 {
 	PE_None = 0,

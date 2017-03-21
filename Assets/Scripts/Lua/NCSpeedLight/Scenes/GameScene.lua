@@ -18,8 +18,8 @@ end
 
 function GameScene.Begin()
 	AssetManager.LoadScene(SceneType.GameScene);
-	UIManager.CloseAllWindows();
 	UIManager.OpenWindow(UIType.UI_MaJiang);
+	UIManager.CloseAllWindowsExcept(UIType.UI_MaJiang);
 	GameScene.RegisterNetEvent();
 end
 
@@ -50,5 +50,13 @@ end
 
 function GameScene.ReceiveCloseRoom(evt)
 	Log.Info("GameScene.ReceiveCloseRoom");
-	SceneManager.GotoScene(SceneType.HallScene);
+	local option = StandardDialogOption:New();
+	option.OnClickOK =
+	function()
+		SceneManager.GotoScene(SceneType.HallScene);
+	end;
+	option.DoubleButton = false;
+	option.Content = "房间已解散,点击确定退出房间";
+	option.Title = "提  示";
+	UIManager.OpenStandardDialog(option);
 end

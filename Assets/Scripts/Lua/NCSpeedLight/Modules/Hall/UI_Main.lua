@@ -49,9 +49,8 @@ end
 
 function UI_Main.OnClickCreateRoom(go)
 	UIManager.OpenWindow(UIType.UI_CreateRoom);
--- SceneManager.GotoScene(SceneType.GameScene);
 end
 
 function UI_Main.OnClickJoinRoom(go)
-	UIManager.OpenWindow('Hall/UI_Share');
+	UIManager.OpenWindow(UIType.UI_JoinRoom);
 end

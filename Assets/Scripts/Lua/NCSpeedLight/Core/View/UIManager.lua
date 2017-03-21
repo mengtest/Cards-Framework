@@ -158,6 +158,23 @@ function UIManager.CloseAllWindows()
 	end
 end
 
+function UIManager.CloseAllWindowsExcept(...)
+	local arg = {...}
+	for key, value in pairs(UIManager.Instance.Windows) do
+		local delete = true;
+		for key2, value2 in ipairs(arg) do
+			if key == value2 then
+				delete = false;
+			end
+		end
+		
+		if delete then
+			UIManager.CloseWindow(key);
+			UIManager.Instance.Windows[key] = nil;
+		end
+	end
+end
+
 function UIManager.OpenStandardDialog(option)
 	if option == nil then
 		Log.Error('Can not open standardDialog,please input option.');
