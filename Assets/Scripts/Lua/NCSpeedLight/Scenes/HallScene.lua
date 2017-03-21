@@ -134,7 +134,7 @@ function HallScene.ReturnPlayerInFb(evt)
 	if msg.m_Result == 0 then
 		-- 房间已存在，直接进入
 		SharedVariable.FBInfo = msg;
-		SceneManager.GotoScene(SceneType.GameScene);
+		SceneManager.GotoScene(SceneType.MaJiangScene);
 	else
 		HallScene.RequestCreateRoom();
 	-- local isInMaJiangRoom = msg.m_FBTypeID >= RoomType.R_1 and msg.m_FBTypeID <= RoomType.R_2;
@@ -169,7 +169,7 @@ function HallScene.ReceiveRespondLoginBattle(evt)
 	if msg == nil then return end;
 	if msg.result == 0 then
 		Log.Info("进入的副本id: " .. SharedVariable.FBInfo.m_FBID);
-		SceneManager.GotoScene(SceneType.GameScene);
+		SceneManager.GotoScene(SceneType.MaJiangScene);
 		Player.Hero:NotifyEvent(PlayerEventType.PE_ReturnLoginFB, msg);
 	end
 end

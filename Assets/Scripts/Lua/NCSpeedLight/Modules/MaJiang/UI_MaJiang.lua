@@ -23,7 +23,7 @@ function UI_MaJiang.DissolveRoom(go)
 	local option = StandardDialogOption:New();
 	option.OnClickOK =
 	function()
-		GameScene.RequestCloseRoom();
+		MaJiangScene.RequestCloseRoom();
 	end;
 	option.DoubleButton = true;
 	option.Content = "解散房间不扣除房卡，是否确定解散？";

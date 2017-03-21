@@ -12,7 +12,7 @@
 require 'NCSpeedLight.Scenes.DownloadScene'
 require 'NCSpeedLight.Scenes.LoginScene'
 require 'NCSpeedLight.Scenes.HallScene'
-require 'NCSpeedLight.Scenes.GameScene'
+require 'NCSpeedLight.Scenes.MaJiangScene'
 
 SceneManager =
 {
@@ -25,7 +25,7 @@ function SceneManager:Initialize()
 		SceneManager.RegisterScene(DownloadScene:Initialize());
 		SceneManager.RegisterScene(LoginScene:Initialize());
 		SceneManager.RegisterScene(HallScene:Initialize());
-		SceneManager.RegisterScene(GameScene:Initialize());
+		SceneManager.RegisterScene(MaJiangScene:Initialize());
 	else
 		Log.Warning('SceneManager has already been initialized.')
 	end

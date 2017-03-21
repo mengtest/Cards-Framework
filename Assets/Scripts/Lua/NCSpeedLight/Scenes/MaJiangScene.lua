@@ -1,44 +1,44 @@
-GameScene = {}
+MaJiangScene = {}
 
-function GameScene:Initialize()
+function MaJiangScene:Initialize()
 	if self.Instance == nil then
-		GameScene:New();
+		MaJiangScene:New();
 	end
 	return self.Instance;
 end
 
-function GameScene:New()
+function MaJiangScene:New()
 	local o = {}
 	setmetatable(o, self)
 	self.__index = self
 	self.Instance = o;
-	self.Instance.Name = SceneType.GameScene;
+	self.Instance.Name = SceneType.MaJiangScene;
 	return o;
 end
 
-function GameScene.Begin()
-	AssetManager.LoadScene(SceneType.GameScene);
+function MaJiangScene.Begin()
+	AssetManager.LoadScene(SceneType.MaJiangScene);
 	UIManager.OpenWindow(UIType.UI_MaJiang);
 	UIManager.CloseAllWindowsExcept(UIType.UI_MaJiang);
-	GameScene.RegisterNetEvent();
+	MaJiangScene.RegisterNetEvent();
 end
 
-function GameScene.Update()
+function MaJiangScene.Update()
 end
 
-function GameScene.End()
-	GameScene.UnRegisterNetEvent();
+function MaJiangScene.End()
+	MaJiangScene.UnRegisterNetEvent();
 end
 
-function GameScene.RegisterNetEvent()
-	NetManager.RegisterEvent(GameMessage.GM_MASTERCLOSEROOM_RETURN, GameScene.ReceiveCloseRoom);
+function MaJiangScene.RegisterNetEvent()
+	NetManager.RegisterEvent(GameMessage.GM_MASTERCLOSEROOM_RETURN, MaJiangScene.ReceiveCloseRoom);
 end
 
-function GameScene.UnRegisterNetEvent()
-	NetManager.UnregisterEvent(GameMessage.GM_MASTERCLOSEROOM_RETURN, GameScene.ReceiveCloseRoom);
+function MaJiangScene.UnRegisterNetEvent()
+	NetManager.UnregisterEvent(GameMessage.GM_MASTERCLOSEROOM_RETURN, MaJiangScene.ReceiveCloseRoom);
 end
 
-function GameScene.RequestCloseRoom()
+function MaJiangScene.RequestCloseRoom()
 	local msg =
 	{
 		m_RoleID = Player.Hero.Data.id,
@@ -48,8 +48,8 @@ function GameScene.RequestCloseRoom()
 end
 
 
-function GameScene.ReceiveCloseRoom(evt)
-	Log.Info("GameScene.ReceiveCloseRoom");
+function MaJiangScene.ReceiveCloseRoom(evt)
+	Log.Info("MaJiangScene.ReceiveCloseRoom");
 	local option = StandardDialogOption:New();
 	option.OnClickOK =
 	function()
