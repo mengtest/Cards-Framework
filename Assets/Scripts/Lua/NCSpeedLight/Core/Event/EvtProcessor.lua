@@ -9,15 +9,14 @@
 --          //
 ----------------------------------------------------------------
 
-require 'NCSpeedLight.Core.Event.EvtQueue'
-
 EvtProcessor = {};
+EvtProcessor.__index = EvtProcessor;
 
 function EvtProcessor:New()
-	local o = {}
-	setmetatable(o, self)
-	self.Listeners = {}
-	return o
+	local o = {};
+	setmetatable(o, self);
+	o.Listeners = {};
+	return o;
 end
 
 function EvtProcessor:Register(id, func)

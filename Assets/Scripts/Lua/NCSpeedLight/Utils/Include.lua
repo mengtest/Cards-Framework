@@ -10,9 +10,12 @@
 -----------------------------------------------
 
 require "NCSpeedLight.3rd.pbc.protobuf"
+
+require 'NCSpeedLight.Core.Event.EvtQueue'
 require "NCSpeedLight.Core.Event.EvtProcessor"
+
 require "NCSpeedLight.Core.Scene.SceneManager"
-require "NCSpeedLight.Scenes.SceneType"
+-- require "NCSpeedLight.Scenes.SceneType"
 require "NCSpeedLight.Utils.Log"
 
 require "NCSpeedLight.Core.Network.NetManager"
@@ -34,3 +37,27 @@ require "NCSpeedLight.Modules.UIType"
 require "NCSpeedLight.Core.Player.Player"
 
 require "NCSpeedLight.Core.Player.PlayerManager"
+
+require "NCSpeedLight.Utils.Define"
+
+Person = {};
+
+Person.__index = Person
+
+function Person:create(name)
+	local p = {}
+	setmetatable(p, Person)
+	p.name = name
+	return p
+end
+
+
+function Person:talk(words)
+	print(self.name .. "说:" .. words)
+end
+
+local pa = Person:create("路人甲")
+local pb = Person:create("路人乙")
+pa:talk("我是路人甲")              --路人甲说:我是路人甲  
+pb:talk("我是路人乙")--路人乙说:我是路人乙  
+

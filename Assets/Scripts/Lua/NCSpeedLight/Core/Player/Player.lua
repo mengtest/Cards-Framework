@@ -19,11 +19,15 @@ function Player:New(data)
 end
 
 function Player:RegisterEvent(id, func)
-	self.EvtProcessor.Register(id, func);
+	self.EvtProcessor:Register(id, func);
 end
 
 function Player:UnregisterEvent(id, func)
-	self.EvtProcessor.Unregister(id, player);
+	self.EvtProcessor:Unregister(id, player);
+end
+
+function Player:NotifyEvent(id, param)
+	self.EvtProcessor:Notify(id, param);
 end
 
 function Player:UpdateData(data)

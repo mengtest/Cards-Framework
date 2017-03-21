@@ -104,11 +104,16 @@ function HallScene.ReturnPlayerInFb(evt)
 		end
 	end
 	
-	local isInMaJiangRoom = msg.m_FBTypeID >= SharedVariable.RoomType.R_1 and msg.m_FBTypeID <= SharedVariable.RoomType.R_2;
+	local isInMaJiangRoom = msg.m_FBTypeID >= RoomType.R_1 and msg.m_FBTypeID <= RoomType.R_2;
 	if msg.m_FBTypeID > 0 and isInMaJiangRoom == false then
 		return;
 	end
 	
+	local mFirstRequest = false;
+	if mFirstRequest then
+	else
+		Player.Hero:NotifyEvent(PlayerEventType.PE_MjRoomExist, msg);
+	end
 end
 
 function HallScene.ReturnAgainEnterFb(evt)
