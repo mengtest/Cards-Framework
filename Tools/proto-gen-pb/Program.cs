@@ -151,7 +151,7 @@ class Program
                         sw.WriteLine(structName + " = ");
                         sw.WriteLine("{");
                         beginParse = true;
-
+                        lastEnumIndex = -1;// reset enum value.
                         continue;
                     }
 
