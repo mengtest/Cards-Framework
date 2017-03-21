@@ -20,5 +20,13 @@ function UI_MaJiang.Start()
 end
 
 function UI_MaJiang.DissolveRoom(go)
-	SceneManager.GotoScene(SceneType.HallScene);
+	local option = StandardDialogOption:New();
+	option.OnClickOK =
+	function()
+		GameScene.RequestCloseRoom();
+	end;
+	option.DoubleButton = true;
+	option.Content = "解散房间不扣除房卡，是否确定解散？";
+	option.Title = "解散房间";
+	UIManager.OpenStandardDialog(option);
 end

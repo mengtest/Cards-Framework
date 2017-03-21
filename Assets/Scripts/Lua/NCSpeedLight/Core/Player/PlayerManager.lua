@@ -19,6 +19,7 @@ PlayerManager =
 function PlayerManager:Initialize()
 	if self.Instance == nil then
 		PlayerManager:New();
+		PlayerManager.InitNetEvent();
 	end
 	return PlayerManager.Instance;
 end
@@ -29,6 +30,14 @@ function PlayerManager:New()
 	self.Instance = o;
 	self.Instance.Players = {};
 	return o;
+end
+
+function PlayerManager.InitNetEvent()
+-- NetManager.RegisterEvent(GameMessage.GM_FBSERVERINFO_RETURN, PlayerManager.ReceiveFbInfo);
+-- NetManager.RegisterEvent(GameMessage.GM_LOGINFB_RETURN, PlayerManager.ReceiveRespondLoginBattle);
+-- NetManager.RegisterEvent(GameMessage.GM_NOTIFY_CHANGE_LONG64, PlayerManager.NotifyChangeSomething);
+-- NetManager.RegisterEvent(GameMessage.GM_NOTIFY_CHANGE_int32, PlayerManager.NotifyChangeSomethingInt32);
+-- NetManager.RegisterEvent(GameMessage.GM_KICKOFF_PLAYER, PlayerManager.NotifyRe_Register);
 end
 
 function PlayerManager.SetHero(player)

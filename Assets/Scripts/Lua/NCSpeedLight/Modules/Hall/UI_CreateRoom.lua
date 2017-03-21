@@ -1,5 +1,4 @@
-UI_CreateRoom = {
-}
+UI_CreateRoom = {}
 
 local transform;
 local gameObject;
@@ -12,6 +11,9 @@ end
 function UI_CreateRoom.Start()
 	NCSpeedLight.UIHelper.SetButtonEvent(transform, "top/topLeft/BackButton", UI_CreateRoom.OnClickClose);
 	NCSpeedLight.UIHelper.SetButtonEvent(transform, "Center/Button", UI_CreateRoom.OnClickConfirm);
+end
+
+function UI_CreateRoom.OnDestory()
 end
 
 function UI_CreateRoom.OnClickClose(go)

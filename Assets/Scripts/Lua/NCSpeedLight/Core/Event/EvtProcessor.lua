@@ -24,7 +24,7 @@ function EvtProcessor:Register(id, func)
 	if self.Listeners[id] == nil then
 		self.Listeners[id] = {}
 	else
-		local existIndex = this:EventIndex(id, func)
+		local existIndex = self:EventIndex(id, func)
 		if existIndex ~= - 1 then
 			return
 		end

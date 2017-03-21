@@ -39,6 +39,11 @@ function HallScene.RegisterNetEvent()
 	NetManager.RegisterEvent(GameMessage.GM_ROOM_RECORD_RETURN, HallScene.ReturnRoomRecord);-- 包房记录;
 	NetManager.RegisterEvent(GameMessage.GM_PLAYERISINBATTLE_RETURN, HallScene.ReturnPlayerInFb);  -- 返回玩家是否在副本中;
 	NetManager.RegisterEvent(GameMessage.GM_PLAYERJOINBATTLEAGAIN_RETRUN, HallScene.ReturnAgainEnterFb);
+	
+	NetManager.RegisterEvent(GameMessage.GM_LOGINFB_RETURN, HallScene.ReceiveRespondLoginBattle);
+	NetManager.RegisterEvent(GameMessage.GM_NOTIFY_CHANGE_LONG64, HallScene.NotifyChangeSomething);
+	NetManager.RegisterEvent(GameMessage.GM_NOTIFY_CHANGE_int32, HallScene.NotifyChangeSomethingInt32);
+	NetManager.RegisterEvent(GameMessage.GM_KICKOFF_PLAYER, HallScene.NotifyRe_Register);
 end
 
 function HallScene.UnRegisterNetEvent()
@@ -48,6 +53,11 @@ function HallScene.UnRegisterNetEvent()
 	NetManager.UnregisterEvent(GameMessage.GM_ROOM_RECORD_RETURN, HallScene.ReturnRoomRecord);-- 包房记录;
 	NetManager.UnregisterEvent(GameMessage.GM_PLAYERISINBATTLE_RETURN, HallScene.ReturnPlayerInFb);  -- 返回玩家是否在副本中;
 	NetManager.UnregisterEvent(GameMessage.GM_PLAYERJOINBATTLEAGAIN_RETRUN, HallScene.ReturnAgainEnterFb);
+	
+	NetManager.UnregisterEvent(GameMessage.GM_LOGINFB_RETURN, HallScene.ReceiveRespondLoginBattle);
+	NetManager.UnregisterEvent(GameMessage.GM_NOTIFY_CHANGE_LONG64, HallScene.NotifyChangeSomething);
+	NetManager.UnregisterEvent(GameMessage.GM_NOTIFY_CHANGE_int32, HallScene.NotifyChangeSomethingInt32);
+	NetManager.UnregisterEvent(GameMessage.GM_KICKOFF_PLAYER, HallScene.NotifyRe_Register);
 end
 
 -- 判断当前玩家是否在副本内
@@ -56,6 +66,26 @@ function HallScene.RequestPlayerInFb()
 		request = SharedVariable.SelfInfo.FullInfo.id;
 	};
 	NetManager.SendEventToLogicServer(GameMessage.GM_PLAYERISINBATTLE_REQUEST, PBMessage.GM_Request, msg);
+end
+
+function HallScene.RequestCreateRoom()
+	local msg = {
+		m_roleid = Player.Hero.Data.id,
+		m_fbtypeid = RoomType.R_2,
+		m_fbplayway = "2,",
+		m_roomcount = 6,
+		m_playerCount = 4,
+	};
+	NetManager.SendEventToLogicServer(GameMessage.GM_MAJIANG_REQUEST, PBMessage.GMMJRequest, msg);
+end
+
+function HallScene.RequestLoginFb()
+	local msg = {
+		m_FBID = SharedVariable.FBInfo.m_FBID,
+		m_RoleID = Player.Hero.Data.id,
+		m_reallyPos = "(105,555)",
+	};
+	NetManager.SendEventToLogicServer(GameMessage.GM_LOGINFB_REQUEST, PBMessage.GM_LoginFBServer, msg);
 end
 
 function HallScene.ReceiveFbInfo(evt)
@@ -83,6 +113,12 @@ end
 
 function HallScene.ReturnEnterMaJiangResult(evt)
 	Log.Info("HallScene.ReturnEnterMaJiangResult");
+	local msg = NetManager.DecodeMsg(PBMessage.GM_Result, evt);
+	if msg == nil then
+		return
+	end
+	local content = "MaJiang enter error" .. msg.m_Result;
+	UIManager.OpenTipsDialog(content)
 end
 
 function HallScene.ReturnRoomRecord(evt)
@@ -95,27 +131,57 @@ function HallScene.ReturnPlayerInFb(evt)
 	if msg == nil then
 		return;
 	end
-	if msg.m_Result ~= 0 then
-		-- 服务器通知自己当前不在副本，但是自己现在在麻将场景，就回到主场景
-		local scene = SceneManager.Instance.CurrentScene;
-		if scene ~= nil and scene.Name == SceneType.GameScene then
-			SceneManager.GotoScene(SceneType.HallScene);
-			return;
-		end
-	end
-	
-	local isInMaJiangRoom = msg.m_FBTypeID >= RoomType.R_1 and msg.m_FBTypeID <= RoomType.R_2;
-	if msg.m_FBTypeID > 0 and isInMaJiangRoom == false then
-		return;
-	end
-	
-	local mFirstRequest = false;
-	if mFirstRequest then
+	if msg.m_Result == 0 then
+		-- 房间已存在，直接进入
+		SharedVariable.FBInfo = msg;
+		SceneManager.GotoScene(SceneType.GameScene);
 	else
-		Player.Hero:NotifyEvent(PlayerEventType.PE_MjRoomExist, msg);
+		HallScene.RequestCreateRoom();
+	-- local isInMaJiangRoom = msg.m_FBTypeID >= RoomType.R_1 and msg.m_FBTypeID <= RoomType.R_2;
+	-- if msg.m_FBTypeID > 0 and isInMaJiangRoom == false then
+	-- 	return;
+	-- end
+	-- local mFirstRequest = false;
+	-- if mFirstRequest then
+	-- else
+	-- 	Player.Hero:NotifyEvent(PlayerEventType.PE_MjRoomExist, msg);
+	-- end
 	end
 end
 
 function HallScene.ReturnAgainEnterFb(evt)
 	Log.Info("HallScene.ReturnAgainEnterFb");
+end
+
+function HallScene.ReceiveFbInfo(evt)
+	Log.Info("HallScene.ReceiveFbInfo");
+	local msg = NetManager.DecodeMsg(PBMessage.GM_BattleFBServerInfo, evt);
+	if msg == nil then return end;
+	if msg.m_Result == 0 then
+		SharedVariable.FBInfo = msg;
+		HallScene.RequestLoginFb();
+	end
+end
+
+function HallScene.ReceiveRespondLoginBattle(evt)
+	Log.Info("HallScene.ReceiveRespondLoginBattle");
+	local msg = NetManager.DecodeMsg(PBMessage.GM_LoginFBServerResult, evt);
+	if msg == nil then return end;
+	if msg.result == 0 then
+		Log.Info("进入的副本id: " .. SharedVariable.FBInfo.m_FBID);
+		SceneManager.GotoScene(SceneType.GameScene);
+		Player.Hero:NotifyEvent(PlayerEventType.PE_ReturnLoginFB, msg);
+	end
+end
+
+function HallScene.NotifyChangeSomething(evt)
+	Log.Info("HallScene.NotifyChangeSomething");
+end
+
+function HallScene.NotifyChangeSomethingInt32(evt)
+	Log.Info("HallScene.NotifyChangeSomethingInt32");
+end
+
+function HallScene.NotifyRe_Register(evt)
+	Log.Info("HallScene.NotifyRe_Register");
 end

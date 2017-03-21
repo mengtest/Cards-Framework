@@ -17,6 +17,8 @@ SharedVariable =
 		AreaID = - 1,
 		FullInfo = nil,
 	},
+	
+	BattleInfo = nil,
 }
 
 SharedVariable.JsonUrl = "http://papamajiangcdn.damaigame.com/json/" .. SharedVariable.CompanyName .. "/" .. SharedVariable.Platform .. "/" .. SharedVariable.Channel .. "/v" .. SharedVariable.Version .. "/qiumo.db?v=" .. tostring(System.DateTime.Now.Ticks);
