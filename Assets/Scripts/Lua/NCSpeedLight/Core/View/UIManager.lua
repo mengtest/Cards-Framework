@@ -225,16 +225,18 @@ function UIManager.OpenStandardDialog(option)
 			NCSpeedLight.UIHelper.SetButtonEvent(dialog.transform, "DoubleBtn/OK",
 			function(go)
 				UIManager.CloseStandardDialog();
+				if option.OnClickOK ~= nil then
+					option.OnClickOK(nil);
+				end
 			end);
 			
 			NCSpeedLight.UIHelper.SetButtonEvent(dialog.transform, "DoubleBtn/Cancel",
 			function(go)
 				UIManager.CloseStandardDialog();
+				if option.OnClickCancel ~= nil then
+					option.OnClickCancel(nil);
+				end
 			end);
-			
-			NCSpeedLight.UIHelper.SetButtonEvent(dialog.transform, "DoubleBtn/OK", option.OnClickOK);
-			NCSpeedLight.UIHelper.SetButtonEvent(dialog.transform, "DoubleBtn/Cancel", option.OnClickCancel);
-			
 		else
 			
 			NCSpeedLight.UIHelper.SetActiveState(dialog.transform, "DoubleBtn", false);
@@ -243,10 +245,11 @@ function UIManager.OpenStandardDialog(option)
 			NCSpeedLight.UIHelper.SetButtonEvent(dialog.transform, "SingleBtn/OK",
 			function(go)
 				UIManager.CloseStandardDialog();
+				if option.OnClickOK ~= nil then
+					option.OnClickOK(nil);
+				end
 			end);
-			NCSpeedLight.UIHelper.SetButtonEvent(dialog.transform, "SingleBtn/OK", option.OnClickOK);
 		end
-		
 		dialog:SetActive(true);
 	end
 end
