@@ -44,6 +44,13 @@ function DownloadScene.CheckVersion()
 	
 	coroutine.www(www);
 	coroutine.wait(0.5);
+	local error = www.error;
+	if error ~= nil then
+		Log.Error("WWW Error: " .. error);
+		UIManager.CloseProgressDialog();
+		UIManager.OpenTipsDialog("检查更新失败");
+		return;
+	end
 	UIManager.CloseProgressDialog();
 	
 	local json = NetManager.DecodeJson(www.bytes);
@@ -64,10 +71,11 @@ end
 
 function DownloadScene.OnConnectLoginServer(connection)
 	UIManager.CloseProgressDialog();
-	UIManager.OpenTipsDialog("成功连接至登录服务器");
+	Log.Info("DownloadScene.OnConnectLoginServer: 成功连接至账号服务器");
 	SceneManager.GotoScene(SceneType.LoginScene);
 end
 
 function DownloadScene.OnDisconnectLoginServer(connection)
-	UIManager.OpenTipsDialog("已经断开与登录服务器的连接");
+	UIManager.CloseProgressDialog();
+	UIManager.OpenTipsDialog("账号服务器异常");
 end

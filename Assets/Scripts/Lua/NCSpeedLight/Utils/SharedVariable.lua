@@ -1,8 +1,8 @@
 SharedVariable =
 {
-	CompanyName = "papa",
-	Version = "1.7.2",
-	Channel = "papa",
+	CompanyName = "hongzhong",
+	Version = "1.0.0",
+	Channel = "hongzhong",
 	Platform = "Android",
 	TargetFramerate = 30,
 	ProtobufProcessor = require 'protobuf',
@@ -18,7 +18,11 @@ SharedVariable =
 		FullInfo = nil,
 	},
 	
-	BattleInfo = nil,
+	FBInfo = nil,
+	
+	FBEntryInfo = nil,
+	
+	DeskOffset = 0,
 }
 
 SharedVariable.JsonUrl = "http://papamajiangcdn.damaigame.com/json/" .. SharedVariable.CompanyName .. "/" .. SharedVariable.Platform .. "/" .. SharedVariable.Channel .. "/v" .. SharedVariable.Version .. "/qiumo.db?v=" .. tostring(System.DateTime.Now.Ticks);
@@ -34,3 +38,4 @@ function SharedVariable.ASSET_BUNDLE_PATH()
 -- 	return "";
 -- end
 end
+

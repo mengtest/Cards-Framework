@@ -42,7 +42,7 @@ end
 
 function PlayerManager.SetHero(player)
 	if Player.Hero ~= nil then
-		Player.Hero:UpdateData(player.Data);
+		Player.Hero.FullInfo(player);
 	else
 		Player.Hero = player;
 	end

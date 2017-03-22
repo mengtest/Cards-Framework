@@ -284,13 +284,13 @@ end
 
 function LoginScene.OnConnectLogicServer(connection)
 	UIManager.CloseProgressDialog();
-	UIManager.OpenTipsDialog("成功连接至逻辑服务器");
-	-- SceneManager.GotoScene(SceneType.HallScene);
+	Log.Info("LoginScene.OnConnectLogicServer: 成功连接至逻辑服务器");
 	LoginScene.RequestAccountRoles();
 end
 
 function LoginScene.OnDisconnectLogicServer(connection)
-	UIManager.OpenTipsDialog("已经断开与逻辑服务器的连接");
+	UIManager.CloseProgressDialog();
+	UIManager.OpenTipsDialog("逻辑服务器异常");
 end
 
 function LoginScene.RequestAccountRoles()
@@ -325,18 +325,17 @@ function LoginScene.RequestRoleLogin()
 end
 
 function LoginScene.OnRoleLoginReturn(evt)
-	local obj = NetManager.DecodeMsg(PBMessage.GM_FullRoleInfo, evt);
-	if obj ~= nil then
-		if obj.id > 0 then
-			Log.Info("OnRoleLoginReturn,id is " .. obj.id .. ',name is ' .. obj.name);
-			SharedVariable.SelfInfo.FullInfo = obj;
-			SharedVariable.SelfInfo.ID = obj.id;
-			SharedVariable.SelfInfo.AccountID = obj.accountid;
+	local msg = NetManager.DecodeMsg(PBMessage.GM_FullRoleInfo, evt);
+	if msg ~= nil then
+		if msg.id > 0 then
+			Log.Info("OnRoleLoginReturn,id is " .. msg.id .. ',name is ' .. msg.name);
+			SharedVariable.SelfInfo.FullInfo = msg;
+			SharedVariable.SelfInfo.ID = msg.id;
+			SharedVariable.SelfInfo.AccountID = msg.accountid;
+			Player.CreateHero(msg);
 			
-			local player = Player:New(obj);
-			PlayerManager.SetHero(player);
-			PlayerManager.AddPlayer(player);
-			SceneManager.GotoScene(SceneType.HallScene);
+			-- SceneManager.GotoScene(SceneType.HallScene);
+			HallScene.RequestPlayerInFb();
 		else
 			Log.Error('Role login fail.');
 		end

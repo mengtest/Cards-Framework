@@ -13,7 +13,7 @@ function UI_CreateRoom.Start()
 	NCSpeedLight.UIHelper.SetButtonEvent(transform, "Center/Button", UI_CreateRoom.OnClickConfirm);
 end
 
-function UI_CreateRoom.OnDestory()
+function UI_CreateRoom.OnDestroy()
 end
 
 function UI_CreateRoom.OnClickClose(go)

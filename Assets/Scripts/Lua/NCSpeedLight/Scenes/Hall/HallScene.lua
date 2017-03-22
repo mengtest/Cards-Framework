@@ -3,6 +3,7 @@ HallScene = {}
 function HallScene:Initialize()
 	if self.Instance == nil then
 		HallScene:New();
+		HallScene.RegisterNetEvent();
 	end
 	return self.Instance;
 end
@@ -16,19 +17,17 @@ function HallScene:New()
 	return o;
 end
 
-
 function HallScene.Begin()
 	UIManager.CloseAllWindows();
 	AssetManager.LoadScene(SceneType.HallScene);
 	UIManager.OpenWindow('Hall/UI_Main');
-	HallScene.RegisterNetEvent();
+	
 end
 
 function HallScene.Update()
 end
 
 function HallScene.End()
-	HallScene.UnRegisterNetEvent();
 end
 
 -- Create Room Logic Begin --
@@ -39,7 +38,6 @@ function HallScene.RegisterNetEvent()
 	NetManager.RegisterEvent(GameMessage.GM_ROOM_RECORD_RETURN, HallScene.ReturnRoomRecord);-- 包房记录;
 	NetManager.RegisterEvent(GameMessage.GM_PLAYERISINBATTLE_RETURN, HallScene.ReturnPlayerInFb);  -- 返回玩家是否在副本中;
 	NetManager.RegisterEvent(GameMessage.GM_PLAYERJOINBATTLEAGAIN_RETRUN, HallScene.ReturnAgainEnterFb);
-	
 	NetManager.RegisterEvent(GameMessage.GM_LOGINFB_RETURN, HallScene.ReceiveRespondLoginBattle);
 	NetManager.RegisterEvent(GameMessage.GM_NOTIFY_CHANGE_LONG64, HallScene.NotifyChangeSomething);
 	NetManager.RegisterEvent(GameMessage.GM_NOTIFY_CHANGE_int32, HallScene.NotifyChangeSomethingInt32);
@@ -53,7 +51,6 @@ function HallScene.UnRegisterNetEvent()
 	NetManager.UnregisterEvent(GameMessage.GM_ROOM_RECORD_RETURN, HallScene.ReturnRoomRecord);-- 包房记录;
 	NetManager.UnregisterEvent(GameMessage.GM_PLAYERISINBATTLE_RETURN, HallScene.ReturnPlayerInFb);  -- 返回玩家是否在副本中;
 	NetManager.UnregisterEvent(GameMessage.GM_PLAYERJOINBATTLEAGAIN_RETRUN, HallScene.ReturnAgainEnterFb);
-	
 	NetManager.UnregisterEvent(GameMessage.GM_LOGINFB_RETURN, HallScene.ReceiveRespondLoginBattle);
 	NetManager.UnregisterEvent(GameMessage.GM_NOTIFY_CHANGE_LONG64, HallScene.NotifyChangeSomething);
 	NetManager.UnregisterEvent(GameMessage.GM_NOTIFY_CHANGE_int32, HallScene.NotifyChangeSomethingInt32);
@@ -70,8 +67,8 @@ end
 
 function HallScene.RequestCreateRoom()
 	local msg = {
-		m_roleid = Player.Hero.Data.id,
-		m_fbtypeid = RoomType.R_2,
+		m_roleid = Player.Hero.FullInfo.id,
+		m_fbtypeid = RoomType.R_1,
 		m_fbplayway = "2,",
 		m_roomcount = 6,
 		m_playerCount = 4,
@@ -82,29 +79,21 @@ end
 function HallScene.RequestLoginFb()
 	local msg = {
 		m_FBID = SharedVariable.FBInfo.m_FBID,
-		m_RoleID = Player.Hero.Data.id,
+		m_RoleID = Player.Hero.FullInfo.id,
 		m_reallyPos = "(105,555)",
 	};
 	NetManager.SendEventToLogicServer(GameMessage.GM_LOGINFB_REQUEST, PBMessage.GM_LoginFBServer, msg);
 end
 
-function HallScene.ReceiveFbInfo(evt)
-	local msg = NetManager.DecodeMsg(PBMessage.GM_BattleFBServerInfo, evt);
-	if msg == nil then
-		Log.Error("HallScene.ReceiveFbInfo parse msg error.");
-	else -- required int32 m_Result=1;			//0 成功,1副本不存在,2 你已经在副本了,3副本已满，4副本人数已满
-		if msg.m_Result == 0 then
-			UIManager.OpenTipsDialog("成功进入副本");
-		elseif msg.m_Result == 1 then
-			UIManager.OpenTipsDialog("副本不存在");
-		elseif msg.m_Result == 2 then
-			UIManager.OpenTipsDialog("你已经在副本了");
-		elseif msg.m_Result == 3 then
-			UIManager.OpenTipsDialog("副本已满");
-		elseif msg.m_Result == 4 then
-			UIManager.OpenTipsDialog("副本人数已满");
-		end
-	end
+function HallScene.RequestJoinRoom(roomID)
+	local msg =
+	{
+		m_Beinvited = Player.Hero.FullInfo.id;
+		m_Roleid = 1,   -- 服务器不需要知道邀请者的角色id, 随便设置1个值;
+		m_Name = "",
+		m_FBID = roomID,
+	};
+	NetManager.SendEventToLogicServer(GameMessage.GM_MAJIANG_JOIN_VIPROOM, PBMessage.GM_AskFriend, msg);
 end
 
 function HallScene.ReceiveInvitePlayMaJiang(evt)
@@ -136,7 +125,12 @@ function HallScene.ReturnPlayerInFb(evt)
 		SharedVariable.FBInfo = msg;
 		SceneManager.GotoScene(SceneType.MaJiangScene);
 	else
-		HallScene.RequestCreateRoom();
+		if SceneManager.Instance.CurrentScene ~= nil and SceneManager.Instance.CurrentScene.Name == SceneType.LoginScene then
+			SceneManager.GotoScene(SceneType.HallScene);
+		else
+			HallScene.RequestCreateRoom();
+			
+		end
 	-- local isInMaJiangRoom = msg.m_FBTypeID >= RoomType.R_1 and msg.m_FBTypeID <= RoomType.R_2;
 	-- if msg.m_FBTypeID > 0 and isInMaJiangRoom == false then
 	-- 	return;
@@ -156,10 +150,22 @@ end
 function HallScene.ReceiveFbInfo(evt)
 	Log.Info("HallScene.ReceiveFbInfo");
 	local msg = NetManager.DecodeMsg(PBMessage.GM_BattleFBServerInfo, evt);
-	if msg == nil then return end;
-	if msg.m_Result == 0 then
-		SharedVariable.FBInfo = msg;
-		HallScene.RequestLoginFb();
+	if msg == nil then
+		Log.Error("HallScene.ReceiveFbInfo parse msg error.");
+	else -- required int32 m_Result=1;			//0 成功,1副本不存在,2 你已经在副本了,3副本已满，4副本人数已满
+		if msg.m_Result == 0 then
+			Log.Info("HallScene.ReceiveFbInfo：成功进入副本");
+			SharedVariable.FBInfo = msg;
+			HallScene.RequestLoginFb();
+		elseif msg.m_Result == 1 then
+			Log.Info("HallScene.ReceiveFbInfo：副本不存在");
+		elseif msg.m_Result == 2 then
+			Log.Info("HallScene.ReceiveFbInfo：你已经在副本了");
+		elseif msg.m_Result == 3 then
+			Log.Info("HallScene.ReceiveFbInfo：副本已满");
+		elseif msg.m_Result == 4 then
+			Log.Info("HallScene.ReceiveFbInfo：副本人数已满");
+		end
 	end
 end
 
