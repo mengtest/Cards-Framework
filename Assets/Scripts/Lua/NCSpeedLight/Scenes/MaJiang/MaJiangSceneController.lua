@@ -3,6 +3,7 @@ MaJiangSceneController = {
 	gameObject = nil,
 	MJDeskObj = nil,
 	MJDeskAnimation = nil,
+	IsSetupDicePanelRotation = false,
 }
 
 function MaJiangSceneController.Awake(go)
@@ -12,6 +13,7 @@ function MaJiangSceneController.Awake(go)
 		MaJiangSceneController.MJDeskObj = go.transform:Find("majiangzhuo").gameObject;
 		MaJiangSceneController.MJDeskAnimation = MaJiangSceneController.MJDeskObj:GetComponent(typeof(UnityEngine.Animation));
 	end
+	MaJiangSceneController.IsSetupDicePanelRotation = false;
 end
 
 function MaJiangSceneController.Start()
@@ -59,7 +61,8 @@ function MaJiangSceneController.SetRoomNumber()
 end
 
 -- 设置骰子面板的朝向
-function MaJiangSceneController.SetupDicePanelDirection(y)
+function MaJiangSceneController.SetupDicePanelDirection()
+	local y = SharedVariable.DeskOffset * 90;
 	local panel = MaJiangSceneController.transform:Find("direction");
 	local eulerAngles = UnityEngine.Vector3(0, y + panel.rotation.eulerAngles.y, 0);
 	local rotation = UnityEngine.Quaternion.Euler(eulerAngles)

@@ -21,6 +21,45 @@ UIType = {
 	UI_Load = "Dialog/UI_Load",
 }
 
+MaJiangType =
+{
+	MJ_1_WAN = 0,
+	MJ_2_WAN = 1,
+	MJ_3_WAN = 2,
+	MJ_4_WAN = 3,
+	MJ_5_WAN = 4,
+	MJ_6_WAN = 5,
+	MJ_7_WAN = 6,
+	MJ_8_WAN = 7,
+	MJ_9_WAN = 8,
+	MJ_1_TIAO = 9,
+	MJ_2_TIAO = 10,
+	MJ_3_TIAO = 11,
+	MJ_4_TIAO = 12,
+	MJ_5_TIAO = 13,
+	MJ_6_TIAO = 14,
+	MJ_7_TIAO = 15,
+	MJ_8_TIAO = 16,
+	MJ_9_TIAO = 17,
+	MJ_1_TONG = 18,
+	MJ_2_TONG = 19,
+	MJ_3_TONG = 20,
+	MJ_4_TONG = 21,
+	MJ_5_TONG = 22,
+	MJ_6_TONG = 23,
+	MJ_7_TONG = 24,
+	MJ_8_TONG = 25,
+	MJ_9_TONG = 26,
+	MJ_DONG = 27,
+	MJ_NAN = 28,
+	MJ_XI = 29,
+	MJ_BEI = 30,
+	MJ_ZHONG = 31,
+	MJ_FA = 32,
+	MJ_BAI = 33,
+	MJ_NUM = 34,
+};
+
 PlayerEventType =
 {
 	PE_None = 0,

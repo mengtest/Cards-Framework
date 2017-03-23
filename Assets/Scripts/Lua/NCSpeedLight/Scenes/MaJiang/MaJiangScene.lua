@@ -183,11 +183,11 @@ function MaJiangScene.ReturnGamePlayerInfo(evt)
 	Log.Info("MaJiangScene.ReturnGamePlayerInfo: RoomMasterID is " .. roomMasterID .. ",current player count is " .. # msg.m_Character);
 	SharedVariable.FBEntryInfo = msg;
 	
-	-- 计算桌面的偏移
-	for i = 1, # SharedVariable.FBEntryInfo.m_Character do
-		local playerEntry = SharedVariable.FBEntryInfo.m_Character[i];
-		if playerEntry ~= nil and playerEntry.m_RoleData ~= nil then
-			if playerEntry.m_RoleData.m_Roleid == Player.Hero.FullInfo.id then
+	-- 计算desk offset,并设置骰子面板的朝向
+	if MaJiangSceneController.IsSetupDicePanelRotation == false then
+		for i = 1, # SharedVariable.FBEntryInfo.m_Character do
+			local playerEntry = SharedVariable.FBEntryInfo.m_Character[i];
+			if playerEntry ~= nil and playerEntry.m_RoleData ~= nil and playerEntry.m_RoleData.m_Roleid == Player.Hero.FullInfo.id then
 				local pos = playerEntry.m_RoleData.m_Postion;
 				SharedVariable.DeskOffset = pos;
 				if SharedVariable.FBInfo.m_FBTypeID == RoomType.R_1 then
@@ -195,6 +195,9 @@ function MaJiangScene.ReturnGamePlayerInfo(evt)
 				end
 			end
 		end
+		Log.Info("MaJiangScene.ReturnGamePlayerInfo: desk offset is " .. SharedVariable.DeskOffset);
+		MaJiangSceneController.SetupDicePanelDirection();
+		MaJiangSceneController.IsSetupDicePanelRotation = true;
 	end
 	
 	-- 设置玩家的UI
@@ -235,12 +238,7 @@ function MaJiangScene.ReturnGamePlayerInfo(evt)
 		end
 	end
 	
-	
-	UI_MaJiang.SetupDeskStatus();
-	MaJiangSceneController.SetupDicePanelDirection(SharedVariable.DeskOffset * 90);
-	
 	UIManager.CloseAllWindowsExcept(UIType.UI_MaJiang);
-	
 end
 
 function MaJiangScene.ReturnHandCardInfo(evt)

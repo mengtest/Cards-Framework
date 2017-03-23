@@ -50,44 +50,6 @@ function UI_MaJiang.SetupCastDice(status)
 	end
 end
 
--- 设置桌面状态，房主/是否准备等
-function UI_MaJiang.SetupDeskStatus()
-	if SharedVariable.FBEntryInfo == nil then
-		Log.Error("UI_MaJiang.SetupDeskStatus: error caused by nil SharedVariable.FBEntryInfo");
-	end
-	local roomMasterID = SharedVariable.FBEntryInfo.m_RoomMasterID;
-	for i = 1, # SharedVariable.FBEntryInfo.m_Character do
-		local playerEntry = SharedVariable.FBEntryInfo.m_Character[i];
-		if playerEntry ~= nil and playerEntry.m_RoleData ~= nil then
-			local pos = playerEntry.m_RoleData.m_Postion;
-			local uiIndex = 0;
-			if SharedVariable.FBInfo.m_FBTypeID == RoomType.R_1 then
-				if pos * 2 - SharedVariable.DeskOffset == 0 then
-					uiIndex = 0;
-				else
-					uiIndex = 2;
-				end
-			elseif SharedVariable.FBInfo.m_FBTypeID == RoomType.R_2 then
-				uiIndex = pos + 4 - SharedVariable.DeskOffset;
-				uiIndex = uiIndex % 4;
-			end
-			if uiIndex == 0 then
-				UI_Player0.Player:SetMJData(playerEntry);
-				UI_Player0.Player:SetupUI();
-			elseif uiIndex == 1 then
-				UI_Player1.Player:SetMJData(playerEntry);
-				UI_Player1.Player:SetupUI();
-			elseif uiIndex == 2 then
-				UI_Player2.Player:SetMJData(playerEntry);
-				UI_Player2.Player:SetupUI();
-			elseif uiIndex == 3 then
-				UI_Player3.Player:SetMJData(playerEntry);
-				UI_Player3.Player:SetupUI();
-			end
-		end
-	end
-end
-
 function UI_MaJiang.DissolveRoom(go)
 	local option = StandardDialogOption:New();
 	option.OnClickOK =
