@@ -54,7 +54,7 @@ function UI_Player0.OnDragCard(go, delta)
 		delta = delta * 1.1;
 		local deltaPos = UnityEngine.Vector3(delta.x, delta.y, 0);
 		local newPos = this.DragingCardObj.transform:TransformPoint(deltaPos);
-		Log.Info("UI_Player0.OnDragCard: newPos" .. tostring(newPos));
+		-- Log.Info("UI_Player0.OnDragCard: newPos" .. tostring(newPos));
 		this.DragingCardObj.transform.position = newPos;
 	end
 end
