@@ -50,6 +50,11 @@ function Player:SetMJData(data)
 	self.MJData = data;
 end
 
+-- data= PBMessage.GMHandCard
+function Player:SetHandCardInfo(data)
+	self.HandCardInfo = data;
+end
+
 -- 设置玩家UI
 function Player:SetupUI()
 	NCSpeedLight.UIHelper.SetLabelText(self.transform, "Enter/Center/Label (Name)", self.MJData.m_RoleData.m_Name);
@@ -73,9 +78,25 @@ function Player:SetupReady(status)
 	end
 end
 
+-- 设置庄家标识
+function Player:SetupBanker()
+	local status = self.MJData.m_RoleData.m_Postion == Player.Hero.HandCardInfo.m_bankerPos;
+	NCSpeedLight.UIHelper.SetActiveState(self.transform, "Enter/Center/Banker", status);
+end
+
 -- 设置进入/离开状态 Enter/Leave
 function Player:SetupEnterAndLeave(...)
 	local args = {...};
 	NCSpeedLight.UIHelper.SetActiveState(self.transform, "Enter", args[1]);
 	NCSpeedLight.UIHelper.SetActiveState(self.transform, "Leave", args[2]);
+end
+
+function Player:StartGame()
+	self:SetupReady(false);
+	self:SetupBanker();
+	self:SetupCards();
+end
+
+function Player:SetupCards()
+	
 end

@@ -144,9 +144,8 @@ function MaJiangScene.RequestAllPlayerInfo()
 	NetManager.SendEventToLogicServer(GameMessage.GM_ALL_CHARACTERINFO, PBMessage.GM_LoginFBServer, msg);
 end
 
-
+-- 请求准备，0取消准备，1准备;
 function MaJiangScene.RequestReady(status)
-	-- 0取消准备，1准备;
 	local var;
 	if status then
 		var = 1;
@@ -157,6 +156,16 @@ function MaJiangScene.RequestReady(status)
 		roleID = var,
 	}
 	NetManager.SendEventToLogicServer(GameMessage.GM_SEND_READY, PBMessage.GM_LeaveBattle, msg);
+end
+
+-- 请求投掷骰子
+function MaJiangScene.RequestCastDice()
+	local msg = {
+		m_roleid = Player.Hero.MJData.m_RoleData.m_Roleid,
+		m_pos = Player.Hero.MJData.m_RoleData.m_Postion,
+	};
+	Log.Info("MaJiangScene.RequestCastDic: roleid is " .. Player.Hero.MJData.m_RoleData.m_Roleid .. ",pos is " .. Player.Hero.MJData.m_RoleData.m_Postion);
+	NetManager.SendEventToLogicServer(GameMessage.GM_PlayerRollTouZi_Request, PBMessage.GM_PlayerRollRequest, msg);
 end
 
 function MaJiangScene.ReceiveCloseRoom(evt)
@@ -241,15 +250,15 @@ function MaJiangScene.ReturnHandCardInfo(evt)
 		Log.Error("MaJiangScene.ReturnHandCardInfo: parse msg error," .. PBMessage.GMHandCard);
 		return;
 	end
-	for i = 1, # msg.m_HandCard do
-		local handInfo = msg.m_HandCard[i];
-		local index = handInfo.m_Index;
+	Player.Hero:SetHandCardInfo(msg);
+	for key, value in pairs(MaJiangScene.Instance.Players) do
+		if value ~= nil then
+			value:StartGame();
+		end
 	end
---   PlayerEventEx<PBMessage.GMHandCard> tempEvent = varEvent as PlayerEventEx<PBMessage.GMHandCard>;
---         if (tempEvent != null)
---         {
---             mMyCardInfo = tempEvent.GetData();
---         }
+	
+	UI_MaJiang.SetupCastDice(true);
+	UI_MaJiang.SetupReadyAndInvite(false, false, false);
 end
 
 function MaJiangScene.ReturnPlayerOutCard(evt)
@@ -339,6 +348,15 @@ end
 
 function MaJiangScene.ReturnCastDice(evt)
 	Log.Info("MaJiangScene.ReturnCastDice");
+	local msg = NetManager.DecodeMsg(PBMessage.GM_PlayerRollRequest, evt);
+	if msg == false then
+		Log.Error("MaJiangScene.ReturnCastDice: parse msg error: " .. PBMessage.GM_PlayerRollRequest);
+		return;
+	end
+	Log.Info("MaJiangScene.ReturnCastDice: dice number is : " .. msg.m_pos);
+	UI_MaJiang.SetupCastDice(false);
+	MaJiangSceneController.PlayDiceAnimation(Player.Hero.HandCardInfo.m_saizi[1], Player.Hero.HandCardInfo.m_saizi[2]);
+	MaJiangSceneController.PlayDeskAnimation();
 end
 
 function MaJiangScene.ReturnOperateError(evt)

@@ -15,6 +15,7 @@ function UI_MaJiang.Start()
 	NCSpeedLight.UIHelper.SetButtonEvent(this.transform, "center/Ready/Yes", UI_MaJiang.OnClickYes);
 	NCSpeedLight.UIHelper.SetButtonEvent(this.transform, "center/Ready/No", UI_MaJiang.OnClickNo);
 	NCSpeedLight.UIHelper.SetButtonEvent(this.transform, "center/Ready/Invite", UI_MaJiang.OnClickInvite);
+	NCSpeedLight.UIHelper.SetButtonEvent(this.transform, "center/CastDice/Button", UI_MaJiang.OnClickCastDice);
 	UI_MaJiang.SetupPlayerUIVisiable();
 	UI_MaJiang.SetupReadyAndInvite(true, false, true);
 end
@@ -33,6 +34,20 @@ function UI_MaJiang.SetupReadyAndInvite(...)
 	NCSpeedLight.UIHelper.SetActiveState(this.transform, "center/Ready/Yes", states[1]);
 	NCSpeedLight.UIHelper.SetActiveState(this.transform, "center/Ready/No", states[2]);
 	NCSpeedLight.UIHelper.SetActiveState(this.transform, "center/Ready/Invite", states[3]);
+end
+
+-- 设置掷骰子
+function UI_MaJiang.SetupCastDice(status)
+	Log.Info("UI_MaJiang.SetupCastDice: hero position is " .. Player.Hero.MJData.m_RoleData.m_Postion .. ",Banker position is " .. Player.Hero.HandCardInfo.m_bankerPos .. ",target status is " .. tostring(status));
+	if status then
+		if Player.Hero.MJData.m_RoleData.m_Postion == Player.Hero.HandCardInfo.m_bankerPos then
+			NCSpeedLight.UIHelper.SetActiveState(this.transform, "center/CastDice/Button", true);
+		else
+			NCSpeedLight.UIHelper.SetActiveState(this.transform, "center/CastDice/Button", false);
+		end
+	else
+		NCSpeedLight.UIHelper.SetActiveState(this.transform, "center/CastDice/Button", false);
+	end
 end
 
 -- 设置桌面状态，房主/是否准备等
@@ -94,4 +109,8 @@ function UI_MaJiang.OnClickNo(go)
 end
 
 function UI_MaJiang.OnClickInvite(go)
+end
+
+function UI_MaJiang.OnClickCastDice(go)
+	MaJiangScene.RequestCastDice();
 end

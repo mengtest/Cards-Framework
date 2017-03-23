@@ -19,9 +19,22 @@ function MaJiangSceneController.Start()
 end
 
 function MaJiangSceneController.PlayDeskAnimation()
+	Log.Info("MaJiangSceneController.PlayDeskAnimation");
 	if MaJiangSceneController.MJDeskAnimation ~= nil then
 		MaJiangSceneController.MJDeskAnimation:Play();
 	end
+end
+
+function MaJiangSceneController.PlayDiceAnimation(number1, number2)
+	local number = number1;
+	if number1 > number2 then
+		number2 = number1;
+		number1 = number;
+	end
+	local path = "majiangzhuo/touzi/" .. tostring(number1) .. "." .. tostring(number2);
+	Log.Info("MaJiangSceneController.PlayDiceAnimation: diceobj root path is " .. path);
+	local diceObj = MaJiangSceneController.transform:Find(path);
+	diceObj.gameObject:SetActive(true);
 end
 
 function MaJiangSceneController.SetRoomNumber()
