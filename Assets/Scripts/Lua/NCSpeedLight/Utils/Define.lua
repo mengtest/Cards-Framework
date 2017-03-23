@@ -19,6 +19,7 @@ UIType = {
 	UI_CreateRoom = "Hall/UI_CreateRoom",
 	UI_JoinRoom = "Hall/UI_JoinRoom",
 	UI_Load = "Dialog/UI_Load",
+	UI_DissolveRoom = "MaJiang/UI_DissolveRoom",
 }
 
 MaJiangType =

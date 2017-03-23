@@ -315,8 +315,19 @@ function MaJiangScene.NotifyTrust(evt)
 	Log.Info("MaJiangScene.NotifyTrust");
 end
 
+-- 有玩家发起解散房间
 function MaJiangScene.NotifyDissolveRoom(evt)
 	Log.Info("MaJiangScene.NotifyDissolveRoom");
+	local msg = NetManager.DecodeMsg(PBMessage.GM_Result, evt);
+	if msg == false then
+		if msg == false then
+			Log.Error("MaJiangScene.NotifyDissolveRoom: parse msg error: " .. PBMessage.GM_Result);
+			return;
+		end
+		return;
+	end
+-- UIManager.OpenWindow(UIType.UI_DissolveRoom);
+-- UI_DissolveRoom.DissolveID = msg.m_Result;
 end
 
 function MaJiangScene.ChooseDissolveRoom(evt)

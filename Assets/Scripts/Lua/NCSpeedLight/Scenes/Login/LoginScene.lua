@@ -144,6 +144,7 @@ function LoginScene.OnVerifyVersionReturn(evt)
 		UIManager.OpenWindow("Login/ui_normalLogin")
 	else
 		Log.Info("LoginScene: Version doesn't match,can not enter game,please update.");
+		UIManager.OpenTipsDialog("版本不匹配，无法进入游戏");
 	end
 end
 
