@@ -50,12 +50,22 @@ function Player:SetMJData(data)
 	self.MJData = data;
 end
 
--- 设置主角UI
-function Player:SetupHeroUI()
-	NCSpeedLight.UIHelper.SetLabelText(self.transform, "Enter/Center/Label (Name)", self.Hero.FullInfo.nickName);
+-- 设置玩家UI
+function Player:SetupUI()
+	NCSpeedLight.UIHelper.SetLabelText(self.transform, "Enter/Center/Label (Name)", self.MJData.m_RoleData.m_Name);
+	
+	-- 显示房主标识
+	if self.MJData.m_RoleData.m_Roleid == SharedVariable.FBEntryInfo.m_RoomMasterID then
+		NCSpeedLight.UIHelper.SetActiveState(self.transform, "Enter/Center/Master", true);
+	end
+	
+	self:SetupReady(self.MJData.m_isReady == 1);
 end
 
--- 设置其他玩家UI
-function Player:SetupOtherPlayerUI(data)
-	NCSpeedLight.UIHelper.SetLabelText(self.transform, "Enter/Center/Label (Name)", self.MJData.m_RoleData.m_Name);
+-- 设置Ready标识
+function Player:SetupReady(status)
+	NCSpeedLight.UIHelper.SetActiveState(self.transform, "Enter/Center/Label (Prepare)", status);
+	if self == Player.Hero then
+		UI_MaJiang.SetupReadyAndInvite(not status, status, true);
+	end
 end

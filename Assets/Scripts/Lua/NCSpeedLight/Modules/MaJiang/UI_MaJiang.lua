@@ -45,24 +45,29 @@ function UI_MaJiang.SetupDeskStatus()
 		local playerEntry = SharedVariable.FBEntryInfo.m_Character[i];
 		if playerEntry ~= nil and playerEntry.m_RoleData ~= nil then
 			local pos = playerEntry.m_RoleData.m_Postion;
+			local uiIndex = 0;
 			if SharedVariable.FBInfo.m_FBTypeID == RoomType.R_1 then
-				pos = pos + SharedVariable.DeskOffset;
+				if pos * 2 - SharedVariable.DeskOffset == 0 then
+					uiIndex = 0;
+				else
+					uiIndex = 2;
+				end
 			elseif SharedVariable.FBInfo.m_FBTypeID == RoomType.R_2 then
-				pos = pos + 4 - SharedVariable.DeskOffset;
-				pos = pos % 4;
+				uiIndex = pos + 4 - SharedVariable.DeskOffset;
+				uiIndex = uiIndex % 4;
 			end
-			if pos == 0 then
+			if uiIndex == 0 then
 				UI_Player0.Player:SetMJData(playerEntry);
-				UI_Player0.Player:SetupHeroUI();
-			elseif pos == 1 then
+				UI_Player0.Player:SetupUI();
+			elseif uiIndex == 1 then
 				UI_Player1.Player:SetMJData(playerEntry);
-				UI_Player1.Player:SetupOtherPlayerUI();
-			elseif pos == 2 then
+				UI_Player1.Player:SetupUI();
+			elseif uiIndex == 2 then
 				UI_Player2.Player:SetMJData(playerEntry);
-				UI_Player2.Player:SetupOtherPlayerUI();
-			elseif pos == 3 then
+				UI_Player2.Player:SetupUI();
+			elseif uiIndex == 3 then
 				UI_Player3.Player:SetMJData(playerEntry);
-				UI_Player3.Player:SetupOtherPlayerUI();
+				UI_Player3.Player:SetupUI();
 			end
 		end
 	end
@@ -81,9 +86,11 @@ function UI_MaJiang.DissolveRoom(go)
 end
 
 function UI_MaJiang.OnClickYes(go)
+	MaJiangScene.RequestReady(true);
 end
 
 function UI_MaJiang.OnClickNo(go)
+	MaJiangScene.RequestReady(false);
 end
 
 function UI_MaJiang.OnClickInvite(go)

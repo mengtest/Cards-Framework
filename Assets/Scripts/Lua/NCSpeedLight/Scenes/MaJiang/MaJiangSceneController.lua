@@ -48,6 +48,7 @@ end
 -- 设置骰子面板的朝向
 function MaJiangSceneController.SetupDicePanelDirection(y)
 	local panel = MaJiangSceneController.transform:Find("direction");
-	local rotation = UnityEngine.Vector3(0, y + panel.rotation.eulerAngles.y, 0);
-	panel.rotation.eulerAngles = rotation;
+	local eulerAngles = UnityEngine.Vector3(0, y + panel.rotation.eulerAngles.y, 0);
+	local rotation = UnityEngine.Quaternion.Euler(eulerAngles)
+	panel.rotation = rotation;
 end

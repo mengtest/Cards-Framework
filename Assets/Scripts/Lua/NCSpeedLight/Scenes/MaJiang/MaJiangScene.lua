@@ -13,6 +13,7 @@ function MaJiangScene:New()
 	self.__index = self
 	self.Instance = o;
 	self.Instance.Name = SceneType.MaJiangScene;
+	self.Instance.Players = {};
 	return o;
 end
 
@@ -92,6 +93,28 @@ function MaJiangScene.UnRegisterNetEvent()
 	NetManager.UnregisterEvent(GameMessage.GM_MJOperator_Error, MaJiangScene.ReturnOperateError);
 end
 
+function MaJiangScene.AddPlayer(player)
+	if MaJiangScene.Instance.Players[player.MJData.m_RoleData.m_Roleid] == nil then
+		MaJiangScene.Instance.Players[player.MJData.m_RoleData.m_Roleid] = player;
+	end
+end
+
+-- keys 
+function MaJiangScene.GetPlayer(...)
+	local keys = {...}
+	for key1, value1 in pairs(MaJiangScene.Instance.Players) do
+		for i = 1, # keys do
+			local key2 = keys[i];
+			if key1 == key2 then
+				return value1;
+			end
+			if value1 ~= nil and value1.m_RoleData ~= nil and value1.m_RoleData.m_Postion == key2 then
+				return value1;
+			end
+		end
+	end
+end
+
 function MaJiangScene.RequestCloseRoom()
 	local msg =
 	{
@@ -112,6 +135,20 @@ function MaJiangScene.RequestAllPlayerInfo()
 end
 
 
+function MaJiangScene.RequestReady(status)
+	-- 0取消准备，1准备;
+	local var;
+	if status then
+		var = 1;
+	else
+		var = 0;
+	end
+	local msg = {
+		roleID = var,
+	}
+	NetManager.SendEventToLogicServer(GameMessage.GM_SEND_READY, PBMessage.GM_LeaveBattle, msg);
+end
+
 function MaJiangScene.ReceiveCloseRoom(evt)
 	Log.Info("MaJiangScene.ReceiveCloseRoom");
 end
@@ -126,20 +163,58 @@ function MaJiangScene.ReturnGamePlayerInfo(evt)
 	local roomMasterID = msg.m_RoomMasterID;
 	Log.Info("MaJiangScene.ReturnGamePlayerInfo: RoomMasterID is " .. roomMasterID .. ",current player count is " .. # msg.m_Character);
 	SharedVariable.FBEntryInfo = msg;
-	-- ;
+	
+	-- 计算桌面的偏移
 	for i = 1, # SharedVariable.FBEntryInfo.m_Character do
 		local playerEntry = SharedVariable.FBEntryInfo.m_Character[i];
 		if playerEntry ~= nil and playerEntry.m_RoleData ~= nil then
 			if playerEntry.m_RoleData.m_Roleid == Player.Hero.FullInfo.id then
-				-- 计算桌面的偏移
 				local pos = playerEntry.m_RoleData.m_Postion;
 				SharedVariable.DeskOffset = pos;
+				if SharedVariable.FBInfo.m_FBTypeID == RoomType.R_1 then
+					SharedVariable.DeskOffset = SharedVariable.DeskOffset * 2;
+				end
 			end
 		end
-		local a = playerEntry.m_reallyPos;
-		
-		local b = 1;
 	end
+	
+	-- 设置玩家的UI
+	for i = 1, # SharedVariable.FBEntryInfo.m_Character do
+		local playerEntry = SharedVariable.FBEntryInfo.m_Character[i];
+		if playerEntry ~= nil and playerEntry.m_RoleData ~= nil then
+			local pos = playerEntry.m_RoleData.m_Postion;
+			local uiIndex = 0;
+			if SharedVariable.FBInfo.m_FBTypeID == RoomType.R_1 then
+				if pos * 2 - SharedVariable.DeskOffset == 0 then
+					uiIndex = 0;
+				else
+					uiIndex = 2;
+				end
+			elseif SharedVariable.FBInfo.m_FBTypeID == RoomType.R_2 then
+				uiIndex = pos + 4 - SharedVariable.DeskOffset;
+				uiIndex = uiIndex % 4;
+			end
+			if uiIndex == 0 then
+				UI_Player0.Player:SetMJData(playerEntry);
+				MaJiangScene.AddPlayer(UI_Player0.Player);
+				UI_Player0.Player:SetupUI();
+			elseif uiIndex == 1 then
+				UI_Player1.Player:SetMJData(playerEntry);
+				MaJiangScene.AddPlayer(UI_Player1.Player);
+				UI_Player1.Player:SetupUI();
+			elseif uiIndex == 2 then
+				UI_Player2.Player:SetMJData(playerEntry);
+				MaJiangScene.AddPlayer(UI_Player2.Player);
+				UI_Player2.Player:SetupUI();
+			elseif uiIndex == 3 then
+				UI_Player3.Player:SetMJData(playerEntry);
+				MaJiangScene.AddPlayer(UI_Player3.Player);
+				UI_Player3.Player:SetupUI();
+			end
+		end
+	end
+	
+	
 	UI_MaJiang.SetupDeskStatus();
 	MaJiangSceneController.SetupDicePanelDirection(SharedVariable.DeskOffset * 90);
 end
@@ -158,6 +233,17 @@ end
 
 function MaJiangScene.NotifyOneReady(evt)
 	Log.Info("MaJiangScene.NotifyOneReady");
+	local msg = NetManager.DecodeMsg(PBMessage.GM_Result, evt);
+	if msg == nil then
+		Log.Error("MaJiangScene.NotifyOneReady: parse msg error," .. PBMessage.GM_Result);
+		return;
+	end
+	local player = MaJiangScene.GetPlayer(msg.m_Result);
+	if player ~= nil then
+		local status = msg.m_productid == 1;
+		player:SetupReady(status);
+		
+	end
 end
 
 function MaJiangScene.ReturnAllReady(evt)
