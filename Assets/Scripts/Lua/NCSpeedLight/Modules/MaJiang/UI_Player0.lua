@@ -15,6 +15,12 @@ function UI_Player0.Awake(go)
 end
 
 function UI_Player0.Start()
+	local cardGridPanel = this.transform:Find("Cards/CardGrid");
+	local childCount = cardGridPanel.childCount;
+	for i = 1, cardGridPanel.childCount do
+		local cardObj = cardGridPanel:GetChild(i - 1)
+		local listerner = cardObj.gameObject:AddComponent(typeof(UIEventListener));
+	end
 end
 
 function UI_Player0.OnDestroy()

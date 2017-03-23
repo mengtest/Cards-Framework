@@ -355,6 +355,9 @@ function MaJiangScene.ReturnCastDice(evt)
 	UI_MaJiang.SetupCastDice(false);
 	MaJiangSceneController.PlayDiceAnimation(Player.Hero.HandCardInfo.m_saizi[1], Player.Hero.HandCardInfo.m_saizi[2]);
 	MaJiangSceneController.PlayDeskAnimation();
+	for key, value in pairs(MaJiangScene.Instance.Players) do
+		value:SetupCards();
+	end
 end
 
 function MaJiangScene.ReturnOperateError(evt)

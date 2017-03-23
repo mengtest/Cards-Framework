@@ -60,6 +60,14 @@ MaJiangType =
 	MJ_NUM = 34,
 };
 
+function MaJiangType.GetString(index)
+	for key, value in pairs(MaJiangType) do
+		if value == index then
+			return key;
+		end
+	end
+end
+
 PlayerEventType =
 {
 	PE_None = 0,

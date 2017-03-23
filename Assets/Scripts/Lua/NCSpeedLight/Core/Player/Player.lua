@@ -94,9 +94,21 @@ end
 function Player:StartGame()
 	self:SetupReady(false);
 	self:SetupBanker();
-	self:SetupCards();
+-- self:SetupCards();
 end
 
 function Player:SetupCards()
-	
+	if self == Player.Hero then
+		table.sort(self.HandCardInfo.m_HandCard, function(o1, o2)
+			return o1.m_Type < o2.m_Type;
+		end);
+		local cardGridPanel = self.transform:Find("Cards/CardGrid");
+		for i = 1, # self.HandCardInfo.m_HandCard do
+			local cardObj = cardGridPanel:Find(tostring(i));
+			NCSpeedLight.UIHelper.SetSpriteName(cardObj, "Sprite", MaJiangType.GetString(self.HandCardInfo.m_HandCard[i].m_Type));
+			cardObj.gameObject:SetActive(true);
+		end
+	else
+		
+	end
 end
