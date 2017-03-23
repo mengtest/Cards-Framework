@@ -248,6 +248,9 @@ end
 
 function MaJiangScene.ReturnAllReady(evt)
 	Log.Info("MaJiangScene.ReturnAllReady");
+	-- PBMessage.GM_NotifyBattleEndTime tempResult = GameClient.DeserializeProtoBuf < PBMessage.GM_NotifyBattleEndTime >(param.GetData());
+	-- PlayerManager.GetSingleton().pCurPlayer.NofityPlayerEvent(new PlayerEventEx < int >(PlayerEventType.PE_AllPlayerReady, tempResult.m_EndTime));
+	local msg = NetManager.DecodeMsg(PBMessage.GM_NotifyBattleEndTime, evt);
 end
 
 function MaJiangScene.ReturnPlayerHu(evt)
