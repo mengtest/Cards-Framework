@@ -103,7 +103,7 @@ void protobuf_AssignDesc_SP_5fMess_2etxt() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(SM_Room_db_request));
   SM_Room_common_descriptor_ = file->message_type(3);
-  static const int SM_Room_common_offsets_[8] = {
+  static const int SM_Room_common_offsets_[7] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SM_Room_common, increid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SM_Room_common, roleid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SM_Room_common, begintime_),
@@ -111,7 +111,6 @@ void protobuf_AssignDesc_SP_5fMess_2etxt() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SM_Room_common, monsterid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SM_Room_common, rate_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SM_Room_common, roomid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SM_Room_common, protol_),
   };
   SM_Room_common_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -238,18 +237,18 @@ void protobuf_AddDesc_SP_5fMess_2etxt() {
     "(\003\022\r\n\005score\030\004 \001(\005\">\n\017SM_Room_roleVec\022\016\n\006"
     "roleid\030\001 \002(\005\022\033\n\004data\030\002 \003(\0132\r.SM_Room_rol"
     "e\"$\n\022SM_Room_db_request\022\016\n\006roleid\030\001 \002(\005\""
-    "\226\001\n\016SM_Room_common\022\017\n\007increid\030\001 \002(\003\022\016\n\006r"
+    "\206\001\n\016SM_Room_common\022\017\n\007increid\030\001 \002(\003\022\016\n\006r"
     "oleid\030\002 \001(\t\022\021\n\tbegintime\030\003 \001(\005\022\017\n\007endtim"
     "e\030\004 \001(\005\022\021\n\tmonsterid\030\005 \001(\005\022\014\n\004rate\030\006 \001(\005"
-    "\022\016\n\006roomid\030\007 \001(\005\022\016\n\006protol\030\010 \001(\t\"B\n\021SM_R"
-    "oom_commonVec\022\016\n\006roleid\030\001 \002(\005\022\035\n\004data\030\002 "
-    "\003(\0132\017.SM_Room_common\"\213\001\n\016SM_Mj_protocol\022"
-    "\016\n\006roleid\030\001 \002(\005\022\r\n\005avoid\030\002 \001(\005\022\021\n\tmessag"
-    "eid\030\003 \001(\005\022\017\n\007nowtime\030\004 \001(\005\022\020\n\010protocol\030\005"
-    " \001(\014\022\024\n\014increidproto\030\006 \001(\005\022\016\n\006length\030\007 \001"
-    "(\005\"j\n\020SM_Mj_RoomCommon\022\017\n\007increid\030\001 \002(\003\022"
-    "\022\n\nplayercout\030\002 \001(\005\022\021\n\troleidvec\030\003 \003(\005\022\036"
-    "\n\005proto\030\004 \003(\0132\017.SM_Mj_protocol", 670);
+    "\022\016\n\006roomid\030\007 \001(\005\"B\n\021SM_Room_commonVec\022\016\n"
+    "\006roleid\030\001 \002(\005\022\035\n\004data\030\002 \003(\0132\017.SM_Room_co"
+    "mmon\"\213\001\n\016SM_Mj_protocol\022\016\n\006roleid\030\001 \002(\005\022"
+    "\r\n\005avoid\030\002 \001(\005\022\021\n\tmessageid\030\003 \001(\005\022\017\n\007now"
+    "time\030\004 \001(\005\022\020\n\010protocol\030\005 \001(\014\022\024\n\014increidp"
+    "roto\030\006 \001(\005\022\016\n\006length\030\007 \001(\005\"j\n\020SM_Mj_Room"
+    "Common\022\017\n\007increid\030\001 \002(\003\022\022\n\nplayercout\030\002 "
+    "\001(\005\022\021\n\troleidvec\030\003 \003(\005\022\036\n\005proto\030\004 \003(\0132\017."
+    "SM_Mj_protocol", 654);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "SP_Mess.txt", &protobuf_RegisterTypes);
   SM_Room_role::default_instance_ = new SM_Room_role();
@@ -1076,7 +1075,6 @@ const int SM_Room_common::kEndtimeFieldNumber;
 const int SM_Room_common::kMonsteridFieldNumber;
 const int SM_Room_common::kRateFieldNumber;
 const int SM_Room_common::kRoomidFieldNumber;
-const int SM_Room_common::kProtolFieldNumber;
 #endif  // !_MSC_VER
 
 SM_Room_common::SM_Room_common()
@@ -1102,7 +1100,6 @@ void SM_Room_common::SharedCtor() {
   monsterid_ = 0;
   rate_ = 0;
   roomid_ = 0;
-  protol_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1113,9 +1110,6 @@ SM_Room_common::~SM_Room_common() {
 void SM_Room_common::SharedDtor() {
   if (roleid_ != &::google::protobuf::internal::kEmptyString) {
     delete roleid_;
-  }
-  if (protol_ != &::google::protobuf::internal::kEmptyString) {
-    delete protol_;
   }
   if (this != default_instance_) {
   }
@@ -1155,11 +1149,6 @@ void SM_Room_common::Clear() {
     monsterid_ = 0;
     rate_ = 0;
     roomid_ = 0;
-    if (has_protol()) {
-      if (protol_ != &::google::protobuf::internal::kEmptyString) {
-        protol_->clear();
-      }
-    }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -1279,23 +1268,6 @@ bool SM_Room_common::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(66)) goto parse_protol;
-        break;
-      }
-
-      // optional string protol = 8;
-      case 8: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_protol:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_protol()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->protol().data(), this->protol().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -1357,15 +1329,6 @@ void SM_Room_common::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->roomid(), output);
   }
 
-  // optional string protol = 8;
-  if (has_protol()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->protol().data(), this->protol().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      8, this->protol(), output);
-  }
-
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -1412,16 +1375,6 @@ void SM_Room_common::SerializeWithCachedSizes(
   // optional int32 roomid = 7;
   if (has_roomid()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->roomid(), target);
-  }
-
-  // optional string protol = 8;
-  if (has_protol()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->protol().data(), this->protol().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        8, this->protol(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -1484,13 +1437,6 @@ int SM_Room_common::ByteSize() const {
           this->roomid());
     }
 
-    // optional string protol = 8;
-    if (has_protol()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->protol());
-    }
-
   }
   if (!unknown_fields().empty()) {
     total_size +=
@@ -1539,9 +1485,6 @@ void SM_Room_common::MergeFrom(const SM_Room_common& from) {
     if (from.has_roomid()) {
       set_roomid(from.roomid());
     }
-    if (from.has_protol()) {
-      set_protol(from.protol());
-    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -1573,7 +1516,6 @@ void SM_Room_common::Swap(SM_Room_common* other) {
     std::swap(monsterid_, other->monsterid_);
     std::swap(rate_, other->rate_);
     std::swap(roomid_, other->roomid_);
-    std::swap(protol_, other->protol_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

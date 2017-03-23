@@ -443,18 +443,6 @@ class SM_Room_common : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 roomid() const;
   inline void set_roomid(::google::protobuf::int32 value);
 
-  // optional string protol = 8;
-  inline bool has_protol() const;
-  inline void clear_protol();
-  static const int kProtolFieldNumber = 8;
-  inline const ::std::string& protol() const;
-  inline void set_protol(const ::std::string& value);
-  inline void set_protol(const char* value);
-  inline void set_protol(const char* value, size_t size);
-  inline ::std::string* mutable_protol();
-  inline ::std::string* release_protol();
-  inline void set_allocated_protol(::std::string* protol);
-
   // @@protoc_insertion_point(class_scope:SM_Room_common)
  private:
   inline void set_has_increid();
@@ -471,8 +459,6 @@ class SM_Room_common : public ::google::protobuf::Message {
   inline void clear_has_rate();
   inline void set_has_roomid();
   inline void clear_has_roomid();
-  inline void set_has_protol();
-  inline void clear_has_protol();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -482,11 +468,10 @@ class SM_Room_common : public ::google::protobuf::Message {
   ::google::protobuf::int32 endtime_;
   ::google::protobuf::int32 monsterid_;
   ::google::protobuf::int32 rate_;
-  ::std::string* protol_;
   ::google::protobuf::int32 roomid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
 
   friend void  protobuf_AddDesc_SP_5fMess_2etxt();
   friend void protobuf_AssignDesc_SP_5fMess_2etxt();
@@ -1231,76 +1216,6 @@ inline ::google::protobuf::int32 SM_Room_common::roomid() const {
 inline void SM_Room_common::set_roomid(::google::protobuf::int32 value) {
   set_has_roomid();
   roomid_ = value;
-}
-
-// optional string protol = 8;
-inline bool SM_Room_common::has_protol() const {
-  return (_has_bits_[0] & 0x00000080u) != 0;
-}
-inline void SM_Room_common::set_has_protol() {
-  _has_bits_[0] |= 0x00000080u;
-}
-inline void SM_Room_common::clear_has_protol() {
-  _has_bits_[0] &= ~0x00000080u;
-}
-inline void SM_Room_common::clear_protol() {
-  if (protol_ != &::google::protobuf::internal::kEmptyString) {
-    protol_->clear();
-  }
-  clear_has_protol();
-}
-inline const ::std::string& SM_Room_common::protol() const {
-  return *protol_;
-}
-inline void SM_Room_common::set_protol(const ::std::string& value) {
-  set_has_protol();
-  if (protol_ == &::google::protobuf::internal::kEmptyString) {
-    protol_ = new ::std::string;
-  }
-  protol_->assign(value);
-}
-inline void SM_Room_common::set_protol(const char* value) {
-  set_has_protol();
-  if (protol_ == &::google::protobuf::internal::kEmptyString) {
-    protol_ = new ::std::string;
-  }
-  protol_->assign(value);
-}
-inline void SM_Room_common::set_protol(const char* value, size_t size) {
-  set_has_protol();
-  if (protol_ == &::google::protobuf::internal::kEmptyString) {
-    protol_ = new ::std::string;
-  }
-  protol_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* SM_Room_common::mutable_protol() {
-  set_has_protol();
-  if (protol_ == &::google::protobuf::internal::kEmptyString) {
-    protol_ = new ::std::string;
-  }
-  return protol_;
-}
-inline ::std::string* SM_Room_common::release_protol() {
-  clear_has_protol();
-  if (protol_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = protol_;
-    protol_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void SM_Room_common::set_allocated_protol(::std::string* protol) {
-  if (protol_ != &::google::protobuf::internal::kEmptyString) {
-    delete protol_;
-  }
-  if (protol) {
-    set_has_protol();
-    protol_ = protol;
-  } else {
-    clear_has_protol();
-    protol_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
 }
 
 // -------------------------------------------------------------------

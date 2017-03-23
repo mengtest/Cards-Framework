@@ -122,7 +122,7 @@ enum CodeSegmentEnum
 #define IPPwdLength     IPaddressLength
 #define RandStrLength          16      ///随机产生字符串的长度
 #define UserEmailLength   30  
-#define ChatMaxLength (200)	///聊天最大字符长度;
+#define ChatMaxLength (73)	///聊天最大字符长度;
 #define TaskNameLength   40   //20
 #define TaskDiscribeLength 4096   //120
 #define ALERM_RECT	20///怪物预警范围

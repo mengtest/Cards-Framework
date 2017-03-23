@@ -24,7 +24,7 @@ required int32 begintime=1;
 //结束时间;
 optional int32 endtime=2;
 //玩家输赢的详细信息;
-repeated GM_Room_role role=3; 
+repeated GM_Room_role role=3;  
 
 optional int32 increid = 4; 
 }

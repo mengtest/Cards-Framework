@@ -30,7 +30,6 @@ optional int32 endtime=4;
 optional int32 monsterid=5;
 optional int32 rate=6;
 optional int32 roomid=7;
-optional string protol = 8; //°üÄÚÈÝ
 }
 
 message SM_Room_commonVec

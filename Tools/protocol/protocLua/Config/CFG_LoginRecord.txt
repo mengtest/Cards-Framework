@@ -5,7 +5,7 @@ message CFG_LoginInfo{
 
 message CFG_LoginRecord
 {
-	repeated LoginInfo loginInfo = 1;
+	repeated CFG_LoginInfo loginInfo = 1;
 }
 
 

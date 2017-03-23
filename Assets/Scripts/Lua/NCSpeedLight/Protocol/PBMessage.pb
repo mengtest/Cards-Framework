@@ -687,6 +687,13 @@ m_objectId ("=
 GM_BlackMarket_Recast_Return
 m_result ((
 data (2.GM_BlackMarket_Return_obj
+
+CFG_LoginRecord.txt"2
+CFG_LoginInfo
+account (	
+password (	"4
+CFG_LoginRecord!
+	loginInfo (2.CFG_LoginInfo
 ¿
 challenge.txt"¦
 GM_Challenge_Open_Return
@@ -2395,14 +2402,6 @@ m_objectid (
 result (
 objectid (
 	objectnum (
-o
-loginRecord.txt".
-	LoginInfo
-account (	
-password (	",
-LoginRecord
-	loginInfo (2
-.LoginInfo
 ˆ
 mail.txt"<
 GM_PlayerMailPack
@@ -2429,7 +2428,7 @@ mailSource (";
 userData (	
 data (2.GM_Mail
 	rolenames (	
-ù!
+«
 majiang.txt"t
 GMMJRequest
 m_roleid (
@@ -2437,96 +2436,61 @@ mailSource (";
 m_fbtypeid (
 m_fbplayway (	
 m_roomcount (
-m_playerCount ("þ
+m_playerCount ("°
 
 GMHandCard
-m_bankerPos (
-m_zheng (
-m_fu (
-	m_zhengid (
+m_bankerPos (
+m_leftCount (
+m_totalCount (
+m_getCardId (
+m_getCardNum (
+m_saizi (&
 
-m_xiazheng (
-m_xiafu (
-m_xiazhengid (&
-m_xiaJingData (2.GM_XiaJingInfo
-m_playerpos	 (
-	m_cardpos
- (
-	m_jingpos (
-
-m_leftTime (
-m_leftCount (
-m_totalCount ($
-m_huiTouData (2.GM_HuiTouData&
-
-m_HandCard (2.GM_PlayerHandCard"Ý
+m_HandCard (2.GM_PlayerHandCard"ä
 GMHandCard_PlayerBack
-m_bankerPos (
-m_zheng (
-m_fu (
-	m_zhengid (
+m_bankerPos (
+m_leftCount (
+m_totalCount (
 
-m_xiazheng (
-m_xiafu (
-m_xiazhengid (&
-m_xiaJingData (2.GM_XiaJingInfo
-m_playerpos	 (
-	m_cardpos
- (
-	m_jingpos (
-
-m_leftTime (
-m_leftCount (
-m_totalCount ($
-m_huiTouData (2.GM_HuiTouData
-
-m_fbtypeid (
-m_fbplayway (	
-m_playerCount (
-m_roomid ((
-m_handCardData (2.GMHandCard_Info"K
+m_fbtypeid (
+m_fbplayway (	
+m_playerCount (
+m_roomid (
+m_saizi ((
+m_handCardData (2.GMHandCard_Info"K
 GMHandCard_Info
 m_roleid (&
 
-m_HandCard (2.GM_PlayerHandCard"`
-GM_HuiTouData
-m_huitouZhen (
-
-m_huitouFu (%
-m_huitouInfo
- (2.GM_XiaJingInfo"\
-GM_XiaJingInfo
-m_roleid (
-m_xiazhuNum (
-
-m_xiafuNum (
-m_sorce ("4
+m_HandCard (2.GM_PlayerHandCard"4
 GM_PlayerHandCard
 m_Index (
 m_Type ("J
 GM_MJCanOperator
 m_roleid ($
 
-m_Operator (2.GM_OperatorData"¤
+m_Operator (2.GM_OperatorData"·
 GM_OperatorData
 m_OperatorType (
 m_FunID (
 m_OperatorCard (
 m_RoleVoice (
-m_CardVoice (&
+m_CardVoice (
+	m_CardNum (&
 
 m_HandCard
- (2.GM_PlayerHandCard"³
+ (2.GM_PlayerHandCard"×
 GM_MJOperator
 m_roleid (
 m_OperatorType (
 m_RoleVoice (
-m_CardVoice (&
+m_CardVoice (
+m_Order (
+	m_CardNum (&
 
-m_LastCard (2.GM_PlayerHandCard&
+m_LastCard (2.GM_PlayerHandCard&
 
 m_HandCard
- (2.GM_PlayerHandCard"¹
+ (2.GM_PlayerHandCard"‘
 GM_HUOperator
 
 m_huRoleid (
@@ -2535,31 +2499,26 @@ m_huRoleid (
 m_Data (2.GM_HuHandCardData
 m_RoleVoice (
 m_CardVoice ($
-m_huCard (2.GM_PlayerHandCard"©
+m_huCard (2.GM_PlayerHandCard
+m_AllHuRoleid (
+m_AllHuType	 (
+m_MaCardType (
+m_MaCardSign ("þ
 GM_HuHandCardData
 m_roleid (
-m_HandCardType (
-	m_xiaJing (
-m_ShangJing (
-m_Hufeng (
-	m_GoldNum (
-
-m_isBaWang (
-m_isCongGuan (
-m_huitouScore	 (
-m_maileiScore
- (
-m_tongScore (
-m_gangScore (
-	m_xiaCGBW (
-	m_huiCGBW (
-	m_maiCGBW (
-
-m_tongCGBW (
-	m_CZScore (
-m_HDFZScore (
-m_PLRate (
-m_AnGangType ("U
+m_HandCardType (
+m_Hufeng (
+	m_ZongLei (
+m_Tan (
+m_Sao (
+m_Peng (
+m_Gang (
+m_anGang	 (
+m_reward
+ (
+m_score (
+m_TotalScore (
+	m_SaoType ("U
 GM_AskFriend
 m_Roleid (
 m_Beinvited (
@@ -2568,38 +2527,30 @@ m_tongCGBW (
 GM_AutoInfo
 m_Roleid (
 
-m_AutoFlag ("é
+m_AutoFlag ("–
 GM_ReconnectMJData
-m_bankerPos (
-m_zheng (
-m_fu (
-	m_zhengid (
-	m_jingpos (
-m_RoomMasterID (
+m_bankerPos (
+m_RoomMasterID (
 
-m_FirstPos (
-m_SecondPos (
-
-m_FreeCard	 (
-
-m_leftTime
+m_FreeCard (
+m_leftCount (
+m_totalCount (
+m_rollCount (
+m_playerCount (
+m_lastOutCardRoleId (
+m_closeRoomLeftTime	 (
+m_huLastCard
  (
-m_leftCount (
-m_totalCount (
-	m_playWay (	
+m_getCardId (
+m_getCardNum (
+m_sendCardID (
+m_fbplayway (	
+m_saizi (&
 
-m_xiazheng (
-m_xiafu (
-m_rollCount (
-m_playerCount (
-m_lastOutCardRoleId (
-m_closeRoomLeftTime (&
-
-m_HandCard (2.GM_PlayerHandCard*
-	m_AllData (2.GM_ReconnectPlayerData3
-m_CloseRoomData (2.GM_ReconnectCloseRoomData(
-m_huOperatorData (2.GM_HUOperator
-m_huLastCard ("ˆ
+m_HandCard (2.GM_PlayerHandCard*
+	m_AllData (2.GM_ReconnectPlayerData3
+m_CloseRoomData (2.GM_ReconnectCloseRoomData(
+m_huOperatorData (2.GM_HUOperator"ˆ
 GM_ReconnectPlayerData
 m_roleid (
 m_Gold (
@@ -2660,7 +2611,9 @@ m_vipLevel (
 GM_PlayerRecivePack
 m_roleid (
 
-m_packFlag (
+m_packFlag ("&
+GM_MJOperatorError
+m_Result (
 Â
 	match.txt"®
 GM_match_UI_info

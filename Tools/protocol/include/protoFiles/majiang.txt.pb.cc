@@ -34,12 +34,6 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* GMHandCard_Info_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   GMHandCard_Info_reflection_ = NULL;
-const ::google::protobuf::Descriptor* GM_HuiTouData_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  GM_HuiTouData_reflection_ = NULL;
-const ::google::protobuf::Descriptor* GM_XiaJingInfo_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  GM_XiaJingInfo_reflection_ = NULL;
 const ::google::protobuf::Descriptor* GM_PlayerHandCard_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   GM_PlayerHandCard_reflection_ = NULL;
@@ -94,6 +88,9 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* GM_PlayerRecivePack_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   GM_PlayerRecivePack_reflection_ = NULL;
+const ::google::protobuf::Descriptor* GM_MJOperatorError_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  GM_MJOperatorError_reflection_ = NULL;
 
 }  // namespace
 
@@ -124,22 +121,13 @@ void protobuf_AssignDesc_majiang_2etxt() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GMMJRequest));
   GMHandCard_descriptor_ = file->message_type(1);
-  static const int GMHandCard_offsets_[16] = {
+  static const int GMHandCard_offsets_[7] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard, m_bankerpos_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard, m_zheng_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard, m_fu_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard, m_zhengid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard, m_xiazheng_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard, m_xiafu_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard, m_xiazhengid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard, m_xiajingdata_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard, m_playerpos_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard, m_cardpos_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard, m_jingpos_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard, m_lefttime_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard, m_leftcount_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard, m_totalcount_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard, m_huitoudata_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard, m_getcardid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard, m_getcardnum_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard, m_saizi_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard, m_handcard_),
   };
   GMHandCard_reflection_ =
@@ -154,26 +142,15 @@ void protobuf_AssignDesc_majiang_2etxt() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GMHandCard));
   GMHandCard_PlayerBack_descriptor_ = file->message_type(2);
-  static const int GMHandCard_PlayerBack_offsets_[20] = {
+  static const int GMHandCard_PlayerBack_offsets_[9] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard_PlayerBack, m_bankerpos_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard_PlayerBack, m_zheng_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard_PlayerBack, m_fu_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard_PlayerBack, m_zhengid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard_PlayerBack, m_xiazheng_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard_PlayerBack, m_xiafu_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard_PlayerBack, m_xiazhengid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard_PlayerBack, m_xiajingdata_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard_PlayerBack, m_playerpos_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard_PlayerBack, m_cardpos_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard_PlayerBack, m_jingpos_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard_PlayerBack, m_lefttime_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard_PlayerBack, m_leftcount_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard_PlayerBack, m_totalcount_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard_PlayerBack, m_huitoudata_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard_PlayerBack, m_fbtypeid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard_PlayerBack, m_fbplayway_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard_PlayerBack, m_playercount_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard_PlayerBack, m_roomid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard_PlayerBack, m_saizi_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GMHandCard_PlayerBack, m_handcarddata_),
   };
   GMHandCard_PlayerBack_reflection_ =
@@ -203,42 +180,7 @@ void protobuf_AssignDesc_majiang_2etxt() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GMHandCard_Info));
-  GM_HuiTouData_descriptor_ = file->message_type(4);
-  static const int GM_HuiTouData_offsets_[3] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuiTouData, m_huitouzhen_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuiTouData, m_huitoufu_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuiTouData, m_huitouinfo_),
-  };
-  GM_HuiTouData_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      GM_HuiTouData_descriptor_,
-      GM_HuiTouData::default_instance_,
-      GM_HuiTouData_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuiTouData, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuiTouData, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(GM_HuiTouData));
-  GM_XiaJingInfo_descriptor_ = file->message_type(5);
-  static const int GM_XiaJingInfo_offsets_[4] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_XiaJingInfo, m_roleid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_XiaJingInfo, m_xiazhunum_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_XiaJingInfo, m_xiafunum_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_XiaJingInfo, m_sorce_),
-  };
-  GM_XiaJingInfo_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      GM_XiaJingInfo_descriptor_,
-      GM_XiaJingInfo::default_instance_,
-      GM_XiaJingInfo_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_XiaJingInfo, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_XiaJingInfo, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(GM_XiaJingInfo));
-  GM_PlayerHandCard_descriptor_ = file->message_type(6);
+  GM_PlayerHandCard_descriptor_ = file->message_type(4);
   static const int GM_PlayerHandCard_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_PlayerHandCard, m_index_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_PlayerHandCard, m_type_),
@@ -254,7 +196,7 @@ void protobuf_AssignDesc_majiang_2etxt() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GM_PlayerHandCard));
-  GM_MJCanOperator_descriptor_ = file->message_type(7);
+  GM_MJCanOperator_descriptor_ = file->message_type(5);
   static const int GM_MJCanOperator_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_MJCanOperator, m_roleid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_MJCanOperator, m_operator_),
@@ -270,13 +212,14 @@ void protobuf_AssignDesc_majiang_2etxt() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GM_MJCanOperator));
-  GM_OperatorData_descriptor_ = file->message_type(8);
-  static const int GM_OperatorData_offsets_[6] = {
+  GM_OperatorData_descriptor_ = file->message_type(6);
+  static const int GM_OperatorData_offsets_[7] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_OperatorData, m_operatortype_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_OperatorData, m_funid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_OperatorData, m_operatorcard_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_OperatorData, m_rolevoice_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_OperatorData, m_cardvoice_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_OperatorData, m_cardnum_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_OperatorData, m_handcard_),
   };
   GM_OperatorData_reflection_ =
@@ -290,12 +233,14 @@ void protobuf_AssignDesc_majiang_2etxt() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GM_OperatorData));
-  GM_MJOperator_descriptor_ = file->message_type(9);
-  static const int GM_MJOperator_offsets_[6] = {
+  GM_MJOperator_descriptor_ = file->message_type(7);
+  static const int GM_MJOperator_offsets_[8] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_MJOperator, m_roleid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_MJOperator, m_operatortype_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_MJOperator, m_rolevoice_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_MJOperator, m_cardvoice_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_MJOperator, m_order_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_MJOperator, m_cardnum_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_MJOperator, m_lastcard_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_MJOperator, m_handcard_),
   };
@@ -310,7 +255,7 @@ void protobuf_AssignDesc_majiang_2etxt() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GM_MJOperator));
-  GM_HUOperator_descriptor_ = file->message_type(10);
+  GM_HUOperator_descriptor_ = file->message_type(8);
   static const int GM_HUOperator_offsets_[7] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HUOperator, m_huroleid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HUOperator, m_hutype_),
@@ -331,28 +276,21 @@ void protobuf_AssignDesc_majiang_2etxt() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GM_HUOperator));
-  GM_HuHandCardData_descriptor_ = file->message_type(11);
-  static const int GM_HuHandCardData_offsets_[20] = {
+  GM_HuHandCardData_descriptor_ = file->message_type(9);
+  static const int GM_HuHandCardData_offsets_[13] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuHandCardData, m_roleid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuHandCardData, m_handcardtype_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuHandCardData, m_xiajing_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuHandCardData, m_shangjing_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuHandCardData, m_hufeng_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuHandCardData, m_goldnum_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuHandCardData, m_isbawang_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuHandCardData, m_iscongguan_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuHandCardData, m_huitouscore_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuHandCardData, m_maileiscore_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuHandCardData, m_tongscore_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuHandCardData, m_gangscore_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuHandCardData, m_xiacgbw_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuHandCardData, m_huicgbw_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuHandCardData, m_maicgbw_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuHandCardData, m_tongcgbw_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuHandCardData, m_czscore_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuHandCardData, m_hdfzscore_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuHandCardData, m_plrate_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuHandCardData, m_angangtype_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuHandCardData, m_zonglei_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuHandCardData, m_tan_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuHandCardData, m_sao_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuHandCardData, m_peng_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuHandCardData, m_gang_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuHandCardData, m_angang_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuHandCardData, m_reward_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuHandCardData, m_score_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuHandCardData, m_totalscore_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_HuHandCardData, m_saotype_),
   };
   GM_HuHandCardData_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -365,7 +303,7 @@ void protobuf_AssignDesc_majiang_2etxt() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GM_HuHandCardData));
-  GM_AskFriend_descriptor_ = file->message_type(12);
+  GM_AskFriend_descriptor_ = file->message_type(10);
   static const int GM_AskFriend_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_AskFriend, m_roleid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_AskFriend, m_beinvited_),
@@ -383,7 +321,7 @@ void protobuf_AssignDesc_majiang_2etxt() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GM_AskFriend));
-  GM_AutoInfo_descriptor_ = file->message_type(13);
+  GM_AutoInfo_descriptor_ = file->message_type(11);
   static const int GM_AutoInfo_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_AutoInfo, m_roleid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_AutoInfo, m_autoflag_),
@@ -399,32 +337,26 @@ void protobuf_AssignDesc_majiang_2etxt() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GM_AutoInfo));
-  GM_ReconnectMJData_descriptor_ = file->message_type(14);
-  static const int GM_ReconnectMJData_offsets_[24] = {
+  GM_ReconnectMJData_descriptor_ = file->message_type(12);
+  static const int GM_ReconnectMJData_offsets_[18] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectMJData, m_bankerpos_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectMJData, m_zheng_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectMJData, m_fu_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectMJData, m_zhengid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectMJData, m_jingpos_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectMJData, m_roommasterid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectMJData, m_firstpos_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectMJData, m_secondpos_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectMJData, m_freecard_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectMJData, m_lefttime_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectMJData, m_leftcount_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectMJData, m_totalcount_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectMJData, m_playway_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectMJData, m_xiazheng_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectMJData, m_xiafu_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectMJData, m_rollcount_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectMJData, m_playercount_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectMJData, m_lastoutcardroleid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectMJData, m_closeroomlefttime_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectMJData, m_hulastcard_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectMJData, m_getcardid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectMJData, m_getcardnum_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectMJData, m_sendcardid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectMJData, m_saizi_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectMJData, m_handcard_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectMJData, m_alldata_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectMJData, m_closeroomdata_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectMJData, m_huoperatordata_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectMJData, m_hulastcard_),
   };
   GM_ReconnectMJData_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -437,7 +369,7 @@ void protobuf_AssignDesc_majiang_2etxt() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GM_ReconnectMJData));
-  GM_ReconnectPlayerData_descriptor_ = file->message_type(15);
+  GM_ReconnectPlayerData_descriptor_ = file->message_type(13);
   static const int GM_ReconnectPlayerData_offsets_[22] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectPlayerData, m_roleid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectPlayerData, m_gold_),
@@ -473,7 +405,7 @@ void protobuf_AssignDesc_majiang_2etxt() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GM_ReconnectPlayerData));
-  GM_ReconnectCloseRoomData_descriptor_ = file->message_type(16);
+  GM_ReconnectCloseRoomData_descriptor_ = file->message_type(14);
   static const int GM_ReconnectCloseRoomData_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectCloseRoomData, m_roleid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectCloseRoomData, m_state_),
@@ -489,7 +421,7 @@ void protobuf_AssignDesc_majiang_2etxt() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GM_ReconnectCloseRoomData));
-  GM_ReconnectFunHandCard_descriptor_ = file->message_type(17);
+  GM_ReconnectFunHandCard_descriptor_ = file->message_type(15);
   static const int GM_ReconnectFunHandCard_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectFunHandCard, m_operatortype_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_ReconnectFunHandCard, m_funhandcard_),
@@ -505,7 +437,7 @@ void protobuf_AssignDesc_majiang_2etxt() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GM_ReconnectFunHandCard));
-  GM_PlayerFunHandCard_descriptor_ = file->message_type(18);
+  GM_PlayerFunHandCard_descriptor_ = file->message_type(16);
   static const int GM_PlayerFunHandCard_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_PlayerFunHandCard, m_index_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_PlayerFunHandCard, m_type_),
@@ -522,7 +454,7 @@ void protobuf_AssignDesc_majiang_2etxt() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GM_PlayerFunHandCard));
-  GM_MJCardRoomResult_descriptor_ = file->message_type(19);
+  GM_MJCardRoomResult_descriptor_ = file->message_type(17);
   static const int GM_MJCardRoomResult_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_MJCardRoomResult, m_count_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_MJCardRoomResult, m_onedata_),
@@ -538,7 +470,7 @@ void protobuf_AssignDesc_majiang_2etxt() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GM_MJCardRoomResult));
-  GM_MJCardRoomOneData_descriptor_ = file->message_type(20);
+  GM_MJCardRoomOneData_descriptor_ = file->message_type(18);
   static const int GM_MJCardRoomOneData_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_MJCardRoomOneData, m_count_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_MJCardRoomOneData, m_resultinfo_),
@@ -554,7 +486,7 @@ void protobuf_AssignDesc_majiang_2etxt() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GM_MJCardRoomOneData));
-  GM_PlayerResultInfo_descriptor_ = file->message_type(21);
+  GM_PlayerResultInfo_descriptor_ = file->message_type(19);
   static const int GM_PlayerResultInfo_offsets_[9] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_PlayerResultInfo, m_roleid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_PlayerResultInfo, m_score_),
@@ -577,7 +509,7 @@ void protobuf_AssignDesc_majiang_2etxt() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GM_PlayerResultInfo));
-  GM_PlayerRollRequest_descriptor_ = file->message_type(22);
+  GM_PlayerRollRequest_descriptor_ = file->message_type(20);
   static const int GM_PlayerRollRequest_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_PlayerRollRequest, m_roleid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_PlayerRollRequest, m_pos_),
@@ -593,7 +525,7 @@ void protobuf_AssignDesc_majiang_2etxt() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GM_PlayerRollRequest));
-  GM_PlayerRecivePack_descriptor_ = file->message_type(23);
+  GM_PlayerRecivePack_descriptor_ = file->message_type(21);
   static const int GM_PlayerRecivePack_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_PlayerRecivePack, m_roleid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_PlayerRecivePack, m_packflag_),
@@ -609,6 +541,21 @@ void protobuf_AssignDesc_majiang_2etxt() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GM_PlayerRecivePack));
+  GM_MJOperatorError_descriptor_ = file->message_type(22);
+  static const int GM_MJOperatorError_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_MJOperatorError, m_result_),
+  };
+  GM_MJOperatorError_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      GM_MJOperatorError_descriptor_,
+      GM_MJOperatorError::default_instance_,
+      GM_MJOperatorError_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_MJOperatorError, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GM_MJOperatorError, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(GM_MJOperatorError));
 }
 
 namespace {
@@ -629,10 +576,6 @@ void protobuf_RegisterTypes(const ::std::string&) {
     GMHandCard_PlayerBack_descriptor_, &GMHandCard_PlayerBack::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     GMHandCard_Info_descriptor_, &GMHandCard_Info::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    GM_HuiTouData_descriptor_, &GM_HuiTouData::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    GM_XiaJingInfo_descriptor_, &GM_XiaJingInfo::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     GM_PlayerHandCard_descriptor_, &GM_PlayerHandCard::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
@@ -669,6 +612,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
     GM_PlayerRollRequest_descriptor_, &GM_PlayerRollRequest::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     GM_PlayerRecivePack_descriptor_, &GM_PlayerRecivePack::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    GM_MJOperatorError_descriptor_, &GM_MJOperatorError::default_instance());
 }
 
 }  // namespace
@@ -682,10 +627,6 @@ void protobuf_ShutdownFile_majiang_2etxt() {
   delete GMHandCard_PlayerBack_reflection_;
   delete GMHandCard_Info::default_instance_;
   delete GMHandCard_Info_reflection_;
-  delete GM_HuiTouData::default_instance_;
-  delete GM_HuiTouData_reflection_;
-  delete GM_XiaJingInfo::default_instance_;
-  delete GM_XiaJingInfo_reflection_;
   delete GM_PlayerHandCard::default_instance_;
   delete GM_PlayerHandCard_reflection_;
   delete GM_MJCanOperator::default_instance_;
@@ -722,6 +663,8 @@ void protobuf_ShutdownFile_majiang_2etxt() {
   delete GM_PlayerRollRequest_reflection_;
   delete GM_PlayerRecivePack::default_instance_;
   delete GM_PlayerRecivePack_reflection_;
+  delete GM_MJOperatorError::default_instance_;
+  delete GM_MJOperatorError_reflection_;
 }
 
 void protobuf_AddDesc_majiang_2etxt() {
@@ -734,120 +677,97 @@ void protobuf_AddDesc_majiang_2etxt() {
     "\n\013majiang.txt\"t\n\013GMMJRequest\022\020\n\010m_roleid"
     "\030\001 \002(\005\022\022\n\nm_fbtypeid\030\002 \001(\005\022\023\n\013m_fbplaywa"
     "y\030\003 \001(\t\022\023\n\013m_roomcount\030\004 \001(\005\022\025\n\rm_player"
-    "Count\030\005 \001(\005\"\376\002\n\nGMHandCard\022\023\n\013m_bankerPo"
-    "s\030\001 \002(\005\022\017\n\007m_zheng\030\002 \001(\005\022\014\n\004m_fu\030\003 \001(\005\022\021"
-    "\n\tm_zhengid\030\004 \001(\005\022\022\n\nm_xiazheng\030\005 \001(\005\022\017\n"
-    "\007m_xiafu\030\006 \001(\005\022\024\n\014m_xiazhengid\030\007 \001(\005\022&\n\r"
-    "m_xiaJingData\030\010 \003(\0132\017.GM_XiaJingInfo\022\023\n\013"
-    "m_playerpos\030\t \001(\005\022\021\n\tm_cardpos\030\n \001(\005\022\021\n\t"
-    "m_jingpos\030\013 \001(\005\022\022\n\nm_leftTime\030\014 \001(\005\022\023\n\013m"
-    "_leftCount\030\r \001(\005\022\024\n\014m_totalCount\030\016 \001(\005\022$"
-    "\n\014m_huiTouData\030\017 \001(\0132\016.GM_HuiTouData\022&\n\n"
-    "m_HandCard\030\024 \003(\0132\022.GM_PlayerHandCard\"\335\003\n"
-    "\025GMHandCard_PlayerBack\022\023\n\013m_bankerPos\030\001 "
-    "\002(\005\022\017\n\007m_zheng\030\002 \001(\005\022\014\n\004m_fu\030\003 \001(\005\022\021\n\tm_"
-    "zhengid\030\004 \001(\005\022\022\n\nm_xiazheng\030\005 \001(\005\022\017\n\007m_x"
-    "iafu\030\006 \001(\005\022\024\n\014m_xiazhengid\030\007 \001(\005\022&\n\rm_xi"
-    "aJingData\030\010 \003(\0132\017.GM_XiaJingInfo\022\023\n\013m_pl"
-    "ayerpos\030\t \001(\005\022\021\n\tm_cardpos\030\n \001(\005\022\021\n\tm_ji"
-    "ngpos\030\013 \001(\005\022\022\n\nm_leftTime\030\014 \001(\005\022\023\n\013m_lef"
-    "tCount\030\r \001(\005\022\024\n\014m_totalCount\030\016 \001(\005\022$\n\014m_"
-    "huiTouData\030\017 \001(\0132\016.GM_HuiTouData\022\022\n\nm_fb"
-    "typeid\030\020 \001(\005\022\023\n\013m_fbplayway\030\021 \001(\t\022\025\n\rm_p"
-    "layerCount\030\022 \001(\005\022\020\n\010m_roomid\030\023 \001(\005\022(\n\016m_"
-    "handCardData\030\024 \003(\0132\020.GMHandCard_Info\"K\n\017"
-    "GMHandCard_Info\022\020\n\010m_roleid\030\001 \002(\005\022&\n\nm_H"
-    "andCard\030\024 \003(\0132\022.GM_PlayerHandCard\"`\n\rGM_"
-    "HuiTouData\022\024\n\014m_huitouZhen\030\001 \002(\005\022\022\n\nm_hu"
-    "itouFu\030\002 \001(\005\022%\n\014m_huitouInfo\030\n \003(\0132\017.GM_"
-    "XiaJingInfo\"\\\n\016GM_XiaJingInfo\022\020\n\010m_rolei"
-    "d\030\001 \002(\005\022\023\n\013m_xiazhuNum\030\002 \001(\005\022\022\n\nm_xiafuN"
-    "um\030\003 \001(\005\022\017\n\007m_sorce\030\004 \001(\005\"4\n\021GM_PlayerHa"
-    "ndCard\022\017\n\007m_Index\030\001 \002(\005\022\016\n\006m_Type\030\002 \001(\005\""
-    "J\n\020GM_MJCanOperator\022\020\n\010m_roleid\030\001 \002(\005\022$\n"
-    "\nm_Operator\030\002 \003(\0132\020.GM_OperatorData\"\244\001\n\017"
-    "GM_OperatorData\022\026\n\016m_OperatorType\030\001 \002(\005\022"
-    "\017\n\007m_FunID\030\002 \001(\005\022\026\n\016m_OperatorCard\030\003 \001(\005"
-    "\022\023\n\013m_RoleVoice\030\004 \001(\005\022\023\n\013m_CardVoice\030\005 \001"
-    "(\005\022&\n\nm_HandCard\030\n \003(\0132\022.GM_PlayerHandCa"
-    "rd\"\263\001\n\rGM_MJOperator\022\020\n\010m_roleid\030\001 \002(\005\022\026"
-    "\n\016m_OperatorType\030\002 \001(\005\022\023\n\013m_RoleVoice\030\003 "
-    "\001(\005\022\023\n\013m_CardVoice\030\004 \001(\005\022&\n\nm_LastCard\030\005"
-    " \001(\0132\022.GM_PlayerHandCard\022&\n\nm_HandCard\030\n"
-    " \003(\0132\022.GM_PlayerHandCard\"\271\001\n\rGM_HUOperat"
-    "or\022\022\n\nm_huRoleid\030\001 \002(\005\022\020\n\010m_huType\030\002 \001(\005"
-    "\022\016\n\006m_fpid\030\003 \001(\005\022\"\n\006m_Data\030\004 \003(\0132\022.GM_Hu"
-    "HandCardData\022\023\n\013m_RoleVoice\030\005 \001(\005\022\023\n\013m_C"
-    "ardVoice\030\006 \001(\005\022$\n\010m_huCard\030\007 \001(\0132\022.GM_Pl"
-    "ayerHandCard\"\251\003\n\021GM_HuHandCardData\022\020\n\010m_"
-    "roleid\030\001 \002(\005\022\026\n\016m_HandCardType\030\002 \003(\005\022\021\n\t"
-    "m_xiaJing\030\003 \001(\005\022\023\n\013m_ShangJing\030\004 \001(\005\022\020\n\010"
-    "m_Hufeng\030\005 \001(\005\022\021\n\tm_GoldNum\030\006 \001(\005\022\022\n\nm_i"
-    "sBaWang\030\007 \001(\005\022\024\n\014m_isCongGuan\030\010 \001(\005\022\025\n\rm"
-    "_huitouScore\030\t \001(\005\022\025\n\rm_maileiScore\030\n \001("
-    "\005\022\023\n\013m_tongScore\030\013 \001(\005\022\023\n\013m_gangScore\030\014 "
-    "\001(\005\022\021\n\tm_xiaCGBW\030\r \001(\005\022\021\n\tm_huiCGBW\030\016 \001("
-    "\005\022\021\n\tm_maiCGBW\030\017 \001(\005\022\022\n\nm_tongCGBW\030\020 \001(\005"
-    "\022\021\n\tm_CZScore\030\021 \001(\005\022\023\n\013m_HDFZScore\030\022 \001(\005"
-    "\022\020\n\010m_PLRate\030\023 \001(\005\022\024\n\014m_AnGangType\030\024 \003(\005"
-    "\"U\n\014GM_AskFriend\022\020\n\010m_Roleid\030\001 \002(\005\022\023\n\013m_"
-    "Beinvited\030\002 \001(\005\022\016\n\006m_Name\030\003 \001(\t\022\016\n\006m_FBI"
-    "D\030\004 \001(\005\"3\n\013GM_AutoInfo\022\020\n\010m_Roleid\030\001 \002(\005"
-    "\022\022\n\nm_AutoFlag\030\002 \001(\005\"\351\004\n\022GM_ReconnectMJD"
-    "ata\022\023\n\013m_bankerPos\030\001 \002(\005\022\017\n\007m_zheng\030\002 \001("
-    "\005\022\014\n\004m_fu\030\003 \001(\005\022\021\n\tm_zhengid\030\004 \001(\005\022\021\n\tm_"
-    "jingpos\030\005 \001(\005\022\026\n\016m_RoomMasterID\030\006 \001(\005\022\022\n"
-    "\nm_FirstPos\030\007 \001(\005\022\023\n\013m_SecondPos\030\010 \001(\005\022\022"
-    "\n\nm_FreeCard\030\t \001(\005\022\022\n\nm_leftTime\030\n \001(\005\022\023"
-    "\n\013m_leftCount\030\013 \001(\005\022\024\n\014m_totalCount\030\014 \001("
-    "\005\022\021\n\tm_playWay\030\r \001(\t\022\022\n\nm_xiazheng\030\016 \001(\005"
-    "\022\017\n\007m_xiafu\030\017 \001(\005\022\023\n\013m_rollCount\030\020 \001(\005\022\025"
-    "\n\rm_playerCount\030\021 \001(\005\022\033\n\023m_lastOutCardRo"
-    "leId\030\022 \001(\005\022\033\n\023m_closeRoomLeftTime\030\023 \001(\005\022"
-    "&\n\nm_HandCard\030\024 \003(\0132\022.GM_PlayerHandCard\022"
-    "*\n\tm_AllData\030\025 \003(\0132\027.GM_ReconnectPlayerD"
-    "ata\0223\n\017m_CloseRoomData\030\026 \003(\0132\032.GM_Reconn"
-    "ectCloseRoomData\022(\n\020m_huOperatorData\030\027 \001"
-    "(\0132\016.GM_HUOperator\022\024\n\014m_huLastCard\030\030 \001(\005"
-    "\"\210\004\n\026GM_ReconnectPlayerData\022\020\n\010m_roleid\030"
-    "\001 \002(\005\022\016\n\006m_Gold\030\002 \001(\003\022\023\n\013m_HeadPhoto\030\003 \001"
-    "(\005\022\025\n\rm_CataterType\030\004 \001(\005\022\021\n\tm_Postion\030\005"
-    " \001(\005\022\016\n\006m_Name\030\006 \001(\t\022\r\n\005m_Sex\030\007 \001(\005\022\025\n\rm"
-    "_handCardNum\030\010 \001(\005\022\023\n\013m_HeadFrame\030\t \001(\005\022"
-    "\022\n\nm_NickName\030\n \001(\t\022\026\n\016m_HeadPhotoUrl\030\013 "
-    "\001(\t\022\020\n\010m_IsAuto\030\014 \001(\005\022\024\n\014m_TotalScore\030\r "
-    "\001(\005\022\021\n\tm_IsReady\030\016 \001(\005\022\023\n\013m_RoleVoice\030\017 "
-    "\001(\005\022\023\n\013m_CardVoice\030\020 \001(\005\022\023\n\013m_Longitude\030"
-    "\021 \001(\001\022\022\n\nm_Latitude\030\022 \001(\001\022\023\n\013m_reallyPos"
-    "\030\023 \001(\t\022\023\n\013m_DingState\030\024 \001(\005\022)\n\rm_OutHand"
-    "Card\030\031 \003(\0132\022.GM_PlayerHandCard\0223\n\021m_FunH"
-    "andCardList\030\032 \003(\0132\030.GM_ReconnectFunHandC"
-    "ard\">\n\031GM_ReconnectCloseRoomData\022\020\n\010m_ro"
-    "leid\030\001 \002(\005\022\017\n\007m_state\030\002 \001(\005\"_\n\027GM_Reconn"
-    "ectFunHandCard\022\026\n\016m_OperatorType\030\001 \002(\005\022,"
-    "\n\rm_FunHandCard\030\002 \003(\0132\025.GM_PlayerFunHand"
-    "Card\"I\n\024GM_PlayerFunHandCard\022\017\n\007m_Index\030"
-    "\001 \002(\005\022\016\n\006m_Type\030\002 \001(\005\022\020\n\010m_RoleId\030\003 \001(\005\""
-    "P\n\023GM_MJCardRoomResult\022\017\n\007m_count\030\001 \002(\005\022"
-    "(\n\tm_OneData\030\002 \003(\0132\025.GM_MJCardRoomOneDat"
-    "a\"S\n\024GM_MJCardRoomOneData\022\017\n\007m_count\030\001 \002"
-    "(\005\022*\n\014m_ResultInfo\030\002 \003(\0132\024.GM_PlayerResu"
-    "ltInfo\"\262\001\n\023GM_PlayerResultInfo\022\020\n\010m_role"
-    "id\030\001 \002(\005\022\017\n\007m_score\030\002 \001(\005\022\r\n\005m_sex\030\003 \001(\005"
-    "\022\022\n\nm_congguan\030\004 \001(\005\022\020\n\010m_bawang\030\005 \001(\005\022\022"
-    "\n\nm_vipLevel\030\006 \001(\005\022\016\n\006m_name\030\007 \001(\t\022\021\n\tm_"
-    "headUrl\030\010 \001(\t\022\014\n\004m_id\030\t \001(\t\"7\n\024GM_Player"
-    "RollRequest\022\020\n\010m_roleid\030\001 \002(\005\022\r\n\005m_pos\030\002"
-    " \001(\005\";\n\023GM_PlayerRecivePack\022\020\n\010m_roleid\030"
-    "\001 \002(\005\022\022\n\nm_packFlag\030\002 \001(\005", 4345);
+    "Count\030\005 \001(\005\"\260\001\n\nGMHandCard\022\023\n\013m_bankerPo"
+    "s\030\001 \002(\005\022\023\n\013m_leftCount\030\002 \001(\005\022\024\n\014m_totalC"
+    "ount\030\003 \001(\005\022\023\n\013m_getCardId\030\004 \001(\005\022\024\n\014m_get"
+    "CardNum\030\005 \001(\005\022\017\n\007m_saizi\030\024 \003(\005\022&\n\nm_Hand"
+    "Card\030\025 \003(\0132\022.GM_PlayerHandCard\"\344\001\n\025GMHan"
+    "dCard_PlayerBack\022\023\n\013m_bankerPos\030\001 \002(\005\022\023\n"
+    "\013m_leftCount\030\002 \001(\005\022\024\n\014m_totalCount\030\003 \001(\005"
+    "\022\022\n\nm_fbtypeid\030\004 \001(\005\022\023\n\013m_fbplayway\030\005 \001("
+    "\t\022\025\n\rm_playerCount\030\006 \001(\005\022\020\n\010m_roomid\030\007 \001"
+    "(\005\022\017\n\007m_saizi\030\024 \003(\005\022(\n\016m_handCardData\030\025 "
+    "\003(\0132\020.GMHandCard_Info\"K\n\017GMHandCard_Info"
+    "\022\020\n\010m_roleid\030\001 \002(\005\022&\n\nm_HandCard\030\024 \003(\0132\022"
+    ".GM_PlayerHandCard\"4\n\021GM_PlayerHandCard\022"
+    "\017\n\007m_Index\030\001 \002(\005\022\016\n\006m_Type\030\002 \001(\005\"J\n\020GM_M"
+    "JCanOperator\022\020\n\010m_roleid\030\001 \002(\005\022$\n\nm_Oper"
+    "ator\030\002 \003(\0132\020.GM_OperatorData\"\267\001\n\017GM_Oper"
+    "atorData\022\026\n\016m_OperatorType\030\001 \002(\005\022\017\n\007m_Fu"
+    "nID\030\002 \001(\005\022\026\n\016m_OperatorCard\030\003 \001(\005\022\023\n\013m_R"
+    "oleVoice\030\004 \001(\005\022\023\n\013m_CardVoice\030\005 \001(\005\022\021\n\tm"
+    "_CardNum\030\006 \001(\005\022&\n\nm_HandCard\030\n \003(\0132\022.GM_"
+    "PlayerHandCard\"\327\001\n\rGM_MJOperator\022\020\n\010m_ro"
+    "leid\030\001 \002(\005\022\026\n\016m_OperatorType\030\002 \001(\005\022\023\n\013m_"
+    "RoleVoice\030\003 \001(\005\022\023\n\013m_CardVoice\030\004 \001(\005\022\017\n\007"
+    "m_Order\030\005 \001(\005\022\021\n\tm_CardNum\030\006 \001(\005\022&\n\nm_La"
+    "stCard\030\007 \001(\0132\022.GM_PlayerHandCard\022&\n\nm_Ha"
+    "ndCard\030\n \003(\0132\022.GM_PlayerHandCard\"\271\001\n\rGM_"
+    "HUOperator\022\022\n\nm_huRoleid\030\001 \002(\005\022\020\n\010m_huTy"
+    "pe\030\002 \001(\005\022\016\n\006m_fpid\030\003 \001(\005\022\"\n\006m_Data\030\004 \003(\013"
+    "2\022.GM_HuHandCardData\022\023\n\013m_RoleVoice\030\005 \001("
+    "\005\022\023\n\013m_CardVoice\030\006 \001(\005\022$\n\010m_huCard\030\007 \001(\013"
+    "2\022.GM_PlayerHandCard\"\376\001\n\021GM_HuHandCardDa"
+    "ta\022\020\n\010m_roleid\030\001 \002(\005\022\026\n\016m_HandCardType\030\002"
+    " \003(\005\022\020\n\010m_Hufeng\030\003 \001(\005\022\021\n\tm_ZongLei\030\004 \001("
+    "\005\022\r\n\005m_Tan\030\005 \001(\005\022\r\n\005m_Sao\030\006 \001(\005\022\016\n\006m_Pen"
+    "g\030\007 \001(\005\022\016\n\006m_Gang\030\010 \001(\005\022\020\n\010m_anGang\030\t \001("
+    "\005\022\020\n\010m_reward\030\n \001(\005\022\017\n\007m_score\030\013 \001(\005\022\024\n\014"
+    "m_TotalScore\030\014 \001(\005\022\021\n\tm_SaoType\030\024 \003(\005\"U\n"
+    "\014GM_AskFriend\022\020\n\010m_Roleid\030\001 \002(\005\022\023\n\013m_Bei"
+    "nvited\030\002 \001(\005\022\016\n\006m_Name\030\003 \001(\t\022\016\n\006m_FBID\030\004"
+    " \001(\005\"3\n\013GM_AutoInfo\022\020\n\010m_Roleid\030\001 \002(\005\022\022\n"
+    "\nm_AutoFlag\030\002 \001(\005\"\201\004\n\022GM_ReconnectMJData"
+    "\022\023\n\013m_bankerPos\030\001 \002(\005\022\026\n\016m_RoomMasterID\030"
+    "\002 \001(\005\022\022\n\nm_FreeCard\030\003 \001(\005\022\023\n\013m_leftCount"
+    "\030\004 \001(\005\022\024\n\014m_totalCount\030\005 \001(\005\022\023\n\013m_rollCo"
+    "unt\030\006 \001(\005\022\025\n\rm_playerCount\030\007 \001(\005\022\033\n\023m_la"
+    "stOutCardRoleId\030\010 \001(\005\022\033\n\023m_closeRoomLeft"
+    "Time\030\t \001(\005\022\024\n\014m_huLastCard\030\n \001(\005\022\023\n\013m_ge"
+    "tCardId\030\013 \001(\005\022\024\n\014m_getCardNum\030\014 \001(\005\022\024\n\014m"
+    "_sendCardID\030\r \001(\005\022\017\n\007m_saizi\030\024 \003(\005\022&\n\nm_"
+    "HandCard\030\025 \003(\0132\022.GM_PlayerHandCard\022*\n\tm_"
+    "AllData\030\026 \003(\0132\027.GM_ReconnectPlayerData\0223"
+    "\n\017m_CloseRoomData\030\027 \003(\0132\032.GM_ReconnectCl"
+    "oseRoomData\022(\n\020m_huOperatorData\030\030 \001(\0132\016."
+    "GM_HUOperator\"\210\004\n\026GM_ReconnectPlayerData"
+    "\022\020\n\010m_roleid\030\001 \002(\005\022\016\n\006m_Gold\030\002 \001(\003\022\023\n\013m_"
+    "HeadPhoto\030\003 \001(\005\022\025\n\rm_CataterType\030\004 \001(\005\022\021"
+    "\n\tm_Postion\030\005 \001(\005\022\016\n\006m_Name\030\006 \001(\t\022\r\n\005m_S"
+    "ex\030\007 \001(\005\022\025\n\rm_handCardNum\030\010 \001(\005\022\023\n\013m_Hea"
+    "dFrame\030\t \001(\005\022\022\n\nm_NickName\030\n \001(\t\022\026\n\016m_He"
+    "adPhotoUrl\030\013 \001(\t\022\020\n\010m_IsAuto\030\014 \001(\005\022\024\n\014m_"
+    "TotalScore\030\r \001(\005\022\021\n\tm_IsReady\030\016 \001(\005\022\023\n\013m"
+    "_RoleVoice\030\017 \001(\005\022\023\n\013m_CardVoice\030\020 \001(\005\022\023\n"
+    "\013m_Longitude\030\021 \001(\001\022\022\n\nm_Latitude\030\022 \001(\001\022\023"
+    "\n\013m_reallyPos\030\023 \001(\t\022\023\n\013m_DingState\030\024 \001(\005"
+    "\022)\n\rm_OutHandCard\030\031 \003(\0132\022.GM_PlayerHandC"
+    "ard\0223\n\021m_FunHandCardList\030\032 \003(\0132\030.GM_Reco"
+    "nnectFunHandCard\">\n\031GM_ReconnectCloseRoo"
+    "mData\022\020\n\010m_roleid\030\001 \002(\005\022\017\n\007m_state\030\002 \001(\005"
+    "\"_\n\027GM_ReconnectFunHandCard\022\026\n\016m_Operato"
+    "rType\030\001 \002(\005\022,\n\rm_FunHandCard\030\002 \003(\0132\025.GM_"
+    "PlayerFunHandCard\"I\n\024GM_PlayerFunHandCar"
+    "d\022\017\n\007m_Index\030\001 \002(\005\022\016\n\006m_Type\030\002 \001(\005\022\020\n\010m_"
+    "RoleId\030\003 \001(\005\"P\n\023GM_MJCardRoomResult\022\017\n\007m"
+    "_count\030\001 \002(\005\022(\n\tm_OneData\030\002 \003(\0132\025.GM_MJC"
+    "ardRoomOneData\"S\n\024GM_MJCardRoomOneData\022\017"
+    "\n\007m_count\030\001 \002(\005\022*\n\014m_ResultInfo\030\002 \003(\0132\024."
+    "GM_PlayerResultInfo\"\262\001\n\023GM_PlayerResultI"
+    "nfo\022\020\n\010m_roleid\030\001 \002(\005\022\017\n\007m_score\030\002 \001(\005\022\r"
+    "\n\005m_sex\030\003 \001(\005\022\022\n\nm_congguan\030\004 \001(\005\022\020\n\010m_b"
+    "awang\030\005 \001(\005\022\022\n\nm_vipLevel\030\006 \001(\005\022\016\n\006m_nam"
+    "e\030\007 \001(\t\022\021\n\tm_headUrl\030\010 \001(\t\022\014\n\004m_id\030\t \001(\t"
+    "\"7\n\024GM_PlayerRollRequest\022\020\n\010m_roleid\030\001 \002"
+    "(\005\022\r\n\005m_pos\030\002 \001(\005\";\n\023GM_PlayerRecivePack"
+    "\022\020\n\010m_roleid\030\001 \002(\005\022\022\n\nm_packFlag\030\002 \001(\005\"&"
+    "\n\022GM_MJOperatorError\022\020\n\010m_Result\030\001 \002(\005", 3518);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "majiang.txt", &protobuf_RegisterTypes);
   GMMJRequest::default_instance_ = new GMMJRequest();
   GMHandCard::default_instance_ = new GMHandCard();
   GMHandCard_PlayerBack::default_instance_ = new GMHandCard_PlayerBack();
   GMHandCard_Info::default_instance_ = new GMHandCard_Info();
-  GM_HuiTouData::default_instance_ = new GM_HuiTouData();
-  GM_XiaJingInfo::default_instance_ = new GM_XiaJingInfo();
   GM_PlayerHandCard::default_instance_ = new GM_PlayerHandCard();
   GM_MJCanOperator::default_instance_ = new GM_MJCanOperator();
   GM_OperatorData::default_instance_ = new GM_OperatorData();
@@ -866,12 +786,11 @@ void protobuf_AddDesc_majiang_2etxt() {
   GM_PlayerResultInfo::default_instance_ = new GM_PlayerResultInfo();
   GM_PlayerRollRequest::default_instance_ = new GM_PlayerRollRequest();
   GM_PlayerRecivePack::default_instance_ = new GM_PlayerRecivePack();
+  GM_MJOperatorError::default_instance_ = new GM_MJOperatorError();
   GMMJRequest::default_instance_->InitAsDefaultInstance();
   GMHandCard::default_instance_->InitAsDefaultInstance();
   GMHandCard_PlayerBack::default_instance_->InitAsDefaultInstance();
   GMHandCard_Info::default_instance_->InitAsDefaultInstance();
-  GM_HuiTouData::default_instance_->InitAsDefaultInstance();
-  GM_XiaJingInfo::default_instance_->InitAsDefaultInstance();
   GM_PlayerHandCard::default_instance_->InitAsDefaultInstance();
   GM_MJCanOperator::default_instance_->InitAsDefaultInstance();
   GM_OperatorData::default_instance_->InitAsDefaultInstance();
@@ -890,6 +809,7 @@ void protobuf_AddDesc_majiang_2etxt() {
   GM_PlayerResultInfo::default_instance_->InitAsDefaultInstance();
   GM_PlayerRollRequest::default_instance_->InitAsDefaultInstance();
   GM_PlayerRecivePack::default_instance_->InitAsDefaultInstance();
+  GM_MJOperatorError::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_majiang_2etxt);
 }
 
@@ -1290,20 +1210,11 @@ void GMMJRequest::Swap(GMMJRequest* other) {
 
 #ifndef _MSC_VER
 const int GMHandCard::kMBankerPosFieldNumber;
-const int GMHandCard::kMZhengFieldNumber;
-const int GMHandCard::kMFuFieldNumber;
-const int GMHandCard::kMZhengidFieldNumber;
-const int GMHandCard::kMXiazhengFieldNumber;
-const int GMHandCard::kMXiafuFieldNumber;
-const int GMHandCard::kMXiazhengidFieldNumber;
-const int GMHandCard::kMXiaJingDataFieldNumber;
-const int GMHandCard::kMPlayerposFieldNumber;
-const int GMHandCard::kMCardposFieldNumber;
-const int GMHandCard::kMJingposFieldNumber;
-const int GMHandCard::kMLeftTimeFieldNumber;
 const int GMHandCard::kMLeftCountFieldNumber;
 const int GMHandCard::kMTotalCountFieldNumber;
-const int GMHandCard::kMHuiTouDataFieldNumber;
+const int GMHandCard::kMGetCardIdFieldNumber;
+const int GMHandCard::kMGetCardNumFieldNumber;
+const int GMHandCard::kMSaiziFieldNumber;
 const int GMHandCard::kMHandCardFieldNumber;
 #endif  // !_MSC_VER
 
@@ -1313,7 +1224,6 @@ GMHandCard::GMHandCard()
 }
 
 void GMHandCard::InitAsDefaultInstance() {
-  m_huitoudata_ = const_cast< ::GM_HuiTouData*>(&::GM_HuiTouData::default_instance());
 }
 
 GMHandCard::GMHandCard(const GMHandCard& from)
@@ -1325,19 +1235,10 @@ GMHandCard::GMHandCard(const GMHandCard& from)
 void GMHandCard::SharedCtor() {
   _cached_size_ = 0;
   m_bankerpos_ = 0;
-  m_zheng_ = 0;
-  m_fu_ = 0;
-  m_zhengid_ = 0;
-  m_xiazheng_ = 0;
-  m_xiafu_ = 0;
-  m_xiazhengid_ = 0;
-  m_playerpos_ = 0;
-  m_cardpos_ = 0;
-  m_jingpos_ = 0;
-  m_lefttime_ = 0;
   m_leftcount_ = 0;
   m_totalcount_ = 0;
-  m_huitoudata_ = NULL;
+  m_getcardid_ = 0;
+  m_getcardnum_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1347,7 +1248,6 @@ GMHandCard::~GMHandCard() {
 
 void GMHandCard::SharedDtor() {
   if (this != default_instance_) {
-    delete m_huitoudata_;
   }
 }
 
@@ -1375,25 +1275,12 @@ GMHandCard* GMHandCard::New() const {
 void GMHandCard::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     m_bankerpos_ = 0;
-    m_zheng_ = 0;
-    m_fu_ = 0;
-    m_zhengid_ = 0;
-    m_xiazheng_ = 0;
-    m_xiafu_ = 0;
-    m_xiazhengid_ = 0;
-  }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    m_playerpos_ = 0;
-    m_cardpos_ = 0;
-    m_jingpos_ = 0;
-    m_lefttime_ = 0;
     m_leftcount_ = 0;
     m_totalcount_ = 0;
-    if (has_m_huitoudata()) {
-      if (m_huitoudata_ != NULL) m_huitoudata_->::GM_HuiTouData::Clear();
-    }
+    m_getcardid_ = 0;
+    m_getcardnum_ = 0;
   }
-  m_xiajingdata_.Clear();
+  m_saizi_.Clear();
   m_handcard_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -1416,187 +1303,12 @@ bool GMHandCard::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(16)) goto parse_m_zheng;
+        if (input->ExpectTag(16)) goto parse_m_leftCount;
         break;
       }
 
-      // optional int32 m_zheng = 2;
+      // optional int32 m_leftCount = 2;
       case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_zheng:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_zheng_)));
-          set_has_m_zheng();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(24)) goto parse_m_fu;
-        break;
-      }
-
-      // optional int32 m_fu = 3;
-      case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_fu:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_fu_)));
-          set_has_m_fu();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(32)) goto parse_m_zhengid;
-        break;
-      }
-
-      // optional int32 m_zhengid = 4;
-      case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_zhengid:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_zhengid_)));
-          set_has_m_zhengid();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(40)) goto parse_m_xiazheng;
-        break;
-      }
-
-      // optional int32 m_xiazheng = 5;
-      case 5: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_xiazheng:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_xiazheng_)));
-          set_has_m_xiazheng();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(48)) goto parse_m_xiafu;
-        break;
-      }
-
-      // optional int32 m_xiafu = 6;
-      case 6: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_xiafu:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_xiafu_)));
-          set_has_m_xiafu();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(56)) goto parse_m_xiazhengid;
-        break;
-      }
-
-      // optional int32 m_xiazhengid = 7;
-      case 7: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_xiazhengid:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_xiazhengid_)));
-          set_has_m_xiazhengid();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(66)) goto parse_m_xiaJingData;
-        break;
-      }
-
-      // repeated .GM_XiaJingInfo m_xiaJingData = 8;
-      case 8: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_m_xiaJingData:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-                input, add_m_xiajingdata()));
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(66)) goto parse_m_xiaJingData;
-        if (input->ExpectTag(72)) goto parse_m_playerpos;
-        break;
-      }
-
-      // optional int32 m_playerpos = 9;
-      case 9: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_playerpos:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_playerpos_)));
-          set_has_m_playerpos();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(80)) goto parse_m_cardpos;
-        break;
-      }
-
-      // optional int32 m_cardpos = 10;
-      case 10: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_cardpos:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_cardpos_)));
-          set_has_m_cardpos();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(88)) goto parse_m_jingpos;
-        break;
-      }
-
-      // optional int32 m_jingpos = 11;
-      case 11: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_jingpos:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_jingpos_)));
-          set_has_m_jingpos();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(96)) goto parse_m_leftTime;
-        break;
-      }
-
-      // optional int32 m_leftTime = 12;
-      case 12: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_leftTime:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_lefttime_)));
-          set_has_m_lefttime();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(104)) goto parse_m_leftCount;
-        break;
-      }
-
-      // optional int32 m_leftCount = 13;
-      case 13: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_m_leftCount:
@@ -1607,12 +1319,12 @@ bool GMHandCard::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(112)) goto parse_m_totalCount;
+        if (input->ExpectTag(24)) goto parse_m_totalCount;
         break;
       }
 
-      // optional int32 m_totalCount = 14;
-      case 14: {
+      // optional int32 m_totalCount = 3;
+      case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_m_totalCount:
@@ -1623,26 +1335,66 @@ bool GMHandCard::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(122)) goto parse_m_huiTouData;
+        if (input->ExpectTag(32)) goto parse_m_getCardId;
         break;
       }
 
-      // optional .GM_HuiTouData m_huiTouData = 15;
-      case 15: {
+      // optional int32 m_getCardId = 4;
+      case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_m_huiTouData:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_m_huitoudata()));
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_m_getCardId:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &m_getcardid_)));
+          set_has_m_getcardid();
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(162)) goto parse_m_HandCard;
+        if (input->ExpectTag(40)) goto parse_m_getCardNum;
         break;
       }
 
-      // repeated .GM_PlayerHandCard m_HandCard = 20;
+      // optional int32 m_getCardNum = 5;
+      case 5: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_m_getCardNum:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &m_getcardnum_)));
+          set_has_m_getcardnum();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(160)) goto parse_m_saizi;
+        break;
+      }
+
+      // repeated int32 m_saizi = 20;
       case 20: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_m_saizi:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 2, 160, input, this->mutable_m_saizi())));
+        } else if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag)
+                   == ::google::protobuf::internal::WireFormatLite::
+                      WIRETYPE_LENGTH_DELIMITED) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, this->mutable_m_saizi())));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(160)) goto parse_m_saizi;
+        if (input->ExpectTag(170)) goto parse_m_HandCard;
+        break;
+      }
+
+      // repeated .GM_PlayerHandCard m_HandCard = 21;
+      case 21: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_m_HandCard:
@@ -1651,7 +1403,7 @@ bool GMHandCard::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(162)) goto parse_m_HandCard;
+        if (input->ExpectTag(170)) goto parse_m_HandCard;
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -1679,82 +1431,36 @@ void GMHandCard::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->m_bankerpos(), output);
   }
 
-  // optional int32 m_zheng = 2;
-  if (has_m_zheng()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->m_zheng(), output);
-  }
-
-  // optional int32 m_fu = 3;
-  if (has_m_fu()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->m_fu(), output);
-  }
-
-  // optional int32 m_zhengid = 4;
-  if (has_m_zhengid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->m_zhengid(), output);
-  }
-
-  // optional int32 m_xiazheng = 5;
-  if (has_m_xiazheng()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->m_xiazheng(), output);
-  }
-
-  // optional int32 m_xiafu = 6;
-  if (has_m_xiafu()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->m_xiafu(), output);
-  }
-
-  // optional int32 m_xiazhengid = 7;
-  if (has_m_xiazhengid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->m_xiazhengid(), output);
-  }
-
-  // repeated .GM_XiaJingInfo m_xiaJingData = 8;
-  for (int i = 0; i < this->m_xiajingdata_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      8, this->m_xiajingdata(i), output);
-  }
-
-  // optional int32 m_playerpos = 9;
-  if (has_m_playerpos()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->m_playerpos(), output);
-  }
-
-  // optional int32 m_cardpos = 10;
-  if (has_m_cardpos()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(10, this->m_cardpos(), output);
-  }
-
-  // optional int32 m_jingpos = 11;
-  if (has_m_jingpos()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(11, this->m_jingpos(), output);
-  }
-
-  // optional int32 m_leftTime = 12;
-  if (has_m_lefttime()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(12, this->m_lefttime(), output);
-  }
-
-  // optional int32 m_leftCount = 13;
+  // optional int32 m_leftCount = 2;
   if (has_m_leftcount()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(13, this->m_leftcount(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->m_leftcount(), output);
   }
 
-  // optional int32 m_totalCount = 14;
+  // optional int32 m_totalCount = 3;
   if (has_m_totalcount()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(14, this->m_totalcount(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->m_totalcount(), output);
   }
 
-  // optional .GM_HuiTouData m_huiTouData = 15;
-  if (has_m_huitoudata()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      15, this->m_huitoudata(), output);
+  // optional int32 m_getCardId = 4;
+  if (has_m_getcardid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->m_getcardid(), output);
   }
 
-  // repeated .GM_PlayerHandCard m_HandCard = 20;
+  // optional int32 m_getCardNum = 5;
+  if (has_m_getcardnum()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->m_getcardnum(), output);
+  }
+
+  // repeated int32 m_saizi = 20;
+  for (int i = 0; i < this->m_saizi_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(
+      20, this->m_saizi(i), output);
+  }
+
+  // repeated .GM_PlayerHandCard m_HandCard = 21;
   for (int i = 0; i < this->m_handcard_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      20, this->m_handcard(i), output);
+      21, this->m_handcard(i), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -1770,85 +1476,37 @@ void GMHandCard::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->m_bankerpos(), target);
   }
 
-  // optional int32 m_zheng = 2;
-  if (has_m_zheng()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->m_zheng(), target);
-  }
-
-  // optional int32 m_fu = 3;
-  if (has_m_fu()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->m_fu(), target);
-  }
-
-  // optional int32 m_zhengid = 4;
-  if (has_m_zhengid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->m_zhengid(), target);
-  }
-
-  // optional int32 m_xiazheng = 5;
-  if (has_m_xiazheng()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->m_xiazheng(), target);
-  }
-
-  // optional int32 m_xiafu = 6;
-  if (has_m_xiafu()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->m_xiafu(), target);
-  }
-
-  // optional int32 m_xiazhengid = 7;
-  if (has_m_xiazhengid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->m_xiazhengid(), target);
-  }
-
-  // repeated .GM_XiaJingInfo m_xiaJingData = 8;
-  for (int i = 0; i < this->m_xiajingdata_size(); i++) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        8, this->m_xiajingdata(i), target);
-  }
-
-  // optional int32 m_playerpos = 9;
-  if (has_m_playerpos()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->m_playerpos(), target);
-  }
-
-  // optional int32 m_cardpos = 10;
-  if (has_m_cardpos()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(10, this->m_cardpos(), target);
-  }
-
-  // optional int32 m_jingpos = 11;
-  if (has_m_jingpos()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(11, this->m_jingpos(), target);
-  }
-
-  // optional int32 m_leftTime = 12;
-  if (has_m_lefttime()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(12, this->m_lefttime(), target);
-  }
-
-  // optional int32 m_leftCount = 13;
+  // optional int32 m_leftCount = 2;
   if (has_m_leftcount()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(13, this->m_leftcount(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->m_leftcount(), target);
   }
 
-  // optional int32 m_totalCount = 14;
+  // optional int32 m_totalCount = 3;
   if (has_m_totalcount()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(14, this->m_totalcount(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->m_totalcount(), target);
   }
 
-  // optional .GM_HuiTouData m_huiTouData = 15;
-  if (has_m_huitoudata()) {
+  // optional int32 m_getCardId = 4;
+  if (has_m_getcardid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->m_getcardid(), target);
+  }
+
+  // optional int32 m_getCardNum = 5;
+  if (has_m_getcardnum()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->m_getcardnum(), target);
+  }
+
+  // repeated int32 m_saizi = 20;
+  for (int i = 0; i < this->m_saizi_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        15, this->m_huitoudata(), target);
+      WriteInt32ToArray(20, this->m_saizi(i), target);
   }
 
-  // repeated .GM_PlayerHandCard m_HandCard = 20;
+  // repeated .GM_PlayerHandCard m_HandCard = 21;
   for (int i = 0; i < this->m_handcard_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        20, this->m_handcard(i), target);
+        21, this->m_handcard(i), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -1869,109 +1527,46 @@ int GMHandCard::ByteSize() const {
           this->m_bankerpos());
     }
 
-    // optional int32 m_zheng = 2;
-    if (has_m_zheng()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_zheng());
-    }
-
-    // optional int32 m_fu = 3;
-    if (has_m_fu()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_fu());
-    }
-
-    // optional int32 m_zhengid = 4;
-    if (has_m_zhengid()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_zhengid());
-    }
-
-    // optional int32 m_xiazheng = 5;
-    if (has_m_xiazheng()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_xiazheng());
-    }
-
-    // optional int32 m_xiafu = 6;
-    if (has_m_xiafu()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_xiafu());
-    }
-
-    // optional int32 m_xiazhengid = 7;
-    if (has_m_xiazhengid()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_xiazhengid());
-    }
-
-  }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // optional int32 m_playerpos = 9;
-    if (has_m_playerpos()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_playerpos());
-    }
-
-    // optional int32 m_cardpos = 10;
-    if (has_m_cardpos()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_cardpos());
-    }
-
-    // optional int32 m_jingpos = 11;
-    if (has_m_jingpos()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_jingpos());
-    }
-
-    // optional int32 m_leftTime = 12;
-    if (has_m_lefttime()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_lefttime());
-    }
-
-    // optional int32 m_leftCount = 13;
+    // optional int32 m_leftCount = 2;
     if (has_m_leftcount()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->m_leftcount());
     }
 
-    // optional int32 m_totalCount = 14;
+    // optional int32 m_totalCount = 3;
     if (has_m_totalcount()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->m_totalcount());
     }
 
-    // optional .GM_HuiTouData m_huiTouData = 15;
-    if (has_m_huitoudata()) {
+    // optional int32 m_getCardId = 4;
+    if (has_m_getcardid()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->m_huitoudata());
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->m_getcardid());
+    }
+
+    // optional int32 m_getCardNum = 5;
+    if (has_m_getcardnum()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->m_getcardnum());
     }
 
   }
-  // repeated .GM_XiaJingInfo m_xiaJingData = 8;
-  total_size += 1 * this->m_xiajingdata_size();
-  for (int i = 0; i < this->m_xiajingdata_size(); i++) {
-    total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->m_xiajingdata(i));
+  // repeated int32 m_saizi = 20;
+  {
+    int data_size = 0;
+    for (int i = 0; i < this->m_saizi_size(); i++) {
+      data_size += ::google::protobuf::internal::WireFormatLite::
+        Int32Size(this->m_saizi(i));
+    }
+    total_size += 2 * this->m_saizi_size() + data_size;
   }
 
-  // repeated .GM_PlayerHandCard m_HandCard = 20;
+  // repeated .GM_PlayerHandCard m_HandCard = 21;
   total_size += 2 * this->m_handcard_size();
   for (int i = 0; i < this->m_handcard_size(); i++) {
     total_size +=
@@ -2004,43 +1599,11 @@ void GMHandCard::MergeFrom(const ::google::protobuf::Message& from) {
 
 void GMHandCard::MergeFrom(const GMHandCard& from) {
   GOOGLE_CHECK_NE(&from, this);
-  m_xiajingdata_.MergeFrom(from.m_xiajingdata_);
+  m_saizi_.MergeFrom(from.m_saizi_);
   m_handcard_.MergeFrom(from.m_handcard_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_m_bankerpos()) {
       set_m_bankerpos(from.m_bankerpos());
-    }
-    if (from.has_m_zheng()) {
-      set_m_zheng(from.m_zheng());
-    }
-    if (from.has_m_fu()) {
-      set_m_fu(from.m_fu());
-    }
-    if (from.has_m_zhengid()) {
-      set_m_zhengid(from.m_zhengid());
-    }
-    if (from.has_m_xiazheng()) {
-      set_m_xiazheng(from.m_xiazheng());
-    }
-    if (from.has_m_xiafu()) {
-      set_m_xiafu(from.m_xiafu());
-    }
-    if (from.has_m_xiazhengid()) {
-      set_m_xiazhengid(from.m_xiazhengid());
-    }
-  }
-  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    if (from.has_m_playerpos()) {
-      set_m_playerpos(from.m_playerpos());
-    }
-    if (from.has_m_cardpos()) {
-      set_m_cardpos(from.m_cardpos());
-    }
-    if (from.has_m_jingpos()) {
-      set_m_jingpos(from.m_jingpos());
-    }
-    if (from.has_m_lefttime()) {
-      set_m_lefttime(from.m_lefttime());
     }
     if (from.has_m_leftcount()) {
       set_m_leftcount(from.m_leftcount());
@@ -2048,8 +1611,11 @@ void GMHandCard::MergeFrom(const GMHandCard& from) {
     if (from.has_m_totalcount()) {
       set_m_totalcount(from.m_totalcount());
     }
-    if (from.has_m_huitoudata()) {
-      mutable_m_huitoudata()->::GM_HuiTouData::MergeFrom(from.m_huitoudata());
+    if (from.has_m_getcardid()) {
+      set_m_getcardid(from.m_getcardid());
+    }
+    if (from.has_m_getcardnum()) {
+      set_m_getcardnum(from.m_getcardnum());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -2070,12 +1636,6 @@ void GMHandCard::CopyFrom(const GMHandCard& from) {
 bool GMHandCard::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
-  for (int i = 0; i < m_xiajingdata_size(); i++) {
-    if (!this->m_xiajingdata(i).IsInitialized()) return false;
-  }
-  if (has_m_huitoudata()) {
-    if (!this->m_huitoudata().IsInitialized()) return false;
-  }
   for (int i = 0; i < m_handcard_size(); i++) {
     if (!this->m_handcard(i).IsInitialized()) return false;
   }
@@ -2085,20 +1645,11 @@ bool GMHandCard::IsInitialized() const {
 void GMHandCard::Swap(GMHandCard* other) {
   if (other != this) {
     std::swap(m_bankerpos_, other->m_bankerpos_);
-    std::swap(m_zheng_, other->m_zheng_);
-    std::swap(m_fu_, other->m_fu_);
-    std::swap(m_zhengid_, other->m_zhengid_);
-    std::swap(m_xiazheng_, other->m_xiazheng_);
-    std::swap(m_xiafu_, other->m_xiafu_);
-    std::swap(m_xiazhengid_, other->m_xiazhengid_);
-    m_xiajingdata_.Swap(&other->m_xiajingdata_);
-    std::swap(m_playerpos_, other->m_playerpos_);
-    std::swap(m_cardpos_, other->m_cardpos_);
-    std::swap(m_jingpos_, other->m_jingpos_);
-    std::swap(m_lefttime_, other->m_lefttime_);
     std::swap(m_leftcount_, other->m_leftcount_);
     std::swap(m_totalcount_, other->m_totalcount_);
-    std::swap(m_huitoudata_, other->m_huitoudata_);
+    std::swap(m_getcardid_, other->m_getcardid_);
+    std::swap(m_getcardnum_, other->m_getcardnum_);
+    m_saizi_.Swap(&other->m_saizi_);
     m_handcard_.Swap(&other->m_handcard_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
@@ -2119,24 +1670,13 @@ void GMHandCard::Swap(GMHandCard* other) {
 
 #ifndef _MSC_VER
 const int GMHandCard_PlayerBack::kMBankerPosFieldNumber;
-const int GMHandCard_PlayerBack::kMZhengFieldNumber;
-const int GMHandCard_PlayerBack::kMFuFieldNumber;
-const int GMHandCard_PlayerBack::kMZhengidFieldNumber;
-const int GMHandCard_PlayerBack::kMXiazhengFieldNumber;
-const int GMHandCard_PlayerBack::kMXiafuFieldNumber;
-const int GMHandCard_PlayerBack::kMXiazhengidFieldNumber;
-const int GMHandCard_PlayerBack::kMXiaJingDataFieldNumber;
-const int GMHandCard_PlayerBack::kMPlayerposFieldNumber;
-const int GMHandCard_PlayerBack::kMCardposFieldNumber;
-const int GMHandCard_PlayerBack::kMJingposFieldNumber;
-const int GMHandCard_PlayerBack::kMLeftTimeFieldNumber;
 const int GMHandCard_PlayerBack::kMLeftCountFieldNumber;
 const int GMHandCard_PlayerBack::kMTotalCountFieldNumber;
-const int GMHandCard_PlayerBack::kMHuiTouDataFieldNumber;
 const int GMHandCard_PlayerBack::kMFbtypeidFieldNumber;
 const int GMHandCard_PlayerBack::kMFbplaywayFieldNumber;
 const int GMHandCard_PlayerBack::kMPlayerCountFieldNumber;
 const int GMHandCard_PlayerBack::kMRoomidFieldNumber;
+const int GMHandCard_PlayerBack::kMSaiziFieldNumber;
 const int GMHandCard_PlayerBack::kMHandCardDataFieldNumber;
 #endif  // !_MSC_VER
 
@@ -2146,7 +1686,6 @@ GMHandCard_PlayerBack::GMHandCard_PlayerBack()
 }
 
 void GMHandCard_PlayerBack::InitAsDefaultInstance() {
-  m_huitoudata_ = const_cast< ::GM_HuiTouData*>(&::GM_HuiTouData::default_instance());
 }
 
 GMHandCard_PlayerBack::GMHandCard_PlayerBack(const GMHandCard_PlayerBack& from)
@@ -2158,19 +1697,8 @@ GMHandCard_PlayerBack::GMHandCard_PlayerBack(const GMHandCard_PlayerBack& from)
 void GMHandCard_PlayerBack::SharedCtor() {
   _cached_size_ = 0;
   m_bankerpos_ = 0;
-  m_zheng_ = 0;
-  m_fu_ = 0;
-  m_zhengid_ = 0;
-  m_xiazheng_ = 0;
-  m_xiafu_ = 0;
-  m_xiazhengid_ = 0;
-  m_playerpos_ = 0;
-  m_cardpos_ = 0;
-  m_jingpos_ = 0;
-  m_lefttime_ = 0;
   m_leftcount_ = 0;
   m_totalcount_ = 0;
-  m_huitoudata_ = NULL;
   m_fbtypeid_ = 0;
   m_fbplayway_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   m_playercount_ = 0;
@@ -2187,7 +1715,6 @@ void GMHandCard_PlayerBack::SharedDtor() {
     delete m_fbplayway_;
   }
   if (this != default_instance_) {
-    delete m_huitoudata_;
   }
 }
 
@@ -2215,26 +1742,9 @@ GMHandCard_PlayerBack* GMHandCard_PlayerBack::New() const {
 void GMHandCard_PlayerBack::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     m_bankerpos_ = 0;
-    m_zheng_ = 0;
-    m_fu_ = 0;
-    m_zhengid_ = 0;
-    m_xiazheng_ = 0;
-    m_xiafu_ = 0;
-    m_xiazhengid_ = 0;
-  }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    m_playerpos_ = 0;
-    m_cardpos_ = 0;
-    m_jingpos_ = 0;
-    m_lefttime_ = 0;
     m_leftcount_ = 0;
     m_totalcount_ = 0;
-    if (has_m_huitoudata()) {
-      if (m_huitoudata_ != NULL) m_huitoudata_->::GM_HuiTouData::Clear();
-    }
     m_fbtypeid_ = 0;
-  }
-  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
     if (has_m_fbplayway()) {
       if (m_fbplayway_ != &::google::protobuf::internal::kEmptyString) {
         m_fbplayway_->clear();
@@ -2243,7 +1753,7 @@ void GMHandCard_PlayerBack::Clear() {
     m_playercount_ = 0;
     m_roomid_ = 0;
   }
-  m_xiajingdata_.Clear();
+  m_saizi_.Clear();
   m_handcarddata_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -2266,187 +1776,12 @@ bool GMHandCard_PlayerBack::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(16)) goto parse_m_zheng;
+        if (input->ExpectTag(16)) goto parse_m_leftCount;
         break;
       }
 
-      // optional int32 m_zheng = 2;
+      // optional int32 m_leftCount = 2;
       case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_zheng:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_zheng_)));
-          set_has_m_zheng();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(24)) goto parse_m_fu;
-        break;
-      }
-
-      // optional int32 m_fu = 3;
-      case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_fu:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_fu_)));
-          set_has_m_fu();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(32)) goto parse_m_zhengid;
-        break;
-      }
-
-      // optional int32 m_zhengid = 4;
-      case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_zhengid:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_zhengid_)));
-          set_has_m_zhengid();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(40)) goto parse_m_xiazheng;
-        break;
-      }
-
-      // optional int32 m_xiazheng = 5;
-      case 5: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_xiazheng:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_xiazheng_)));
-          set_has_m_xiazheng();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(48)) goto parse_m_xiafu;
-        break;
-      }
-
-      // optional int32 m_xiafu = 6;
-      case 6: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_xiafu:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_xiafu_)));
-          set_has_m_xiafu();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(56)) goto parse_m_xiazhengid;
-        break;
-      }
-
-      // optional int32 m_xiazhengid = 7;
-      case 7: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_xiazhengid:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_xiazhengid_)));
-          set_has_m_xiazhengid();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(66)) goto parse_m_xiaJingData;
-        break;
-      }
-
-      // repeated .GM_XiaJingInfo m_xiaJingData = 8;
-      case 8: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_m_xiaJingData:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-                input, add_m_xiajingdata()));
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(66)) goto parse_m_xiaJingData;
-        if (input->ExpectTag(72)) goto parse_m_playerpos;
-        break;
-      }
-
-      // optional int32 m_playerpos = 9;
-      case 9: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_playerpos:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_playerpos_)));
-          set_has_m_playerpos();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(80)) goto parse_m_cardpos;
-        break;
-      }
-
-      // optional int32 m_cardpos = 10;
-      case 10: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_cardpos:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_cardpos_)));
-          set_has_m_cardpos();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(88)) goto parse_m_jingpos;
-        break;
-      }
-
-      // optional int32 m_jingpos = 11;
-      case 11: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_jingpos:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_jingpos_)));
-          set_has_m_jingpos();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(96)) goto parse_m_leftTime;
-        break;
-      }
-
-      // optional int32 m_leftTime = 12;
-      case 12: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_leftTime:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_lefttime_)));
-          set_has_m_lefttime();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(104)) goto parse_m_leftCount;
-        break;
-      }
-
-      // optional int32 m_leftCount = 13;
-      case 13: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_m_leftCount:
@@ -2457,12 +1792,12 @@ bool GMHandCard_PlayerBack::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(112)) goto parse_m_totalCount;
+        if (input->ExpectTag(24)) goto parse_m_totalCount;
         break;
       }
 
-      // optional int32 m_totalCount = 14;
-      case 14: {
+      // optional int32 m_totalCount = 3;
+      case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_m_totalCount:
@@ -2473,26 +1808,12 @@ bool GMHandCard_PlayerBack::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(122)) goto parse_m_huiTouData;
+        if (input->ExpectTag(32)) goto parse_m_fbtypeid;
         break;
       }
 
-      // optional .GM_HuiTouData m_huiTouData = 15;
-      case 15: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_m_huiTouData:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_m_huitoudata()));
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(128)) goto parse_m_fbtypeid;
-        break;
-      }
-
-      // optional int32 m_fbtypeid = 16;
-      case 16: {
+      // optional int32 m_fbtypeid = 4;
+      case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_m_fbtypeid:
@@ -2503,12 +1824,12 @@ bool GMHandCard_PlayerBack::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(138)) goto parse_m_fbplayway;
+        if (input->ExpectTag(42)) goto parse_m_fbplayway;
         break;
       }
 
-      // optional string m_fbplayway = 17;
-      case 17: {
+      // optional string m_fbplayway = 5;
+      case 5: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_m_fbplayway:
@@ -2520,12 +1841,12 @@ bool GMHandCard_PlayerBack::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(144)) goto parse_m_playerCount;
+        if (input->ExpectTag(48)) goto parse_m_playerCount;
         break;
       }
 
-      // optional int32 m_playerCount = 18;
-      case 18: {
+      // optional int32 m_playerCount = 6;
+      case 6: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_m_playerCount:
@@ -2536,12 +1857,12 @@ bool GMHandCard_PlayerBack::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(152)) goto parse_m_roomid;
+        if (input->ExpectTag(56)) goto parse_m_roomid;
         break;
       }
 
-      // optional int32 m_roomid = 19;
-      case 19: {
+      // optional int32 m_roomid = 7;
+      case 7: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_m_roomid:
@@ -2552,12 +1873,34 @@ bool GMHandCard_PlayerBack::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(162)) goto parse_m_handCardData;
+        if (input->ExpectTag(160)) goto parse_m_saizi;
         break;
       }
 
-      // repeated .GMHandCard_Info m_handCardData = 20;
+      // repeated int32 m_saizi = 20;
       case 20: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_m_saizi:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 2, 160, input, this->mutable_m_saizi())));
+        } else if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag)
+                   == ::google::protobuf::internal::WireFormatLite::
+                      WIRETYPE_LENGTH_DELIMITED) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, this->mutable_m_saizi())));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(160)) goto parse_m_saizi;
+        if (input->ExpectTag(170)) goto parse_m_handCardData;
+        break;
+      }
+
+      // repeated .GMHandCard_Info m_handCardData = 21;
+      case 21: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_m_handCardData:
@@ -2566,7 +1909,7 @@ bool GMHandCard_PlayerBack::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(162)) goto parse_m_handCardData;
+        if (input->ExpectTag(170)) goto parse_m_handCardData;
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -2594,106 +1937,50 @@ void GMHandCard_PlayerBack::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->m_bankerpos(), output);
   }
 
-  // optional int32 m_zheng = 2;
-  if (has_m_zheng()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->m_zheng(), output);
-  }
-
-  // optional int32 m_fu = 3;
-  if (has_m_fu()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->m_fu(), output);
-  }
-
-  // optional int32 m_zhengid = 4;
-  if (has_m_zhengid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->m_zhengid(), output);
-  }
-
-  // optional int32 m_xiazheng = 5;
-  if (has_m_xiazheng()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->m_xiazheng(), output);
-  }
-
-  // optional int32 m_xiafu = 6;
-  if (has_m_xiafu()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->m_xiafu(), output);
-  }
-
-  // optional int32 m_xiazhengid = 7;
-  if (has_m_xiazhengid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->m_xiazhengid(), output);
-  }
-
-  // repeated .GM_XiaJingInfo m_xiaJingData = 8;
-  for (int i = 0; i < this->m_xiajingdata_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      8, this->m_xiajingdata(i), output);
-  }
-
-  // optional int32 m_playerpos = 9;
-  if (has_m_playerpos()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->m_playerpos(), output);
-  }
-
-  // optional int32 m_cardpos = 10;
-  if (has_m_cardpos()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(10, this->m_cardpos(), output);
-  }
-
-  // optional int32 m_jingpos = 11;
-  if (has_m_jingpos()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(11, this->m_jingpos(), output);
-  }
-
-  // optional int32 m_leftTime = 12;
-  if (has_m_lefttime()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(12, this->m_lefttime(), output);
-  }
-
-  // optional int32 m_leftCount = 13;
+  // optional int32 m_leftCount = 2;
   if (has_m_leftcount()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(13, this->m_leftcount(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->m_leftcount(), output);
   }
 
-  // optional int32 m_totalCount = 14;
+  // optional int32 m_totalCount = 3;
   if (has_m_totalcount()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(14, this->m_totalcount(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->m_totalcount(), output);
   }
 
-  // optional .GM_HuiTouData m_huiTouData = 15;
-  if (has_m_huitoudata()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      15, this->m_huitoudata(), output);
-  }
-
-  // optional int32 m_fbtypeid = 16;
+  // optional int32 m_fbtypeid = 4;
   if (has_m_fbtypeid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(16, this->m_fbtypeid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->m_fbtypeid(), output);
   }
 
-  // optional string m_fbplayway = 17;
+  // optional string m_fbplayway = 5;
   if (has_m_fbplayway()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->m_fbplayway().data(), this->m_fbplayway().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      17, this->m_fbplayway(), output);
+      5, this->m_fbplayway(), output);
   }
 
-  // optional int32 m_playerCount = 18;
+  // optional int32 m_playerCount = 6;
   if (has_m_playercount()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(18, this->m_playercount(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->m_playercount(), output);
   }
 
-  // optional int32 m_roomid = 19;
+  // optional int32 m_roomid = 7;
   if (has_m_roomid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(19, this->m_roomid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->m_roomid(), output);
   }
 
-  // repeated .GMHandCard_Info m_handCardData = 20;
+  // repeated int32 m_saizi = 20;
+  for (int i = 0; i < this->m_saizi_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(
+      20, this->m_saizi(i), output);
+  }
+
+  // repeated .GMHandCard_Info m_handCardData = 21;
   for (int i = 0; i < this->m_handcarddata_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      20, this->m_handcarddata(i), output);
+      21, this->m_handcarddata(i), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -2709,110 +1996,52 @@ void GMHandCard_PlayerBack::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->m_bankerpos(), target);
   }
 
-  // optional int32 m_zheng = 2;
-  if (has_m_zheng()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->m_zheng(), target);
-  }
-
-  // optional int32 m_fu = 3;
-  if (has_m_fu()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->m_fu(), target);
-  }
-
-  // optional int32 m_zhengid = 4;
-  if (has_m_zhengid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->m_zhengid(), target);
-  }
-
-  // optional int32 m_xiazheng = 5;
-  if (has_m_xiazheng()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->m_xiazheng(), target);
-  }
-
-  // optional int32 m_xiafu = 6;
-  if (has_m_xiafu()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->m_xiafu(), target);
-  }
-
-  // optional int32 m_xiazhengid = 7;
-  if (has_m_xiazhengid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->m_xiazhengid(), target);
-  }
-
-  // repeated .GM_XiaJingInfo m_xiaJingData = 8;
-  for (int i = 0; i < this->m_xiajingdata_size(); i++) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        8, this->m_xiajingdata(i), target);
-  }
-
-  // optional int32 m_playerpos = 9;
-  if (has_m_playerpos()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->m_playerpos(), target);
-  }
-
-  // optional int32 m_cardpos = 10;
-  if (has_m_cardpos()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(10, this->m_cardpos(), target);
-  }
-
-  // optional int32 m_jingpos = 11;
-  if (has_m_jingpos()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(11, this->m_jingpos(), target);
-  }
-
-  // optional int32 m_leftTime = 12;
-  if (has_m_lefttime()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(12, this->m_lefttime(), target);
-  }
-
-  // optional int32 m_leftCount = 13;
+  // optional int32 m_leftCount = 2;
   if (has_m_leftcount()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(13, this->m_leftcount(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->m_leftcount(), target);
   }
 
-  // optional int32 m_totalCount = 14;
+  // optional int32 m_totalCount = 3;
   if (has_m_totalcount()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(14, this->m_totalcount(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->m_totalcount(), target);
   }
 
-  // optional .GM_HuiTouData m_huiTouData = 15;
-  if (has_m_huitoudata()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        15, this->m_huitoudata(), target);
-  }
-
-  // optional int32 m_fbtypeid = 16;
+  // optional int32 m_fbtypeid = 4;
   if (has_m_fbtypeid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(16, this->m_fbtypeid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->m_fbtypeid(), target);
   }
 
-  // optional string m_fbplayway = 17;
+  // optional string m_fbplayway = 5;
   if (has_m_fbplayway()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->m_fbplayway().data(), this->m_fbplayway().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        17, this->m_fbplayway(), target);
+        5, this->m_fbplayway(), target);
   }
 
-  // optional int32 m_playerCount = 18;
+  // optional int32 m_playerCount = 6;
   if (has_m_playercount()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(18, this->m_playercount(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->m_playercount(), target);
   }
 
-  // optional int32 m_roomid = 19;
+  // optional int32 m_roomid = 7;
   if (has_m_roomid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(19, this->m_roomid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->m_roomid(), target);
   }
 
-  // repeated .GMHandCard_Info m_handCardData = 20;
+  // repeated int32 m_saizi = 20;
+  for (int i = 0; i < this->m_saizi_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteInt32ToArray(20, this->m_saizi(i), target);
+  }
+
+  // repeated .GMHandCard_Info m_handCardData = 21;
   for (int i = 0; i < this->m_handcarddata_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        20, this->m_handcarddata(i), target);
+        21, this->m_handcarddata(i), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -2833,139 +2062,60 @@ int GMHandCard_PlayerBack::ByteSize() const {
           this->m_bankerpos());
     }
 
-    // optional int32 m_zheng = 2;
-    if (has_m_zheng()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_zheng());
-    }
-
-    // optional int32 m_fu = 3;
-    if (has_m_fu()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_fu());
-    }
-
-    // optional int32 m_zhengid = 4;
-    if (has_m_zhengid()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_zhengid());
-    }
-
-    // optional int32 m_xiazheng = 5;
-    if (has_m_xiazheng()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_xiazheng());
-    }
-
-    // optional int32 m_xiafu = 6;
-    if (has_m_xiafu()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_xiafu());
-    }
-
-    // optional int32 m_xiazhengid = 7;
-    if (has_m_xiazhengid()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_xiazhengid());
-    }
-
-  }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // optional int32 m_playerpos = 9;
-    if (has_m_playerpos()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_playerpos());
-    }
-
-    // optional int32 m_cardpos = 10;
-    if (has_m_cardpos()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_cardpos());
-    }
-
-    // optional int32 m_jingpos = 11;
-    if (has_m_jingpos()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_jingpos());
-    }
-
-    // optional int32 m_leftTime = 12;
-    if (has_m_lefttime()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_lefttime());
-    }
-
-    // optional int32 m_leftCount = 13;
+    // optional int32 m_leftCount = 2;
     if (has_m_leftcount()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->m_leftcount());
     }
 
-    // optional int32 m_totalCount = 14;
+    // optional int32 m_totalCount = 3;
     if (has_m_totalcount()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->m_totalcount());
     }
 
-    // optional .GM_HuiTouData m_huiTouData = 15;
-    if (has_m_huitoudata()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->m_huitoudata());
-    }
-
-    // optional int32 m_fbtypeid = 16;
+    // optional int32 m_fbtypeid = 4;
     if (has_m_fbtypeid()) {
-      total_size += 2 +
+      total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->m_fbtypeid());
     }
 
-  }
-  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
-    // optional string m_fbplayway = 17;
+    // optional string m_fbplayway = 5;
     if (has_m_fbplayway()) {
-      total_size += 2 +
+      total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->m_fbplayway());
     }
 
-    // optional int32 m_playerCount = 18;
+    // optional int32 m_playerCount = 6;
     if (has_m_playercount()) {
-      total_size += 2 +
+      total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->m_playercount());
     }
 
-    // optional int32 m_roomid = 19;
+    // optional int32 m_roomid = 7;
     if (has_m_roomid()) {
-      total_size += 2 +
+      total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->m_roomid());
     }
 
   }
-  // repeated .GM_XiaJingInfo m_xiaJingData = 8;
-  total_size += 1 * this->m_xiajingdata_size();
-  for (int i = 0; i < this->m_xiajingdata_size(); i++) {
-    total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->m_xiajingdata(i));
+  // repeated int32 m_saizi = 20;
+  {
+    int data_size = 0;
+    for (int i = 0; i < this->m_saizi_size(); i++) {
+      data_size += ::google::protobuf::internal::WireFormatLite::
+        Int32Size(this->m_saizi(i));
+    }
+    total_size += 2 * this->m_saizi_size() + data_size;
   }
 
-  // repeated .GMHandCard_Info m_handCardData = 20;
+  // repeated .GMHandCard_Info m_handCardData = 21;
   total_size += 2 * this->m_handcarddata_size();
   for (int i = 0; i < this->m_handcarddata_size(); i++) {
     total_size +=
@@ -2998,43 +2148,11 @@ void GMHandCard_PlayerBack::MergeFrom(const ::google::protobuf::Message& from) {
 
 void GMHandCard_PlayerBack::MergeFrom(const GMHandCard_PlayerBack& from) {
   GOOGLE_CHECK_NE(&from, this);
-  m_xiajingdata_.MergeFrom(from.m_xiajingdata_);
+  m_saizi_.MergeFrom(from.m_saizi_);
   m_handcarddata_.MergeFrom(from.m_handcarddata_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_m_bankerpos()) {
       set_m_bankerpos(from.m_bankerpos());
-    }
-    if (from.has_m_zheng()) {
-      set_m_zheng(from.m_zheng());
-    }
-    if (from.has_m_fu()) {
-      set_m_fu(from.m_fu());
-    }
-    if (from.has_m_zhengid()) {
-      set_m_zhengid(from.m_zhengid());
-    }
-    if (from.has_m_xiazheng()) {
-      set_m_xiazheng(from.m_xiazheng());
-    }
-    if (from.has_m_xiafu()) {
-      set_m_xiafu(from.m_xiafu());
-    }
-    if (from.has_m_xiazhengid()) {
-      set_m_xiazhengid(from.m_xiazhengid());
-    }
-  }
-  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    if (from.has_m_playerpos()) {
-      set_m_playerpos(from.m_playerpos());
-    }
-    if (from.has_m_cardpos()) {
-      set_m_cardpos(from.m_cardpos());
-    }
-    if (from.has_m_jingpos()) {
-      set_m_jingpos(from.m_jingpos());
-    }
-    if (from.has_m_lefttime()) {
-      set_m_lefttime(from.m_lefttime());
     }
     if (from.has_m_leftcount()) {
       set_m_leftcount(from.m_leftcount());
@@ -3042,14 +2160,9 @@ void GMHandCard_PlayerBack::MergeFrom(const GMHandCard_PlayerBack& from) {
     if (from.has_m_totalcount()) {
       set_m_totalcount(from.m_totalcount());
     }
-    if (from.has_m_huitoudata()) {
-      mutable_m_huitoudata()->::GM_HuiTouData::MergeFrom(from.m_huitoudata());
-    }
     if (from.has_m_fbtypeid()) {
       set_m_fbtypeid(from.m_fbtypeid());
     }
-  }
-  if (from._has_bits_[16 / 32] & (0xffu << (16 % 32))) {
     if (from.has_m_fbplayway()) {
       set_m_fbplayway(from.m_fbplayway());
     }
@@ -3078,12 +2191,6 @@ void GMHandCard_PlayerBack::CopyFrom(const GMHandCard_PlayerBack& from) {
 bool GMHandCard_PlayerBack::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
-  for (int i = 0; i < m_xiajingdata_size(); i++) {
-    if (!this->m_xiajingdata(i).IsInitialized()) return false;
-  }
-  if (has_m_huitoudata()) {
-    if (!this->m_huitoudata().IsInitialized()) return false;
-  }
   for (int i = 0; i < m_handcarddata_size(); i++) {
     if (!this->m_handcarddata(i).IsInitialized()) return false;
   }
@@ -3093,24 +2200,13 @@ bool GMHandCard_PlayerBack::IsInitialized() const {
 void GMHandCard_PlayerBack::Swap(GMHandCard_PlayerBack* other) {
   if (other != this) {
     std::swap(m_bankerpos_, other->m_bankerpos_);
-    std::swap(m_zheng_, other->m_zheng_);
-    std::swap(m_fu_, other->m_fu_);
-    std::swap(m_zhengid_, other->m_zhengid_);
-    std::swap(m_xiazheng_, other->m_xiazheng_);
-    std::swap(m_xiafu_, other->m_xiafu_);
-    std::swap(m_xiazhengid_, other->m_xiazhengid_);
-    m_xiajingdata_.Swap(&other->m_xiajingdata_);
-    std::swap(m_playerpos_, other->m_playerpos_);
-    std::swap(m_cardpos_, other->m_cardpos_);
-    std::swap(m_jingpos_, other->m_jingpos_);
-    std::swap(m_lefttime_, other->m_lefttime_);
     std::swap(m_leftcount_, other->m_leftcount_);
     std::swap(m_totalcount_, other->m_totalcount_);
-    std::swap(m_huitoudata_, other->m_huitoudata_);
     std::swap(m_fbtypeid_, other->m_fbtypeid_);
     std::swap(m_fbplayway_, other->m_fbplayway_);
     std::swap(m_playercount_, other->m_playercount_);
     std::swap(m_roomid_, other->m_roomid_);
+    m_saizi_.Swap(&other->m_saizi_);
     m_handcarddata_.Swap(&other->m_handcarddata_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
@@ -3375,627 +2471,6 @@ void GMHandCard_Info::Swap(GMHandCard_Info* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = GMHandCard_Info_descriptor_;
   metadata.reflection = GMHandCard_Info_reflection_;
-  return metadata;
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
-const int GM_HuiTouData::kMHuitouZhenFieldNumber;
-const int GM_HuiTouData::kMHuitouFuFieldNumber;
-const int GM_HuiTouData::kMHuitouInfoFieldNumber;
-#endif  // !_MSC_VER
-
-GM_HuiTouData::GM_HuiTouData()
-  : ::google::protobuf::Message() {
-  SharedCtor();
-}
-
-void GM_HuiTouData::InitAsDefaultInstance() {
-}
-
-GM_HuiTouData::GM_HuiTouData(const GM_HuiTouData& from)
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void GM_HuiTouData::SharedCtor() {
-  _cached_size_ = 0;
-  m_huitouzhen_ = 0;
-  m_huitoufu_ = 0;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-GM_HuiTouData::~GM_HuiTouData() {
-  SharedDtor();
-}
-
-void GM_HuiTouData::SharedDtor() {
-  if (this != default_instance_) {
-  }
-}
-
-void GM_HuiTouData::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const ::google::protobuf::Descriptor* GM_HuiTouData::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return GM_HuiTouData_descriptor_;
-}
-
-const GM_HuiTouData& GM_HuiTouData::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_majiang_2etxt();
-  return *default_instance_;
-}
-
-GM_HuiTouData* GM_HuiTouData::default_instance_ = NULL;
-
-GM_HuiTouData* GM_HuiTouData::New() const {
-  return new GM_HuiTouData;
-}
-
-void GM_HuiTouData::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    m_huitouzhen_ = 0;
-    m_huitoufu_ = 0;
-  }
-  m_huitouinfo_.Clear();
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool GM_HuiTouData::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 m_huitouZhen = 1;
-      case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_huitouzhen_)));
-          set_has_m_huitouzhen();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(16)) goto parse_m_huitouFu;
-        break;
-      }
-
-      // optional int32 m_huitouFu = 2;
-      case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_huitouFu:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_huitoufu_)));
-          set_has_m_huitoufu();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(82)) goto parse_m_huitouInfo;
-        break;
-      }
-
-      // repeated .GM_XiaJingInfo m_huitouInfo = 10;
-      case 10: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_m_huitouInfo:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-                input, add_m_huitouinfo()));
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(82)) goto parse_m_huitouInfo;
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void GM_HuiTouData::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // required int32 m_huitouZhen = 1;
-  if (has_m_huitouzhen()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->m_huitouzhen(), output);
-  }
-
-  // optional int32 m_huitouFu = 2;
-  if (has_m_huitoufu()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->m_huitoufu(), output);
-  }
-
-  // repeated .GM_XiaJingInfo m_huitouInfo = 10;
-  for (int i = 0; i < this->m_huitouinfo_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      10, this->m_huitouinfo(i), output);
-  }
-
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* GM_HuiTouData::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // required int32 m_huitouZhen = 1;
-  if (has_m_huitouzhen()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->m_huitouzhen(), target);
-  }
-
-  // optional int32 m_huitouFu = 2;
-  if (has_m_huitoufu()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->m_huitoufu(), target);
-  }
-
-  // repeated .GM_XiaJingInfo m_huitouInfo = 10;
-  for (int i = 0; i < this->m_huitouinfo_size(); i++) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        10, this->m_huitouinfo(i), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int GM_HuiTouData::ByteSize() const {
-  int total_size = 0;
-
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 m_huitouZhen = 1;
-    if (has_m_huitouzhen()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_huitouzhen());
-    }
-
-    // optional int32 m_huitouFu = 2;
-    if (has_m_huitoufu()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_huitoufu());
-    }
-
-  }
-  // repeated .GM_XiaJingInfo m_huitouInfo = 10;
-  total_size += 1 * this->m_huitouinfo_size();
-  for (int i = 0; i < this->m_huitouinfo_size(); i++) {
-    total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->m_huitouinfo(i));
-  }
-
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void GM_HuiTouData::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const GM_HuiTouData* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const GM_HuiTouData*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void GM_HuiTouData::MergeFrom(const GM_HuiTouData& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  m_huitouinfo_.MergeFrom(from.m_huitouinfo_);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_m_huitouzhen()) {
-      set_m_huitouzhen(from.m_huitouzhen());
-    }
-    if (from.has_m_huitoufu()) {
-      set_m_huitoufu(from.m_huitoufu());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void GM_HuiTouData::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void GM_HuiTouData::CopyFrom(const GM_HuiTouData& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool GM_HuiTouData::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
-
-  for (int i = 0; i < m_huitouinfo_size(); i++) {
-    if (!this->m_huitouinfo(i).IsInitialized()) return false;
-  }
-  return true;
-}
-
-void GM_HuiTouData::Swap(GM_HuiTouData* other) {
-  if (other != this) {
-    std::swap(m_huitouzhen_, other->m_huitouzhen_);
-    std::swap(m_huitoufu_, other->m_huitoufu_);
-    m_huitouinfo_.Swap(&other->m_huitouinfo_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata GM_HuiTouData::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = GM_HuiTouData_descriptor_;
-  metadata.reflection = GM_HuiTouData_reflection_;
-  return metadata;
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
-const int GM_XiaJingInfo::kMRoleidFieldNumber;
-const int GM_XiaJingInfo::kMXiazhuNumFieldNumber;
-const int GM_XiaJingInfo::kMXiafuNumFieldNumber;
-const int GM_XiaJingInfo::kMSorceFieldNumber;
-#endif  // !_MSC_VER
-
-GM_XiaJingInfo::GM_XiaJingInfo()
-  : ::google::protobuf::Message() {
-  SharedCtor();
-}
-
-void GM_XiaJingInfo::InitAsDefaultInstance() {
-}
-
-GM_XiaJingInfo::GM_XiaJingInfo(const GM_XiaJingInfo& from)
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void GM_XiaJingInfo::SharedCtor() {
-  _cached_size_ = 0;
-  m_roleid_ = 0;
-  m_xiazhunum_ = 0;
-  m_xiafunum_ = 0;
-  m_sorce_ = 0;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-GM_XiaJingInfo::~GM_XiaJingInfo() {
-  SharedDtor();
-}
-
-void GM_XiaJingInfo::SharedDtor() {
-  if (this != default_instance_) {
-  }
-}
-
-void GM_XiaJingInfo::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const ::google::protobuf::Descriptor* GM_XiaJingInfo::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return GM_XiaJingInfo_descriptor_;
-}
-
-const GM_XiaJingInfo& GM_XiaJingInfo::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_majiang_2etxt();
-  return *default_instance_;
-}
-
-GM_XiaJingInfo* GM_XiaJingInfo::default_instance_ = NULL;
-
-GM_XiaJingInfo* GM_XiaJingInfo::New() const {
-  return new GM_XiaJingInfo;
-}
-
-void GM_XiaJingInfo::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    m_roleid_ = 0;
-    m_xiazhunum_ = 0;
-    m_xiafunum_ = 0;
-    m_sorce_ = 0;
-  }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool GM_XiaJingInfo::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 m_roleid = 1;
-      case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_roleid_)));
-          set_has_m_roleid();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(16)) goto parse_m_xiazhuNum;
-        break;
-      }
-
-      // optional int32 m_xiazhuNum = 2;
-      case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_xiazhuNum:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_xiazhunum_)));
-          set_has_m_xiazhunum();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(24)) goto parse_m_xiafuNum;
-        break;
-      }
-
-      // optional int32 m_xiafuNum = 3;
-      case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_xiafuNum:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_xiafunum_)));
-          set_has_m_xiafunum();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(32)) goto parse_m_sorce;
-        break;
-      }
-
-      // optional int32 m_sorce = 4;
-      case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_sorce:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_sorce_)));
-          set_has_m_sorce();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void GM_XiaJingInfo::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // required int32 m_roleid = 1;
-  if (has_m_roleid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->m_roleid(), output);
-  }
-
-  // optional int32 m_xiazhuNum = 2;
-  if (has_m_xiazhunum()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->m_xiazhunum(), output);
-  }
-
-  // optional int32 m_xiafuNum = 3;
-  if (has_m_xiafunum()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->m_xiafunum(), output);
-  }
-
-  // optional int32 m_sorce = 4;
-  if (has_m_sorce()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->m_sorce(), output);
-  }
-
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* GM_XiaJingInfo::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // required int32 m_roleid = 1;
-  if (has_m_roleid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->m_roleid(), target);
-  }
-
-  // optional int32 m_xiazhuNum = 2;
-  if (has_m_xiazhunum()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->m_xiazhunum(), target);
-  }
-
-  // optional int32 m_xiafuNum = 3;
-  if (has_m_xiafunum()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->m_xiafunum(), target);
-  }
-
-  // optional int32 m_sorce = 4;
-  if (has_m_sorce()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->m_sorce(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int GM_XiaJingInfo::ByteSize() const {
-  int total_size = 0;
-
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 m_roleid = 1;
-    if (has_m_roleid()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_roleid());
-    }
-
-    // optional int32 m_xiazhuNum = 2;
-    if (has_m_xiazhunum()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_xiazhunum());
-    }
-
-    // optional int32 m_xiafuNum = 3;
-    if (has_m_xiafunum()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_xiafunum());
-    }
-
-    // optional int32 m_sorce = 4;
-    if (has_m_sorce()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_sorce());
-    }
-
-  }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void GM_XiaJingInfo::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const GM_XiaJingInfo* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const GM_XiaJingInfo*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void GM_XiaJingInfo::MergeFrom(const GM_XiaJingInfo& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_m_roleid()) {
-      set_m_roleid(from.m_roleid());
-    }
-    if (from.has_m_xiazhunum()) {
-      set_m_xiazhunum(from.m_xiazhunum());
-    }
-    if (from.has_m_xiafunum()) {
-      set_m_xiafunum(from.m_xiafunum());
-    }
-    if (from.has_m_sorce()) {
-      set_m_sorce(from.m_sorce());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void GM_XiaJingInfo::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void GM_XiaJingInfo::CopyFrom(const GM_XiaJingInfo& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool GM_XiaJingInfo::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
-
-  return true;
-}
-
-void GM_XiaJingInfo::Swap(GM_XiaJingInfo* other) {
-  if (other != this) {
-    std::swap(m_roleid_, other->m_roleid_);
-    std::swap(m_xiazhunum_, other->m_xiazhunum_);
-    std::swap(m_xiafunum_, other->m_xiafunum_);
-    std::swap(m_sorce_, other->m_sorce_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata GM_XiaJingInfo::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = GM_XiaJingInfo_descriptor_;
-  metadata.reflection = GM_XiaJingInfo_reflection_;
   return metadata;
 }
 
@@ -4509,6 +2984,7 @@ const int GM_OperatorData::kMFunIDFieldNumber;
 const int GM_OperatorData::kMOperatorCardFieldNumber;
 const int GM_OperatorData::kMRoleVoiceFieldNumber;
 const int GM_OperatorData::kMCardVoiceFieldNumber;
+const int GM_OperatorData::kMCardNumFieldNumber;
 const int GM_OperatorData::kMHandCardFieldNumber;
 #endif  // !_MSC_VER
 
@@ -4533,6 +3009,7 @@ void GM_OperatorData::SharedCtor() {
   m_operatorcard_ = 0;
   m_rolevoice_ = 0;
   m_cardvoice_ = 0;
+  m_cardnum_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -4573,6 +3050,7 @@ void GM_OperatorData::Clear() {
     m_operatorcard_ = 0;
     m_rolevoice_ = 0;
     m_cardvoice_ = 0;
+    m_cardnum_ = 0;
   }
   m_handcard_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -4660,6 +3138,22 @@ bool GM_OperatorData::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(48)) goto parse_m_CardNum;
+        break;
+      }
+
+      // optional int32 m_CardNum = 6;
+      case 6: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_m_CardNum:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &m_cardnum_)));
+          set_has_m_cardnum();
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectTag(82)) goto parse_m_HandCard;
         break;
       }
@@ -4722,6 +3216,11 @@ void GM_OperatorData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->m_cardvoice(), output);
   }
 
+  // optional int32 m_CardNum = 6;
+  if (has_m_cardnum()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->m_cardnum(), output);
+  }
+
   // repeated .GM_PlayerHandCard m_HandCard = 10;
   for (int i = 0; i < this->m_handcard_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
@@ -4759,6 +3258,11 @@ void GM_OperatorData::SerializeWithCachedSizes(
   // optional int32 m_CardVoice = 5;
   if (has_m_cardvoice()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->m_cardvoice(), target);
+  }
+
+  // optional int32 m_CardNum = 6;
+  if (has_m_cardnum()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->m_cardnum(), target);
   }
 
   // repeated .GM_PlayerHandCard m_HandCard = 10;
@@ -4814,6 +3318,13 @@ int GM_OperatorData::ByteSize() const {
           this->m_cardvoice());
     }
 
+    // optional int32 m_CardNum = 6;
+    if (has_m_cardnum()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->m_cardnum());
+    }
+
   }
   // repeated .GM_PlayerHandCard m_HandCard = 10;
   total_size += 1 * this->m_handcard_size();
@@ -4865,6 +3376,9 @@ void GM_OperatorData::MergeFrom(const GM_OperatorData& from) {
     if (from.has_m_cardvoice()) {
       set_m_cardvoice(from.m_cardvoice());
     }
+    if (from.has_m_cardnum()) {
+      set_m_cardnum(from.m_cardnum());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -4897,6 +3411,7 @@ void GM_OperatorData::Swap(GM_OperatorData* other) {
     std::swap(m_operatorcard_, other->m_operatorcard_);
     std::swap(m_rolevoice_, other->m_rolevoice_);
     std::swap(m_cardvoice_, other->m_cardvoice_);
+    std::swap(m_cardnum_, other->m_cardnum_);
     m_handcard_.Swap(&other->m_handcard_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
@@ -4920,6 +3435,8 @@ const int GM_MJOperator::kMRoleidFieldNumber;
 const int GM_MJOperator::kMOperatorTypeFieldNumber;
 const int GM_MJOperator::kMRoleVoiceFieldNumber;
 const int GM_MJOperator::kMCardVoiceFieldNumber;
+const int GM_MJOperator::kMOrderFieldNumber;
+const int GM_MJOperator::kMCardNumFieldNumber;
 const int GM_MJOperator::kMLastCardFieldNumber;
 const int GM_MJOperator::kMHandCardFieldNumber;
 #endif  // !_MSC_VER
@@ -4945,6 +3462,8 @@ void GM_MJOperator::SharedCtor() {
   m_operatortype_ = 0;
   m_rolevoice_ = 0;
   m_cardvoice_ = 0;
+  m_order_ = 0;
+  m_cardnum_ = 0;
   m_lastcard_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -4986,6 +3505,8 @@ void GM_MJOperator::Clear() {
     m_operatortype_ = 0;
     m_rolevoice_ = 0;
     m_cardvoice_ = 0;
+    m_order_ = 0;
+    m_cardnum_ = 0;
     if (has_m_lastcard()) {
       if (m_lastcard_ != NULL) m_lastcard_->::GM_PlayerHandCard::Clear();
     }
@@ -5060,12 +3581,44 @@ bool GM_MJOperator::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(42)) goto parse_m_LastCard;
+        if (input->ExpectTag(40)) goto parse_m_Order;
         break;
       }
 
-      // optional .GM_PlayerHandCard m_LastCard = 5;
+      // optional int32 m_Order = 5;
       case 5: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_m_Order:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &m_order_)));
+          set_has_m_order();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(48)) goto parse_m_CardNum;
+        break;
+      }
+
+      // optional int32 m_CardNum = 6;
+      case 6: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_m_CardNum:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &m_cardnum_)));
+          set_has_m_cardnum();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(58)) goto parse_m_LastCard;
+        break;
+      }
+
+      // optional .GM_PlayerHandCard m_LastCard = 7;
+      case 7: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_m_LastCard:
@@ -5131,10 +3684,20 @@ void GM_MJOperator::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->m_cardvoice(), output);
   }
 
-  // optional .GM_PlayerHandCard m_LastCard = 5;
+  // optional int32 m_Order = 5;
+  if (has_m_order()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->m_order(), output);
+  }
+
+  // optional int32 m_CardNum = 6;
+  if (has_m_cardnum()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->m_cardnum(), output);
+  }
+
+  // optional .GM_PlayerHandCard m_LastCard = 7;
   if (has_m_lastcard()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      5, this->m_lastcard(), output);
+      7, this->m_lastcard(), output);
   }
 
   // repeated .GM_PlayerHandCard m_HandCard = 10;
@@ -5171,11 +3734,21 @@ void GM_MJOperator::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->m_cardvoice(), target);
   }
 
-  // optional .GM_PlayerHandCard m_LastCard = 5;
+  // optional int32 m_Order = 5;
+  if (has_m_order()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->m_order(), target);
+  }
+
+  // optional int32 m_CardNum = 6;
+  if (has_m_cardnum()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->m_cardnum(), target);
+  }
+
+  // optional .GM_PlayerHandCard m_LastCard = 7;
   if (has_m_lastcard()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        5, this->m_lastcard(), target);
+        7, this->m_lastcard(), target);
   }
 
   // repeated .GM_PlayerHandCard m_HandCard = 10;
@@ -5224,7 +3797,21 @@ int GM_MJOperator::ByteSize() const {
           this->m_cardvoice());
     }
 
-    // optional .GM_PlayerHandCard m_LastCard = 5;
+    // optional int32 m_Order = 5;
+    if (has_m_order()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->m_order());
+    }
+
+    // optional int32 m_CardNum = 6;
+    if (has_m_cardnum()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->m_cardnum());
+    }
+
+    // optional .GM_PlayerHandCard m_LastCard = 7;
     if (has_m_lastcard()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -5279,6 +3866,12 @@ void GM_MJOperator::MergeFrom(const GM_MJOperator& from) {
     if (from.has_m_cardvoice()) {
       set_m_cardvoice(from.m_cardvoice());
     }
+    if (from.has_m_order()) {
+      set_m_order(from.m_order());
+    }
+    if (from.has_m_cardnum()) {
+      set_m_cardnum(from.m_cardnum());
+    }
     if (from.has_m_lastcard()) {
       mutable_m_lastcard()->::GM_PlayerHandCard::MergeFrom(from.m_lastcard());
     }
@@ -5316,6 +3909,8 @@ void GM_MJOperator::Swap(GM_MJOperator* other) {
     std::swap(m_operatortype_, other->m_operatortype_);
     std::swap(m_rolevoice_, other->m_rolevoice_);
     std::swap(m_cardvoice_, other->m_cardvoice_);
+    std::swap(m_order_, other->m_order_);
+    std::swap(m_cardnum_, other->m_cardnum_);
     std::swap(m_lastcard_, other->m_lastcard_);
     m_handcard_.Swap(&other->m_handcard_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
@@ -5798,24 +4393,17 @@ void GM_HUOperator::Swap(GM_HUOperator* other) {
 #ifndef _MSC_VER
 const int GM_HuHandCardData::kMRoleidFieldNumber;
 const int GM_HuHandCardData::kMHandCardTypeFieldNumber;
-const int GM_HuHandCardData::kMXiaJingFieldNumber;
-const int GM_HuHandCardData::kMShangJingFieldNumber;
 const int GM_HuHandCardData::kMHufengFieldNumber;
-const int GM_HuHandCardData::kMGoldNumFieldNumber;
-const int GM_HuHandCardData::kMIsBaWangFieldNumber;
-const int GM_HuHandCardData::kMIsCongGuanFieldNumber;
-const int GM_HuHandCardData::kMHuitouScoreFieldNumber;
-const int GM_HuHandCardData::kMMaileiScoreFieldNumber;
-const int GM_HuHandCardData::kMTongScoreFieldNumber;
-const int GM_HuHandCardData::kMGangScoreFieldNumber;
-const int GM_HuHandCardData::kMXiaCGBWFieldNumber;
-const int GM_HuHandCardData::kMHuiCGBWFieldNumber;
-const int GM_HuHandCardData::kMMaiCGBWFieldNumber;
-const int GM_HuHandCardData::kMTongCGBWFieldNumber;
-const int GM_HuHandCardData::kMCZScoreFieldNumber;
-const int GM_HuHandCardData::kMHDFZScoreFieldNumber;
-const int GM_HuHandCardData::kMPLRateFieldNumber;
-const int GM_HuHandCardData::kMAnGangTypeFieldNumber;
+const int GM_HuHandCardData::kMZongLeiFieldNumber;
+const int GM_HuHandCardData::kMTanFieldNumber;
+const int GM_HuHandCardData::kMSaoFieldNumber;
+const int GM_HuHandCardData::kMPengFieldNumber;
+const int GM_HuHandCardData::kMGangFieldNumber;
+const int GM_HuHandCardData::kMAnGangFieldNumber;
+const int GM_HuHandCardData::kMRewardFieldNumber;
+const int GM_HuHandCardData::kMScoreFieldNumber;
+const int GM_HuHandCardData::kMTotalScoreFieldNumber;
+const int GM_HuHandCardData::kMSaoTypeFieldNumber;
 #endif  // !_MSC_VER
 
 GM_HuHandCardData::GM_HuHandCardData()
@@ -5835,23 +4423,16 @@ GM_HuHandCardData::GM_HuHandCardData(const GM_HuHandCardData& from)
 void GM_HuHandCardData::SharedCtor() {
   _cached_size_ = 0;
   m_roleid_ = 0;
-  m_xiajing_ = 0;
-  m_shangjing_ = 0;
   m_hufeng_ = 0;
-  m_goldnum_ = 0;
-  m_isbawang_ = 0;
-  m_iscongguan_ = 0;
-  m_huitouscore_ = 0;
-  m_maileiscore_ = 0;
-  m_tongscore_ = 0;
-  m_gangscore_ = 0;
-  m_xiacgbw_ = 0;
-  m_huicgbw_ = 0;
-  m_maicgbw_ = 0;
-  m_tongcgbw_ = 0;
-  m_czscore_ = 0;
-  m_hdfzscore_ = 0;
-  m_plrate_ = 0;
+  m_zonglei_ = 0;
+  m_tan_ = 0;
+  m_sao_ = 0;
+  m_peng_ = 0;
+  m_gang_ = 0;
+  m_angang_ = 0;
+  m_reward_ = 0;
+  m_score_ = 0;
+  m_totalscore_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -5888,30 +4469,21 @@ GM_HuHandCardData* GM_HuHandCardData::New() const {
 void GM_HuHandCardData::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     m_roleid_ = 0;
-    m_xiajing_ = 0;
-    m_shangjing_ = 0;
     m_hufeng_ = 0;
-    m_goldnum_ = 0;
-    m_isbawang_ = 0;
-    m_iscongguan_ = 0;
+    m_zonglei_ = 0;
+    m_tan_ = 0;
+    m_sao_ = 0;
+    m_peng_ = 0;
+    m_gang_ = 0;
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    m_huitouscore_ = 0;
-    m_maileiscore_ = 0;
-    m_tongscore_ = 0;
-    m_gangscore_ = 0;
-    m_xiacgbw_ = 0;
-    m_huicgbw_ = 0;
-    m_maicgbw_ = 0;
-    m_tongcgbw_ = 0;
-  }
-  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
-    m_czscore_ = 0;
-    m_hdfzscore_ = 0;
-    m_plrate_ = 0;
+    m_angang_ = 0;
+    m_reward_ = 0;
+    m_score_ = 0;
+    m_totalscore_ = 0;
   }
   m_handcardtype_.Clear();
-  m_angangtype_.Clear();
+  m_saotype_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
@@ -5955,44 +4527,12 @@ bool GM_HuHandCardData::MergePartialFromCodedStream(
           goto handle_uninterpreted;
         }
         if (input->ExpectTag(16)) goto parse_m_HandCardType;
-        if (input->ExpectTag(24)) goto parse_m_xiaJing;
+        if (input->ExpectTag(24)) goto parse_m_Hufeng;
         break;
       }
 
-      // optional int32 m_xiaJing = 3;
+      // optional int32 m_Hufeng = 3;
       case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_xiaJing:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_xiajing_)));
-          set_has_m_xiajing();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(32)) goto parse_m_ShangJing;
-        break;
-      }
-
-      // optional int32 m_ShangJing = 4;
-      case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_ShangJing:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_shangjing_)));
-          set_has_m_shangjing();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(40)) goto parse_m_Hufeng;
-        break;
-      }
-
-      // optional int32 m_Hufeng = 5;
-      case 5: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_m_Hufeng:
@@ -6003,252 +4543,172 @@ bool GM_HuHandCardData::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(48)) goto parse_m_GoldNum;
+        if (input->ExpectTag(32)) goto parse_m_ZongLei;
         break;
       }
 
-      // optional int32 m_GoldNum = 6;
+      // optional int32 m_ZongLei = 4;
+      case 4: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_m_ZongLei:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &m_zonglei_)));
+          set_has_m_zonglei();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(40)) goto parse_m_Tan;
+        break;
+      }
+
+      // optional int32 m_Tan = 5;
+      case 5: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_m_Tan:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &m_tan_)));
+          set_has_m_tan();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(48)) goto parse_m_Sao;
+        break;
+      }
+
+      // optional int32 m_Sao = 6;
       case 6: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_GoldNum:
+         parse_m_Sao:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_goldnum_)));
-          set_has_m_goldnum();
+                 input, &m_sao_)));
+          set_has_m_sao();
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(56)) goto parse_m_isBaWang;
+        if (input->ExpectTag(56)) goto parse_m_Peng;
         break;
       }
 
-      // optional int32 m_isBaWang = 7;
+      // optional int32 m_Peng = 7;
       case 7: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_isBaWang:
+         parse_m_Peng:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_isbawang_)));
-          set_has_m_isbawang();
+                 input, &m_peng_)));
+          set_has_m_peng();
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(64)) goto parse_m_isCongGuan;
+        if (input->ExpectTag(64)) goto parse_m_Gang;
         break;
       }
 
-      // optional int32 m_isCongGuan = 8;
+      // optional int32 m_Gang = 8;
       case 8: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_isCongGuan:
+         parse_m_Gang:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_iscongguan_)));
-          set_has_m_iscongguan();
+                 input, &m_gang_)));
+          set_has_m_gang();
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(72)) goto parse_m_huitouScore;
+        if (input->ExpectTag(72)) goto parse_m_anGang;
         break;
       }
 
-      // optional int32 m_huitouScore = 9;
+      // optional int32 m_anGang = 9;
       case 9: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_huitouScore:
+         parse_m_anGang:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_huitouscore_)));
-          set_has_m_huitouscore();
+                 input, &m_angang_)));
+          set_has_m_angang();
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(80)) goto parse_m_maileiScore;
+        if (input->ExpectTag(80)) goto parse_m_reward;
         break;
       }
 
-      // optional int32 m_maileiScore = 10;
+      // optional int32 m_reward = 10;
       case 10: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_maileiScore:
+         parse_m_reward:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_maileiscore_)));
-          set_has_m_maileiscore();
+                 input, &m_reward_)));
+          set_has_m_reward();
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(88)) goto parse_m_tongScore;
+        if (input->ExpectTag(88)) goto parse_m_score;
         break;
       }
 
-      // optional int32 m_tongScore = 11;
+      // optional int32 m_score = 11;
       case 11: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_tongScore:
+         parse_m_score:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_tongscore_)));
-          set_has_m_tongscore();
+                 input, &m_score_)));
+          set_has_m_score();
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(96)) goto parse_m_gangScore;
+        if (input->ExpectTag(96)) goto parse_m_TotalScore;
         break;
       }
 
-      // optional int32 m_gangScore = 12;
+      // optional int32 m_TotalScore = 12;
       case 12: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_gangScore:
+         parse_m_TotalScore:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_gangscore_)));
-          set_has_m_gangscore();
+                 input, &m_totalscore_)));
+          set_has_m_totalscore();
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(104)) goto parse_m_xiaCGBW;
+        if (input->ExpectTag(160)) goto parse_m_SaoType;
         break;
       }
 
-      // optional int32 m_xiaCGBW = 13;
-      case 13: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_xiaCGBW:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_xiacgbw_)));
-          set_has_m_xiacgbw();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(112)) goto parse_m_huiCGBW;
-        break;
-      }
-
-      // optional int32 m_huiCGBW = 14;
-      case 14: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_huiCGBW:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_huicgbw_)));
-          set_has_m_huicgbw();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(120)) goto parse_m_maiCGBW;
-        break;
-      }
-
-      // optional int32 m_maiCGBW = 15;
-      case 15: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_maiCGBW:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_maicgbw_)));
-          set_has_m_maicgbw();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(128)) goto parse_m_tongCGBW;
-        break;
-      }
-
-      // optional int32 m_tongCGBW = 16;
-      case 16: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_tongCGBW:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_tongcgbw_)));
-          set_has_m_tongcgbw();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(136)) goto parse_m_CZScore;
-        break;
-      }
-
-      // optional int32 m_CZScore = 17;
-      case 17: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_CZScore:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_czscore_)));
-          set_has_m_czscore();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(144)) goto parse_m_HDFZScore;
-        break;
-      }
-
-      // optional int32 m_HDFZScore = 18;
-      case 18: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_HDFZScore:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_hdfzscore_)));
-          set_has_m_hdfzscore();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(152)) goto parse_m_PLRate;
-        break;
-      }
-
-      // optional int32 m_PLRate = 19;
-      case 19: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_PLRate:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_plrate_)));
-          set_has_m_plrate();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(160)) goto parse_m_AnGangType;
-        break;
-      }
-
-      // repeated int32 m_AnGangType = 20;
+      // repeated int32 m_SaoType = 20;
       case 20: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_AnGangType:
+         parse_m_SaoType:
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 2, 160, input, this->mutable_m_angangtype())));
+                 2, 160, input, this->mutable_m_saotype())));
         } else if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag)
                    == ::google::protobuf::internal::WireFormatLite::
                       WIRETYPE_LENGTH_DELIMITED) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, this->mutable_m_angangtype())));
+                 input, this->mutable_m_saotype())));
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(160)) goto parse_m_AnGangType;
+        if (input->ExpectTag(160)) goto parse_m_SaoType;
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -6282,95 +4742,60 @@ void GM_HuHandCardData::SerializeWithCachedSizes(
       2, this->m_handcardtype(i), output);
   }
 
-  // optional int32 m_xiaJing = 3;
-  if (has_m_xiajing()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->m_xiajing(), output);
-  }
-
-  // optional int32 m_ShangJing = 4;
-  if (has_m_shangjing()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->m_shangjing(), output);
-  }
-
-  // optional int32 m_Hufeng = 5;
+  // optional int32 m_Hufeng = 3;
   if (has_m_hufeng()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->m_hufeng(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->m_hufeng(), output);
   }
 
-  // optional int32 m_GoldNum = 6;
-  if (has_m_goldnum()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->m_goldnum(), output);
+  // optional int32 m_ZongLei = 4;
+  if (has_m_zonglei()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->m_zonglei(), output);
   }
 
-  // optional int32 m_isBaWang = 7;
-  if (has_m_isbawang()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->m_isbawang(), output);
+  // optional int32 m_Tan = 5;
+  if (has_m_tan()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->m_tan(), output);
   }
 
-  // optional int32 m_isCongGuan = 8;
-  if (has_m_iscongguan()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->m_iscongguan(), output);
+  // optional int32 m_Sao = 6;
+  if (has_m_sao()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->m_sao(), output);
   }
 
-  // optional int32 m_huitouScore = 9;
-  if (has_m_huitouscore()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->m_huitouscore(), output);
+  // optional int32 m_Peng = 7;
+  if (has_m_peng()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->m_peng(), output);
   }
 
-  // optional int32 m_maileiScore = 10;
-  if (has_m_maileiscore()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(10, this->m_maileiscore(), output);
+  // optional int32 m_Gang = 8;
+  if (has_m_gang()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->m_gang(), output);
   }
 
-  // optional int32 m_tongScore = 11;
-  if (has_m_tongscore()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(11, this->m_tongscore(), output);
+  // optional int32 m_anGang = 9;
+  if (has_m_angang()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->m_angang(), output);
   }
 
-  // optional int32 m_gangScore = 12;
-  if (has_m_gangscore()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(12, this->m_gangscore(), output);
+  // optional int32 m_reward = 10;
+  if (has_m_reward()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(10, this->m_reward(), output);
   }
 
-  // optional int32 m_xiaCGBW = 13;
-  if (has_m_xiacgbw()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(13, this->m_xiacgbw(), output);
+  // optional int32 m_score = 11;
+  if (has_m_score()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(11, this->m_score(), output);
   }
 
-  // optional int32 m_huiCGBW = 14;
-  if (has_m_huicgbw()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(14, this->m_huicgbw(), output);
+  // optional int32 m_TotalScore = 12;
+  if (has_m_totalscore()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(12, this->m_totalscore(), output);
   }
 
-  // optional int32 m_maiCGBW = 15;
-  if (has_m_maicgbw()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(15, this->m_maicgbw(), output);
-  }
-
-  // optional int32 m_tongCGBW = 16;
-  if (has_m_tongcgbw()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(16, this->m_tongcgbw(), output);
-  }
-
-  // optional int32 m_CZScore = 17;
-  if (has_m_czscore()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(17, this->m_czscore(), output);
-  }
-
-  // optional int32 m_HDFZScore = 18;
-  if (has_m_hdfzscore()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(18, this->m_hdfzscore(), output);
-  }
-
-  // optional int32 m_PLRate = 19;
-  if (has_m_plrate()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(19, this->m_plrate(), output);
-  }
-
-  // repeated int32 m_AnGangType = 20;
-  for (int i = 0; i < this->m_angangtype_size(); i++) {
+  // repeated int32 m_SaoType = 20;
+  for (int i = 0; i < this->m_saotype_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(
-      20, this->m_angangtype(i), output);
+      20, this->m_saotype(i), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -6392,95 +4817,60 @@ void GM_HuHandCardData::SerializeWithCachedSizes(
       WriteInt32ToArray(2, this->m_handcardtype(i), target);
   }
 
-  // optional int32 m_xiaJing = 3;
-  if (has_m_xiajing()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->m_xiajing(), target);
-  }
-
-  // optional int32 m_ShangJing = 4;
-  if (has_m_shangjing()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->m_shangjing(), target);
-  }
-
-  // optional int32 m_Hufeng = 5;
+  // optional int32 m_Hufeng = 3;
   if (has_m_hufeng()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->m_hufeng(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->m_hufeng(), target);
   }
 
-  // optional int32 m_GoldNum = 6;
-  if (has_m_goldnum()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->m_goldnum(), target);
+  // optional int32 m_ZongLei = 4;
+  if (has_m_zonglei()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->m_zonglei(), target);
   }
 
-  // optional int32 m_isBaWang = 7;
-  if (has_m_isbawang()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->m_isbawang(), target);
+  // optional int32 m_Tan = 5;
+  if (has_m_tan()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->m_tan(), target);
   }
 
-  // optional int32 m_isCongGuan = 8;
-  if (has_m_iscongguan()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->m_iscongguan(), target);
+  // optional int32 m_Sao = 6;
+  if (has_m_sao()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->m_sao(), target);
   }
 
-  // optional int32 m_huitouScore = 9;
-  if (has_m_huitouscore()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->m_huitouscore(), target);
+  // optional int32 m_Peng = 7;
+  if (has_m_peng()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->m_peng(), target);
   }
 
-  // optional int32 m_maileiScore = 10;
-  if (has_m_maileiscore()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(10, this->m_maileiscore(), target);
+  // optional int32 m_Gang = 8;
+  if (has_m_gang()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->m_gang(), target);
   }
 
-  // optional int32 m_tongScore = 11;
-  if (has_m_tongscore()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(11, this->m_tongscore(), target);
+  // optional int32 m_anGang = 9;
+  if (has_m_angang()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->m_angang(), target);
   }
 
-  // optional int32 m_gangScore = 12;
-  if (has_m_gangscore()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(12, this->m_gangscore(), target);
+  // optional int32 m_reward = 10;
+  if (has_m_reward()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(10, this->m_reward(), target);
   }
 
-  // optional int32 m_xiaCGBW = 13;
-  if (has_m_xiacgbw()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(13, this->m_xiacgbw(), target);
+  // optional int32 m_score = 11;
+  if (has_m_score()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(11, this->m_score(), target);
   }
 
-  // optional int32 m_huiCGBW = 14;
-  if (has_m_huicgbw()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(14, this->m_huicgbw(), target);
+  // optional int32 m_TotalScore = 12;
+  if (has_m_totalscore()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(12, this->m_totalscore(), target);
   }
 
-  // optional int32 m_maiCGBW = 15;
-  if (has_m_maicgbw()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(15, this->m_maicgbw(), target);
-  }
-
-  // optional int32 m_tongCGBW = 16;
-  if (has_m_tongcgbw()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(16, this->m_tongcgbw(), target);
-  }
-
-  // optional int32 m_CZScore = 17;
-  if (has_m_czscore()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(17, this->m_czscore(), target);
-  }
-
-  // optional int32 m_HDFZScore = 18;
-  if (has_m_hdfzscore()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(18, this->m_hdfzscore(), target);
-  }
-
-  // optional int32 m_PLRate = 19;
-  if (has_m_plrate()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(19, this->m_plrate(), target);
-  }
-
-  // repeated int32 m_AnGangType = 20;
-  for (int i = 0; i < this->m_angangtype_size(); i++) {
+  // repeated int32 m_SaoType = 20;
+  for (int i = 0; i < this->m_saotype_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
-      WriteInt32ToArray(20, this->m_angangtype(i), target);
+      WriteInt32ToArray(20, this->m_saotype(i), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -6501,127 +4891,76 @@ int GM_HuHandCardData::ByteSize() const {
           this->m_roleid());
     }
 
-    // optional int32 m_xiaJing = 3;
-    if (has_m_xiajing()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_xiajing());
-    }
-
-    // optional int32 m_ShangJing = 4;
-    if (has_m_shangjing()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_shangjing());
-    }
-
-    // optional int32 m_Hufeng = 5;
+    // optional int32 m_Hufeng = 3;
     if (has_m_hufeng()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->m_hufeng());
     }
 
-    // optional int32 m_GoldNum = 6;
-    if (has_m_goldnum()) {
+    // optional int32 m_ZongLei = 4;
+    if (has_m_zonglei()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_goldnum());
+          this->m_zonglei());
     }
 
-    // optional int32 m_isBaWang = 7;
-    if (has_m_isbawang()) {
+    // optional int32 m_Tan = 5;
+    if (has_m_tan()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_isbawang());
+          this->m_tan());
     }
 
-    // optional int32 m_isCongGuan = 8;
-    if (has_m_iscongguan()) {
+    // optional int32 m_Sao = 6;
+    if (has_m_sao()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_iscongguan());
+          this->m_sao());
+    }
+
+    // optional int32 m_Peng = 7;
+    if (has_m_peng()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->m_peng());
+    }
+
+    // optional int32 m_Gang = 8;
+    if (has_m_gang()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->m_gang());
     }
 
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // optional int32 m_huitouScore = 9;
-    if (has_m_huitouscore()) {
+    // optional int32 m_anGang = 9;
+    if (has_m_angang()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_huitouscore());
+          this->m_angang());
     }
 
-    // optional int32 m_maileiScore = 10;
-    if (has_m_maileiscore()) {
+    // optional int32 m_reward = 10;
+    if (has_m_reward()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_maileiscore());
+          this->m_reward());
     }
 
-    // optional int32 m_tongScore = 11;
-    if (has_m_tongscore()) {
+    // optional int32 m_score = 11;
+    if (has_m_score()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_tongscore());
+          this->m_score());
     }
 
-    // optional int32 m_gangScore = 12;
-    if (has_m_gangscore()) {
+    // optional int32 m_TotalScore = 12;
+    if (has_m_totalscore()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_gangscore());
-    }
-
-    // optional int32 m_xiaCGBW = 13;
-    if (has_m_xiacgbw()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_xiacgbw());
-    }
-
-    // optional int32 m_huiCGBW = 14;
-    if (has_m_huicgbw()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_huicgbw());
-    }
-
-    // optional int32 m_maiCGBW = 15;
-    if (has_m_maicgbw()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_maicgbw());
-    }
-
-    // optional int32 m_tongCGBW = 16;
-    if (has_m_tongcgbw()) {
-      total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_tongcgbw());
-    }
-
-  }
-  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
-    // optional int32 m_CZScore = 17;
-    if (has_m_czscore()) {
-      total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_czscore());
-    }
-
-    // optional int32 m_HDFZScore = 18;
-    if (has_m_hdfzscore()) {
-      total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_hdfzscore());
-    }
-
-    // optional int32 m_PLRate = 19;
-    if (has_m_plrate()) {
-      total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_plrate());
+          this->m_totalscore());
     }
 
   }
@@ -6635,14 +4974,14 @@ int GM_HuHandCardData::ByteSize() const {
     total_size += 1 * this->m_handcardtype_size() + data_size;
   }
 
-  // repeated int32 m_AnGangType = 20;
+  // repeated int32 m_SaoType = 20;
   {
     int data_size = 0;
-    for (int i = 0; i < this->m_angangtype_size(); i++) {
+    for (int i = 0; i < this->m_saotype_size(); i++) {
       data_size += ::google::protobuf::internal::WireFormatLite::
-        Int32Size(this->m_angangtype(i));
+        Int32Size(this->m_saotype(i));
     }
-    total_size += 2 * this->m_angangtype_size() + data_size;
+    total_size += 2 * this->m_saotype_size() + data_size;
   }
 
   if (!unknown_fields().empty()) {
@@ -6671,65 +5010,42 @@ void GM_HuHandCardData::MergeFrom(const ::google::protobuf::Message& from) {
 void GM_HuHandCardData::MergeFrom(const GM_HuHandCardData& from) {
   GOOGLE_CHECK_NE(&from, this);
   m_handcardtype_.MergeFrom(from.m_handcardtype_);
-  m_angangtype_.MergeFrom(from.m_angangtype_);
+  m_saotype_.MergeFrom(from.m_saotype_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_m_roleid()) {
       set_m_roleid(from.m_roleid());
     }
-    if (from.has_m_xiajing()) {
-      set_m_xiajing(from.m_xiajing());
-    }
-    if (from.has_m_shangjing()) {
-      set_m_shangjing(from.m_shangjing());
-    }
     if (from.has_m_hufeng()) {
       set_m_hufeng(from.m_hufeng());
     }
-    if (from.has_m_goldnum()) {
-      set_m_goldnum(from.m_goldnum());
+    if (from.has_m_zonglei()) {
+      set_m_zonglei(from.m_zonglei());
     }
-    if (from.has_m_isbawang()) {
-      set_m_isbawang(from.m_isbawang());
+    if (from.has_m_tan()) {
+      set_m_tan(from.m_tan());
     }
-    if (from.has_m_iscongguan()) {
-      set_m_iscongguan(from.m_iscongguan());
+    if (from.has_m_sao()) {
+      set_m_sao(from.m_sao());
+    }
+    if (from.has_m_peng()) {
+      set_m_peng(from.m_peng());
+    }
+    if (from.has_m_gang()) {
+      set_m_gang(from.m_gang());
     }
   }
   if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    if (from.has_m_huitouscore()) {
-      set_m_huitouscore(from.m_huitouscore());
+    if (from.has_m_angang()) {
+      set_m_angang(from.m_angang());
     }
-    if (from.has_m_maileiscore()) {
-      set_m_maileiscore(from.m_maileiscore());
+    if (from.has_m_reward()) {
+      set_m_reward(from.m_reward());
     }
-    if (from.has_m_tongscore()) {
-      set_m_tongscore(from.m_tongscore());
+    if (from.has_m_score()) {
+      set_m_score(from.m_score());
     }
-    if (from.has_m_gangscore()) {
-      set_m_gangscore(from.m_gangscore());
-    }
-    if (from.has_m_xiacgbw()) {
-      set_m_xiacgbw(from.m_xiacgbw());
-    }
-    if (from.has_m_huicgbw()) {
-      set_m_huicgbw(from.m_huicgbw());
-    }
-    if (from.has_m_maicgbw()) {
-      set_m_maicgbw(from.m_maicgbw());
-    }
-    if (from.has_m_tongcgbw()) {
-      set_m_tongcgbw(from.m_tongcgbw());
-    }
-  }
-  if (from._has_bits_[16 / 32] & (0xffu << (16 % 32))) {
-    if (from.has_m_czscore()) {
-      set_m_czscore(from.m_czscore());
-    }
-    if (from.has_m_hdfzscore()) {
-      set_m_hdfzscore(from.m_hdfzscore());
-    }
-    if (from.has_m_plrate()) {
-      set_m_plrate(from.m_plrate());
+    if (from.has_m_totalscore()) {
+      set_m_totalscore(from.m_totalscore());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -6757,24 +5073,17 @@ void GM_HuHandCardData::Swap(GM_HuHandCardData* other) {
   if (other != this) {
     std::swap(m_roleid_, other->m_roleid_);
     m_handcardtype_.Swap(&other->m_handcardtype_);
-    std::swap(m_xiajing_, other->m_xiajing_);
-    std::swap(m_shangjing_, other->m_shangjing_);
     std::swap(m_hufeng_, other->m_hufeng_);
-    std::swap(m_goldnum_, other->m_goldnum_);
-    std::swap(m_isbawang_, other->m_isbawang_);
-    std::swap(m_iscongguan_, other->m_iscongguan_);
-    std::swap(m_huitouscore_, other->m_huitouscore_);
-    std::swap(m_maileiscore_, other->m_maileiscore_);
-    std::swap(m_tongscore_, other->m_tongscore_);
-    std::swap(m_gangscore_, other->m_gangscore_);
-    std::swap(m_xiacgbw_, other->m_xiacgbw_);
-    std::swap(m_huicgbw_, other->m_huicgbw_);
-    std::swap(m_maicgbw_, other->m_maicgbw_);
-    std::swap(m_tongcgbw_, other->m_tongcgbw_);
-    std::swap(m_czscore_, other->m_czscore_);
-    std::swap(m_hdfzscore_, other->m_hdfzscore_);
-    std::swap(m_plrate_, other->m_plrate_);
-    m_angangtype_.Swap(&other->m_angangtype_);
+    std::swap(m_zonglei_, other->m_zonglei_);
+    std::swap(m_tan_, other->m_tan_);
+    std::swap(m_sao_, other->m_sao_);
+    std::swap(m_peng_, other->m_peng_);
+    std::swap(m_gang_, other->m_gang_);
+    std::swap(m_angang_, other->m_angang_);
+    std::swap(m_reward_, other->m_reward_);
+    std::swap(m_score_, other->m_score_);
+    std::swap(m_totalscore_, other->m_totalscore_);
+    m_saotype_.Swap(&other->m_saotype_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -7389,29 +5698,23 @@ void GM_AutoInfo::Swap(GM_AutoInfo* other) {
 
 #ifndef _MSC_VER
 const int GM_ReconnectMJData::kMBankerPosFieldNumber;
-const int GM_ReconnectMJData::kMZhengFieldNumber;
-const int GM_ReconnectMJData::kMFuFieldNumber;
-const int GM_ReconnectMJData::kMZhengidFieldNumber;
-const int GM_ReconnectMJData::kMJingposFieldNumber;
 const int GM_ReconnectMJData::kMRoomMasterIDFieldNumber;
-const int GM_ReconnectMJData::kMFirstPosFieldNumber;
-const int GM_ReconnectMJData::kMSecondPosFieldNumber;
 const int GM_ReconnectMJData::kMFreeCardFieldNumber;
-const int GM_ReconnectMJData::kMLeftTimeFieldNumber;
 const int GM_ReconnectMJData::kMLeftCountFieldNumber;
 const int GM_ReconnectMJData::kMTotalCountFieldNumber;
-const int GM_ReconnectMJData::kMPlayWayFieldNumber;
-const int GM_ReconnectMJData::kMXiazhengFieldNumber;
-const int GM_ReconnectMJData::kMXiafuFieldNumber;
 const int GM_ReconnectMJData::kMRollCountFieldNumber;
 const int GM_ReconnectMJData::kMPlayerCountFieldNumber;
 const int GM_ReconnectMJData::kMLastOutCardRoleIdFieldNumber;
 const int GM_ReconnectMJData::kMCloseRoomLeftTimeFieldNumber;
+const int GM_ReconnectMJData::kMHuLastCardFieldNumber;
+const int GM_ReconnectMJData::kMGetCardIdFieldNumber;
+const int GM_ReconnectMJData::kMGetCardNumFieldNumber;
+const int GM_ReconnectMJData::kMSendCardIDFieldNumber;
+const int GM_ReconnectMJData::kMSaiziFieldNumber;
 const int GM_ReconnectMJData::kMHandCardFieldNumber;
 const int GM_ReconnectMJData::kMAllDataFieldNumber;
 const int GM_ReconnectMJData::kMCloseRoomDataFieldNumber;
 const int GM_ReconnectMJData::kMHuOperatorDataFieldNumber;
-const int GM_ReconnectMJData::kMHuLastCardFieldNumber;
 #endif  // !_MSC_VER
 
 GM_ReconnectMJData::GM_ReconnectMJData()
@@ -7432,26 +5735,19 @@ GM_ReconnectMJData::GM_ReconnectMJData(const GM_ReconnectMJData& from)
 void GM_ReconnectMJData::SharedCtor() {
   _cached_size_ = 0;
   m_bankerpos_ = 0;
-  m_zheng_ = 0;
-  m_fu_ = 0;
-  m_zhengid_ = 0;
-  m_jingpos_ = 0;
   m_roommasterid_ = 0;
-  m_firstpos_ = 0;
-  m_secondpos_ = 0;
   m_freecard_ = 0;
-  m_lefttime_ = 0;
   m_leftcount_ = 0;
   m_totalcount_ = 0;
-  m_playway_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  m_xiazheng_ = 0;
-  m_xiafu_ = 0;
   m_rollcount_ = 0;
   m_playercount_ = 0;
   m_lastoutcardroleid_ = 0;
   m_closeroomlefttime_ = 0;
-  m_huoperatordata_ = NULL;
   m_hulastcard_ = 0;
+  m_getcardid_ = 0;
+  m_getcardnum_ = 0;
+  m_sendcardid_ = 0;
+  m_huoperatordata_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -7460,9 +5756,6 @@ GM_ReconnectMJData::~GM_ReconnectMJData() {
 }
 
 void GM_ReconnectMJData::SharedDtor() {
-  if (m_playway_ != &::google::protobuf::internal::kEmptyString) {
-    delete m_playway_;
-  }
   if (this != default_instance_) {
     delete m_huoperatordata_;
   }
@@ -7492,37 +5785,27 @@ GM_ReconnectMJData* GM_ReconnectMJData::New() const {
 void GM_ReconnectMJData::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     m_bankerpos_ = 0;
-    m_zheng_ = 0;
-    m_fu_ = 0;
-    m_zhengid_ = 0;
-    m_jingpos_ = 0;
     m_roommasterid_ = 0;
-    m_firstpos_ = 0;
-    m_secondpos_ = 0;
-  }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     m_freecard_ = 0;
-    m_lefttime_ = 0;
     m_leftcount_ = 0;
     m_totalcount_ = 0;
-    if (has_m_playway()) {
-      if (m_playway_ != &::google::protobuf::internal::kEmptyString) {
-        m_playway_->clear();
-      }
-    }
-    m_xiazheng_ = 0;
-    m_xiafu_ = 0;
     m_rollcount_ = 0;
-  }
-  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
     m_playercount_ = 0;
     m_lastoutcardroleid_ = 0;
+  }
+  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     m_closeroomlefttime_ = 0;
+    m_hulastcard_ = 0;
+    m_getcardid_ = 0;
+    m_getcardnum_ = 0;
+    m_sendcardid_ = 0;
+  }
+  if (_has_bits_[17 / 32] & (0xffu << (17 % 32))) {
     if (has_m_huoperatordata()) {
       if (m_huoperatordata_ != NULL) m_huoperatordata_->::GM_HUOperator::Clear();
     }
-    m_hulastcard_ = 0;
   }
+  m_saizi_.Clear();
   m_handcard_.Clear();
   m_alldata_.Clear();
   m_closeroomdata_.Clear();
@@ -7547,76 +5830,12 @@ bool GM_ReconnectMJData::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(16)) goto parse_m_zheng;
+        if (input->ExpectTag(16)) goto parse_m_RoomMasterID;
         break;
       }
 
-      // optional int32 m_zheng = 2;
+      // optional int32 m_RoomMasterID = 2;
       case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_zheng:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_zheng_)));
-          set_has_m_zheng();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(24)) goto parse_m_fu;
-        break;
-      }
-
-      // optional int32 m_fu = 3;
-      case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_fu:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_fu_)));
-          set_has_m_fu();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(32)) goto parse_m_zhengid;
-        break;
-      }
-
-      // optional int32 m_zhengid = 4;
-      case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_zhengid:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_zhengid_)));
-          set_has_m_zhengid();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(40)) goto parse_m_jingpos;
-        break;
-      }
-
-      // optional int32 m_jingpos = 5;
-      case 5: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_jingpos:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_jingpos_)));
-          set_has_m_jingpos();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(48)) goto parse_m_RoomMasterID;
-        break;
-      }
-
-      // optional int32 m_RoomMasterID = 6;
-      case 6: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_m_RoomMasterID:
@@ -7627,44 +5846,12 @@ bool GM_ReconnectMJData::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(56)) goto parse_m_FirstPos;
+        if (input->ExpectTag(24)) goto parse_m_FreeCard;
         break;
       }
 
-      // optional int32 m_FirstPos = 7;
-      case 7: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_FirstPos:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_firstpos_)));
-          set_has_m_firstpos();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(64)) goto parse_m_SecondPos;
-        break;
-      }
-
-      // optional int32 m_SecondPos = 8;
-      case 8: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_SecondPos:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_secondpos_)));
-          set_has_m_secondpos();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(72)) goto parse_m_FreeCard;
-        break;
-      }
-
-      // optional int32 m_FreeCard = 9;
-      case 9: {
+      // optional int32 m_FreeCard = 3;
+      case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_m_FreeCard:
@@ -7675,28 +5862,12 @@ bool GM_ReconnectMJData::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(80)) goto parse_m_leftTime;
+        if (input->ExpectTag(32)) goto parse_m_leftCount;
         break;
       }
 
-      // optional int32 m_leftTime = 10;
-      case 10: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_leftTime:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_lefttime_)));
-          set_has_m_lefttime();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(88)) goto parse_m_leftCount;
-        break;
-      }
-
-      // optional int32 m_leftCount = 11;
-      case 11: {
+      // optional int32 m_leftCount = 4;
+      case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_m_leftCount:
@@ -7707,12 +5878,12 @@ bool GM_ReconnectMJData::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(96)) goto parse_m_totalCount;
+        if (input->ExpectTag(40)) goto parse_m_totalCount;
         break;
       }
 
-      // optional int32 m_totalCount = 12;
-      case 12: {
+      // optional int32 m_totalCount = 5;
+      case 5: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_m_totalCount:
@@ -7723,61 +5894,12 @@ bool GM_ReconnectMJData::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(106)) goto parse_m_playWay;
+        if (input->ExpectTag(48)) goto parse_m_rollCount;
         break;
       }
 
-      // optional string m_playWay = 13;
-      case 13: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_m_playWay:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_m_playway()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->m_playway().data(), this->m_playway().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(112)) goto parse_m_xiazheng;
-        break;
-      }
-
-      // optional int32 m_xiazheng = 14;
-      case 14: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_xiazheng:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_xiazheng_)));
-          set_has_m_xiazheng();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(120)) goto parse_m_xiafu;
-        break;
-      }
-
-      // optional int32 m_xiafu = 15;
-      case 15: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_xiafu:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_xiafu_)));
-          set_has_m_xiafu();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(128)) goto parse_m_rollCount;
-        break;
-      }
-
-      // optional int32 m_rollCount = 16;
-      case 16: {
+      // optional int32 m_rollCount = 6;
+      case 6: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_m_rollCount:
@@ -7788,12 +5910,12 @@ bool GM_ReconnectMJData::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(136)) goto parse_m_playerCount;
+        if (input->ExpectTag(56)) goto parse_m_playerCount;
         break;
       }
 
-      // optional int32 m_playerCount = 17;
-      case 17: {
+      // optional int32 m_playerCount = 7;
+      case 7: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_m_playerCount:
@@ -7804,12 +5926,12 @@ bool GM_ReconnectMJData::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(144)) goto parse_m_lastOutCardRoleId;
+        if (input->ExpectTag(64)) goto parse_m_lastOutCardRoleId;
         break;
       }
 
-      // optional int32 m_lastOutCardRoleId = 18;
-      case 18: {
+      // optional int32 m_lastOutCardRoleId = 8;
+      case 8: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_m_lastOutCardRoleId:
@@ -7820,12 +5942,12 @@ bool GM_ReconnectMJData::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(152)) goto parse_m_closeRoomLeftTime;
+        if (input->ExpectTag(72)) goto parse_m_closeRoomLeftTime;
         break;
       }
 
-      // optional int32 m_closeRoomLeftTime = 19;
-      case 19: {
+      // optional int32 m_closeRoomLeftTime = 9;
+      case 9: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_m_closeRoomLeftTime:
@@ -7836,12 +5958,98 @@ bool GM_ReconnectMJData::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(162)) goto parse_m_HandCard;
+        if (input->ExpectTag(80)) goto parse_m_huLastCard;
         break;
       }
 
-      // repeated .GM_PlayerHandCard m_HandCard = 20;
+      // optional int32 m_huLastCard = 10;
+      case 10: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_m_huLastCard:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &m_hulastcard_)));
+          set_has_m_hulastcard();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(88)) goto parse_m_getCardId;
+        break;
+      }
+
+      // optional int32 m_getCardId = 11;
+      case 11: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_m_getCardId:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &m_getcardid_)));
+          set_has_m_getcardid();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(96)) goto parse_m_getCardNum;
+        break;
+      }
+
+      // optional int32 m_getCardNum = 12;
+      case 12: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_m_getCardNum:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &m_getcardnum_)));
+          set_has_m_getcardnum();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(104)) goto parse_m_sendCardID;
+        break;
+      }
+
+      // optional int32 m_sendCardID = 13;
+      case 13: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_m_sendCardID:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &m_sendcardid_)));
+          set_has_m_sendcardid();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(160)) goto parse_m_saizi;
+        break;
+      }
+
+      // repeated int32 m_saizi = 20;
       case 20: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_m_saizi:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 2, 160, input, this->mutable_m_saizi())));
+        } else if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag)
+                   == ::google::protobuf::internal::WireFormatLite::
+                      WIRETYPE_LENGTH_DELIMITED) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, this->mutable_m_saizi())));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(160)) goto parse_m_saizi;
+        if (input->ExpectTag(170)) goto parse_m_HandCard;
+        break;
+      }
+
+      // repeated .GM_PlayerHandCard m_HandCard = 21;
+      case 21: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_m_HandCard:
@@ -7850,13 +6058,13 @@ bool GM_ReconnectMJData::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(162)) goto parse_m_HandCard;
-        if (input->ExpectTag(170)) goto parse_m_AllData;
+        if (input->ExpectTag(170)) goto parse_m_HandCard;
+        if (input->ExpectTag(178)) goto parse_m_AllData;
         break;
       }
 
-      // repeated .GM_ReconnectPlayerData m_AllData = 21;
-      case 21: {
+      // repeated .GM_ReconnectPlayerData m_AllData = 22;
+      case 22: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_m_AllData:
@@ -7865,13 +6073,13 @@ bool GM_ReconnectMJData::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(170)) goto parse_m_AllData;
-        if (input->ExpectTag(178)) goto parse_m_CloseRoomData;
+        if (input->ExpectTag(178)) goto parse_m_AllData;
+        if (input->ExpectTag(186)) goto parse_m_CloseRoomData;
         break;
       }
 
-      // repeated .GM_ReconnectCloseRoomData m_CloseRoomData = 22;
-      case 22: {
+      // repeated .GM_ReconnectCloseRoomData m_CloseRoomData = 23;
+      case 23: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_m_CloseRoomData:
@@ -7880,34 +6088,18 @@ bool GM_ReconnectMJData::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(178)) goto parse_m_CloseRoomData;
-        if (input->ExpectTag(186)) goto parse_m_huOperatorData;
+        if (input->ExpectTag(186)) goto parse_m_CloseRoomData;
+        if (input->ExpectTag(194)) goto parse_m_huOperatorData;
         break;
       }
 
-      // optional .GM_HUOperator m_huOperatorData = 23;
-      case 23: {
+      // optional .GM_HUOperator m_huOperatorData = 24;
+      case 24: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_m_huOperatorData:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_m_huoperatordata()));
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(192)) goto parse_m_huLastCard;
-        break;
-      }
-
-      // optional int32 m_huLastCard = 24;
-      case 24: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_m_huLastCard:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &m_hulastcard_)));
-          set_has_m_hulastcard();
         } else {
           goto handle_uninterpreted;
         }
@@ -7938,127 +6130,94 @@ void GM_ReconnectMJData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->m_bankerpos(), output);
   }
 
-  // optional int32 m_zheng = 2;
-  if (has_m_zheng()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->m_zheng(), output);
-  }
-
-  // optional int32 m_fu = 3;
-  if (has_m_fu()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->m_fu(), output);
-  }
-
-  // optional int32 m_zhengid = 4;
-  if (has_m_zhengid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->m_zhengid(), output);
-  }
-
-  // optional int32 m_jingpos = 5;
-  if (has_m_jingpos()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->m_jingpos(), output);
-  }
-
-  // optional int32 m_RoomMasterID = 6;
+  // optional int32 m_RoomMasterID = 2;
   if (has_m_roommasterid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->m_roommasterid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->m_roommasterid(), output);
   }
 
-  // optional int32 m_FirstPos = 7;
-  if (has_m_firstpos()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->m_firstpos(), output);
-  }
-
-  // optional int32 m_SecondPos = 8;
-  if (has_m_secondpos()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->m_secondpos(), output);
-  }
-
-  // optional int32 m_FreeCard = 9;
+  // optional int32 m_FreeCard = 3;
   if (has_m_freecard()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->m_freecard(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->m_freecard(), output);
   }
 
-  // optional int32 m_leftTime = 10;
-  if (has_m_lefttime()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(10, this->m_lefttime(), output);
-  }
-
-  // optional int32 m_leftCount = 11;
+  // optional int32 m_leftCount = 4;
   if (has_m_leftcount()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(11, this->m_leftcount(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->m_leftcount(), output);
   }
 
-  // optional int32 m_totalCount = 12;
+  // optional int32 m_totalCount = 5;
   if (has_m_totalcount()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(12, this->m_totalcount(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->m_totalcount(), output);
   }
 
-  // optional string m_playWay = 13;
-  if (has_m_playway()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->m_playway().data(), this->m_playway().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      13, this->m_playway(), output);
-  }
-
-  // optional int32 m_xiazheng = 14;
-  if (has_m_xiazheng()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(14, this->m_xiazheng(), output);
-  }
-
-  // optional int32 m_xiafu = 15;
-  if (has_m_xiafu()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(15, this->m_xiafu(), output);
-  }
-
-  // optional int32 m_rollCount = 16;
+  // optional int32 m_rollCount = 6;
   if (has_m_rollcount()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(16, this->m_rollcount(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->m_rollcount(), output);
   }
 
-  // optional int32 m_playerCount = 17;
+  // optional int32 m_playerCount = 7;
   if (has_m_playercount()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(17, this->m_playercount(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->m_playercount(), output);
   }
 
-  // optional int32 m_lastOutCardRoleId = 18;
+  // optional int32 m_lastOutCardRoleId = 8;
   if (has_m_lastoutcardroleid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(18, this->m_lastoutcardroleid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->m_lastoutcardroleid(), output);
   }
 
-  // optional int32 m_closeRoomLeftTime = 19;
+  // optional int32 m_closeRoomLeftTime = 9;
   if (has_m_closeroomlefttime()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(19, this->m_closeroomlefttime(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->m_closeroomlefttime(), output);
   }
 
-  // repeated .GM_PlayerHandCard m_HandCard = 20;
+  // optional int32 m_huLastCard = 10;
+  if (has_m_hulastcard()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(10, this->m_hulastcard(), output);
+  }
+
+  // optional int32 m_getCardId = 11;
+  if (has_m_getcardid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(11, this->m_getcardid(), output);
+  }
+
+  // optional int32 m_getCardNum = 12;
+  if (has_m_getcardnum()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(12, this->m_getcardnum(), output);
+  }
+
+  // optional int32 m_sendCardID = 13;
+  if (has_m_sendcardid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(13, this->m_sendcardid(), output);
+  }
+
+  // repeated int32 m_saizi = 20;
+  for (int i = 0; i < this->m_saizi_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(
+      20, this->m_saizi(i), output);
+  }
+
+  // repeated .GM_PlayerHandCard m_HandCard = 21;
   for (int i = 0; i < this->m_handcard_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      20, this->m_handcard(i), output);
+      21, this->m_handcard(i), output);
   }
 
-  // repeated .GM_ReconnectPlayerData m_AllData = 21;
+  // repeated .GM_ReconnectPlayerData m_AllData = 22;
   for (int i = 0; i < this->m_alldata_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      21, this->m_alldata(i), output);
+      22, this->m_alldata(i), output);
   }
 
-  // repeated .GM_ReconnectCloseRoomData m_CloseRoomData = 22;
+  // repeated .GM_ReconnectCloseRoomData m_CloseRoomData = 23;
   for (int i = 0; i < this->m_closeroomdata_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      22, this->m_closeroomdata(i), output);
+      23, this->m_closeroomdata(i), output);
   }
 
-  // optional .GM_HUOperator m_huOperatorData = 23;
+  // optional .GM_HUOperator m_huOperatorData = 24;
   if (has_m_huoperatordata()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      23, this->m_huoperatordata(), output);
-  }
-
-  // optional int32 m_huLastCard = 24;
-  if (has_m_hulastcard()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(24, this->m_hulastcard(), output);
+      24, this->m_huoperatordata(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -8074,132 +6233,98 @@ void GM_ReconnectMJData::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->m_bankerpos(), target);
   }
 
-  // optional int32 m_zheng = 2;
-  if (has_m_zheng()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->m_zheng(), target);
-  }
-
-  // optional int32 m_fu = 3;
-  if (has_m_fu()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->m_fu(), target);
-  }
-
-  // optional int32 m_zhengid = 4;
-  if (has_m_zhengid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->m_zhengid(), target);
-  }
-
-  // optional int32 m_jingpos = 5;
-  if (has_m_jingpos()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->m_jingpos(), target);
-  }
-
-  // optional int32 m_RoomMasterID = 6;
+  // optional int32 m_RoomMasterID = 2;
   if (has_m_roommasterid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->m_roommasterid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->m_roommasterid(), target);
   }
 
-  // optional int32 m_FirstPos = 7;
-  if (has_m_firstpos()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->m_firstpos(), target);
-  }
-
-  // optional int32 m_SecondPos = 8;
-  if (has_m_secondpos()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->m_secondpos(), target);
-  }
-
-  // optional int32 m_FreeCard = 9;
+  // optional int32 m_FreeCard = 3;
   if (has_m_freecard()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->m_freecard(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->m_freecard(), target);
   }
 
-  // optional int32 m_leftTime = 10;
-  if (has_m_lefttime()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(10, this->m_lefttime(), target);
-  }
-
-  // optional int32 m_leftCount = 11;
+  // optional int32 m_leftCount = 4;
   if (has_m_leftcount()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(11, this->m_leftcount(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->m_leftcount(), target);
   }
 
-  // optional int32 m_totalCount = 12;
+  // optional int32 m_totalCount = 5;
   if (has_m_totalcount()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(12, this->m_totalcount(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->m_totalcount(), target);
   }
 
-  // optional string m_playWay = 13;
-  if (has_m_playway()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->m_playway().data(), this->m_playway().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        13, this->m_playway(), target);
-  }
-
-  // optional int32 m_xiazheng = 14;
-  if (has_m_xiazheng()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(14, this->m_xiazheng(), target);
-  }
-
-  // optional int32 m_xiafu = 15;
-  if (has_m_xiafu()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(15, this->m_xiafu(), target);
-  }
-
-  // optional int32 m_rollCount = 16;
+  // optional int32 m_rollCount = 6;
   if (has_m_rollcount()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(16, this->m_rollcount(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->m_rollcount(), target);
   }
 
-  // optional int32 m_playerCount = 17;
+  // optional int32 m_playerCount = 7;
   if (has_m_playercount()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(17, this->m_playercount(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->m_playercount(), target);
   }
 
-  // optional int32 m_lastOutCardRoleId = 18;
+  // optional int32 m_lastOutCardRoleId = 8;
   if (has_m_lastoutcardroleid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(18, this->m_lastoutcardroleid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->m_lastoutcardroleid(), target);
   }
 
-  // optional int32 m_closeRoomLeftTime = 19;
+  // optional int32 m_closeRoomLeftTime = 9;
   if (has_m_closeroomlefttime()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(19, this->m_closeroomlefttime(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->m_closeroomlefttime(), target);
   }
 
-  // repeated .GM_PlayerHandCard m_HandCard = 20;
+  // optional int32 m_huLastCard = 10;
+  if (has_m_hulastcard()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(10, this->m_hulastcard(), target);
+  }
+
+  // optional int32 m_getCardId = 11;
+  if (has_m_getcardid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(11, this->m_getcardid(), target);
+  }
+
+  // optional int32 m_getCardNum = 12;
+  if (has_m_getcardnum()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(12, this->m_getcardnum(), target);
+  }
+
+  // optional int32 m_sendCardID = 13;
+  if (has_m_sendcardid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(13, this->m_sendcardid(), target);
+  }
+
+  // repeated int32 m_saizi = 20;
+  for (int i = 0; i < this->m_saizi_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteInt32ToArray(20, this->m_saizi(i), target);
+  }
+
+  // repeated .GM_PlayerHandCard m_HandCard = 21;
   for (int i = 0; i < this->m_handcard_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        20, this->m_handcard(i), target);
+        21, this->m_handcard(i), target);
   }
 
-  // repeated .GM_ReconnectPlayerData m_AllData = 21;
+  // repeated .GM_ReconnectPlayerData m_AllData = 22;
   for (int i = 0; i < this->m_alldata_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        21, this->m_alldata(i), target);
+        22, this->m_alldata(i), target);
   }
 
-  // repeated .GM_ReconnectCloseRoomData m_CloseRoomData = 22;
+  // repeated .GM_ReconnectCloseRoomData m_CloseRoomData = 23;
   for (int i = 0; i < this->m_closeroomdata_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        22, this->m_closeroomdata(i), target);
+        23, this->m_closeroomdata(i), target);
   }
 
-  // optional .GM_HUOperator m_huOperatorData = 23;
+  // optional .GM_HUOperator m_huOperatorData = 24;
   if (has_m_huoperatordata()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        23, this->m_huoperatordata(), target);
-  }
-
-  // optional int32 m_huLastCard = 24;
-  if (has_m_hulastcard()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(24, this->m_hulastcard(), target);
+        24, this->m_huoperatordata(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -8220,152 +6345,113 @@ int GM_ReconnectMJData::ByteSize() const {
           this->m_bankerpos());
     }
 
-    // optional int32 m_zheng = 2;
-    if (has_m_zheng()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_zheng());
-    }
-
-    // optional int32 m_fu = 3;
-    if (has_m_fu()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_fu());
-    }
-
-    // optional int32 m_zhengid = 4;
-    if (has_m_zhengid()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_zhengid());
-    }
-
-    // optional int32 m_jingpos = 5;
-    if (has_m_jingpos()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_jingpos());
-    }
-
-    // optional int32 m_RoomMasterID = 6;
+    // optional int32 m_RoomMasterID = 2;
     if (has_m_roommasterid()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->m_roommasterid());
     }
 
-    // optional int32 m_FirstPos = 7;
-    if (has_m_firstpos()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_firstpos());
-    }
-
-    // optional int32 m_SecondPos = 8;
-    if (has_m_secondpos()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_secondpos());
-    }
-
-  }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // optional int32 m_FreeCard = 9;
+    // optional int32 m_FreeCard = 3;
     if (has_m_freecard()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->m_freecard());
     }
 
-    // optional int32 m_leftTime = 10;
-    if (has_m_lefttime()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_lefttime());
-    }
-
-    // optional int32 m_leftCount = 11;
+    // optional int32 m_leftCount = 4;
     if (has_m_leftcount()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->m_leftcount());
     }
 
-    // optional int32 m_totalCount = 12;
+    // optional int32 m_totalCount = 5;
     if (has_m_totalcount()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->m_totalcount());
     }
 
-    // optional string m_playWay = 13;
-    if (has_m_playway()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->m_playway());
-    }
-
-    // optional int32 m_xiazheng = 14;
-    if (has_m_xiazheng()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_xiazheng());
-    }
-
-    // optional int32 m_xiafu = 15;
-    if (has_m_xiafu()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_xiafu());
-    }
-
-    // optional int32 m_rollCount = 16;
+    // optional int32 m_rollCount = 6;
     if (has_m_rollcount()) {
-      total_size += 2 +
+      total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->m_rollcount());
     }
 
-  }
-  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
-    // optional int32 m_playerCount = 17;
+    // optional int32 m_playerCount = 7;
     if (has_m_playercount()) {
-      total_size += 2 +
+      total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->m_playercount());
     }
 
-    // optional int32 m_lastOutCardRoleId = 18;
+    // optional int32 m_lastOutCardRoleId = 8;
     if (has_m_lastoutcardroleid()) {
-      total_size += 2 +
+      total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->m_lastoutcardroleid());
     }
 
-    // optional int32 m_closeRoomLeftTime = 19;
+  }
+  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    // optional int32 m_closeRoomLeftTime = 9;
     if (has_m_closeroomlefttime()) {
-      total_size += 2 +
+      total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->m_closeroomlefttime());
     }
 
-    // optional .GM_HUOperator m_huOperatorData = 23;
+    // optional int32 m_huLastCard = 10;
+    if (has_m_hulastcard()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->m_hulastcard());
+    }
+
+    // optional int32 m_getCardId = 11;
+    if (has_m_getcardid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->m_getcardid());
+    }
+
+    // optional int32 m_getCardNum = 12;
+    if (has_m_getcardnum()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->m_getcardnum());
+    }
+
+    // optional int32 m_sendCardID = 13;
+    if (has_m_sendcardid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->m_sendcardid());
+    }
+
+  }
+  if (_has_bits_[17 / 32] & (0xffu << (17 % 32))) {
+    // optional .GM_HUOperator m_huOperatorData = 24;
     if (has_m_huoperatordata()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->m_huoperatordata());
     }
 
-    // optional int32 m_huLastCard = 24;
-    if (has_m_hulastcard()) {
-      total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->m_hulastcard());
-    }
-
   }
-  // repeated .GM_PlayerHandCard m_HandCard = 20;
+  // repeated int32 m_saizi = 20;
+  {
+    int data_size = 0;
+    for (int i = 0; i < this->m_saizi_size(); i++) {
+      data_size += ::google::protobuf::internal::WireFormatLite::
+        Int32Size(this->m_saizi(i));
+    }
+    total_size += 2 * this->m_saizi_size() + data_size;
+  }
+
+  // repeated .GM_PlayerHandCard m_HandCard = 21;
   total_size += 2 * this->m_handcard_size();
   for (int i = 0; i < this->m_handcard_size(); i++) {
     total_size +=
@@ -8373,7 +6459,7 @@ int GM_ReconnectMJData::ByteSize() const {
         this->m_handcard(i));
   }
 
-  // repeated .GM_ReconnectPlayerData m_AllData = 21;
+  // repeated .GM_ReconnectPlayerData m_AllData = 22;
   total_size += 2 * this->m_alldata_size();
   for (int i = 0; i < this->m_alldata_size(); i++) {
     total_size +=
@@ -8381,7 +6467,7 @@ int GM_ReconnectMJData::ByteSize() const {
         this->m_alldata(i));
   }
 
-  // repeated .GM_ReconnectCloseRoomData m_CloseRoomData = 22;
+  // repeated .GM_ReconnectCloseRoomData m_CloseRoomData = 23;
   total_size += 2 * this->m_closeroomdata_size();
   for (int i = 0; i < this->m_closeroomdata_size(); i++) {
     total_size +=
@@ -8414,6 +6500,7 @@ void GM_ReconnectMJData::MergeFrom(const ::google::protobuf::Message& from) {
 
 void GM_ReconnectMJData::MergeFrom(const GM_ReconnectMJData& from) {
   GOOGLE_CHECK_NE(&from, this);
+  m_saizi_.MergeFrom(from.m_saizi_);
   m_handcard_.MergeFrom(from.m_handcard_);
   m_alldata_.MergeFrom(from.m_alldata_);
   m_closeroomdata_.MergeFrom(from.m_closeroomdata_);
@@ -8421,34 +6508,11 @@ void GM_ReconnectMJData::MergeFrom(const GM_ReconnectMJData& from) {
     if (from.has_m_bankerpos()) {
       set_m_bankerpos(from.m_bankerpos());
     }
-    if (from.has_m_zheng()) {
-      set_m_zheng(from.m_zheng());
-    }
-    if (from.has_m_fu()) {
-      set_m_fu(from.m_fu());
-    }
-    if (from.has_m_zhengid()) {
-      set_m_zhengid(from.m_zhengid());
-    }
-    if (from.has_m_jingpos()) {
-      set_m_jingpos(from.m_jingpos());
-    }
     if (from.has_m_roommasterid()) {
       set_m_roommasterid(from.m_roommasterid());
     }
-    if (from.has_m_firstpos()) {
-      set_m_firstpos(from.m_firstpos());
-    }
-    if (from.has_m_secondpos()) {
-      set_m_secondpos(from.m_secondpos());
-    }
-  }
-  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (from.has_m_freecard()) {
       set_m_freecard(from.m_freecard());
-    }
-    if (from.has_m_lefttime()) {
-      set_m_lefttime(from.m_lefttime());
     }
     if (from.has_m_leftcount()) {
       set_m_leftcount(from.m_leftcount());
@@ -8456,34 +6520,36 @@ void GM_ReconnectMJData::MergeFrom(const GM_ReconnectMJData& from) {
     if (from.has_m_totalcount()) {
       set_m_totalcount(from.m_totalcount());
     }
-    if (from.has_m_playway()) {
-      set_m_playway(from.m_playway());
-    }
-    if (from.has_m_xiazheng()) {
-      set_m_xiazheng(from.m_xiazheng());
-    }
-    if (from.has_m_xiafu()) {
-      set_m_xiafu(from.m_xiafu());
-    }
     if (from.has_m_rollcount()) {
       set_m_rollcount(from.m_rollcount());
     }
-  }
-  if (from._has_bits_[16 / 32] & (0xffu << (16 % 32))) {
     if (from.has_m_playercount()) {
       set_m_playercount(from.m_playercount());
     }
     if (from.has_m_lastoutcardroleid()) {
       set_m_lastoutcardroleid(from.m_lastoutcardroleid());
     }
+  }
+  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (from.has_m_closeroomlefttime()) {
       set_m_closeroomlefttime(from.m_closeroomlefttime());
     }
-    if (from.has_m_huoperatordata()) {
-      mutable_m_huoperatordata()->::GM_HUOperator::MergeFrom(from.m_huoperatordata());
-    }
     if (from.has_m_hulastcard()) {
       set_m_hulastcard(from.m_hulastcard());
+    }
+    if (from.has_m_getcardid()) {
+      set_m_getcardid(from.m_getcardid());
+    }
+    if (from.has_m_getcardnum()) {
+      set_m_getcardnum(from.m_getcardnum());
+    }
+    if (from.has_m_sendcardid()) {
+      set_m_sendcardid(from.m_sendcardid());
+    }
+  }
+  if (from._has_bits_[17 / 32] & (0xffu << (17 % 32))) {
+    if (from.has_m_huoperatordata()) {
+      mutable_m_huoperatordata()->::GM_HUOperator::MergeFrom(from.m_huoperatordata());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -8522,29 +6588,23 @@ bool GM_ReconnectMJData::IsInitialized() const {
 void GM_ReconnectMJData::Swap(GM_ReconnectMJData* other) {
   if (other != this) {
     std::swap(m_bankerpos_, other->m_bankerpos_);
-    std::swap(m_zheng_, other->m_zheng_);
-    std::swap(m_fu_, other->m_fu_);
-    std::swap(m_zhengid_, other->m_zhengid_);
-    std::swap(m_jingpos_, other->m_jingpos_);
     std::swap(m_roommasterid_, other->m_roommasterid_);
-    std::swap(m_firstpos_, other->m_firstpos_);
-    std::swap(m_secondpos_, other->m_secondpos_);
     std::swap(m_freecard_, other->m_freecard_);
-    std::swap(m_lefttime_, other->m_lefttime_);
     std::swap(m_leftcount_, other->m_leftcount_);
     std::swap(m_totalcount_, other->m_totalcount_);
-    std::swap(m_playway_, other->m_playway_);
-    std::swap(m_xiazheng_, other->m_xiazheng_);
-    std::swap(m_xiafu_, other->m_xiafu_);
     std::swap(m_rollcount_, other->m_rollcount_);
     std::swap(m_playercount_, other->m_playercount_);
     std::swap(m_lastoutcardroleid_, other->m_lastoutcardroleid_);
     std::swap(m_closeroomlefttime_, other->m_closeroomlefttime_);
+    std::swap(m_hulastcard_, other->m_hulastcard_);
+    std::swap(m_getcardid_, other->m_getcardid_);
+    std::swap(m_getcardnum_, other->m_getcardnum_);
+    std::swap(m_sendcardid_, other->m_sendcardid_);
+    m_saizi_.Swap(&other->m_saizi_);
     m_handcard_.Swap(&other->m_handcard_);
     m_alldata_.Swap(&other->m_alldata_);
     m_closeroomdata_.Swap(&other->m_closeroomdata_);
     std::swap(m_huoperatordata_, other->m_huoperatordata_);
-    std::swap(m_hulastcard_, other->m_hulastcard_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -12065,6 +10125,215 @@ void GM_PlayerRecivePack::Swap(GM_PlayerRecivePack* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = GM_PlayerRecivePack_descriptor_;
   metadata.reflection = GM_PlayerRecivePack_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int GM_MJOperatorError::kMResultFieldNumber;
+#endif  // !_MSC_VER
+
+GM_MJOperatorError::GM_MJOperatorError()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void GM_MJOperatorError::InitAsDefaultInstance() {
+}
+
+GM_MJOperatorError::GM_MJOperatorError(const GM_MJOperatorError& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void GM_MJOperatorError::SharedCtor() {
+  _cached_size_ = 0;
+  m_result_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+GM_MJOperatorError::~GM_MJOperatorError() {
+  SharedDtor();
+}
+
+void GM_MJOperatorError::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void GM_MJOperatorError::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* GM_MJOperatorError::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return GM_MJOperatorError_descriptor_;
+}
+
+const GM_MJOperatorError& GM_MJOperatorError::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_majiang_2etxt();
+  return *default_instance_;
+}
+
+GM_MJOperatorError* GM_MJOperatorError::default_instance_ = NULL;
+
+GM_MJOperatorError* GM_MJOperatorError::New() const {
+  return new GM_MJOperatorError;
+}
+
+void GM_MJOperatorError::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    m_result_ = 0;
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool GM_MJOperatorError::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required int32 m_Result = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &m_result_)));
+          set_has_m_result();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void GM_MJOperatorError::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // required int32 m_Result = 1;
+  if (has_m_result()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->m_result(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* GM_MJOperatorError::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required int32 m_Result = 1;
+  if (has_m_result()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->m_result(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int GM_MJOperatorError::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required int32 m_Result = 1;
+    if (has_m_result()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->m_result());
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void GM_MJOperatorError::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const GM_MJOperatorError* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const GM_MJOperatorError*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void GM_MJOperatorError::MergeFrom(const GM_MJOperatorError& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_m_result()) {
+      set_m_result(from.m_result());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void GM_MJOperatorError::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void GM_MJOperatorError::CopyFrom(const GM_MJOperatorError& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool GM_MJOperatorError::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+
+  return true;
+}
+
+void GM_MJOperatorError::Swap(GM_MJOperatorError* other) {
+  if (other != this) {
+    std::swap(m_result_, other->m_result_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata GM_MJOperatorError::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = GM_MJOperatorError_descriptor_;
+  metadata.reflection = GM_MJOperatorError_reflection_;
   return metadata;
 }
 

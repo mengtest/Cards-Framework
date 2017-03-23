@@ -1943,10 +1943,9 @@ enum GameMessage
 	GM_PlayerRecivePackReturn,//玩家收到服务器包之后返回核对包;
 	GM_PlayerGameStateRequest,//玩家在异常情况下请求当前游戏的状态;
 	GM_PlayerNeedCardRequest,//玩家请求一张需要的牌;
-	GM_NOTIFYCZSUCCESS,//通知操庄成立;
-	GM_MJOperator_Error,//通知客户端操作错误，重刷界面;
-	
-	/***********论道系统*****************************************************************/
+	GM_MJOperator_Error,	 //玩家操作错误
+
+/*******************************************论道系统*****************************************************************/
 	GM_ANSWER_QUESTION_REQUEST=100200,			//请求题目的信息;
 	GM_ANSWER_QUESTION_RETURN,			//;
 
@@ -2767,11 +2766,20 @@ enum BATTLETYPE
 {
 	BATTLE_CITY=0,				//主城
 	BATTLE_PVE_START=100,		//Pve战斗开始;
-	BATTLE_MAJIANG,				//麻将
+	BATTLE_FCMJ_3,				//丰城麻将3人
+	BATTLE_FCMJ_4,				//丰城麻将4人
+	BATTLE_HONGZHONG_2,			//红中麻将
+	BATTLE_HONGZHONG,			//红中麻将
+	BATTLE_XINYU_2,				//新余麻将2人
+	BATTLE_XINYU_4,				//新余麻将4人
+	BATTLE_YONGXIU_EASY_2,		//永修简单打法	
+	BATTLE_YONGXIU_EASY,		//永修简单打法		
+	BATTLE_YONGXIU_2,			//永修满带
+	BATTLE_YONGXIU,				//永修满带
 
 	BATTLE_PVP_START=200,		//pvp战斗开始;
 	BATTLE_TOPFIGHT,			//巅峰对决
-	
+	BATTLE_PK_3K,				//3个老K
 	
 	BATTLE_FISHS=250,			//捕鱼;	
 	BATTLE_GOLDEN=251,			//金花;
@@ -3065,6 +3073,63 @@ enum MaJiangType
 	MJ_FA,
 	MJ_BAI,
 	MJ_NUM,
+
+	
+	PK_3_SPADE=100,
+	PK_4_SPADE,
+	PK_5_SPADE,
+	PK_6_SPADE,
+	PK_7_SPADE,
+	PK_8_SPADE,
+	PK_9_SPADE,
+	PK_10_SPADE,
+	PK_J_SPADE,
+	PK_Q_SPADE,
+	PK_K_SPADE,
+	PK_1_SPADE,
+	PK_2_SPADE,
+	PK_3_HEART,
+	PK_4_HEART,
+	PK_5_HEART,
+	PK_6_HEART,
+	PK_7_HEART,
+	PK_8_HEART,
+	PK_9_HEART,
+	PK_10_HEART,
+	PK_J_HEART,
+	PK_Q_HEART,
+	PK_K_HEART,
+	PK_1_HEART,
+	PK_2_HEART,
+	PK_3_CLUB,
+	PK_4_CLUB,
+	PK_5_CLUB,
+	PK_6_CLUB,
+	PK_7_CLUB,
+	PK_8_CLUB,
+	PK_9_CLUB,
+	PK_10_CLUB,
+	PK_J_CLUB,
+	PK_Q_CLUB,
+	PK_K_CLUB,
+	PK_1_CLUB,
+	PK_2_CLUB,
+	PK_3_DIAMOND,
+	PK_4_DIAMOND,
+	PK_5_DIAMOND,
+	PK_6_DIAMOND,
+	PK_7_DIAMOND,
+	PK_8_DIAMOND,
+	PK_9_DIAMOND,
+	PK_10_DIAMOND,
+	PK_J_DIAMOND,
+	PK_Q_DIAMOND,
+	PK_K_DIAMOND,
+	PK_1_DIAMOND,
+	PK_2_DIAMOND,
+	PK_JOKER,
+	PK_BIGJOKER,
+	PK_NUM,
 };
 
 enum MaJiangOperatorType
@@ -3073,7 +3138,9 @@ enum MaJiangOperatorType
 	MJOT_GetCard,//抓牌
 	MJOT_BuCard,//补牌
 	MJOT_SendCard,//出牌
+	MJOT_Tan,	//摊
 	MJOT_CHI,	//吃
+	MJOT_SAO,	//勺
 	MJOT_PENG,	//碰
 	MJOT_GANG,	//杠
 	MJOT_AN_GANG,//暗杠
@@ -3081,11 +3148,37 @@ enum MaJiangOperatorType
 	MJOT_GUO,	//过
 	MJOT_HU,	//胡
 	MJOT_DingHU,//定胡;
+
+	PKOT_Dan=100,//单张
+	PKOT_Dui,	 //对子
+	PKOT_SUN,	 //顺子
+	PKOT_LianDui,//连对
+	PKOT_3dai,	 //3带
+	PKOT_Liandai,//连带
+	PKOT_BOOM,	 //炸弹
 };
 
 enum MJPlayWay///麻将内玩法
 {
 	PW_Begin,
+	//红中麻将
+	PW_7DUI,		//可胡7对
+	PW_1MA,			//一码全中
+	PW_2MA,			//扎2码
+	PW_4MA,			//扎4码
+	PW_6MA,			//扎6码
+	//新余麻将
+	PW_LONG,		//一条龙
+	PW_16BEI,		//16倍
+	PW_32BEI,		//32倍
+	PW_64BEI,		//64倍
+	PW_NOBEI,		//不封顶
+	//永修麻将
+	PW_Chi,			//可吃
+	PW_DanDiao,		//可单钓简易玩法
+	PW_FangPao,		//可放炮
+
+	//南昌麻将
 	PW_WXJ,			//无下精;
 	PW_HTSXJ,		//上下精;
 	PW_MDL,			//埋地雷;
@@ -3093,8 +3186,5 @@ enum MJPlayWay///麻将内玩法
 	PW_TYSG,		//同一首歌;
 	PW_HTYX,		//回头一笑;
 
-	PW_CZ,			//操庄玩法;
-	PW_HTFZ,		//皇帝妃子玩法;
-	PW_PL,			//爬楼玩法;
 	PW_End,
 };

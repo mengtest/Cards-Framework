@@ -7,7 +7,7 @@ message GM_BattleFBServerInfo
    optional int32 m_FBTypeID=4;			//所进入的副本
    optional int32 m_increidmatch=5;
    optional string m_playWay = 6;		//副本玩法;
-   optional int32 m_playerCount = 7;			///麻将的人数（4表示4人场，2表示2人场）  
+   optional int32 m_playerCount = 7;		///麻将的人数（4表示4人场，2表示2人场）  
    optional int32 m_gameCount = 8;		//麻将局数(8和16);
 }
 

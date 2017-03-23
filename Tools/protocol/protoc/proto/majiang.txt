@@ -10,47 +10,26 @@ message GMMJRequest
 message GMHandCard 
 {
   required int32 m_bankerPos = 1;				//庄家的座位
-  optional int32 m_zheng = 2;					//正精的类型
-  optional int32 m_fu = 3;						//副精的类型
-  optional int32 m_zhengid = 4;					//正精的id
-  optional int32 m_xiazheng = 5;				//下正精的类型
-  optional int32 m_xiafu = 6;					//下副精的类型
-  optional int32 m_xiazhengid = 7;				//下正精的id
-  repeated GM_XiaJingInfo m_xiaJingData = 8;	//下精数据
-  optional int32 m_playerpos = 9;			//确定投掷骰子的玩家位置;
-  optional int32 m_cardpos = 10;				//确定拿牌的位置;
-  optional int32 m_jingpos = 11;				//确定精牌的位置;
-  optional int32 m_leftTime = 12;				//剩余时间（包间才用）
-  optional int32 m_leftCount = 13;				//剩余局数
-  optional int32 m_totalCount = 14;				//总局数
-  optional GM_HuiTouData m_huiTouData = 15;		//回头精数据
-  
-  repeated GM_PlayerHandCard m_HandCard = 20;	//手牌信息
+  optional int32 m_leftCount = 2;				//剩余局数
+  optional int32 m_totalCount = 3;				//总局数
+  optional int32 m_getCardId = 4;				//从谁面前取牌
+  optional int32 m_getCardNum = 5;				//从第几墩取牌
+  repeated int32 m_saizi = 20;					//筛子次数，以及内容
+  repeated GM_PlayerHandCard m_HandCard = 21;			//手牌信息
 }
 
 message GMHandCard_PlayerBack 
 {
   required int32 m_bankerPos = 1;				//庄家的座位
-  optional int32 m_zheng = 2;					//正精的类型
-  optional int32 m_fu = 3;						//副精的类型
-  optional int32 m_zhengid = 4;					//正精的id
-  optional int32 m_xiazheng = 5;				//下正精的类型
-  optional int32 m_xiafu = 6;					//下副精的类型
-  optional int32 m_xiazhengid = 7;				//下正精的id
-  repeated GM_XiaJingInfo m_xiaJingData = 8;	//下精数据
-  optional int32 m_playerpos = 9;				//确定投掷骰子的玩家位置;
-  optional int32 m_cardpos = 10;				//确定拿牌的位置;
-  optional int32 m_jingpos = 11;				//确定精牌的位置;
-  optional int32 m_leftTime = 12;				//剩余时间（包间才用）
-  optional int32 m_leftCount = 13;				//剩余局数
-  optional int32 m_totalCount = 14;				//总局数
-  optional GM_HuiTouData m_huiTouData = 15;		//回头精数据
-  optional int32 m_fbtypeid = 16;				//房间类型
-  optional string m_fbplayway = 17;				//房间玩法
-  optional int32 m_playerCount = 18;			//麻将的人数（4表示4人场，2表示2人场）
-  optional int32 m_roomid = 19;					//房间号
+  optional int32 m_leftCount = 2;				//剩余局数
+  optional int32 m_totalCount = 3;				//总局数
+  optional int32 m_fbtypeid = 4;				//房间类型
+  optional string m_fbplayway = 5;				//房间玩法
+  optional int32 m_playerCount = 6;			    //麻将的人数（4表示4人场，2表示2人场）
+  optional int32 m_roomid = 7;					//房间号
   
-  repeated GMHandCard_Info m_handCardData = 20; //所有人的手牌信息
+  repeated int32 m_saizi = 20;					//筛子次数，以及内容
+  repeated GMHandCard_Info m_handCardData = 21; //所有人的手牌信息
 }
 
 message GMHandCard_Info
@@ -59,86 +38,72 @@ message GMHandCard_Info
   repeated GM_PlayerHandCard m_HandCard = 20;	//手牌信息
 }
 
-message GM_HuiTouData
-{
-  required int32 m_huitouZhen = 1;		//回头正精;
-  optional int32 m_huitouFu = 2;		//回头副精;
-  repeated GM_XiaJingInfo m_huitouInfo = 10;		//回头精数据;
-}
-
-message GM_XiaJingInfo
-{
-  required int32 m_roleid = 1;				//庄家的座位
-  optional int32 m_xiazhuNum = 2;			///主精个数
-  optional int32 m_xiafuNum = 3; 			///副精个数
-  optional int32 m_sorce = 4;				//得分数
-}
-
 message GM_PlayerHandCard
 {
-	required int32 m_Index = 1;				///牌的唯一id
-	optional int32 m_Type = 2;				///类型id
+  required int32 m_Index = 1;				///牌的唯一id
+  optional int32 m_Type = 2;				///类型id
 }
 
 message GM_MJCanOperator
 {
-	required int32 m_roleid = 1;			///操作对象
-	repeated GM_OperatorData m_Operator = 2;//操作
+  required int32 m_roleid = 1;			///操作对象
+  repeated GM_OperatorData m_Operator = 2;	//操作 
 }
 
 message GM_OperatorData
 {
 	required int32 m_OperatorType = 1;		///操作类型
-	optional int32 m_FunID = 2;				///方法ID
+	optional int32 m_FunID = 2;			///方法ID
 	optional int32 m_OperatorCard = 3;		///操作的那张牌
 	optional int32 m_RoleVoice = 4;			///选择的角色的声音id
 	optional int32 m_CardVoice = 5;			///选择牌的声音id
+	optional int32 m_CardNum = 6;			///手牌数
 	repeated GM_PlayerHandCard m_HandCard = 10;	///操作相关牌
 }
 
 message GM_MJOperator
 {
 	required int32 m_roleid = 1;			///操作对象
-	optional int32 m_OperatorType = 2;		///操作类型
+	optional int32 m_OperatorType = 2;		///操作类型	
 	optional int32 m_RoleVoice = 3;			///选择的角色的声音id
 	optional int32 m_CardVoice = 4;			///选择牌的声音id
-	optional GM_PlayerHandCard m_LastCard = 5;	///桌面上的牌
+	optional int32 m_Order = 5;			///勺的顺序
+	optional int32 m_CardNum = 6;			///手牌数
+	optional GM_PlayerHandCard m_LastCard = 7;	///桌面上的牌
 	repeated GM_PlayerHandCard m_HandCard = 10;	///操作相关牌
 }
 
 message GM_HUOperator
 {
 	required int32 m_huRoleid =1;			//胡牌的人
-	optional int32 m_huType = 2;			//胡牌的类型	
-	optional int32 m_fpid = 3;				//放炮的角色id
-	repeated GM_HuHandCardData m_Data=4;	//所有人的手牌信息
+	optional int32 m_huType = 2;			//胡牌的类型
+	optional int32 m_fpid = 3;			//放炮的角色id
+	repeated GM_HuHandCardData m_Data=4;		//所有人的手牌信息
 	optional int32 m_RoleVoice = 5;			///选择的角色的声音id
 	optional int32 m_CardVoice = 6;			///选择牌的声音id
-	optional GM_PlayerHandCard m_huCard = 7;///被胡的那张牌
+	optional GM_PlayerHandCard m_huCard = 7;	///被胡的那张牌
+	repeated int32 m_AllHuRoleid = 8;			///一炮多响
+	repeated int32 m_AllHuType = 9;			///一炮多响胡类型
+	
+	repeated int32 m_MaCardType =20;			///暂定 红中 码牌类型
+	repeated int32 m_MaCardSign =21;			///暂定 红中 码牌高亮类型
 }
 
 message GM_HuHandCardData
 {
 	required int32 m_roleid = 1;		//胡牌的角色id
-	repeated int32 m_HandCardType = 2;	///牌的类型
-	optional int32 m_xiaJing = 3;		//下精
-	optional int32 m_ShangJing = 4;		//上精
-	optional int32 m_Hufeng = 5;		//胡分
-	optional int32 m_GoldNum = 6;		//金币 
-	optional int32 m_isBaWang = 7;		//是否是霸王，0不是，1是
-	optional int32 m_isCongGuan = 8;	//是否冲关，0不是，1是
-	optional int32 m_huitouScore = 9;	//回头一笑积分
-	optional int32 m_maileiScore = 10;	//埋雷积分
-	optional int32 m_tongScore = 11;	//同一首歌积分
-	optional int32 m_gangScore = 12;	//杠分
-	optional int32 m_xiaCGBW = 13;		//0无冲关霸王，1冲关无霸王，2无冲关有霸王，3冲关又霸王;
-	optional int32 m_huiCGBW = 14;
-	optional int32 m_maiCGBW = 15;
-	optional int32 m_tongCGBW = 16;
-	optional int32 m_CZScore = 17;		//抄庄分
-	optional int32 m_HDFZScore = 18;	//皇帝妃子分
-	optional int32 m_PLRate = 19;		//爬楼的倍率
-	repeated int32 m_AnGangType = 20;	//暗杠过的牌
+	repeated int32 m_HandCardType = 2;	//牌的类型
+	optional int32 m_Hufeng = 3;		//胡分
+	optional int32 m_ZongLei = 4;		//总垒
+	optional int32 m_Tan = 5;		//摊 
+	optional int32 m_Sao = 6;		//勺 
+	optional int32 m_Peng = 7;		//碰 
+	optional int32 m_Gang = 8;		//杠 
+	optional int32 m_anGang = 9;		//暗杠 
+	optional int32 m_reward = 10;		//奖励
+	optional int32 m_score = 11;		//得分
+	optional int32 m_TotalScore = 12;	//总得分
+	repeated int32 m_SaoType = 20;		//勺过的牌
 }
 
 message GM_AskFriend
@@ -158,29 +123,26 @@ message GM_AutoInfo
 message GM_ReconnectMJData
 {
   required int32 m_bankerPos = 1;				//庄家的座位
-  optional int32 m_zheng = 2;					//正精的类型
-  optional int32 m_fu = 3;						//副精的类型
-  optional int32 m_zhengid = 4;					//正精的id
-  optional int32 m_jingpos = 5;					//精的位置
-  optional int32 m_RoomMasterID = 6;			//房主id
-  optional int32 m_FirstPos = 7;				//第一次骰子的点数
-  optional int32 m_SecondPos = 8;				//第二次骰子的点数
-  optional int32 m_FreeCard = 9;				//剩余牌数
-  optional int32 m_leftTime = 10;				//剩余时间（包间才用）
-  optional int32 m_leftCount = 11;				//剩余局数
-  optional int32 m_totalCount = 12;				//总局数
-  optional string m_playWay = 13;				//玩法
-  optional int32 m_xiazheng = 14;				//下正精的类型
-  optional int32 m_xiafu = 15;					//下副精的类型
-  optional int32 m_rollCount = 16;				//当前骰子转的次数
-  optional int32 m_playerCount = 17;			///麻将的人数（4表示4人场，2表示2人场）
-  optional int32 m_lastOutCardRoleId = 18;		///打出最后一张牌的角色id
-  optional int32 m_closeRoomLeftTime = 19;		///解散房间剩余的时间
-  repeated GM_PlayerHandCard m_HandCard = 20;	//手牌信息
-  repeated GM_ReconnectPlayerData m_AllData = 21;//除上面之外的所有信息;
-  repeated GM_ReconnectCloseRoomData m_CloseRoomData = 22;//重连时当前副本是否有解散的信息;
-  optional GM_HUOperator m_huOperatorData = 23;	///结算数据;
-  optional int32 m_huLastCard = 24;				///最后被胡的那张牌(只有胡牌时才能使用该字段，流局标记的是最后那张牌)
+  optional int32 m_RoomMasterID = 2;				//房主id
+  optional int32 m_FreeCard = 3;				//剩余牌数
+  optional int32 m_leftCount = 4;				//剩余局数
+  optional int32 m_totalCount = 5;				//总局数
+  optional int32 m_rollCount = 6;				//当前骰子转的次数
+  optional int32 m_playerCount = 7;				///麻将的人数（4表示4人场，2表示2人场）
+  optional int32 m_lastOutCardRoleId = 8;			///打出最后一张牌的角色id
+  optional int32 m_closeRoomLeftTime = 9;			///解散房间剩余的时间
+  optional int32 m_huLastCard = 10;				///最后被胡的那张牌(只有胡牌时才能使用该字段，流局标记的是最后那张牌)
+  optional int32 m_getCardId = 11;				//从谁面前取牌
+  optional int32 m_getCardNum = 12;				//从第几墩取牌
+  optional int32 m_sendCardID = 13;				//当前出牌人的ID（等到操作时赋值0）
+  optional string m_fbplayway = 14;				//房间玩法
+  
+  repeated int32 m_saizi = 20;					//筛子次数，以及内容
+  repeated GM_PlayerHandCard m_HandCard = 21;			//手牌信息
+  repeated GM_ReconnectPlayerData m_AllData = 22;		//除上面之外的所有信息;
+  repeated GM_ReconnectCloseRoomData m_CloseRoomData = 23;	//重连时当前副本是否有解散的信息;
+  optional GM_HUOperator m_huOperatorData = 24;			///结算数据;
+ 
 }
 
 message GM_ReconnectPlayerData
@@ -188,25 +150,25 @@ message GM_ReconnectPlayerData
    required int32 m_roleid = 1;			//角色id
    optional int64 m_Gold = 2;			///金币
    optional int32 m_HeadPhoto = 3;		///头像
-   optional int32 m_CataterType = 4;	///CharacterType(见usermessage）
+   optional int32 m_CataterType = 4;		///CharacterType(见usermessage）
    optional int32 m_Postion = 5;		///位置信息
    optional string m_Name = 6;			///名字
    optional int32 m_Sex = 7;			///性别
-   optional int32 m_handCardNum = 8;	//手牌个数;
+   optional int32 m_handCardNum = 8;		//手牌个数;
    optional int32 m_HeadFrame = 9;		///头像框
-   optional string m_NickName = 10;	///昵称
-   optional string m_HeadPhotoUrl = 11;///头像uil地址
+   optional string m_NickName = 10;		///昵称
+   optional string m_HeadPhotoUrl = 11;		///头像uil地址
    optional int32 m_IsAuto = 12;		///是否托管1表示托管状态;
-   optional int32 m_TotalScore = 13;	//总分
+   optional int32 m_TotalScore = 13;		//总分
    optional int32 m_IsReady = 14;		//是否准备0未准备1准备;
-   optional int32 m_RoleVoice = 15;			///选择的角色的声音id
-   optional int32 m_CardVoice = 16;			///选择牌的声音id
-   optional double m_Longitude = 17;//经度;
-   optional double m_Latitude = 18;//纬度;
-   optional string m_reallyPos = 19;//真实位置;
-   optional int32 m_DingState = 20;//是否定牌;
+   optional int32 m_RoleVoice = 15;		///选择的角色的声音id
+   optional int32 m_CardVoice = 16;		///选择牌的声音id
+   optional double m_Longitude = 17;		//经度;
+   optional double m_Latitude = 18;		//纬度;
+   optional string m_reallyPos = 19;		//真实位置;
+   optional int32 m_DingState = 20;		//是否定牌;
    
-   repeated GM_PlayerHandCard m_OutHandCard = 25;	//已经出牌集合;
+   repeated GM_PlayerHandCard m_OutHandCard = 25;		//已经出牌集合;
    repeated GM_ReconnectFunHandCard m_FunHandCardList = 26;	//已经操作牌集合;
 }
 
@@ -244,8 +206,8 @@ message GM_MJCardRoomOneData
 message GM_PlayerResultInfo
 {
 	required int32 m_roleid = 1;	///角色id;
-	optional int32 m_score = 2;		///当局输赢的积分;
-	optional int32 m_sex = 3;		///性别;
+	optional int32 m_score = 2;	///当局输赢的积分;
+	optional int32 m_sex = 3;	///性别;
 	optional int32 m_congguan = 4;	///是否冲关;
 	optional int32 m_bawang = 5;	///是否霸王;
 	optional int32 m_vipLevel = 6;	///vip等级;
@@ -257,7 +219,7 @@ message GM_PlayerResultInfo
 message GM_PlayerRollRequest
 {
 	required int32 m_roleid = 1;	///角色id；
-	optional int32 m_pos = 2;		///角色的位置;
+	optional int32 m_pos = 2;	///角色的位置;
 }
 
 message GM_PlayerRecivePack
@@ -266,3 +228,7 @@ message GM_PlayerRecivePack
 	optional int32 m_packFlag = 2;	///回包的标记 1表示收到发牌的包 2表示收到操作的包
 }
 
+message GM_MJOperatorError
+{
+	required int32 m_Result = 1;	//错误状态
+}

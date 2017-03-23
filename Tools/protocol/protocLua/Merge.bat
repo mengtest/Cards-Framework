@@ -1,0 +1,1 @@
+COPY *.txt PBMessage.proto

@@ -56,7 +56,7 @@ function LoginScene.OpenLoginRecord()
 	if buffer == nil then
 		Log.Error('Can not open login record file,is this file exists?  ' .. path);
 	else
-		local record = NetManager.DecodePB('LoginRecord', buffer);
+		local record = NetManager.DecodePB(PBMessage.CFG_LoginRecord, buffer);
 		if record == false then
 			Log.Error('Decode login record fail.')
 		else
@@ -126,7 +126,7 @@ end
 
 function LoginScene.SaveLoginRecordFile()
 	local path = NCSpeedLight.SharedVariable.DATA_PATH .. "Config/LoginRecord.bytes";
-	local buffer = NetManager.EncodePB(PBMessage.LoginRecord, LoginScene.Instance.LoginRecord);
+	local buffer = NetManager.EncodePB(PBMessage.CFG_LoginRecord, LoginScene.Instance.LoginRecord);
 	Utility.SaveFile(path, buffer);
 end
 

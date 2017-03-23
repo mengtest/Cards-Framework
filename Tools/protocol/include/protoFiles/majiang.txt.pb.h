@@ -40,8 +40,6 @@ class GMMJRequest;
 class GMHandCard;
 class GMHandCard_PlayerBack;
 class GMHandCard_Info;
-class GM_HuiTouData;
-class GM_XiaJingInfo;
 class GM_PlayerHandCard;
 class GM_MJCanOperator;
 class GM_OperatorData;
@@ -60,6 +58,7 @@ class GM_MJCardRoomOneData;
 class GM_PlayerResultInfo;
 class GM_PlayerRollRequest;
 class GM_PlayerRecivePack;
+class GM_MJOperatorError;
 
 // ===================================================================
 
@@ -251,115 +250,50 @@ class GMHandCard : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 m_bankerpos() const;
   inline void set_m_bankerpos(::google::protobuf::int32 value);
 
-  // optional int32 m_zheng = 2;
-  inline bool has_m_zheng() const;
-  inline void clear_m_zheng();
-  static const int kMZhengFieldNumber = 2;
-  inline ::google::protobuf::int32 m_zheng() const;
-  inline void set_m_zheng(::google::protobuf::int32 value);
-
-  // optional int32 m_fu = 3;
-  inline bool has_m_fu() const;
-  inline void clear_m_fu();
-  static const int kMFuFieldNumber = 3;
-  inline ::google::protobuf::int32 m_fu() const;
-  inline void set_m_fu(::google::protobuf::int32 value);
-
-  // optional int32 m_zhengid = 4;
-  inline bool has_m_zhengid() const;
-  inline void clear_m_zhengid();
-  static const int kMZhengidFieldNumber = 4;
-  inline ::google::protobuf::int32 m_zhengid() const;
-  inline void set_m_zhengid(::google::protobuf::int32 value);
-
-  // optional int32 m_xiazheng = 5;
-  inline bool has_m_xiazheng() const;
-  inline void clear_m_xiazheng();
-  static const int kMXiazhengFieldNumber = 5;
-  inline ::google::protobuf::int32 m_xiazheng() const;
-  inline void set_m_xiazheng(::google::protobuf::int32 value);
-
-  // optional int32 m_xiafu = 6;
-  inline bool has_m_xiafu() const;
-  inline void clear_m_xiafu();
-  static const int kMXiafuFieldNumber = 6;
-  inline ::google::protobuf::int32 m_xiafu() const;
-  inline void set_m_xiafu(::google::protobuf::int32 value);
-
-  // optional int32 m_xiazhengid = 7;
-  inline bool has_m_xiazhengid() const;
-  inline void clear_m_xiazhengid();
-  static const int kMXiazhengidFieldNumber = 7;
-  inline ::google::protobuf::int32 m_xiazhengid() const;
-  inline void set_m_xiazhengid(::google::protobuf::int32 value);
-
-  // repeated .GM_XiaJingInfo m_xiaJingData = 8;
-  inline int m_xiajingdata_size() const;
-  inline void clear_m_xiajingdata();
-  static const int kMXiaJingDataFieldNumber = 8;
-  inline const ::GM_XiaJingInfo& m_xiajingdata(int index) const;
-  inline ::GM_XiaJingInfo* mutable_m_xiajingdata(int index);
-  inline ::GM_XiaJingInfo* add_m_xiajingdata();
-  inline const ::google::protobuf::RepeatedPtrField< ::GM_XiaJingInfo >&
-      m_xiajingdata() const;
-  inline ::google::protobuf::RepeatedPtrField< ::GM_XiaJingInfo >*
-      mutable_m_xiajingdata();
-
-  // optional int32 m_playerpos = 9;
-  inline bool has_m_playerpos() const;
-  inline void clear_m_playerpos();
-  static const int kMPlayerposFieldNumber = 9;
-  inline ::google::protobuf::int32 m_playerpos() const;
-  inline void set_m_playerpos(::google::protobuf::int32 value);
-
-  // optional int32 m_cardpos = 10;
-  inline bool has_m_cardpos() const;
-  inline void clear_m_cardpos();
-  static const int kMCardposFieldNumber = 10;
-  inline ::google::protobuf::int32 m_cardpos() const;
-  inline void set_m_cardpos(::google::protobuf::int32 value);
-
-  // optional int32 m_jingpos = 11;
-  inline bool has_m_jingpos() const;
-  inline void clear_m_jingpos();
-  static const int kMJingposFieldNumber = 11;
-  inline ::google::protobuf::int32 m_jingpos() const;
-  inline void set_m_jingpos(::google::protobuf::int32 value);
-
-  // optional int32 m_leftTime = 12;
-  inline bool has_m_lefttime() const;
-  inline void clear_m_lefttime();
-  static const int kMLeftTimeFieldNumber = 12;
-  inline ::google::protobuf::int32 m_lefttime() const;
-  inline void set_m_lefttime(::google::protobuf::int32 value);
-
-  // optional int32 m_leftCount = 13;
+  // optional int32 m_leftCount = 2;
   inline bool has_m_leftcount() const;
   inline void clear_m_leftcount();
-  static const int kMLeftCountFieldNumber = 13;
+  static const int kMLeftCountFieldNumber = 2;
   inline ::google::protobuf::int32 m_leftcount() const;
   inline void set_m_leftcount(::google::protobuf::int32 value);
 
-  // optional int32 m_totalCount = 14;
+  // optional int32 m_totalCount = 3;
   inline bool has_m_totalcount() const;
   inline void clear_m_totalcount();
-  static const int kMTotalCountFieldNumber = 14;
+  static const int kMTotalCountFieldNumber = 3;
   inline ::google::protobuf::int32 m_totalcount() const;
   inline void set_m_totalcount(::google::protobuf::int32 value);
 
-  // optional .GM_HuiTouData m_huiTouData = 15;
-  inline bool has_m_huitoudata() const;
-  inline void clear_m_huitoudata();
-  static const int kMHuiTouDataFieldNumber = 15;
-  inline const ::GM_HuiTouData& m_huitoudata() const;
-  inline ::GM_HuiTouData* mutable_m_huitoudata();
-  inline ::GM_HuiTouData* release_m_huitoudata();
-  inline void set_allocated_m_huitoudata(::GM_HuiTouData* m_huitoudata);
+  // optional int32 m_getCardId = 4;
+  inline bool has_m_getcardid() const;
+  inline void clear_m_getcardid();
+  static const int kMGetCardIdFieldNumber = 4;
+  inline ::google::protobuf::int32 m_getcardid() const;
+  inline void set_m_getcardid(::google::protobuf::int32 value);
 
-  // repeated .GM_PlayerHandCard m_HandCard = 20;
+  // optional int32 m_getCardNum = 5;
+  inline bool has_m_getcardnum() const;
+  inline void clear_m_getcardnum();
+  static const int kMGetCardNumFieldNumber = 5;
+  inline ::google::protobuf::int32 m_getcardnum() const;
+  inline void set_m_getcardnum(::google::protobuf::int32 value);
+
+  // repeated int32 m_saizi = 20;
+  inline int m_saizi_size() const;
+  inline void clear_m_saizi();
+  static const int kMSaiziFieldNumber = 20;
+  inline ::google::protobuf::int32 m_saizi(int index) const;
+  inline void set_m_saizi(int index, ::google::protobuf::int32 value);
+  inline void add_m_saizi(::google::protobuf::int32 value);
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+      m_saizi() const;
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+      mutable_m_saizi();
+
+  // repeated .GM_PlayerHandCard m_HandCard = 21;
   inline int m_handcard_size() const;
   inline void clear_m_handcard();
-  static const int kMHandCardFieldNumber = 20;
+  static const int kMHandCardFieldNumber = 21;
   inline const ::GM_PlayerHandCard& m_handcard(int index) const;
   inline ::GM_PlayerHandCard* mutable_m_handcard(int index);
   inline ::GM_PlayerHandCard* add_m_handcard();
@@ -372,54 +306,27 @@ class GMHandCard : public ::google::protobuf::Message {
  private:
   inline void set_has_m_bankerpos();
   inline void clear_has_m_bankerpos();
-  inline void set_has_m_zheng();
-  inline void clear_has_m_zheng();
-  inline void set_has_m_fu();
-  inline void clear_has_m_fu();
-  inline void set_has_m_zhengid();
-  inline void clear_has_m_zhengid();
-  inline void set_has_m_xiazheng();
-  inline void clear_has_m_xiazheng();
-  inline void set_has_m_xiafu();
-  inline void clear_has_m_xiafu();
-  inline void set_has_m_xiazhengid();
-  inline void clear_has_m_xiazhengid();
-  inline void set_has_m_playerpos();
-  inline void clear_has_m_playerpos();
-  inline void set_has_m_cardpos();
-  inline void clear_has_m_cardpos();
-  inline void set_has_m_jingpos();
-  inline void clear_has_m_jingpos();
-  inline void set_has_m_lefttime();
-  inline void clear_has_m_lefttime();
   inline void set_has_m_leftcount();
   inline void clear_has_m_leftcount();
   inline void set_has_m_totalcount();
   inline void clear_has_m_totalcount();
-  inline void set_has_m_huitoudata();
-  inline void clear_has_m_huitoudata();
+  inline void set_has_m_getcardid();
+  inline void clear_has_m_getcardid();
+  inline void set_has_m_getcardnum();
+  inline void clear_has_m_getcardnum();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::int32 m_bankerpos_;
-  ::google::protobuf::int32 m_zheng_;
-  ::google::protobuf::int32 m_fu_;
-  ::google::protobuf::int32 m_zhengid_;
-  ::google::protobuf::int32 m_xiazheng_;
-  ::google::protobuf::int32 m_xiafu_;
-  ::google::protobuf::RepeatedPtrField< ::GM_XiaJingInfo > m_xiajingdata_;
-  ::google::protobuf::int32 m_xiazhengid_;
-  ::google::protobuf::int32 m_playerpos_;
-  ::google::protobuf::int32 m_cardpos_;
-  ::google::protobuf::int32 m_jingpos_;
-  ::google::protobuf::int32 m_lefttime_;
   ::google::protobuf::int32 m_leftcount_;
-  ::GM_HuiTouData* m_huitoudata_;
-  ::google::protobuf::RepeatedPtrField< ::GM_PlayerHandCard > m_handcard_;
   ::google::protobuf::int32 m_totalcount_;
+  ::google::protobuf::int32 m_getcardid_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > m_saizi_;
+  ::google::protobuf::RepeatedPtrField< ::GM_PlayerHandCard > m_handcard_;
+  ::google::protobuf::int32 m_getcardnum_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(16 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
 
   friend void  protobuf_AddDesc_majiang_2etxt();
   friend void protobuf_AssignDesc_majiang_2etxt();
@@ -491,122 +398,31 @@ class GMHandCard_PlayerBack : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 m_bankerpos() const;
   inline void set_m_bankerpos(::google::protobuf::int32 value);
 
-  // optional int32 m_zheng = 2;
-  inline bool has_m_zheng() const;
-  inline void clear_m_zheng();
-  static const int kMZhengFieldNumber = 2;
-  inline ::google::protobuf::int32 m_zheng() const;
-  inline void set_m_zheng(::google::protobuf::int32 value);
-
-  // optional int32 m_fu = 3;
-  inline bool has_m_fu() const;
-  inline void clear_m_fu();
-  static const int kMFuFieldNumber = 3;
-  inline ::google::protobuf::int32 m_fu() const;
-  inline void set_m_fu(::google::protobuf::int32 value);
-
-  // optional int32 m_zhengid = 4;
-  inline bool has_m_zhengid() const;
-  inline void clear_m_zhengid();
-  static const int kMZhengidFieldNumber = 4;
-  inline ::google::protobuf::int32 m_zhengid() const;
-  inline void set_m_zhengid(::google::protobuf::int32 value);
-
-  // optional int32 m_xiazheng = 5;
-  inline bool has_m_xiazheng() const;
-  inline void clear_m_xiazheng();
-  static const int kMXiazhengFieldNumber = 5;
-  inline ::google::protobuf::int32 m_xiazheng() const;
-  inline void set_m_xiazheng(::google::protobuf::int32 value);
-
-  // optional int32 m_xiafu = 6;
-  inline bool has_m_xiafu() const;
-  inline void clear_m_xiafu();
-  static const int kMXiafuFieldNumber = 6;
-  inline ::google::protobuf::int32 m_xiafu() const;
-  inline void set_m_xiafu(::google::protobuf::int32 value);
-
-  // optional int32 m_xiazhengid = 7;
-  inline bool has_m_xiazhengid() const;
-  inline void clear_m_xiazhengid();
-  static const int kMXiazhengidFieldNumber = 7;
-  inline ::google::protobuf::int32 m_xiazhengid() const;
-  inline void set_m_xiazhengid(::google::protobuf::int32 value);
-
-  // repeated .GM_XiaJingInfo m_xiaJingData = 8;
-  inline int m_xiajingdata_size() const;
-  inline void clear_m_xiajingdata();
-  static const int kMXiaJingDataFieldNumber = 8;
-  inline const ::GM_XiaJingInfo& m_xiajingdata(int index) const;
-  inline ::GM_XiaJingInfo* mutable_m_xiajingdata(int index);
-  inline ::GM_XiaJingInfo* add_m_xiajingdata();
-  inline const ::google::protobuf::RepeatedPtrField< ::GM_XiaJingInfo >&
-      m_xiajingdata() const;
-  inline ::google::protobuf::RepeatedPtrField< ::GM_XiaJingInfo >*
-      mutable_m_xiajingdata();
-
-  // optional int32 m_playerpos = 9;
-  inline bool has_m_playerpos() const;
-  inline void clear_m_playerpos();
-  static const int kMPlayerposFieldNumber = 9;
-  inline ::google::protobuf::int32 m_playerpos() const;
-  inline void set_m_playerpos(::google::protobuf::int32 value);
-
-  // optional int32 m_cardpos = 10;
-  inline bool has_m_cardpos() const;
-  inline void clear_m_cardpos();
-  static const int kMCardposFieldNumber = 10;
-  inline ::google::protobuf::int32 m_cardpos() const;
-  inline void set_m_cardpos(::google::protobuf::int32 value);
-
-  // optional int32 m_jingpos = 11;
-  inline bool has_m_jingpos() const;
-  inline void clear_m_jingpos();
-  static const int kMJingposFieldNumber = 11;
-  inline ::google::protobuf::int32 m_jingpos() const;
-  inline void set_m_jingpos(::google::protobuf::int32 value);
-
-  // optional int32 m_leftTime = 12;
-  inline bool has_m_lefttime() const;
-  inline void clear_m_lefttime();
-  static const int kMLeftTimeFieldNumber = 12;
-  inline ::google::protobuf::int32 m_lefttime() const;
-  inline void set_m_lefttime(::google::protobuf::int32 value);
-
-  // optional int32 m_leftCount = 13;
+  // optional int32 m_leftCount = 2;
   inline bool has_m_leftcount() const;
   inline void clear_m_leftcount();
-  static const int kMLeftCountFieldNumber = 13;
+  static const int kMLeftCountFieldNumber = 2;
   inline ::google::protobuf::int32 m_leftcount() const;
   inline void set_m_leftcount(::google::protobuf::int32 value);
 
-  // optional int32 m_totalCount = 14;
+  // optional int32 m_totalCount = 3;
   inline bool has_m_totalcount() const;
   inline void clear_m_totalcount();
-  static const int kMTotalCountFieldNumber = 14;
+  static const int kMTotalCountFieldNumber = 3;
   inline ::google::protobuf::int32 m_totalcount() const;
   inline void set_m_totalcount(::google::protobuf::int32 value);
 
-  // optional .GM_HuiTouData m_huiTouData = 15;
-  inline bool has_m_huitoudata() const;
-  inline void clear_m_huitoudata();
-  static const int kMHuiTouDataFieldNumber = 15;
-  inline const ::GM_HuiTouData& m_huitoudata() const;
-  inline ::GM_HuiTouData* mutable_m_huitoudata();
-  inline ::GM_HuiTouData* release_m_huitoudata();
-  inline void set_allocated_m_huitoudata(::GM_HuiTouData* m_huitoudata);
-
-  // optional int32 m_fbtypeid = 16;
+  // optional int32 m_fbtypeid = 4;
   inline bool has_m_fbtypeid() const;
   inline void clear_m_fbtypeid();
-  static const int kMFbtypeidFieldNumber = 16;
+  static const int kMFbtypeidFieldNumber = 4;
   inline ::google::protobuf::int32 m_fbtypeid() const;
   inline void set_m_fbtypeid(::google::protobuf::int32 value);
 
-  // optional string m_fbplayway = 17;
+  // optional string m_fbplayway = 5;
   inline bool has_m_fbplayway() const;
   inline void clear_m_fbplayway();
-  static const int kMFbplaywayFieldNumber = 17;
+  static const int kMFbplaywayFieldNumber = 5;
   inline const ::std::string& m_fbplayway() const;
   inline void set_m_fbplayway(const ::std::string& value);
   inline void set_m_fbplayway(const char* value);
@@ -615,24 +431,36 @@ class GMHandCard_PlayerBack : public ::google::protobuf::Message {
   inline ::std::string* release_m_fbplayway();
   inline void set_allocated_m_fbplayway(::std::string* m_fbplayway);
 
-  // optional int32 m_playerCount = 18;
+  // optional int32 m_playerCount = 6;
   inline bool has_m_playercount() const;
   inline void clear_m_playercount();
-  static const int kMPlayerCountFieldNumber = 18;
+  static const int kMPlayerCountFieldNumber = 6;
   inline ::google::protobuf::int32 m_playercount() const;
   inline void set_m_playercount(::google::protobuf::int32 value);
 
-  // optional int32 m_roomid = 19;
+  // optional int32 m_roomid = 7;
   inline bool has_m_roomid() const;
   inline void clear_m_roomid();
-  static const int kMRoomidFieldNumber = 19;
+  static const int kMRoomidFieldNumber = 7;
   inline ::google::protobuf::int32 m_roomid() const;
   inline void set_m_roomid(::google::protobuf::int32 value);
 
-  // repeated .GMHandCard_Info m_handCardData = 20;
+  // repeated int32 m_saizi = 20;
+  inline int m_saizi_size() const;
+  inline void clear_m_saizi();
+  static const int kMSaiziFieldNumber = 20;
+  inline ::google::protobuf::int32 m_saizi(int index) const;
+  inline void set_m_saizi(int index, ::google::protobuf::int32 value);
+  inline void add_m_saizi(::google::protobuf::int32 value);
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+      m_saizi() const;
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+      mutable_m_saizi();
+
+  // repeated .GMHandCard_Info m_handCardData = 21;
   inline int m_handcarddata_size() const;
   inline void clear_m_handcarddata();
-  static const int kMHandCardDataFieldNumber = 20;
+  static const int kMHandCardDataFieldNumber = 21;
   inline const ::GMHandCard_Info& m_handcarddata(int index) const;
   inline ::GMHandCard_Info* mutable_m_handcarddata(int index);
   inline ::GMHandCard_Info* add_m_handcarddata();
@@ -645,32 +473,10 @@ class GMHandCard_PlayerBack : public ::google::protobuf::Message {
  private:
   inline void set_has_m_bankerpos();
   inline void clear_has_m_bankerpos();
-  inline void set_has_m_zheng();
-  inline void clear_has_m_zheng();
-  inline void set_has_m_fu();
-  inline void clear_has_m_fu();
-  inline void set_has_m_zhengid();
-  inline void clear_has_m_zhengid();
-  inline void set_has_m_xiazheng();
-  inline void clear_has_m_xiazheng();
-  inline void set_has_m_xiafu();
-  inline void clear_has_m_xiafu();
-  inline void set_has_m_xiazhengid();
-  inline void clear_has_m_xiazhengid();
-  inline void set_has_m_playerpos();
-  inline void clear_has_m_playerpos();
-  inline void set_has_m_cardpos();
-  inline void clear_has_m_cardpos();
-  inline void set_has_m_jingpos();
-  inline void clear_has_m_jingpos();
-  inline void set_has_m_lefttime();
-  inline void clear_has_m_lefttime();
   inline void set_has_m_leftcount();
   inline void clear_has_m_leftcount();
   inline void set_has_m_totalcount();
   inline void clear_has_m_totalcount();
-  inline void set_has_m_huitoudata();
-  inline void clear_has_m_huitoudata();
   inline void set_has_m_fbtypeid();
   inline void clear_has_m_fbtypeid();
   inline void set_has_m_fbplayway();
@@ -683,28 +489,17 @@ class GMHandCard_PlayerBack : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::int32 m_bankerpos_;
-  ::google::protobuf::int32 m_zheng_;
-  ::google::protobuf::int32 m_fu_;
-  ::google::protobuf::int32 m_zhengid_;
-  ::google::protobuf::int32 m_xiazheng_;
-  ::google::protobuf::int32 m_xiafu_;
-  ::google::protobuf::RepeatedPtrField< ::GM_XiaJingInfo > m_xiajingdata_;
-  ::google::protobuf::int32 m_xiazhengid_;
-  ::google::protobuf::int32 m_playerpos_;
-  ::google::protobuf::int32 m_cardpos_;
-  ::google::protobuf::int32 m_jingpos_;
-  ::google::protobuf::int32 m_lefttime_;
   ::google::protobuf::int32 m_leftcount_;
-  ::GM_HuiTouData* m_huitoudata_;
   ::google::protobuf::int32 m_totalcount_;
   ::google::protobuf::int32 m_fbtypeid_;
   ::std::string* m_fbplayway_;
   ::google::protobuf::int32 m_playercount_;
   ::google::protobuf::int32 m_roomid_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > m_saizi_;
   ::google::protobuf::RepeatedPtrField< ::GMHandCard_Info > m_handcarddata_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(20 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(9 + 31) / 32];
 
   friend void  protobuf_AddDesc_majiang_2etxt();
   friend void protobuf_AssignDesc_majiang_2etxt();
@@ -807,223 +602,6 @@ class GMHandCard_Info : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static GMHandCard_Info* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class GM_HuiTouData : public ::google::protobuf::Message {
- public:
-  GM_HuiTouData();
-  virtual ~GM_HuiTouData();
-
-  GM_HuiTouData(const GM_HuiTouData& from);
-
-  inline GM_HuiTouData& operator=(const GM_HuiTouData& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const GM_HuiTouData& default_instance();
-
-  void Swap(GM_HuiTouData* other);
-
-  // implements Message ----------------------------------------------
-
-  GM_HuiTouData* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const GM_HuiTouData& from);
-  void MergeFrom(const GM_HuiTouData& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // required int32 m_huitouZhen = 1;
-  inline bool has_m_huitouzhen() const;
-  inline void clear_m_huitouzhen();
-  static const int kMHuitouZhenFieldNumber = 1;
-  inline ::google::protobuf::int32 m_huitouzhen() const;
-  inline void set_m_huitouzhen(::google::protobuf::int32 value);
-
-  // optional int32 m_huitouFu = 2;
-  inline bool has_m_huitoufu() const;
-  inline void clear_m_huitoufu();
-  static const int kMHuitouFuFieldNumber = 2;
-  inline ::google::protobuf::int32 m_huitoufu() const;
-  inline void set_m_huitoufu(::google::protobuf::int32 value);
-
-  // repeated .GM_XiaJingInfo m_huitouInfo = 10;
-  inline int m_huitouinfo_size() const;
-  inline void clear_m_huitouinfo();
-  static const int kMHuitouInfoFieldNumber = 10;
-  inline const ::GM_XiaJingInfo& m_huitouinfo(int index) const;
-  inline ::GM_XiaJingInfo* mutable_m_huitouinfo(int index);
-  inline ::GM_XiaJingInfo* add_m_huitouinfo();
-  inline const ::google::protobuf::RepeatedPtrField< ::GM_XiaJingInfo >&
-      m_huitouinfo() const;
-  inline ::google::protobuf::RepeatedPtrField< ::GM_XiaJingInfo >*
-      mutable_m_huitouinfo();
-
-  // @@protoc_insertion_point(class_scope:GM_HuiTouData)
- private:
-  inline void set_has_m_huitouzhen();
-  inline void clear_has_m_huitouzhen();
-  inline void set_has_m_huitoufu();
-  inline void clear_has_m_huitoufu();
-
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
-  ::google::protobuf::int32 m_huitouzhen_;
-  ::google::protobuf::int32 m_huitoufu_;
-  ::google::protobuf::RepeatedPtrField< ::GM_XiaJingInfo > m_huitouinfo_;
-
-  mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
-
-  friend void  protobuf_AddDesc_majiang_2etxt();
-  friend void protobuf_AssignDesc_majiang_2etxt();
-  friend void protobuf_ShutdownFile_majiang_2etxt();
-
-  void InitAsDefaultInstance();
-  static GM_HuiTouData* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class GM_XiaJingInfo : public ::google::protobuf::Message {
- public:
-  GM_XiaJingInfo();
-  virtual ~GM_XiaJingInfo();
-
-  GM_XiaJingInfo(const GM_XiaJingInfo& from);
-
-  inline GM_XiaJingInfo& operator=(const GM_XiaJingInfo& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const GM_XiaJingInfo& default_instance();
-
-  void Swap(GM_XiaJingInfo* other);
-
-  // implements Message ----------------------------------------------
-
-  GM_XiaJingInfo* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const GM_XiaJingInfo& from);
-  void MergeFrom(const GM_XiaJingInfo& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // required int32 m_roleid = 1;
-  inline bool has_m_roleid() const;
-  inline void clear_m_roleid();
-  static const int kMRoleidFieldNumber = 1;
-  inline ::google::protobuf::int32 m_roleid() const;
-  inline void set_m_roleid(::google::protobuf::int32 value);
-
-  // optional int32 m_xiazhuNum = 2;
-  inline bool has_m_xiazhunum() const;
-  inline void clear_m_xiazhunum();
-  static const int kMXiazhuNumFieldNumber = 2;
-  inline ::google::protobuf::int32 m_xiazhunum() const;
-  inline void set_m_xiazhunum(::google::protobuf::int32 value);
-
-  // optional int32 m_xiafuNum = 3;
-  inline bool has_m_xiafunum() const;
-  inline void clear_m_xiafunum();
-  static const int kMXiafuNumFieldNumber = 3;
-  inline ::google::protobuf::int32 m_xiafunum() const;
-  inline void set_m_xiafunum(::google::protobuf::int32 value);
-
-  // optional int32 m_sorce = 4;
-  inline bool has_m_sorce() const;
-  inline void clear_m_sorce();
-  static const int kMSorceFieldNumber = 4;
-  inline ::google::protobuf::int32 m_sorce() const;
-  inline void set_m_sorce(::google::protobuf::int32 value);
-
-  // @@protoc_insertion_point(class_scope:GM_XiaJingInfo)
- private:
-  inline void set_has_m_roleid();
-  inline void clear_has_m_roleid();
-  inline void set_has_m_xiazhunum();
-  inline void clear_has_m_xiazhunum();
-  inline void set_has_m_xiafunum();
-  inline void clear_has_m_xiafunum();
-  inline void set_has_m_sorce();
-  inline void clear_has_m_sorce();
-
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
-  ::google::protobuf::int32 m_roleid_;
-  ::google::protobuf::int32 m_xiazhunum_;
-  ::google::protobuf::int32 m_xiafunum_;
-  ::google::protobuf::int32 m_sorce_;
-
-  mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
-
-  friend void  protobuf_AddDesc_majiang_2etxt();
-  friend void protobuf_AssignDesc_majiang_2etxt();
-  friend void protobuf_ShutdownFile_majiang_2etxt();
-
-  void InitAsDefaultInstance();
-  static GM_XiaJingInfo* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -1303,6 +881,13 @@ class GM_OperatorData : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 m_cardvoice() const;
   inline void set_m_cardvoice(::google::protobuf::int32 value);
 
+  // optional int32 m_CardNum = 6;
+  inline bool has_m_cardnum() const;
+  inline void clear_m_cardnum();
+  static const int kMCardNumFieldNumber = 6;
+  inline ::google::protobuf::int32 m_cardnum() const;
+  inline void set_m_cardnum(::google::protobuf::int32 value);
+
   // repeated .GM_PlayerHandCard m_HandCard = 10;
   inline int m_handcard_size() const;
   inline void clear_m_handcard();
@@ -1327,6 +912,8 @@ class GM_OperatorData : public ::google::protobuf::Message {
   inline void clear_has_m_rolevoice();
   inline void set_has_m_cardvoice();
   inline void clear_has_m_cardvoice();
+  inline void set_has_m_cardnum();
+  inline void clear_has_m_cardnum();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -1334,11 +921,12 @@ class GM_OperatorData : public ::google::protobuf::Message {
   ::google::protobuf::int32 m_funid_;
   ::google::protobuf::int32 m_operatorcard_;
   ::google::protobuf::int32 m_rolevoice_;
-  ::google::protobuf::RepeatedPtrField< ::GM_PlayerHandCard > m_handcard_;
   ::google::protobuf::int32 m_cardvoice_;
+  ::google::protobuf::int32 m_cardnum_;
+  ::google::protobuf::RepeatedPtrField< ::GM_PlayerHandCard > m_handcard_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
 
   friend void  protobuf_AddDesc_majiang_2etxt();
   friend void protobuf_AssignDesc_majiang_2etxt();
@@ -1431,10 +1019,24 @@ class GM_MJOperator : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 m_cardvoice() const;
   inline void set_m_cardvoice(::google::protobuf::int32 value);
 
-  // optional .GM_PlayerHandCard m_LastCard = 5;
+  // optional int32 m_Order = 5;
+  inline bool has_m_order() const;
+  inline void clear_m_order();
+  static const int kMOrderFieldNumber = 5;
+  inline ::google::protobuf::int32 m_order() const;
+  inline void set_m_order(::google::protobuf::int32 value);
+
+  // optional int32 m_CardNum = 6;
+  inline bool has_m_cardnum() const;
+  inline void clear_m_cardnum();
+  static const int kMCardNumFieldNumber = 6;
+  inline ::google::protobuf::int32 m_cardnum() const;
+  inline void set_m_cardnum(::google::protobuf::int32 value);
+
+  // optional .GM_PlayerHandCard m_LastCard = 7;
   inline bool has_m_lastcard() const;
   inline void clear_m_lastcard();
-  static const int kMLastCardFieldNumber = 5;
+  static const int kMLastCardFieldNumber = 7;
   inline const ::GM_PlayerHandCard& m_lastcard() const;
   inline ::GM_PlayerHandCard* mutable_m_lastcard();
   inline ::GM_PlayerHandCard* release_m_lastcard();
@@ -1462,6 +1064,10 @@ class GM_MJOperator : public ::google::protobuf::Message {
   inline void clear_has_m_rolevoice();
   inline void set_has_m_cardvoice();
   inline void clear_has_m_cardvoice();
+  inline void set_has_m_order();
+  inline void clear_has_m_order();
+  inline void set_has_m_cardnum();
+  inline void clear_has_m_cardnum();
   inline void set_has_m_lastcard();
   inline void clear_has_m_lastcard();
 
@@ -1471,11 +1077,13 @@ class GM_MJOperator : public ::google::protobuf::Message {
   ::google::protobuf::int32 m_operatortype_;
   ::google::protobuf::int32 m_rolevoice_;
   ::google::protobuf::int32 m_cardvoice_;
+  ::google::protobuf::int32 m_order_;
+  ::google::protobuf::int32 m_cardnum_;
   ::GM_PlayerHandCard* m_lastcard_;
   ::google::protobuf::RepeatedPtrField< ::GM_PlayerHandCard > m_handcard_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
 
   friend void  protobuf_AddDesc_majiang_2etxt();
   friend void protobuf_AssignDesc_majiang_2etxt();
@@ -1706,201 +1314,131 @@ class GM_HuHandCardData : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
       mutable_m_handcardtype();
 
-  // optional int32 m_xiaJing = 3;
-  inline bool has_m_xiajing() const;
-  inline void clear_m_xiajing();
-  static const int kMXiaJingFieldNumber = 3;
-  inline ::google::protobuf::int32 m_xiajing() const;
-  inline void set_m_xiajing(::google::protobuf::int32 value);
-
-  // optional int32 m_ShangJing = 4;
-  inline bool has_m_shangjing() const;
-  inline void clear_m_shangjing();
-  static const int kMShangJingFieldNumber = 4;
-  inline ::google::protobuf::int32 m_shangjing() const;
-  inline void set_m_shangjing(::google::protobuf::int32 value);
-
-  // optional int32 m_Hufeng = 5;
+  // optional int32 m_Hufeng = 3;
   inline bool has_m_hufeng() const;
   inline void clear_m_hufeng();
-  static const int kMHufengFieldNumber = 5;
+  static const int kMHufengFieldNumber = 3;
   inline ::google::protobuf::int32 m_hufeng() const;
   inline void set_m_hufeng(::google::protobuf::int32 value);
 
-  // optional int32 m_GoldNum = 6;
-  inline bool has_m_goldnum() const;
-  inline void clear_m_goldnum();
-  static const int kMGoldNumFieldNumber = 6;
-  inline ::google::protobuf::int32 m_goldnum() const;
-  inline void set_m_goldnum(::google::protobuf::int32 value);
+  // optional int32 m_ZongLei = 4;
+  inline bool has_m_zonglei() const;
+  inline void clear_m_zonglei();
+  static const int kMZongLeiFieldNumber = 4;
+  inline ::google::protobuf::int32 m_zonglei() const;
+  inline void set_m_zonglei(::google::protobuf::int32 value);
 
-  // optional int32 m_isBaWang = 7;
-  inline bool has_m_isbawang() const;
-  inline void clear_m_isbawang();
-  static const int kMIsBaWangFieldNumber = 7;
-  inline ::google::protobuf::int32 m_isbawang() const;
-  inline void set_m_isbawang(::google::protobuf::int32 value);
+  // optional int32 m_Tan = 5;
+  inline bool has_m_tan() const;
+  inline void clear_m_tan();
+  static const int kMTanFieldNumber = 5;
+  inline ::google::protobuf::int32 m_tan() const;
+  inline void set_m_tan(::google::protobuf::int32 value);
 
-  // optional int32 m_isCongGuan = 8;
-  inline bool has_m_iscongguan() const;
-  inline void clear_m_iscongguan();
-  static const int kMIsCongGuanFieldNumber = 8;
-  inline ::google::protobuf::int32 m_iscongguan() const;
-  inline void set_m_iscongguan(::google::protobuf::int32 value);
+  // optional int32 m_Sao = 6;
+  inline bool has_m_sao() const;
+  inline void clear_m_sao();
+  static const int kMSaoFieldNumber = 6;
+  inline ::google::protobuf::int32 m_sao() const;
+  inline void set_m_sao(::google::protobuf::int32 value);
 
-  // optional int32 m_huitouScore = 9;
-  inline bool has_m_huitouscore() const;
-  inline void clear_m_huitouscore();
-  static const int kMHuitouScoreFieldNumber = 9;
-  inline ::google::protobuf::int32 m_huitouscore() const;
-  inline void set_m_huitouscore(::google::protobuf::int32 value);
+  // optional int32 m_Peng = 7;
+  inline bool has_m_peng() const;
+  inline void clear_m_peng();
+  static const int kMPengFieldNumber = 7;
+  inline ::google::protobuf::int32 m_peng() const;
+  inline void set_m_peng(::google::protobuf::int32 value);
 
-  // optional int32 m_maileiScore = 10;
-  inline bool has_m_maileiscore() const;
-  inline void clear_m_maileiscore();
-  static const int kMMaileiScoreFieldNumber = 10;
-  inline ::google::protobuf::int32 m_maileiscore() const;
-  inline void set_m_maileiscore(::google::protobuf::int32 value);
+  // optional int32 m_Gang = 8;
+  inline bool has_m_gang() const;
+  inline void clear_m_gang();
+  static const int kMGangFieldNumber = 8;
+  inline ::google::protobuf::int32 m_gang() const;
+  inline void set_m_gang(::google::protobuf::int32 value);
 
-  // optional int32 m_tongScore = 11;
-  inline bool has_m_tongscore() const;
-  inline void clear_m_tongscore();
-  static const int kMTongScoreFieldNumber = 11;
-  inline ::google::protobuf::int32 m_tongscore() const;
-  inline void set_m_tongscore(::google::protobuf::int32 value);
+  // optional int32 m_anGang = 9;
+  inline bool has_m_angang() const;
+  inline void clear_m_angang();
+  static const int kMAnGangFieldNumber = 9;
+  inline ::google::protobuf::int32 m_angang() const;
+  inline void set_m_angang(::google::protobuf::int32 value);
 
-  // optional int32 m_gangScore = 12;
-  inline bool has_m_gangscore() const;
-  inline void clear_m_gangscore();
-  static const int kMGangScoreFieldNumber = 12;
-  inline ::google::protobuf::int32 m_gangscore() const;
-  inline void set_m_gangscore(::google::protobuf::int32 value);
+  // optional int32 m_reward = 10;
+  inline bool has_m_reward() const;
+  inline void clear_m_reward();
+  static const int kMRewardFieldNumber = 10;
+  inline ::google::protobuf::int32 m_reward() const;
+  inline void set_m_reward(::google::protobuf::int32 value);
 
-  // optional int32 m_xiaCGBW = 13;
-  inline bool has_m_xiacgbw() const;
-  inline void clear_m_xiacgbw();
-  static const int kMXiaCGBWFieldNumber = 13;
-  inline ::google::protobuf::int32 m_xiacgbw() const;
-  inline void set_m_xiacgbw(::google::protobuf::int32 value);
+  // optional int32 m_score = 11;
+  inline bool has_m_score() const;
+  inline void clear_m_score();
+  static const int kMScoreFieldNumber = 11;
+  inline ::google::protobuf::int32 m_score() const;
+  inline void set_m_score(::google::protobuf::int32 value);
 
-  // optional int32 m_huiCGBW = 14;
-  inline bool has_m_huicgbw() const;
-  inline void clear_m_huicgbw();
-  static const int kMHuiCGBWFieldNumber = 14;
-  inline ::google::protobuf::int32 m_huicgbw() const;
-  inline void set_m_huicgbw(::google::protobuf::int32 value);
+  // optional int32 m_TotalScore = 12;
+  inline bool has_m_totalscore() const;
+  inline void clear_m_totalscore();
+  static const int kMTotalScoreFieldNumber = 12;
+  inline ::google::protobuf::int32 m_totalscore() const;
+  inline void set_m_totalscore(::google::protobuf::int32 value);
 
-  // optional int32 m_maiCGBW = 15;
-  inline bool has_m_maicgbw() const;
-  inline void clear_m_maicgbw();
-  static const int kMMaiCGBWFieldNumber = 15;
-  inline ::google::protobuf::int32 m_maicgbw() const;
-  inline void set_m_maicgbw(::google::protobuf::int32 value);
-
-  // optional int32 m_tongCGBW = 16;
-  inline bool has_m_tongcgbw() const;
-  inline void clear_m_tongcgbw();
-  static const int kMTongCGBWFieldNumber = 16;
-  inline ::google::protobuf::int32 m_tongcgbw() const;
-  inline void set_m_tongcgbw(::google::protobuf::int32 value);
-
-  // optional int32 m_CZScore = 17;
-  inline bool has_m_czscore() const;
-  inline void clear_m_czscore();
-  static const int kMCZScoreFieldNumber = 17;
-  inline ::google::protobuf::int32 m_czscore() const;
-  inline void set_m_czscore(::google::protobuf::int32 value);
-
-  // optional int32 m_HDFZScore = 18;
-  inline bool has_m_hdfzscore() const;
-  inline void clear_m_hdfzscore();
-  static const int kMHDFZScoreFieldNumber = 18;
-  inline ::google::protobuf::int32 m_hdfzscore() const;
-  inline void set_m_hdfzscore(::google::protobuf::int32 value);
-
-  // optional int32 m_PLRate = 19;
-  inline bool has_m_plrate() const;
-  inline void clear_m_plrate();
-  static const int kMPLRateFieldNumber = 19;
-  inline ::google::protobuf::int32 m_plrate() const;
-  inline void set_m_plrate(::google::protobuf::int32 value);
-
-  // repeated int32 m_AnGangType = 20;
-  inline int m_angangtype_size() const;
-  inline void clear_m_angangtype();
-  static const int kMAnGangTypeFieldNumber = 20;
-  inline ::google::protobuf::int32 m_angangtype(int index) const;
-  inline void set_m_angangtype(int index, ::google::protobuf::int32 value);
-  inline void add_m_angangtype(::google::protobuf::int32 value);
+  // repeated int32 m_SaoType = 20;
+  inline int m_saotype_size() const;
+  inline void clear_m_saotype();
+  static const int kMSaoTypeFieldNumber = 20;
+  inline ::google::protobuf::int32 m_saotype(int index) const;
+  inline void set_m_saotype(int index, ::google::protobuf::int32 value);
+  inline void add_m_saotype(::google::protobuf::int32 value);
   inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
-      m_angangtype() const;
+      m_saotype() const;
   inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
-      mutable_m_angangtype();
+      mutable_m_saotype();
 
   // @@protoc_insertion_point(class_scope:GM_HuHandCardData)
  private:
   inline void set_has_m_roleid();
   inline void clear_has_m_roleid();
-  inline void set_has_m_xiajing();
-  inline void clear_has_m_xiajing();
-  inline void set_has_m_shangjing();
-  inline void clear_has_m_shangjing();
   inline void set_has_m_hufeng();
   inline void clear_has_m_hufeng();
-  inline void set_has_m_goldnum();
-  inline void clear_has_m_goldnum();
-  inline void set_has_m_isbawang();
-  inline void clear_has_m_isbawang();
-  inline void set_has_m_iscongguan();
-  inline void clear_has_m_iscongguan();
-  inline void set_has_m_huitouscore();
-  inline void clear_has_m_huitouscore();
-  inline void set_has_m_maileiscore();
-  inline void clear_has_m_maileiscore();
-  inline void set_has_m_tongscore();
-  inline void clear_has_m_tongscore();
-  inline void set_has_m_gangscore();
-  inline void clear_has_m_gangscore();
-  inline void set_has_m_xiacgbw();
-  inline void clear_has_m_xiacgbw();
-  inline void set_has_m_huicgbw();
-  inline void clear_has_m_huicgbw();
-  inline void set_has_m_maicgbw();
-  inline void clear_has_m_maicgbw();
-  inline void set_has_m_tongcgbw();
-  inline void clear_has_m_tongcgbw();
-  inline void set_has_m_czscore();
-  inline void clear_has_m_czscore();
-  inline void set_has_m_hdfzscore();
-  inline void clear_has_m_hdfzscore();
-  inline void set_has_m_plrate();
-  inline void clear_has_m_plrate();
+  inline void set_has_m_zonglei();
+  inline void clear_has_m_zonglei();
+  inline void set_has_m_tan();
+  inline void clear_has_m_tan();
+  inline void set_has_m_sao();
+  inline void clear_has_m_sao();
+  inline void set_has_m_peng();
+  inline void clear_has_m_peng();
+  inline void set_has_m_gang();
+  inline void clear_has_m_gang();
+  inline void set_has_m_angang();
+  inline void clear_has_m_angang();
+  inline void set_has_m_reward();
+  inline void clear_has_m_reward();
+  inline void set_has_m_score();
+  inline void clear_has_m_score();
+  inline void set_has_m_totalscore();
+  inline void clear_has_m_totalscore();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::RepeatedField< ::google::protobuf::int32 > m_handcardtype_;
   ::google::protobuf::int32 m_roleid_;
-  ::google::protobuf::int32 m_xiajing_;
-  ::google::protobuf::int32 m_shangjing_;
   ::google::protobuf::int32 m_hufeng_;
-  ::google::protobuf::int32 m_goldnum_;
-  ::google::protobuf::int32 m_isbawang_;
-  ::google::protobuf::int32 m_iscongguan_;
-  ::google::protobuf::int32 m_huitouscore_;
-  ::google::protobuf::int32 m_maileiscore_;
-  ::google::protobuf::int32 m_tongscore_;
-  ::google::protobuf::int32 m_gangscore_;
-  ::google::protobuf::int32 m_xiacgbw_;
-  ::google::protobuf::int32 m_huicgbw_;
-  ::google::protobuf::int32 m_maicgbw_;
-  ::google::protobuf::int32 m_tongcgbw_;
-  ::google::protobuf::int32 m_czscore_;
-  ::google::protobuf::int32 m_hdfzscore_;
-  ::google::protobuf::int32 m_plrate_;
-  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > m_angangtype_;
+  ::google::protobuf::int32 m_zonglei_;
+  ::google::protobuf::int32 m_tan_;
+  ::google::protobuf::int32 m_sao_;
+  ::google::protobuf::int32 m_peng_;
+  ::google::protobuf::int32 m_gang_;
+  ::google::protobuf::int32 m_angang_;
+  ::google::protobuf::int32 m_reward_;
+  ::google::protobuf::int32 m_score_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > m_saotype_;
+  ::google::protobuf::int32 m_totalscore_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(20 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(13 + 31) / 32];
 
   friend void  protobuf_AddDesc_majiang_2etxt();
   friend void protobuf_AssignDesc_majiang_2etxt();
@@ -2181,141 +1719,106 @@ class GM_ReconnectMJData : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 m_bankerpos() const;
   inline void set_m_bankerpos(::google::protobuf::int32 value);
 
-  // optional int32 m_zheng = 2;
-  inline bool has_m_zheng() const;
-  inline void clear_m_zheng();
-  static const int kMZhengFieldNumber = 2;
-  inline ::google::protobuf::int32 m_zheng() const;
-  inline void set_m_zheng(::google::protobuf::int32 value);
-
-  // optional int32 m_fu = 3;
-  inline bool has_m_fu() const;
-  inline void clear_m_fu();
-  static const int kMFuFieldNumber = 3;
-  inline ::google::protobuf::int32 m_fu() const;
-  inline void set_m_fu(::google::protobuf::int32 value);
-
-  // optional int32 m_zhengid = 4;
-  inline bool has_m_zhengid() const;
-  inline void clear_m_zhengid();
-  static const int kMZhengidFieldNumber = 4;
-  inline ::google::protobuf::int32 m_zhengid() const;
-  inline void set_m_zhengid(::google::protobuf::int32 value);
-
-  // optional int32 m_jingpos = 5;
-  inline bool has_m_jingpos() const;
-  inline void clear_m_jingpos();
-  static const int kMJingposFieldNumber = 5;
-  inline ::google::protobuf::int32 m_jingpos() const;
-  inline void set_m_jingpos(::google::protobuf::int32 value);
-
-  // optional int32 m_RoomMasterID = 6;
+  // optional int32 m_RoomMasterID = 2;
   inline bool has_m_roommasterid() const;
   inline void clear_m_roommasterid();
-  static const int kMRoomMasterIDFieldNumber = 6;
+  static const int kMRoomMasterIDFieldNumber = 2;
   inline ::google::protobuf::int32 m_roommasterid() const;
   inline void set_m_roommasterid(::google::protobuf::int32 value);
 
-  // optional int32 m_FirstPos = 7;
-  inline bool has_m_firstpos() const;
-  inline void clear_m_firstpos();
-  static const int kMFirstPosFieldNumber = 7;
-  inline ::google::protobuf::int32 m_firstpos() const;
-  inline void set_m_firstpos(::google::protobuf::int32 value);
-
-  // optional int32 m_SecondPos = 8;
-  inline bool has_m_secondpos() const;
-  inline void clear_m_secondpos();
-  static const int kMSecondPosFieldNumber = 8;
-  inline ::google::protobuf::int32 m_secondpos() const;
-  inline void set_m_secondpos(::google::protobuf::int32 value);
-
-  // optional int32 m_FreeCard = 9;
+  // optional int32 m_FreeCard = 3;
   inline bool has_m_freecard() const;
   inline void clear_m_freecard();
-  static const int kMFreeCardFieldNumber = 9;
+  static const int kMFreeCardFieldNumber = 3;
   inline ::google::protobuf::int32 m_freecard() const;
   inline void set_m_freecard(::google::protobuf::int32 value);
 
-  // optional int32 m_leftTime = 10;
-  inline bool has_m_lefttime() const;
-  inline void clear_m_lefttime();
-  static const int kMLeftTimeFieldNumber = 10;
-  inline ::google::protobuf::int32 m_lefttime() const;
-  inline void set_m_lefttime(::google::protobuf::int32 value);
-
-  // optional int32 m_leftCount = 11;
+  // optional int32 m_leftCount = 4;
   inline bool has_m_leftcount() const;
   inline void clear_m_leftcount();
-  static const int kMLeftCountFieldNumber = 11;
+  static const int kMLeftCountFieldNumber = 4;
   inline ::google::protobuf::int32 m_leftcount() const;
   inline void set_m_leftcount(::google::protobuf::int32 value);
 
-  // optional int32 m_totalCount = 12;
+  // optional int32 m_totalCount = 5;
   inline bool has_m_totalcount() const;
   inline void clear_m_totalcount();
-  static const int kMTotalCountFieldNumber = 12;
+  static const int kMTotalCountFieldNumber = 5;
   inline ::google::protobuf::int32 m_totalcount() const;
   inline void set_m_totalcount(::google::protobuf::int32 value);
 
-  // optional string m_playWay = 13;
-  inline bool has_m_playway() const;
-  inline void clear_m_playway();
-  static const int kMPlayWayFieldNumber = 13;
-  inline const ::std::string& m_playway() const;
-  inline void set_m_playway(const ::std::string& value);
-  inline void set_m_playway(const char* value);
-  inline void set_m_playway(const char* value, size_t size);
-  inline ::std::string* mutable_m_playway();
-  inline ::std::string* release_m_playway();
-  inline void set_allocated_m_playway(::std::string* m_playway);
-
-  // optional int32 m_xiazheng = 14;
-  inline bool has_m_xiazheng() const;
-  inline void clear_m_xiazheng();
-  static const int kMXiazhengFieldNumber = 14;
-  inline ::google::protobuf::int32 m_xiazheng() const;
-  inline void set_m_xiazheng(::google::protobuf::int32 value);
-
-  // optional int32 m_xiafu = 15;
-  inline bool has_m_xiafu() const;
-  inline void clear_m_xiafu();
-  static const int kMXiafuFieldNumber = 15;
-  inline ::google::protobuf::int32 m_xiafu() const;
-  inline void set_m_xiafu(::google::protobuf::int32 value);
-
-  // optional int32 m_rollCount = 16;
+  // optional int32 m_rollCount = 6;
   inline bool has_m_rollcount() const;
   inline void clear_m_rollcount();
-  static const int kMRollCountFieldNumber = 16;
+  static const int kMRollCountFieldNumber = 6;
   inline ::google::protobuf::int32 m_rollcount() const;
   inline void set_m_rollcount(::google::protobuf::int32 value);
 
-  // optional int32 m_playerCount = 17;
+  // optional int32 m_playerCount = 7;
   inline bool has_m_playercount() const;
   inline void clear_m_playercount();
-  static const int kMPlayerCountFieldNumber = 17;
+  static const int kMPlayerCountFieldNumber = 7;
   inline ::google::protobuf::int32 m_playercount() const;
   inline void set_m_playercount(::google::protobuf::int32 value);
 
-  // optional int32 m_lastOutCardRoleId = 18;
+  // optional int32 m_lastOutCardRoleId = 8;
   inline bool has_m_lastoutcardroleid() const;
   inline void clear_m_lastoutcardroleid();
-  static const int kMLastOutCardRoleIdFieldNumber = 18;
+  static const int kMLastOutCardRoleIdFieldNumber = 8;
   inline ::google::protobuf::int32 m_lastoutcardroleid() const;
   inline void set_m_lastoutcardroleid(::google::protobuf::int32 value);
 
-  // optional int32 m_closeRoomLeftTime = 19;
+  // optional int32 m_closeRoomLeftTime = 9;
   inline bool has_m_closeroomlefttime() const;
   inline void clear_m_closeroomlefttime();
-  static const int kMCloseRoomLeftTimeFieldNumber = 19;
+  static const int kMCloseRoomLeftTimeFieldNumber = 9;
   inline ::google::protobuf::int32 m_closeroomlefttime() const;
   inline void set_m_closeroomlefttime(::google::protobuf::int32 value);
 
-  // repeated .GM_PlayerHandCard m_HandCard = 20;
+  // optional int32 m_huLastCard = 10;
+  inline bool has_m_hulastcard() const;
+  inline void clear_m_hulastcard();
+  static const int kMHuLastCardFieldNumber = 10;
+  inline ::google::protobuf::int32 m_hulastcard() const;
+  inline void set_m_hulastcard(::google::protobuf::int32 value);
+
+  // optional int32 m_getCardId = 11;
+  inline bool has_m_getcardid() const;
+  inline void clear_m_getcardid();
+  static const int kMGetCardIdFieldNumber = 11;
+  inline ::google::protobuf::int32 m_getcardid() const;
+  inline void set_m_getcardid(::google::protobuf::int32 value);
+
+  // optional int32 m_getCardNum = 12;
+  inline bool has_m_getcardnum() const;
+  inline void clear_m_getcardnum();
+  static const int kMGetCardNumFieldNumber = 12;
+  inline ::google::protobuf::int32 m_getcardnum() const;
+  inline void set_m_getcardnum(::google::protobuf::int32 value);
+
+  // optional int32 m_sendCardID = 13;
+  inline bool has_m_sendcardid() const;
+  inline void clear_m_sendcardid();
+  static const int kMSendCardIDFieldNumber = 13;
+  inline ::google::protobuf::int32 m_sendcardid() const;
+  inline void set_m_sendcardid(::google::protobuf::int32 value);
+
+  // repeated int32 m_saizi = 20;
+  inline int m_saizi_size() const;
+  inline void clear_m_saizi();
+  static const int kMSaiziFieldNumber = 20;
+  inline ::google::protobuf::int32 m_saizi(int index) const;
+  inline void set_m_saizi(int index, ::google::protobuf::int32 value);
+  inline void add_m_saizi(::google::protobuf::int32 value);
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+      m_saizi() const;
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+      mutable_m_saizi();
+
+  // repeated .GM_PlayerHandCard m_HandCard = 21;
   inline int m_handcard_size() const;
   inline void clear_m_handcard();
-  static const int kMHandCardFieldNumber = 20;
+  static const int kMHandCardFieldNumber = 21;
   inline const ::GM_PlayerHandCard& m_handcard(int index) const;
   inline ::GM_PlayerHandCard* mutable_m_handcard(int index);
   inline ::GM_PlayerHandCard* add_m_handcard();
@@ -2324,10 +1827,10 @@ class GM_ReconnectMJData : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::GM_PlayerHandCard >*
       mutable_m_handcard();
 
-  // repeated .GM_ReconnectPlayerData m_AllData = 21;
+  // repeated .GM_ReconnectPlayerData m_AllData = 22;
   inline int m_alldata_size() const;
   inline void clear_m_alldata();
-  static const int kMAllDataFieldNumber = 21;
+  static const int kMAllDataFieldNumber = 22;
   inline const ::GM_ReconnectPlayerData& m_alldata(int index) const;
   inline ::GM_ReconnectPlayerData* mutable_m_alldata(int index);
   inline ::GM_ReconnectPlayerData* add_m_alldata();
@@ -2336,10 +1839,10 @@ class GM_ReconnectMJData : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::GM_ReconnectPlayerData >*
       mutable_m_alldata();
 
-  // repeated .GM_ReconnectCloseRoomData m_CloseRoomData = 22;
+  // repeated .GM_ReconnectCloseRoomData m_CloseRoomData = 23;
   inline int m_closeroomdata_size() const;
   inline void clear_m_closeroomdata();
-  static const int kMCloseRoomDataFieldNumber = 22;
+  static const int kMCloseRoomDataFieldNumber = 23;
   inline const ::GM_ReconnectCloseRoomData& m_closeroomdata(int index) const;
   inline ::GM_ReconnectCloseRoomData* mutable_m_closeroomdata(int index);
   inline ::GM_ReconnectCloseRoomData* add_m_closeroomdata();
@@ -2348,54 +1851,27 @@ class GM_ReconnectMJData : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::GM_ReconnectCloseRoomData >*
       mutable_m_closeroomdata();
 
-  // optional .GM_HUOperator m_huOperatorData = 23;
+  // optional .GM_HUOperator m_huOperatorData = 24;
   inline bool has_m_huoperatordata() const;
   inline void clear_m_huoperatordata();
-  static const int kMHuOperatorDataFieldNumber = 23;
+  static const int kMHuOperatorDataFieldNumber = 24;
   inline const ::GM_HUOperator& m_huoperatordata() const;
   inline ::GM_HUOperator* mutable_m_huoperatordata();
   inline ::GM_HUOperator* release_m_huoperatordata();
   inline void set_allocated_m_huoperatordata(::GM_HUOperator* m_huoperatordata);
 
-  // optional int32 m_huLastCard = 24;
-  inline bool has_m_hulastcard() const;
-  inline void clear_m_hulastcard();
-  static const int kMHuLastCardFieldNumber = 24;
-  inline ::google::protobuf::int32 m_hulastcard() const;
-  inline void set_m_hulastcard(::google::protobuf::int32 value);
-
   // @@protoc_insertion_point(class_scope:GM_ReconnectMJData)
  private:
   inline void set_has_m_bankerpos();
   inline void clear_has_m_bankerpos();
-  inline void set_has_m_zheng();
-  inline void clear_has_m_zheng();
-  inline void set_has_m_fu();
-  inline void clear_has_m_fu();
-  inline void set_has_m_zhengid();
-  inline void clear_has_m_zhengid();
-  inline void set_has_m_jingpos();
-  inline void clear_has_m_jingpos();
   inline void set_has_m_roommasterid();
   inline void clear_has_m_roommasterid();
-  inline void set_has_m_firstpos();
-  inline void clear_has_m_firstpos();
-  inline void set_has_m_secondpos();
-  inline void clear_has_m_secondpos();
   inline void set_has_m_freecard();
   inline void clear_has_m_freecard();
-  inline void set_has_m_lefttime();
-  inline void clear_has_m_lefttime();
   inline void set_has_m_leftcount();
   inline void clear_has_m_leftcount();
   inline void set_has_m_totalcount();
   inline void clear_has_m_totalcount();
-  inline void set_has_m_playway();
-  inline void clear_has_m_playway();
-  inline void set_has_m_xiazheng();
-  inline void clear_has_m_xiazheng();
-  inline void set_has_m_xiafu();
-  inline void clear_has_m_xiafu();
   inline void set_has_m_rollcount();
   inline void clear_has_m_rollcount();
   inline void set_has_m_playercount();
@@ -2404,40 +1880,40 @@ class GM_ReconnectMJData : public ::google::protobuf::Message {
   inline void clear_has_m_lastoutcardroleid();
   inline void set_has_m_closeroomlefttime();
   inline void clear_has_m_closeroomlefttime();
-  inline void set_has_m_huoperatordata();
-  inline void clear_has_m_huoperatordata();
   inline void set_has_m_hulastcard();
   inline void clear_has_m_hulastcard();
+  inline void set_has_m_getcardid();
+  inline void clear_has_m_getcardid();
+  inline void set_has_m_getcardnum();
+  inline void clear_has_m_getcardnum();
+  inline void set_has_m_sendcardid();
+  inline void clear_has_m_sendcardid();
+  inline void set_has_m_huoperatordata();
+  inline void clear_has_m_huoperatordata();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::int32 m_bankerpos_;
-  ::google::protobuf::int32 m_zheng_;
-  ::google::protobuf::int32 m_fu_;
-  ::google::protobuf::int32 m_zhengid_;
-  ::google::protobuf::int32 m_jingpos_;
   ::google::protobuf::int32 m_roommasterid_;
-  ::google::protobuf::int32 m_firstpos_;
-  ::google::protobuf::int32 m_secondpos_;
   ::google::protobuf::int32 m_freecard_;
-  ::google::protobuf::int32 m_lefttime_;
   ::google::protobuf::int32 m_leftcount_;
   ::google::protobuf::int32 m_totalcount_;
-  ::std::string* m_playway_;
-  ::google::protobuf::int32 m_xiazheng_;
-  ::google::protobuf::int32 m_xiafu_;
   ::google::protobuf::int32 m_rollcount_;
   ::google::protobuf::int32 m_playercount_;
   ::google::protobuf::int32 m_lastoutcardroleid_;
   ::google::protobuf::int32 m_closeroomlefttime_;
+  ::google::protobuf::int32 m_hulastcard_;
+  ::google::protobuf::int32 m_getcardid_;
+  ::google::protobuf::int32 m_getcardnum_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > m_saizi_;
   ::google::protobuf::RepeatedPtrField< ::GM_PlayerHandCard > m_handcard_;
   ::google::protobuf::RepeatedPtrField< ::GM_ReconnectPlayerData > m_alldata_;
   ::google::protobuf::RepeatedPtrField< ::GM_ReconnectCloseRoomData > m_closeroomdata_;
   ::GM_HUOperator* m_huoperatordata_;
-  ::google::protobuf::int32 m_hulastcard_;
+  ::google::protobuf::int32 m_sendcardid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(24 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(18 + 31) / 32];
 
   friend void  protobuf_AddDesc_majiang_2etxt();
   friend void protobuf_AssignDesc_majiang_2etxt();
@@ -3604,6 +3080,88 @@ class GM_PlayerRecivePack : public ::google::protobuf::Message {
   void InitAsDefaultInstance();
   static GM_PlayerRecivePack* default_instance_;
 };
+// -------------------------------------------------------------------
+
+class GM_MJOperatorError : public ::google::protobuf::Message {
+ public:
+  GM_MJOperatorError();
+  virtual ~GM_MJOperatorError();
+
+  GM_MJOperatorError(const GM_MJOperatorError& from);
+
+  inline GM_MJOperatorError& operator=(const GM_MJOperatorError& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const GM_MJOperatorError& default_instance();
+
+  void Swap(GM_MJOperatorError* other);
+
+  // implements Message ----------------------------------------------
+
+  GM_MJOperatorError* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const GM_MJOperatorError& from);
+  void MergeFrom(const GM_MJOperatorError& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 m_Result = 1;
+  inline bool has_m_result() const;
+  inline void clear_m_result();
+  static const int kMResultFieldNumber = 1;
+  inline ::google::protobuf::int32 m_result() const;
+  inline void set_m_result(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:GM_MJOperatorError)
+ private:
+  inline void set_has_m_result();
+  inline void clear_has_m_result();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::int32 m_result_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_majiang_2etxt();
+  friend void protobuf_AssignDesc_majiang_2etxt();
+  friend void protobuf_ShutdownFile_majiang_2etxt();
+
+  void InitAsDefaultInstance();
+  static GM_MJOperatorError* default_instance_;
+};
 // ===================================================================
 
 
@@ -3795,260 +3353,15 @@ inline void GMHandCard::set_m_bankerpos(::google::protobuf::int32 value) {
   m_bankerpos_ = value;
 }
 
-// optional int32 m_zheng = 2;
-inline bool GMHandCard::has_m_zheng() const {
+// optional int32 m_leftCount = 2;
+inline bool GMHandCard::has_m_leftcount() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void GMHandCard::set_has_m_zheng() {
+inline void GMHandCard::set_has_m_leftcount() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void GMHandCard::clear_has_m_zheng() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void GMHandCard::clear_m_zheng() {
-  m_zheng_ = 0;
-  clear_has_m_zheng();
-}
-inline ::google::protobuf::int32 GMHandCard::m_zheng() const {
-  return m_zheng_;
-}
-inline void GMHandCard::set_m_zheng(::google::protobuf::int32 value) {
-  set_has_m_zheng();
-  m_zheng_ = value;
-}
-
-// optional int32 m_fu = 3;
-inline bool GMHandCard::has_m_fu() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
-}
-inline void GMHandCard::set_has_m_fu() {
-  _has_bits_[0] |= 0x00000004u;
-}
-inline void GMHandCard::clear_has_m_fu() {
-  _has_bits_[0] &= ~0x00000004u;
-}
-inline void GMHandCard::clear_m_fu() {
-  m_fu_ = 0;
-  clear_has_m_fu();
-}
-inline ::google::protobuf::int32 GMHandCard::m_fu() const {
-  return m_fu_;
-}
-inline void GMHandCard::set_m_fu(::google::protobuf::int32 value) {
-  set_has_m_fu();
-  m_fu_ = value;
-}
-
-// optional int32 m_zhengid = 4;
-inline bool GMHandCard::has_m_zhengid() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
-}
-inline void GMHandCard::set_has_m_zhengid() {
-  _has_bits_[0] |= 0x00000008u;
-}
-inline void GMHandCard::clear_has_m_zhengid() {
-  _has_bits_[0] &= ~0x00000008u;
-}
-inline void GMHandCard::clear_m_zhengid() {
-  m_zhengid_ = 0;
-  clear_has_m_zhengid();
-}
-inline ::google::protobuf::int32 GMHandCard::m_zhengid() const {
-  return m_zhengid_;
-}
-inline void GMHandCard::set_m_zhengid(::google::protobuf::int32 value) {
-  set_has_m_zhengid();
-  m_zhengid_ = value;
-}
-
-// optional int32 m_xiazheng = 5;
-inline bool GMHandCard::has_m_xiazheng() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
-}
-inline void GMHandCard::set_has_m_xiazheng() {
-  _has_bits_[0] |= 0x00000010u;
-}
-inline void GMHandCard::clear_has_m_xiazheng() {
-  _has_bits_[0] &= ~0x00000010u;
-}
-inline void GMHandCard::clear_m_xiazheng() {
-  m_xiazheng_ = 0;
-  clear_has_m_xiazheng();
-}
-inline ::google::protobuf::int32 GMHandCard::m_xiazheng() const {
-  return m_xiazheng_;
-}
-inline void GMHandCard::set_m_xiazheng(::google::protobuf::int32 value) {
-  set_has_m_xiazheng();
-  m_xiazheng_ = value;
-}
-
-// optional int32 m_xiafu = 6;
-inline bool GMHandCard::has_m_xiafu() const {
-  return (_has_bits_[0] & 0x00000020u) != 0;
-}
-inline void GMHandCard::set_has_m_xiafu() {
-  _has_bits_[0] |= 0x00000020u;
-}
-inline void GMHandCard::clear_has_m_xiafu() {
-  _has_bits_[0] &= ~0x00000020u;
-}
-inline void GMHandCard::clear_m_xiafu() {
-  m_xiafu_ = 0;
-  clear_has_m_xiafu();
-}
-inline ::google::protobuf::int32 GMHandCard::m_xiafu() const {
-  return m_xiafu_;
-}
-inline void GMHandCard::set_m_xiafu(::google::protobuf::int32 value) {
-  set_has_m_xiafu();
-  m_xiafu_ = value;
-}
-
-// optional int32 m_xiazhengid = 7;
-inline bool GMHandCard::has_m_xiazhengid() const {
-  return (_has_bits_[0] & 0x00000040u) != 0;
-}
-inline void GMHandCard::set_has_m_xiazhengid() {
-  _has_bits_[0] |= 0x00000040u;
-}
-inline void GMHandCard::clear_has_m_xiazhengid() {
-  _has_bits_[0] &= ~0x00000040u;
-}
-inline void GMHandCard::clear_m_xiazhengid() {
-  m_xiazhengid_ = 0;
-  clear_has_m_xiazhengid();
-}
-inline ::google::protobuf::int32 GMHandCard::m_xiazhengid() const {
-  return m_xiazhengid_;
-}
-inline void GMHandCard::set_m_xiazhengid(::google::protobuf::int32 value) {
-  set_has_m_xiazhengid();
-  m_xiazhengid_ = value;
-}
-
-// repeated .GM_XiaJingInfo m_xiaJingData = 8;
-inline int GMHandCard::m_xiajingdata_size() const {
-  return m_xiajingdata_.size();
-}
-inline void GMHandCard::clear_m_xiajingdata() {
-  m_xiajingdata_.Clear();
-}
-inline const ::GM_XiaJingInfo& GMHandCard::m_xiajingdata(int index) const {
-  return m_xiajingdata_.Get(index);
-}
-inline ::GM_XiaJingInfo* GMHandCard::mutable_m_xiajingdata(int index) {
-  return m_xiajingdata_.Mutable(index);
-}
-inline ::GM_XiaJingInfo* GMHandCard::add_m_xiajingdata() {
-  return m_xiajingdata_.Add();
-}
-inline const ::google::protobuf::RepeatedPtrField< ::GM_XiaJingInfo >&
-GMHandCard::m_xiajingdata() const {
-  return m_xiajingdata_;
-}
-inline ::google::protobuf::RepeatedPtrField< ::GM_XiaJingInfo >*
-GMHandCard::mutable_m_xiajingdata() {
-  return &m_xiajingdata_;
-}
-
-// optional int32 m_playerpos = 9;
-inline bool GMHandCard::has_m_playerpos() const {
-  return (_has_bits_[0] & 0x00000100u) != 0;
-}
-inline void GMHandCard::set_has_m_playerpos() {
-  _has_bits_[0] |= 0x00000100u;
-}
-inline void GMHandCard::clear_has_m_playerpos() {
-  _has_bits_[0] &= ~0x00000100u;
-}
-inline void GMHandCard::clear_m_playerpos() {
-  m_playerpos_ = 0;
-  clear_has_m_playerpos();
-}
-inline ::google::protobuf::int32 GMHandCard::m_playerpos() const {
-  return m_playerpos_;
-}
-inline void GMHandCard::set_m_playerpos(::google::protobuf::int32 value) {
-  set_has_m_playerpos();
-  m_playerpos_ = value;
-}
-
-// optional int32 m_cardpos = 10;
-inline bool GMHandCard::has_m_cardpos() const {
-  return (_has_bits_[0] & 0x00000200u) != 0;
-}
-inline void GMHandCard::set_has_m_cardpos() {
-  _has_bits_[0] |= 0x00000200u;
-}
-inline void GMHandCard::clear_has_m_cardpos() {
-  _has_bits_[0] &= ~0x00000200u;
-}
-inline void GMHandCard::clear_m_cardpos() {
-  m_cardpos_ = 0;
-  clear_has_m_cardpos();
-}
-inline ::google::protobuf::int32 GMHandCard::m_cardpos() const {
-  return m_cardpos_;
-}
-inline void GMHandCard::set_m_cardpos(::google::protobuf::int32 value) {
-  set_has_m_cardpos();
-  m_cardpos_ = value;
-}
-
-// optional int32 m_jingpos = 11;
-inline bool GMHandCard::has_m_jingpos() const {
-  return (_has_bits_[0] & 0x00000400u) != 0;
-}
-inline void GMHandCard::set_has_m_jingpos() {
-  _has_bits_[0] |= 0x00000400u;
-}
-inline void GMHandCard::clear_has_m_jingpos() {
-  _has_bits_[0] &= ~0x00000400u;
-}
-inline void GMHandCard::clear_m_jingpos() {
-  m_jingpos_ = 0;
-  clear_has_m_jingpos();
-}
-inline ::google::protobuf::int32 GMHandCard::m_jingpos() const {
-  return m_jingpos_;
-}
-inline void GMHandCard::set_m_jingpos(::google::protobuf::int32 value) {
-  set_has_m_jingpos();
-  m_jingpos_ = value;
-}
-
-// optional int32 m_leftTime = 12;
-inline bool GMHandCard::has_m_lefttime() const {
-  return (_has_bits_[0] & 0x00000800u) != 0;
-}
-inline void GMHandCard::set_has_m_lefttime() {
-  _has_bits_[0] |= 0x00000800u;
-}
-inline void GMHandCard::clear_has_m_lefttime() {
-  _has_bits_[0] &= ~0x00000800u;
-}
-inline void GMHandCard::clear_m_lefttime() {
-  m_lefttime_ = 0;
-  clear_has_m_lefttime();
-}
-inline ::google::protobuf::int32 GMHandCard::m_lefttime() const {
-  return m_lefttime_;
-}
-inline void GMHandCard::set_m_lefttime(::google::protobuf::int32 value) {
-  set_has_m_lefttime();
-  m_lefttime_ = value;
-}
-
-// optional int32 m_leftCount = 13;
-inline bool GMHandCard::has_m_leftcount() const {
-  return (_has_bits_[0] & 0x00001000u) != 0;
-}
-inline void GMHandCard::set_has_m_leftcount() {
-  _has_bits_[0] |= 0x00001000u;
-}
 inline void GMHandCard::clear_has_m_leftcount() {
-  _has_bits_[0] &= ~0x00001000u;
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline void GMHandCard::clear_m_leftcount() {
   m_leftcount_ = 0;
@@ -4062,15 +3375,15 @@ inline void GMHandCard::set_m_leftcount(::google::protobuf::int32 value) {
   m_leftcount_ = value;
 }
 
-// optional int32 m_totalCount = 14;
+// optional int32 m_totalCount = 3;
 inline bool GMHandCard::has_m_totalcount() const {
-  return (_has_bits_[0] & 0x00002000u) != 0;
+  return (_has_bits_[0] & 0x00000004u) != 0;
 }
 inline void GMHandCard::set_has_m_totalcount() {
-  _has_bits_[0] |= 0x00002000u;
+  _has_bits_[0] |= 0x00000004u;
 }
 inline void GMHandCard::clear_has_m_totalcount() {
-  _has_bits_[0] &= ~0x00002000u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void GMHandCard::clear_m_totalcount() {
   m_totalcount_ = 0;
@@ -4084,45 +3397,76 @@ inline void GMHandCard::set_m_totalcount(::google::protobuf::int32 value) {
   m_totalcount_ = value;
 }
 
-// optional .GM_HuiTouData m_huiTouData = 15;
-inline bool GMHandCard::has_m_huitoudata() const {
-  return (_has_bits_[0] & 0x00004000u) != 0;
+// optional int32 m_getCardId = 4;
+inline bool GMHandCard::has_m_getcardid() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void GMHandCard::set_has_m_huitoudata() {
-  _has_bits_[0] |= 0x00004000u;
+inline void GMHandCard::set_has_m_getcardid() {
+  _has_bits_[0] |= 0x00000008u;
 }
-inline void GMHandCard::clear_has_m_huitoudata() {
-  _has_bits_[0] &= ~0x00004000u;
+inline void GMHandCard::clear_has_m_getcardid() {
+  _has_bits_[0] &= ~0x00000008u;
 }
-inline void GMHandCard::clear_m_huitoudata() {
-  if (m_huitoudata_ != NULL) m_huitoudata_->::GM_HuiTouData::Clear();
-  clear_has_m_huitoudata();
+inline void GMHandCard::clear_m_getcardid() {
+  m_getcardid_ = 0;
+  clear_has_m_getcardid();
 }
-inline const ::GM_HuiTouData& GMHandCard::m_huitoudata() const {
-  return m_huitoudata_ != NULL ? *m_huitoudata_ : *default_instance_->m_huitoudata_;
+inline ::google::protobuf::int32 GMHandCard::m_getcardid() const {
+  return m_getcardid_;
 }
-inline ::GM_HuiTouData* GMHandCard::mutable_m_huitoudata() {
-  set_has_m_huitoudata();
-  if (m_huitoudata_ == NULL) m_huitoudata_ = new ::GM_HuiTouData;
-  return m_huitoudata_;
-}
-inline ::GM_HuiTouData* GMHandCard::release_m_huitoudata() {
-  clear_has_m_huitoudata();
-  ::GM_HuiTouData* temp = m_huitoudata_;
-  m_huitoudata_ = NULL;
-  return temp;
-}
-inline void GMHandCard::set_allocated_m_huitoudata(::GM_HuiTouData* m_huitoudata) {
-  delete m_huitoudata_;
-  m_huitoudata_ = m_huitoudata;
-  if (m_huitoudata) {
-    set_has_m_huitoudata();
-  } else {
-    clear_has_m_huitoudata();
-  }
+inline void GMHandCard::set_m_getcardid(::google::protobuf::int32 value) {
+  set_has_m_getcardid();
+  m_getcardid_ = value;
 }
 
-// repeated .GM_PlayerHandCard m_HandCard = 20;
+// optional int32 m_getCardNum = 5;
+inline bool GMHandCard::has_m_getcardnum() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void GMHandCard::set_has_m_getcardnum() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void GMHandCard::clear_has_m_getcardnum() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void GMHandCard::clear_m_getcardnum() {
+  m_getcardnum_ = 0;
+  clear_has_m_getcardnum();
+}
+inline ::google::protobuf::int32 GMHandCard::m_getcardnum() const {
+  return m_getcardnum_;
+}
+inline void GMHandCard::set_m_getcardnum(::google::protobuf::int32 value) {
+  set_has_m_getcardnum();
+  m_getcardnum_ = value;
+}
+
+// repeated int32 m_saizi = 20;
+inline int GMHandCard::m_saizi_size() const {
+  return m_saizi_.size();
+}
+inline void GMHandCard::clear_m_saizi() {
+  m_saizi_.Clear();
+}
+inline ::google::protobuf::int32 GMHandCard::m_saizi(int index) const {
+  return m_saizi_.Get(index);
+}
+inline void GMHandCard::set_m_saizi(int index, ::google::protobuf::int32 value) {
+  m_saizi_.Set(index, value);
+}
+inline void GMHandCard::add_m_saizi(::google::protobuf::int32 value) {
+  m_saizi_.Add(value);
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+GMHandCard::m_saizi() const {
+  return m_saizi_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+GMHandCard::mutable_m_saizi() {
+  return &m_saizi_;
+}
+
+// repeated .GM_PlayerHandCard m_HandCard = 21;
 inline int GMHandCard::m_handcard_size() const {
   return m_handcard_.size();
 }
@@ -4173,260 +3517,15 @@ inline void GMHandCard_PlayerBack::set_m_bankerpos(::google::protobuf::int32 val
   m_bankerpos_ = value;
 }
 
-// optional int32 m_zheng = 2;
-inline bool GMHandCard_PlayerBack::has_m_zheng() const {
+// optional int32 m_leftCount = 2;
+inline bool GMHandCard_PlayerBack::has_m_leftcount() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void GMHandCard_PlayerBack::set_has_m_zheng() {
+inline void GMHandCard_PlayerBack::set_has_m_leftcount() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void GMHandCard_PlayerBack::clear_has_m_zheng() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void GMHandCard_PlayerBack::clear_m_zheng() {
-  m_zheng_ = 0;
-  clear_has_m_zheng();
-}
-inline ::google::protobuf::int32 GMHandCard_PlayerBack::m_zheng() const {
-  return m_zheng_;
-}
-inline void GMHandCard_PlayerBack::set_m_zheng(::google::protobuf::int32 value) {
-  set_has_m_zheng();
-  m_zheng_ = value;
-}
-
-// optional int32 m_fu = 3;
-inline bool GMHandCard_PlayerBack::has_m_fu() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
-}
-inline void GMHandCard_PlayerBack::set_has_m_fu() {
-  _has_bits_[0] |= 0x00000004u;
-}
-inline void GMHandCard_PlayerBack::clear_has_m_fu() {
-  _has_bits_[0] &= ~0x00000004u;
-}
-inline void GMHandCard_PlayerBack::clear_m_fu() {
-  m_fu_ = 0;
-  clear_has_m_fu();
-}
-inline ::google::protobuf::int32 GMHandCard_PlayerBack::m_fu() const {
-  return m_fu_;
-}
-inline void GMHandCard_PlayerBack::set_m_fu(::google::protobuf::int32 value) {
-  set_has_m_fu();
-  m_fu_ = value;
-}
-
-// optional int32 m_zhengid = 4;
-inline bool GMHandCard_PlayerBack::has_m_zhengid() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
-}
-inline void GMHandCard_PlayerBack::set_has_m_zhengid() {
-  _has_bits_[0] |= 0x00000008u;
-}
-inline void GMHandCard_PlayerBack::clear_has_m_zhengid() {
-  _has_bits_[0] &= ~0x00000008u;
-}
-inline void GMHandCard_PlayerBack::clear_m_zhengid() {
-  m_zhengid_ = 0;
-  clear_has_m_zhengid();
-}
-inline ::google::protobuf::int32 GMHandCard_PlayerBack::m_zhengid() const {
-  return m_zhengid_;
-}
-inline void GMHandCard_PlayerBack::set_m_zhengid(::google::protobuf::int32 value) {
-  set_has_m_zhengid();
-  m_zhengid_ = value;
-}
-
-// optional int32 m_xiazheng = 5;
-inline bool GMHandCard_PlayerBack::has_m_xiazheng() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
-}
-inline void GMHandCard_PlayerBack::set_has_m_xiazheng() {
-  _has_bits_[0] |= 0x00000010u;
-}
-inline void GMHandCard_PlayerBack::clear_has_m_xiazheng() {
-  _has_bits_[0] &= ~0x00000010u;
-}
-inline void GMHandCard_PlayerBack::clear_m_xiazheng() {
-  m_xiazheng_ = 0;
-  clear_has_m_xiazheng();
-}
-inline ::google::protobuf::int32 GMHandCard_PlayerBack::m_xiazheng() const {
-  return m_xiazheng_;
-}
-inline void GMHandCard_PlayerBack::set_m_xiazheng(::google::protobuf::int32 value) {
-  set_has_m_xiazheng();
-  m_xiazheng_ = value;
-}
-
-// optional int32 m_xiafu = 6;
-inline bool GMHandCard_PlayerBack::has_m_xiafu() const {
-  return (_has_bits_[0] & 0x00000020u) != 0;
-}
-inline void GMHandCard_PlayerBack::set_has_m_xiafu() {
-  _has_bits_[0] |= 0x00000020u;
-}
-inline void GMHandCard_PlayerBack::clear_has_m_xiafu() {
-  _has_bits_[0] &= ~0x00000020u;
-}
-inline void GMHandCard_PlayerBack::clear_m_xiafu() {
-  m_xiafu_ = 0;
-  clear_has_m_xiafu();
-}
-inline ::google::protobuf::int32 GMHandCard_PlayerBack::m_xiafu() const {
-  return m_xiafu_;
-}
-inline void GMHandCard_PlayerBack::set_m_xiafu(::google::protobuf::int32 value) {
-  set_has_m_xiafu();
-  m_xiafu_ = value;
-}
-
-// optional int32 m_xiazhengid = 7;
-inline bool GMHandCard_PlayerBack::has_m_xiazhengid() const {
-  return (_has_bits_[0] & 0x00000040u) != 0;
-}
-inline void GMHandCard_PlayerBack::set_has_m_xiazhengid() {
-  _has_bits_[0] |= 0x00000040u;
-}
-inline void GMHandCard_PlayerBack::clear_has_m_xiazhengid() {
-  _has_bits_[0] &= ~0x00000040u;
-}
-inline void GMHandCard_PlayerBack::clear_m_xiazhengid() {
-  m_xiazhengid_ = 0;
-  clear_has_m_xiazhengid();
-}
-inline ::google::protobuf::int32 GMHandCard_PlayerBack::m_xiazhengid() const {
-  return m_xiazhengid_;
-}
-inline void GMHandCard_PlayerBack::set_m_xiazhengid(::google::protobuf::int32 value) {
-  set_has_m_xiazhengid();
-  m_xiazhengid_ = value;
-}
-
-// repeated .GM_XiaJingInfo m_xiaJingData = 8;
-inline int GMHandCard_PlayerBack::m_xiajingdata_size() const {
-  return m_xiajingdata_.size();
-}
-inline void GMHandCard_PlayerBack::clear_m_xiajingdata() {
-  m_xiajingdata_.Clear();
-}
-inline const ::GM_XiaJingInfo& GMHandCard_PlayerBack::m_xiajingdata(int index) const {
-  return m_xiajingdata_.Get(index);
-}
-inline ::GM_XiaJingInfo* GMHandCard_PlayerBack::mutable_m_xiajingdata(int index) {
-  return m_xiajingdata_.Mutable(index);
-}
-inline ::GM_XiaJingInfo* GMHandCard_PlayerBack::add_m_xiajingdata() {
-  return m_xiajingdata_.Add();
-}
-inline const ::google::protobuf::RepeatedPtrField< ::GM_XiaJingInfo >&
-GMHandCard_PlayerBack::m_xiajingdata() const {
-  return m_xiajingdata_;
-}
-inline ::google::protobuf::RepeatedPtrField< ::GM_XiaJingInfo >*
-GMHandCard_PlayerBack::mutable_m_xiajingdata() {
-  return &m_xiajingdata_;
-}
-
-// optional int32 m_playerpos = 9;
-inline bool GMHandCard_PlayerBack::has_m_playerpos() const {
-  return (_has_bits_[0] & 0x00000100u) != 0;
-}
-inline void GMHandCard_PlayerBack::set_has_m_playerpos() {
-  _has_bits_[0] |= 0x00000100u;
-}
-inline void GMHandCard_PlayerBack::clear_has_m_playerpos() {
-  _has_bits_[0] &= ~0x00000100u;
-}
-inline void GMHandCard_PlayerBack::clear_m_playerpos() {
-  m_playerpos_ = 0;
-  clear_has_m_playerpos();
-}
-inline ::google::protobuf::int32 GMHandCard_PlayerBack::m_playerpos() const {
-  return m_playerpos_;
-}
-inline void GMHandCard_PlayerBack::set_m_playerpos(::google::protobuf::int32 value) {
-  set_has_m_playerpos();
-  m_playerpos_ = value;
-}
-
-// optional int32 m_cardpos = 10;
-inline bool GMHandCard_PlayerBack::has_m_cardpos() const {
-  return (_has_bits_[0] & 0x00000200u) != 0;
-}
-inline void GMHandCard_PlayerBack::set_has_m_cardpos() {
-  _has_bits_[0] |= 0x00000200u;
-}
-inline void GMHandCard_PlayerBack::clear_has_m_cardpos() {
-  _has_bits_[0] &= ~0x00000200u;
-}
-inline void GMHandCard_PlayerBack::clear_m_cardpos() {
-  m_cardpos_ = 0;
-  clear_has_m_cardpos();
-}
-inline ::google::protobuf::int32 GMHandCard_PlayerBack::m_cardpos() const {
-  return m_cardpos_;
-}
-inline void GMHandCard_PlayerBack::set_m_cardpos(::google::protobuf::int32 value) {
-  set_has_m_cardpos();
-  m_cardpos_ = value;
-}
-
-// optional int32 m_jingpos = 11;
-inline bool GMHandCard_PlayerBack::has_m_jingpos() const {
-  return (_has_bits_[0] & 0x00000400u) != 0;
-}
-inline void GMHandCard_PlayerBack::set_has_m_jingpos() {
-  _has_bits_[0] |= 0x00000400u;
-}
-inline void GMHandCard_PlayerBack::clear_has_m_jingpos() {
-  _has_bits_[0] &= ~0x00000400u;
-}
-inline void GMHandCard_PlayerBack::clear_m_jingpos() {
-  m_jingpos_ = 0;
-  clear_has_m_jingpos();
-}
-inline ::google::protobuf::int32 GMHandCard_PlayerBack::m_jingpos() const {
-  return m_jingpos_;
-}
-inline void GMHandCard_PlayerBack::set_m_jingpos(::google::protobuf::int32 value) {
-  set_has_m_jingpos();
-  m_jingpos_ = value;
-}
-
-// optional int32 m_leftTime = 12;
-inline bool GMHandCard_PlayerBack::has_m_lefttime() const {
-  return (_has_bits_[0] & 0x00000800u) != 0;
-}
-inline void GMHandCard_PlayerBack::set_has_m_lefttime() {
-  _has_bits_[0] |= 0x00000800u;
-}
-inline void GMHandCard_PlayerBack::clear_has_m_lefttime() {
-  _has_bits_[0] &= ~0x00000800u;
-}
-inline void GMHandCard_PlayerBack::clear_m_lefttime() {
-  m_lefttime_ = 0;
-  clear_has_m_lefttime();
-}
-inline ::google::protobuf::int32 GMHandCard_PlayerBack::m_lefttime() const {
-  return m_lefttime_;
-}
-inline void GMHandCard_PlayerBack::set_m_lefttime(::google::protobuf::int32 value) {
-  set_has_m_lefttime();
-  m_lefttime_ = value;
-}
-
-// optional int32 m_leftCount = 13;
-inline bool GMHandCard_PlayerBack::has_m_leftcount() const {
-  return (_has_bits_[0] & 0x00001000u) != 0;
-}
-inline void GMHandCard_PlayerBack::set_has_m_leftcount() {
-  _has_bits_[0] |= 0x00001000u;
-}
 inline void GMHandCard_PlayerBack::clear_has_m_leftcount() {
-  _has_bits_[0] &= ~0x00001000u;
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline void GMHandCard_PlayerBack::clear_m_leftcount() {
   m_leftcount_ = 0;
@@ -4440,15 +3539,15 @@ inline void GMHandCard_PlayerBack::set_m_leftcount(::google::protobuf::int32 val
   m_leftcount_ = value;
 }
 
-// optional int32 m_totalCount = 14;
+// optional int32 m_totalCount = 3;
 inline bool GMHandCard_PlayerBack::has_m_totalcount() const {
-  return (_has_bits_[0] & 0x00002000u) != 0;
+  return (_has_bits_[0] & 0x00000004u) != 0;
 }
 inline void GMHandCard_PlayerBack::set_has_m_totalcount() {
-  _has_bits_[0] |= 0x00002000u;
+  _has_bits_[0] |= 0x00000004u;
 }
 inline void GMHandCard_PlayerBack::clear_has_m_totalcount() {
-  _has_bits_[0] &= ~0x00002000u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void GMHandCard_PlayerBack::clear_m_totalcount() {
   m_totalcount_ = 0;
@@ -4462,53 +3561,15 @@ inline void GMHandCard_PlayerBack::set_m_totalcount(::google::protobuf::int32 va
   m_totalcount_ = value;
 }
 
-// optional .GM_HuiTouData m_huiTouData = 15;
-inline bool GMHandCard_PlayerBack::has_m_huitoudata() const {
-  return (_has_bits_[0] & 0x00004000u) != 0;
-}
-inline void GMHandCard_PlayerBack::set_has_m_huitoudata() {
-  _has_bits_[0] |= 0x00004000u;
-}
-inline void GMHandCard_PlayerBack::clear_has_m_huitoudata() {
-  _has_bits_[0] &= ~0x00004000u;
-}
-inline void GMHandCard_PlayerBack::clear_m_huitoudata() {
-  if (m_huitoudata_ != NULL) m_huitoudata_->::GM_HuiTouData::Clear();
-  clear_has_m_huitoudata();
-}
-inline const ::GM_HuiTouData& GMHandCard_PlayerBack::m_huitoudata() const {
-  return m_huitoudata_ != NULL ? *m_huitoudata_ : *default_instance_->m_huitoudata_;
-}
-inline ::GM_HuiTouData* GMHandCard_PlayerBack::mutable_m_huitoudata() {
-  set_has_m_huitoudata();
-  if (m_huitoudata_ == NULL) m_huitoudata_ = new ::GM_HuiTouData;
-  return m_huitoudata_;
-}
-inline ::GM_HuiTouData* GMHandCard_PlayerBack::release_m_huitoudata() {
-  clear_has_m_huitoudata();
-  ::GM_HuiTouData* temp = m_huitoudata_;
-  m_huitoudata_ = NULL;
-  return temp;
-}
-inline void GMHandCard_PlayerBack::set_allocated_m_huitoudata(::GM_HuiTouData* m_huitoudata) {
-  delete m_huitoudata_;
-  m_huitoudata_ = m_huitoudata;
-  if (m_huitoudata) {
-    set_has_m_huitoudata();
-  } else {
-    clear_has_m_huitoudata();
-  }
-}
-
-// optional int32 m_fbtypeid = 16;
+// optional int32 m_fbtypeid = 4;
 inline bool GMHandCard_PlayerBack::has_m_fbtypeid() const {
-  return (_has_bits_[0] & 0x00008000u) != 0;
+  return (_has_bits_[0] & 0x00000008u) != 0;
 }
 inline void GMHandCard_PlayerBack::set_has_m_fbtypeid() {
-  _has_bits_[0] |= 0x00008000u;
+  _has_bits_[0] |= 0x00000008u;
 }
 inline void GMHandCard_PlayerBack::clear_has_m_fbtypeid() {
-  _has_bits_[0] &= ~0x00008000u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void GMHandCard_PlayerBack::clear_m_fbtypeid() {
   m_fbtypeid_ = 0;
@@ -4522,15 +3583,15 @@ inline void GMHandCard_PlayerBack::set_m_fbtypeid(::google::protobuf::int32 valu
   m_fbtypeid_ = value;
 }
 
-// optional string m_fbplayway = 17;
+// optional string m_fbplayway = 5;
 inline bool GMHandCard_PlayerBack::has_m_fbplayway() const {
-  return (_has_bits_[0] & 0x00010000u) != 0;
+  return (_has_bits_[0] & 0x00000010u) != 0;
 }
 inline void GMHandCard_PlayerBack::set_has_m_fbplayway() {
-  _has_bits_[0] |= 0x00010000u;
+  _has_bits_[0] |= 0x00000010u;
 }
 inline void GMHandCard_PlayerBack::clear_has_m_fbplayway() {
-  _has_bits_[0] &= ~0x00010000u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline void GMHandCard_PlayerBack::clear_m_fbplayway() {
   if (m_fbplayway_ != &::google::protobuf::internal::kEmptyString) {
@@ -4592,15 +3653,15 @@ inline void GMHandCard_PlayerBack::set_allocated_m_fbplayway(::std::string* m_fb
   }
 }
 
-// optional int32 m_playerCount = 18;
+// optional int32 m_playerCount = 6;
 inline bool GMHandCard_PlayerBack::has_m_playercount() const {
-  return (_has_bits_[0] & 0x00020000u) != 0;
+  return (_has_bits_[0] & 0x00000020u) != 0;
 }
 inline void GMHandCard_PlayerBack::set_has_m_playercount() {
-  _has_bits_[0] |= 0x00020000u;
+  _has_bits_[0] |= 0x00000020u;
 }
 inline void GMHandCard_PlayerBack::clear_has_m_playercount() {
-  _has_bits_[0] &= ~0x00020000u;
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline void GMHandCard_PlayerBack::clear_m_playercount() {
   m_playercount_ = 0;
@@ -4614,15 +3675,15 @@ inline void GMHandCard_PlayerBack::set_m_playercount(::google::protobuf::int32 v
   m_playercount_ = value;
 }
 
-// optional int32 m_roomid = 19;
+// optional int32 m_roomid = 7;
 inline bool GMHandCard_PlayerBack::has_m_roomid() const {
-  return (_has_bits_[0] & 0x00040000u) != 0;
+  return (_has_bits_[0] & 0x00000040u) != 0;
 }
 inline void GMHandCard_PlayerBack::set_has_m_roomid() {
-  _has_bits_[0] |= 0x00040000u;
+  _has_bits_[0] |= 0x00000040u;
 }
 inline void GMHandCard_PlayerBack::clear_has_m_roomid() {
-  _has_bits_[0] &= ~0x00040000u;
+  _has_bits_[0] &= ~0x00000040u;
 }
 inline void GMHandCard_PlayerBack::clear_m_roomid() {
   m_roomid_ = 0;
@@ -4636,7 +3697,32 @@ inline void GMHandCard_PlayerBack::set_m_roomid(::google::protobuf::int32 value)
   m_roomid_ = value;
 }
 
-// repeated .GMHandCard_Info m_handCardData = 20;
+// repeated int32 m_saizi = 20;
+inline int GMHandCard_PlayerBack::m_saizi_size() const {
+  return m_saizi_.size();
+}
+inline void GMHandCard_PlayerBack::clear_m_saizi() {
+  m_saizi_.Clear();
+}
+inline ::google::protobuf::int32 GMHandCard_PlayerBack::m_saizi(int index) const {
+  return m_saizi_.Get(index);
+}
+inline void GMHandCard_PlayerBack::set_m_saizi(int index, ::google::protobuf::int32 value) {
+  m_saizi_.Set(index, value);
+}
+inline void GMHandCard_PlayerBack::add_m_saizi(::google::protobuf::int32 value) {
+  m_saizi_.Add(value);
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+GMHandCard_PlayerBack::m_saizi() const {
+  return m_saizi_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+GMHandCard_PlayerBack::mutable_m_saizi() {
+  return &m_saizi_;
+}
+
+// repeated .GMHandCard_Info m_handCardData = 21;
 inline int GMHandCard_PlayerBack::m_handcarddata_size() const {
   return m_handcarddata_.size();
 }
@@ -4710,171 +3796,6 @@ GMHandCard_Info::m_handcard() const {
 inline ::google::protobuf::RepeatedPtrField< ::GM_PlayerHandCard >*
 GMHandCard_Info::mutable_m_handcard() {
   return &m_handcard_;
-}
-
-// -------------------------------------------------------------------
-
-// GM_HuiTouData
-
-// required int32 m_huitouZhen = 1;
-inline bool GM_HuiTouData::has_m_huitouzhen() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void GM_HuiTouData::set_has_m_huitouzhen() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void GM_HuiTouData::clear_has_m_huitouzhen() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void GM_HuiTouData::clear_m_huitouzhen() {
-  m_huitouzhen_ = 0;
-  clear_has_m_huitouzhen();
-}
-inline ::google::protobuf::int32 GM_HuiTouData::m_huitouzhen() const {
-  return m_huitouzhen_;
-}
-inline void GM_HuiTouData::set_m_huitouzhen(::google::protobuf::int32 value) {
-  set_has_m_huitouzhen();
-  m_huitouzhen_ = value;
-}
-
-// optional int32 m_huitouFu = 2;
-inline bool GM_HuiTouData::has_m_huitoufu() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void GM_HuiTouData::set_has_m_huitoufu() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void GM_HuiTouData::clear_has_m_huitoufu() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void GM_HuiTouData::clear_m_huitoufu() {
-  m_huitoufu_ = 0;
-  clear_has_m_huitoufu();
-}
-inline ::google::protobuf::int32 GM_HuiTouData::m_huitoufu() const {
-  return m_huitoufu_;
-}
-inline void GM_HuiTouData::set_m_huitoufu(::google::protobuf::int32 value) {
-  set_has_m_huitoufu();
-  m_huitoufu_ = value;
-}
-
-// repeated .GM_XiaJingInfo m_huitouInfo = 10;
-inline int GM_HuiTouData::m_huitouinfo_size() const {
-  return m_huitouinfo_.size();
-}
-inline void GM_HuiTouData::clear_m_huitouinfo() {
-  m_huitouinfo_.Clear();
-}
-inline const ::GM_XiaJingInfo& GM_HuiTouData::m_huitouinfo(int index) const {
-  return m_huitouinfo_.Get(index);
-}
-inline ::GM_XiaJingInfo* GM_HuiTouData::mutable_m_huitouinfo(int index) {
-  return m_huitouinfo_.Mutable(index);
-}
-inline ::GM_XiaJingInfo* GM_HuiTouData::add_m_huitouinfo() {
-  return m_huitouinfo_.Add();
-}
-inline const ::google::protobuf::RepeatedPtrField< ::GM_XiaJingInfo >&
-GM_HuiTouData::m_huitouinfo() const {
-  return m_huitouinfo_;
-}
-inline ::google::protobuf::RepeatedPtrField< ::GM_XiaJingInfo >*
-GM_HuiTouData::mutable_m_huitouinfo() {
-  return &m_huitouinfo_;
-}
-
-// -------------------------------------------------------------------
-
-// GM_XiaJingInfo
-
-// required int32 m_roleid = 1;
-inline bool GM_XiaJingInfo::has_m_roleid() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void GM_XiaJingInfo::set_has_m_roleid() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void GM_XiaJingInfo::clear_has_m_roleid() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void GM_XiaJingInfo::clear_m_roleid() {
-  m_roleid_ = 0;
-  clear_has_m_roleid();
-}
-inline ::google::protobuf::int32 GM_XiaJingInfo::m_roleid() const {
-  return m_roleid_;
-}
-inline void GM_XiaJingInfo::set_m_roleid(::google::protobuf::int32 value) {
-  set_has_m_roleid();
-  m_roleid_ = value;
-}
-
-// optional int32 m_xiazhuNum = 2;
-inline bool GM_XiaJingInfo::has_m_xiazhunum() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void GM_XiaJingInfo::set_has_m_xiazhunum() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void GM_XiaJingInfo::clear_has_m_xiazhunum() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void GM_XiaJingInfo::clear_m_xiazhunum() {
-  m_xiazhunum_ = 0;
-  clear_has_m_xiazhunum();
-}
-inline ::google::protobuf::int32 GM_XiaJingInfo::m_xiazhunum() const {
-  return m_xiazhunum_;
-}
-inline void GM_XiaJingInfo::set_m_xiazhunum(::google::protobuf::int32 value) {
-  set_has_m_xiazhunum();
-  m_xiazhunum_ = value;
-}
-
-// optional int32 m_xiafuNum = 3;
-inline bool GM_XiaJingInfo::has_m_xiafunum() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
-}
-inline void GM_XiaJingInfo::set_has_m_xiafunum() {
-  _has_bits_[0] |= 0x00000004u;
-}
-inline void GM_XiaJingInfo::clear_has_m_xiafunum() {
-  _has_bits_[0] &= ~0x00000004u;
-}
-inline void GM_XiaJingInfo::clear_m_xiafunum() {
-  m_xiafunum_ = 0;
-  clear_has_m_xiafunum();
-}
-inline ::google::protobuf::int32 GM_XiaJingInfo::m_xiafunum() const {
-  return m_xiafunum_;
-}
-inline void GM_XiaJingInfo::set_m_xiafunum(::google::protobuf::int32 value) {
-  set_has_m_xiafunum();
-  m_xiafunum_ = value;
-}
-
-// optional int32 m_sorce = 4;
-inline bool GM_XiaJingInfo::has_m_sorce() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
-}
-inline void GM_XiaJingInfo::set_has_m_sorce() {
-  _has_bits_[0] |= 0x00000008u;
-}
-inline void GM_XiaJingInfo::clear_has_m_sorce() {
-  _has_bits_[0] &= ~0x00000008u;
-}
-inline void GM_XiaJingInfo::clear_m_sorce() {
-  m_sorce_ = 0;
-  clear_has_m_sorce();
-}
-inline ::google::protobuf::int32 GM_XiaJingInfo::m_sorce() const {
-  return m_sorce_;
-}
-inline void GM_XiaJingInfo::set_m_sorce(::google::protobuf::int32 value) {
-  set_has_m_sorce();
-  m_sorce_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -5090,6 +4011,28 @@ inline void GM_OperatorData::set_m_cardvoice(::google::protobuf::int32 value) {
   m_cardvoice_ = value;
 }
 
+// optional int32 m_CardNum = 6;
+inline bool GM_OperatorData::has_m_cardnum() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void GM_OperatorData::set_has_m_cardnum() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void GM_OperatorData::clear_has_m_cardnum() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void GM_OperatorData::clear_m_cardnum() {
+  m_cardnum_ = 0;
+  clear_has_m_cardnum();
+}
+inline ::google::protobuf::int32 GM_OperatorData::m_cardnum() const {
+  return m_cardnum_;
+}
+inline void GM_OperatorData::set_m_cardnum(::google::protobuf::int32 value) {
+  set_has_m_cardnum();
+  m_cardnum_ = value;
+}
+
 // repeated .GM_PlayerHandCard m_HandCard = 10;
 inline int GM_OperatorData::m_handcard_size() const {
   return m_handcard_.size();
@@ -5207,15 +4150,59 @@ inline void GM_MJOperator::set_m_cardvoice(::google::protobuf::int32 value) {
   m_cardvoice_ = value;
 }
 
-// optional .GM_PlayerHandCard m_LastCard = 5;
-inline bool GM_MJOperator::has_m_lastcard() const {
+// optional int32 m_Order = 5;
+inline bool GM_MJOperator::has_m_order() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
-inline void GM_MJOperator::set_has_m_lastcard() {
+inline void GM_MJOperator::set_has_m_order() {
   _has_bits_[0] |= 0x00000010u;
 }
-inline void GM_MJOperator::clear_has_m_lastcard() {
+inline void GM_MJOperator::clear_has_m_order() {
   _has_bits_[0] &= ~0x00000010u;
+}
+inline void GM_MJOperator::clear_m_order() {
+  m_order_ = 0;
+  clear_has_m_order();
+}
+inline ::google::protobuf::int32 GM_MJOperator::m_order() const {
+  return m_order_;
+}
+inline void GM_MJOperator::set_m_order(::google::protobuf::int32 value) {
+  set_has_m_order();
+  m_order_ = value;
+}
+
+// optional int32 m_CardNum = 6;
+inline bool GM_MJOperator::has_m_cardnum() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void GM_MJOperator::set_has_m_cardnum() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void GM_MJOperator::clear_has_m_cardnum() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void GM_MJOperator::clear_m_cardnum() {
+  m_cardnum_ = 0;
+  clear_has_m_cardnum();
+}
+inline ::google::protobuf::int32 GM_MJOperator::m_cardnum() const {
+  return m_cardnum_;
+}
+inline void GM_MJOperator::set_m_cardnum(::google::protobuf::int32 value) {
+  set_has_m_cardnum();
+  m_cardnum_ = value;
+}
+
+// optional .GM_PlayerHandCard m_LastCard = 7;
+inline bool GM_MJOperator::has_m_lastcard() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void GM_MJOperator::set_has_m_lastcard() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void GM_MJOperator::clear_has_m_lastcard() {
+  _has_bits_[0] &= ~0x00000040u;
 }
 inline void GM_MJOperator::clear_m_lastcard() {
   if (m_lastcard_ != NULL) m_lastcard_->::GM_PlayerHandCard::Clear();
@@ -5498,59 +4485,15 @@ GM_HuHandCardData::mutable_m_handcardtype() {
   return &m_handcardtype_;
 }
 
-// optional int32 m_xiaJing = 3;
-inline bool GM_HuHandCardData::has_m_xiajing() const {
+// optional int32 m_Hufeng = 3;
+inline bool GM_HuHandCardData::has_m_hufeng() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void GM_HuHandCardData::set_has_m_xiajing() {
+inline void GM_HuHandCardData::set_has_m_hufeng() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void GM_HuHandCardData::clear_has_m_xiajing() {
-  _has_bits_[0] &= ~0x00000004u;
-}
-inline void GM_HuHandCardData::clear_m_xiajing() {
-  m_xiajing_ = 0;
-  clear_has_m_xiajing();
-}
-inline ::google::protobuf::int32 GM_HuHandCardData::m_xiajing() const {
-  return m_xiajing_;
-}
-inline void GM_HuHandCardData::set_m_xiajing(::google::protobuf::int32 value) {
-  set_has_m_xiajing();
-  m_xiajing_ = value;
-}
-
-// optional int32 m_ShangJing = 4;
-inline bool GM_HuHandCardData::has_m_shangjing() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
-}
-inline void GM_HuHandCardData::set_has_m_shangjing() {
-  _has_bits_[0] |= 0x00000008u;
-}
-inline void GM_HuHandCardData::clear_has_m_shangjing() {
-  _has_bits_[0] &= ~0x00000008u;
-}
-inline void GM_HuHandCardData::clear_m_shangjing() {
-  m_shangjing_ = 0;
-  clear_has_m_shangjing();
-}
-inline ::google::protobuf::int32 GM_HuHandCardData::m_shangjing() const {
-  return m_shangjing_;
-}
-inline void GM_HuHandCardData::set_m_shangjing(::google::protobuf::int32 value) {
-  set_has_m_shangjing();
-  m_shangjing_ = value;
-}
-
-// optional int32 m_Hufeng = 5;
-inline bool GM_HuHandCardData::has_m_hufeng() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
-}
-inline void GM_HuHandCardData::set_has_m_hufeng() {
-  _has_bits_[0] |= 0x00000010u;
-}
 inline void GM_HuHandCardData::clear_has_m_hufeng() {
-  _has_bits_[0] &= ~0x00000010u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void GM_HuHandCardData::clear_m_hufeng() {
   m_hufeng_ = 0;
@@ -5564,337 +4507,227 @@ inline void GM_HuHandCardData::set_m_hufeng(::google::protobuf::int32 value) {
   m_hufeng_ = value;
 }
 
-// optional int32 m_GoldNum = 6;
-inline bool GM_HuHandCardData::has_m_goldnum() const {
+// optional int32 m_ZongLei = 4;
+inline bool GM_HuHandCardData::has_m_zonglei() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void GM_HuHandCardData::set_has_m_zonglei() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void GM_HuHandCardData::clear_has_m_zonglei() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void GM_HuHandCardData::clear_m_zonglei() {
+  m_zonglei_ = 0;
+  clear_has_m_zonglei();
+}
+inline ::google::protobuf::int32 GM_HuHandCardData::m_zonglei() const {
+  return m_zonglei_;
+}
+inline void GM_HuHandCardData::set_m_zonglei(::google::protobuf::int32 value) {
+  set_has_m_zonglei();
+  m_zonglei_ = value;
+}
+
+// optional int32 m_Tan = 5;
+inline bool GM_HuHandCardData::has_m_tan() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void GM_HuHandCardData::set_has_m_tan() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void GM_HuHandCardData::clear_has_m_tan() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void GM_HuHandCardData::clear_m_tan() {
+  m_tan_ = 0;
+  clear_has_m_tan();
+}
+inline ::google::protobuf::int32 GM_HuHandCardData::m_tan() const {
+  return m_tan_;
+}
+inline void GM_HuHandCardData::set_m_tan(::google::protobuf::int32 value) {
+  set_has_m_tan();
+  m_tan_ = value;
+}
+
+// optional int32 m_Sao = 6;
+inline bool GM_HuHandCardData::has_m_sao() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
-inline void GM_HuHandCardData::set_has_m_goldnum() {
+inline void GM_HuHandCardData::set_has_m_sao() {
   _has_bits_[0] |= 0x00000020u;
 }
-inline void GM_HuHandCardData::clear_has_m_goldnum() {
+inline void GM_HuHandCardData::clear_has_m_sao() {
   _has_bits_[0] &= ~0x00000020u;
 }
-inline void GM_HuHandCardData::clear_m_goldnum() {
-  m_goldnum_ = 0;
-  clear_has_m_goldnum();
+inline void GM_HuHandCardData::clear_m_sao() {
+  m_sao_ = 0;
+  clear_has_m_sao();
 }
-inline ::google::protobuf::int32 GM_HuHandCardData::m_goldnum() const {
-  return m_goldnum_;
+inline ::google::protobuf::int32 GM_HuHandCardData::m_sao() const {
+  return m_sao_;
 }
-inline void GM_HuHandCardData::set_m_goldnum(::google::protobuf::int32 value) {
-  set_has_m_goldnum();
-  m_goldnum_ = value;
+inline void GM_HuHandCardData::set_m_sao(::google::protobuf::int32 value) {
+  set_has_m_sao();
+  m_sao_ = value;
 }
 
-// optional int32 m_isBaWang = 7;
-inline bool GM_HuHandCardData::has_m_isbawang() const {
+// optional int32 m_Peng = 7;
+inline bool GM_HuHandCardData::has_m_peng() const {
   return (_has_bits_[0] & 0x00000040u) != 0;
 }
-inline void GM_HuHandCardData::set_has_m_isbawang() {
+inline void GM_HuHandCardData::set_has_m_peng() {
   _has_bits_[0] |= 0x00000040u;
 }
-inline void GM_HuHandCardData::clear_has_m_isbawang() {
+inline void GM_HuHandCardData::clear_has_m_peng() {
   _has_bits_[0] &= ~0x00000040u;
 }
-inline void GM_HuHandCardData::clear_m_isbawang() {
-  m_isbawang_ = 0;
-  clear_has_m_isbawang();
+inline void GM_HuHandCardData::clear_m_peng() {
+  m_peng_ = 0;
+  clear_has_m_peng();
 }
-inline ::google::protobuf::int32 GM_HuHandCardData::m_isbawang() const {
-  return m_isbawang_;
+inline ::google::protobuf::int32 GM_HuHandCardData::m_peng() const {
+  return m_peng_;
 }
-inline void GM_HuHandCardData::set_m_isbawang(::google::protobuf::int32 value) {
-  set_has_m_isbawang();
-  m_isbawang_ = value;
+inline void GM_HuHandCardData::set_m_peng(::google::protobuf::int32 value) {
+  set_has_m_peng();
+  m_peng_ = value;
 }
 
-// optional int32 m_isCongGuan = 8;
-inline bool GM_HuHandCardData::has_m_iscongguan() const {
+// optional int32 m_Gang = 8;
+inline bool GM_HuHandCardData::has_m_gang() const {
   return (_has_bits_[0] & 0x00000080u) != 0;
 }
-inline void GM_HuHandCardData::set_has_m_iscongguan() {
+inline void GM_HuHandCardData::set_has_m_gang() {
   _has_bits_[0] |= 0x00000080u;
 }
-inline void GM_HuHandCardData::clear_has_m_iscongguan() {
+inline void GM_HuHandCardData::clear_has_m_gang() {
   _has_bits_[0] &= ~0x00000080u;
 }
-inline void GM_HuHandCardData::clear_m_iscongguan() {
-  m_iscongguan_ = 0;
-  clear_has_m_iscongguan();
+inline void GM_HuHandCardData::clear_m_gang() {
+  m_gang_ = 0;
+  clear_has_m_gang();
 }
-inline ::google::protobuf::int32 GM_HuHandCardData::m_iscongguan() const {
-  return m_iscongguan_;
+inline ::google::protobuf::int32 GM_HuHandCardData::m_gang() const {
+  return m_gang_;
 }
-inline void GM_HuHandCardData::set_m_iscongguan(::google::protobuf::int32 value) {
-  set_has_m_iscongguan();
-  m_iscongguan_ = value;
+inline void GM_HuHandCardData::set_m_gang(::google::protobuf::int32 value) {
+  set_has_m_gang();
+  m_gang_ = value;
 }
 
-// optional int32 m_huitouScore = 9;
-inline bool GM_HuHandCardData::has_m_huitouscore() const {
+// optional int32 m_anGang = 9;
+inline bool GM_HuHandCardData::has_m_angang() const {
   return (_has_bits_[0] & 0x00000100u) != 0;
 }
-inline void GM_HuHandCardData::set_has_m_huitouscore() {
+inline void GM_HuHandCardData::set_has_m_angang() {
   _has_bits_[0] |= 0x00000100u;
 }
-inline void GM_HuHandCardData::clear_has_m_huitouscore() {
+inline void GM_HuHandCardData::clear_has_m_angang() {
   _has_bits_[0] &= ~0x00000100u;
 }
-inline void GM_HuHandCardData::clear_m_huitouscore() {
-  m_huitouscore_ = 0;
-  clear_has_m_huitouscore();
+inline void GM_HuHandCardData::clear_m_angang() {
+  m_angang_ = 0;
+  clear_has_m_angang();
 }
-inline ::google::protobuf::int32 GM_HuHandCardData::m_huitouscore() const {
-  return m_huitouscore_;
+inline ::google::protobuf::int32 GM_HuHandCardData::m_angang() const {
+  return m_angang_;
 }
-inline void GM_HuHandCardData::set_m_huitouscore(::google::protobuf::int32 value) {
-  set_has_m_huitouscore();
-  m_huitouscore_ = value;
+inline void GM_HuHandCardData::set_m_angang(::google::protobuf::int32 value) {
+  set_has_m_angang();
+  m_angang_ = value;
 }
 
-// optional int32 m_maileiScore = 10;
-inline bool GM_HuHandCardData::has_m_maileiscore() const {
+// optional int32 m_reward = 10;
+inline bool GM_HuHandCardData::has_m_reward() const {
   return (_has_bits_[0] & 0x00000200u) != 0;
 }
-inline void GM_HuHandCardData::set_has_m_maileiscore() {
+inline void GM_HuHandCardData::set_has_m_reward() {
   _has_bits_[0] |= 0x00000200u;
 }
-inline void GM_HuHandCardData::clear_has_m_maileiscore() {
+inline void GM_HuHandCardData::clear_has_m_reward() {
   _has_bits_[0] &= ~0x00000200u;
 }
-inline void GM_HuHandCardData::clear_m_maileiscore() {
-  m_maileiscore_ = 0;
-  clear_has_m_maileiscore();
+inline void GM_HuHandCardData::clear_m_reward() {
+  m_reward_ = 0;
+  clear_has_m_reward();
 }
-inline ::google::protobuf::int32 GM_HuHandCardData::m_maileiscore() const {
-  return m_maileiscore_;
+inline ::google::protobuf::int32 GM_HuHandCardData::m_reward() const {
+  return m_reward_;
 }
-inline void GM_HuHandCardData::set_m_maileiscore(::google::protobuf::int32 value) {
-  set_has_m_maileiscore();
-  m_maileiscore_ = value;
+inline void GM_HuHandCardData::set_m_reward(::google::protobuf::int32 value) {
+  set_has_m_reward();
+  m_reward_ = value;
 }
 
-// optional int32 m_tongScore = 11;
-inline bool GM_HuHandCardData::has_m_tongscore() const {
+// optional int32 m_score = 11;
+inline bool GM_HuHandCardData::has_m_score() const {
   return (_has_bits_[0] & 0x00000400u) != 0;
 }
-inline void GM_HuHandCardData::set_has_m_tongscore() {
+inline void GM_HuHandCardData::set_has_m_score() {
   _has_bits_[0] |= 0x00000400u;
 }
-inline void GM_HuHandCardData::clear_has_m_tongscore() {
+inline void GM_HuHandCardData::clear_has_m_score() {
   _has_bits_[0] &= ~0x00000400u;
 }
-inline void GM_HuHandCardData::clear_m_tongscore() {
-  m_tongscore_ = 0;
-  clear_has_m_tongscore();
+inline void GM_HuHandCardData::clear_m_score() {
+  m_score_ = 0;
+  clear_has_m_score();
 }
-inline ::google::protobuf::int32 GM_HuHandCardData::m_tongscore() const {
-  return m_tongscore_;
+inline ::google::protobuf::int32 GM_HuHandCardData::m_score() const {
+  return m_score_;
 }
-inline void GM_HuHandCardData::set_m_tongscore(::google::protobuf::int32 value) {
-  set_has_m_tongscore();
-  m_tongscore_ = value;
+inline void GM_HuHandCardData::set_m_score(::google::protobuf::int32 value) {
+  set_has_m_score();
+  m_score_ = value;
 }
 
-// optional int32 m_gangScore = 12;
-inline bool GM_HuHandCardData::has_m_gangscore() const {
+// optional int32 m_TotalScore = 12;
+inline bool GM_HuHandCardData::has_m_totalscore() const {
   return (_has_bits_[0] & 0x00000800u) != 0;
 }
-inline void GM_HuHandCardData::set_has_m_gangscore() {
+inline void GM_HuHandCardData::set_has_m_totalscore() {
   _has_bits_[0] |= 0x00000800u;
 }
-inline void GM_HuHandCardData::clear_has_m_gangscore() {
+inline void GM_HuHandCardData::clear_has_m_totalscore() {
   _has_bits_[0] &= ~0x00000800u;
 }
-inline void GM_HuHandCardData::clear_m_gangscore() {
-  m_gangscore_ = 0;
-  clear_has_m_gangscore();
+inline void GM_HuHandCardData::clear_m_totalscore() {
+  m_totalscore_ = 0;
+  clear_has_m_totalscore();
 }
-inline ::google::protobuf::int32 GM_HuHandCardData::m_gangscore() const {
-  return m_gangscore_;
+inline ::google::protobuf::int32 GM_HuHandCardData::m_totalscore() const {
+  return m_totalscore_;
 }
-inline void GM_HuHandCardData::set_m_gangscore(::google::protobuf::int32 value) {
-  set_has_m_gangscore();
-  m_gangscore_ = value;
-}
-
-// optional int32 m_xiaCGBW = 13;
-inline bool GM_HuHandCardData::has_m_xiacgbw() const {
-  return (_has_bits_[0] & 0x00001000u) != 0;
-}
-inline void GM_HuHandCardData::set_has_m_xiacgbw() {
-  _has_bits_[0] |= 0x00001000u;
-}
-inline void GM_HuHandCardData::clear_has_m_xiacgbw() {
-  _has_bits_[0] &= ~0x00001000u;
-}
-inline void GM_HuHandCardData::clear_m_xiacgbw() {
-  m_xiacgbw_ = 0;
-  clear_has_m_xiacgbw();
-}
-inline ::google::protobuf::int32 GM_HuHandCardData::m_xiacgbw() const {
-  return m_xiacgbw_;
-}
-inline void GM_HuHandCardData::set_m_xiacgbw(::google::protobuf::int32 value) {
-  set_has_m_xiacgbw();
-  m_xiacgbw_ = value;
+inline void GM_HuHandCardData::set_m_totalscore(::google::protobuf::int32 value) {
+  set_has_m_totalscore();
+  m_totalscore_ = value;
 }
 
-// optional int32 m_huiCGBW = 14;
-inline bool GM_HuHandCardData::has_m_huicgbw() const {
-  return (_has_bits_[0] & 0x00002000u) != 0;
+// repeated int32 m_SaoType = 20;
+inline int GM_HuHandCardData::m_saotype_size() const {
+  return m_saotype_.size();
 }
-inline void GM_HuHandCardData::set_has_m_huicgbw() {
-  _has_bits_[0] |= 0x00002000u;
+inline void GM_HuHandCardData::clear_m_saotype() {
+  m_saotype_.Clear();
 }
-inline void GM_HuHandCardData::clear_has_m_huicgbw() {
-  _has_bits_[0] &= ~0x00002000u;
+inline ::google::protobuf::int32 GM_HuHandCardData::m_saotype(int index) const {
+  return m_saotype_.Get(index);
 }
-inline void GM_HuHandCardData::clear_m_huicgbw() {
-  m_huicgbw_ = 0;
-  clear_has_m_huicgbw();
+inline void GM_HuHandCardData::set_m_saotype(int index, ::google::protobuf::int32 value) {
+  m_saotype_.Set(index, value);
 }
-inline ::google::protobuf::int32 GM_HuHandCardData::m_huicgbw() const {
-  return m_huicgbw_;
-}
-inline void GM_HuHandCardData::set_m_huicgbw(::google::protobuf::int32 value) {
-  set_has_m_huicgbw();
-  m_huicgbw_ = value;
-}
-
-// optional int32 m_maiCGBW = 15;
-inline bool GM_HuHandCardData::has_m_maicgbw() const {
-  return (_has_bits_[0] & 0x00004000u) != 0;
-}
-inline void GM_HuHandCardData::set_has_m_maicgbw() {
-  _has_bits_[0] |= 0x00004000u;
-}
-inline void GM_HuHandCardData::clear_has_m_maicgbw() {
-  _has_bits_[0] &= ~0x00004000u;
-}
-inline void GM_HuHandCardData::clear_m_maicgbw() {
-  m_maicgbw_ = 0;
-  clear_has_m_maicgbw();
-}
-inline ::google::protobuf::int32 GM_HuHandCardData::m_maicgbw() const {
-  return m_maicgbw_;
-}
-inline void GM_HuHandCardData::set_m_maicgbw(::google::protobuf::int32 value) {
-  set_has_m_maicgbw();
-  m_maicgbw_ = value;
-}
-
-// optional int32 m_tongCGBW = 16;
-inline bool GM_HuHandCardData::has_m_tongcgbw() const {
-  return (_has_bits_[0] & 0x00008000u) != 0;
-}
-inline void GM_HuHandCardData::set_has_m_tongcgbw() {
-  _has_bits_[0] |= 0x00008000u;
-}
-inline void GM_HuHandCardData::clear_has_m_tongcgbw() {
-  _has_bits_[0] &= ~0x00008000u;
-}
-inline void GM_HuHandCardData::clear_m_tongcgbw() {
-  m_tongcgbw_ = 0;
-  clear_has_m_tongcgbw();
-}
-inline ::google::protobuf::int32 GM_HuHandCardData::m_tongcgbw() const {
-  return m_tongcgbw_;
-}
-inline void GM_HuHandCardData::set_m_tongcgbw(::google::protobuf::int32 value) {
-  set_has_m_tongcgbw();
-  m_tongcgbw_ = value;
-}
-
-// optional int32 m_CZScore = 17;
-inline bool GM_HuHandCardData::has_m_czscore() const {
-  return (_has_bits_[0] & 0x00010000u) != 0;
-}
-inline void GM_HuHandCardData::set_has_m_czscore() {
-  _has_bits_[0] |= 0x00010000u;
-}
-inline void GM_HuHandCardData::clear_has_m_czscore() {
-  _has_bits_[0] &= ~0x00010000u;
-}
-inline void GM_HuHandCardData::clear_m_czscore() {
-  m_czscore_ = 0;
-  clear_has_m_czscore();
-}
-inline ::google::protobuf::int32 GM_HuHandCardData::m_czscore() const {
-  return m_czscore_;
-}
-inline void GM_HuHandCardData::set_m_czscore(::google::protobuf::int32 value) {
-  set_has_m_czscore();
-  m_czscore_ = value;
-}
-
-// optional int32 m_HDFZScore = 18;
-inline bool GM_HuHandCardData::has_m_hdfzscore() const {
-  return (_has_bits_[0] & 0x00020000u) != 0;
-}
-inline void GM_HuHandCardData::set_has_m_hdfzscore() {
-  _has_bits_[0] |= 0x00020000u;
-}
-inline void GM_HuHandCardData::clear_has_m_hdfzscore() {
-  _has_bits_[0] &= ~0x00020000u;
-}
-inline void GM_HuHandCardData::clear_m_hdfzscore() {
-  m_hdfzscore_ = 0;
-  clear_has_m_hdfzscore();
-}
-inline ::google::protobuf::int32 GM_HuHandCardData::m_hdfzscore() const {
-  return m_hdfzscore_;
-}
-inline void GM_HuHandCardData::set_m_hdfzscore(::google::protobuf::int32 value) {
-  set_has_m_hdfzscore();
-  m_hdfzscore_ = value;
-}
-
-// optional int32 m_PLRate = 19;
-inline bool GM_HuHandCardData::has_m_plrate() const {
-  return (_has_bits_[0] & 0x00040000u) != 0;
-}
-inline void GM_HuHandCardData::set_has_m_plrate() {
-  _has_bits_[0] |= 0x00040000u;
-}
-inline void GM_HuHandCardData::clear_has_m_plrate() {
-  _has_bits_[0] &= ~0x00040000u;
-}
-inline void GM_HuHandCardData::clear_m_plrate() {
-  m_plrate_ = 0;
-  clear_has_m_plrate();
-}
-inline ::google::protobuf::int32 GM_HuHandCardData::m_plrate() const {
-  return m_plrate_;
-}
-inline void GM_HuHandCardData::set_m_plrate(::google::protobuf::int32 value) {
-  set_has_m_plrate();
-  m_plrate_ = value;
-}
-
-// repeated int32 m_AnGangType = 20;
-inline int GM_HuHandCardData::m_angangtype_size() const {
-  return m_angangtype_.size();
-}
-inline void GM_HuHandCardData::clear_m_angangtype() {
-  m_angangtype_.Clear();
-}
-inline ::google::protobuf::int32 GM_HuHandCardData::m_angangtype(int index) const {
-  return m_angangtype_.Get(index);
-}
-inline void GM_HuHandCardData::set_m_angangtype(int index, ::google::protobuf::int32 value) {
-  m_angangtype_.Set(index, value);
-}
-inline void GM_HuHandCardData::add_m_angangtype(::google::protobuf::int32 value) {
-  m_angangtype_.Add(value);
+inline void GM_HuHandCardData::add_m_saotype(::google::protobuf::int32 value) {
+  m_saotype_.Add(value);
 }
 inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
-GM_HuHandCardData::m_angangtype() const {
-  return m_angangtype_;
+GM_HuHandCardData::m_saotype() const {
+  return m_saotype_;
 }
 inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
-GM_HuHandCardData::mutable_m_angangtype() {
-  return &m_angangtype_;
+GM_HuHandCardData::mutable_m_saotype() {
+  return &m_saotype_;
 }
 
 // -------------------------------------------------------------------
@@ -6111,103 +4944,15 @@ inline void GM_ReconnectMJData::set_m_bankerpos(::google::protobuf::int32 value)
   m_bankerpos_ = value;
 }
 
-// optional int32 m_zheng = 2;
-inline bool GM_ReconnectMJData::has_m_zheng() const {
+// optional int32 m_RoomMasterID = 2;
+inline bool GM_ReconnectMJData::has_m_roommasterid() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void GM_ReconnectMJData::set_has_m_zheng() {
+inline void GM_ReconnectMJData::set_has_m_roommasterid() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void GM_ReconnectMJData::clear_has_m_zheng() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void GM_ReconnectMJData::clear_m_zheng() {
-  m_zheng_ = 0;
-  clear_has_m_zheng();
-}
-inline ::google::protobuf::int32 GM_ReconnectMJData::m_zheng() const {
-  return m_zheng_;
-}
-inline void GM_ReconnectMJData::set_m_zheng(::google::protobuf::int32 value) {
-  set_has_m_zheng();
-  m_zheng_ = value;
-}
-
-// optional int32 m_fu = 3;
-inline bool GM_ReconnectMJData::has_m_fu() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
-}
-inline void GM_ReconnectMJData::set_has_m_fu() {
-  _has_bits_[0] |= 0x00000004u;
-}
-inline void GM_ReconnectMJData::clear_has_m_fu() {
-  _has_bits_[0] &= ~0x00000004u;
-}
-inline void GM_ReconnectMJData::clear_m_fu() {
-  m_fu_ = 0;
-  clear_has_m_fu();
-}
-inline ::google::protobuf::int32 GM_ReconnectMJData::m_fu() const {
-  return m_fu_;
-}
-inline void GM_ReconnectMJData::set_m_fu(::google::protobuf::int32 value) {
-  set_has_m_fu();
-  m_fu_ = value;
-}
-
-// optional int32 m_zhengid = 4;
-inline bool GM_ReconnectMJData::has_m_zhengid() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
-}
-inline void GM_ReconnectMJData::set_has_m_zhengid() {
-  _has_bits_[0] |= 0x00000008u;
-}
-inline void GM_ReconnectMJData::clear_has_m_zhengid() {
-  _has_bits_[0] &= ~0x00000008u;
-}
-inline void GM_ReconnectMJData::clear_m_zhengid() {
-  m_zhengid_ = 0;
-  clear_has_m_zhengid();
-}
-inline ::google::protobuf::int32 GM_ReconnectMJData::m_zhengid() const {
-  return m_zhengid_;
-}
-inline void GM_ReconnectMJData::set_m_zhengid(::google::protobuf::int32 value) {
-  set_has_m_zhengid();
-  m_zhengid_ = value;
-}
-
-// optional int32 m_jingpos = 5;
-inline bool GM_ReconnectMJData::has_m_jingpos() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
-}
-inline void GM_ReconnectMJData::set_has_m_jingpos() {
-  _has_bits_[0] |= 0x00000010u;
-}
-inline void GM_ReconnectMJData::clear_has_m_jingpos() {
-  _has_bits_[0] &= ~0x00000010u;
-}
-inline void GM_ReconnectMJData::clear_m_jingpos() {
-  m_jingpos_ = 0;
-  clear_has_m_jingpos();
-}
-inline ::google::protobuf::int32 GM_ReconnectMJData::m_jingpos() const {
-  return m_jingpos_;
-}
-inline void GM_ReconnectMJData::set_m_jingpos(::google::protobuf::int32 value) {
-  set_has_m_jingpos();
-  m_jingpos_ = value;
-}
-
-// optional int32 m_RoomMasterID = 6;
-inline bool GM_ReconnectMJData::has_m_roommasterid() const {
-  return (_has_bits_[0] & 0x00000020u) != 0;
-}
-inline void GM_ReconnectMJData::set_has_m_roommasterid() {
-  _has_bits_[0] |= 0x00000020u;
-}
 inline void GM_ReconnectMJData::clear_has_m_roommasterid() {
-  _has_bits_[0] &= ~0x00000020u;
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline void GM_ReconnectMJData::clear_m_roommasterid() {
   m_roommasterid_ = 0;
@@ -6221,59 +4966,15 @@ inline void GM_ReconnectMJData::set_m_roommasterid(::google::protobuf::int32 val
   m_roommasterid_ = value;
 }
 
-// optional int32 m_FirstPos = 7;
-inline bool GM_ReconnectMJData::has_m_firstpos() const {
-  return (_has_bits_[0] & 0x00000040u) != 0;
-}
-inline void GM_ReconnectMJData::set_has_m_firstpos() {
-  _has_bits_[0] |= 0x00000040u;
-}
-inline void GM_ReconnectMJData::clear_has_m_firstpos() {
-  _has_bits_[0] &= ~0x00000040u;
-}
-inline void GM_ReconnectMJData::clear_m_firstpos() {
-  m_firstpos_ = 0;
-  clear_has_m_firstpos();
-}
-inline ::google::protobuf::int32 GM_ReconnectMJData::m_firstpos() const {
-  return m_firstpos_;
-}
-inline void GM_ReconnectMJData::set_m_firstpos(::google::protobuf::int32 value) {
-  set_has_m_firstpos();
-  m_firstpos_ = value;
-}
-
-// optional int32 m_SecondPos = 8;
-inline bool GM_ReconnectMJData::has_m_secondpos() const {
-  return (_has_bits_[0] & 0x00000080u) != 0;
-}
-inline void GM_ReconnectMJData::set_has_m_secondpos() {
-  _has_bits_[0] |= 0x00000080u;
-}
-inline void GM_ReconnectMJData::clear_has_m_secondpos() {
-  _has_bits_[0] &= ~0x00000080u;
-}
-inline void GM_ReconnectMJData::clear_m_secondpos() {
-  m_secondpos_ = 0;
-  clear_has_m_secondpos();
-}
-inline ::google::protobuf::int32 GM_ReconnectMJData::m_secondpos() const {
-  return m_secondpos_;
-}
-inline void GM_ReconnectMJData::set_m_secondpos(::google::protobuf::int32 value) {
-  set_has_m_secondpos();
-  m_secondpos_ = value;
-}
-
-// optional int32 m_FreeCard = 9;
+// optional int32 m_FreeCard = 3;
 inline bool GM_ReconnectMJData::has_m_freecard() const {
-  return (_has_bits_[0] & 0x00000100u) != 0;
+  return (_has_bits_[0] & 0x00000004u) != 0;
 }
 inline void GM_ReconnectMJData::set_has_m_freecard() {
-  _has_bits_[0] |= 0x00000100u;
+  _has_bits_[0] |= 0x00000004u;
 }
 inline void GM_ReconnectMJData::clear_has_m_freecard() {
-  _has_bits_[0] &= ~0x00000100u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void GM_ReconnectMJData::clear_m_freecard() {
   m_freecard_ = 0;
@@ -6287,37 +4988,15 @@ inline void GM_ReconnectMJData::set_m_freecard(::google::protobuf::int32 value) 
   m_freecard_ = value;
 }
 
-// optional int32 m_leftTime = 10;
-inline bool GM_ReconnectMJData::has_m_lefttime() const {
-  return (_has_bits_[0] & 0x00000200u) != 0;
-}
-inline void GM_ReconnectMJData::set_has_m_lefttime() {
-  _has_bits_[0] |= 0x00000200u;
-}
-inline void GM_ReconnectMJData::clear_has_m_lefttime() {
-  _has_bits_[0] &= ~0x00000200u;
-}
-inline void GM_ReconnectMJData::clear_m_lefttime() {
-  m_lefttime_ = 0;
-  clear_has_m_lefttime();
-}
-inline ::google::protobuf::int32 GM_ReconnectMJData::m_lefttime() const {
-  return m_lefttime_;
-}
-inline void GM_ReconnectMJData::set_m_lefttime(::google::protobuf::int32 value) {
-  set_has_m_lefttime();
-  m_lefttime_ = value;
-}
-
-// optional int32 m_leftCount = 11;
+// optional int32 m_leftCount = 4;
 inline bool GM_ReconnectMJData::has_m_leftcount() const {
-  return (_has_bits_[0] & 0x00000400u) != 0;
+  return (_has_bits_[0] & 0x00000008u) != 0;
 }
 inline void GM_ReconnectMJData::set_has_m_leftcount() {
-  _has_bits_[0] |= 0x00000400u;
+  _has_bits_[0] |= 0x00000008u;
 }
 inline void GM_ReconnectMJData::clear_has_m_leftcount() {
-  _has_bits_[0] &= ~0x00000400u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void GM_ReconnectMJData::clear_m_leftcount() {
   m_leftcount_ = 0;
@@ -6331,15 +5010,15 @@ inline void GM_ReconnectMJData::set_m_leftcount(::google::protobuf::int32 value)
   m_leftcount_ = value;
 }
 
-// optional int32 m_totalCount = 12;
+// optional int32 m_totalCount = 5;
 inline bool GM_ReconnectMJData::has_m_totalcount() const {
-  return (_has_bits_[0] & 0x00000800u) != 0;
+  return (_has_bits_[0] & 0x00000010u) != 0;
 }
 inline void GM_ReconnectMJData::set_has_m_totalcount() {
-  _has_bits_[0] |= 0x00000800u;
+  _has_bits_[0] |= 0x00000010u;
 }
 inline void GM_ReconnectMJData::clear_has_m_totalcount() {
-  _has_bits_[0] &= ~0x00000800u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline void GM_ReconnectMJData::clear_m_totalcount() {
   m_totalcount_ = 0;
@@ -6353,129 +5032,15 @@ inline void GM_ReconnectMJData::set_m_totalcount(::google::protobuf::int32 value
   m_totalcount_ = value;
 }
 
-// optional string m_playWay = 13;
-inline bool GM_ReconnectMJData::has_m_playway() const {
-  return (_has_bits_[0] & 0x00001000u) != 0;
-}
-inline void GM_ReconnectMJData::set_has_m_playway() {
-  _has_bits_[0] |= 0x00001000u;
-}
-inline void GM_ReconnectMJData::clear_has_m_playway() {
-  _has_bits_[0] &= ~0x00001000u;
-}
-inline void GM_ReconnectMJData::clear_m_playway() {
-  if (m_playway_ != &::google::protobuf::internal::kEmptyString) {
-    m_playway_->clear();
-  }
-  clear_has_m_playway();
-}
-inline const ::std::string& GM_ReconnectMJData::m_playway() const {
-  return *m_playway_;
-}
-inline void GM_ReconnectMJData::set_m_playway(const ::std::string& value) {
-  set_has_m_playway();
-  if (m_playway_ == &::google::protobuf::internal::kEmptyString) {
-    m_playway_ = new ::std::string;
-  }
-  m_playway_->assign(value);
-}
-inline void GM_ReconnectMJData::set_m_playway(const char* value) {
-  set_has_m_playway();
-  if (m_playway_ == &::google::protobuf::internal::kEmptyString) {
-    m_playway_ = new ::std::string;
-  }
-  m_playway_->assign(value);
-}
-inline void GM_ReconnectMJData::set_m_playway(const char* value, size_t size) {
-  set_has_m_playway();
-  if (m_playway_ == &::google::protobuf::internal::kEmptyString) {
-    m_playway_ = new ::std::string;
-  }
-  m_playway_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* GM_ReconnectMJData::mutable_m_playway() {
-  set_has_m_playway();
-  if (m_playway_ == &::google::protobuf::internal::kEmptyString) {
-    m_playway_ = new ::std::string;
-  }
-  return m_playway_;
-}
-inline ::std::string* GM_ReconnectMJData::release_m_playway() {
-  clear_has_m_playway();
-  if (m_playway_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = m_playway_;
-    m_playway_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void GM_ReconnectMJData::set_allocated_m_playway(::std::string* m_playway) {
-  if (m_playway_ != &::google::protobuf::internal::kEmptyString) {
-    delete m_playway_;
-  }
-  if (m_playway) {
-    set_has_m_playway();
-    m_playway_ = m_playway;
-  } else {
-    clear_has_m_playway();
-    m_playway_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
-}
-
-// optional int32 m_xiazheng = 14;
-inline bool GM_ReconnectMJData::has_m_xiazheng() const {
-  return (_has_bits_[0] & 0x00002000u) != 0;
-}
-inline void GM_ReconnectMJData::set_has_m_xiazheng() {
-  _has_bits_[0] |= 0x00002000u;
-}
-inline void GM_ReconnectMJData::clear_has_m_xiazheng() {
-  _has_bits_[0] &= ~0x00002000u;
-}
-inline void GM_ReconnectMJData::clear_m_xiazheng() {
-  m_xiazheng_ = 0;
-  clear_has_m_xiazheng();
-}
-inline ::google::protobuf::int32 GM_ReconnectMJData::m_xiazheng() const {
-  return m_xiazheng_;
-}
-inline void GM_ReconnectMJData::set_m_xiazheng(::google::protobuf::int32 value) {
-  set_has_m_xiazheng();
-  m_xiazheng_ = value;
-}
-
-// optional int32 m_xiafu = 15;
-inline bool GM_ReconnectMJData::has_m_xiafu() const {
-  return (_has_bits_[0] & 0x00004000u) != 0;
-}
-inline void GM_ReconnectMJData::set_has_m_xiafu() {
-  _has_bits_[0] |= 0x00004000u;
-}
-inline void GM_ReconnectMJData::clear_has_m_xiafu() {
-  _has_bits_[0] &= ~0x00004000u;
-}
-inline void GM_ReconnectMJData::clear_m_xiafu() {
-  m_xiafu_ = 0;
-  clear_has_m_xiafu();
-}
-inline ::google::protobuf::int32 GM_ReconnectMJData::m_xiafu() const {
-  return m_xiafu_;
-}
-inline void GM_ReconnectMJData::set_m_xiafu(::google::protobuf::int32 value) {
-  set_has_m_xiafu();
-  m_xiafu_ = value;
-}
-
-// optional int32 m_rollCount = 16;
+// optional int32 m_rollCount = 6;
 inline bool GM_ReconnectMJData::has_m_rollcount() const {
-  return (_has_bits_[0] & 0x00008000u) != 0;
+  return (_has_bits_[0] & 0x00000020u) != 0;
 }
 inline void GM_ReconnectMJData::set_has_m_rollcount() {
-  _has_bits_[0] |= 0x00008000u;
+  _has_bits_[0] |= 0x00000020u;
 }
 inline void GM_ReconnectMJData::clear_has_m_rollcount() {
-  _has_bits_[0] &= ~0x00008000u;
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline void GM_ReconnectMJData::clear_m_rollcount() {
   m_rollcount_ = 0;
@@ -6489,15 +5054,15 @@ inline void GM_ReconnectMJData::set_m_rollcount(::google::protobuf::int32 value)
   m_rollcount_ = value;
 }
 
-// optional int32 m_playerCount = 17;
+// optional int32 m_playerCount = 7;
 inline bool GM_ReconnectMJData::has_m_playercount() const {
-  return (_has_bits_[0] & 0x00010000u) != 0;
+  return (_has_bits_[0] & 0x00000040u) != 0;
 }
 inline void GM_ReconnectMJData::set_has_m_playercount() {
-  _has_bits_[0] |= 0x00010000u;
+  _has_bits_[0] |= 0x00000040u;
 }
 inline void GM_ReconnectMJData::clear_has_m_playercount() {
-  _has_bits_[0] &= ~0x00010000u;
+  _has_bits_[0] &= ~0x00000040u;
 }
 inline void GM_ReconnectMJData::clear_m_playercount() {
   m_playercount_ = 0;
@@ -6511,15 +5076,15 @@ inline void GM_ReconnectMJData::set_m_playercount(::google::protobuf::int32 valu
   m_playercount_ = value;
 }
 
-// optional int32 m_lastOutCardRoleId = 18;
+// optional int32 m_lastOutCardRoleId = 8;
 inline bool GM_ReconnectMJData::has_m_lastoutcardroleid() const {
-  return (_has_bits_[0] & 0x00020000u) != 0;
+  return (_has_bits_[0] & 0x00000080u) != 0;
 }
 inline void GM_ReconnectMJData::set_has_m_lastoutcardroleid() {
-  _has_bits_[0] |= 0x00020000u;
+  _has_bits_[0] |= 0x00000080u;
 }
 inline void GM_ReconnectMJData::clear_has_m_lastoutcardroleid() {
-  _has_bits_[0] &= ~0x00020000u;
+  _has_bits_[0] &= ~0x00000080u;
 }
 inline void GM_ReconnectMJData::clear_m_lastoutcardroleid() {
   m_lastoutcardroleid_ = 0;
@@ -6533,15 +5098,15 @@ inline void GM_ReconnectMJData::set_m_lastoutcardroleid(::google::protobuf::int3
   m_lastoutcardroleid_ = value;
 }
 
-// optional int32 m_closeRoomLeftTime = 19;
+// optional int32 m_closeRoomLeftTime = 9;
 inline bool GM_ReconnectMJData::has_m_closeroomlefttime() const {
-  return (_has_bits_[0] & 0x00040000u) != 0;
+  return (_has_bits_[0] & 0x00000100u) != 0;
 }
 inline void GM_ReconnectMJData::set_has_m_closeroomlefttime() {
-  _has_bits_[0] |= 0x00040000u;
+  _has_bits_[0] |= 0x00000100u;
 }
 inline void GM_ReconnectMJData::clear_has_m_closeroomlefttime() {
-  _has_bits_[0] &= ~0x00040000u;
+  _has_bits_[0] &= ~0x00000100u;
 }
 inline void GM_ReconnectMJData::clear_m_closeroomlefttime() {
   m_closeroomlefttime_ = 0;
@@ -6555,7 +5120,120 @@ inline void GM_ReconnectMJData::set_m_closeroomlefttime(::google::protobuf::int3
   m_closeroomlefttime_ = value;
 }
 
-// repeated .GM_PlayerHandCard m_HandCard = 20;
+// optional int32 m_huLastCard = 10;
+inline bool GM_ReconnectMJData::has_m_hulastcard() const {
+  return (_has_bits_[0] & 0x00000200u) != 0;
+}
+inline void GM_ReconnectMJData::set_has_m_hulastcard() {
+  _has_bits_[0] |= 0x00000200u;
+}
+inline void GM_ReconnectMJData::clear_has_m_hulastcard() {
+  _has_bits_[0] &= ~0x00000200u;
+}
+inline void GM_ReconnectMJData::clear_m_hulastcard() {
+  m_hulastcard_ = 0;
+  clear_has_m_hulastcard();
+}
+inline ::google::protobuf::int32 GM_ReconnectMJData::m_hulastcard() const {
+  return m_hulastcard_;
+}
+inline void GM_ReconnectMJData::set_m_hulastcard(::google::protobuf::int32 value) {
+  set_has_m_hulastcard();
+  m_hulastcard_ = value;
+}
+
+// optional int32 m_getCardId = 11;
+inline bool GM_ReconnectMJData::has_m_getcardid() const {
+  return (_has_bits_[0] & 0x00000400u) != 0;
+}
+inline void GM_ReconnectMJData::set_has_m_getcardid() {
+  _has_bits_[0] |= 0x00000400u;
+}
+inline void GM_ReconnectMJData::clear_has_m_getcardid() {
+  _has_bits_[0] &= ~0x00000400u;
+}
+inline void GM_ReconnectMJData::clear_m_getcardid() {
+  m_getcardid_ = 0;
+  clear_has_m_getcardid();
+}
+inline ::google::protobuf::int32 GM_ReconnectMJData::m_getcardid() const {
+  return m_getcardid_;
+}
+inline void GM_ReconnectMJData::set_m_getcardid(::google::protobuf::int32 value) {
+  set_has_m_getcardid();
+  m_getcardid_ = value;
+}
+
+// optional int32 m_getCardNum = 12;
+inline bool GM_ReconnectMJData::has_m_getcardnum() const {
+  return (_has_bits_[0] & 0x00000800u) != 0;
+}
+inline void GM_ReconnectMJData::set_has_m_getcardnum() {
+  _has_bits_[0] |= 0x00000800u;
+}
+inline void GM_ReconnectMJData::clear_has_m_getcardnum() {
+  _has_bits_[0] &= ~0x00000800u;
+}
+inline void GM_ReconnectMJData::clear_m_getcardnum() {
+  m_getcardnum_ = 0;
+  clear_has_m_getcardnum();
+}
+inline ::google::protobuf::int32 GM_ReconnectMJData::m_getcardnum() const {
+  return m_getcardnum_;
+}
+inline void GM_ReconnectMJData::set_m_getcardnum(::google::protobuf::int32 value) {
+  set_has_m_getcardnum();
+  m_getcardnum_ = value;
+}
+
+// optional int32 m_sendCardID = 13;
+inline bool GM_ReconnectMJData::has_m_sendcardid() const {
+  return (_has_bits_[0] & 0x00001000u) != 0;
+}
+inline void GM_ReconnectMJData::set_has_m_sendcardid() {
+  _has_bits_[0] |= 0x00001000u;
+}
+inline void GM_ReconnectMJData::clear_has_m_sendcardid() {
+  _has_bits_[0] &= ~0x00001000u;
+}
+inline void GM_ReconnectMJData::clear_m_sendcardid() {
+  m_sendcardid_ = 0;
+  clear_has_m_sendcardid();
+}
+inline ::google::protobuf::int32 GM_ReconnectMJData::m_sendcardid() const {
+  return m_sendcardid_;
+}
+inline void GM_ReconnectMJData::set_m_sendcardid(::google::protobuf::int32 value) {
+  set_has_m_sendcardid();
+  m_sendcardid_ = value;
+}
+
+// repeated int32 m_saizi = 20;
+inline int GM_ReconnectMJData::m_saizi_size() const {
+  return m_saizi_.size();
+}
+inline void GM_ReconnectMJData::clear_m_saizi() {
+  m_saizi_.Clear();
+}
+inline ::google::protobuf::int32 GM_ReconnectMJData::m_saizi(int index) const {
+  return m_saizi_.Get(index);
+}
+inline void GM_ReconnectMJData::set_m_saizi(int index, ::google::protobuf::int32 value) {
+  m_saizi_.Set(index, value);
+}
+inline void GM_ReconnectMJData::add_m_saizi(::google::protobuf::int32 value) {
+  m_saizi_.Add(value);
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+GM_ReconnectMJData::m_saizi() const {
+  return m_saizi_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+GM_ReconnectMJData::mutable_m_saizi() {
+  return &m_saizi_;
+}
+
+// repeated .GM_PlayerHandCard m_HandCard = 21;
 inline int GM_ReconnectMJData::m_handcard_size() const {
   return m_handcard_.size();
 }
@@ -6580,7 +5258,7 @@ GM_ReconnectMJData::mutable_m_handcard() {
   return &m_handcard_;
 }
 
-// repeated .GM_ReconnectPlayerData m_AllData = 21;
+// repeated .GM_ReconnectPlayerData m_AllData = 22;
 inline int GM_ReconnectMJData::m_alldata_size() const {
   return m_alldata_.size();
 }
@@ -6605,7 +5283,7 @@ GM_ReconnectMJData::mutable_m_alldata() {
   return &m_alldata_;
 }
 
-// repeated .GM_ReconnectCloseRoomData m_CloseRoomData = 22;
+// repeated .GM_ReconnectCloseRoomData m_CloseRoomData = 23;
 inline int GM_ReconnectMJData::m_closeroomdata_size() const {
   return m_closeroomdata_.size();
 }
@@ -6630,15 +5308,15 @@ GM_ReconnectMJData::mutable_m_closeroomdata() {
   return &m_closeroomdata_;
 }
 
-// optional .GM_HUOperator m_huOperatorData = 23;
+// optional .GM_HUOperator m_huOperatorData = 24;
 inline bool GM_ReconnectMJData::has_m_huoperatordata() const {
-  return (_has_bits_[0] & 0x00400000u) != 0;
+  return (_has_bits_[0] & 0x00020000u) != 0;
 }
 inline void GM_ReconnectMJData::set_has_m_huoperatordata() {
-  _has_bits_[0] |= 0x00400000u;
+  _has_bits_[0] |= 0x00020000u;
 }
 inline void GM_ReconnectMJData::clear_has_m_huoperatordata() {
-  _has_bits_[0] &= ~0x00400000u;
+  _has_bits_[0] &= ~0x00020000u;
 }
 inline void GM_ReconnectMJData::clear_m_huoperatordata() {
   if (m_huoperatordata_ != NULL) m_huoperatordata_->::GM_HUOperator::Clear();
@@ -6666,28 +5344,6 @@ inline void GM_ReconnectMJData::set_allocated_m_huoperatordata(::GM_HUOperator* 
   } else {
     clear_has_m_huoperatordata();
   }
-}
-
-// optional int32 m_huLastCard = 24;
-inline bool GM_ReconnectMJData::has_m_hulastcard() const {
-  return (_has_bits_[0] & 0x00800000u) != 0;
-}
-inline void GM_ReconnectMJData::set_has_m_hulastcard() {
-  _has_bits_[0] |= 0x00800000u;
-}
-inline void GM_ReconnectMJData::clear_has_m_hulastcard() {
-  _has_bits_[0] &= ~0x00800000u;
-}
-inline void GM_ReconnectMJData::clear_m_hulastcard() {
-  m_hulastcard_ = 0;
-  clear_has_m_hulastcard();
-}
-inline ::google::protobuf::int32 GM_ReconnectMJData::m_hulastcard() const {
-  return m_hulastcard_;
-}
-inline void GM_ReconnectMJData::set_m_hulastcard(::google::protobuf::int32 value) {
-  set_has_m_hulastcard();
-  m_hulastcard_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -8087,6 +6743,32 @@ inline ::google::protobuf::int32 GM_PlayerRecivePack::m_packflag() const {
 inline void GM_PlayerRecivePack::set_m_packflag(::google::protobuf::int32 value) {
   set_has_m_packflag();
   m_packflag_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// GM_MJOperatorError
+
+// required int32 m_Result = 1;
+inline bool GM_MJOperatorError::has_m_result() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void GM_MJOperatorError::set_has_m_result() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void GM_MJOperatorError::clear_has_m_result() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void GM_MJOperatorError::clear_m_result() {
+  m_result_ = 0;
+  clear_has_m_result();
+}
+inline ::google::protobuf::int32 GM_MJOperatorError::m_result() const {
+  return m_result_;
+}
+inline void GM_MJOperatorError::set_m_result(::google::protobuf::int32 value) {
+  set_has_m_result();
+  m_result_ = value;
 }
 
 
