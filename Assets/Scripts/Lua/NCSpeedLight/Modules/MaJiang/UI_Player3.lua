@@ -10,6 +10,7 @@ function UI_Player3.Awake(go)
 	this.gameObject = go;
 	this.transform = go.transform;
 	this.Player = Player:New();
+	Log.Info("UI_Player3: player instance is " .. tostring(this.Player));
 	this.Player:Initialize(this.transform);
 end
 

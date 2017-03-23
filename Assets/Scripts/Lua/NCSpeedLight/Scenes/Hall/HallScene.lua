@@ -129,7 +129,6 @@ function HallScene.ReturnPlayerInFb(evt)
 			SceneManager.GotoScene(SceneType.HallScene);
 		else
 			HallScene.RequestCreateRoom();
-			
 		end
 	-- local isInMaJiangRoom = msg.m_FBTypeID >= RoomType.R_1 and msg.m_FBTypeID <= RoomType.R_2;
 	-- if msg.m_FBTypeID > 0 and isInMaJiangRoom == false then

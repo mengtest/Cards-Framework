@@ -60,12 +60,22 @@ function Player:SetupUI()
 	end
 	
 	self:SetupReady(self.MJData.m_isReady == 1);
+	self:SetupEnterAndLeave(true, false);
 end
 
 -- 设置Ready标识
 function Player:SetupReady(status)
+	Log.Info("Addr is : " .. tostring(self));
+	Log.Info("MaJiangScene.NotifyOneReady: " .. tostring(status) .. ",name is " .. self.transform.name);
 	NCSpeedLight.UIHelper.SetActiveState(self.transform, "Enter/Center/Label (Prepare)", status);
 	if self == Player.Hero then
 		UI_MaJiang.SetupReadyAndInvite(not status, status, true);
 	end
+end
+
+-- 设置进入/离开状态 Enter/Leave
+function Player:SetupEnterAndLeave(...)
+	local args = {...};
+	NCSpeedLight.UIHelper.SetActiveState(self.transform, "Enter", args[1]);
+	NCSpeedLight.UIHelper.SetActiveState(self.transform, "Leave", args[2]);
 end

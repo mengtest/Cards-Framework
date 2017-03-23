@@ -18,9 +18,10 @@ function MaJiangScene:New()
 end
 
 function MaJiangScene.Begin()
+	UIManager.OpenWindow(UIType.UI_Load);
 	AssetManager.LoadScene(SceneType.MaJiangScene);
 	UIManager.OpenWindow(UIType.UI_MaJiang);
-	UIManager.CloseAllWindowsExcept(UIType.UI_MaJiang);
+	MaJiangScene.Instance.Players = {};
 	MaJiangScene.RegisterNetEvent();
 	MaJiangScene.RequestAllPlayerInfo();
 end
@@ -30,6 +31,7 @@ end
 
 function MaJiangScene.End()
 	MaJiangScene.UnRegisterNetEvent();
+	MaJiangScene.Instance.Players = nil;
 end
 
 function MaJiangScene.RegisterNetEvent()
@@ -115,6 +117,14 @@ function MaJiangScene.GetPlayer(...)
 	end
 end
 
+function MaJiangScene.RemovePlayer(id)
+	for key, value in pairs(MaJiangScene.Instance.Players) do
+		if key == id then
+			table.remove(MaJiangScene.Instance.Players, key);
+		end
+	end
+end
+
 function MaJiangScene.RequestCloseRoom()
 	local msg =
 	{
@@ -153,11 +163,11 @@ function MaJiangScene.ReceiveCloseRoom(evt)
 	Log.Info("MaJiangScene.ReceiveCloseRoom");
 end
 
--- 返回玩家位置，庄家是谁
+-- 返回玩家位置，庄家是谁，有玩家进入就会调用一次
 function MaJiangScene.ReturnGamePlayerInfo(evt)
 	Log.Info("MaJiangScene.ReturnGamePlayerInfo");
 	local msg = NetManager.DecodeMsg(PBMessage.GM_BattleEntryInfo, evt);
-	if msg == nil then
+	if msg == false then
 		Log.Error("MaJiangScene.ReturnGamePlayerInfo: parse msg error struct name is " .. PBMessage.GM_BattleEntryInfo);
 	end
 	local roomMasterID = msg.m_RoomMasterID;
@@ -211,16 +221,35 @@ function MaJiangScene.ReturnGamePlayerInfo(evt)
 				MaJiangScene.AddPlayer(UI_Player3.Player);
 				UI_Player3.Player:SetupUI();
 			end
+			local str = "玩家 " .. playerEntry.m_RoleData.m_Name .. " 进入房间";
+			UIManager.OpenTipsDialog(str);
 		end
 	end
 	
 	
 	UI_MaJiang.SetupDeskStatus();
 	MaJiangSceneController.SetupDicePanelDirection(SharedVariable.DeskOffset * 90);
+	
+	UIManager.CloseAllWindowsExcept(UIType.UI_MaJiang);
+	
 end
 
 function MaJiangScene.ReturnHandCardInfo(evt)
 	Log.Info("MaJiangScene.ReturnHandCardInfo");
+	local msg = NetManager.DecodeMsg(PBMessage.GMHandCard, evt);
+	if msg == false then
+		Log.Error("MaJiangScene.ReturnHandCardInfo: parse msg error," .. PBMessage.GMHandCard);
+		return;
+	end
+	for i = 1, # msg.m_HandCard do
+		local handInfo = msg.m_HandCard[i];
+		local index = handInfo.m_Index;
+	end
+--   PlayerEventEx<PBMessage.GMHandCard> tempEvent = varEvent as PlayerEventEx<PBMessage.GMHandCard>;
+--         if (tempEvent != null)
+--         {
+--             mMyCardInfo = tempEvent.GetData();
+--         }
 end
 
 function MaJiangScene.ReturnPlayerOutCard(evt)
@@ -234,23 +263,22 @@ end
 function MaJiangScene.NotifyOneReady(evt)
 	Log.Info("MaJiangScene.NotifyOneReady");
 	local msg = NetManager.DecodeMsg(PBMessage.GM_Result, evt);
-	if msg == nil then
+	if msg == false then
 		Log.Error("MaJiangScene.NotifyOneReady: parse msg error," .. PBMessage.GM_Result);
 		return;
 	end
 	local player = MaJiangScene.GetPlayer(msg.m_Result);
 	if player ~= nil then
 		local status = msg.m_productid == 1;
+		-- Log.Info("MaJiangScene.NotifyOneReady: " .. tostring(status) .. ",name is " .. player.transform.name);
 		player:SetupReady(status);
-		
 	end
 end
 
 function MaJiangScene.ReturnAllReady(evt)
 	Log.Info("MaJiangScene.ReturnAllReady");
-	-- PBMessage.GM_NotifyBattleEndTime tempResult = GameClient.DeserializeProtoBuf < PBMessage.GM_NotifyBattleEndTime >(param.GetData());
-	-- PlayerManager.GetSingleton().pCurPlayer.NofityPlayerEvent(new PlayerEventEx < int >(PlayerEventType.PE_AllPlayerReady, tempResult.m_EndTime));
 	local msg = NetManager.DecodeMsg(PBMessage.GM_NotifyBattleEndTime, evt);
+	UIManager.OpenTipsDialog("对局开始");
 end
 
 function MaJiangScene.ReturnPlayerHu(evt)
@@ -259,6 +287,17 @@ end
 
 function MaJiangScene.NotifyPlayerLeave(evt)
 	Log.Info("MaJiangScene.NotifyPlayerLeave");
+	local msg = NetManager.DecodeMsg(PBMessage.GM_LeaveBattle, evt);
+	if msg == false then
+		Log.Error("MaJiangScene.NotifyPlayerLeave: parse msg error: " .. PBMessage.GM_LeaveBattle);
+		return;
+	end
+	local player = MaJiangScene.GetPlayer(msg.roleID);
+	if player ~= nil then
+		local str = "玩家 " .. player.MJData.m_RoleData.m_Name .. " 离开房间";
+		UIManager.OpenTipsDialog(str);
+		player:SetupEnterAndLeave(false, true);
+	end
 end
 
 function MaJiangScene.NotifyChat(evt)

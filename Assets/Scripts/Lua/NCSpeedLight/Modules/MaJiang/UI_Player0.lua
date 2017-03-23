@@ -10,7 +10,8 @@ function UI_Player0.Awake(go)
 	this.gameObject = go;
 	this.transform = go.transform;
 	this.Player = Player.Hero;
-	this.Player:Initialize(this.transform);
+	Log.Info("UI_Player0: player instance is " .. tostring(this.Player));
+	this.Player:Initialize(go.transform);
 end
 
 function UI_Player0.Start()
@@ -20,4 +21,5 @@ function UI_Player0.OnDestroy()
 	this.gameObject = nil;
 	this.transform = nil;
 	this.Player:OnUIDestroy();
+	this.Player = nil;
 end
