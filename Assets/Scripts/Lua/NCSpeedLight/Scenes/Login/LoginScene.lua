@@ -304,10 +304,10 @@ function LoginScene.RequestAccountRoles()
 end
 
 function LoginScene.OnAccountRolesReturn(evt)
-	local obj = NetManager.DecodeMsg(PBMessage.GMRoleListEx, evt);
-	if obj.m_roleid ~= 0 then
+	local msg = NetManager.DecodeMsg(PBMessage.GMRoleListEx, evt);
+	if msg.m_roleid ~= 0 then
 		local loginScene = LoginScene.Instance;
-		loginScene.Token.RoleID = obj.m_roleid;
+		loginScene.Token.RoleID = msg.m_roleid;
 		LoginScene.RequestRoleLogin();
 	else
 		LoginScene.RequestCreateRole();
@@ -347,14 +347,13 @@ end
 
 function LoginScene.RequestCreateRole()
 	local loginScene = LoginScene.Instance;
-	local msg = {
-		m_AccountID = loginScene.Token.AccountID,
-		m_info = nil,
-		m_NickName = 'hello world',
-		m_HeadPhotoUrl = 'qq.com',
-		m_sex = 1,
-		m_UnionID = '10086',
-	};
+	local msg = {};
+	msg.m_AccountID = loginScene.Token.AccountID;
+	msg.m_info = nil;
+	msg.m_NickName = loginScene.Token.AccountID;
+	msg.m_HeadPhotoUrl = "http://tva1.sinaimg.cn/crop.0.0.852.852.180/613e3b5fjw8eph1yzmcabj20no0no0uc.jpg";
+	msg.m_sex = 1;
+	msg.m_UnionID = "10086";
 	NetManager.SendEventToLogicServer(GameMessage.GM_ROLE_CREATE, PBMessage.GMRoleCreate, msg);
 end
 

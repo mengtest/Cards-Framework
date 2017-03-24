@@ -25,7 +25,7 @@ function UI_Main.InitSelfInfo()
 		Log.Error("UI_Main: Cannot init self info because of nil SharedVariable.SelfInfo instance.");
 	else
 		NCSpeedLight.UIHelper.SetLabelText(transform, "left/RoleInfo/Info/Label (Name)", SharedVariable.SelfInfo.FullInfo.nickName);
-		NCSpeedLight.UIHelper.SetLabelText(transform, "left/RoleInfo/Info/Label (ID)", SharedVariable.SelfInfo.FullInfo.id);
+		NCSpeedLight.UIHelper.SetLabelText(transform, "left/RoleInfo/Info/Label (ID)", "ID:" .. tostring(SharedVariable.SelfInfo.FullInfo.id));
 		NCSpeedLight.UIHelper.SetLabelText(transform, "left/RoleInfo/Info/Label (IP)", SharedVariable.SelfInfo.FullInfo.name);
 		NCSpeedLight.UIHelper.SetLabelText(transform, "left/RoleInfo/Card/Label (Card)", SharedVariable.SelfInfo.FullInfo.roomcard);
 	end

@@ -70,7 +70,6 @@ end
 
 -- 设置Ready标识
 function Player:SetupReady(status)
-	Log.Info("Addr is : " .. tostring(self));
 	Log.Info("MaJiangScene.NotifyOneReady: " .. tostring(status) .. ",name is " .. self.transform.name);
 	NCSpeedLight.UIHelper.SetActiveState(self.transform, "Enter/Center/Label (Prepare)", status);
 	if self == Player.Hero then
@@ -111,4 +110,11 @@ function Player:SetupCards()
 	else
 		
 	end
+end
+
+-- 播放UI框的缩放
+function Player:PlayUIScale(status)
+	Log.Info("Player:PlayUIScale: this is " .. self.transform.name);
+	local scaleAnimation = self.transform:Find("Enter/Center"):GetComponent(typeof(TweenScale));
+	scaleAnimation.enabled = status;
 end

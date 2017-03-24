@@ -59,15 +59,58 @@ MaJiangType =
 	MJ_FA = 32,
 	MJ_BAI = 33,
 	MJ_NUM = 34,
-};
-
-function MaJiangType.GetString(index)
-	for key, value in pairs(MaJiangType) do
-		if value == index then
-			return key;
+	
+	GetString = function(index)
+		for key, value in pairs(MaJiangType) do
+			if value == index then
+				return tostring(key);
+			end
 		end
 	end
-end
+};
+
+MaJiangOperatorType =
+{
+	--开始
+	MJOT_BEGIN = 0,
+	--抓牌
+	MJOT_GetCard = 1,
+	--补牌
+	MJOT_BuCard = 2,
+	--出牌
+	MJOT_SendCard = 3,
+	--摊
+	MJOT_Tan = 4,
+	--吃  
+	MJOT_CHI = 5,
+	--勺
+	MJOT_SAO = 6,
+	--碰
+	MJOT_PENG = 7,
+	--杠
+	MJOT_GANG = 8,
+	--暗杠
+	MJOT_AN_GANG = 9,
+	--补杠
+	MJOT_BuGang = 10,
+	--过
+	MJOT_GUO = 11,
+	--胡
+	MJOT_HU = 12,
+	--定胡
+	MJOT_DingHU = 13,
+	
+	GetString = function(index)
+		for key, value in pairs(MaJiangOperatorType) do
+			if value == index then
+				return tostring(key);
+			end
+		end
+	end
+	
+};
+
+
 
 PlayerEventType =
 {

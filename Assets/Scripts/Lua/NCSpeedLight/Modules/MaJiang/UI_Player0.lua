@@ -15,11 +15,6 @@ function UI_Player0.Awake(go)
 	this.Player:Initialize(go.transform);
 end
 
--- public VoidDelegate onDragStart;
--- public VectorDelegate onDrag;
--- public VoidDelegate onDragOver;
--- public VoidDelegate onDragOut;
--- public VoidDelegate onDragEnd;
 function UI_Player0.Start()
 	local cardGridPanel = this.transform:Find("Cards/CardGrid");
 	local childCount = cardGridPanel.childCount;
@@ -32,10 +27,8 @@ function UI_Player0.Start()
 	end
 end
 
-
-
 function UI_Player0.OnStartDragCard(go)
-	-- Log.Info("UI_Player0.OnStartDragCard: " .. go.name);
+	Log.Info("UI_Player0.OnStartDragCard: " .. go.name);
 	if this.DragingCardObj ~= nil then
 		UnityEngine.GameObject.Destroy(this.DragingCardObj);
 	end
@@ -49,18 +42,16 @@ function UI_Player0.OnStartDragCard(go)
 end
 
 function UI_Player0.OnDragCard(go, delta)
-	-- Log.Info("UI_Player0.OnDragCard: " .. go.name .. ",delta pos is " .. tostring(delta));
 	if this.DragingCardObj ~= nil then
 		delta = delta * 1.1;
 		local deltaPos = UnityEngine.Vector3(delta.x, delta.y, 0);
 		local newPos = this.DragingCardObj.transform:TransformPoint(deltaPos);
-		-- Log.Info("UI_Player0.OnDragCard: newPos" .. tostring(newPos));
 		this.DragingCardObj.transform.position = newPos;
 	end
 end
 
 function UI_Player0.OnStopDragCard(go)
-	-- Log.Info("UI_Player0.OnStopDragCard: " .. go.name);
+	Log.Info("UI_Player0.OnStopDragCard: " .. go.name);
 	if this.DragingCardObj ~= nil then
 		UnityEngine.GameObject.Destroy(this.DragingCardObj);
 	end

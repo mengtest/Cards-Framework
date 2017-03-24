@@ -14,6 +14,10 @@ function MaJiangScene:New()
 	self.Instance = o;
 	self.Instance.Name = SceneType.MaJiangScene;
 	self.Instance.Players = {};
+	-- 当前操作的玩家
+	self.Instance.CurrentOperator = nil;
+	-- 上一个操作的玩家
+	self.Instance.LastOperator = nil;
 	return o;
 end
 
@@ -172,6 +176,61 @@ function MaJiangScene.ReceiveCloseRoom(evt)
 	Log.Info("MaJiangScene.ReceiveCloseRoom");
 end
 
+
+-- 请求麻将胡
+function MaJiangScene.RequestMJOperate_Hu()
+	local cardNum = # Player.Hero.HandCardInfo.m_HandCard;
+	Log.Info("MaJiangScene.RequestMJOperate_Hu: current cards count is " .. cardNum);
+	local msg = {};
+	msg.m_OperatorType = MaJiangOperatorType.MJOT_HU;
+	msg.m_CardNum = cardNum;
+	NetManager.SendEventToLogicServer(GameMessage.GM_CLIENT_REQUEST_OPERATOR, PBMessage.GM_OperatorData, msg);
+end
+
+-- 请求麻将定胡
+function MaJiangScene.RequestMJOperate_DingHu()
+	Log.Info("MaJiangScene.RequestMJOperate_DingHu");
+	local msg = {};
+	msg.m_OperatorType = MaJiangOperatorType.MJOT_DingHU;
+	NetManager.SendEventToLogicServer(GameMessage.GM_CLIENT_REQUEST_OPERATOR, PBMessage.GM_OperatorData, msg);
+end
+
+-- 请求麻将过
+function MaJiangScene.RequestMJOperate_Pass()
+	local cardNum = # Player.Hero.HandCardInfo.m_HandCard;
+	Log.Info("MaJiangScene.RequestMJOperate_Pass: current cards count is " .. cardNum);
+	local msg = {};
+	msg.m_OperatorType = MaJiangOperatorType.MJOT_GUO;
+	msg.m_CardNum = cardNum;
+	NetManager.SendEventToLogicServer(GameMessage.GM_CLIENT_REQUEST_OPERATOR, PBMessage.GM_OperatorData, msg);
+end
+
+-- 请求麻将出牌
+function MaJiangScene.RequestMJOperate_OutCard(cardIndex, cardType)
+	local cardNum = # Player.Hero.HandCardInfo.m_HandCard;
+	Log.Info("MaJiangScene.RequestMJOperate_OutCard: current cards count is " .. cardNum);
+	local msg = {};
+	msg.m_OperatorType = MaJiangOperatorType.MJOT_SendCard;
+	msg.m_CardNum = cardNum;
+	msg.m_HandCard = {
+		{
+			m_Index = cardIndex,
+			m_Type = cardType,
+		},
+	};
+	NetManager.SendEventToLogicServer(GameMessage.GM_CLIENT_REQUEST_OPERATOR, PBMessage.GM_OperatorData, msg);
+end
+
+-- 请求麻将操作
+function MaJiangScene.RequestMJOperate(operateType)
+	local cardNum = # Player.Hero.HandCardInfo.m_HandCard;
+	Log.Info("MaJiangScene.RequestMJOperate: operate type is " .. MaJiangOperatorType.GetString(operateType) .. ",current cards count is " .. cardNum);
+	local msg = {};
+	msg.m_OperatorType = operateType;
+	msg.m_CardNum = # Player.Hero.HandCardInfo.m_HandCard;
+	NetManager.SendEventToLogicServer(GameMessage.GM_CLIENT_REQUEST_OPERATOR, PBMessage.GM_OperatorData, msg);
+end
+
 -- 返回玩家位置，庄家是谁，有玩家进入就会调用一次
 function MaJiangScene.ReturnGamePlayerInfo(evt)
 	Log.Info("MaJiangScene.ReturnGamePlayerInfo");
@@ -261,6 +320,27 @@ end
 
 function MaJiangScene.ReturnPlayerOutCard(evt)
 	Log.Info("MaJiangScene.ReturnPlayerOutCard");
+	local msg = NetManager.DecodeMsg(PBMessage.GM_MJOperator, evt);
+	if msg == false then
+		Log.Error("MaJiangScene.ReturnPlayerOutCard: parse msg error," .. PBMessage.GM_MJOperator);
+		return;
+	end
+	local player = MaJiangScene.GetPlayer(msg.m_roleid);
+	if player == nil then
+		Log.Error("MaJiangScene.ReturnPlayerOutCard: can not get player id is " .. msg.m_roleid);
+		return;
+	end
+	-- if player == MaJiangScene.Instance.CurrentOperator.Player then
+	-- 	Log.Error("MaJiangScene.ReturnPlayerOutCard: same operator id is " .. msg.m_roleid);
+	-- 	return;
+	-- end
+	Log.Info("MaJiangScene.ReturnPlayerOutCard: operator id is " .. msg.m_roleid .. ",operate type is " .. MaJiangOperatorType.GetString(msg.m_OperatorType));
+	MaJiangScene.Instance.LastOperator = MaJiangScene.Instance.CurrentOperator;
+	MaJiangScene.Instance.CurrentOperator = {Player = player, Data = msg};
+	if MaJiangScene.Instance.LastOperator ~= nil and MaJiangScene.Instance.LastOperator.Player ~= nil then
+		MaJiangScene.Instance.LastOperator:PlayUIScale(false);
+	end
+	MaJiangScene.Instance.CurrentOperator.Player:PlayUIScale(true);
 end
 
 function MaJiangScene.ReturnCanOperatorType(evt)
@@ -326,8 +406,8 @@ function MaJiangScene.NotifyDissolveRoom(evt)
 		end
 		return;
 	end
--- UIManager.OpenWindow(UIType.UI_DissolveRoom);
--- UI_DissolveRoom.DissolveID = msg.m_Result;
+	UIManager.OpenWindow(UIType.UI_DissolveRoom);
+	UI_DissolveRoom.DissolveID = msg.m_Result;
 end
 
 function MaJiangScene.ChooseDissolveRoom(evt)

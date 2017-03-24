@@ -23,6 +23,9 @@ SharedVariable =
 	FBEntryInfo = nil,
 	
 	DeskOffset = 0,
+	
+	IP = "192.168.1.177",
+	PORT = "30000",
 }
 
 SharedVariable.JsonUrl = "http://papamajiangcdn.damaigame.com/json/" .. SharedVariable.CompanyName .. "/" .. SharedVariable.Platform .. "/" .. SharedVariable.Channel .. "/v" .. SharedVariable.Version .. "/qiumo.db?v=" .. tostring(System.DateTime.Now.Ticks);
