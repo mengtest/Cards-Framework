@@ -76,3 +76,74 @@ end
 function UI_MaJiang.OnClickCastDice(go)
 	MaJiangScene.RequestCastDice();
 end
+
+function UI_MaJiang.ShowOperateView(operations)
+	local tempDic = {};
+	table.insert(tempDic, {"ChooseOperate/Peng1", false});
+	table.insert(tempDic, {"ChooseOperate/Eat1", false});
+	table.insert(tempDic, {"ChooseOperate/Eat2", false});
+	table.insert(tempDic, {"ChooseOperate/Eat3", false});
+	table.insert(tempDic, {"ChooseOperate/Gang1", false});
+	table.insert(tempDic, {"ChooseOperate/Gang2", false});
+	table.insert(tempDic, {"ChooseOperate/Gang3", false});
+	table.insert(tempDic, {"Hu", false});
+	table.insert(tempDic, {"DingHu", false});
+	
+	local EatNum = 0;
+	local GangNum = 0;
+	for i = 1, # operations do
+		local tempOperate = operations[i];
+		if tempOperate.m_OperatorType == MaJiangOperatorType.MJOT_CHI then
+			EatNum = EatNum + 1;
+			tempDic["ChooseOperate/Eat" .. tostring(EatNum)] = true;
+			ClickEat();
+		elseif tempOperate.m_OperatorType == MaJiangOperatorType.MJOT_PENG then
+			tempDic["ChooseOperate/Peng1"] = true;
+			ClickPeng();
+		elseif tempOperate.m_OperatorType == MaJiangOperatorType.MJOT_GANG or tempOperate.m_OperatorType == MaJiangOperatorType.MJOT_BuGang or tempOperate.m_OperatorType == MaJiangOperatorType.MJOT_AN_GANG then
+			GangNum = GangNum + 1;
+			tempDic["ChooseOperate/Gang" .. tostring(GangNum)] = true;
+			ClickGang();
+		elseif tempOperate.m_OperatorType == MaJiangOperatorType.MJOT_HU then
+			tempDic["Hu"] = true;
+		elseif tempOperate.m_OperatorType == MaJiangOperatorType.MJOT_DingHU then
+			tempDic["DingHu"] = true;
+		end
+	end
+	
+-- 	Transform tempTrans = transform.Find("bottom/right/Operate");
+-- 	Transform tempBg = transform.Find("bottom/right/Bg");
+-- 	Transform tempChoose=tempTrans.FindChild("ChooseOperate");
+-- 	if (tempTrans == null)
+-- 	{
+-- 		return;
+-- 	}
+
+-- 	Dictionary<string, bool>.Enumerator tempEnumerator = tempDic.GetEnumerator();
+-- 	for (int i = 0; i < tempDic.Count; i++)
+-- 	{
+-- 		tempEnumerator.MoveNext();
+-- 		KeyValuePair<string, bool> tempKvp = tempEnumerator.Current;
+-- 		Helper.SetActiveState(tempTrans, tempKvp.Key, tempKvp.Value);
+-- 	}
+-- 	tempBg.gameObject.SetActive(true);
+-- 	tempTrans.gameObject.SetActive(true);
+-- 	UIGrid tempGrid = tempTrans.GetComponent<UIGrid>();
+-- 	if (tempGrid != null)
+-- 	{
+-- 		tempGrid.Reposition();
+-- 	}
+-- 	UIGrid ChooseOpGrid = tempChoose.GetComponent<UIGrid>();
+-- 	if (ChooseOpGrid != null) 
+-- 	{
+-- 		ChooseOpGrid.Reposition();
+-- 	}
+-- 	if (tempDic.ContainsKey("ChooseOperate/Gang2") || tempDic.ContainsKey("ChooseOperate/Gang3"))
+-- 	{
+-- 		Transform tempGang2Trans = tempTrans.FindChild("ChooseOperate/Gang2");
+-- 		tempGang2Trans.localPosition = new Vector3(tempGang2Trans.localPosition.x - 56, 0, 0);
+-- 		Transform tempGang3Trans = tempTrans.FindChild("ChooseOperate/Gang3");
+-- 		tempGang3Trans.localPosition = new Vector3(tempGang3Trans.localPosition.x - 112, 0, 0);
+-- 	}
+-- }
+end

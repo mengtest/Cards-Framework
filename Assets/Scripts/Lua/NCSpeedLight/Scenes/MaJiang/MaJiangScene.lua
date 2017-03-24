@@ -36,6 +36,8 @@ end
 function MaJiangScene.End()
 	MaJiangScene.UnRegisterNetEvent();
 	MaJiangScene.Instance.Players = nil;
+	MaJiangScene.Instance.CurrentOperator = nil;
+	MaJiangScene.Instance.LastOperator = nil;
 end
 
 function MaJiangScene.RegisterNetEvent()
@@ -177,6 +179,16 @@ function MaJiangScene.ReceiveCloseRoom(evt)
 end
 
 
+-- 请求麻将过
+function MaJiangScene.RequestMJOperate_Guo()
+	local cardNum = # Player.Hero.HandCardInfo.m_HandCard;
+	Log.Info("MaJiangScene.RequestMJOperate_Guo: current cards count is " .. cardNum);
+	local msg = {};
+	msg.m_OperatorType = MaJiangOperatorType.MJOT_GUO;
+	msg.m_CardNum = cardNum;
+	NetManager.SendEventToLogicServer(GameMessage.GM_CLIENT_REQUEST_OPERATOR, PBMessage.GM_OperatorData, msg);
+end
+
 -- 请求麻将胡
 function MaJiangScene.RequestMJOperate_Hu()
 	local cardNum = # Player.Hero.HandCardInfo.m_HandCard;
@@ -206,17 +218,14 @@ function MaJiangScene.RequestMJOperate_Pass()
 end
 
 -- 请求麻将出牌
-function MaJiangScene.RequestMJOperate_OutCard(cardIndex, cardType)
+function MaJiangScene.RequestMJOperate_OutCard(card)
 	local cardNum = # Player.Hero.HandCardInfo.m_HandCard;
-	Log.Info("MaJiangScene.RequestMJOperate_OutCard: current cards count is " .. cardNum);
+	Log.Info("MaJiangScene.RequestMJOperate_OutCard: current cards count is " .. cardNum .. ",card index is " .. card.m_Index .. ",type is " .. MaJiangType.GetString(card.m_Type));
 	local msg = {};
 	msg.m_OperatorType = MaJiangOperatorType.MJOT_SendCard;
 	msg.m_CardNum = cardNum;
 	msg.m_HandCard = {
-		{
-			m_Index = cardIndex,
-			m_Type = cardType,
-		},
+		card,
 	};
 	NetManager.SendEventToLogicServer(GameMessage.GM_CLIENT_REQUEST_OPERATOR, PBMessage.GM_OperatorData, msg);
 end
@@ -319,32 +328,68 @@ function MaJiangScene.ReturnHandCardInfo(evt)
 end
 
 function MaJiangScene.ReturnPlayerOutCard(evt)
-	Log.Info("MaJiangScene.ReturnPlayerOutCard");
 	local msg = NetManager.DecodeMsg(PBMessage.GM_MJOperator, evt);
 	if msg == false then
 		Log.Error("MaJiangScene.ReturnPlayerOutCard: parse msg error," .. PBMessage.GM_MJOperator);
 		return;
 	end
+	
 	local player = MaJiangScene.GetPlayer(msg.m_roleid);
 	if player == nil then
 		Log.Error("MaJiangScene.ReturnPlayerOutCard: can not get player id is " .. msg.m_roleid);
 		return;
 	end
-	-- if player == MaJiangScene.Instance.CurrentOperator.Player then
-	-- 	Log.Error("MaJiangScene.ReturnPlayerOutCard: same operator id is " .. msg.m_roleid);
-	-- 	return;
-	-- end
-	Log.Info("MaJiangScene.ReturnPlayerOutCard: operator id is " .. msg.m_roleid .. ",operate type is " .. MaJiangOperatorType.GetString(msg.m_OperatorType));
-	MaJiangScene.Instance.LastOperator = MaJiangScene.Instance.CurrentOperator;
-	MaJiangScene.Instance.CurrentOperator = {Player = player, Data = msg};
-	if MaJiangScene.Instance.LastOperator ~= nil and MaJiangScene.Instance.LastOperator.Player ~= nil then
-		MaJiangScene.Instance.LastOperator:PlayUIScale(false);
+	
+	Log.Info("MaJiangScene.ReturnPlayerOutCard: operator id is " .. msg.m_roleid .. ",operate type is " .. MaJiangOperatorType.GetString(msg.m_OperatorType) .. ", m_LastCard.m_Index is " .. msg.m_LastCard.m_Index .. " and m_Type is " .. msg.m_LastCard.m_Type .. ", m_HandCard.count is " .. # msg.m_HandCard);
+	
+	if msg.m_OperatorType == MaJiangOperatorType.MJOT_BEGIN then
+		MaJiangScene.Instance.LastOperator = MaJiangScene.Instance.CurrentOperator;
+		MaJiangScene.Instance.CurrentOperator = {Player = player, Data = msg};
+		if MaJiangScene.Instance.LastOperator ~= nil and MaJiangScene.Instance.LastOperator.Player ~= nil then
+			MaJiangScene.Instance.LastOperator.Player:PlayUIScale(false);
+		end
+		MaJiangScene.Instance.CurrentOperator.Player:PlayUIScale(true);
+		player:MJOT_BEGIN(msg);
+	elseif msg.m_OperatorType == MaJiangOperatorType.MJOT_GetCard then
+		player:MJOT_GetCard(msg);
+	elseif msg.m_OperatorType == MaJiangOperatorType.MJOT_BuCard then
+		player:MJOT_BuCard(msg);
+	elseif msg.m_OperatorType == MaJiangOperatorType.MJOT_SendCard then
+		player:MJOT_SendCard(msg);
+	elseif msg.m_OperatorType == MaJiangOperatorType.MJOT_Tan then
+		player:MJOT_Tan(msg);
+	elseif msg.m_OperatorType == MaJiangOperatorType.MJOT_CHI then
+		player:MJOT_CHI(msg);
+	elseif msg.m_OperatorType == MaJiangOperatorType.MJOT_SAO then
+		player:MJOT_SAO(msg);
+	elseif msg.m_OperatorType == MaJiangOperatorType.MJOT_GANG then
+		player:MJOT_GANG(msg);
+	elseif msg.m_OperatorType == MaJiangOperatorType.MJOT_AN_GANG then
+		player:MJOT_AN_GANG(msg);
+	elseif msg.m_OperatorType == MaJiangOperatorType.MJOT_BuGang then
+		player:MJOT_BuGang(msg);
+	elseif msg.m_OperatorType == MaJiangOperatorType.MJOT_GUO then
+		player:MJOT_GUO(msg);
+	elseif msg.m_OperatorType == MaJiangOperatorType.MJOT_HU then
+		player:MJOT_HU(msg);
+	elseif msg.m_OperatorType == MaJiangOperatorType.MJOT_DingHU then
+		player:MJOT_DingHU(msg);
 	end
-	MaJiangScene.Instance.CurrentOperator.Player:PlayUIScale(true);
 end
 
 function MaJiangScene.ReturnCanOperatorType(evt)
 	Log.Info("MaJiangScene.ReturnCanOperatorType");
+	local msg = NetManager.DecodeMsg(PBMessage.GM_MJCanOperator, evt);
+	if msg == false then
+		Log.Error("MaJiangScene.ReturnCanOperatorType: parse msg error," .. PBMessage.GM_MJCanOperator);
+		return;
+	end
+	-- List<PBMessage.GM_OperatorData> tempList = tempData.m_Operator;  /
+	local operatorsData = msg.m_Operator;
+	local a = 1;
+	
+	UIManager.OpenTipsDialog("直接过");
+	MaJiangScene.RequestMJOperate_Guo();
 end
 
 function MaJiangScene.NotifyOneReady(evt)
@@ -453,4 +498,5 @@ end
 
 function MaJiangScene.ReturnOperateError(evt)
 	Log.Info("MaJiangScene.ReturnOperateError");
+	UIManager.OpenTipsDialog("操作失败");
 end

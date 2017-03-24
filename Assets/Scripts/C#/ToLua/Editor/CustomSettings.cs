@@ -208,7 +208,7 @@ public static class CustomSettings
          _GT(typeof(VPTimer.Stats)),
 
          _GT(typeof(TipsDialog)),
-
+         _GT(typeof(InvisiableOnTweenFinish)),
 
 #endregion
 

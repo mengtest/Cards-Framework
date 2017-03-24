@@ -263,6 +263,7 @@
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\VPTimer.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\View\FPSPrinter.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\View\GetBlurBackground.cs" />
+    <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\View\InvisiableOnTweenFinish.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\View\ModifyRenderQ.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\View\TipsDialog.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\View\UIGaussianBlurEffect.cs" />
@@ -371,6 +372,7 @@
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_EvtWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_GlobalEventManagerWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_HelperWrap.cs" />
+    <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_InvisiableOnTweenFinishWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_LuaBehaviourWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_LuaLoaderWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_LuaManagerWrap.cs" />

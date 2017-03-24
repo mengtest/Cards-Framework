@@ -28,7 +28,7 @@ function UI_Player0.Start()
 end
 
 function UI_Player0.OnStartDragCard(go)
-	Log.Info("UI_Player0.OnStartDragCard: " .. go.name);
+	-- Log.Info("UI_Player0.OnStartDragCard: " .. go.name);
 	if this.DragingCardObj ~= nil then
 		UnityEngine.GameObject.Destroy(this.DragingCardObj);
 	end
@@ -43,7 +43,8 @@ end
 
 function UI_Player0.OnDragCard(go, delta)
 	if this.DragingCardObj ~= nil then
-		delta = delta * 1.1;
+		-- delta = delta * 1.1;
+		delta = delta * UIManager.Instance.UIRoot.pixelSizeAdjustment;
 		local deltaPos = UnityEngine.Vector3(delta.x, delta.y, 0);
 		local newPos = this.DragingCardObj.transform:TransformPoint(deltaPos);
 		this.DragingCardObj.transform.position = newPos;
@@ -51,10 +52,40 @@ function UI_Player0.OnDragCard(go, delta)
 end
 
 function UI_Player0.OnStopDragCard(go)
-	Log.Info("UI_Player0.OnStopDragCard: " .. go.name);
-	if this.DragingCardObj ~= nil then
-		UnityEngine.GameObject.Destroy(this.DragingCardObj);
+	-- Log.Info("UI_Player0.OnStopDragCard: " .. go.name);
+	if MaJiangScene.Instance.CurrentOperator.Player == Player.Hero then
+		local cardIndex = tonumber(go.name);
+		local card = Player.Hero:GetHandCardByPosition(cardIndex);
+		if card == nil then
+			Log.Error("UI_Player0.OnStopDragCard: cannot out card caused by nil card instance");
+		else
+			this.PlayOutCard(this.DragingCardObj.transform, card.m_Type);
+			MaJiangScene.RequestMJOperate_OutCard(card);
+		end
+	else
+		UIManager.OpenTipsDialog("不是你的回合，无法出牌");
 	end
+	if this.DragingCardObj ~= nil then
+		this.DragingCardObj:SetActive(false);
+	end
+end
+
+-- 播放出牌效果
+function UI_Player0.PlayOutCard(from, cardType)
+	local outCardTran = this.transform:Find("OutCard/Card");
+	local tweener = outCardTran:GetComponent(typeof(TweenTransform));
+	local tweenerUtils = outCardTran:GetComponent(typeof(NCSpeedLight.InvisiableOnTweenFinish));
+	tweenerUtils.OnFinish = function()
+		if this.DragingCardObj ~= nil then
+			UnityEngine.GameObject.Destroy(this.DragingCardObj);
+		end
+	end
+	tweener.enabled = true;
+	tweener.duration = 0.5;
+	tweener.from = from;
+	tweener:ResetToBeginning();
+	NCSpeedLight.UIHelper.SetSpriteName(outCardTran, "Sprite", MaJiangType.GetString(cardType));
+	outCardTran.gameObject:SetActive(true);
 end
 
 function UI_Player0.OnDestroy()
