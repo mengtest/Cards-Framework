@@ -210,8 +210,6 @@ public static class CustomSettings
          _GT(typeof(TipsDialog)),
          _GT(typeof(InvisiableOnTweenFinish)),
 
-         _GT(typeof(ByteBuffer)),
-
 #endregion
 
         #region NGUI Component

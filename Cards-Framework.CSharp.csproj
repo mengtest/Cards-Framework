@@ -257,7 +257,6 @@
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Core\View\LuaView.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Game.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Main.cs" />
-    <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\ByteBuffer.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\Helper.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\ImageCache.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\SharedVariable.cs" />
@@ -370,7 +369,6 @@
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\LuaInterface_LuaFileUtilsWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_AndroidAdapterWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_AudioManagerWrap.cs" />
-    <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_ByteBufferWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_EventManagerWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_EvtWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_GlobalEventManagerWrap.cs" />
