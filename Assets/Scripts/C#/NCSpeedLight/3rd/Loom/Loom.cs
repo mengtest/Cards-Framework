@@ -136,23 +136,25 @@ public class Loom : MonoBehaviour
             _currentActions.AddRange(_actions);
             _actions.Clear();
         }
-        foreach (var a in _currentActions)
+        for (int i = 0; i < _currentActions.Count; i++)
         {
-            a();
+            if (_currentActions[i] != null)
+            {
+                _currentActions[i]();
+            }
         }
         lock (_delayed)
         {
             _currentDelayed.Clear();
             _currentDelayed.AddRange(_delayed.Where(d => d.time <= Time.time));
-            foreach (var item in _currentDelayed)
-                _delayed.Remove(item);
+            for (int i = 0; i < _currentDelayed.Count; i++)
+            {
+                _delayed.Remove(_currentDelayed[i]);
+            }
         }
-        foreach (var delayed in _currentDelayed)
+        for (int i = 0; i < _currentDelayed.Count; i++)
         {
-            delayed.action();
+            _currentDelayed[i].action();
         }
-
-
-
     }
 }

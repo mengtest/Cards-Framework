@@ -33,7 +33,7 @@ end
 
 function DownloadScene.CheckVersion()
 	local url = SharedVariable.JsonUrl;
-	Log.Info('Request json url at ' .. url);
+	Log.Info("DownloadScene.CheckVersion: Request json url at " .. url);
 	local www = UnityEngine.WWW(url);
 	
 	local option = ProgressDialogOption:New();
@@ -46,7 +46,7 @@ function DownloadScene.CheckVersion()
 	coroutine.wait(0.5);
 	local error = www.error;
 	if error ~= nil then
-		Log.Error("WWW Error: " .. error);
+		Log.Error("DownloadScene.CheckVersion: WWW Error: " .. error);
 		UIManager.CloseProgressDialog();
 		UIManager.OpenTipsDialog("检查更新失败");
 		return;
@@ -56,8 +56,8 @@ function DownloadScene.CheckVersion()
 	local json = NetManager.DecodeJson(www.bytes);
 	json.accountserverip = SharedVariable.IP;
 	json.accountserverport = SharedVariable.PORT;
-	Log.Info("Account server ip is " .. json.accountserverip);
-	Log.Info("Account server port is " .. json.accountserverport);
+	Log.Info("DownloadScene.CheckVersion: account server ip is " .. json.accountserverip);
+	Log.Info("DownloadScene.CheckVersion: account server port is " .. json.accountserverport);
 	local option = ProgressDialogOption:New();
 	option.AutoClose = true;
 	option.Timeout = 10;

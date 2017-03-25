@@ -70,6 +70,7 @@ public static class DelegateFactory
 		dict.Add(typeof(UIInput.OnValidate), UIInput_OnValidate);
 		dict.Add(typeof(UIPanel.OnGeometryUpdated), UIPanel_OnGeometryUpdated);
 		dict.Add(typeof(UIPanel.OnClippingMoved), UIPanel_OnClippingMoved);
+		dict.Add(typeof(System.AsyncCallback), System_AsyncCallback);
 	}
 
     [NoToLuaAttribute]
@@ -2699,6 +2700,53 @@ public static class DelegateFactory
 		{
 			UIPanel_OnClippingMoved_Event target = new UIPanel_OnClippingMoved_Event(func, self);
 			UIPanel.OnClippingMoved d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	class System_AsyncCallback_Event : LuaDelegate
+	{
+		public System_AsyncCallback_Event(LuaFunction func) : base(func) { }
+		public System_AsyncCallback_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(System.IAsyncResult param0)
+		{
+			func.BeginPCall();
+			func.PushObject(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(System.IAsyncResult param0)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.PushObject(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public static Delegate System_AsyncCallback(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			System.AsyncCallback fn = delegate(System.IAsyncResult param0) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			System_AsyncCallback_Event target = new System_AsyncCallback_Event(func);
+			System.AsyncCallback d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			System_AsyncCallback_Event target = new System_AsyncCallback_Event(func, self);
+			System.AsyncCallback d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}

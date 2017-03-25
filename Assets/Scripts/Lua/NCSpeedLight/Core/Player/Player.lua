@@ -165,6 +165,9 @@ function Player:PlayUIScale(status)
 	-- Log.Info("Player:PlayUIScale: this is " .. self.transform.name);
 	local scaleAnimation = self.transform:Find("Enter/Center"):GetComponent(typeof(TweenScale));
 	scaleAnimation.enabled = status;
+	if self == Player.Hero then
+		NCSpeedLight.UIHelper.SetActiveState(UI_MaJiang.transform, "center/OperatorPrompt", status);
+	end
 end
 
 -- 播放出牌效果

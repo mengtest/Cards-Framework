@@ -169,11 +169,10 @@ function HallScene.ReceiveFbInfo(evt)
 end
 
 function HallScene.ReceiveRespondLoginBattle(evt)
-	Log.Info("HallScene.ReceiveRespondLoginBattle");
 	local msg = NetManager.DecodeMsg(PBMessage.GM_LoginFBServerResult, evt);
-	if msg == nil then return end;
+	if msg == false then return end;
 	if msg.result == 0 then
-		Log.Info("进入的副本id: " .. SharedVariable.FBInfo.m_FBID);
+		Log.Info("HallScene.ReceiveRespondLoginBattle: FBID is " .. SharedVariable.FBInfo.m_FBID);
 		SceneManager.GotoScene(SceneType.MaJiangScene);
 		Player.Hero:NotifyEvent(PlayerEventType.PE_ReturnLoginFB, msg);
 	end

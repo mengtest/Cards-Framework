@@ -186,6 +186,7 @@ public static class LuaBinder
 		NCSpeedLight_VPTimerWrap.Register(L);
 		NCSpeedLight_TipsDialogWrap.Register(L);
 		NCSpeedLight_InvisiableOnTweenFinishWrap.Register(L);
+		NCSpeedLight_ByteBufferWrap.Register(L);
 		NCSpeedLight_EventManagerWrap.Register(L);
 		L.RegFunction("EventHandlerDelegate", NCSpeedLight_EventHandlerDelegate);
 		L.RegFunction("LoadAssetCallback", NCSpeedLight_LoadAssetCallback);
@@ -207,12 +208,31 @@ public static class LuaBinder
 		UIRoot_ScalingWrap.Register(L);
 		L.EndModule();
 		L.BeginModule("System");
+		System_BitConverterWrap.Register(L);
 		System_DateTimeWrap.Register(L);
+		System_MarshalByRefObjectWrap.Register(L);
 		L.RegFunction("Action", System_Action);
 		L.RegFunction("Predicate_int", System_Predicate_int);
 		L.RegFunction("Action_int", System_Action_int);
 		L.RegFunction("Comparison_int", System_Comparison_int);
 		L.RegFunction("Comparison_UnityEngine_Transform", System_Comparison_UnityEngine_Transform);
+		L.RegFunction("AsyncCallback", System_AsyncCallback);
+		L.BeginModule("IO");
+		System_IO_FileWrap.Register(L);
+		System_IO_FileInfoWrap.Register(L);
+		System_IO_FileModeWrap.Register(L);
+		System_IO_FileStreamWrap.Register(L);
+		System_IO_MemoryStreamWrap.Register(L);
+		System_IO_PathWrap.Register(L);
+		System_IO_StreamReaderWrap.Register(L);
+		System_IO_StreamWriterWrap.Register(L);
+		System_IO_TextReaderWrap.Register(L);
+		System_IO_TextWriterWrap.Register(L);
+		System_IO_DirectoryWrap.Register(L);
+		System_IO_DirectoryInfoWrap.Register(L);
+		System_IO_FileSystemInfoWrap.Register(L);
+		System_IO_StreamWrap.Register(L);
+		L.EndModule();
 		L.EndModule();
 		L.BeginModule("LuaInterface");
 		LuaInterface_LuaFileUtilsWrap.Register(L);
@@ -783,6 +803,33 @@ public static class LuaBinder
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
 				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Comparison<UnityEngine.Transform>), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int System_AsyncCallback(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.AsyncCallback), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.AsyncCallback), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;

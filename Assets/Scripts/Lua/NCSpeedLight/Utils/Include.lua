@@ -44,3 +44,5 @@ require "NCSpeedLight.Core.Player.Player"
 require "NCSpeedLight.Core.Player.PlayerManager"
 
 require "NCSpeedLight.Utils.Define"
+
+require "NCSpeedLight.Utils.APIDefine"

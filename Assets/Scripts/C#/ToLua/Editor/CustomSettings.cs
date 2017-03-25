@@ -210,6 +210,8 @@ public static class CustomSettings
          _GT(typeof(TipsDialog)),
          _GT(typeof(InvisiableOnTweenFinish)),
 
+         _GT(typeof(ByteBuffer)),
+
 #endregion
 
         #region NGUI Component
@@ -299,10 +301,28 @@ public static class CustomSettings
          _GT(typeof(UIViewport)),
 
 
-#endregion
+        #endregion
 
-         _GT(typeof(string)),
-         _GT(typeof(DateTime)),
+         
+        #region System
+        _GT(typeof(BitConverter)),
+        _GT(typeof(System.DateTime)),
+        #endregion
+     
+        #region System.IO
+        _GT(typeof(System.IO.File)),
+        _GT(typeof(System.IO.FileInfo)),
+        _GT(typeof(System.IO.FileMode)),
+        _GT(typeof(System.IO.FileStream)),
+        _GT(typeof(System.IO.MemoryStream)),
+        _GT(typeof(System.IO.Path)),
+        _GT(typeof(System.IO.StreamReader)),
+        _GT(typeof(System.IO.StreamWriter)),
+        _GT(typeof(System.IO.TextReader)),
+        _GT(typeof(System.IO.TextWriter)),
+        _GT(typeof(System.IO.Directory)),
+        _GT(typeof(System.IO.DirectoryInfo)),
+#endregion
 
     };
 

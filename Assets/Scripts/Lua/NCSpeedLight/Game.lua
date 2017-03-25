@@ -21,6 +21,7 @@ function Initialize()
 	
 	platform = UnityEngine.Application.platform;
 	
+	Log.Initialize();
 	-- NCSpeedLight.ResManager.Initialize();
 	AssetManager:Initialize();
 	
@@ -119,7 +120,8 @@ end
 -- end
 
 function Game.OnDestroy()
-	NetManager.DeleteAllConnections()
+	NetManager.DeleteAllConnections();
+	Log.ToFile();
 end
 
 
