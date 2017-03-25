@@ -57,7 +57,8 @@ function Log.Format(...)
 	end
 end
 
-function Log.ToFile()
+-- 将buffer中的log写入文件
+function Log.Close()
 	if CSFile.Exists(Log.FilePath) then
 		CSFile.Delete(Log.FilePath);
 	end

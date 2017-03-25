@@ -10,6 +10,7 @@ public static class LuaBinder
 		float t = Time.realtimeSinceStartup;
 		L.BeginModule(null);
 		LuaInterface_DebuggerWrap.Register(L);
+		NGUIToolsWrap.Register(L);
 		UIEventListenerWrap.Register(L);
 		LanguageSelectionWrap.Register(L);
 		TypewriterEffectWrap.Register(L);

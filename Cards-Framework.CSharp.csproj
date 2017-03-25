@@ -392,6 +392,7 @@
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_VPTimer_StatsWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_VersionManagerWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_iOSAdapterWrap.cs" />
+    <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NGUIToolsWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\SpringPositionWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\System_BitConverterWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\System_DateTimeWrap.cs" />

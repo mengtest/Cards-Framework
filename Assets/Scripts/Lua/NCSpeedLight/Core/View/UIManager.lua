@@ -119,6 +119,11 @@ function UIManager:New()
 	self.Instance = o;
 end
 
+-- 屏幕分辨率
+function UIManager.ScreenResolution()
+	return UIManager.Instance.UIRoot.pixelSizeAdjustment * NGUITools.screenSize;
+end
+
 -- 打开窗口
 function UIManager.OpenWindow(windowName)
 	local window = UIManager.Instance.Windows[windowName];

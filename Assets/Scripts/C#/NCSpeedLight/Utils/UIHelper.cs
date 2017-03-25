@@ -54,7 +54,7 @@ namespace NCSpeedLight
 
         public static UILabel SetLabelText(Transform transform, string path, object content)
         {
-            UILabel label = GetComponent<UILabel>(transform, path);
+            UILabel label = GetComponent(transform, path, typeof(UILabel)) as UILabel;
             if (label == null || content == null)
             {
                 return null;
@@ -172,8 +172,7 @@ namespace NCSpeedLight
             return null;
         }
 
-        public static T GetComponent<T>(Transform transform, string path)
-            where T : Component
+        public static UnityEngine.Object GetComponent(Transform transform, string path, System.Type type)
         {
             if (transform == null)
             {
@@ -184,17 +183,16 @@ namespace NCSpeedLight
             {
                 return null;
             }
-            return t.GetComponent<T>();
+            return t.GetComponent(type);
         }
 
-        public static T GetComponent<T>(Transform transform)
-            where T : Component
+        public static UnityEngine.Object GetComponent(Transform transform, System.Type type)
         {
             if (transform == null)
             {
                 return null;
             }
-            return transform.GetComponent<T>();
+            return transform.GetComponent(type);
         }
 
         public static string BytesToString(byte[] bytes)

@@ -121,7 +121,7 @@ end
 
 function Game.OnDestroy()
 	NetManager.DeleteAllConnections();
-	Log.ToFile();
+	Log.Close();
 end
 
 

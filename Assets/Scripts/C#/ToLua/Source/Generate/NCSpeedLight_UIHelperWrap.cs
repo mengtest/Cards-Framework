@@ -13,6 +13,7 @@ public class NCSpeedLight_UIHelperWrap
 		L.RegFunction("SetActiveState", SetActiveState);
 		L.RegFunction("SetSpriteName", SetSpriteName);
 		L.RegFunction("SetSpriteAlpha", SetSpriteAlpha);
+		L.RegFunction("GetComponent", GetComponent);
 		L.RegFunction("BytesToString", BytesToString);
 		L.RegFunction("New", _CreateNCSpeedLight_UIHelper);
 		L.RegFunction("__tostring", ToLua.op_ToString);
@@ -266,6 +267,41 @@ public class NCSpeedLight_UIHelperWrap
 			else
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to method: NCSpeedLight.UIHelper.SetSpriteAlpha");
+			}
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetComponent(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Transform), typeof(System.Type)))
+			{
+				UnityEngine.Transform arg0 = (UnityEngine.Transform)ToLua.ToObject(L, 1);
+				System.Type arg1 = (System.Type)ToLua.ToObject(L, 2);
+				UnityEngine.Object o = NCSpeedLight.UIHelper.GetComponent(arg0, arg1);
+				ToLua.Push(L, o);
+				return 1;
+			}
+			else if (count == 3 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Transform), typeof(string), typeof(System.Type)))
+			{
+				UnityEngine.Transform arg0 = (UnityEngine.Transform)ToLua.ToObject(L, 1);
+				string arg1 = ToLua.ToString(L, 2);
+				System.Type arg2 = (System.Type)ToLua.ToObject(L, 3);
+				UnityEngine.Object o = NCSpeedLight.UIHelper.GetComponent(arg0, arg1, arg2);
+				ToLua.Push(L, o);
+				return 1;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: NCSpeedLight.UIHelper.GetComponent");
 			}
 		}
 		catch(Exception e)

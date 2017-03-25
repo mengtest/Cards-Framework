@@ -213,8 +213,8 @@ public static class CustomSettings
 #endregion
 
         #region NGUI Component
-        _GT(typeof(UIEventListener)),
-
+        _GT(typeof(NGUITools)),
+         _GT(typeof(UIEventListener)),
          _GT(typeof(LanguageSelection)),
          _GT(typeof(TypewriterEffect)),
          _GT(typeof(UIButton)),

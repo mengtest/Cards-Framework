@@ -25,3 +25,15 @@ function Utility.SaveFile(path, buffer)
 	return NCSpeedLight.Helper.SaveFile(path, buffer);
 end
 
+function Utility.StartTimer(name, time, func)
+	local one = CreateCoroutine(function(this, name, func)
+		if not WaitForSeconds(this, delayTime, name) then return end
+		if func ~= nil then func() end
+	end)
+	StartCoroutine(one, name, func)
+end
+
+function Utility.StopTimer(name)
+	StopCoroutine(name);
+end
+

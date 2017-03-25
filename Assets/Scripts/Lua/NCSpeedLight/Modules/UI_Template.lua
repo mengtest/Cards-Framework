@@ -1,14 +1,19 @@
 UI_Template = {
+	transform = nil,
+	gameObject = nil,
 }
 
-local transform;
-local gameObject;
+local this = UI_Template;
 
 function UI_Template.Awake(go)
-	gameObject = go;
-	transform = go.transform;
+	this.gameObject = go;
+	this.transform = go.transform;
 end
 
 function UI_Template.Start()
-	NCSpeedLight.UIHelper.SetButtonEvent(transform, "Bg/Close", UI_Main.OnClickShare);
+end
+
+function UI_Template.OnDestroy()
+	this.transform = nil;
+	this.gameObject = nil;
 end

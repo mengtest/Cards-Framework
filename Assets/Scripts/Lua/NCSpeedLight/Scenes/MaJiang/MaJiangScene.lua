@@ -24,10 +24,6 @@ end
 function MaJiangScene.Begin()
 	UIManager.OpenWindow(UIType.UI_Load);
 	AssetManager.LoadScene(SceneType.MaJiangScene);
-	UIManager.OpenWindow(UIType.UI_MaJiang);
-	MaJiangScene.Instance.Players = {};
-	MaJiangScene.RegisterNetEvent();
-	MaJiangScene.RequestAllPlayerInfo();
 end
 
 function MaJiangScene.Update()
@@ -38,6 +34,14 @@ function MaJiangScene.End()
 	MaJiangScene.Instance.Players = nil;
 	MaJiangScene.Instance.CurrentOperator = nil;
 	MaJiangScene.Instance.LastOperator = nil;
+end
+
+function MaJiangScene.OnSceneWasLoaded()
+	Log.Info("MaJiangScene.OnSceneWasLoaded: now bein to open majiang ui and request game fb info or reconnect info.");
+	UIManager.OpenWindow(UIType.UI_MaJiang);
+	MaJiangScene.Instance.Players = {};
+	MaJiangScene.RegisterNetEvent();
+	MaJiangScene.RequestAllPlayerInfo();
 end
 
 function MaJiangScene.RegisterNetEvent()
@@ -128,6 +132,15 @@ function MaJiangScene.RemovePlayer(id)
 		if key == id then
 			table.remove(MaJiangScene.Instance.Players, key);
 		end
+	end
+end
+
+-- 当前是否是我的回合
+function MaJiangScene.IsMyTurn()
+	if MaJiangScene.Instance.CurrentOperator == nil or MaJiangScene.Instance.CurrentOperator.Player == nil or MaJiangScene.Instance.CurrentOperator.Player ~= Player.Hero then
+		return false;
+	else
+		return true;
 	end
 end
 
@@ -489,14 +502,19 @@ function MaJiangScene.ReturnCastDice(evt)
 	end
 	Log.Info("MaJiangScene.ReturnCastDice: dice number is : " .. msg.m_pos);
 	UI_MaJiang.SetupCastDice(false);
-	MaJiangSceneController.PlayDiceAnimation(Player.Hero.HandCardInfo.m_saizi[1], Player.Hero.HandCardInfo.m_saizi[2]);
-	MaJiangSceneController.PlayDeskAnimation();
-	for key, value in pairs(MaJiangScene.Instance.Players) do
-		value:SetupCards();
-	end
+	MaJiangSceneController.PlayDiceAnimation(Player.Hero.HandCardInfo.m_saizi[1], Player.Hero.HandCardInfo.m_saizi[2], nil);
+	MaJiangSceneController.PlayDeskAnimation(function()
+		MaJiangScene.PlayStartGameEffect();
+	end);
 end
 
 function MaJiangScene.ReturnOperateError(evt)
 	Log.Info("MaJiangScene.ReturnOperateError");
 	UIManager.OpenTipsDialog("操作失败");
+end
+
+function MaJiangScene.PlayStartGameEffect()
+	for key, value in pairs(MaJiangScene.Instance.Players) do
+		value:SetupCards();
+	end
 end

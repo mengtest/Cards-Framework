@@ -26,6 +26,11 @@ function Player.CreateHero(fullInfo)
 	return Player.Hero;
 end
 
+-- 判断是否是自己
+function Player:IsHero()
+	return self == Player.Hero;
+end
+
 function Player:RegisterEvent(id, func)
 	self.EvtProcessor:Register(id, func);
 end
@@ -40,6 +45,9 @@ end
 
 function Player:Initialize(transform)
 	self.transform = transform;
+	if self:IsHero() == false then
+		self.sceneTransform = MaJiangSceneController.transform:Find("majiangzhuo/backCard/" .. self.transform.name);
+	end
 end
 
 function Player:OnUIDestroy()
@@ -256,3 +264,9 @@ end
 --定胡
 function Player:MJOT_DingHU(data)
 end
+
+-- 播放出牌的效果动画
+function Player:PlayOutCardAnimation()
+	
+end
+
