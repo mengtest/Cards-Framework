@@ -187,6 +187,10 @@ namespace NCSpeedLight
         /// <param name="bundleName"></param>
         public void AddBundle(string bundleName)
         {
+            if (base.zipMap[bundleName] != null)
+            {
+                return;
+            }
             string fileName = bundleName.ToLower();
             string url = SharedVariable.SCRIPT_BUNDLE_PATH + fileName;
             if (File.Exists(url))
