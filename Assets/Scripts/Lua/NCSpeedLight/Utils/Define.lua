@@ -4,12 +4,19 @@ RoomType =
 	R_2 = 10003,
 }
 
+MJPlayerType =
+{
+	Hero = 0,
+	Player = 1,
+	Robot = 2,
+}
+
 SceneType =
 {
 	DownloadScene = "DownloadScene",
 	LoginScene = 'LoginScene',
 	HallScene = 'HallScene',
-	MaJiangScene = 'MaJiangScene',
+	MJScene = 'MJScene',
 }
 
 UIType = {

@@ -13,16 +13,24 @@ NetManager = {};
 
 ServerType = {Login = 0, Logic = 1};
 
+local this = NetManager;
+
 function NetManager.Initialize()
-	NCSpeedLight.NetManager.Initialize()
-	InitPBMessage();
+	Log.Info("NetManager.Initialize");
+	NCSpeedLight.NetManager.Initialize();
+	NetManager.InitPBMessage();
 end
 
 -- 初始化PB文件，注册lua解析
-function InitPBMessage()
+function NetManager.InitPBMessage()
 	local path = NCSpeedLight.SharedVariable.SCRIPT_BUNDLE_PATH .. "PBMessage.pb";
 	local buffer = Utility.OpenFile(path);
-	SharedVariable.ProtobufProcessor.register(buffer)
+	if buffer == nil then
+		Log.Error("NetManager.InitPBMessage: open pb file error.");
+	else
+		SharedVariable.ProtobufProcessor.register(buffer);
+		Log.Info("NetManager.InitPBMessage: success.");
+	end
 end
 
 function NetManager.CreateConnection(serverType, host, port, onConnected, onDisconnected)

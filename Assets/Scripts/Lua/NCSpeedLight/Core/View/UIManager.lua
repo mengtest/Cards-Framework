@@ -61,13 +61,19 @@ end
 
 UIManager =
 {
-	Instance = nil,
+	IsInitialized = false,
+	UIRoot = nil,
+	UIPanel = nil,
+	Camera = nil,
+	UICamera = nil,
+	WindowRoot = nil,
+	DialogRoot = nil,
+	Windows = {};
 };
 
-function UIManager:Initialize()
-	if self.Instance == nil then
-		
-		UIManager:New();
+function UIManager.Initialize()
+	if UIManager.IsInitialized == false then
+		UIManager.IsInitialized = true;
 		
 		local go = UnityEngine.GameObject("UIManager");
 		if NCSpeedLight.SharedVariable.GameHolder ~= nil then
@@ -76,57 +82,50 @@ function UIManager:Initialize()
 			UnityEngine.GameObject.DontDestroyOnLoad(go)
 		end
 		
-		self.Instance.UIRoot = go:AddComponent(typeof(UIRoot));
-		self.Instance.UIRoot.scalingStyle = UIRoot.Scaling.ConstrainedOnMobiles;
-		self.Instance.UIRoot.manualHeight = 720;
-		self.Instance.UIRoot.manualWidth = 1224;
-		self.Instance.UIRoot.maximumHeight = 720;
-		self.Instance.UIRoot.minimumHeight = 640;
+		UIManager.UIRoot = go:AddComponent(typeof(UIRoot));
+		UIManager.UIRoot.scalingStyle = UIRoot.Scaling.ConstrainedOnMobiles;
+		UIManager.UIRoot.manualHeight = 720;
+		UIManager.UIRoot.manualWidth = 1224;
+		UIManager.UIRoot.maximumHeight = 720;
+		UIManager.UIRoot.minimumHeight = 640;
 		
-		self.Instance.UIPanel = go:AddComponent(typeof(UIPanel));
+		UIManager.UIPanel = go:AddComponent(typeof(UIPanel));
 		
 		local cameraGO = UnityEngine.GameObject("UICamera");
 		cameraGO.transform:SetParent(go.transform);
 		cameraGO.transform.localPosition = UnityEngine.Vector3.back;
-		self.Instance.Camera = cameraGO:AddComponent(typeof(UnityEngine.Camera));
-		self.Instance.Camera.orthographic = true;
-		self.Instance.Camera.orthographicSize = 1;
-		self.Instance.Camera.nearClipPlane = - 10;
-		self.Instance.Camera.depth = 1;
-		self.Instance.Camera.clearFlags = UnityEngine.CameraClearFlags.Depth; --CameraClearFlags.Nothing;
-		-- self.Instance.Camera.cullingMask = NCSpeedLight.Helper.OnlyIncluding("UI");
-		self.Instance.UICamera = cameraGO:AddComponent(typeof(UICamera));
-		-- self.Instance.UICamera.eventReceiverMask = Helper.EverythingBut(mUILayer);
+		UIManager.Camera = cameraGO:AddComponent(typeof(UnityEngine.Camera));
+		UIManager.Camera.orthographic = true;
+		UIManager.Camera.orthographicSize = 1;
+		UIManager.Camera.nearClipPlane = - 10;
+		UIManager.Camera.depth = 1;
+		UIManager.Camera.clearFlags = UnityEngine.CameraClearFlags.Depth; --CameraClearFlags.Nothing;
+		-- UIManager.Camera.cullingMask = NCSpeedLight.Helper.OnlyIncluding("UI");
+		UIManager.UICamera = cameraGO:AddComponent(typeof(UICamera));
+		-- UIManager.UICamera.eventReceiverMask = Helper.EverythingBut(mUILayer);
 
 		-- Window root.
-		self.Instance.WindowRoot = UnityEngine.GameObject("Window");
-		self.Instance.WindowRoot.transform:SetParent(go.transform);
+		UIManager.WindowRoot = UnityEngine.GameObject("Window");
+		UIManager.WindowRoot.transform:SetParent(go.transform);
 		
 		-- Dialog root.
-		self.Instance.DialogRoot = UnityEngine.GameObject("Dialog");
-		self.Instance.DialogRoot.transform:SetParent(go.transform);
+		UIManager.DialogRoot = UnityEngine.GameObject("Dialog");
+		UIManager.DialogRoot.transform:SetParent(go.transform);
 		
-		self.Instance.Windows = {};
+		Log.Info("UIManager.Initialize: success.");
 	else
-		Log.Warning("UIManager has already been initialized.");
+		Log.Warning("UIManager.Initialize: UIManager has already been initialized.");
 	end
-end
-
-function UIManager:New()
-	o = {}
-	setmetatable(o, self)
-	self.__index = self
-	self.Instance = o;
 end
 
 -- 屏幕分辨率
 function UIManager.ScreenResolution()
-	return UIManager.Instance.UIRoot.pixelSizeAdjustment * NGUITools.screenSize;
+	return UIManager.UIRoot.pixelSizeAdjustment * NGUITools.screenSize;
 end
 
 -- 打开窗口
 function UIManager.OpenWindow(windowName)
-	local window = UIManager.Instance.Windows[windowName];
+	local window = UIManager.Windows[windowName];
 	if window ~= nil then
 		return window;
 	else
@@ -139,17 +138,17 @@ function UIManager.OpenWindow(windowName)
 		local go = AssetManager.LoadAsset(assetPath, typeof(UnityEngine.GameObject));
 		go = UIManager.SetupWindow(go);
 		if go ~= nil then
-			UIManager.Instance.Windows[windowName] = go;
+			UIManager.Windows[windowName] = go;
 		end
 	end
 	return go;
 end
 
 function UIManager.CloseWindow(windowName)
-	local window = UIManager.Instance.Windows[windowName];
+	local window = UIManager.Windows[windowName];
 	if window ~= nil then
 		UnityEngine.GameObject.Destroy(window);
-		UIManager.Instance.Windows[windowName] = nil;
+		UIManager.Windows[windowName] = nil;
 	end
 	if SharedVariable.ASSETBUNDLE_MODE then
 		AssetManager.UnloadAssetBundle("UI/" .. windowName);
@@ -157,15 +156,15 @@ function UIManager.CloseWindow(windowName)
 end
 
 function UIManager.CloseAllWindows()
-	for key, value in pairs(UIManager.Instance.Windows) do
+	for key, value in pairs(UIManager.Windows) do
 		UIManager.CloseWindow(key);
-		UIManager.Instance.Windows[key] = nil;
+		UIManager.Windows[key] = nil;
 	end
 end
 
 function UIManager.CloseAllWindowsExcept(...)
-	local arg = {...}
-	for key, value in pairs(UIManager.Instance.Windows) do
+	local arg = {...};
+	for key, value in pairs(UIManager.Windows) do
 		local delete = true;
 		for key2, value2 in ipairs(arg) do
 			if key == value2 then
@@ -175,7 +174,7 @@ function UIManager.CloseAllWindowsExcept(...)
 		
 		if delete then
 			UIManager.CloseWindow(key);
-			UIManager.Instance.Windows[key] = nil;
+			UIManager.Windows[key] = nil;
 		end
 	end
 end
@@ -185,7 +184,7 @@ function UIManager.OpenStandardDialog(option)
 		Log.Error('Can not open standardDialog,please input option.');
 		return;
 	end
-	if UIManager.Instance.StandardDialog == nil then
+	if UIManager.StandardDialog == nil then
 		local assetPath;
 		if SharedVariable.ASSETBUNDLE_MODE then
 			assetPath = "UI/Dialog/StandardDialog";
@@ -194,10 +193,10 @@ function UIManager.OpenStandardDialog(option)
 		end
 		local go = AssetManager.LoadAsset(assetPath, typeof(UnityEngine.GameObject));
 		go = UIManager.SetupDialog(go);
-		UIManager.Instance.StandardDialog = go;
+		UIManager.StandardDialog = go;
 	end
 	
-	local dialog = UIManager.Instance.StandardDialog;
+	local dialog = UIManager.StandardDialog;
 	if dialog ~= nil then
 		local titleSprite = dialog.transform:Find("BG/Title"):GetComponent(typeof(UISprite));
 		local contentLabel = dialog.transform:Find("Label_Content"):GetComponent(typeof(UILabel));
@@ -260,8 +259,8 @@ function UIManager.OpenStandardDialog(option)
 end
 
 function UIManager.CloseStandardDialog()
-	if UIManager.Instance.StandardDialog ~= nil then
-		UIManager.Instance.StandardDialog:SetActive(false);
+	if UIManager.StandardDialog ~= nil then
+		UIManager.StandardDialog:SetActive(false);
 	end
 end
 
@@ -270,7 +269,7 @@ function UIManager.OpenProgressDialog(option)
 		Log:Error('Can not open progressdialog,please input option.');
 		return;
 	end
-	if UIManager.Instance.ProgressDialog == nil then
+	if UIManager.ProgressDialog == nil then
 		local assetPath;
 		if SharedVariable.ASSETBUNDLE_MODE then
 			assetPath = "UI/Dialog/ProgressDialog";
@@ -279,10 +278,10 @@ function UIManager.OpenProgressDialog(option)
 		end
 		local go = AssetManager.LoadAsset(assetPath, typeof(UnityEngine.GameObject));
 		go = UIManager.SetupDialog(go);
-		UIManager.Instance.ProgressDialog = go;
+		UIManager.ProgressDialog = go;
 	end
 	
-	local dialog = UIManager.Instance.ProgressDialog;
+	local dialog = UIManager.ProgressDialog;
 	if dialog ~= nil then
 		local contentLabel = dialog.transform:Find("Content/Label"):GetComponent(typeof(UILabel));
 		if contentLabel ~= nil then
@@ -290,8 +289,8 @@ function UIManager.OpenProgressDialog(option)
 			contentLabel.fontSize = option.ContentFontSize;
 		end
 		
-		if UIManager.Instance.ProgressDialogTimer ~= nil then
-			UIManager.Instance.ProgressDialogTimer:Stop();
+		if UIManager.ProgressDialogTimer ~= nil then
+			UIManager.ProgressDialogTimer:Stop();
 		end
 		
 		if option.AutoClose == true then
@@ -310,8 +309,8 @@ function UIManager.OpenProgressDialog(option)
 		if option.Cancelable == true then
 			NCSpeedLight.UIHelper.SetButtonEvent(dialog.transform, "BlackBG",
 			function(go)
-				if UIManager.Instance.ProgressDialogTimer ~= nil then
-					UIManager.Instance.ProgressDialogTimer:Stop();
+				if UIManager.ProgressDialogTimer ~= nil then
+					UIManager.ProgressDialogTimer:Stop();
 				end
 				
 				if option.OnCancel ~= nil then
@@ -326,11 +325,11 @@ function UIManager.OpenProgressDialog(option)
 end
 
 function UIManager.CloseProgressDialog()
-	if UIManager.Instance.ProgressDialog ~= nil then
-		UIManager.Instance.ProgressDialog:SetActive(false);
+	if UIManager.ProgressDialog ~= nil then
+		UIManager.ProgressDialog:SetActive(false);
 	end
-	if UIManager.Instance.ProgressDialogTimer ~= nil then
-		UIManager.Instance.ProgressDialogTimer:Stop();
+	if UIManager.ProgressDialogTimer ~= nil then
+		UIManager.ProgressDialogTimer:Stop();
 	end
 end
 
@@ -377,7 +376,7 @@ function UIManager.SetupWindow(go)
 	end
 	
 	local window = root.gameObject;
-	root:SetParent(UIManager.Instance.WindowRoot.transform);
+	root:SetParent(UIManager.WindowRoot.transform);
 	root.localScale = UnityEngine.Vector3.one;
 	UnityEngine.GameObject.Destroy(go);
 	NCSpeedLight.Helper.SetLayer(window, "UI");
@@ -409,7 +408,7 @@ function UIManager.SetupDialog(go)
 	end
 	
 	local dialog = root.gameObject;
-	root:SetParent(UIManager.Instance.DialogRoot.transform);
+	root:SetParent(UIManager.DialogRoot.transform);
 	root.localScale = UnityEngine.Vector3.one;
 	UnityEngine.GameObject.Destroy(go);
 	NCSpeedLight.Helper.SetLayer(dialog, "UI");

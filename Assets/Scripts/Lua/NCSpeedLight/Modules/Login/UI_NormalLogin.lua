@@ -28,11 +28,10 @@ function UI_NormalLogin.Awake(go)
 end
 
 function UI_NormalLogin.Start()
-	lbAccount = transform:Find("Input (account)/Label"):GetComponent('UILabel');
-	ipPassword = transform:Find("Input (password)"):GetComponent('UIInput');
-	local loginScene = LoginScene.Instance;
-	if loginScene ~= nil and loginScene.LoginRecord ~= nil and # loginScene.LoginRecord.loginInfo >= 1 then
-		local firstInfo = loginScene.LoginRecord.loginInfo[1];
+	lbAccount = transform:Find("Input (account)/Label"):GetComponent("UILabel");
+	ipPassword = transform:Find("Input (password)"):GetComponent("UIInput");
+	if LoginScene.LoginRecord ~= nil and # LoginScene.LoginRecord.loginInfo >= 1 then
+		local firstInfo = LoginScene.LoginRecord.loginInfo[1];
 		if lbAccount ~= nil then
 			lbAccount.text = firstInfo.account;
 		end
@@ -40,9 +39,9 @@ function UI_NormalLogin.Start()
 			ipPassword.value = firstInfo.password;
 		end
 	end
-	NCSpeedLight.UIHelper.SetButtonEvent(transform, 'Btn/Button (login)', onClickLogin);
-	NCSpeedLight.UIHelper.SetButtonEvent(transform, 'Btn/Button (regist)', onClickRegister);
-	NCSpeedLight.UIHelper.SetButtonEvent(transform, 'Input (account)', onClickArrow);
+	NCSpeedLight.UIHelper.SetButtonEvent(transform, "Btn/Button (login)", onClickLogin);
+	NCSpeedLight.UIHelper.SetButtonEvent(transform, "Btn/Button (regist)", onClickRegister);
+	NCSpeedLight.UIHelper.SetButtonEvent(transform, "Input (account)", onClickArrow);
 end
 
 function UI_NormalLogin.OnEnable()
@@ -68,9 +67,8 @@ function onClickLogin(go)
 		UIManager.OpenTipsDialog("请输入密码");
 		return;
 	end
-	local loginScene = LoginScene.Instance;
-	loginScene.currentAccount = lbAccount.text;
-	loginScene.currentPassword = ipPassword.value;
+	LoginScene.currentAccount = lbAccount.text;
+	LoginScene.currentPassword = ipPassword.value;
 	-- LoginScene:AddLoginRecord(lbAccount.text, ipPassword.value);
 	LoginScene.RequestLogin(lbAccount.text, ipPassword.value);
 end
@@ -92,27 +90,26 @@ function onClickArrow(go)
 end
 
 function displayRecordPanel()
-	local loginScene = LoginScene.Instance;
-	local bg = transform:Find('Panel/Sprite'):GetComponent('UISprite');
-	local panel = transform:Find('Panel/Accounts');
-	local item = transform:Find('Panel/CloneAccount');
-	local otherAccountItem = transform:Find('Panel/CloneAccount2');
-	if loginScene ~= nil and loginScene.LoginRecord ~= nil and loginScene.LoginRecord.loginInfo ~= nil then
+	local bg = transform:Find("Panel/Sprite"):GetComponent("UISprite");
+	local panel = transform:Find("Panel/Accounts");
+	local item = transform:Find("Panel/CloneAccount");
+	local otherAccountItem = transform:Find("Panel/CloneAccount2");
+	if LoginScene.LoginRecord ~= nil and LoginScene.LoginRecord.loginInfo ~= nil then
 		if bg == nil or panel == nil or item == nil or otherAccountItem == nil then return end;
 		local index = 0;
-		for i = 1, # loginScene.LoginRecord.loginInfo do
-			local info = loginScene.LoginRecord.loginInfo[i];
+		for i = 1, # LoginScene.LoginRecord.loginInfo do
+			local info = LoginScene.LoginRecord.loginInfo[i];
 			local childItem = UnityEngine.GameObject.Instantiate(item);
 			childItem:SetParent(panel);
 			childItem.localPosition = UnityEngine.Vector3.zero;
 			childItem.localScale = UnityEngine.Vector3.one;
 			childItem.gameObject:SetActive(true);
 			childItem.name = info.account;
-			NCSpeedLight.UIHelper.SetLabelText(childItem, 'Label', info.account);
-			NCSpeedLight.UIHelper.SetButtonEvent(childItem, 'Label', onClickAccountItem);
-			NCSpeedLight.UIHelper.SetButtonEvent(childItem, 'Delete', onClickDeleteItem);
-			local delete = childItem:Find('Delete');
-			local label = childItem:Find('Label');
+			NCSpeedLight.UIHelper.SetLabelText(childItem, "Label", info.account);
+			NCSpeedLight.UIHelper.SetButtonEvent(childItem, "Label", onClickAccountItem);
+			NCSpeedLight.UIHelper.SetButtonEvent(childItem, "Delete", onClickDeleteItem);
+			local delete = childItem:Find("Delete");
+			local label = childItem:Find("Label");
 			recordLoginInfo[i] = {childItem.gameObject, label.gameObject, delete.gameObject, info};
 			index = i;
 		end
@@ -128,7 +125,7 @@ function displayRecordPanel()
 			otherAccountItemClone.localScale = UnityEngine.Vector3.one;
 			otherAccountItemClone.gameObject:SetActive(true);
 			NCSpeedLight.UIHelper.SetButtonEvent(otherAccountItemClone, onClickOtherAccount);
-			local grid = panel:GetComponent('UIGrid');
+			local grid = panel:GetComponent("UIGrid");
 			if grid ~= nil then
 				grid.enabled = true;
 			end
@@ -176,7 +173,7 @@ function onClickAccountItem(go)
 			ipPassword.value = info.password;
 		end
 	end
-	local alphaTweener = transform:Find('Panel/Sprite'):GetComponent('TweenAlpha');
+	local alphaTweener = transform:Find("Panel/Sprite"):GetComponent("TweenAlpha");
 	if alphaTweener ~= nil then
 		alphaTweener:Play(false);
 	end
@@ -186,7 +183,7 @@ end
 function onClickDeleteItem(go)
 	local info = TryGetLoginRecordInfo(go);
 	if info ~= nil then
-		LoginScene:RemoveLoginRecord(info.account, info.password);
+		LoginScene.RemoveLoginRecord(info.account, info.password);
 	end
 	clearRecordPanel();
 	isRecordPanelOpen = true;

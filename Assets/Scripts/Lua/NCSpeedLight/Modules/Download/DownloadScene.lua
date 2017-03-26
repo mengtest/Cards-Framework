@@ -1,19 +1,13 @@
-DownloadScene = {};
+DownloadScene =
+{
+	Name = SceneType.DownloadScene,
+	IsInitialized = false,
+};
 
-function DownloadScene:Initialize()
-	if self.Instance == nil then
-		DownloadScene:New();
+function DownloadScene.Initialize()
+	if DownloadScene.IsInitialized == false then
+		DownloadScene.IsInitialized = true;
 	end
-	return self.Instance;
-end
-
-function DownloadScene:New()
-	o = {}
-	setmetatable(o, self)
-	self.__index = self
-	self.Instance = o;
-	self.Instance.Name = SceneType.DownloadScene;
-	return o;
 end
 
 function DownloadScene.Begin()
@@ -54,16 +48,16 @@ function DownloadScene.CheckVersion()
 	UIManager.CloseProgressDialog();
 	
 	local json = NetManager.DecodeJson(www.bytes);
-	json.accountserverip = SharedVariable.IP;
-	json.accountserverport = SharedVariable.PORT;
+	-- json.accountserverip = SharedVariable.IP;
+	-- json.accountserverport = SharedVariable.PORT;
 	Log.Info("DownloadScene.CheckVersion: account server ip is " .. json.accountserverip);
 	Log.Info("DownloadScene.CheckVersion: account server port is " .. json.accountserverport);
 	local option = ProgressDialogOption:New();
 	option.AutoClose = true;
 	option.Timeout = 10;
-	option.Content = '连接服务器中...';
+	option.Content = "连接服务器中...";
 	option.OnAutoClose = function()
-		UIManager.OpenTipsDialog('请求超时，请检查设备的网络状况');
+		UIManager.OpenTipsDialog("请求超时，请检查设备的网络状况");
 	end;
 	UIManager.OpenProgressDialog(option);
 	NetManager.CreateConnection(ServerType.Login, json.accountserverip, json.accountserverport, DownloadScene.OnConnectLoginServer, DownloadScene.OnDisconnectLoginServer);

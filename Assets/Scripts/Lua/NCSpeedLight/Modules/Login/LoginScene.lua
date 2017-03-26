@@ -5,24 +5,17 @@ LoginScene =
 		AccountToken,
 		LatestArea,
 		RoleID,
-	}
+	},
+	Name = SceneType.LoginScene,
+	LoginRecord = nil,
+	IsInitialized = false,
 };
 
-function LoginScene:Initialize()
-	if self.Instance == nil then
-		LoginScene:New();
+function LoginScene.Initialize()
+	if LoginScene.IsInitialized == false then
+		LoginScene.IsInitialized = true;
 		LoginScene.OpenLoginRecord();
 	end
-	return self.Instance;
-end
-
-function LoginScene:New()
-	o = {}
-	setmetatable(o, self)
-	self.__index = self
-	self.Instance = o;
-	self.Instance.Name = SceneType.LoginScene;
-	return o;
 end
 
 function LoginScene.Begin()
@@ -34,7 +27,7 @@ function LoginScene.Begin()
 	NetManager.RegisterEvent(GameMessage.GM_ROLELIST_RETURN, LoginScene.OnAccountRolesReturn);
 	NetManager.RegisterEvent(GameMessage.GM_ROLE_LOGIN_RETURN, LoginScene.OnRoleLoginReturn);
 	NetManager.RegisterEvent(GameMessage.GM_ROLE_CREATE_RETURN, LoginScene.OnCreateRoleReturn);
-	LoginScene:RequestVerifyVersion()
+	LoginScene.RequestVerifyVersion()
 end
 
 function LoginScene.Update()
@@ -60,7 +53,7 @@ function LoginScene.OpenLoginRecord()
 		if record == false then
 			Log.Error("LoginScene.OpenLoginRecord: decode login record error");
 		else
-			LoginScene.Instance.LoginRecord = record;
+			LoginScene.LoginRecord = record;
 			for i = 1, # record.loginInfo do
 				Log.Info("LoginScene.OpenLoginRecord: recorded account: " .. record.loginInfo[i].account .. ",password: " .. record.loginInfo[i].password);
 			end
@@ -69,7 +62,7 @@ function LoginScene.OpenLoginRecord()
 end
 
 function LoginScene.GetLoginRecord()
-	return LoginScene.Instance.LoginRecord;
+	return LoginScene.LoginRecord;
 end
 
 function LoginScene.AddLoginRecord(accountStr, passwordStr, latestAreaStr, latestRoleIDStr)
@@ -85,23 +78,23 @@ function LoginScene.AddLoginRecord(accountStr, passwordStr, latestAreaStr, lates
 			}
 		}
 	}
-	if LoginScene.Instance.LoginRecord ~= nil then
-		for i = 1, # LoginScene.Instance.LoginRecord.loginInfo do
+	if LoginScene.LoginRecord ~= nil then
+		for i = 1, # LoginScene.LoginRecord.loginInfo do
 			if i > 2 then break end
 			info.loginInfo[i + 1] = {
-				account = LoginScene.Instance.LoginRecord.loginInfo[i].account,
-				password = LoginScene.Instance.LoginRecord.loginInfo[i].password,
+				account = LoginScene.LoginRecord.loginInfo[i].account,
+				password = LoginScene.LoginRecord.loginInfo[i].password,
 			};
 		end
 	end
-	LoginScene.Instance.LoginRecord = info;
+	LoginScene.LoginRecord = info;
 	LoginScene.SaveLoginRecordFile();
 end
 
 function LoginScene.ExistRecord(accountStr)
-	if LoginScene.Instance.LoginRecord ~= nil then
-		for i = 1, # LoginScene.Instance.LoginRecord.loginInfo do
-			local info = LoginScene.Instance.LoginRecord.loginInfo[i];
+	if LoginScene.LoginRecord ~= nil then
+		for i = 1, # LoginScene.LoginRecord.loginInfo do
+			local info = LoginScene.LoginRecord.loginInfo[i];
 			if info ~= nil and info.account == accountStr then
 				return true;
 			end
@@ -112,11 +105,11 @@ function LoginScene.ExistRecord(accountStr)
 end
 
 function LoginScene.RemoveLoginRecord(accountStr, passwordStr)
-	if LoginScene.Instance.LoginRecord ~= nil then
-		for i = # LoginScene.Instance.LoginRecord.loginInfo, 1, - 1 do
-			local item = LoginScene.Instance.LoginRecord.loginInfo[i];
+	if LoginScene.LoginRecord ~= nil then
+		for i = # LoginScene.LoginRecord.loginInfo, 1, - 1 do
+			local item = LoginScene.LoginRecord.loginInfo[i];
 			if item.account == accountStr and item.password == passwordStr then
-				table.remove(LoginScene.Instance.LoginRecord.loginInfo, i);
+				table.remove(LoginScene.LoginRecord.loginInfo, i);
 				break;
 			end
 		end
@@ -126,7 +119,7 @@ end
 
 function LoginScene.SaveLoginRecordFile()
 	local path = NCSpeedLight.SharedVariable.DATA_PATH .. "Config/LoginRecord.bytes";
-	local buffer = NetManager.EncodePB(PBMessage.CFG_LoginRecord, LoginScene.Instance.LoginRecord);
+	local buffer = NetManager.EncodePB(PBMessage.CFG_LoginRecord, LoginScene.LoginRecord);
 	Utility.SaveFile(path, buffer);
 end
 
@@ -164,7 +157,7 @@ function LoginScene.RequestLogin(account, password)
 			macAddress = "4D6MDJJ",
 			deviceUUID = "547SFHBSDFHESYHTRY",
 		}
-	}
+	};
 	NetManager.SendEventToLoginServer(GameMessage.GM_ACCOUNT_VERIFY, PBMessage.GM_AccountRequest, msg);
 	UIManager.OpenWindow(UIType.UI_Load);
 end
@@ -174,16 +167,15 @@ function LoginScene.OnLoginReturn(evt)
 	local obj = NetManager.DecodeMsg(PBMessage.GM_AccountReturn, evt)
 	if obj.m_Result == 0 then
 		Log.Info("LoginScene.OnLoginReturn: 账号验证成功");
-		local loginScene = LoginScene.Instance;
 		
 		-- 记录至内存中
-		loginScene.Token = {};
-		loginScene.Token.AccountID = obj.m_AccountID;
-		loginScene.Token.AccountToken = obj.m_RandStr;
-		loginScene.Token.LatestArea = obj.m_lastloginServerID;
+		LoginScene.Token = {};
+		LoginScene.Token.AccountID = obj.m_AccountID;
+		LoginScene.Token.AccountToken = obj.m_RandStr;
+		LoginScene.Token.LatestArea = obj.m_lastloginServerID;
 		
 		-- 保存至本地
-		LoginScene.AddLoginRecord(loginScene.currentAccount, loginScene.currentPassword, obj.m_lastloginServerID);
+		LoginScene.AddLoginRecord(LoginScene.currentAccount, LoginScene.currentPassword, obj.m_lastloginServerID);
 		
 		-- 请求选区
 		LoginScene.RequestChooseArea();
@@ -233,15 +225,13 @@ function LoginScene.OnRegisterReturn(evt)
 	if obj.m_Result == 0 then
 		UIManager.OpenTipsDialog("创建成功")
 		-- 保存账号信息至本地
-		local loginScene = LoginScene.Instance;
-		LoginScene.AddLoginRecord(loginScene.currentAccount, loginScene.currentPassword);
+		LoginScene.AddLoginRecord(LoginScene.currentAccount, LoginScene.currentPassword);
 		UIManager.CloseWindow("Login/ui_register")
 		UIManager.OpenWindow("Login/ui_normalLogin")
 	elseif obj.m_Result == 1 then
 		UIManager.OpenTipsDialog("存在账号")
 		-- 保存账号信息至本地
-		local loginScene = LoginScene.Instance;
-		LoginScene.AddLoginRecord(loginScene.currentAccount, loginScene.currentPassword);
+		LoginScene.AddLoginRecord(LoginScene.currentAccount, LoginScene.currentPassword);
 		UIManager.CloseWindow("Login/ui_register")
 		UIManager.OpenWindow("Login/ui_normalLogin")
 	elseif obj.m_Result == 2 then
@@ -255,11 +245,10 @@ function LoginScene.OnRegisterReturn(evt)
 end
 
 function LoginScene.RequestChooseArea()
-	local loginScene = LoginScene.Instance;
 	local msg = {
-		m_Account = loginScene.Token.AccountID,
-		m_AreaID = loginScene.Token.LatestArea,
-		m_RandStr = loginScene.Token.AccountToken,
+		m_Account = LoginScene.Token.AccountID,
+		m_AreaID = LoginScene.Token.LatestArea,
+		m_RandStr = LoginScene.Token.AccountToken,
 	};
 	NetManager.SendEventToLoginServer(GameMessage.GM_CHOOSE_AREA, PBMessage.GM_ChooseArea, msg);
 end
@@ -267,14 +256,6 @@ end
 function LoginScene.OnChoseAreaReturn(evt)
 	local obj = NetManager.DecodeMsg(PBMessage.GM_ChooseAreaReturn, evt);
 	if obj.m_Result == 0 then
-		-- local option = ProgressDialogOption:New();
-		-- option.AutoClose = true;
-		-- option.Timeout = 10;
-		-- option.Content = "连接服务器中...";
-		-- option.OnAutoClose = function()
-		-- 	UIManager.OpenTipsDialog("请求超时，请检查设备的网络状况");
-		-- end;
-		-- UIManager.OpenProgressDialog(option);
 		Log.Info("LoginScene.OnChoseAreaReturn：选区成功,开始连接逻辑服务器");
 		Log.Info("LoginScene.OnChoseAreaReturn: logic server ip is " .. obj.m_ServerIP);
 		Log.Info("LoginScene.OnChoseAreaReturn: logic server port is " .. obj.m_PortNumber);
@@ -287,23 +268,20 @@ function LoginScene.OnChoseAreaReturn(evt)
 end
 
 function LoginScene.OnConnectLogicServer(connection)
-	-- UIManager.CloseProgressDialog();
 	Log.Info("LoginScene.OnConnectLogicServer: 成功连接至逻辑服务器");
 	LoginScene.RequestAccountRoles();
 end
 
 function LoginScene.OnDisconnectLogicServer(connection)
-	-- UIManager.CloseProgressDialog();
 	UIManager.OpenTipsDialog("逻辑服务器异常");
 	UIManager.CloseWindow(UIType.UI_Load);
 	Log.Info("LoginScene.OnDisconnectLogicServer: 逻辑服务器异常");
 end
 
 function LoginScene.RequestAccountRoles()
-	local loginScene = LoginScene.Instance;
 	local msg = {
-		m_accountID = loginScene.Token.AccountID,
-		m_area = loginScene.Token.LatestArea,
+		m_accountID = LoginScene.Token.AccountID,
+		m_area = LoginScene.Token.LatestArea,
 	};
 	NetManager.SendEventToLogicServer(GameMessage.GM_ROLELIST_REQUEST, PBMessage.GMRoleListRequest, msg)
 end
@@ -311,8 +289,7 @@ end
 function LoginScene.OnAccountRolesReturn(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GMRoleListEx, evt);
 	if msg.m_roleid ~= 0 then
-		local loginScene = LoginScene.Instance;
-		loginScene.Token.RoleID = msg.m_roleid;
+		LoginScene.Token.RoleID = msg.m_roleid;
 		LoginScene.RequestRoleLogin();
 	else
 		LoginScene.RequestCreateRole();
@@ -320,11 +297,10 @@ function LoginScene.OnAccountRolesReturn(evt)
 end
 
 function LoginScene.RequestRoleLogin()
-	local loginScene = LoginScene.Instance;
 	local msg = {
-		m_AccountID = loginScene.Token.AccountID,
-		m_RoleID = loginScene.Token.RoleID,
-		m_randstr = loginScene.Token.AccountToken,
+		m_AccountID = LoginScene.Token.AccountID,
+		m_RoleID = LoginScene.Token.RoleID,
+		m_randstr = LoginScene.Token.AccountToken,
 		m_info = nil,
 	};
 	NetManager.SendEventToLogicServer(GameMessage.GM_ROLE_LOGIN, PBMessage.GMRoleLogin, msg);
@@ -338,7 +314,7 @@ function LoginScene.OnRoleLoginReturn(evt)
 			SharedVariable.SelfInfo.FullInfo = msg;
 			SharedVariable.SelfInfo.ID = msg.id;
 			SharedVariable.SelfInfo.AccountID = msg.accountid;
-			Player.CreateHero(msg);
+			Player.SetFullInfo(msg);
 			
 			-- SceneManager.GotoScene(SceneType.HallScene);
 			HallScene.RequestPlayerInFb();
@@ -353,11 +329,10 @@ function LoginScene.OnRoleLoginReturn(evt)
 end
 
 function LoginScene.RequestCreateRole()
-	local loginScene = LoginScene.Instance;
 	local msg = {};
-	msg.m_AccountID = loginScene.Token.AccountID;
+	msg.m_AccountID = LoginScene.Token.AccountID;
 	msg.m_info = nil;
-	msg.m_NickName = loginScene.Token.AccountID;
+	msg.m_NickName = LoginScene.Token.AccountID;
 	msg.m_HeadPhotoUrl = "http://tva1.sinaimg.cn/crop.0.0.852.852.180/613e3b5fjw8eph1yzmcabj20no0no0uc.jpg";
 	msg.m_sex = 1;
 	msg.m_UnionID = "10086";

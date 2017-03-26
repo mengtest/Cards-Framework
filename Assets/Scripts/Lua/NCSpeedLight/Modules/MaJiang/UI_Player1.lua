@@ -9,8 +9,8 @@ local this = UI_Player1;
 function UI_Player1.Awake(go)
 	this.gameObject = go;
 	this.transform = go.transform;
-	this.Player = Player:New();
-	Log.Info("UI_Player1: player instance is " .. tostring(this.Player));
+	this.Player = MJPlayer.New();
+	Log.Info("UI_Player1.Awake: player instance is " .. tostring(this.Player));
 	this.Player:Initialize(this.transform);
 end
 

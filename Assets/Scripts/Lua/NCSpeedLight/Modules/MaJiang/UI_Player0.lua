@@ -10,8 +10,9 @@ local this = UI_Player0;
 function UI_Player0.Awake(go)
 	this.gameObject = go;
 	this.transform = go.transform;
-	this.Player = Player.Hero;
-	Log.Info("UI_Player0: player instance is " .. tostring(this.Player));
+	this.Player = MJPlayer.New();
+	MJPlayer.Hero = this.Player;
+	Log.Info("UI_Player0.Awake: player instance is " .. tostring(this.Player));
 	this.Player:Initialize(go.transform);
 end
 
@@ -53,14 +54,14 @@ end
 
 function UI_Player0.OnStopDragCard(go)
 	-- Log.Info("UI_Player0.OnStopDragCard: " .. go.name);
-	if MaJiangScene.Instance.CurrentOperator.Player == Player.Hero then
+	if MJScene.Instance.CurrentOperator.Player == Player.Hero then
 		local cardIndex = tonumber(go.name);
 		local card = Player.Hero:GetHandCardByPosition(cardIndex);
 		if card == nil then
 			Log.Error("UI_Player0.OnStopDragCard: cannot out card caused by nil card instance");
 		else
 			this.PlayOutCard(this.DragingCardObj.transform, card.m_Type);
-			MaJiangScene.RequestMJOperate_OutCard(card);
+			MJScene.RequestMJOperate_OutCard(card);
 		end
 	else
 		UIManager.OpenTipsDialog("不是你的回合，无法出牌");
@@ -93,5 +94,6 @@ function UI_Player0.OnDestroy()
 	this.transform = nil;
 	this.Player:OnUIDestroy();
 	this.Player = nil;
+	MJPlayer.Hero = nil;
 	this.DragingCardObj = nil;
 end

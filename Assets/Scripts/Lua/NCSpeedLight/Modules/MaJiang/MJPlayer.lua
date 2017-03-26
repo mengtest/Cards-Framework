@@ -1,45 +1,20 @@
 MJPlayer =
 {
-	time = 0,
-	duration = 1,
-	loop = 1,
-	running = false,
-	scale = false,
-	func = nil,
-}
-
-local MJPlayer = MJPlayer
-local t = {}
-t.__index = Timer
-
-function MJPlayer.New()
-	local obj = {};
-	setmetatable(obj, t);
-	return obj;
-end
-
-MJPlayer =
-{
 	Hero = nil,
+	MJData = nil,
 };
 
-function MJPlayer:New()
-	
-	local timer = {}
-	scale = scale or false and true
-	setmetatable(timer, mt)
-	timer:Reset(func, duration, loop, scale)
-	return timer
-	
-	o = {}
-	setmetatable(o, self)
-	self.__index = self;
-	self.EvtProcessor = EvtProcessor:New();
+local meta = {};
+meta.__index = MJPlayer;
+
+function MJPlayer.New()
+	local o = {};
+	setmetatable(o, meta);
 	return o;
 end
 
 -- 判断是否是自己
-function MJPlayer:IsSelf()
+function MJPlayer:IsHero()
 	return self == MJPlayer.Hero;
 end
 
@@ -58,7 +33,7 @@ end
 function MJPlayer:Initialize(transform)
 	self.transform = transform;
 	if self:IsHero() == false then
-		self.sceneTransform = MaJiangSceneController.transform:Find("majiangzhuo/backCard/" .. self.transform.name);
+		self.sceneTransform = MJSceneController.transform:Find("majiangzhuo/backCard/" .. self.transform.name);
 	end
 end
 
@@ -133,7 +108,7 @@ end
 
 -- 设置Ready标识
 function MJPlayer:SetupReady(status)
-	Log.Info("MaJiangScene.NotifyOneReady: " .. tostring(status) .. ",name is " .. self.transform.name);
+	Log.Info("MJScene.NotifyOneReady: " .. tostring(status) .. ",name is " .. self.transform.name);
 	NCSpeedLight.UIHelper.SetActiveState(self.transform, "Enter/Center/Label (Prepare)", status);
 	if self == MJPlayer.Hero then
 		UI_MaJiang.SetupReadyAndInvite(not status, status, true);

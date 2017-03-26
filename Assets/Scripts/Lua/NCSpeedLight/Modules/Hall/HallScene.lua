@@ -1,27 +1,19 @@
-HallScene = {}
+HallScene =
+{
+	Name = SceneType.HallScene,
+	IsInitialized = false,
+}
 
-function HallScene:Initialize()
-	if self.Instance == nil then
-		HallScene:New();
+function HallScene.Initialize()
+	if HallScene.IsInitialized == false then
 		HallScene.RegisterNetEvent();
 	end
-	return self.Instance;
-end
-
-function HallScene:New()
-	o = {}
-	setmetatable(o, self)
-	self.__index = self
-	self.Instance = o;
-	self.Instance.Name = SceneType.HallScene;
-	return o;
 end
 
 function HallScene.Begin()
 	UIManager.CloseAllWindows();
 	AssetManager.LoadScene(SceneType.HallScene);
 	UIManager.OpenWindow('Hall/UI_Main');
-	
 end
 
 function HallScene.Update()
@@ -67,7 +59,7 @@ end
 
 function HallScene.RequestCreateRoom()
 	local msg = {
-		m_roleid = Player.Hero.FullInfo.id,
+		m_roleid = Player.FullInfo.id,
 		m_fbtypeid = RoomType.R_1,
 		m_fbplayway = "2,",
 		m_roomcount = 6,
@@ -79,7 +71,7 @@ end
 function HallScene.RequestLoginFb()
 	local msg = {
 		m_FBID = SharedVariable.FBInfo.m_FBID,
-		m_RoleID = Player.Hero.FullInfo.id,
+		m_RoleID = Player.FullInfo.id,
 		m_reallyPos = "(105,555)",
 	};
 	NetManager.SendEventToLogicServer(GameMessage.GM_LOGINFB_REQUEST, PBMessage.GM_LoginFBServer, msg);
@@ -88,7 +80,7 @@ end
 function HallScene.RequestJoinRoom(roomID)
 	local msg =
 	{
-		m_Beinvited = Player.Hero.FullInfo.id;
+		m_Beinvited = Player.FullInfo.id;
 		m_Roleid = 1,   -- 服务器不需要知道邀请者的角色id, 随便设置1个值;
 		m_Name = "",
 		m_FBID = roomID,
@@ -123,9 +115,9 @@ function HallScene.ReturnPlayerInFb(evt)
 	if msg.m_Result == 0 then
 		-- 房间已存在，直接进入
 		SharedVariable.FBInfo = msg;
-		SceneManager.GotoScene(SceneType.MaJiangScene);
+		SceneManager.GotoScene(SceneType.MJScene);
 	else
-		if SceneManager.Instance.CurrentScene ~= nil and SceneManager.Instance.CurrentScene.Name == SceneType.LoginScene then
+		if SceneManager.CurrentScene ~= nil and SceneManager.CurrentScene.Name == SceneType.LoginScene then
 			SceneManager.GotoScene(SceneType.HallScene);
 		else
 			HallScene.RequestCreateRoom();
@@ -137,7 +129,7 @@ function HallScene.ReturnPlayerInFb(evt)
 	-- local mFirstRequest = false;
 	-- if mFirstRequest then
 	-- else
-	-- 	Player.Hero:NotifyEvent(PlayerEventType.PE_MjRoomExist, msg);
+	-- 	Player:NotifyEvent(PlayerEventType.PE_MjRoomExist, msg);
 	-- end
 	end
 end
@@ -173,8 +165,8 @@ function HallScene.ReceiveRespondLoginBattle(evt)
 	if msg == false then return end;
 	if msg.result == 0 then
 		Log.Info("HallScene.ReceiveRespondLoginBattle: FBID is " .. SharedVariable.FBInfo.m_FBID);
-		SceneManager.GotoScene(SceneType.MaJiangScene);
-		Player.Hero:NotifyEvent(PlayerEventType.PE_ReturnLoginFB, msg);
+		SceneManager.GotoScene(SceneType.MJScene);
+		Player:NotifyEvent(PlayerEventType.PE_ReturnLoginFB, msg);
 	end
 end
 

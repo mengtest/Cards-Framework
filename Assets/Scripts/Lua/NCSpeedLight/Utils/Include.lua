@@ -11,39 +11,26 @@
 
 require "NCSpeedLight.3rd.pbc.protobuf"
 
+require "NCSpeedLight.Utils.Log"
+require "NCSpeedLight.Utils.Utility"
+require("NCSpeedLight.Utils.LuaDebug")("localhost", 7003)
+require "NCSpeedLight.Utils.Protocol.GameMessage"
+require "NCSpeedLight.Utils.Protocol.PBMessage"
+require "NCSpeedLight.Utils.SharedVariable"
+require "NCSpeedLight.Utils.Define"
+require "NCSpeedLight.Utils.APIDefine"
+
 require "NCSpeedLight.Core.Event.EvtQueue"
 require "NCSpeedLight.Core.Event.EvtProcessor"
-
-
-require "NCSpeedLight.Scenes.Download.DownloadScene"
-require "NCSpeedLight.Scenes.Login.LoginScene"
-require "NCSpeedLight.Scenes.Hall.HallScene"
-require "NCSpeedLight.Scenes.MaJiang.MaJiangScene"
-require "NCSpeedLight.Scenes.MaJiang.MaJiangSceneController"
-require "NCSpeedLight.Core.Scene.SceneManager"
-
-
--- require "NCSpeedLight.Scenes.SceneType"
-require "NCSpeedLight.Utils.Log"
-
 require "NCSpeedLight.Core.Network.NetManager"
 require "NCSpeedLight.Core.View.UIManager"
-
-require("NCSpeedLight.Utils.LuaDebug")("localhost", 7003);
-
-require "NCSpeedLight.Utils.Utility"
-
-require "NCSpeedLight.Protocol.GameMessage"
-require "NCSpeedLight.Protocol.PBMessage"
-
+require "NCSpeedLight.Core.Scene.SceneManager"
 require "NCSpeedLight.Core.Asset.AssetManager"
 
-require "NCSpeedLight.Utils.SharedVariable"
-
-require "NCSpeedLight.Core.Player.Player"
-
-require "NCSpeedLight.Core.Player.PlayerManager"
-
-require "NCSpeedLight.Utils.Define"
-
-require "NCSpeedLight.Utils.APIDefine"
+require "NCSpeedLight.Modules.Download.DownloadScene"
+require "NCSpeedLight.Modules.Login.LoginScene"
+require "NCSpeedLight.Modules.Login.Player"
+require "NCSpeedLight.Modules.Hall.HallScene"
+require "NCSpeedLight.Modules.MaJiang.MJScene"
+require "NCSpeedLight.Modules.MaJiang.MJPlayer"
+require "NCSpeedLight.Modules.MaJiang.MJSceneController"

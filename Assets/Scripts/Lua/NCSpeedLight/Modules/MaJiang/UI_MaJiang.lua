@@ -54,7 +54,7 @@ function UI_MaJiang.DissolveRoom(go)
 	local option = StandardDialogOption:New();
 	option.OnClickOK =
 	function()
-		MaJiangScene.RequestCloseRoom();
+		MJScene.RequestCloseRoom();
 	end;
 	option.DoubleButton = true;
 	option.Content = "解散房间不扣除房卡，是否确定解散？";
@@ -63,18 +63,18 @@ function UI_MaJiang.DissolveRoom(go)
 end
 
 function UI_MaJiang.OnClickYes(go)
-	MaJiangScene.RequestReady(true);
+	MJScene.RequestReady(true);
 end
 
 function UI_MaJiang.OnClickNo(go)
-	MaJiangScene.RequestReady(false);
+	MJScene.RequestReady(false);
 end
 
 function UI_MaJiang.OnClickInvite(go)
 end
 
 function UI_MaJiang.OnClickCastDice(go)
-	MaJiangScene.RequestCastDice();
+	MJScene.RequestCastDice();
 end
 
 function UI_MaJiang.ShowOperateView(operations)

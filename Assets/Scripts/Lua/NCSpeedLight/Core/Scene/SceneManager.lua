@@ -9,79 +9,76 @@
 --          //
 ----------------------------------------------------------------
 
-
 SceneManager =
 {
-	Instance = nil,
+	IsInitialized = false,
+	Scenes = {},
+	LastScene = nil,
+	CurrentScene = nil,
+	NextScene = nil,
 };
 
-function SceneManager:Initialize()
-	if self.Instance == nil then
-		SceneManager:New();
-		SceneManager.RegisterScene(DownloadScene:Initialize());
-		SceneManager.RegisterScene(LoginScene:Initialize());
-		SceneManager.RegisterScene(HallScene:Initialize());
-		SceneManager.RegisterScene(MaJiangScene:Initialize());
+function SceneManager.Initialize()
+	if SceneManager.IsInitialized == false then
+		SceneManager.IsInitialized = true;
+		SceneManager.RegisterScene(DownloadScene);
+		SceneManager.RegisterScene(LoginScene);
+		SceneManager.RegisterScene(HallScene);
+		SceneManager.RegisterScene(MJScene);
+		Log.Info("SceneManager.Initialize：success.");
 	else
-		Log.Warning('SceneManager has already been initialized.')
+		Log.Warning("SceneManager.Initialize：SceneManager has already been initialized.")
 	end
-end
-
-function SceneManager:New()
-	local o = {};
-	setmetatable(o, self);
-	self.__index = self;
-	self.Instance = o;
-	self.Instance.Scenes = {};
-	self.Instance.LastScene = nil;
-	self.Instance.CurrentScene = nil;
-	self.Instance.NextScene = nil;
-	return o;
 end
 
 function SceneManager.Update()
-	if SceneManager.Instance == nil then
-		return
+	if SceneManager.CurrentScene ~= nil then
+		SceneManager.CurrentScene.Update();
 	end
 	
-	if SceneManager.Instance.CurrentScene ~= nil then
-		SceneManager.Instance.CurrentScene.Update();
-	end
-	
-	if SceneManager.Instance.NextScene ~= nil then
-		if SceneManager.Instance.CurrentScene ~= nil then
-			SceneManager.Instance.CurrentScene.End();
+	if SceneManager.NextScene ~= nil then
+		if SceneManager.CurrentScene ~= nil then
+			SceneManager.CurrentScene.End();
 		end
-		SceneManager.Instance.CurrentScene = SceneManager.Instance.NextScene;
-		SceneManager.Instance.NextScene = nil;
-		SceneManager.Instance.CurrentScene.Begin();
+		SceneManager.CurrentScene = SceneManager.NextScene;
+		SceneManager.NextScene = nil;
+		SceneManager.CurrentScene.Begin();
 	end
 end
 
 function SceneManager.RegisterScene(scene)
 	if scene == nil then
-		Log.Error('SceneManager: can not register scene caused by nil scene.')
+		Log.Error("SceneManager.RegisterScene: can not register scene caused by nil scene.")
 		return;
 	end
-	SceneManager.Instance.Scenes[scene.Name] = scene;
+	if scene.Name == nil then
+		Log.Error("SceneManager.RegisterScene: can not register scene caused by nil scene.name.")
+		return;
+	end
+	if SceneManager.Scenes[scene.Name] ~= nil then
+		Log.Error("SceneManager.RegisterScene: can not register scene caused by same scene exists named " .. tostring(scene.Name));
+		return;
+	end
+	SceneManager.Scenes[scene.Name] = scene;
+	scene.Initialize();
 end
 
 function SceneManager.GotoScene(name)
-	local scene = SceneManager.Instance.Scenes[name];
+	local scene = SceneManager.Scenes[name];
 	if scene == nil then
-		Log.Error('SceneManager: can not GotoScene caused by nil scene,name is ' .. name)
+		Log.Error("SceneManager.GotoScene: can not GotoScene caused by nil scene,name is " .. name);
 		return;
 	end
-	if scene == SceneManager.Instance.NextScene then
+	if scene == SceneManager.NextScene then
 		return
 	end
-	if SceneManager.Instance.CurrentScene == nil then
-		SceneManager.Instance.LastScene = SceneManager.Instance.CurrentScene;
-		SceneManager.Instance.NextScene = scene;
-	elseif SceneManager.Instance.CurrentScene.Name ~= name then
-		SceneManager.Instance.LastScene = SceneManager.Instance.CurrentScene;
-		SceneManager.Instance.NextScene = scene;
+	if SceneManager.CurrentScene == nil then
+		SceneManager.LastScene = SceneManager.CurrentScene;
+		SceneManager.NextScene = scene;
+	elseif SceneManager.CurrentScene.Name ~= name then
+		SceneManager.LastScene = SceneManager.CurrentScene;
+		SceneManager.NextScene = scene;
 	else
-		Log.Error("SceneManager: can not go to same scene,name is " .. name);
+		Log.Error("SceneManager.GotoScene: can not go to same scene,name is " .. name);
 	end
 end

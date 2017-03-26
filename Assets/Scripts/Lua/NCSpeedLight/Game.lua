@@ -22,18 +22,11 @@ function Initialize()
 	platform = UnityEngine.Application.platform;
 	
 	Log.Initialize();
-	-- NCSpeedLight.ResManager.Initialize();
-	AssetManager:Initialize();
+	AssetManager.Initialize();
+	UIManager.Initialize();
+	NetManager.Initialize();
+	SceneManager.Initialize();
 	
-	UIManager:Initialize();
-	
-	NetManager:Initialize();
-	
-	SceneManager:Initialize();
-	
-	PlayerManager:Initialize();
-	
--- TestEvent();
 end
 
 function Game.Awake()
