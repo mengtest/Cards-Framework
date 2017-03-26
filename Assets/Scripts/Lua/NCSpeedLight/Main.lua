@@ -9,11 +9,20 @@
 --
 ----------------------------------------------- 
 
-require 'NCSpeedLight.Core.Hotfix.LuaManager'
+require "NCSpeedLight.Core.Hotfix.LuaManager"
+require "NCSpeedLight.Utils.APIDefine"
+require "NCSpeedLight.Utils.Log"
+require "NCSpeedLight.Utils.Utility"
 
-Main = { }
+Main = {}
 
 function Main.StartGame(go)
-    LuaManager:Initialize();
-    NCSpeedLight.Helper.AddComponent('NCSpeedLight.Game', go);
+	Log.Initialize();
+	Log.Info("Main.StartGame");
+	LuaManager.Initialize();
+	if go ~= nil then
+		NCSpeedLight.Helper.AddComponent("NCSpeedLight.Game", go);
+	else
+		Log.Error("Main.StartGame: error caused by nil gameObject.");
+	end
 end

@@ -187,7 +187,7 @@ namespace NCSpeedLight
         /// <param name="bundleName"></param>
         public void AddBundle(string bundleName)
         {
-            if (base.zipMap[bundleName] != null)
+            if (base.zipMap.ContainsKey(bundleName) == true)
             {
                 return;
             }

@@ -14,9 +14,9 @@ MJPlayerType =
 SceneType =
 {
 	DownloadScene = "DownloadScene",
-	LoginScene = 'LoginScene',
-	HallScene = 'HallScene',
-	MJScene = 'MJScene',
+	LoginScene = "LoginScene",
+	HallScene = "HallScene",
+	MJScene = "MJScene",
 }
 
 UIType = {

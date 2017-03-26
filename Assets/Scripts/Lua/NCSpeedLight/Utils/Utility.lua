@@ -25,15 +25,16 @@ function Utility.SaveFile(path, buffer)
 	return NCSpeedLight.Helper.SaveFile(path, buffer);
 end
 
-function Utility.StartTimer(name, time, func)
-	local one = CreateCoroutine(function(this, name, func)
-		if not WaitForSeconds(this, delayTime, name) then return end
-		if func ~= nil then func() end
-	end)
-	StartCoroutine(one, name, func)
-end
-
-function Utility.StopTimer(name)
-	StopCoroutine(name);
+-- 字符串分割
+function Utility.SplitString(str, delimiter)
+	if str == nil or str == '' or delimiter == nil then
+		return nil
+	end
+	
+	local result = {}
+	for match in(str .. delimiter):gmatch("(.-)" .. delimiter) do
+		table.insert(result, match)
+	end
+	return result
 end
 

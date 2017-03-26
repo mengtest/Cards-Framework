@@ -183,7 +183,7 @@ function MJScene.RequestAllPlayerInfo()
 	local msg =
 	{
 		m_FBID = SharedVariable.FBInfo.m_FBID,
-		m_RoleID = MJPlayer.Hero.MJData.m_RoleData.m_Roleid,
+		m_RoleID = Player.FullInfo.id,
 	};
 	NetManager.SendEventToLogicServer(GameMessage.GM_ALL_CHARACTERINFO, PBMessage.GM_LoginFBServer, msg);
 end
@@ -437,7 +437,7 @@ function MJScene.NotifyOneReady(evt)
 		Log.Error("MJScene.NotifyOneReady: parse msg error," .. PBMessage.GM_Result);
 		return;
 	end
-	local player = MJScene.GetPlayer(msg.m_Result);
+	local player = MJScene.GetPlayerByID(msg.m_Result);
 	if player ~= nil then
 		local status = msg.m_productid == 1;
 		-- Log.Info("MJScene.NotifyOneReady: " .. tostring(status) .. ",name is " .. player.transform.name);

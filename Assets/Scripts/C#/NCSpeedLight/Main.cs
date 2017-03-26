@@ -130,6 +130,7 @@ namespace NCSpeedLight
             {
                 LuaManager.LuaLoader.AddBundle("ncspeedlight");
                 LuaManager.LuaLoader.AddBundle("ncspeedlight_core_hotfix");
+                LuaManager.LuaLoader.AddBundle("ncspeedlight_utils");
             }
             LuaManager.DoString("require 'NCSpeedLight.Main'");
             LuaFunction func = LuaManager.LuaState.GetFunction("Main.StartGame");
