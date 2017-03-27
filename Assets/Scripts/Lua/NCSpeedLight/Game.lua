@@ -9,7 +9,8 @@
 --
 -----------------------------------------------
 
-require 'NCSpeedLight.Utils.Include'
+require "NCSpeedLight.Utils.Include"
+require "NCSpeedLight.Core.Timeline.Timeline"
 
 Game = {}
 local platform;
@@ -37,6 +38,7 @@ function Game.Start()
 end
 
 function Game.Update()
+	Timeline.Update();
 	NetManager.Update();
 	SceneManager.Update();
 	if platform == UnityEngine.RuntimePlatform.Android then

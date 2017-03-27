@@ -1,3 +1,14 @@
+-----------------------------------------------
+-- Copyright © 2014-2017 NCSpeedLight
+--
+-- FileName: AssetManager.lua
+-- Describle:  资源管理器
+-- Created By:  Wells Hsu
+-- Date&Time:  2017/2/28 19:11:09
+-- Modify History:
+--
+-----------------------------------------------
+
 AssetManager =
 {
 	IsInitialited = false,

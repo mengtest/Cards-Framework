@@ -19,8 +19,8 @@ end
 function UI_Player0.Start()
 	local cardGridPanel = this.transform:Find("Cards/CardGrid");
 	local childCount = cardGridPanel.childCount;
-	for i = 1, cardGridPanel.childCount do
-		local cardObj = cardGridPanel:GetChild(i - 1)
+	for i = 0, cardGridPanel.childCount - 1 do
+		local cardObj = cardGridPanel:GetChild(i)
 		local listener = cardObj.gameObject:AddComponent(typeof(UIEventListener));
 		listener.onDragStart = UI_Player0.OnStartDragCard;
 		listener.onDrag = UI_Player0.OnDragCard;
@@ -55,7 +55,7 @@ function UI_Player0.OnStopDragCard(go)
 	-- Log.Info("UI_Player0.OnStopDragCard: " .. go.name);
 	if this.DragingCardObj ~= nil then
 		this.DragingCardObj:SetActive(false);
-		if this.DragingCardObj.transform.localPosition.y < 30 then
+		if this.DragingCardObj.transform.localPosition.y < - 105 then
 			return;
 		end
 	end
@@ -91,6 +91,11 @@ function UI_Player0.PlayOutCardAnimation(from, cardType)
 	outCardTran.gameObject:SetActive(true);
 end
 
+-- 播放插牌动画
+function UI_Player0.PlayInsertCardAnimaiton(newCard, outCard)
+	
+end
+
 -- 播放抓牌效果
 function UI_Player0.PlayGetCardAnimation()
 	local index = this.Player:GetHandCardCount();
@@ -101,8 +106,6 @@ function UI_Player0.PlayGetCardAnimation()
 	card.rotation = rotationFrom;
 	TweenRotation.Begin(card.gameObject, 0.5, rotationTo);
 	
-	-- Log.Info("UI_Player0.PlayGetCardAnimation: card position is " .. tostring(card.position));
-	-- Log.Info("UI_Player0.PlayGetCardAnimation: card localPosition is " .. tostring(card.localPosition));
 	local positionFrom = UnityEngine.Vector3(card.localPosition.x, 70, card.localPosition.z);
 	local positionTo = card.localPosition;
 	card.localPosition = positionFrom;

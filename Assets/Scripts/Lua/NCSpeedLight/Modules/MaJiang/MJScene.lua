@@ -540,6 +540,6 @@ end
 
 function MJScene.PlayStartGameEffect()
 	for key, value in pairs(MJScene.Players) do
-		value:SetupCards();
+		value:DisplayCards(true);
 	end
 end

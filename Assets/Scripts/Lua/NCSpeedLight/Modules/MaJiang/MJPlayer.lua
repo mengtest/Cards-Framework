@@ -3,6 +3,8 @@ MJPlayer =
 	Hero = nil,
 	MJData = nil,
 	HandCardInfo = nil,
+	ServerHandCards = nil,
+	HandCards = nil,
 };
 
 local meta = {};
@@ -139,9 +141,11 @@ function MJPlayer:StartGame()
 	self:SetupBanker();
 end
 
-function MJPlayer:SetupCards()
+function MJPlayer:DisplayCards(sort)
 	if self == MJPlayer.Hero then
-		self:SortHandCard();
+		if sort then
+			self:SortHandCard();
+		end
 		local cardGridPanel = self.transform:Find("Cards/CardGrid");
 		local gridCom = cardGridPanel:GetComponent(typeof(UIGrid));
 		local index = 1;
@@ -179,7 +183,7 @@ end
 
 --开始
 function MJPlayer:MJOT_BEGIN(data)
-	self:SetupCards();
+	self:DisplayCards(true);
 end
 
 --抓牌
@@ -191,7 +195,7 @@ function MJPlayer:MJOT_GetCard(data)
 			self:AddHandCard(card);
 		end
 	end
-	self:SetupCards();
+	self:DisplayCards(false);
 	if self:IsHero() then
 		UI_Player0.PlayGetCardAnimation();
 	end
@@ -206,7 +210,7 @@ function MJPlayer:MJOT_BuCard(data)
 			self:AddHandCard(card);
 		end
 	end
-	self:SetupCards();
+	self:DisplayCards();
 end
 
 --出牌
@@ -218,7 +222,7 @@ function MJPlayer:MJOT_SendCard(data)
 			self:RemoveHandCard(card.m_Index);
 		end
 	end
-	self:SetupCards();
+	self:DisplayCards(true);
 end
 
 --摊

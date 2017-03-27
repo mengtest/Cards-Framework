@@ -38,3 +38,35 @@ function Utility.SplitString(str, delimiter)
 	return result
 end
 
+
+function Utility.RemoveFromTableByKey(tb, obj)
+	if tb == nil or obj == nil then return end;
+	local index = 0;
+	local needRemove = false;
+	for key, value in pairs(tb) do
+		index = index + 1;
+		if key == obj then
+			needRemove = true;
+			break;
+		end
+	end
+	if needRemove then
+		table.remove(tb, index);
+	end
+end
+
+function Utility.RemoveFromTableByValue(tb, obj)
+	if tb == nil or obj == nil then return end;
+	local index = 0;
+	local needRemove = false;
+	for key, value in pairs(tb) do
+		index = index + 1;
+		if value == obj then
+			needRemove = true;
+			break;
+		end
+	end
+	if needRemove then
+		table.remove(tb, index);
+	end
+end
