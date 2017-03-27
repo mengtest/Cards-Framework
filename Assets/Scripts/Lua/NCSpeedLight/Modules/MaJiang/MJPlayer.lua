@@ -63,6 +63,11 @@ function MJPlayer:GetHandCardByPosition(pos)
 	end
 end
 
+-- 获取手牌数量
+function MJPlayer:GetHandCardCount()
+	return # self.HandCardInfo.m_HandCard;
+end
+
 -- 根据牌的ID获取牌的信息
 function MJPlayer:GetHandCardByIndex(index)
 	for key, value in pairs(self.HandCardInfo.m_HandCard) do
@@ -187,6 +192,9 @@ function MJPlayer:MJOT_GetCard(data)
 		end
 	end
 	self:SetupCards();
+	if self:IsHero() then
+		UI_Player0.PlayGetCardAnimation();
+	end
 end
 
 --补牌

@@ -53,25 +53,28 @@ end
 
 function UI_Player0.OnStopDragCard(go)
 	-- Log.Info("UI_Player0.OnStopDragCard: " .. go.name);
+	if this.DragingCardObj ~= nil then
+		this.DragingCardObj:SetActive(false);
+		if this.DragingCardObj.transform.localPosition.y < 30 then
+			return;
+		end
+	end
 	if MJScene.CurrentOperator.Player == MJPlayer.Hero then
 		local cardIndex = tonumber(go.name);
 		local card = MJPlayer.Hero:GetHandCardByPosition(cardIndex);
 		if card == nil then
 			Log.Error("UI_Player0.OnStopDragCard: cannot out card caused by nil card instance");
 		else
-			this.PlayOutCard(this.DragingCardObj.transform, card.m_Type);
+			this.PlayOutCardAnimation(this.DragingCardObj.transform, card.m_Type);
 			MJScene.RequestMJOperate_OutCard(card);
 		end
 	else
 		UIManager.OpenTipsDialog("不是你的回合，无法出牌");
 	end
-	if this.DragingCardObj ~= nil then
-		this.DragingCardObj:SetActive(false);
-	end
 end
 
 -- 播放出牌效果
-function UI_Player0.PlayOutCard(from, cardType)
+function UI_Player0.PlayOutCardAnimation(from, cardType)
 	local outCardTran = this.transform:Find("OutCard/Card");
 	local tweener = outCardTran:GetComponent(typeof(TweenTransform));
 	local tweenerUtils = outCardTran:GetComponent(typeof(NCSpeedLight.InvisiableOnTweenFinish));
@@ -86,6 +89,29 @@ function UI_Player0.PlayOutCard(from, cardType)
 	tweener:ResetToBeginning();
 	NCSpeedLight.UIHelper.SetSpriteName(outCardTran, "Sprite", MaJiangType.GetString(cardType));
 	outCardTran.gameObject:SetActive(true);
+end
+
+-- 播放抓牌效果
+function UI_Player0.PlayGetCardAnimation()
+	local index = this.Player:GetHandCardCount();
+	local card = this.GetCardObjByIndex(index);
+	
+	local rotationFrom = UnityEngine.Quaternion.Euler(UnityEngine.Vector3(0, 0, 15));
+	local rotationTo = UnityEngine.Quaternion.Euler(UnityEngine.Vector3(0, 0, 0));
+	card.rotation = rotationFrom;
+	TweenRotation.Begin(card.gameObject, 0.5, rotationTo);
+	
+	-- Log.Info("UI_Player0.PlayGetCardAnimation: card position is " .. tostring(card.position));
+	-- Log.Info("UI_Player0.PlayGetCardAnimation: card localPosition is " .. tostring(card.localPosition));
+	local positionFrom = UnityEngine.Vector3(card.localPosition.x, 70, card.localPosition.z);
+	local positionTo = card.localPosition;
+	card.localPosition = positionFrom;
+	SpringPosition.Begin(card.gameObject, positionTo, 8);
+end
+
+-- 根据索引获取牌的对象
+function UI_Player0.GetCardObjByIndex(index)
+	return this.transform:Find("Cards/CardGrid/" .. tostring(index));
 end
 
 function UI_Player0.OnDestroy()
