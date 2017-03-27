@@ -9,8 +9,6 @@
 --
 -----------------------------------------------
 
-require "NCSpeedLight.Core.Timeline.Action"
-
 TimelineStatus =
 {
 	Action = 0,
@@ -31,6 +29,48 @@ ActionStatus =
 	Playing = 2,
 }
 
+-- define action 
+Action =
+{
+	BeginTime = 0,
+	EndTime = 1,
+	
+	OnBegin = nil,
+	OnUpdate = nil,
+	OnEnd = nil,
+};
+
+Action.__index = Action;
+
+-- beginTime: 行为开始时间
+-- endTime: 行为结束时间
+function Action.New(beginTime, endTime)
+	local o = {};
+	o.BeginTime = beginTime;
+	o.EndTime = endTime;
+	setmetatable(o, Action);
+	return o;
+end
+
+function Action:Begin(timeline, deltatime)
+	if self.OnBegin ~= nil then
+		self.OnBegin(timeline, deltatime);
+	end
+end
+
+function Action:Update(timeline, deltatime)
+	if self.OnUpdate ~= nil then
+		self.OnUpdate(timeline, deltatime);
+	end
+end
+
+function Action:End(timeline, deltatime)
+	if self.OnEnd ~= nil then
+		self.OnEnd(timeline, deltatime);
+	end
+end
+-- end of action 
+
 Timeline = {
 	Name = nil,
 	Elapse,
@@ -40,13 +80,12 @@ Timeline = {
 	WaitingActions = {},
 };
 
-local meta = {};
-meta.__index = Timeline;
+Timeline.__index = Timeline;
 local lines = {};
 
 function Timeline.New(name)
 	local obj = {};
-	setmetatable(obj, meta);
+	setmetatable(obj, Timeline);
 	obj.Name = name;
 	obj.Elapse = 0;
 	obj.Status = TimelineStatus.Inaction;
@@ -211,6 +250,11 @@ function Timeline:Destroy()
 	if needRemove then
 		table.remove(lines, index);
 	end
+end
+
+-- is timeline running.
+function Timeline:IsActive()
+	return self.Status == TimelineStatus.Playing;
 end
 
 -- 用户自定义行为
