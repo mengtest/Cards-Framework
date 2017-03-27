@@ -12,8 +12,8 @@ function UI_DissolveRoom.Awake(go)
 end
 
 function UI_DissolveRoom.Start()
-	local dissolver = MJScene.GetPlayer(this.DissolveID);
-	if dissolver ~= Player.Hero then
+	local dissolver = MJScene.GetPlayerByID(this.DissolveID);
+	if dissolver ~= MJPlayer.Hero then
 		NCSpeedLight.UIHelper.SetActiveState(this.transform, "Button", true);
 		NCSpeedLight.UIHelper.SetButtonEvent(this.transform, "Button/Button1", this.OnClickAgree);
 		NCSpeedLight.UIHelper.SetButtonEvent(this.transform, "Button/Button2", this.OnClickCancel);
@@ -24,12 +24,12 @@ function UI_DissolveRoom.Start()
 end
 
 function UI_DissolveRoom.SetupContent()
-	local dissolver = MJScene.GetPlayer(this.DissolveID);
+	local dissolver = MJScene.GetPlayerByID(this.DissolveID);
 	local lb0str = "玩家【" .. dissolver.MJData.m_RoleData.m_Name .. "】申请解散房间，请等待其他玩家选择（超过5分钟未做选择）则默认同意";
 	NCSpeedLight.UIHelper.SetLabelText(this.transform, "Center/0", lb0str);
 	NCSpeedLight.UIHelper.SetActiveState(this.transform, "Center/0", true);
 	local index = 1;
-	for key, value in pairs(MJScene.Instance.Players) do
+	for key, value in pairs(MJScene.Players) do
 		if value ~= dissolver then
 			local lbstr = "【" .. value.MJData.m_RoleData.m_Name .. "】  等待选择";
 			NCSpeedLight.UIHelper.SetLabelText(this.transform, "Center/" .. index, lbstr);

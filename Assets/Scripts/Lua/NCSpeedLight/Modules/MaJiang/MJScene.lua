@@ -102,21 +102,21 @@ function MJScene.AddPlayer(ui, player)
 	end
 end
 
--- keys 
-function MJScene.GetPlayer(...)
-	local keys = {...}
-	for key1, value1 in pairs(MJScene.Players) do
-		for i = 1, # keys do
-			local key2 = keys[i];
-			if key1 == key2 then
-				return value1;
-			end
-			if value1 ~= nil and value1.m_RoleData ~= nil and value1.m_RoleData.m_Postion == key2 then
-				return value1;
-			end
-		end
-	end
-end
+-- -- keys 
+-- function MJScene.GetPlayer(...)
+-- 	local keys = {...}
+-- 	for key1, value1 in pairs(MJScene.Players) do
+-- 		for i = 1, # keys do
+-- 			local key2 = keys[i];
+-- 			if key1 == key2 then
+-- 				return value1;
+-- 			end
+-- 			if value1 ~= nil and value1.m_RoleData ~= nil and value1.m_RoleData.m_Postion == key2 then
+-- 				return value1;
+-- 			end
+-- 		end
+-- 	end
+-- end
 
 function MJScene.RemovePlayer(id)
 	for key, value in pairs(MJScene.Players) do
@@ -372,7 +372,7 @@ function MJScene.ReturnPlayerOutCard(evt)
 		return;
 	end
 	
-	local player = MJScene.GetPlayer(msg.m_roleid);
+	local player = MJScene.GetPlayerByID(msg.m_roleid);
 	if player == nil then
 		Log.Error("MJScene.ReturnPlayerOutCard: can not get player id is " .. msg.m_roleid);
 		return;
@@ -462,7 +462,7 @@ function MJScene.NotifyPlayerLeave(evt)
 		Log.Error("MJScene.NotifyPlayerLeave: parse msg error: " .. PBMessage.GM_LeaveBattle);
 		return;
 	end
-	local player = MJScene.GetPlayer(msg.roleID);
+	local player = MJScene.GetPlayerByID(msg.roleID);
 	if player ~= nil then
 		local str = "玩家 " .. player.MJData.m_RoleData.m_Name .. " 离开房间";
 		UIManager.OpenTipsDialog(str);

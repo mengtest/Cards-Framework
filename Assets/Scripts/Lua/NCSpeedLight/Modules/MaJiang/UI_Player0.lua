@@ -44,8 +44,7 @@ end
 
 function UI_Player0.OnDragCard(go, delta)
 	if this.DragingCardObj ~= nil then
-		-- delta = delta * 1.1;
-		delta = delta * UIManager.Instance.UIRoot.pixelSizeAdjustment;
+		delta = delta * UIManager.UIRoot.pixelSizeAdjustment;
 		local deltaPos = UnityEngine.Vector3(delta.x, delta.y, 0);
 		local newPos = this.DragingCardObj.transform:TransformPoint(deltaPos);
 		this.DragingCardObj.transform.position = newPos;
@@ -54,9 +53,9 @@ end
 
 function UI_Player0.OnStopDragCard(go)
 	-- Log.Info("UI_Player0.OnStopDragCard: " .. go.name);
-	if MJScene.Instance.CurrentOperator.Player == Player.Hero then
+	if MJScene.CurrentOperator.Player == MJPlayer.Hero then
 		local cardIndex = tonumber(go.name);
-		local card = Player.Hero:GetHandCardByPosition(cardIndex);
+		local card = MJPlayer.Hero:GetHandCardByPosition(cardIndex);
 		if card == nil then
 			Log.Error("UI_Player0.OnStopDragCard: cannot out card caused by nil card instance");
 		else

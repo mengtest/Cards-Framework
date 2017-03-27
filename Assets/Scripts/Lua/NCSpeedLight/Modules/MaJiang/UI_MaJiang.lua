@@ -38,9 +38,9 @@ end
 
 -- 设置掷骰子
 function UI_MaJiang.SetupCastDice(status)
-	Log.Info("UI_MaJiang.SetupCastDice: hero position is " .. Player.Hero.MJData.m_RoleData.m_Postion .. ",Banker position is " .. Player.Hero.HandCardInfo.m_bankerPos .. ",target status is " .. tostring(status));
+	Log.Info("UI_MaJiang.SetupCastDice: hero position is " .. MJPlayer.Hero.MJData.m_RoleData.m_Postion .. ",Banker position is " .. MJPlayer.Hero.HandCardInfo.m_bankerPos .. ",target status is " .. tostring(status));
 	if status then
-		if Player.Hero.MJData.m_RoleData.m_Postion == Player.Hero.HandCardInfo.m_bankerPos then
+		if MJPlayer.Hero.MJData.m_RoleData.m_Postion == MJPlayer.Hero.HandCardInfo.m_bankerPos then
 			NCSpeedLight.UIHelper.SetActiveState(this.transform, "center/CastDice/Button", true);
 		else
 			NCSpeedLight.UIHelper.SetActiveState(this.transform, "center/CastDice/Button", false);

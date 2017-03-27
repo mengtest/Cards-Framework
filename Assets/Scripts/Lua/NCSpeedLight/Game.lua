@@ -21,7 +21,6 @@ function Initialize()
 	
 	platform = UnityEngine.Application.platform;
 	
-	Log.Initialize();
 	AssetManager.Initialize();
 	UIManager.Initialize();
 	NetManager.Initialize();

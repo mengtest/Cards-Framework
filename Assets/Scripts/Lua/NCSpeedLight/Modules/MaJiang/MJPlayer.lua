@@ -2,6 +2,7 @@ MJPlayer =
 {
 	Hero = nil,
 	MJData = nil,
+	HandCardInfo = nil,
 };
 
 local meta = {};

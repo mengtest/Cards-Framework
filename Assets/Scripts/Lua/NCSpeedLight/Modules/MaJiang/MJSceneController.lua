@@ -109,3 +109,7 @@ function MJSceneController.SetupDicePanelDirection()
 	local rotation = UnityEngine.Quaternion.Euler(eulerAngles)
 	panel.rotation = rotation;
 end
+
+-- 播放骰子面板的闪光效果
+function MJSceneController.PlayDicePanelGrowEffect()
+end
