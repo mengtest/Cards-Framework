@@ -6,54 +6,43 @@ MJPlayer =
 	ServerHandCards = nil,
 	HandCards = nil,
 };
-
 local meta = {};
 meta.__index = MJPlayer;
-
 function MJPlayer.New()
 	local o = {};
 	setmetatable(o, meta);
 	return o;
 end
-
 -- 判断是否是自己
 function MJPlayer:IsHero()
 	return self == MJPlayer.Hero;
 end
-
 function MJPlayer:RegisterEvent(id, func)
 	self.EvtProcessor:Register(id, func);
 end
-
 function MJPlayer:UnregisterEvent(id, func)
 	self.EvtProcessor:Unregister(id, MJPlayer);
 end
-
 function MJPlayer:NotifyEvent(id, param)
 	self.EvtProcessor:Notify(id, param);
 end
-
 function MJPlayer:Initialize(transform)
 	self.transform = transform;
 	if self:IsHero() == false then
 		self.sceneTransform = MJSceneController.transform:Find("majiangzhuo/backCard/" .. self.transform.name);
 	end
 end
-
 function MJPlayer:OnUIDestroy()
 end
-
 -- data= PBMessage.GM_EntryInfo_Single
 function MJPlayer:SetMJData(data)
 	self.MJData = data;
 end
-
 -- data= PBMessage.GMHandCard
 function MJPlayer:SetHandCardInfo(data)
 	self.HandCardInfo = data;
 	self:SortHandCard();
 end
-
 -- 根据牌的位置索引获取牌的信息
 function MJPlayer:GetHandCardByPosition(pos)
 	local var = 1;
@@ -64,12 +53,10 @@ function MJPlayer:GetHandCardByPosition(pos)
 		var = var + 1;
 	end
 end
-
 -- 获取手牌数量
 function MJPlayer:GetHandCardCount()
 	return # self.HandCardInfo.m_HandCard;
 end
-
 -- 根据牌的ID获取牌的信息
 function MJPlayer:GetHandCardByIndex(index)
 	for key, value in pairs(self.HandCardInfo.m_HandCard) do
@@ -78,7 +65,6 @@ function MJPlayer:GetHandCardByIndex(index)
 		end
 	end
 end
-
 -- 移除一张牌
 function MJPlayer:RemoveHandCard(index)
 	local var = 1;
@@ -90,30 +76,43 @@ function MJPlayer:RemoveHandCard(index)
 		var = var + 1;
 	end
 end
-
 function MJPlayer:AddHandCard(card)
 	table.insert(self.HandCardInfo.m_HandCard, card);
 end
-
 function MJPlayer:SortHandCard()
 	table.sort(self.HandCardInfo.m_HandCard, function(o1, o2)
 		return o1.m_Type < o2.m_Type;
 	end);
 end
-
+-- 根据牌的对象获取所在的位置
+function MJPlayer:GetHandCardIndex(card)
+	for i = 1, # self.HandCardInfo.m_HandCard do
+		if self.HandCardInfo.m_HandCard[i] == card then
+			return i;
+		end
+	end
+	return - 1;
+end
+-- 根据牌的ID获取位置
+function MJPlayer:GetHandCardPositionByID(id)
+	for i = 1, # self.HandCardInfo.m_HandCard do
+		local card = self.HandCardInfo.m_HandCard[i];
+		if card.m_Index == id then
+			return i;
+		end
+	end
+	return - 1;
+end
 -- 设置玩家UI
 function MJPlayer:SetupUI()
 	NCSpeedLight.UIHelper.SetLabelText(self.transform, "Enter/Center/Label (Name)", self.MJData.m_RoleData.m_Name);
-	
 	-- 显示房主标识
 	if self.MJData.m_RoleData.m_Roleid == SharedVariable.FBEntryInfo.m_RoomMasterID then
 		NCSpeedLight.UIHelper.SetActiveState(self.transform, "Enter/Center/Master", true);
 	end
-	
 	self:SetupReady(self.MJData.m_isReady == 1);
 	self:SetupEnterAndLeave(true, false);
 end
-
 -- 设置Ready标识
 function MJPlayer:SetupReady(status)
 	Log.Info("MJScene.NotifyOneReady: " .. tostring(status) .. ",name is " .. self.transform.name);
@@ -122,25 +121,21 @@ function MJPlayer:SetupReady(status)
 		UI_MaJiang.SetupReadyAndInvite(not status, status, true);
 	end
 end
-
 -- 设置庄家标识
 function MJPlayer:SetupBanker()
 	local status = self.MJData.m_RoleData.m_Postion == MJPlayer.Hero.HandCardInfo.m_bankerPos;
 	NCSpeedLight.UIHelper.SetActiveState(self.transform, "Enter/Center/Banker", status);
 end
-
 -- 设置进入/离开状态 Enter/Leave
 function MJPlayer:SetupEnterAndLeave(...)
 	local args = {...};
 	NCSpeedLight.UIHelper.SetActiveState(self.transform, "Enter", args[1]);
 	NCSpeedLight.UIHelper.SetActiveState(self.transform, "Leave", args[2]);
 end
-
 function MJPlayer:StartGame()
 	self:SetupReady(false);
 	self:SetupBanker();
 end
-
 function MJPlayer:DisplayCards(sort)
 	if self == MJPlayer.Hero then
 		if sort then
@@ -161,10 +156,8 @@ function MJPlayer:DisplayCards(sort)
 			cardObj.gameObject:SetActive(false);
 		end
 	else
-		
 	end
 end
-
 -- 播放UI框的缩放
 function MJPlayer:PlayUIScale(status)
 	-- Log.Info("MJPlayer:PlayUIScale: this is " .. self.transform.name);
@@ -174,18 +167,15 @@ function MJPlayer:PlayUIScale(status)
 		NCSpeedLight.UIHelper.SetActiveState(UI_MaJiang.transform, "center/OperatorPrompt", status);
 	end
 end
-
 -- 播放出牌效果
 function MJPlayer:PlayOutCard(status, cardType)
 	NCSpeedLight.UIHelper.SetActiveState(self.transform, "OutCard/Card", status);
 	NCSpeedLight.UIHelper.SetSpriteName(self.transform, "OutCard/Card/Sprite", MaJiangType.GetString(cardType));
 end
-
 --开始
 function MJPlayer:MJOT_BEGIN(data)
 	self:DisplayCards(true);
 end
-
 --抓牌
 function MJPlayer:MJOT_GetCard(data)
 	if self == MJPlayer.Hero then
@@ -200,7 +190,6 @@ function MJPlayer:MJOT_GetCard(data)
 		UI_Player0.PlayGetCardAnimation();
 	end
 end
-
 --补牌
 function MJPlayer:MJOT_BuCard(data)
 	if self == MJPlayer.Hero then
@@ -210,63 +199,54 @@ function MJPlayer:MJOT_BuCard(data)
 			self:AddHandCard(card);
 		end
 	end
-	self:DisplayCards();
+	-- self:DisplayCards();
 end
-
 --出牌
 function MJPlayer:MJOT_SendCard(data)
-	if self == MJPlayer.Hero then
+	if self:IsHero() then
 		local card = data.m_HandCard[1];
 		Log.Info("MJPlayer:MJOT_SendCard: card index is " .. card.m_Index .. ",type is " .. MaJiangType.GetString(card.m_Type));
-		if card ~= nil then
-			self:RemoveHandCard(card.m_Index);
-		end
+		local cardPosition = self:GetHandCardPositionByID(card.m_Index);
+		local newCardPosition = self:GetHandCardCount();
+		local newCard = self:GetHandCardByPosition(newCardPosition);
+		self:RemoveHandCard(card.m_Index);
+		self:SortHandCard();
+		local newCardTargetPosition = self:GetHandCardIndex(newCard);
+		UI_Player0.PlayOutCardAnimation(card.m_Type);
+		UI_Player0.PlayInsertCardAnimation(cardPosition, newCardPosition, newCardTargetPosition);
 	end
-	self:DisplayCards(true);
+	-- self:DisplayCards(true);
 end
-
 --摊
 function MJPlayer:MJOT_Tan(data)
 end
-
 --吃 
 function MJPlayer:MJOT_CHI(data)
 end
-
 --勺
 function MJPlayer:MJOT_SAO(data)
 end
-
 --碰
 function MJPlayer:MJOT_PENG(data)
 end
-
 --杠
 function MJPlayer:MJOT_GANG(data)
 end
-
 --暗杠
 function MJPlayer:MJOT_AN_GANG(data)
 end
-
 --补杠
 function MJPlayer:MJOT_BuGang(data)
 end
-
 --过
 function MJPlayer:MJOT_GUO(data)
 end
-
 --胡
 function MJPlayer:MJOT_HU(data)
 end
-
 --定胡
 function MJPlayer:MJOT_DingHU(data)
 end
-
 -- 播放出牌的效果动画
 function MJPlayer:PlayOutCardAnimation()
-	
 end
-

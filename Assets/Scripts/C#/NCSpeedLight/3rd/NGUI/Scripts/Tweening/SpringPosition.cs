@@ -87,8 +87,8 @@ public class SpringPosition : MonoBehaviour
 			if (mThreshold >= (target - mTrans.position).sqrMagnitude)
 			{
 				mTrans.position = target;
-				NotifyListeners();
-				enabled = false;
+                enabled = false;
+                NotifyListeners();
 			}
 		}
 		else
@@ -99,8 +99,8 @@ public class SpringPosition : MonoBehaviour
 			if (mThreshold >= (target - mTrans.localPosition).sqrMagnitude)
 			{
 				mTrans.localPosition = target;
-				NotifyListeners();
-				enabled = false;
+                enabled = false;
+                NotifyListeners();
 			}
 		}
 
