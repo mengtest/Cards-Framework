@@ -167,26 +167,24 @@ function MJPlayer:PlayUIScale(status)
 		NCSpeedLight.UIHelper.SetActiveState(UI_MaJiang.transform, "center/OperatorPrompt", status);
 	end
 end
--- 播放出牌效果
-function MJPlayer:PlayOutCard(status, cardType)
-	NCSpeedLight.UIHelper.SetActiveState(self.transform, "OutCard/Card", status);
-	NCSpeedLight.UIHelper.SetSpriteName(self.transform, "OutCard/Card/Sprite", MaJiangType.GetString(cardType));
-end
+-- -- 播放出牌效果
+-- function MJPlayer:PlayOutCard(status, cardType)
+-- 	NCSpeedLight.UIHelper.SetActiveState(self.transform, "OutCard/Card", status);
+-- 	NCSpeedLight.UIHelper.SetSpriteName(self.transform, "OutCard/Card/Sprite", MaJiangType.GetString(cardType));
+-- end
 --开始
 function MJPlayer:MJOT_BEGIN(data)
-	self:DisplayCards(true);
+	-- self:DisplayCards(true);
 end
 --抓牌
 function MJPlayer:MJOT_GetCard(data)
-	if self == MJPlayer.Hero then
+	if self:IsHero() then
 		local card = data.m_HandCard[1];
 		Log.Info("MJPlayer:MJOT_GetCard: card index is " .. card.m_Index .. ",type is " .. MaJiangType.GetString(card.m_Type));
 		if card ~= nil then
 			self:AddHandCard(card);
 		end
-	end
-	self:DisplayCards(false);
-	if self:IsHero() then
+		-- self:DisplayCards(false);
 		UI_Player0.PlayGetCardAnimation();
 	end
 end
@@ -199,7 +197,6 @@ function MJPlayer:MJOT_BuCard(data)
 			self:AddHandCard(card);
 		end
 	end
-	-- self:DisplayCards();
 end
 --出牌
 function MJPlayer:MJOT_SendCard(data)
@@ -215,7 +212,6 @@ function MJPlayer:MJOT_SendCard(data)
 		UI_Player0.PlayOutCardAnimation(card.m_Type);
 		UI_Player0.PlayInsertCardAnimation(cardPosition, newCardPosition, newCardTargetPosition);
 	end
-	-- self:DisplayCards(true);
 end
 --摊
 function MJPlayer:MJOT_Tan(data)
@@ -246,7 +242,4 @@ function MJPlayer:MJOT_HU(data)
 end
 --定胡
 function MJPlayer:MJOT_DingHU(data)
-end
--- 播放出牌的效果动画
-function MJPlayer:PlayOutCardAnimation()
 end

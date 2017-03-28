@@ -100,12 +100,12 @@ function UI_Player0.PlayInsertCardAnimation(outCardPosition, newCardPosition, ne
 		this.InsertCardAnimation:Reset();
 	end
 	Log.Info("UI_Player0.PlayInsertCardAnimation: OUTCARD AT " .. tostring(outCardPosition) .. ",NEWCARD FROM " .. tostring(newCardPosition) .. " TO " .. tostring(newCardTargetPosition));
-	if outCardPosition == newCardPosition or newCardPosition == - 1 then
-		Log.Info("UI_Player0.PlayInsertCardAnimation: neednt play insert-card animation.");
-		return;
-	end
 	local outCardObj = this.GetCardObjByPosition(outCardPosition);
 	local newCardObj = this.GetCardObjByPosition(newCardPosition);
+	if outCardPosition == newCardPosition then
+		outCardObj:SetActive(false);
+		return;
+	end
 	local targetCardObj = this.GetCardObjByPosition(newCardTargetPosition);
 	local newCardDownPos1 = newCardObj.transform.localPosition;
 	local newCardUpPos1 = UnityEngine.Vector3(newCardObj.transform.localPosition.x, 100, newCardObj.transform.localPosition.z);
@@ -123,9 +123,9 @@ function UI_Player0.PlayInsertCardAnimation(outCardPosition, newCardPosition, ne
 	local newCardUpAction = Action.New();
 	newCardUpAction.OnBegin = function(line)
 		Log.Info("UI_Player0.PlayInsertCardAnimation: newCardUpAction.OnBegin");
-		local sp = SpringPosition.Begin(newCardObj, newCardUpPos1, 8);
+		local sp = SpringPosition.Begin(newCardObj, newCardUpPos1, 10);
 		sp.onFinished = function()
-			Log.Info("UI_Player0.PlayInsertCardAnimation: newCardUpAction.OnBegin: sp.onFinished");
+			-- Log.Info("UI_Player0.PlayInsertCardAnimation: newCardUpAction.OnBegin: sp.onFinished");
 			line:Next();
 		end;
 	end
@@ -133,9 +133,9 @@ function UI_Player0.PlayInsertCardAnimation(outCardPosition, newCardPosition, ne
 	local newCardMoveAction = Action.New();
 	newCardMoveAction.OnBegin = function(line)
 		Log.Info("UI_Player0.PlayInsertCardAnimation: newCardMoveAction.OnBegin");
-		local sp = SpringPosition.Begin(newCardObj, newCardUpPos2, 8);
+		local sp = SpringPosition.Begin(newCardObj, newCardUpPos2, 32);
 		sp.onFinished = function()
-			Log.Info("UI_Player0.PlayInsertCardAnimation: newCardMoveAction.OnBegin: sp.onFinished");
+			-- Log.Info("UI_Player0.PlayInsertCardAnimation: newCardMoveAction.OnBegin: sp.onFinished");
 			line:Next();
 		end;
 	end
@@ -143,7 +143,7 @@ function UI_Player0.PlayInsertCardAnimation(outCardPosition, newCardPosition, ne
 	local newCardDownAction = Action.New();
 	newCardDownAction.OnBegin = function(line)
 		Log.Info("UI_Player0.PlayInsertCardAnimation: newCardDownAction.OnBegin");
-		SpringPosition.Begin(newCardObj, newCardDownPos2, 8);
+		SpringPosition.Begin(newCardObj, newCardDownPos2, 15);
 		local rotationFrom = UnityEngine.Quaternion.Euler(UnityEngine.Vector3(0, 0, 15));
 		local rotationTo = UnityEngine.Quaternion.Euler(UnityEngine.Vector3(0, 0, 0));
 		newCardObj.transform.rotation = rotationFrom;
@@ -160,22 +160,24 @@ function UI_Player0.PlayInsertCardAnimation(outCardPosition, newCardPosition, ne
 			for i = outCardPosition, newCardTargetPosition do
 				local cardObj = this.GetCardObjByPosition(i);
 				local cardObjNewPos = UnityEngine.Vector3(cardObj.transform.localPosition.x + offsetX, cardObj.transform.localPosition.y, cardObj.transform.localPosition.z);
-				SpringPosition.Begin(cardObj, cardObjNewPos, 8);
+				SpringPosition.Begin(cardObj, cardObjNewPos, 15);
 			end
 		elseif newCardTargetPosition < outCardPosition then
 			offsetX = 72;
 			for i = newCardTargetPosition, outCardPosition do
 				local cardObj = this.GetCardObjByPosition(i);
 				local cardObjNewPos = UnityEngine.Vector3(cardObj.transform.localPosition.x + offsetX, cardObj.transform.localPosition.y, cardObj.transform.localPosition.z);
-				SpringPosition.Begin(cardObj, cardObjNewPos, 8);
+				SpringPosition.Begin(cardObj, cardObjNewPos, 15);
 			end
 		else
 		end
-		for i = newCardTargetPosition, outCardPosition do
-			local cardObj = this.GetCardObjByPosition(i);
-			local cardObjNewPos = UnityEngine.Vector3(cardObj.transform.localPosition.x + offsetX, cardObj.transform.localPosition.y, cardObj.transform.localPosition.z);
-			SpringPosition.Begin(cardObj, cardObjNewPos, 8);
-		end
+		-- -- 重命名牌，按照顺序
+		-- for name, cardObj in pairs(names) do
+		-- 	cardObj.name = name;
+		-- end
+		-- local newCardName = outCardObj.name;
+		-- outCardObj.name = newCardObj.name;
+		-- newCardObj.name = newCardName;
 		line:Next();
 	end
 	-- 6.重命名牌，按照顺序
@@ -195,6 +197,7 @@ function UI_Player0.PlayInsertCardAnimation(outCardPosition, newCardPosition, ne
 		for i = 1, # cardObjs do
 			local cardObj = cardObjs[i];
 			cardObj.name = tostring(i);
+			Log.Info("renameCardObjsAction.OnBegin: card name is " .. cardObj.name .. ",card position x is " .. cardObj.transform.localPosition.x);
 		end
 		line:Next();
 	end;
@@ -218,6 +221,10 @@ function UI_Player0.PlayGetCardAnimation()
 	end
 	local position = this.Player:GetHandCardCount();
 	local cardObj = this.GetCardObjByPosition(position);
+	local card = this.Player:GetHandCardByPosition(position);
+	UIHelper.SetSpriteName(cardObj.transform, "Sprite", MaJiangType.GetString(card.m_Type));
+	cardObj:SetActive(true);
+	local leftCardObj = this.GetCardObjByPosition(position - 1);
 	local rotateAction = Action.New(0, 0.5);
 	rotateAction.OnBegin = function()
 		local rotationFrom = UnityEngine.Quaternion.Euler(UnityEngine.Vector3(0, 0, 15));
