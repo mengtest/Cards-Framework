@@ -350,5 +350,5 @@ function TestQueue()
 	timeline:AddAction(action2);
 	timeline:Start();
 end
-TestParallel();
-TestQueue(); 
+-- TestParallel();
+-- TestQueue(); 
