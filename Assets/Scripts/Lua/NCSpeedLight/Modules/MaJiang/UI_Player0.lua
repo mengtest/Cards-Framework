@@ -114,7 +114,7 @@ function UI_Player0.PlayInsertCardAnimation(outCardPosition, newCardPosition, ne
 	local inactiveOutCardAction = Action.New();
 	-- 1.隐藏打出的牌
 	inactiveOutCardAction.OnBegin = function(line)
-		Log.Info("UI_Player0.PlayInsertCardAnimation: inactiveOutCardAction.OnBegin");
+		Log.Info("UI_Player0.PlayInsertCardAnimation: inactiveOutCardAction.OnBegin -- 隐藏打出的牌");
 		outCardObj:SetActive(false);
 		outCardObj.transform.position = newCardObj.transform.position;
 		line:Next();
@@ -122,27 +122,25 @@ function UI_Player0.PlayInsertCardAnimation(outCardPosition, newCardPosition, ne
 	-- 2.新牌上升
 	local newCardUpAction = Action.New();
 	newCardUpAction.OnBegin = function(line)
-		Log.Info("UI_Player0.PlayInsertCardAnimation: newCardUpAction.OnBegin");
+		Log.Info("UI_Player0.PlayInsertCardAnimation: newCardUpAction.OnBegin -- 新牌上升");
 		local sp = SpringPosition.Begin(newCardObj, newCardUpPos1, 10);
 		sp.onFinished = function()
-			-- Log.Info("UI_Player0.PlayInsertCardAnimation: newCardUpAction.OnBegin: sp.onFinished");
 			line:Next();
 		end;
 	end
 	-- 3.新牌横移至目标位
 	local newCardMoveAction = Action.New();
 	newCardMoveAction.OnBegin = function(line)
-		Log.Info("UI_Player0.PlayInsertCardAnimation: newCardMoveAction.OnBegin");
+		Log.Info("UI_Player0.PlayInsertCardAnimation: newCardMoveAction.OnBegin -- 新牌横移至目标位");
 		local sp = SpringPosition.Begin(newCardObj, newCardUpPos2, 32);
 		sp.onFinished = function()
-			-- Log.Info("UI_Player0.PlayInsertCardAnimation: newCardMoveAction.OnBegin: sp.onFinished");
 			line:Next();
 		end;
 	end
 	-- 4.新牌下落至槽位中
 	local newCardDownAction = Action.New();
 	newCardDownAction.OnBegin = function(line)
-		Log.Info("UI_Player0.PlayInsertCardAnimation: newCardDownAction.OnBegin");
+		Log.Info("UI_Player0.PlayInsertCardAnimation: newCardDownAction.OnBegin -- 新牌下落至槽位中，同时开始偏移其他牌");
 		SpringPosition.Begin(newCardObj, newCardDownPos2, 15);
 		local rotationFrom = UnityEngine.Quaternion.Euler(UnityEngine.Vector3(0, 0, 15));
 		local rotationTo = UnityEngine.Quaternion.Euler(UnityEngine.Vector3(0, 0, 0));
@@ -153,37 +151,41 @@ function UI_Player0.PlayInsertCardAnimation(outCardPosition, newCardPosition, ne
 	-- 5.偏移其他牌
 	local offsetCardsAction = Action.New();
 	offsetCardsAction.OnBegin = function(line)
-		Log.Info("UI_Player0.PlayInsertCardAnimation: offsetCardsAction.OnBegin");
+		Log.Info("UI_Player0.PlayInsertCardAnimation: offsetCardsAction.OnBegin -- 偏移其他牌");
 		local offsetX = 0;
+		local sp = nil;
 		if newCardTargetPosition > outCardPosition then
 			offsetX = - 72;
 			for i = outCardPosition, newCardTargetPosition do
-				local cardObj = this.GetCardObjByPosition(i);
-				local cardObjNewPos = UnityEngine.Vector3(cardObj.transform.localPosition.x + offsetX, cardObj.transform.localPosition.y, cardObj.transform.localPosition.z);
-				SpringPosition.Begin(cardObj, cardObjNewPos, 15);
+				if i ~= outCardPosition then
+					local cardObj = this.GetCardObjByPosition(i);
+					local cardObjNewPos = UnityEngine.Vector3(cardObj.transform.localPosition.x + offsetX, cardObj.transform.localPosition.y, cardObj.transform.localPosition.z);
+					sp = SpringPosition.Begin(cardObj, cardObjNewPos, 15);
+				end
 			end
 		elseif newCardTargetPosition < outCardPosition then
 			offsetX = 72;
 			for i = newCardTargetPosition, outCardPosition do
-				local cardObj = this.GetCardObjByPosition(i);
-				local cardObjNewPos = UnityEngine.Vector3(cardObj.transform.localPosition.x + offsetX, cardObj.transform.localPosition.y, cardObj.transform.localPosition.z);
-				SpringPosition.Begin(cardObj, cardObjNewPos, 15);
+				if i ~= outCardPosition then
+					local cardObj = this.GetCardObjByPosition(i);
+					local cardObjNewPos = UnityEngine.Vector3(cardObj.transform.localPosition.x + offsetX, cardObj.transform.localPosition.y, cardObj.transform.localPosition.z);
+					sp = SpringPosition.Begin(cardObj, cardObjNewPos, 15);
+				end
 			end
 		else
 		end
-		-- -- 重命名牌，按照顺序
-		-- for name, cardObj in pairs(names) do
-		-- 	cardObj.name = name;
-		-- end
-		-- local newCardName = outCardObj.name;
-		-- outCardObj.name = newCardObj.name;
-		-- newCardObj.name = newCardName;
-		line:Next();
+		if sp ~= nil then
+			sp.onFinished = function()
+				line:Next();
+			end
+		else
+			line:Next();
+		end
 	end
 	-- 6.重命名牌，按照顺序
 	local renameCardObjsAction = Action.New();
 	renameCardObjsAction.OnBegin = function(line)
-		Log.Info("UI_Player0.PlayInsertCardAnimation: renameCardObjsAction.OnBegin");
+		Log.Info("UI_Player0.PlayInsertCardAnimation: renameCardObjsAction.OnBegin -- 按照x坐标的升序命名牌的名字");
 		local gridTran = this.transform:Find("Cards/CardGrid");
 		local cardObjs = {};
 		for i = 0, gridTran.childCount - 1 do
@@ -197,7 +199,6 @@ function UI_Player0.PlayInsertCardAnimation(outCardPosition, newCardPosition, ne
 		for i = 1, # cardObjs do
 			local cardObj = cardObjs[i];
 			cardObj.name = tostring(i);
-			Log.Info("renameCardObjsAction.OnBegin: card name is " .. cardObj.name .. ",card position x is " .. cardObj.transform.localPosition.x);
 		end
 		line:Next();
 	end;
