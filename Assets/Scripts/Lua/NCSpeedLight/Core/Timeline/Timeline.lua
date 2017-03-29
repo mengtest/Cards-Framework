@@ -130,14 +130,6 @@ function Timeline.Update()
 				if line.CurrentAction ~= nil then
 					Timeline.InvokeActionMethod(line.CurrentAction, "Update", line, deltaTime);
 				end
-				if line.NextAction ~= nil then
-					if line.CurrentAction ~= nil then
-						Timeline.InvokeActionMethod(line.CurrentAction, "End", line, deltaTime);
-					end
-					line.CurrentAction = line.NextAction;
-					line.NextAction = nil;
-					Timeline.InvokeActionMethod(line.CurrentAction, "Begin", line, deltaTime);
-				end
 			end
 		end
 	end
@@ -273,8 +265,8 @@ end
 function Timeline:Next()
 	if self.CurrentAction == nil then
 		local action = self.Actions[1];
-		self.NextAction = action;
-		-- Timeline.InvokeActionMethod(self.CurrentAction, "Begin", self, 0);
+		self.CurrentAction = action;
+		Timeline.InvokeActionMethod(self.CurrentAction, "Begin", self, 0);
 	else
 		local index = 1;
 		while index <= # self.Actions do
@@ -283,10 +275,9 @@ function Timeline:Next()
 				if index ~= # self.Actions then
 					local nextActionIndex = index + 1;
 					local nextAction = self.Actions[nextActionIndex];
-					self.NextAction = nextAction;
-					-- Timeline.InvokeActionMethod(self.CurrentAction, "End", self, 0);
-					-- self.CurrentAction = nextAction;
-					-- Timeline.InvokeActionMethod(self.CurrentAction, "Begin", self, 0);
+					Timeline.InvokeActionMethod(self.CurrentAction, "End", self, 0);
+					self.CurrentAction = nextAction;
+					Timeline.InvokeActionMethod(self.CurrentAction, "Begin", self, 0);
 					break;
 				else
 					if self.CurrentAction ~= nil then
