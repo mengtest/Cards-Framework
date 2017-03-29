@@ -6,10 +6,7 @@ UI_Player0 = {
 	DragingCardObj = nil,
 	-- 出牌的动画
 	OutCardAnimation = nil,
-	-- 插牌的动画
-	InsertCardAnimation = nil,
-	-- 抓牌的动画
-	GetCardAnimation = nil,
+	AnimationQueue = nil,
 }
 local this = UI_Player0;
 function UI_Player0.Awake(go)
@@ -19,6 +16,7 @@ function UI_Player0.Awake(go)
 	MJPlayer.Hero = this.Player;
 	Log.Info("UI_Player0.Awake: player instance is " .. tostring(this.Player));
 	this.Player:Initialize(go.transform);
+	this.AnimationQueue = AnimationQueue.New();
 end
 function UI_Player0.Start()
 	local cardGridPanel = this.transform:Find("Cards/CardGrid");
@@ -91,14 +89,7 @@ function UI_Player0.PlayOutCardAnimation(cardType)
 end
 -- 播放插牌动画
 function UI_Player0.PlayInsertCardAnimation(outCardPosition, newCardPosition, newCardTargetPosition)
-	if this.InsertCardAnimation == nil then
-		this.InsertCardAnimation = Timeline.New("MJ_INSERTCARD_ANIMATION", TimelinePlayMode.Queue);
-	else
-		if this.InsertCardAnimation:IsActive() then
-			this.InsertCardAnimation:Stop();
-		end
-		this.InsertCardAnimation:Reset();
-	end
+	local actionLine = ActionLine.New(ActionLinePlayMode.Queue, true);
 	Log.Info("UI_Player0.PlayInsertCardAnimation: OUTCARD AT " .. tostring(outCardPosition) .. ",NEWCARD FROM " .. tostring(newCardPosition) .. " TO " .. tostring(newCardTargetPosition));
 	local outCardObj = this.GetCardObjByPosition(outCardPosition);
 	local newCardObj = this.GetCardObjByPosition(newCardPosition);
@@ -202,47 +193,52 @@ function UI_Player0.PlayInsertCardAnimation(outCardPosition, newCardPosition, ne
 		end
 		line:Next();
 	end;
-	this.InsertCardAnimation:AddAction(inactiveOutCardAction);
-	this.InsertCardAnimation:AddAction(newCardUpAction);
-	this.InsertCardAnimation:AddAction(newCardMoveAction);
-	this.InsertCardAnimation:AddAction(newCardDownAction);
-	this.InsertCardAnimation:AddAction(offsetCardsAction);
-	this.InsertCardAnimation:AddAction(renameCardObjsAction);
-	this.InsertCardAnimation:Start();
+	actionLine:AddAction(inactiveOutCardAction);
+	actionLine:AddAction(newCardUpAction);
+	actionLine:AddAction(newCardMoveAction);
+	actionLine:AddAction(newCardDownAction);
+	actionLine:AddAction(offsetCardsAction);
+	actionLine:AddAction(renameCardObjsAction);
+	this.AnimationQueue:Push(actionLine);
+	this.AnimationQueue:Resume();
 end
 -- 播放抓牌效果
 function UI_Player0.PlayGetCardAnimation()
-	if this.GetCardAnimation == nil then
-		this.GetCardAnimation = Timeline.New("MJ_GETCARD_ANIMATION", TimelinePlayMode.Parallel);
-	else
-		if this.GetCardAnimation:IsActive() then
-			this.GetCardAnimation:Stop();
-		end
-		this.GetCardAnimation:Reset();
-	end
-	local position = this.Player:GetHandCardCount();
-	local cardObj = this.GetCardObjByPosition(position);
-	local card = this.Player:GetHandCardByPosition(position);
-	UIHelper.SetSpriteName(cardObj.transform, "Sprite", MaJiangType.GetString(card.m_Type));
-	cardObj:SetActive(true);
-	local leftCardObj = this.GetCardObjByPosition(position - 1);
-	local rotateAction = Action.New(0, 0.5);
-	rotateAction.OnBegin = function()
+	local actionLine = ActionLine.New(ActionLinePlayMode.Parallel, true);
+	local firstAction = Action.New(0, 0.1);
+	firstAction.OnBegin = function()
+		local cardPos = this.Player:GetHandCardCount();
+		local cardObj = this.GetCardObjByPosition(cardPos);
+		local card = this.Player:GetHandCardByPosition(cardPos);
+		UIHelper.SetSpriteName(cardObj.transform, "Sprite", MaJiangType.GetString(card.m_Type));
+		cardObj:SetActive(true);
+		local leftCardObj = this.GetCardObjByPosition(cardPos - 1);
+	end;
+	local shakeAction = Action.New(0, 0.5);
+	shakeAction.OnBegin = function()
+		Log.Info("UI_Player0.PlayGetCardAnimation: shakeAction.OnBegin -- 抖动牌面");
+		local cardPos = this.Player:GetHandCardCount();
+		local cardObj = this.GetCardObjByPosition(cardPos);
 		local rotationFrom = UnityEngine.Quaternion.Euler(UnityEngine.Vector3(0, 0, 15));
 		local rotationTo = UnityEngine.Quaternion.Euler(UnityEngine.Vector3(0, 0, 0));
 		cardObj.transform.rotation = rotationFrom;
 		TweenRotation.Begin(cardObj, 0.5, rotationTo);
 	end
-	local posAction = Action.New(0, 0.5);
-	posAction.OnBegin = function()
+	local downAction = Action.New(0, 0.5);
+	downAction.OnBegin = function()
+		Log.Info("UI_Player0.PlayGetCardAnimation: downAction.OnBegin -- 下落至槽位中");
+		local cardPos = this.Player:GetHandCardCount();
+		local cardObj = this.GetCardObjByPosition(cardPos);
 		local positionFrom = UnityEngine.Vector3(cardObj.transform.localPosition.x, 70, cardObj.transform.localPosition.z);
 		local positionTo = cardObj.transform.localPosition;
 		cardObj.transform.localPosition = positionFrom;
 		SpringPosition.Begin(cardObj, positionTo, 8);
 	end
-	this.GetCardAnimation:AddAction(rotateAction);
-	this.GetCardAnimation:AddAction(posAction);
-	this.GetCardAnimation:Start();
+	actionLine:AddAction(firstAction);
+	actionLine:AddAction(shakeAction);
+	actionLine:AddAction(downAction);
+	this.AnimationQueue:Push(actionLine);
+	this.AnimationQueue:Resume();
 end
 -- 根据索引获取牌的对象
 function UI_Player0.GetCardObjByPosition(pos)

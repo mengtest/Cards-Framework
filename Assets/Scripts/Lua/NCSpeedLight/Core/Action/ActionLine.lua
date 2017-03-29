@@ -1,20 +1,20 @@
 -----------------------------------------------
 -- Copyright © 2014-2017 NCSpeedLight
 --
--- FileName: Timeline.lua
--- Describle:  时间轴
+-- FileName: ActionLine.lua
+-- Describle:  行为轴
 -- Created By:  Wells Hsu
 -- Date&Time:  2017/2/28 19:11:09
 -- Modify History:
 --
 -----------------------------------------------
-TimelineStatus =
+ActionLineStatus =
 {
 	Action = 0,
 	Inaction = 1,
 	Playing = 2,
 };
-TimelinePlayMode = {
+ActionLinePlayMode = {
 	-- 顺序执行
 	Queue = 0,
 	-- 平行结构
@@ -34,6 +34,7 @@ Action =
 	OnBegin = nil,
 	OnUpdate = nil,
 	OnEnd = nil,
+	Param = nil,
 };
 Action.__index = Action;
 -- beginTime: 行为开始时间
@@ -61,50 +62,57 @@ function Action:End(timeline, deltatime)
 	end
 end
 -- end of action 
-Timeline = {
+ActionLine = {
 	Name = nil,
 	Elapse,
-	Status = TimelineStatus.Inaction,
+	Status = ActionLineStatus.Inaction,
 	Actions = {},
 	ProcessingActions = {},
 	WaitingActions = {},
 	LastAction = nil,
 	CurrentAction = nil,
+	OnFinished = nil,
+	AutoDestory = false,
 };
-Timeline.__index = Timeline;
+ActionLine.__index = ActionLine;
 local lines = {};
-function Timeline.New(name, playmode)
+function ActionLine.New(playmode, autoDestroy)
 	local obj = {};
-	setmetatable(obj, Timeline);
+	setmetatable(obj, ActionLine);
 	obj.Name = name;
 	obj.Elapse = 0;
-	obj.Status = TimelineStatus.Inaction;
+	obj.Status = ActionLineStatus.Inaction;
 	obj.Actions = {};
 	obj.ProcessingActions = {};
 	obj.WaitingActions = {};
 	if playmode == nil then
-		obj.PlayMode = TimelinePlayMode.Parallel;
+		obj.PlayMode = ActionLinePlayMode.Parallel;
 	else
 		obj.PlayMode = playmode;
+	end
+	if autoDestroy == nil then
+		obj.AutoDestory = false;
+	else
+		obj.AutoDestory = autoDestroy;
 	end
 	table.insert(lines, obj);
 	return obj;
 end
-function Timeline.Update()
+function ActionLine.Update()
 	for i = 1, # lines do
 		local line = lines[i];
-		if line ~= nil and line.Status == TimelineStatus.Playing then
+		if line ~= nil and line.Status == ActionLineStatus.Playing then
 			local deltaTime = Time.deltaTime;
 			line.Elapse = line.Elapse + deltaTime;
-			if line.PlayMode == TimelinePlayMode.Parallel then
+			if line.PlayMode == ActionLinePlayMode.Parallel then
 				-- Parallel mode 
 				local index = 1;
 				while index <= # line.ProcessingActions do
 					local action = line.ProcessingActions[index];
-					Timeline.InvokeActionMethod(action, "Update", line, deltaTime);
+					ActionLine.InvokeActionMethod(action, "Update", line);
 					if line.Elapse >= action.EndTime then
 						action.Status = ActionStatus.Inaction;
-						Timeline.InvokeActionMethod(action, "End", line, deltaTime);
+						ActionLine.InvokeActionMethod(action, "End", line);
 						table.remove(line.ProcessingActions, index);
 					else
 						index = index + 1;
@@ -115,7 +123,7 @@ function Timeline.Update()
 					local action = line.WaitingActions[index];
 					if line.Elapse >= action.BeginTime then
 						action.Status = ActionStatus.Playing;
-						Timeline.InvokeActionMethod(action, "Begin", line, deltaTime);
+						ActionLine.InvokeActionMethod(action, "Begin", line);
 						table.insert(line.ProcessingActions, action);
 						table.remove(line.WaitingActions, index);
 					else
@@ -128,25 +136,25 @@ function Timeline.Update()
 			else
 				-- Queue mode
 				if line.CurrentAction ~= nil then
-					Timeline.InvokeActionMethod(line.CurrentAction, "Update", line, deltaTime);
+					ActionLine.InvokeActionMethod(line.CurrentAction, "Update", line);
 				end
 			end
 		end
 	end
 end
-function Timeline.InvokeActionMethod(action, methodName, ...)
+function ActionLine.InvokeActionMethod(action, methodName, line)
 	local meta = getmetatable(action);
 	if meta ~= nil then
 		for key, value in pairs(meta) do
 			if key == methodName and value ~= nil then
-				value(action, ...);
+				value(action, line);
 			end
 		end
 	end
 end
-function Timeline:AddAction(action)
+function ActionLine:AddAction(action)
 	if action == nil then
-		Log.Error("Timeline:AddAction: can not add action to line caused bu nil action instance.");
+		Log.Error("ActionLine:AddAction: can not add action to line caused bu nil action instance.");
 		return
 	end
 	local hasBeginTime = false;
@@ -171,23 +179,23 @@ function Timeline:AddAction(action)
 			end
 		end
 	else
-		Log.Error("Timeline:AddAction: can not add action caused bu nil metatable of table.");
+		Log.Error("ActionLine:AddAction: can not add action caused bu nil metatable of table.");
 	end
-	if self.PlayMode == TimelinePlayMode.Parallel then
+	if self.PlayMode == ActionLinePlayMode.Parallel then
 		if hasBeginTime and hasEndTime and hasBeginFunc and hasEndFunc then
 			table.insert(self.Actions, action);
 		else
-			Log.Error("Timeline:AddAction: can not add action caused bu nil field(s), hasBeginTime:" .. tostring(hasBeginTime) .. " , hasEndTime:" .. tostring(hasEndTime) .. " , hasBeginFunc:" .. tostring(hasBeginFunc) .. " , hasEndFunc:" .. tostring(hasEndFunc));
+			Log.Error("ActionLine:AddAction: can not add action caused bu nil field(s), hasBeginTime:" .. tostring(hasBeginTime) .. " , hasEndTime:" .. tostring(hasEndTime) .. " , hasBeginFunc:" .. tostring(hasBeginFunc) .. " , hasEndFunc:" .. tostring(hasEndFunc));
 		end
 	else
 		if hasBeginFunc and hasEndFunc then
 			table.insert(self.Actions, action);
 		else
-			Log.Error("Timeline:AddAction: can not add action caused bu nil field(s), hasBeginFunc:" .. tostring(hasBeginFunc) .. " , hasEndFunc:" .. tostring(hasEndFunc));
+			Log.Error("ActionLine:AddAction: can not add action caused bu nil field(s), hasBeginFunc:" .. tostring(hasBeginFunc) .. " , hasEndFunc:" .. tostring(hasEndFunc));
 		end
 	end
 end
-function Timeline:RemoveAction(action)
+function ActionLine:RemoveAction(action)
 	local needRemove = false;
 	local index = 1;
 	for i = 1, # self.Actions do
@@ -201,10 +209,10 @@ function Timeline:RemoveAction(action)
 	end
 end
 -- start timeline.
-function Timeline:Start()
+function ActionLine:Start()
 	self.Elapse = 0;
-	self.Status = TimelineStatus.Playing;
-	if self.PlayMode == TimelinePlayMode.Parallel then
+	self.Status = ActionLineStatus.Playing;
+	if self.PlayMode == ActionLinePlayMode.Parallel then
 		self.WaitingActions = {};
 		self.ProcessingActions = {};
 		for i = 1, # self.Actions do
@@ -219,14 +227,14 @@ function Timeline:Start()
 	end
 end
 -- force stop timeline.
-function Timeline:Stop()
-	if self.PlayMode == TimelinePlayMode.Parallel then
-		if self.Status == TimelineStatus.Playing then
+function ActionLine:Stop()
+	if self.PlayMode == ActionLinePlayMode.Parallel then
+		if self.Status == ActionLineStatus.Playing then
 			local index = 1;
 			while index <= # self.ProcessingActions do
 				local action = self.ProcessingActions[index];
 				action.Status = ActionStatus.Inaction;
-				Timeline.InvokeActionMethod(action, "End", self, 0);
+				ActionLine.InvokeActionMethod(action, "End", self);
 				table.remove(self.ProcessingActions, index);
 				index = index + 1;
 			end
@@ -236,15 +244,15 @@ function Timeline:Stop()
 	self:InternalStop();
 end
 -- restore all timeline data.
-function Timeline:Reset()
+function ActionLine:Reset()
 	self.WaitingActions = {};
 	self.ProcessingActions = {};
 	self.Elapse = 0;
-	self.Status = TimelineStatus.Inaction;
+	self.Status = ActionLineStatus.Inaction;
 	self.Actions = {};
 end
 -- destroy timeline instance.
-function Timeline:Destroy()
+function ActionLine:Destroy()
 	local needRemove = false;
 	local index = 1;
 	for i = 1, # lines do
@@ -258,15 +266,15 @@ function Timeline:Destroy()
 	end
 end
 -- is timeline running.
-function Timeline:IsActive()
-	return self.Status == TimelineStatus.Playing;
+function ActionLine:IsActive()
+	return self.Status == ActionLineStatus.Playing;
 end
 -- execute next action. 
-function Timeline:Next()
+function ActionLine:Next()
 	if self.CurrentAction == nil then
 		local action = self.Actions[1];
 		self.CurrentAction = action;
-		Timeline.InvokeActionMethod(self.CurrentAction, "Begin", self, 0);
+		ActionLine.InvokeActionMethod(self.CurrentAction, "Begin", self);
 	else
 		local index = 1;
 		while index <= # self.Actions do
@@ -275,13 +283,13 @@ function Timeline:Next()
 				if index ~= # self.Actions then
 					local nextActionIndex = index + 1;
 					local nextAction = self.Actions[nextActionIndex];
-					Timeline.InvokeActionMethod(self.CurrentAction, "End", self, 0);
+					ActionLine.InvokeActionMethod(self.CurrentAction, "End", self);
 					self.CurrentAction = nextAction;
-					Timeline.InvokeActionMethod(self.CurrentAction, "Begin", self, 0);
+					ActionLine.InvokeActionMethod(self.CurrentAction, "Begin", self);
 					break;
 				else
 					if self.CurrentAction ~= nil then
-						Timeline.InvokeActionMethod(self.CurrentAction, "End", self, 0);
+						ActionLine.InvokeActionMethod(self.CurrentAction, "End", self);
 					end
 					self:InternalStop();
 				end
@@ -290,8 +298,12 @@ function Timeline:Next()
 		end
 	end
 end
-function Timeline:InternalStop()
-	self.Status = TimelineStatus.Inaction;
+function ActionLine:InternalStop()
+	self.Status = ActionLineStatus.Inaction;
+	if self.AutoDestory then self:Destroy() end;
+	if self.OnFinished ~= nil then
+		self.OnFinished(self);
+	end
 end
 -- 用户自定义行为
 CustomAction = {
@@ -311,7 +323,7 @@ function CustomAction:End()
 	Log.Info("CustomAction:End: " .. tostring(self));
 end
 function TestParallel()
-	local timeline = Timeline.New("TEST");
+	local timeline = ActionLine.New("TEST");
 	local action1 = CustomAction.New();
 	action1.BeginTime = 1;
 	action1.EndTime = 4;
@@ -329,7 +341,7 @@ function TestParallel()
 	-- timeline:Destroy();
 end
 function TestQueue()
-	local timeline = Timeline.New("TEST_2", TimelinePlayMode.Queue);
+	local timeline = ActionLine.New("TEST_2", ActionLinePlayMode.Queue);
 	local action1 = Action.New();
 	action1.OnBegin = function(line)
 		Log.Info("TestQueue.action1 begin");
