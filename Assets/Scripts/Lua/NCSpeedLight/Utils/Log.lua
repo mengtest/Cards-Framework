@@ -8,13 +8,11 @@
 -- Modify History:
 --
 -----------------------------------------------
-
 Log =
 {
 	Buffer = {},
 	FilePath = nil,
 }
-
 function Log.Initialize()
 	local fileName = os.date("%Y-%m-%d_%H:%M:%S");
 	fileName = string.gsub(fileName, "/", "-");
@@ -25,23 +23,23 @@ function Log.Initialize()
 	Log.Info("Log.Initialize: log file path is " .. Log.FilePath);
 end
 function Log.Error(obj)
-	local str = "[Log.Error] " .. tostring(obj);
+	local time = os.date("%H:%M:%S");
+	local str = "[Log.Error][" .. time .. "-" .. Time.frameCount .. "] " .. tostring(obj);
 	print(str);
 	table.insert(Log.Buffer, str);
 end
-
 function Log.Info(obj)
-	local str = "[Log.Info] " .. tostring(obj);
+	local time = os.date("%H:%M:%S");
+	local str = "[Log.Info][" .. time .. "-" .. Time.frameCount .. "] " .. tostring(obj);
 	print(str);
 	table.insert(Log.Buffer, str);
 end
-
 function Log.Warning(obj)
-	local str = "[Log.Warning] " .. tostring(obj);
+	local time = os.date("%H:%M:%S");
+	local str = "[Log.Warning][" .. time .. "-" .. Time.frameCount .. "] " .. tostring(obj);
 	print(str);
 	table.insert(Log.Buffer, str);
 end
-
 function Log.Format(...)
 	local args = {...};
 	local str = "";
@@ -51,18 +49,17 @@ function Log.Format(...)
 		end
 	end
 	if string.len(str) > 0 then
-		local newStr = "[Log.Format] " .. tostring(str);
+		local time = os.date("%H:%M:%S");
+		local newStr = "[Log.Format][" .. time .. "-" .. Time.frameCount .. "] " .. tostring(str);
 		print(newStr);
 		table.insert(Log.Buffer, newStr);
 	end
 end
-
 -- 将buffer中的log写入文件
 function Log.Close()
 	if CSFile.Exists(Log.FilePath) then
 		CSFile.Delete(Log.FilePath);
 	end
-	
 	local file = CSFile.Open(Log.FilePath, CSFileMode.Create);
 	local sw = CSStreamWriter.New(file);
 	for i = 1, # Log.Buffer do
@@ -70,4 +67,4 @@ function Log.Close()
 	end
 	sw:Close();
 	file:Close();
-end
+end 
