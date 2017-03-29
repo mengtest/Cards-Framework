@@ -241,8 +241,8 @@ function MJScene.ReturnGamePlayerInfo(evt)
 			end
 		end
 		Log.Info("MJScene.ReturnGamePlayerInfo: desk offset is " .. SharedVariable.DeskOffset);
-		MJSceneController.SetupDicePanelDirection();
-		MJSceneController.IsSetupDicePanelRotation = true;
+		-- MJSceneController.SetupDicePanelDirection();
+		-- MJSceneController.IsSetupDicePanelRotation = true;
 	end
 	-- 设置玩家的UI
 	for i = 1, # SharedVariable.FBEntryInfo.m_Character do
@@ -281,6 +281,8 @@ function MJScene.ReturnGamePlayerInfo(evt)
 			UIManager.OpenTipsDialog(str);
 		end
 	end
+	MJSceneController.SetupDicePanelDirection();
+	MJSceneController.IsSetupDicePanelRotation = true;
 	UIManager.CloseAllWindowsExcept(UIType.UI_MaJiang);
 end
 function MJScene.ReturnHandCardInfo(evt)
@@ -315,9 +317,9 @@ function MJScene.ReturnPlayerOutCard(evt)
 		MJScene.LastOperator = MJScene.CurrentOperator;
 		MJScene.CurrentOperator = {Player = player, Data = msg};
 		if MJScene.LastOperator ~= nil and MJScene.LastOperator.Player ~= nil then
-			MJScene.LastOperator.Player:PlayUIScale(false);
+			MJScene.LastOperator.Player:PlayUIScaleAndDicePanelGrow(false);
 		end
-		MJScene.CurrentOperator.Player:PlayUIScale(true);
+		MJScene.CurrentOperator.Player:PlayUIScaleAndDicePanelGrow(true);
 		player:MJOT_BEGIN(msg);
 	elseif msg.m_OperatorType == MaJiangOperatorType.MJOT_GetCard then
 		player:MJOT_GetCard(msg);

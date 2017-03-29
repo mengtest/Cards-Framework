@@ -1,3 +1,20 @@
+MJPlayerPos = {
+	-- 东
+	EAST = 0,
+	-- 南
+	SOUTH = 1,
+	-- 西
+	WEST = 2,
+	-- 北
+	NORTH = 3,
+	GetString = function(index)
+		for key, value in pairs(MJPlayerPos) do
+			if value == index then
+				return tostring(key);
+			end
+		end
+	end
+}
 MJPlayer =
 {
 	Hero = nil,
@@ -169,10 +186,12 @@ function MJPlayer:DisplayCards(sort)
 	else
 	end
 end
--- 播放UI框的缩放
-function MJPlayer:PlayUIScale(status)
-	-- Log.Info("MJPlayer:PlayUIScale: this is " .. self.transform.name);
+-- 播放UI框的缩放,以及投资面板的闪光效果
+function MJPlayer:PlayUIScaleAndDicePanelGrow(status)
+	-- Log.Info("MJPlayer:PlayUIScaleAndDicePanelGrow: this is " .. self.transform.name);
 	local scaleAnimation = self.transform:Find("Enter/Center"):GetComponent(typeof(TweenScale));
+	local name = MJPlayerPos.GetString(self.MJData.m_RoleData.m_Postion);
+	MJSceneController.PlayDicePanelGrowEffect(name, status);
 	scaleAnimation.enabled = status;
 	if self == MJPlayer.Hero then
 		NCSpeedLight.UIHelper.SetActiveState(UI_MaJiang.transform, "center/OperatorPrompt", status);

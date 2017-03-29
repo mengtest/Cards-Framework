@@ -101,14 +101,18 @@ function MJSceneController.SetupPlayWay()
 end
 -- 设置骰子面板的朝向
 function MJSceneController.SetupDicePanelDirection()
-	local y = SharedVariable.DeskOffset * 90;
-	local panel = MJSceneController.transform:Find("majiangzhuo/direction");
-	local eulerAngles = UnityEngine.Vector3(0, y + panel.rotation.eulerAngles.y, 0);
-	local rotation = UnityEngine.Quaternion.Euler(eulerAngles)
-	panel.rotation = rotation;
+	if MJSceneController.IsSetupDicePanelRotation == false then
+		MJSceneController.IsSetupDicePanelRotation = true;
+		local y = MJPlayer.Hero.MJData.m_RoleData.m_Postion * 90;
+		local panel = MJSceneController.transform:Find("majiangzhuo/direction");
+		local eulerAngles = UnityEngine.Vector3(0, y + panel.rotation.eulerAngles.y, 0);
+		local rotation = UnityEngine.Quaternion.Euler(eulerAngles)
+		panel.rotation = rotation;
+	end
 end
--- 播放骰子面板的闪光效果
-function MJSceneController.PlayDicePanelGrowEffect()
+-- 播放骰子面板的东南西北闪光效果
+function MJSceneController.PlayDicePanelGrowEffect(name, status)
+	UIHelper.SetActiveState(this.transform, "majiangzhuo/direction/Flicker/" .. name, status);
 end
 function MJSceneController.ShowArrow()
 end
