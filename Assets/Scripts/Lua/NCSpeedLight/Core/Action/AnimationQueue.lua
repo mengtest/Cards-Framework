@@ -34,6 +34,9 @@ function AnimationQueue:Pop()
 	end
 	return nil;
 end
+function AnimationQueue:Count()
+	return # self.Lines;
+end
 function AnimationQueue:Resume()
 	if self.CurrentLine == nil then
 		local line = self:Pop();

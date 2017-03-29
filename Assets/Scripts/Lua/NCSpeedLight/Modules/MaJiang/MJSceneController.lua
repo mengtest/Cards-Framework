@@ -9,7 +9,7 @@ MJSceneController = {
 	DiceAnimationTimer = nil,
 	DiceAnimationTime = 1.25,
 }
-
+local this = MJSceneController;
 function MJSceneController.Awake(go)
 	if go ~= nil then
 		MJSceneController.gameObject = go;
@@ -17,14 +17,13 @@ function MJSceneController.Awake(go)
 		MJSceneController.MJDeskObj = go.transform:Find("majiangzhuo").gameObject;
 		MJSceneController.MJDeskAnimation = MJSceneController.MJDeskObj:GetComponent(typeof(UnityEngine.Animation));
 	end
+	MJSceneController.ReadCard();
 	MJSceneController.IsSetupDicePanelRotation = false;
 	MJScene.OnSceneWasLoaded();
 end
-
 function MJSceneController.Start()
-	MJSceneController.SetRoomNumber();
+	MJSceneController.SetupRoomNumber();
 end
-
 function MJSceneController.OnDestroy()
 	MJSceneController.transform = nil;
 	MJSceneController.gameObject = nil;
@@ -33,7 +32,6 @@ function MJSceneController.OnDestroy()
 	MJSceneController.DeskAnimationTimer = nil;
 	MJSceneController.DiceAnimationTimer = nil;
 end
-
 function MJSceneController.PlayDeskAnimation(onFinishCallback)
 	Log.Info("MJSceneController.PlayDeskAnimation");
 	if MJSceneController.MJDeskAnimation ~= nil then
@@ -53,7 +51,6 @@ function MJSceneController.PlayDeskAnimation(onFinishCallback)
 		MJSceneController.DeskAnimationTimer:Start();
 	end
 end
-
 function MJSceneController.PlayDiceAnimation(number1, number2, onFinishCallback)
 	local number = number1;
 	if number1 > number2 then
@@ -79,12 +76,12 @@ function MJSceneController.PlayDiceAnimation(number1, number2, onFinishCallback)
 	end
 	MJSceneController.DiceAnimationTimer:Start();
 end
-
-function MJSceneController.SetRoomNumber()
+-- 设置房间号
+function MJSceneController.SetupRoomNumber()
 	if SharedVariable.FBInfo ~= nil then
 		local roomNumberTransform = MJSceneController.transform:Find("majiangzhuo/Text/RoomNumber");
 		local roomNumberStr = tostring(SharedVariable.FBInfo.m_FBID);
-		Log.Info("MJSceneController.SetRoomNumber: room number is " .. roomNumberStr);
+		Log.Info("MJSceneController.SetupRoomNumber: room number is " .. roomNumberStr);
 		local strLength = string.len(roomNumberStr);
 		if strLength == 0 then return end;
 		for i = 1, strLength do
@@ -96,11 +93,12 @@ function MJSceneController.SetRoomNumber()
 			numberObj.localPosition = UnityEngine.Vector3.zero;
 			numberObj.localRotation = UnityEngine.Quaternion.identity;
 			numberObj.gameObject:SetActive(true);
-		-- Log.Info("MJSceneController.SetRoomNumber: single room number is " .. singleNumber);
 		end
 	end
 end
-
+-- 设置玩法
+function MJSceneController.SetupPlayWay()
+end
 -- 设置骰子面板的朝向
 function MJSceneController.SetupDicePanelDirection()
 	local y = SharedVariable.DeskOffset * 90;
@@ -109,7 +107,61 @@ function MJSceneController.SetupDicePanelDirection()
 	local rotation = UnityEngine.Quaternion.Euler(eulerAngles)
 	panel.rotation = rotation;
 end
-
 -- 播放骰子面板的闪光效果
 function MJSceneController.PlayDicePanelGrowEffect()
 end
+function MJSceneController.ShowArrow()
+end
+function MJSceneController.HideArrow()
+end
+-- 初始化桌子上的牌
+function MJSceneController.ReadCard()
+	if MJSceneController.mCard == nil then
+		MJSceneController.mCard = {};
+	end
+	if MJSceneController.mAllCard == nil then
+		MJSceneController.mAllCard = {};
+	end
+	MJSceneController.InitMJCards("majiangzhuo/Card/Wan", MaJiangType.MJ_1_WAN);
+	MJSceneController.InitMJCards("majiangzhuo/Card/Tiao", MaJiangType.MJ_1_TIAO);
+	MJSceneController.InitMJCards("majiangzhuo/Card/Tong", MaJiangType.MJ_1_TONG);
+	MJSceneController.InitMJCards("majiangzhuo/Card/Zhi", MaJiangType.MJ_DONG);
+end
+function MJSceneController.InitMJCards(path, startCardType)
+	local tempTrans = this.transform:Find(path);
+	if tempTrans == nil then return end;
+	local tempEnd = 0;
+	if startCardType < MaJiangType.MJ_DONG then
+		tempEnd = 9;
+	else
+		tempEnd = 7;
+	end
+	for i = 0, tempEnd - 1 do
+		local tempCardType = i + startCardType;
+		local tempCardTran = tempTrans:GetChild(i);
+		local tempCardObj = tempCardTran.gameObject;
+		table.insert(this.mCard, tempCardObj);
+		local mjCard = MJSceneController.CreateMJCard(tempCardObj, tempCardType);
+		local tempList = {};
+		table.insert(tempList, mjCard);
+		for j = 1, 3 do
+			local tempCloneObj = NGUITools.AddChild(tempTrans.gameObject, tempCardObj);
+			local tempCloneTrans = tempCloneObj.transform;
+			tempCloneTrans.localPosition = tempCardTran.localPosition;
+			tempCloneTrans.localEulerAngles = tempCardTran.localEulerAngles;
+			tempCloneTrans.localScale = tempCardTran.localScale;
+			table.insert(this.mCard, tempCloneObj);
+			mjCard = MJSceneController.CreateMJCard(tempCloneObj, tempCardType);
+			table.insert(tempList, mjCard);
+		end
+		table.insert(this.mAllCard, {tempCardType, tempList});
+	end
+end
+function MJSceneController.CreateMJCard(obj, type)
+	local card = MJCard.New();
+	card.GO = obj;
+	card.RoleID = - 1;
+	card.Status = MJCardStatus.MJCS_Begin;
+	card.Type = type;
+	return card;
+end 

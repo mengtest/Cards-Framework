@@ -15,6 +15,8 @@ function UI_Player0.Awake(go)
 	this.Player = MJPlayer.New();
 	MJPlayer.Hero = this.Player;
 	Log.Info("UI_Player0.Awake: player instance is " .. tostring(this.Player));
+	this.Player.UICardStartPos = UnityEngine.Vector3(- 468, 0, 0);
+	this.Player.UICardOffset = UnityEngine.Vector3(72, 0, 0);
 	this.Player:Initialize(go.transform);
 	this.AnimationQueue = AnimationQueue.New();
 end

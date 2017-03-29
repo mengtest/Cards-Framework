@@ -11,8 +11,7 @@ CSTextReader = System.IO.TextReader;
 CSTextWriter = System.IO.TextWriter;
 CSDirectory = System.IO.Directory;
 CSDirectoryInfo = System.IO.DirectoryInfo;
-
 CSBitConverter = System.BitConverter;
 CSDateTime = System.DateTime;
-
 UIHelper = NCSpeedLight.UIHelper;
+LuaComponent = NCSpeedLight.LuaComponent; 

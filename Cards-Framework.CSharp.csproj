@@ -233,7 +233,9 @@
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Core\Event\Event.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Core\Event\EventManager.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Core\Event\GlobalEventManager.cs" />
+    <Compile Include="Assets\Scripts\C#\NCSpeedLight\Core\Game.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Core\Hotfix\LuaBehaviour.cs" />
+    <Compile Include="Assets\Scripts\C#\NCSpeedLight\Core\Hotfix\LuaComponent.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Core\Hotfix\LuaManager.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Core\Media\AudioManager.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Core\Network\NetConnection.cs" />
@@ -255,7 +257,6 @@
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Core\SDK\iOSAdapter.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Core\Version\VersionManager.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Core\View\LuaView.cs" />
-    <Compile Include="Assets\Scripts\C#\NCSpeedLight\Game.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Main.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\Helper.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\ImageCache.cs" />
@@ -375,6 +376,7 @@
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_HelperWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_InvisiableOnTweenFinishWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_LuaBehaviourWrap.cs" />
+    <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_LuaComponentWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_LuaLoaderWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_LuaManagerWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\NCSpeedLight_LuaViewWrap.cs" />

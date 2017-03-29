@@ -187,6 +187,7 @@ public static class LuaBinder
 		NCSpeedLight_VPTimerWrap.Register(L);
 		NCSpeedLight_TipsDialogWrap.Register(L);
 		NCSpeedLight_InvisiableOnTweenFinishWrap.Register(L);
+		NCSpeedLight_LuaComponentWrap.Register(L);
 		NCSpeedLight_EventManagerWrap.Register(L);
 		L.RegFunction("EventHandlerDelegate", NCSpeedLight_EventHandlerDelegate);
 		L.RegFunction("LoadAssetCallback", NCSpeedLight_LoadAssetCallback);

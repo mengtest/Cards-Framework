@@ -5,13 +5,24 @@ MJPlayer =
 	HandCardInfo = nil,
 	ServerHandCards = nil,
 	HandCards = nil,
+	-- 桌面牌的起始位置
+	TableCardStartPos = nil,
+	-- 桌面牌的横向位置偏移
+	TableCardHorizontalOffset = nil,
+	-- 桌面牌的纵向位置偏移
+	TableCardVerticalOffset = nil,
+	-- 桌面牌的朝向
+	TableCardRotation = nil,
+	-- UI牌的起始位置
+	UICardStartPos = nil,
+	-- UI牌的横向位置偏移
+	UICardOffset = nil;
 };
-local meta = {};
-meta.__index = MJPlayer;
+MJPlayer.__index = MJPlayer;
 function MJPlayer.New()
-	local o = {};
-	setmetatable(o, meta);
-	return o;
+	local obj = {};
+	setmetatable(obj, MJPlayer);
+	return obj;
 end
 -- 判断是否是自己
 function MJPlayer:IsHero()
@@ -173,6 +184,7 @@ end
 -- 	NCSpeedLight.UIHelper.SetSpriteName(self.transform, "OutCard/Card/Sprite", MaJiangType.GetString(cardType));
 -- end
 --开始
+local isFirst = true;
 function MJPlayer:MJOT_BEGIN(data)
 	-- self:DisplayCards(true);
 end

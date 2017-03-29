@@ -210,6 +210,8 @@ public static class CustomSettings
          _GT(typeof(TipsDialog)),
          _GT(typeof(InvisiableOnTweenFinish)),
 
+         _GT(typeof(LuaComponent)),
+
 #endregion
 
         #region NGUI Component

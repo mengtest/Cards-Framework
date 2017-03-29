@@ -1,15 +1,14 @@
+require "NCSpeedLight.Modules.MaJiang.UI_HeroPlayer"
+require "NCSpeedLight.Modules.MaJiang.UI_OtherPlayer"
 UI_MaJiang = {
 	transform,
 	gameObject,
 }
-
 local this = UI_MaJiang
-
 function UI_MaJiang.Awake(go)
 	this.gameObject = go;
 	this.transform = go.transform;
 end
-
 function UI_MaJiang.Start()
 	NCSpeedLight.UIHelper.SetButtonEvent(this.transform, "bottom/right/DissolveRoom", UI_MaJiang.DissolveRoom);
 	NCSpeedLight.UIHelper.SetButtonEvent(this.transform, "center/Ready/Yes", UI_MaJiang.OnClickYes);
@@ -18,8 +17,19 @@ function UI_MaJiang.Start()
 	NCSpeedLight.UIHelper.SetButtonEvent(this.transform, "center/CastDice/Button", UI_MaJiang.OnClickCastDice);
 	UI_MaJiang.SetupPlayerUIVisiable();
 	UI_MaJiang.SetupReadyAndInvite(true, false, true);
+	-- UI_MaJiang.InitPlayerUI();
 end
-
+-- 初始化玩家的UI
+function UI_MaJiang.InitPlayerUI()
+	local playerO_Obj = this.transform:Find("Player0").gameObject;
+	local player1_Obj = this.transform:Find("Player1").gameObject;
+	local player2_Obj = this.transform:Find("Player2").gameObject;
+	local player3_Obj = this.transform:Find("Player3").gameObject;
+	LuaComponent.Add(playerO_Obj, UI_HeroPlayer);
+	LuaComponent.Add(player1_Obj, UI_OtherPlayer);
+	LuaComponent.Add(player2_Obj, UI_OtherPlayer);
+	LuaComponent.Add(player3_Obj, UI_OtherPlayer);
+end
 -- 设置player ui显示
 function UI_MaJiang.SetupPlayerUIVisiable()
 	if SharedVariable.FBInfo.m_FBTypeID == RoomType.R_1 then
@@ -27,7 +37,6 @@ function UI_MaJiang.SetupPlayerUIVisiable()
 		NCSpeedLight.UIHelper.SetActiveState(this.transform, "Player3", false);
 	end
 end
-
 -- 设置准备和邀请按钮的显示状态 , Yes/No/Invite
 function UI_MaJiang.SetupReadyAndInvite(...)
 	local states = {...};
@@ -35,7 +44,6 @@ function UI_MaJiang.SetupReadyAndInvite(...)
 	NCSpeedLight.UIHelper.SetActiveState(this.transform, "center/Ready/No", states[2]);
 	NCSpeedLight.UIHelper.SetActiveState(this.transform, "center/Ready/Invite", states[3]);
 end
-
 -- 设置掷骰子
 function UI_MaJiang.SetupCastDice(status)
 	Log.Info("UI_MaJiang.SetupCastDice: hero position is " .. MJPlayer.Hero.MJData.m_RoleData.m_Postion .. ",Banker position is " .. MJPlayer.Hero.HandCardInfo.m_bankerPos .. ",target status is " .. tostring(status));
@@ -49,7 +57,6 @@ function UI_MaJiang.SetupCastDice(status)
 		NCSpeedLight.UIHelper.SetActiveState(this.transform, "center/CastDice/Button", false);
 	end
 end
-
 function UI_MaJiang.DissolveRoom(go)
 	local option = StandardDialogOption:New();
 	option.OnClickOK =
@@ -61,22 +68,17 @@ function UI_MaJiang.DissolveRoom(go)
 	option.Title = "解散房间";
 	UIManager.OpenStandardDialog(option);
 end
-
 function UI_MaJiang.OnClickYes(go)
 	MJScene.RequestReady(true);
 end
-
 function UI_MaJiang.OnClickNo(go)
 	MJScene.RequestReady(false);
 end
-
 function UI_MaJiang.OnClickInvite(go)
 end
-
 function UI_MaJiang.OnClickCastDice(go)
 	MJScene.RequestCastDice();
 end
-
 function UI_MaJiang.ShowOperateView(operations)
 	local tempDic = {};
 	table.insert(tempDic, {"ChooseOperate/Peng1", false});
@@ -88,7 +90,6 @@ function UI_MaJiang.ShowOperateView(operations)
 	table.insert(tempDic, {"ChooseOperate/Gang3", false});
 	table.insert(tempDic, {"Hu", false});
 	table.insert(tempDic, {"DingHu", false});
-	
 	local EatNum = 0;
 	local GangNum = 0;
 	for i = 1, # operations do
@@ -110,40 +111,38 @@ function UI_MaJiang.ShowOperateView(operations)
 			tempDic["DingHu"] = true;
 		end
 	end
-	
--- 	Transform tempTrans = transform.Find("bottom/right/Operate");
--- 	Transform tempBg = transform.Find("bottom/right/Bg");
--- 	Transform tempChoose=tempTrans.FindChild("ChooseOperate");
--- 	if (tempTrans == null)
--- 	{
--- 		return;
--- 	}
-
--- 	Dictionary<string, bool>.Enumerator tempEnumerator = tempDic.GetEnumerator();
--- 	for (int i = 0; i < tempDic.Count; i++)
--- 	{
--- 		tempEnumerator.MoveNext();
--- 		KeyValuePair<string, bool> tempKvp = tempEnumerator.Current;
--- 		Helper.SetActiveState(tempTrans, tempKvp.Key, tempKvp.Value);
--- 	}
--- 	tempBg.gameObject.SetActive(true);
--- 	tempTrans.gameObject.SetActive(true);
--- 	UIGrid tempGrid = tempTrans.GetComponent<UIGrid>();
--- 	if (tempGrid != null)
--- 	{
--- 		tempGrid.Reposition();
--- 	}
--- 	UIGrid ChooseOpGrid = tempChoose.GetComponent<UIGrid>();
--- 	if (ChooseOpGrid != null) 
--- 	{
--- 		ChooseOpGrid.Reposition();
--- 	}
--- 	if (tempDic.ContainsKey("ChooseOperate/Gang2") || tempDic.ContainsKey("ChooseOperate/Gang3"))
--- 	{
--- 		Transform tempGang2Trans = tempTrans.FindChild("ChooseOperate/Gang2");
--- 		tempGang2Trans.localPosition = new Vector3(tempGang2Trans.localPosition.x - 56, 0, 0);
--- 		Transform tempGang3Trans = tempTrans.FindChild("ChooseOperate/Gang3");
--- 		tempGang3Trans.localPosition = new Vector3(tempGang3Trans.localPosition.x - 112, 0, 0);
--- 	}
--- }
-end
+	-- 	Transform tempTrans = transform.Find("bottom/right/Operate");
+	-- 	Transform tempBg = transform.Find("bottom/right/Bg");
+	-- 	Transform tempChoose=tempTrans.FindChild("ChooseOperate");
+	-- 	if (tempTrans == null)
+	-- 	{
+	-- 		return;
+	-- 	}
+	-- 	Dictionary<string, bool>.Enumerator tempEnumerator = tempDic.GetEnumerator();
+	-- 	for (int i = 0; i < tempDic.Count; i++)
+	-- 	{
+	-- 		tempEnumerator.MoveNext();
+	-- 		KeyValuePair<string, bool> tempKvp = tempEnumerator.Current;
+	-- 		Helper.SetActiveState(tempTrans, tempKvp.Key, tempKvp.Value);
+	-- 	}
+	-- 	tempBg.gameObject.SetActive(true);
+	-- 	tempTrans.gameObject.SetActive(true);
+	-- 	UIGrid tempGrid = tempTrans.GetComponent<UIGrid>();
+	-- 	if (tempGrid != null)
+	-- 	{
+	-- 		tempGrid.Reposition();
+	-- 	}
+	-- 	UIGrid ChooseOpGrid = tempChoose.GetComponent<UIGrid>();
+	-- 	if (ChooseOpGrid != null) 
+	-- 	{
+	-- 		ChooseOpGrid.Reposition();
+	-- 	}
+	-- 	if (tempDic.ContainsKey("ChooseOperate/Gang2") || tempDic.ContainsKey("ChooseOperate/Gang3"))
+	-- 	{
+	-- 		Transform tempGang2Trans = tempTrans.FindChild("ChooseOperate/Gang2");
+	-- 		tempGang2Trans.localPosition = new Vector3(tempGang2Trans.localPosition.x - 56, 0, 0);
+	-- 		Transform tempGang3Trans = tempTrans.FindChild("ChooseOperate/Gang3");
+	-- 		tempGang3Trans.localPosition = new Vector3(tempGang3Trans.localPosition.x - 112, 0, 0);
+	-- 	}
+	-- }
+end 
