@@ -3,25 +3,20 @@ HallScene =
 	Name = SceneType.HallScene,
 	IsInitialized = false,
 }
-
 function HallScene.Initialize()
 	if HallScene.IsInitialized == false then
 		HallScene.RegisterNetEvent();
 	end
 end
-
 function HallScene.Begin()
 	UIManager.CloseAllWindows();
 	AssetManager.LoadScene(SceneType.HallScene);
 	UIManager.OpenWindow('Hall/UI_Main');
 end
-
 function HallScene.Update()
 end
-
 function HallScene.End()
 end
-
 -- Create Room Logic Begin --
 function HallScene.RegisterNetEvent()
 	NetManager.RegisterEvent(GameMessage.GM_FBSERVERINFO_RETURN, HallScene.ReceiveFbInfo);
@@ -35,7 +30,6 @@ function HallScene.RegisterNetEvent()
 	NetManager.RegisterEvent(GameMessage.GM_NOTIFY_CHANGE_int32, HallScene.NotifyChangeSomethingInt32);
 	NetManager.RegisterEvent(GameMessage.GM_KICKOFF_PLAYER, HallScene.NotifyRe_Register);
 end
-
 function HallScene.UnRegisterNetEvent()
 	NetManager.UnregisterEvent(GameMessage.GM_FBSERVERINFO_RETURN, HallScene.ReceiveFbInfo);
 	NetManager.UnregisterEvent(GameMessage.GM_MAJIANG_NOTIFY_ASKFIREND, HallScene.ReceiveInvitePlayMaJiang);
@@ -48,7 +42,6 @@ function HallScene.UnRegisterNetEvent()
 	NetManager.UnregisterEvent(GameMessage.GM_NOTIFY_CHANGE_int32, HallScene.NotifyChangeSomethingInt32);
 	NetManager.UnregisterEvent(GameMessage.GM_KICKOFF_PLAYER, HallScene.NotifyRe_Register);
 end
-
 -- 判断当前玩家是否在副本内
 function HallScene.RequestPlayerInFb()
 	local msg = {
@@ -56,18 +49,16 @@ function HallScene.RequestPlayerInFb()
 	};
 	NetManager.SendEventToLogicServer(GameMessage.GM_PLAYERISINBATTLE_REQUEST, PBMessage.GM_Request, msg);
 end
-
 function HallScene.RequestCreateRoom()
 	local msg = {
 		m_roleid = Player.FullInfo.id,
-		m_fbtypeid = RoomType.R_1,
+		m_fbtypeid = MJRoomType.R_1,
 		m_fbplayway = "2,",
 		m_roomcount = 6,
 		m_playerCount = 4,
 	};
 	NetManager.SendEventToLogicServer(GameMessage.GM_MAJIANG_REQUEST, PBMessage.GMMJRequest, msg);
 end
-
 function HallScene.RequestLoginFb()
 	local msg = {
 		m_FBID = SharedVariable.FBInfo.m_FBID,
@@ -76,7 +67,6 @@ function HallScene.RequestLoginFb()
 	};
 	NetManager.SendEventToLogicServer(GameMessage.GM_LOGINFB_REQUEST, PBMessage.GM_LoginFBServer, msg);
 end
-
 function HallScene.RequestJoinRoom(roomID)
 	local msg =
 	{
@@ -87,11 +77,9 @@ function HallScene.RequestJoinRoom(roomID)
 	};
 	NetManager.SendEventToLogicServer(GameMessage.GM_MAJIANG_JOIN_VIPROOM, PBMessage.GM_AskFriend, msg);
 end
-
 function HallScene.ReceiveInvitePlayMaJiang(evt)
 	Log.Info("HallScene.ReceiveInvitePlayMaJiang");
 end
-
 function HallScene.ReturnEnterMaJiangResult(evt)
 	Log.Info("HallScene.ReturnEnterMaJiangResult");
 	local msg = NetManager.DecodeMsg(PBMessage.GM_Result, evt);
@@ -101,11 +89,9 @@ function HallScene.ReturnEnterMaJiangResult(evt)
 	local content = "MaJiang enter error" .. msg.m_Result;
 	UIManager.OpenTipsDialog(content)
 end
-
 function HallScene.ReturnRoomRecord(evt)
 	Log.Info("HallScene.ReturnRoomRecord");
 end
-
 function HallScene.ReturnPlayerInFb(evt)
 	Log.Info("HallScene.ReturnPlayerInFb");
 	local msg = NetManager.DecodeMsg(PBMessage.GM_BattleFBServerInfo, evt);
@@ -122,22 +108,20 @@ function HallScene.ReturnPlayerInFb(evt)
 		else
 			HallScene.RequestCreateRoom();
 		end
-	-- local isInMaJiangRoom = msg.m_FBTypeID >= RoomType.R_1 and msg.m_FBTypeID <= RoomType.R_2;
-	-- if msg.m_FBTypeID > 0 and isInMaJiangRoom == false then
-	-- 	return;
-	-- end
-	-- local mFirstRequest = false;
-	-- if mFirstRequest then
-	-- else
-	-- 	Player:NotifyEvent(PlayerEventType.PE_MjRoomExist, msg);
-	-- end
+		-- local isInMaJiangRoom = msg.m_FBTypeID >= MJRoomType.R_1 and msg.m_FBTypeID <= MJRoomType.R_2;
+		-- if msg.m_FBTypeID > 0 and isInMaJiangRoom == false then
+		-- 	return;
+		-- end
+		-- local mFirstRequest = false;
+		-- if mFirstRequest then
+		-- else
+		-- 	Player:NotifyEvent(PlayerEventType.PE_MjRoomExist, msg);
+		-- end
 	end
 end
-
 function HallScene.ReturnAgainEnterFb(evt)
 	Log.Info("HallScene.ReturnAgainEnterFb");
 end
-
 function HallScene.ReceiveFbInfo(evt)
 	Log.Info("HallScene.ReceiveFbInfo");
 	local msg = NetManager.DecodeMsg(PBMessage.GM_BattleFBServerInfo, evt);
@@ -159,7 +143,6 @@ function HallScene.ReceiveFbInfo(evt)
 		end
 	end
 end
-
 function HallScene.ReceiveRespondLoginBattle(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GM_LoginFBServerResult, evt);
 	if msg == false then return end;
@@ -169,15 +152,12 @@ function HallScene.ReceiveRespondLoginBattle(evt)
 		Player:NotifyEvent(PlayerEventType.PE_ReturnLoginFB, msg);
 	end
 end
-
 function HallScene.NotifyChangeSomething(evt)
 	Log.Info("HallScene.NotifyChangeSomething");
 end
-
 function HallScene.NotifyChangeSomethingInt32(evt)
 	Log.Info("HallScene.NotifyChangeSomethingInt32");
 end
-
 function HallScene.NotifyRe_Register(evt)
 	Log.Info("HallScene.NotifyRe_Register");
 end

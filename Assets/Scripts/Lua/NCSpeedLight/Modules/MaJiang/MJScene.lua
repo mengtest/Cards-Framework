@@ -5,6 +5,8 @@ MJScene =
 	Players = nil,
 	CurrentOperator = nil,
 	LastOperator = nil,
+	CardWidth = 1,
+	CardHeight = 1.2,
 }
 function MJScene.Initialize()
 	if MJScene.IsInitialized == false then
@@ -72,9 +74,12 @@ function MJScene.UnRegisterNetEvent()
 	NetManager.UnregisterEvent(GameMessage.GM_PlayerRollTouZi_Request, MJScene.ReturnCastDice);
 	NetManager.UnregisterEvent(GameMessage.GM_MJOperator_Error, MJScene.ReturnOperateError);
 end
-function MJScene.AddPlayer(ui, player)
-	if MJScene.Players[ui] == nil then
-		MJScene.Players[ui] = player;
+function MJScene.HasPlayer(id)
+	return MJScene.Players[id] == nil;
+end
+function MJScene.AddPlayer(id, player)
+	if MJScene.Players[id] == nil then
+		MJScene.Players[id] = player;
 	end
 end
 function MJScene.RemovePlayer(id)
@@ -112,6 +117,14 @@ function MJScene.GetPlayerByID(id)
 			return value;
 		end
 	end
+end
+-- 获取玩家的个数
+function MJScene.GetPlayerCount()
+	local count = 0;
+	for key, value in pairs(MJScene.Players) do
+		count = count + 1;
+	end
+	return count;
 end
 -- 当前是否是我的回合
 function MJScene.IsMyTurn()
@@ -228,57 +241,41 @@ function MJScene.ReturnGamePlayerInfo(evt)
 	local roomMasterID = msg.m_RoomMasterID;
 	Log.Info("MJScene.ReturnGamePlayerInfo: RoomMasterID is " .. roomMasterID .. ",current player count is " .. # msg.m_Character);
 	SharedVariable.FBEntryInfo = msg;
-	-- 计算desk offset,并设置骰子面板的朝向
-	if MJSceneController.IsSetupDicePanelRotation == false then
+	local hero = MJScene.GetPlayerByID(Player.FullInfo.id);
+	if hero == nil then
+		-- 先创建自己的数据
 		for i = 1, # SharedVariable.FBEntryInfo.m_Character do
 			local playerEntry = SharedVariable.FBEntryInfo.m_Character[i];
 			if playerEntry ~= nil and playerEntry.m_RoleData ~= nil and playerEntry.m_RoleData.m_Roleid == Player.FullInfo.id then
-				local pos = playerEntry.m_RoleData.m_Postion;
-				SharedVariable.DeskOffset = pos;
-				if SharedVariable.FBInfo.m_FBTypeID == RoomType.R_1 then
-					SharedVariable.DeskOffset = SharedVariable.DeskOffset * 2;
-				end
+				hero = MJPlayer.New();
+				hero:Initialize(playerEntry, true);
+				-- hero.ID = playerEntry.m_RoleData.m_Roleid;
+				-- MJPlayer.Hero = hero;
+				-- hero.RealPosition = playerEntry.m_RoleData.m_Postion;
+				-- hero:SetMJData(playerEntry);
+				-- local vals = UI_MaJiang.GetPlayerUI(hero.RealPosition);
+				-- hero.UI = vals[1];
+				-- hero.UITransform = vals[2];
+				-- hero.UIPosition = vals[3];
+				-- hero.Position = hero.RealPosition;
+				-- hero.UI:Initialize(hero);
+				-- hero:SetupUI();
+				MJScene.AddPlayer(hero.ID, hero);
+				Log.Info("MJScene.ReturnGamePlayerInfo: Create hero id is " .. hero.ID .. ",server position is " .. hero.RealPosition);
 			end
 		end
-		Log.Info("MJScene.ReturnGamePlayerInfo: desk offset is " .. SharedVariable.DeskOffset);
-		-- MJSceneController.SetupDicePanelDirection();
-		-- MJSceneController.IsSetupDicePanelRotation = true;
 	end
-	-- 设置玩家的UI
+	-- 创建其他玩家
 	for i = 1, # SharedVariable.FBEntryInfo.m_Character do
 		local playerEntry = SharedVariable.FBEntryInfo.m_Character[i];
 		if playerEntry ~= nil and playerEntry.m_RoleData ~= nil then
-			local pos = playerEntry.m_RoleData.m_Postion;
-			local uiIndex = 0;
-			if SharedVariable.FBInfo.m_FBTypeID == RoomType.R_1 then
-				if pos * 2 - SharedVariable.DeskOffset == 0 then
-					uiIndex = 0;
-				else
-					uiIndex = 2;
-				end
-			elseif SharedVariable.FBInfo.m_FBTypeID == RoomType.R_2 then
-				uiIndex = pos + 4 - SharedVariable.DeskOffset;
-				uiIndex = uiIndex % 4;
+			local player = MJScene.GetPlayerByID(playerEntry.m_RoleData.m_Roleid);
+			if player == nil then
+				player = MJPlayer.New();
+				player:Initialize(playerEntry);
+				MJScene.AddPlayer(player.ID, player);
+				Log.Info("MJScene.ReturnGamePlayerInfo: Create a player id is " .. player.ID .. ",server position is " .. player.RealPosition);
 			end
-			if uiIndex == 0 then
-				UI_Player0.Player:SetMJData(playerEntry);
-				MJScene.AddPlayer(UI_Player0.transform, UI_Player0.Player);
-				UI_Player0.Player:SetupUI();
-			elseif uiIndex == 1 then
-				UI_Player1.Player:SetMJData(playerEntry);
-				MJScene.AddPlayer(UI_Player1.transform, UI_Player1.Player);
-				UI_Player1.Player:SetupUI();
-			elseif uiIndex == 2 then
-				UI_Player2.Player:SetMJData(playerEntry);
-				MJScene.AddPlayer(UI_Player2.transform, UI_Player2.Player);
-				UI_Player2.Player:SetupUI();
-			elseif uiIndex == 3 then
-				UI_Player3.Player:SetMJData(playerEntry);
-				MJScene.AddPlayer(UI_Player3.transform, UI_Player3.Player);
-				UI_Player3.Player:SetupUI();
-			end
-			local str = "玩家 " .. playerEntry.m_RoleData.m_Name .. " 进入房间";
-			UIManager.OpenTipsDialog(str);
 		end
 	end
 	MJSceneController.SetupDicePanelDirection();

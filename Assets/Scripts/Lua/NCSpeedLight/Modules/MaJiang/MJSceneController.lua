@@ -8,6 +8,10 @@ MJSceneController = {
 	DeskAnimationTime = 1.333,
 	DiceAnimationTimer = nil,
 	DiceAnimationTime = 1.25,
+	-- 场景中所有的牌
+	AllCards = nil,
+	-- 场景中所有的牌的物体对象
+	AllCardsObj = nil,
 }
 local this = MJSceneController;
 function MJSceneController.Awake(go)
@@ -103,7 +107,7 @@ end
 function MJSceneController.SetupDicePanelDirection()
 	if MJSceneController.IsSetupDicePanelRotation == false then
 		MJSceneController.IsSetupDicePanelRotation = true;
-		local y = MJPlayer.Hero.MJData.m_RoleData.m_Postion * 90;
+		local y = MJPlayer.Hero.Position * 90;
 		local panel = MJSceneController.transform:Find("majiangzhuo/direction");
 		local eulerAngles = UnityEngine.Vector3(0, y + panel.rotation.eulerAngles.y, 0);
 		local rotation = UnityEngine.Quaternion.Euler(eulerAngles)
@@ -120,11 +124,11 @@ function MJSceneController.HideArrow()
 end
 -- 初始化桌子上的牌
 function MJSceneController.ReadCard()
-	if MJSceneController.mCard == nil then
-		MJSceneController.mCard = {};
+	if MJSceneController.AllCardsObj == nil then
+		MJSceneController.AllCardsObj = {};
 	end
-	if MJSceneController.mAllCard == nil then
-		MJSceneController.mAllCard = {};
+	if MJSceneController.AllCards == nil then
+		MJSceneController.AllCards = {};
 	end
 	MJSceneController.InitMJCards("majiangzhuo/Card/Wan", MaJiangType.MJ_1_WAN);
 	MJSceneController.InitMJCards("majiangzhuo/Card/Tiao", MaJiangType.MJ_1_TIAO);
@@ -144,7 +148,7 @@ function MJSceneController.InitMJCards(path, startCardType)
 		local tempCardType = i + startCardType;
 		local tempCardTran = tempTrans:GetChild(i);
 		local tempCardObj = tempCardTran.gameObject;
-		table.insert(this.mCard, tempCardObj);
+		table.insert(this.AllCardsObj, tempCardObj);
 		local mjCard = MJSceneController.CreateMJCard(tempCardObj, tempCardType);
 		local tempList = {};
 		table.insert(tempList, mjCard);
@@ -154,11 +158,12 @@ function MJSceneController.InitMJCards(path, startCardType)
 			tempCloneTrans.localPosition = tempCardTran.localPosition;
 			tempCloneTrans.localEulerAngles = tempCardTran.localEulerAngles;
 			tempCloneTrans.localScale = tempCardTran.localScale;
-			table.insert(this.mCard, tempCloneObj);
+			table.insert(this.AllCardsObj, tempCloneObj);
 			mjCard = MJSceneController.CreateMJCard(tempCloneObj, tempCardType);
 			table.insert(tempList, mjCard);
 		end
-		table.insert(this.mAllCard, {tempCardType, tempList});
+		this.AllCards[tempCardType] = tempList;
+		-- table.insert(this.AllCards, {tempCardType, tempList});
 	end
 end
 function MJSceneController.CreateMJCard(obj, type)
@@ -168,4 +173,15 @@ function MJSceneController.CreateMJCard(obj, type)
 	card.Status = MJCardStatus.MJCS_Begin;
 	card.Type = type;
 	return card;
+end
+-- 获取一张桌面上牌的对象
+function MJSceneController.GetCard(cardData)
+	local cards = this.AllCards[cardData.m_Type];
+	for i = 1, # cards do
+		local card = cards[i];
+		if card.ID == - 1 then
+			card.ID = cardData.m_Index;
+			return card;
+		end
+	end
 end 

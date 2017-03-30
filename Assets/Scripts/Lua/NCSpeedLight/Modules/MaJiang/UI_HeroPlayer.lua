@@ -8,26 +8,21 @@ UI_HeroPlayer = {
 	OutCardAnimation = nil,
 	AnimationQueue = nil,
 }
-local this = UI_HeroPlayer;
-this.__index = UI_HeroPlayer;
+UI_HeroPlayer.__index = UI_HeroPlayer;
 function UI_HeroPlayer.New()
 	local obj = {};
-	setmetatable(obj, this);
+	setmetatable(obj, UI_HeroPlayer);
 	return obj;
 end
 function UI_HeroPlayer:Awake(go)
-	this.gameObject = go;
-	this.transform = go.transform;
-	this.Player = MJPlayer.New();
-	MJPlayer.Hero = this.Player;
-	Log.Info("UI_HeroPlayer.Awake: player instance is " .. tostring(this.Player));
-	this.Player.UICardStartPos = UnityEngine.Vector3(- 468, 0, 0);
-	this.Player.UICardOffset = UnityEngine.Vector3(72, 0, 0);
-	this.Player:Initialize(go.transform);
-	this.AnimationQueue = AnimationQueue.New();
+	self.gameObject = go;
+	self.transform = go.transform;
+	-- self.Player.UICardStartPos = UnityEngine.Vector3(- 468, 0, 0);
+	-- self.Player.UICardOffset = UnityEngine.Vector3(72, 0, 0);
+	self.AnimationQueue = AnimationQueue.New();
 end
 function UI_HeroPlayer:Start()
-	local cardGridPanel = this.transform:Find("Cards/CardGrid");
+	local cardGridPanel = self.transform:Find("Cards/CardGrid");
 	local childCount = cardGridPanel.childCount;
 	for i = 0, cardGridPanel.childCount - 1 do
 		local cardObj = cardGridPanel:GetChild(i)
@@ -38,39 +33,43 @@ function UI_HeroPlayer:Start()
 	end
 end
 function UI_HeroPlayer:OnDestroy()
-	this.gameObject = nil;
-	this.transform = nil;
-	this.Player:OnUIDestroy();
-	this.Player = nil;
-	MJPlayer.Hero = nil;
-	this.DragingCardObj = nil;
+	self.gameObject = nil;
+	self.transform = nil;
+	if self.Player ~= nil then
+		self.Player:OnUIDestroy();
+	end
+	self.Player = nil;
+	UI_HeroPlayer.DragingCardObj = nil;
+end
+function UI_HeroPlayer:Initialize(player)
+	self.Player = player;
 end
 function UI_HeroPlayer.OnStartDragCard(go)
 	-- Log.Info("UI_HeroPlayer.OnStartDragCard: " .. go.name);
-	if this.DragingCardObj ~= nil then
-		UnityEngine.GameObject.Destroy(this.DragingCardObj);
+	if UI_HeroPlayer.DragingCardObj ~= nil then
+		UnityEngine.GameObject.Destroy(UI_HeroPlayer.DragingCardObj);
 	end
-	this.DragingCardObj = UnityEngine.GameObject.Instantiate(go);
-	this.DragingCardObj.name = "DragingCard";
-	this.DragingCardObj.transform:SetParent(UI_MaJiang.transform);
-	this.DragingCardObj.transform.localPosition = UnityEngine.Vector3.zero;
-	this.DragingCardObj.transform.localScale = UnityEngine.Vector3.one;
-	this.DragingCardObj.transform.localRotation = UnityEngine.Quaternion.identity;
-	this.DragingCardObj.transform.position = go.transform.position;
+	UI_HeroPlayer.DragingCardObj = UnityEngine.GameObject.Instantiate(go);
+	UI_HeroPlayer.DragingCardObj.name = "DragingCard";
+	UI_HeroPlayer.DragingCardObj.transform:SetParent(UI_MaJiang.transform);
+	UI_HeroPlayer.DragingCardObj.transform.localPosition = UnityEngine.Vector3.zero;
+	UI_HeroPlayer.DragingCardObj.transform.localScale = UnityEngine.Vector3.one;
+	UI_HeroPlayer.DragingCardObj.transform.localRotation = UnityEngine.Quaternion.identity;
+	UI_HeroPlayer.DragingCardObj.transform.position = go.transform.position;
 end
 function UI_HeroPlayer.OnDragCard(go, delta)
-	if this.DragingCardObj ~= nil then
+	if UI_HeroPlayer.DragingCardObj ~= nil then
 		delta = delta * UIManager.UIRoot.pixelSizeAdjustment;
 		local deltaPos = UnityEngine.Vector3(delta.x, delta.y, 0);
-		local newPos = this.DragingCardObj.transform:TransformPoint(deltaPos);
-		this.DragingCardObj.transform.position = newPos;
+		local newPos = UI_HeroPlayer.DragingCardObj.transform:TransformPoint(deltaPos);
+		UI_HeroPlayer.DragingCardObj.transform.position = newPos;
 	end
 end
 function UI_HeroPlayer.OnStopDragCard(go)
 	-- Log.Info("UI_HeroPlayer.OnStopDragCard: " .. go.name);
-	if this.DragingCardObj ~= nil then
-		this.DragingCardObj:SetActive(false);
-		if this.DragingCardObj.transform.localPosition.y < - 105 then
+	if UI_HeroPlayer.DragingCardObj ~= nil then
+		UI_HeroPlayer.DragingCardObj:SetActive(false);
+		if UI_HeroPlayer.DragingCardObj.transform.localPosition.y < - 105 then
 			return;
 		end
 	end
@@ -87,33 +86,38 @@ function UI_HeroPlayer.OnStopDragCard(go)
 	end
 end
 -- 播放出牌效果
-function UI_HeroPlayer.PlayOutCardAnimation(cardType)
-	local outCardTran = this.transform:Find("OutCard/Card");
+function UI_HeroPlayer:PlayOutCardAnimation(card)
+	local outCardTran = self.transform:Find("OutCard/Card");
 	local tweener = outCardTran:GetComponent(typeof(TweenTransform));
 	local tweenerUtils = outCardTran:GetComponent(typeof(NCSpeedLight.InvisiableOnTweenFinish));
 	tweenerUtils.OnFinish = function()
-		if this.DragingCardObj ~= nil then
-			UnityEngine.GameObject.Destroy(this.DragingCardObj);
+		if UI_HeroPlayer.DragingCardObj ~= nil then
+			UnityEngine.GameObject.Destroy(UI_HeroPlayer.DragingCardObj);
 		end
 	end
 	tweener.enabled = true;
 	tweener.duration = 0.5;
-	tweener.from = this.DragingCardObj.transform;
+	tweener.from = UI_HeroPlayer.DragingCardObj.transform;
 	tweener:ResetToBeginning();
-	NCSpeedLight.UIHelper.SetSpriteName(outCardTran, "Sprite", MaJiangType.GetString(cardType));
+	NCSpeedLight.UIHelper.SetSpriteName(outCardTran, "Sprite", MaJiangType.GetString(card.m_Type));
 	outCardTran.gameObject:SetActive(true);
+	local tableCard = MJSceneController.GetCard(card);
+	local cardPos = self.Player:GetTableCardPos(self.Player.OutCardCount);
+	tableCard.GO.transform.position = cardPos;
+	local rotation = UnityEngine.Quaternion.Euler(self.Player.TableCardRotation);
+	tableCard.GO.transform.rotation = rotation;
 end
 -- 播放插牌动画
-function UI_HeroPlayer.PlayInsertCardAnimation(outCardPosition, newCardPosition, newCardTargetPosition)
+function UI_HeroPlayer:PlayInsertCardAnimation(outCardPosition, newCardPosition, newCardTargetPosition)
 	local actionLine = ActionLine.New(ActionLinePlayMode.Queue, true);
 	Log.Info("UI_HeroPlayer.PlayInsertCardAnimation: OUTCARD AT " .. tostring(outCardPosition) .. ",NEWCARD FROM " .. tostring(newCardPosition) .. " TO " .. tostring(newCardTargetPosition));
-	local outCardObj = this.GetCardObjByPosition(outCardPosition);
-	local newCardObj = this.GetCardObjByPosition(newCardPosition);
+	local outCardObj = self:GetCardObjByPosition(outCardPosition);
+	local newCardObj = self:GetCardObjByPosition(newCardPosition);
 	if outCardPosition == newCardPosition then
 		outCardObj:SetActive(false);
 		return;
 	end
-	local targetCardObj = this.GetCardObjByPosition(newCardTargetPosition);
+	local targetCardObj = self:GetCardObjByPosition(newCardTargetPosition);
 	local newCardDownPos1 = newCardObj.transform.localPosition;
 	local newCardUpPos1 = UnityEngine.Vector3(newCardObj.transform.localPosition.x, 100, newCardObj.transform.localPosition.z);
 	local newCardDownPos2 = targetCardObj.transform.localPosition;
@@ -165,7 +169,7 @@ function UI_HeroPlayer.PlayInsertCardAnimation(outCardPosition, newCardPosition,
 			offsetX = - 72;
 			for i = outCardPosition, newCardTargetPosition do
 				if i ~= outCardPosition then
-					local cardObj = this.GetCardObjByPosition(i);
+					local cardObj = self:GetCardObjByPosition(i);
 					local cardObjNewPos = UnityEngine.Vector3(cardObj.transform.localPosition.x + offsetX, cardObj.transform.localPosition.y, cardObj.transform.localPosition.z);
 					sp = SpringPosition.Begin(cardObj, cardObjNewPos, 15);
 				end
@@ -174,7 +178,7 @@ function UI_HeroPlayer.PlayInsertCardAnimation(outCardPosition, newCardPosition,
 			offsetX = 72;
 			for i = newCardTargetPosition, outCardPosition do
 				if i ~= outCardPosition then
-					local cardObj = this.GetCardObjByPosition(i);
+					local cardObj = self:GetCardObjByPosition(i);
 					local cardObjNewPos = UnityEngine.Vector3(cardObj.transform.localPosition.x + offsetX, cardObj.transform.localPosition.y, cardObj.transform.localPosition.z);
 					sp = SpringPosition.Begin(cardObj, cardObjNewPos, 15);
 				end
@@ -193,7 +197,7 @@ function UI_HeroPlayer.PlayInsertCardAnimation(outCardPosition, newCardPosition,
 	local renameCardObjsAction = Action.New();
 	renameCardObjsAction.OnBegin = function(line)
 		Log.Info("UI_HeroPlayer.PlayInsertCardAnimation: renameCardObjsAction.OnBegin -- 按照x坐标的升序命名牌的名字");
-		local gridTran = this.transform:Find("Cards/CardGrid");
+		local gridTran = self.transform:Find("Cards/CardGrid");
 		local cardObjs = {};
 		for i = 0, gridTran.childCount - 1 do
 			table.insert(cardObjs, gridTran:GetChild(i));
@@ -215,26 +219,26 @@ function UI_HeroPlayer.PlayInsertCardAnimation(outCardPosition, newCardPosition,
 	actionLine:AddAction(newCardDownAction);
 	actionLine:AddAction(offsetCardsAction);
 	actionLine:AddAction(renameCardObjsAction);
-	this.AnimationQueue:Push(actionLine);
-	this.AnimationQueue:Resume();
+	self.AnimationQueue:Push(actionLine);
+	self.AnimationQueue:Resume();
 end
 -- 播放抓牌效果
-function UI_HeroPlayer.PlayGetCardAnimation()
+function UI_HeroPlayer:PlayGetCardAnimation()
 	local actionLine = ActionLine.New(ActionLinePlayMode.Parallel, true);
 	local firstAction = Action.New(0, 0.1);
 	firstAction.OnBegin = function()
-		local cardPos = this.Player:GetHandCardCount();
-		local cardObj = this.GetCardObjByPosition(cardPos);
-		local card = this.Player:GetHandCardByPosition(cardPos);
+		local cardPos = self.Player:GetHandCardCount();
+		local cardObj = self:GetCardObjByPosition(cardPos);
+		local card = self.Player:GetHandCardByPosition(cardPos);
 		UIHelper.SetSpriteName(cardObj.transform, "Sprite", MaJiangType.GetString(card.m_Type));
 		cardObj:SetActive(true);
-		local leftCardObj = this.GetCardObjByPosition(cardPos - 1);
+		local leftCardObj = self:GetCardObjByPosition(cardPos - 1);
 	end;
 	local shakeAction = Action.New(0, 0.5);
 	shakeAction.OnBegin = function()
 		Log.Info("UI_HeroPlayer.PlayGetCardAnimation: shakeAction.OnBegin -- 抖动牌面");
-		local cardPos = this.Player:GetHandCardCount();
-		local cardObj = this.GetCardObjByPosition(cardPos);
+		local cardPos = self.Player:GetHandCardCount();
+		local cardObj = self:GetCardObjByPosition(cardPos);
 		local rotationFrom = UnityEngine.Quaternion.Euler(UnityEngine.Vector3(0, 0, 15));
 		local rotationTo = UnityEngine.Quaternion.Euler(UnityEngine.Vector3(0, 0, 0));
 		cardObj.transform.rotation = rotationFrom;
@@ -243,8 +247,8 @@ function UI_HeroPlayer.PlayGetCardAnimation()
 	local downAction = Action.New(0, 0.5);
 	downAction.OnBegin = function()
 		Log.Info("UI_HeroPlayer.PlayGetCardAnimation: downAction.OnBegin -- 下落至槽位中");
-		local cardPos = this.Player:GetHandCardCount();
-		local cardObj = this.GetCardObjByPosition(cardPos);
+		local cardPos = self.Player:GetHandCardCount();
+		local cardObj = self:GetCardObjByPosition(cardPos);
 		local positionFrom = UnityEngine.Vector3(cardObj.transform.localPosition.x, 70, cardObj.transform.localPosition.z);
 		local positionTo = cardObj.transform.localPosition;
 		cardObj.transform.localPosition = positionFrom;
@@ -253,12 +257,12 @@ function UI_HeroPlayer.PlayGetCardAnimation()
 	actionLine:AddAction(firstAction);
 	actionLine:AddAction(shakeAction);
 	actionLine:AddAction(downAction);
-	this.AnimationQueue:Push(actionLine);
-	this.AnimationQueue:Resume();
+	self.AnimationQueue:Push(actionLine);
+	self.AnimationQueue:Resume();
 end
 -- 根据索引获取牌的对象
-function UI_HeroPlayer.GetCardObjByPosition(pos)
-	local tran = this.transform:Find("Cards/CardGrid/" .. tostring(pos));
+function UI_HeroPlayer:GetCardObjByPosition(pos)
+	local tran = self.transform:Find("Cards/CardGrid/" .. tostring(pos));
 	if tran ~= nil then
 		return	tran.gameObject;
 	else

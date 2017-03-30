@@ -11,17 +11,19 @@ function UI_OtherPlayer.New()
 	return obj;
 end
 function UI_OtherPlayer:Awake(go)
-	this.gameObject = go;
-	this.transform = go.transform;
-	this.Player = MJPlayer.New();
-	Log.Info("UI_OtherPlayer.Awake: player instance is " .. tostring(this.Player));
-	this.Player:Initialize(this.transform);
+	self.gameObject = go;
+	self.transform = go.transform;
 end
 function UI_OtherPlayer:Start()
 end
 function UI_OtherPlayer:OnDestroy()
-	this.gameObject = nil;
-	this.transform = nil;
-	this.Player:OnUIDestroy();
-	this.Player = nil;
+	self.gameObject = nil;
+	self.transform = nil;
+	if self.Player ~= nil then
+		self.Player:OnUIDestroy();
+		self.Player = nil;
+	end
+end
+function UI_OtherPlayer:Initialize(player)
+	self.Player = player;
 end 

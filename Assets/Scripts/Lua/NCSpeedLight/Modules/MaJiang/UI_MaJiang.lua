@@ -3,6 +3,10 @@ require "NCSpeedLight.Modules.MaJiang.UI_OtherPlayer"
 UI_MaJiang = {
 	transform,
 	gameObject,
+	UI_Player0,
+	UI_Player1,
+	UI_Player2,
+	UI_Player3,
 }
 local this = UI_MaJiang
 function UI_MaJiang.Awake(go)
@@ -17,22 +21,36 @@ function UI_MaJiang.Start()
 	NCSpeedLight.UIHelper.SetButtonEvent(this.transform, "center/CastDice/Button", UI_MaJiang.OnClickCastDice);
 	UI_MaJiang.SetupPlayerUIVisiable();
 	UI_MaJiang.SetupReadyAndInvite(true, false, true);
-	-- UI_MaJiang.InitPlayerUI();
+	UI_MaJiang.InitPlayerUI();
 end
 -- 初始化玩家的UI
 function UI_MaJiang.InitPlayerUI()
-	local playerO_Obj = this.transform:Find("Player0").gameObject;
-	local player1_Obj = this.transform:Find("Player1").gameObject;
-	local player2_Obj = this.transform:Find("Player2").gameObject;
-	local player3_Obj = this.transform:Find("Player3").gameObject;
-	LuaComponent.Add(playerO_Obj, UI_HeroPlayer);
-	LuaComponent.Add(player1_Obj, UI_OtherPlayer);
-	LuaComponent.Add(player2_Obj, UI_OtherPlayer);
-	LuaComponent.Add(player3_Obj, UI_OtherPlayer);
+	UI_MaJiang.UI_Player0 = this.transform:Find("Player0");
+	UI_MaJiang.UI_Player1 = this.transform:Find("Player1");
+	UI_MaJiang.UI_Player2 = this.transform:Find("Player2");
+	UI_MaJiang.UI_Player3 = this.transform:Find("Player3");
+	LuaComponent.Add(UI_MaJiang.UI_Player0.gameObject, UI_HeroPlayer);
+	LuaComponent.Add(UI_MaJiang.UI_Player1.gameObject, UI_OtherPlayer);
+	LuaComponent.Add(UI_MaJiang.UI_Player2.gameObject, UI_OtherPlayer);
+	LuaComponent.Add(UI_MaJiang.UI_Player3.gameObject, UI_OtherPlayer);
+end
+function UI_MaJiang.GetPlayerUI(realPos)
+	local heroPos = MJPlayer.Hero.MJData.m_RoleData.m_Postion;
+	if SharedVariable.FBInfo.m_FBTypeID == MJRoomType.R_1 then
+		if heroPos == realPos then
+			local uiCom = LuaComponent.Get(UI_MaJiang.UI_Player0.gameObject, UI_HeroPlayer);
+			return {uiCom, UI_MaJiang.UI_Player0, 0};
+		else
+			local uiCom = LuaComponent.Get(UI_MaJiang.UI_Player2.gameObject, UI_OtherPlayer);
+			return {uiCom, UI_MaJiang.UI_Player2, 2};
+		end
+	else
+		return nil;
+	end
 end
 -- 设置player ui显示
 function UI_MaJiang.SetupPlayerUIVisiable()
-	if SharedVariable.FBInfo.m_FBTypeID == RoomType.R_1 then
+	if SharedVariable.FBInfo.m_FBTypeID == MJRoomType.R_1 then
 		NCSpeedLight.UIHelper.SetActiveState(this.transform, "Player1", false);
 		NCSpeedLight.UIHelper.SetActiveState(this.transform, "Player3", false);
 	end

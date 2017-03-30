@@ -1,16 +1,15 @@
-RoomType =
+MJRoomType =
 {
 	R_1 = 10002,
 	R_2 = 10003,
+	R_3 = 10004,
 }
-
 MJPlayerType =
 {
 	Hero = 0,
 	Player = 1,
 	Robot = 2,
 }
-
 SceneType =
 {
 	DownloadScene = "DownloadScene",
@@ -18,7 +17,6 @@ SceneType =
 	HallScene = "HallScene",
 	MJScene = "MJScene",
 }
-
 UIType = {
 	UI_MaJiang = "MaJiang/UI_MaJiang",
 	UI_Share = "Hall/UI_Share",
@@ -28,7 +26,6 @@ UIType = {
 	UI_Load = "Dialog/UI_Load",
 	UI_DissolveRoom = "MaJiang/UI_DissolveRoom",
 }
-
 MaJiangType =
 {
 	MJ_1_WAN = 0,
@@ -66,7 +63,6 @@ MaJiangType =
 	MJ_FA = 32,
 	MJ_BAI = 33,
 	MJ_NUM = 34,
-	
 	GetString = function(index)
 		for key, value in pairs(MaJiangType) do
 			if value == index then
@@ -75,7 +71,6 @@ MaJiangType =
 		end
 	end
 };
-
 MaJiangOperatorType =
 {
 	--开始
@@ -106,7 +101,6 @@ MaJiangOperatorType =
 	MJOT_HU = 12,
 	--定胡
 	MJOT_DingHU = 13,
-	
 	GetString = function(index)
 		for key, value in pairs(MaJiangOperatorType) do
 			if value == index then
@@ -114,11 +108,7 @@ MaJiangOperatorType =
 			end
 		end
 	end
-	
 };
-
-
-
 PlayerEventType =
 {
 	PE_None = 0,
@@ -436,4 +426,4 @@ PlayerEventType =
 	PE_UI_Gain_Center = 312,
 	PE_UI_NotifyCZ = 313,
 	PE_END = 314,
-}
+} 

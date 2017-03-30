@@ -21,5 +21,6 @@ MJCard.__index = MJCard;
 function MJCard.New()
 	local obj = {};
 	setmetatable(obj, MJCard);
+	obj.ID = - 1;
 	return obj;
 end
