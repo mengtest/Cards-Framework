@@ -167,10 +167,10 @@ function MJSceneController.InitMJCards(path, startCardType)
 	end
 end
 function MJSceneController.CreateMJCard(obj, type)
-	local card = MJCard.New();
+	local card = MJTableCard.New();
 	card.GO = obj;
 	card.RoleID = - 1;
-	card.Status = MJCardStatus.MJCS_Begin;
+	card.Status = MJTableCardStatus.MJCS_Begin;
 	card.Type = type;
 	return card;
 end
