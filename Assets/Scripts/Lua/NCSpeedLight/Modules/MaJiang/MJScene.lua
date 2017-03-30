@@ -223,12 +223,8 @@ function MJScene.RequestMJOperate_OutCard(card)
 	NetManager.SendEventToLogicServer(GameMessage.GM_CLIENT_REQUEST_OPERATOR, PBMessage.GM_OperatorData, msg);
 end
 -- 请求麻将操作
-function MJScene.RequestMJOperate(operateType)
-	local cardNum = # MJPlayer.Hero.HandCardInfo.m_HandCard;
-	Log.Info("MJScene.RequestMJOperate: operate type is " .. MaJiangOperatorType.GetString(operateType) .. ",current cards count is " .. cardNum);
-	local msg = {};
-	msg.m_OperatorType = operateType;
-	msg.m_CardNum = # MJPlayer.Hero.HandCardInfo.m_HandCard;
+function MJScene.RequestMJOperate(msg)
+	Log.Info("MJScene.RequestMJOperate: operate type is " .. MaJiangOperatorType.GetString(msg.m_OperatorType));
 	NetManager.SendEventToLogicServer(GameMessage.GM_CLIENT_REQUEST_OPERATOR, PBMessage.GM_OperatorData, msg);
 end
 -- 返回玩家位置，庄家是谁，有玩家进入就会调用一次
@@ -249,17 +245,6 @@ function MJScene.ReturnGamePlayerInfo(evt)
 			if playerEntry ~= nil and playerEntry.m_RoleData ~= nil and playerEntry.m_RoleData.m_Roleid == Player.FullInfo.id then
 				hero = MJPlayer.New();
 				hero:Initialize(playerEntry, true);
-				-- hero.ID = playerEntry.m_RoleData.m_Roleid;
-				-- MJPlayer.Hero = hero;
-				-- hero.RealPosition = playerEntry.m_RoleData.m_Postion;
-				-- hero:SetMJData(playerEntry);
-				-- local vals = UI_MaJiang.GetPlayerUI(hero.RealPosition);
-				-- hero.UI = vals[1];
-				-- hero.UITransform = vals[2];
-				-- hero.UIPosition = vals[3];
-				-- hero.Position = hero.RealPosition;
-				-- hero.UI:Initialize(hero);
-				-- hero:SetupUI();
 				MJScene.AddPlayer(hero.ID, hero);
 				Log.Info("MJScene.ReturnGamePlayerInfo: Create hero id is " .. hero.ID .. ",server position is " .. hero.RealPosition);
 			end
@@ -351,11 +336,18 @@ function MJScene.ReturnCanOperatorType(evt)
 		Log.Error("MJScene.ReturnCanOperatorType: parse msg error," .. PBMessage.GM_MJCanOperator);
 		return;
 	end
-	-- List<PBMessage.GM_OperatorData> tempList = tempData.m_Operator;  /
-	local operatorsData = msg.m_Operator;
-	local a = 1;
-	UIManager.OpenTipsDialog("直接过");
-	MJScene.RequestMJOperate_Guo();
+	Log.Info("MJScene.ReturnCanOperatorType: roleid is " .. msg.m_roleid);
+	for i = 1, # msg.m_Operator do
+		local data = msg.m_Operator[i];
+		Log.Info("MJScene.ReturnCanOperatorType: operate data,m_OperatorType is " .. MaJiangOperatorType.GetString(data.m_OperatorType) .. ",m_FunID is " .. data.m_FunID .. ",m_OperatorCard is " .. data.m_OperatorCard .. ",m_CardNum is " .. data.m_CardNum);
+		for j = 1, # data.m_HandCard do
+			local handCard = data.m_HandCard[j];
+			Log.Info("MJScene.ReturnCanOperatorType: operate data: handcard" .. tostring(j) .. ": card id is " .. handCard.m_Index .. ", card type is " .. MaJiangType.GetString(handCard.m_Type));
+		end
+	end
+	UI_MaJiang.ShowOperateView(msg.m_Operator);
+	-- UIManager.OpenTipsDialog("直接过");
+	-- MJScene.RequestMJOperate_Guo();
 end
 function MJScene.NotifyOneReady(evt)
 	Log.Info("MJScene.NotifyOneReady");

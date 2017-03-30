@@ -26,4 +26,26 @@ function UI_OtherPlayer:OnDestroy()
 end
 function UI_OtherPlayer:Initialize(player)
 	self.Player = player;
+end
+-- 播放出牌效果
+function UI_OtherPlayer:PlayOutCardAnimation(card)
+	-- local outCardTran = self.transform:Find("OutCard/Card");
+	-- local tweener = outCardTran:GetComponent(typeof(TweenTransform));
+	-- local tweenerUtils = outCardTran:GetComponent(typeof(NCSpeedLight.InvisiableOnTweenFinish));
+	-- tweenerUtils.OnFinish = function()
+	-- 	if UI_HeroPlayer.DragingCardObj ~= nil then
+	-- 		UnityEngine.GameObject.Destroy(UI_HeroPlayer.DragingCardObj);
+	-- 	end
+	-- end
+	-- tweener.enabled = true;
+	-- tweener.duration = 0.5;
+	-- tweener.from = UI_HeroPlayer.DragingCardObj.transform;
+	-- tweener:ResetToBeginning();
+	-- NCSpeedLight.UIHelper.SetSpriteName(outCardTran, "Sprite", MaJiangType.GetString(card.m_Type));
+	-- outCardTran.gameObject:SetActive(true);
+	local tableCard = MJSceneController.GetUnuseCard(self.Player.ID, card);
+	local cardPos = self.Player:GetTableCardPos(self.Player.OutCardCount);
+	tableCard.GO.transform.position = cardPos;
+	local rotation = UnityEngine.Quaternion.Euler(self.Player.TableCardRotation);
+	tableCard.GO.transform.rotation = rotation;
 end 

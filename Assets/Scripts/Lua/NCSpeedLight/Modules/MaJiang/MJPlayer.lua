@@ -113,7 +113,7 @@ function MJPlayer:Initialize(data, ishero)
 		self.HandCardStartPos = Vector3.New(- 6.5, 3.6, - 9.5);
 		if isTwoPlayers then
 			self.TableCardColumnLimit = 13;
-			self.TableCardStartPos = Vector3.New(- 5.8, 3.82, - 1.1);
+			self.TableCardStartPos = Vector3.New(- 6.02, 3.82, - 1.1);
 		else
 			self.TableCardColumnLimit = 8;
 			self.TableCardStartPos = Vector3.New(- 6.5, 3.6, - 9.5);
@@ -136,7 +136,7 @@ function MJPlayer:Initialize(data, ishero)
 		self.HandCardStartPos = Vector3.New(5.6, 4, 8.7);
 		if isTwoPlayers then
 			self.TableCardColumnLimit = 13;
-			self.TableCardStartPos = Vector3.New(5.76, 3.67, 0.905);
+			self.TableCardStartPos = Vector3.New(5.98, 3.67, 0.905);
 		else
 			self.TableCardColumnLimit = 8;
 			self.TableCardStartPos = Vector3.New(2.13, 3.67, 3.4);
@@ -332,9 +332,9 @@ function MJPlayer:MJOT_BuCard(data)
 end
 --出牌
 function MJPlayer:MJOT_SendCard(data)
+	local card = data.m_HandCard[1];
+	Log.Info("MJPlayer:MJOT_SendCard: card index is " .. card.m_Index .. ",type is " .. MaJiangType.GetString(card.m_Type));
 	if self:IsHero() then
-		local card = data.m_HandCard[1];
-		Log.Info("MJPlayer:MJOT_SendCard: card index is " .. card.m_Index .. ",type is " .. MaJiangType.GetString(card.m_Type));
 		local cardPosition = self:GetHandCardPositionByID(card.m_Index);
 		local newCardPosition = self:GetHandCardCount();
 		local newCard = self:GetHandCardByPosition(newCardPosition);
@@ -346,8 +346,10 @@ function MJPlayer:MJOT_SendCard(data)
 		local newCardTargetPosition = self:GetHandCardIndex(newCard);
 		self.UI:PlayOutCardAnimation(card);
 		self.UI:PlayInsertCardAnimation(cardPosition, newCardPosition, newCardTargetPosition);
-		self.OutCardCount = self.OutCardCount + 1;
+	else
+		self.UI:PlayOutCardAnimation(card);
 	end
+	self.OutCardCount = self.OutCardCount + 1;
 end
 --摊
 function MJPlayer:MJOT_Tan(data)
@@ -360,6 +362,13 @@ function MJPlayer:MJOT_SAO(data)
 end
 --碰
 function MJPlayer:MJOT_PENG(data)
+	if self:IsHero() then
+		for i = 1, # data.m_HandCard do
+			local card = data.m_HandCard[i];
+			self:RemoveHandCard(card.m_Index);
+			self:DisplayCards(true);
+		end
+	end
 end
 --杠
 function MJPlayer:MJOT_GANG(data)
@@ -401,12 +410,7 @@ function MJPlayer:GetTableCardPos(varIndex)
 		tempLine = math.floor(varIndex / self.TableCardColumnLimit);
 		tempNum = varIndex % self.TableCardColumnLimit;
 	end
-	-- tempPos = tempPos + tempLine * self.TableCardVerticalOffset + tempNum * self.TableCardHorizontalOffset;
-	Log.Info("MJPlayer:GetTableCardPos: Begin");
-	Log.Info("MJPlayer:GetTableCardPos: tempPos" .. tostring(tempPos));
 	tempPos = tempPos + Vector3.New(self.TableCardVerticalOffset.x * tempLine, self.TableCardVerticalOffset.y * tempLine, self.TableCardVerticalOffset.z * tempLine);
-	Log.Info("MJPlayer:GetTableCardPos: tempPos" .. tostring(tempPos));
 	tempPos = tempPos + Vector3.New(self.TableCardHorizontalOffset.x * tempNum, self.TableCardHorizontalOffset.y * tempNum, self.TableCardHorizontalOffset.z * tempNum);
-	Log.Info("MJPlayer:GetTableCardPos: tempPos" .. tostring(tempPos));
 	return tempPos;
 end 

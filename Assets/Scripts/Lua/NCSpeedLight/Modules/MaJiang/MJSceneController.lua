@@ -21,7 +21,7 @@ function MJSceneController.Awake(go)
 		MJSceneController.MJDeskObj = go.transform:Find("majiangzhuo").gameObject;
 		MJSceneController.MJDeskAnimation = MJSceneController.MJDeskObj:GetComponent(typeof(UnityEngine.Animation));
 	end
-	MJSceneController.ReadCard();
+	MJSceneController.CloneTableCards();
 	MJSceneController.IsSetupDicePanelRotation = false;
 	MJScene.OnSceneWasLoaded();
 end
@@ -123,7 +123,7 @@ end
 function MJSceneController.HideArrow()
 end
 -- 初始化桌子上的牌
-function MJSceneController.ReadCard()
+function MJSceneController.CloneTableCards()
 	if MJSceneController.AllCardsObj == nil then
 		MJSceneController.AllCardsObj = {};
 	end
@@ -174,13 +174,14 @@ function MJSceneController.CreateMJCard(obj, type)
 	card.Type = type;
 	return card;
 end
--- 获取一张桌面上牌的对象
-function MJSceneController.GetCard(cardData)
+-- 获取一张未使用的牌对象
+function MJSceneController.GetUnuseCard(roleID, cardData)
 	local cards = this.AllCards[cardData.m_Type];
 	for i = 1, # cards do
 		local card = cards[i];
 		if card.ID == - 1 then
-			card.ID = cardData.m_Index;
+			card:SetID(cardData.m_Index);
+			card:SetRoleID(roleID);
 			return card;
 		end
 	end

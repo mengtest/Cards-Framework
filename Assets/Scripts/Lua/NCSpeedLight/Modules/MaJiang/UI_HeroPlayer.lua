@@ -101,7 +101,7 @@ function UI_HeroPlayer:PlayOutCardAnimation(card)
 	tweener:ResetToBeginning();
 	NCSpeedLight.UIHelper.SetSpriteName(outCardTran, "Sprite", MaJiangType.GetString(card.m_Type));
 	outCardTran.gameObject:SetActive(true);
-	local tableCard = MJSceneController.GetCard(card);
+	local tableCard = MJSceneController.GetUnuseCard(self.Player.ID, card);
 	local cardPos = self.Player:GetTableCardPos(self.Player.OutCardCount);
 	tableCard.GO.transform.position = cardPos;
 	local rotation = UnityEngine.Quaternion.Euler(self.Player.TableCardRotation);

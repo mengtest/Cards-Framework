@@ -15,12 +15,31 @@ MJTableCard =
 	RoleID = 0, -- 属于哪个玩家
 	Status = MJTableCardStatus.MJCS_Begin, -- 牌的状态
 	Type = MaJiangType.MJ_1_TIAO, -- 牌的类型
-	ID = 0, -- 牌的ID
+	ID = - 1, -- 牌的ID
 };
 MJTableCard.__index = MJTableCard;
 function MJTableCard.New()
 	local obj = {};
 	setmetatable(obj, MJTableCard);
 	obj.ID = - 1;
+	obj.RoleID = 0;
 	return obj;
 end
+function MJTableCard:Reset()
+	self.ID = - 1;
+	self.RoleID = 0;
+	self.Status = MJTableCardStatus.MJCS_Begin;
+end
+function MJTableCard:Show(position, rotation)
+end
+function MJTableCard:Hide()
+end
+function MJTableCard:SetStatus(status)
+	self.Status = status;
+end
+function MJTableCard:SetID(id)
+	self.ID = id;
+end
+function MJTableCard:SetRoleID(roleID)
+	self.RoleID = roleID;
+end 

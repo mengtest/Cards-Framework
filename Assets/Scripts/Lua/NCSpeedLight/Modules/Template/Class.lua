@@ -8,14 +8,10 @@
 -- Modify History:
 --
 -----------------------------------------------
-
 Class = {};
-
-local meta = {};
-meta.__index = Class;
-
+Class.__index = Class;
 function Class.New()
 	local o = {};
-	setmetatable(o, meta);
+	setmetatable(o, Class);
 	return o;
-end
+end 
