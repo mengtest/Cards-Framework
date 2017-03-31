@@ -19,6 +19,10 @@ function Log.Initialize()
 	fileName = string.gsub(fileName, " ", "_");
 	fileName = string.gsub(fileName, ":", "_");
 	fileName = fileName .. ".log";
+	local logDirectory = NCSpeedLight.SharedVariable.DATA_PATH .. "Log/";
+	if CSDirectory.Exists(logDirectory) == false then
+		CSDirectory.CreateDirectory(logDirectory);
+	end
 	Log.FilePath = NCSpeedLight.SharedVariable.DATA_PATH .. "Log/" .. fileName;
 	Log.Info("Log.Initialize: log file path is " .. Log.FilePath);
 end

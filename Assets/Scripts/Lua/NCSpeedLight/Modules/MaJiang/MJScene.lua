@@ -315,6 +315,8 @@ function MJScene.ReturnPlayerOutCard(evt)
 		player:MJOT_CHI(msg);
 	elseif msg.m_OperatorType == MaJiangOperatorType.MJOT_SAO then
 		player:MJOT_SAO(msg);
+	elseif msg.m_OperatorType == MaJiangOperatorType.MJOT_PENG then
+		player:MJOT_PENG(msg);
 	elseif msg.m_OperatorType == MaJiangOperatorType.MJOT_GANG then
 		player:MJOT_GANG(msg);
 	elseif msg.m_OperatorType == MaJiangOperatorType.MJOT_AN_GANG then
