@@ -1,3 +1,13 @@
+-----------------------------------------------
+-- Copyright © 2014-2017 NCSpeedLight
+--
+-- FileName: LoginScene.lua
+-- Describle:  登录场景
+-- Created By:  Wells Hsu
+-- Date&Time:  2017/2/28 19:11:09
+-- Modify History:
+--
+-----------------------------------------------
 LoginScene =
 {
 	Token = {
@@ -10,14 +20,12 @@ LoginScene =
 	LoginRecord = nil,
 	IsInitialized = false,
 };
-
 function LoginScene.Initialize()
 	if LoginScene.IsInitialized == false then
 		LoginScene.IsInitialized = true;
 		LoginScene.OpenLoginRecord();
 	end
 end
-
 function LoginScene.Begin()
 	AssetManager.LoadScene(SceneType.LoginScene);
 	NetManager.RegisterEvent(GameMessage.GM_VERSION_RETURN, LoginScene.OnVerifyVersionReturn);
@@ -29,10 +37,8 @@ function LoginScene.Begin()
 	NetManager.RegisterEvent(GameMessage.GM_ROLE_CREATE_RETURN, LoginScene.OnCreateRoleReturn);
 	LoginScene.RequestVerifyVersion()
 end
-
 function LoginScene.Update()
 end
-
 function LoginScene.End()
 	NetManager.UnregisterEvent(GameMessage.GM_VERSION_RETURN, LoginScene.OnVerifyVersionReturn);
 	NetManager.UnregisterEvent(GameMessage.GM_ACCOUNT_VERIFY_RETURN, LoginScene.OnLoginReturn);
@@ -42,7 +48,6 @@ function LoginScene.End()
 	NetManager.UnregisterEvent(GameMessage.GM_ROLE_LOGIN_RETURN, LoginScene.OnRoleLoginReturn);
 	NetManager.UnregisterEvent(GameMessage.GM_ROLE_CREATE_RETURN, LoginScene.OnCreateRoleReturn);
 end
-
 function LoginScene.OpenLoginRecord()
 	local path = NCSpeedLight.SharedVariable.DATA_PATH .. "Config/LoginRecord.bytes";
 	local buffer = Utility.OpenFile(path);
@@ -60,11 +65,9 @@ function LoginScene.OpenLoginRecord()
 		end
 	end
 end
-
 function LoginScene.GetLoginRecord()
 	return LoginScene.LoginRecord;
 end
-
 function LoginScene.AddLoginRecord(accountStr, passwordStr, latestAreaStr, latestRoleIDStr)
 	if LoginScene.ExistRecord(accountStr) then
 		return
@@ -90,7 +93,6 @@ function LoginScene.AddLoginRecord(accountStr, passwordStr, latestAreaStr, lates
 	LoginScene.LoginRecord = info;
 	LoginScene.SaveLoginRecordFile();
 end
-
 function LoginScene.ExistRecord(accountStr)
 	if LoginScene.LoginRecord ~= nil then
 		for i = 1, # LoginScene.LoginRecord.loginInfo do
@@ -103,7 +105,6 @@ function LoginScene.ExistRecord(accountStr)
 		return false;
 	end
 end
-
 function LoginScene.RemoveLoginRecord(accountStr, passwordStr)
 	if LoginScene.LoginRecord ~= nil then
 		for i = # LoginScene.LoginRecord.loginInfo, 1, - 1 do
@@ -116,13 +117,11 @@ function LoginScene.RemoveLoginRecord(accountStr, passwordStr)
 	end
 	LoginScene.SaveLoginRecordFile();
 end
-
 function LoginScene.SaveLoginRecordFile()
 	local path = NCSpeedLight.SharedVariable.DATA_PATH .. "Config/LoginRecord.bytes";
 	local buffer = NetManager.EncodePB(PBMessage.CFG_LoginRecord, LoginScene.LoginRecord);
 	Utility.SaveFile(path, buffer);
 end
-
 function LoginScene.RequestVerifyVersion()
 	Log.Info("LoginScene.RequestVerifyVersion: Send verify version msg,current version is " .. SharedVariable.Version);
 	local msg = {
@@ -130,18 +129,16 @@ function LoginScene.RequestVerifyVersion()
 	}
 	NetManager.SendEventToLoginServer(GameMessage.GM_VERIFY_VERSION, PBMessage.GM_VerifyVersion, msg)
 end
-
 function LoginScene.OnVerifyVersionReturn(evt)
 	local obj = NetManager.DecodeMsg(PBMessage.GM_VerifyVersionReturn, evt)
 	if obj.result == 0 then
 		UIManager.OpenWindow("Login/ui_normalLogin")
 		Log.Info("LoginScene.OnVerifyVersionReturn: sccuss.");
 	else
-		Log.Error("LoginScene.OnVerifyVersionReturn: version doesn't match,can not enter game,please update.");
+		Log.Error("LoginScene.OnVerifyVersionReturn: version doesn\'t match,can not enter game,please update.");
 		UIManager.OpenTipsDialog("版本不匹配，无法进入游戏");
 	end
 end
-
 function LoginScene.RequestLogin(account, password)
 	local msg =
 	{
@@ -161,22 +158,18 @@ function LoginScene.RequestLogin(account, password)
 	NetManager.SendEventToLoginServer(GameMessage.GM_ACCOUNT_VERIFY, PBMessage.GM_AccountRequest, msg);
 	UIManager.OpenWindow(UIType.UI_Load);
 end
-
 function LoginScene.OnLoginReturn(evt)
 	UIManager.CloseProgressDialog();
 	local obj = NetManager.DecodeMsg(PBMessage.GM_AccountReturn, evt)
 	if obj.m_Result == 0 then
 		Log.Info("LoginScene.OnLoginReturn: 账号验证成功");
-		
 		-- 记录至内存中
 		LoginScene.Token = {};
 		LoginScene.Token.AccountID = obj.m_AccountID;
 		LoginScene.Token.AccountToken = obj.m_RandStr;
 		LoginScene.Token.LatestArea = obj.m_lastloginServerID;
-		
 		-- 保存至本地
 		LoginScene.AddLoginRecord(LoginScene.currentAccount, LoginScene.currentPassword, obj.m_lastloginServerID);
-		
 		-- 请求选区
 		LoginScene.RequestChooseArea();
 	elseif obj.m_Result == 1 then
@@ -201,7 +194,6 @@ function LoginScene.OnLoginReturn(evt)
 		UIManager.CloseWindow(UIType.UI_Load);
 	end
 end
-
 function LoginScene.RequestRegister(account, password)
 	local msg =
 	{
@@ -219,7 +211,6 @@ function LoginScene.RequestRegister(account, password)
 	}
 	NetManager.SendEventToLoginServer(GameMessage.GM_ACCOUNT_CREATE, PBMessage.GM_AccountCreate, msg)
 end
-
 function LoginScene.OnRegisterReturn(evt)
 	local obj = NetManager.DecodeMsg(PBMessage.GM_AccountCreateReturn, evt)
 	if obj.m_Result == 0 then
@@ -243,7 +234,6 @@ function LoginScene.OnRegisterReturn(evt)
 	else
 	end
 end
-
 function LoginScene.RequestChooseArea()
 	local msg = {
 		m_Account = LoginScene.Token.AccountID,
@@ -252,7 +242,6 @@ function LoginScene.RequestChooseArea()
 	};
 	NetManager.SendEventToLoginServer(GameMessage.GM_CHOOSE_AREA, PBMessage.GM_ChooseArea, msg);
 end
-
 function LoginScene.OnChoseAreaReturn(evt)
 	local obj = NetManager.DecodeMsg(PBMessage.GM_ChooseAreaReturn, evt);
 	if obj.m_Result == 0 then
@@ -266,18 +255,15 @@ function LoginScene.OnChoseAreaReturn(evt)
 		UIManager.OpenTipsDialog("选区失败");
 	end
 end
-
 function LoginScene.OnConnectLogicServer(connection)
 	Log.Info("LoginScene.OnConnectLogicServer: 成功连接至逻辑服务器");
 	LoginScene.RequestAccountRoles();
 end
-
 function LoginScene.OnDisconnectLogicServer(connection)
 	UIManager.OpenTipsDialog("逻辑服务器异常");
 	UIManager.CloseWindow(UIType.UI_Load);
 	Log.Info("LoginScene.OnDisconnectLogicServer: 逻辑服务器异常");
 end
-
 function LoginScene.RequestAccountRoles()
 	local msg = {
 		m_accountID = LoginScene.Token.AccountID,
@@ -285,7 +271,6 @@ function LoginScene.RequestAccountRoles()
 	};
 	NetManager.SendEventToLogicServer(GameMessage.GM_ROLELIST_REQUEST, PBMessage.GMRoleListRequest, msg)
 end
-
 function LoginScene.OnAccountRolesReturn(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GMRoleListEx, evt);
 	if msg.m_roleid ~= 0 then
@@ -295,7 +280,6 @@ function LoginScene.OnAccountRolesReturn(evt)
 		LoginScene.RequestCreateRole();
 	end
 end
-
 function LoginScene.RequestRoleLogin()
 	local msg = {
 		m_AccountID = LoginScene.Token.AccountID,
@@ -305,7 +289,6 @@ function LoginScene.RequestRoleLogin()
 	};
 	NetManager.SendEventToLogicServer(GameMessage.GM_ROLE_LOGIN, PBMessage.GMRoleLogin, msg);
 end
-
 function LoginScene.OnRoleLoginReturn(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GM_FullRoleInfo, evt);
 	if msg ~= nil then
@@ -315,11 +298,10 @@ function LoginScene.OnRoleLoginReturn(evt)
 			SharedVariable.SelfInfo.ID = msg.id;
 			SharedVariable.SelfInfo.AccountID = msg.accountid;
 			Player.SetFullInfo(msg);
-			
 			-- SceneManager.GotoScene(SceneType.HallScene);
 			HallScene.RequestPlayerInFb();
 		else
-			Log.Info("LoginScene.OnRoleLoginReturn: role login error caused by ' msg.id<=0' ");
+			Log.Info("LoginScene.OnRoleLoginReturn: role login error caused by \' msg.id<=0\' ");
 			UIManager.CloseWindow(UIType.UI_Load);
 		end
 	else
@@ -327,7 +309,6 @@ function LoginScene.OnRoleLoginReturn(evt)
 		UIManager.CloseWindow(UIType.UI_Load);
 	end
 end
-
 function LoginScene.RequestCreateRole()
 	local msg = {};
 	msg.m_AccountID = LoginScene.Token.AccountID;
@@ -338,7 +319,6 @@ function LoginScene.RequestCreateRole()
 	msg.m_UnionID = "10086";
 	NetManager.SendEventToLogicServer(GameMessage.GM_ROLE_CREATE, PBMessage.GMRoleCreate, msg);
 end
-
 function LoginScene.OnCreateRoleReturn(evt)
 	local obj = NetManager.DecodeMsg(PBMessage.GMRoleCreateReturn, evt);
 	if obj ~= nil then
@@ -352,4 +332,4 @@ function LoginScene.OnCreateRoleReturn(evt)
 		UIManager.CloseWindow(UIType.UI_Load);
 		Log.Info("LoginScene.OnCreateRoleReturn: role create error caused by nil msg.");
 	end
-end
+end 

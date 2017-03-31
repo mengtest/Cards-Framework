@@ -1,32 +1,33 @@
+-----------------------------------------------
+-- Copyright © 2014-2017 NCSpeedLight
+--
+-- FileName: UI_NormalLogin.lua
+-- Describle:   
+-- Created By:  Wells Hsu
+-- Date&Time:  2017/2/28 19:11:09
+-- Modify History:
+--
+-----------------------------------------------
 UI_NormalLogin = {
 }
-
 local this = UI_NormalLogin;
-
 local transform;
 local gameObject;
-
-
 local lbAccount;
 local ipPassword;
 local btnLogin;
 local btnRegister;
-
 local isRecordPanelOpen;
-
 local recordLoginInfo = {
 };
-
 function UI_NormalLogin.New()
 	return this;
 end
-
 function UI_NormalLogin.Awake(go)
 	gameObject = go;
 	transform = go.transform;
 	isRecordPanelOpen = false;
 end
-
 function UI_NormalLogin.Start()
 	lbAccount = transform:Find("Input (account)/Label"):GetComponent("UILabel");
 	ipPassword = transform:Find("Input (password)"):GetComponent("UIInput");
@@ -43,22 +44,16 @@ function UI_NormalLogin.Start()
 	NCSpeedLight.UIHelper.SetButtonEvent(transform, "Btn/Button (regist)", onClickRegister);
 	NCSpeedLight.UIHelper.SetButtonEvent(transform, "Input (account)", onClickArrow);
 end
-
 function UI_NormalLogin.OnEnable()
 end
-
 function UI_NormalLogin.OnDisable()
 end
-
 function UI_NormalLogin.Update()
 end
-
 function UI_NormalLogin.LateUpdate()
 end
-
 function UI_NormalLogin.OnDestroy()
 end
-
 function onClickLogin(go)
 	if string.len(lbAccount.text) == 0 then
 		UIManager.OpenTipsDialog("请输入账号");
@@ -72,12 +67,10 @@ function onClickLogin(go)
 	-- LoginScene:AddLoginRecord(lbAccount.text, ipPassword.value);
 	LoginScene.RequestLogin(lbAccount.text, ipPassword.value);
 end
-
 function onClickRegister(go)
 	UIManager.CloseWindow("Login/ui_normalLogin");
 	UIManager.OpenWindow("Login/ui_register");
 end
-
 function onClickArrow(go)
 	isRecordPanelOpen = not isRecordPanelOpen;
 	if isRecordPanelOpen == true then
@@ -88,7 +81,6 @@ function onClickArrow(go)
 		recordLoginInfo = nil;
 	end
 end
-
 function displayRecordPanel()
 	local bg = transform:Find("Panel/Sprite"):GetComponent("UISprite");
 	local panel = transform:Find("Panel/Accounts");
@@ -113,11 +105,8 @@ function displayRecordPanel()
 			recordLoginInfo[i] = {childItem.gameObject, label.gameObject, delete.gameObject, info};
 			index = i;
 		end
-		
 		if index > 0 then
-			
 			bg.enabled = true;
-			
 			-- 其他账号按钮
 			local otherAccountItemClone = UnityEngine.GameObject.Instantiate(otherAccountItem);
 			otherAccountItemClone:SetParent(panel);
@@ -140,7 +129,6 @@ function displayRecordPanel()
 		bg.enabled = false;
 	end
 end
-
 function getRecordPanelHeight(count)
 	if count == 1 then
 		return 130;
@@ -152,7 +140,6 @@ function getRecordPanelHeight(count)
 		return 0;
 	end
 end
-
 function clearRecordPanel()
 	for i = 1, # recordLoginInfo do
 		local item = recordLoginInfo[i];
@@ -161,7 +148,6 @@ function clearRecordPanel()
 		end
 	end
 end
-
 function onClickAccountItem(go)
 	isRecordPanelOpen = not isRecordPanelOpen;
 	local info = TryGetLoginRecordInfo(go);
@@ -179,7 +165,6 @@ function onClickAccountItem(go)
 	end
 	clearRecordPanel();
 end
-
 function onClickDeleteItem(go)
 	local info = TryGetLoginRecordInfo(go);
 	if info ~= nil then
@@ -189,11 +174,8 @@ function onClickDeleteItem(go)
 	isRecordPanelOpen = true;
 	displayRecordPanel();
 end
-
-
 function onClickOtherAccount(go)
 end
-
 function TryGetLoginRecordInfo(go)
 	UnityEngine.GameObject.Destroy(go);
 	for i = 1, # recordLoginInfo do
@@ -206,4 +188,4 @@ function TryGetLoginRecordInfo(go)
 			return item4;
 		end
 	end
-end
+end 

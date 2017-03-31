@@ -1,3 +1,13 @@
+-----------------------------------------------
+-- Copyright © 2014-2017 NCSpeedLight
+--
+-- FileName: MJSceneController.lua
+-- Describle:   麻将场景控制
+-- Created By:  Wells Hsu
+-- Date&Time:  2017/2/28 19:11:09
+-- Modify History:
+--
+-----------------------------------------------
 MJSceneController = {
 	transform = nil,
 	gameObject = nil,
