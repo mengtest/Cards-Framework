@@ -8,13 +8,11 @@
 --          // Modify History:
 --          //
 ----------------------------------------------------------------
-
 -- lua 管理器
 LuaManager =
 {
 	IsInitialized = false,
 };
-
 function LuaManager.Initialize()
 	if LuaManager.IsInitialized == false then
 		LuaManager.LoadLuaBundle();
@@ -23,10 +21,9 @@ function LuaManager.Initialize()
 		Log.Warning("LuaManager.Initialize: luamanager has already been initialized.");
 	end
 end
-
 function LuaManager.LoadLuaBundle()
 	if NCSpeedLight.SharedVariable.LUA_BUNDLE_MODE == true then
-		local manifest = NCSpeedLight.SharedVariable.APP_CONTENT_PATH .. "Scripts/manifest.txt"; --游戏包资源目录
+		local manifest = NCSpeedLight.SharedVariable.DATA_PATH .. "Scripts/manifest.txt"; --游戏包资源目录
 		Log.Info("LuaManager.LoadLuaBundle: manifest path is " .. manifest);
 		if CSFile.Exists(manifest) == false then
 			Log.Error("LuaManager.LoadLuaBundle: error caused by nil file.");
@@ -43,29 +40,28 @@ function LuaManager.LoadLuaBundle()
 			Log.Info("LuaManager.LoadLuaBundle: add bundle named " .. bundleName);
 			NCSpeedLight.LuaManager.LuaLoader:AddBundle(bundleName);
 		end
-	-- local file 
-	-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_3rd_cjson");
-	-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_3rd_luabitop");
-	-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_3rd_pbc");
-	-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_3rd_pblua");
-	-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_3rd_sproto");
-	-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_core_asset");
-	-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_core_event");
-	-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_core_network");
-	-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_core_player");
-	-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_core_scene");
-	-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_core_view");
-	-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_modules");
-	-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_modules_dialog");
-	-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_modules_hall");
-	-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_modules_login");
-	-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_modules_majiang");
-	-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_protocol");
-	-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_scenes_download");
-	-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_scenes_hall");
-	-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_scenes_login");
-	-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_scenes_majiang");
-	-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_utils");
+		-- local file 
+		-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_3rd_cjson");
+		-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_3rd_luabitop");
+		-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_3rd_pbc");
+		-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_3rd_pblua");
+		-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_3rd_sproto");
+		-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_core_asset");
+		-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_core_event");
+		-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_core_network");
+		-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_core_player");
+		-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_core_scene");
+		-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_core_view");
+		-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_modules");
+		-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_modules_dialog");
+		-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_modules_hall");
+		-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_modules_login");
+		-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_modules_majiang");
+		-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_protocol");
+		-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_scenes_download");
+		-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_scenes_hall");
+		-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_scenes_login");
+		-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_scenes_majiang");
+		-- NCSpeedLight.LuaManager.LuaLoader:AddBundle("ncspeedlight_utils");
 	end
 end
-

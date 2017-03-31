@@ -180,7 +180,7 @@ namespace NCSpeedLight
                 }
                 else if (Application.isEditor)
                 {
-                    return false;
+                    return true;
                 }
                 else
                 {
