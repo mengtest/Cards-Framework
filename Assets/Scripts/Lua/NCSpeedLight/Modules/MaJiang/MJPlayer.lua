@@ -139,22 +139,22 @@ function MJPlayer:Initialize(data, ishero)
 	if self.UIPosition == 0 then
 		-- 手牌
 		self.HandCardRotation = Vector3.New(- 18, 90, 0);
-		self.HandCardOffset = Vector3.New(MJScene.CardWidth, 0, 0);
+		self.HandCardOffset = Vector3.New(MJScene.TableCardX, 0, 0);
 		self.HandCardStartPos = Vector3.New(- 6.5, 3.6, - 9.5);
 		-- 桌面的牌
 		if isTwoPlayers then
 			self.TableCardColumnLimit = 13;
-			self.TableCardStartPos = Vector3.New(- 6.02, 3.82, - 1.1);
+			self.TableCardStartPos = Vector3.New(- 5.8, 3.82, - 1.1);
 		else
 			self.TableCardColumnLimit = 8;
 			self.TableCardStartPos = Vector3.New(- 6.5, 3.6, - 9.5);
 		end
 		self.TableCardRotation = Vector3.New(90, 0, 0);
-		self.TableCardHorizontalOffset = Vector3.New(MJScene.CardWidth, 0, 0);
-		self.TableCardVerticalOffset = Vector3.New(0, 0, - MJScene.CardHeight);
+		self.TableCardHorizontalOffset = Vector3.New(MJScene.TableCardX, 0, 0);
+		self.TableCardVerticalOffset = Vector3.New(0, 0, - MJScene.TableCardY);
 		-- 操作的牌
 		self.OperateCardStartPos = Vector3.New(- 9.390512, 3.6, - 9.5);
-		self.OperateCardOffset = Vector3.New(MJScene.CardWidth, 0, 0);
+		self.OperateCardOffset = Vector3.New(MJScene.TableCardX, 0, 0);
 		self.OperateCardRotation = Vector3.New(90, 0, 0);
 		self.UICardStartPos = Vector3.New(- 468, 0, 0);
 		self.UICardWidth = 72;
@@ -164,52 +164,52 @@ function MJPlayer:Initialize(data, ishero)
 	elseif self.UIPosition == 1 then
 		-- 手牌
 		self.HandCardRotation = Vector3.New(0, - 90, 0);
-		self.HandCardOffset = Vector3.New(0, 0, MJScene.CardWidth);
+		self.HandCardOffset = Vector3.New(0, 0, MJScene.TableCardX);
 		self.HandCardStartPos = Vector3.New(10, 4, - 5.36);
 		-- 桌面的牌
 		self.TableCardColumnLimit = 8;
 		self.TableCardStartPos = Vector3.New(3.29, 3.67, - 2.3);
 		self.TableCardRotation = Vector3.New(90, - 90, 0);
-		self.TableCardHorizontalOffset = Vector3.New(0, 0, MJScene.CardWidth);
-		self.TableCardVerticalOffset = Vector3.New(MJScene.CardHeight, 0, 0);
+		self.TableCardHorizontalOffset = Vector3.New(0, 0, MJScene.TableCardX);
+		self.TableCardVerticalOffset = Vector3.New(MJScene.TableCardY, 0, 0);
 		-- 操作的牌
 		self.OperateCardStartPos = Vector3.New(- 9.390512, 3.6, - 9.5);
-		self.OperateCardOffset = Vector3.New(MJScene.CardWidth, 0, 0);
+		self.OperateCardOffset = Vector3.New(MJScene.TableCardX, 0, 0);
 		self.OperateCardRotation = Vector3.New(90, 0, 0);
 	elseif self.UIPosition == 2 then
 		-- 手牌
 		self.HandCardRotation = Vector3.New(0, 180, 0);
-		self.HandCardOffset = Vector3.New(- MJScene.CardWidth, 0, 0);
+		self.HandCardOffset = Vector3.New(- MJScene.TableCardX, 0, 0);
 		self.HandCardStartPos = Vector3.New(5.6, 4, 8.7);
 		-- 桌面的牌
 		if isTwoPlayers then
 			self.TableCardColumnLimit = 13;
-			self.TableCardStartPos = Vector3.New(5.98, 3.67, 0.905);
+			self.TableCardStartPos = Vector3.New(5.76, 3.67, 0.905);
 		else
 			self.TableCardColumnLimit = 8;
 			self.TableCardStartPos = Vector3.New(2.13, 3.67, 3.4);
 		end
 		self.TableCardRotation = Vector3.New(90, 180, 0);
-		self.TableCardHorizontalOffset = Vector3.New(- MJScene.CardWidth, 0, 0);
-		self.TableCardVerticalOffset = Vector3.New(0, 0, MJScene.CardHeight);
+		self.TableCardHorizontalOffset = Vector3.New(- MJScene.TableCardX, 0, 0);
+		self.TableCardVerticalOffset = Vector3.New(0, 0, MJScene.TableCardY);
 		-- 操作的牌
 		self.OperateCardStartPos = Vector3.New(8.490512, 4, 8.7);
-		self.OperateCardOffset = Vector3.New(- MJScene.CardWidth, 0, 0);
+		self.OperateCardOffset = Vector3.New(- MJScene.TableCardX, 0, 0);
 		self.OperateCardRotation = Vector3.New(90, 180, 0);
 	elseif self.UIPosition == 3 then
 		-- 手牌
 		self.HandCardRotation = Vector3.New(0, 90, 0);
-		self.HandCardOffset = Vector3.New(0, 0, - MJScene.CardWidth);
+		self.HandCardOffset = Vector3.New(0, 0, - MJScene.TableCardX);
 		self.HandCardStartPos = Vector3.New(- 10.5, 4, 4.8);
 		-- 桌面的牌
 		self.TableCardColumnLimit = 8;
 		self.TableCardStartPos = Vector3.New(- 3.32, 3.67, 2.22);
 		self.TableCardRotation = Vector3.New(90, - 90, 0);
-		self.TableCardHorizontalOffset = Vector3.New(0, 0, - MJScene.CardWidth);
-		self.TableCardVerticalOffset = Vector3.New(- MJScene.CardHeight, 0, 0);
+		self.TableCardHorizontalOffset = Vector3.New(0, 0, - MJScene.TableCardX);
+		self.TableCardVerticalOffset = Vector3.New(- MJScene.TableCardY, 0, 0);
 		-- 操作的牌
 		self.OperateCardStartPos = Vector3.New(8.490512, 4, 8.7);
-		self.OperateCardOffset = Vector3.New(- MJScene.CardWidth, 0, 0);
+		self.OperateCardOffset = Vector3.New(- MJScene.TableCardX, 0, 0);
 		self.OperateCardRotation = Vector3.New(90, 180, 0);
 	else
 	end
@@ -560,7 +560,7 @@ function MJPlayer:PutGangCard(data)
 	local card1Pos = self.OperateCardStartPos + Vector3.New(self.OperateCardOffset.x * factor, self.OperateCardOffset.y * factor, self.OperateCardOffset.z * factor);
 	local card2Pos = card1Pos + self.OperateCardOffset;
 	local card3Pos = card2Pos + self.OperateCardOffset;
-	local card4Pos = Vector3.New(card2Pos.x, card2Pos.y + MJScene.CardThick, card2Pos.z);
+	local card4Pos = Vector3.New(card2Pos.x, card2Pos.y + MJScene.TableCardZ, card2Pos.z);
 	card1:Show(card1Pos, self.OperateCardRotation);
 	card2:Show(card2Pos, self.OperateCardRotation);
 	card3:Show(card3Pos, self.OperateCardRotation);
@@ -573,7 +573,7 @@ function MJPlayer:PutAnGangCard(data)
 	local card1Pos = self.OperateCardStartPos + Vector3.New(self.OperateCardOffset.x * factor, self.OperateCardOffset.y * factor, self.OperateCardOffset.z * factor);
 	local card2Pos = card1Pos + self.OperateCardOffset;
 	local card3Pos = card2Pos + self.OperateCardOffset;
-	local card4Pos = Vector3.New(card2Pos.x, card2Pos.y + MJScene.CardThick, card2Pos.z);
+	local card4Pos = Vector3.New(card2Pos.x, card2Pos.y + MJScene.TableCardZ, card2Pos.z);
 	if self:IsHero() then
 		-- 自己暗杠会发详细的牌信息
 		MJSceneController.PutOneBackCard(card1Pos, self.OperateCardRotation);
@@ -601,7 +601,7 @@ function MJPlayer:PutBuGangCard(data)
 	end);
 	local card2 = cards[2];
 	local card2Pos = card2.GO.transform.position;
-	local card1Pos = Vector3.New(card2Pos.x, card2Pos.y + MJScene.CardThick, card2Pos.z);
+	local card1Pos = Vector3.New(card2Pos.x, card2Pos.y + MJScene.TableCardZ, card2Pos.z);
 	card1:Show(card1Pos, self.OperateCardRotation);
 end
 -- 放置碰的牌
