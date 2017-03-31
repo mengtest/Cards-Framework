@@ -13,6 +13,7 @@ MJTableCard =
 	GO = nil, -- 牌的正面
 	BackGO = nil, -- 牌的反面
 	RoleID = 0, -- 属于哪个玩家
+	LastRoleID = 0, -- 上一次属于的玩家
 	Status = MJTableCardStatus.MJCS_Begin, -- 牌的状态
 	Type = MaJiangType.MJ_1_TIAO, -- 牌的类型
 	ID = - 1, -- 牌的ID
@@ -30,9 +31,17 @@ function MJTableCard:Reset()
 	self.RoleID = 0;
 	self.Status = MJTableCardStatus.MJCS_Begin;
 end
-function MJTableCard:Show(position, rotation)
+function MJTableCard:Show(position, eulerAngles)
+	if position ~= nil then
+		self.GO.transform.position = position;
+	end
+	if eulerAngles ~= nil then
+		self.GO.transform.rotation = UnityEngine.Quaternion.Euler(eulerAngles);
+	end
+	self.GO:SetActive(true);
 end
 function MJTableCard:Hide()
+	self.GO:SetActive(false);
 end
 function MJTableCard:SetStatus(status)
 	self.Status = status;
@@ -41,5 +50,6 @@ function MJTableCard:SetID(id)
 	self.ID = id;
 end
 function MJTableCard:SetRoleID(roleID)
+	self.LastRoleID = self.RoleID;
 	self.RoleID = roleID;
 end 

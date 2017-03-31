@@ -5,8 +5,12 @@ MJScene =
 	Players = nil,
 	CurrentOperator = nil,
 	LastOperator = nil,
+	-- 场景内牌的宽度
 	CardWidth = 1,
+	-- 场景内牌的高度
 	CardHeight = 1.2,
+	-- 场景内牌的厚度
+	CardThick = 0.6,
 }
 function MJScene.Initialize()
 	if MJScene.IsInitialized == false then

@@ -4,6 +4,8 @@ UI_HeroPlayer = {
 	Player = nil,
 	-- 当前被拖拽的那张牌
 	DragingCardObj = nil,
+	-- 当前选中的牌
+	SelectedCardObj = nil,
 	-- 出牌的动画
 	OutCardAnimation = nil,
 	AnimationQueue = nil,
@@ -101,11 +103,9 @@ function UI_HeroPlayer:PlayOutCardAnimation(card)
 	tweener:ResetToBeginning();
 	NCSpeedLight.UIHelper.SetSpriteName(outCardTran, "Sprite", MaJiangType.GetString(card.m_Type));
 	outCardTran.gameObject:SetActive(true);
-	local tableCard = MJSceneController.GetUnuseCard(self.Player.ID, card);
+	local tableCard = MJSceneController.GetOneUnuseCard(card.m_Index, card.m_Type, self.Player.ID);
 	local cardPos = self.Player:GetTableCardPos(self.Player.TableCardCount);
-	tableCard.GO.transform.position = cardPos;
-	local rotation = UnityEngine.Quaternion.Euler(self.Player.TableCardRotation);
-	tableCard.GO.transform.rotation = rotation;
+	tableCard:Show(cardPos, self.Player.TableCardRotation);
 end
 -- 播放插牌动画
 function UI_HeroPlayer:PlayInsertCardAnimation(outCardPosition, newCardPosition, newCardTargetPosition)

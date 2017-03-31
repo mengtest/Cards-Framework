@@ -175,14 +175,50 @@ function MJSceneController.CreateMJCard(obj, type)
 	return card;
 end
 -- 获取一张未使用的牌对象
-function MJSceneController.GetUnuseCard(roleID, cardData)
-	local cards = this.AllCards[cardData.m_Type];
+function MJSceneController.GetOneUnuseCard(ID, type, roleID)
+	local cards = this.AllCards[type];
 	for i = 1, # cards do
 		local card = cards[i];
 		if card.ID == - 1 then
-			card:SetID(cardData.m_Index);
+			card:SetID(ID);
 			card:SetRoleID(roleID);
 			return card;
 		end
 	end
+end
+-- 根据牌的ID获取对象,如果roleID不为空，则更改这张牌的拥有者
+function MJSceneController.GetCardByID(ID, roleID)
+	for key, value in pairs(this.AllCards) do
+		for i = 1, # value do
+			local card = value[i];
+			if card.ID == ID then
+				if roleID ~= nil then
+					card:SetRoleID(roleID);
+				end
+				return card;
+			end
+		end
+	end
+end
+-- 根据牌的类型和角色的ID获取牌，返回数组
+function MJSceneController.GetCardByRoleIDAndType(type, roleID)
+	local cards = this.AllCards[type];
+	local outCards = {};
+	for i = 1, # cards do
+		local card = cards[i];
+		if card.ID ~= - 1 and card.RoleID == roleID then
+			table.insert(outCards, card);
+		end
+	end
+	return outCards;
+end
+-- 放置一张反面的牌用于显示
+function MJSceneController.PutOneBackCard(position, eulerAngles)
+	local cardParent = this.transform:Find("majiangzhuo/Card/Gang/");
+	local originalObj = this.transform:Find("majiangzhuo/Card/Gang/Card");
+	local newObj = NGUITools.AddChild(cardParent.gameObject, originalObj.gameObject);
+	local newEulerAngles = Vector3.New(eulerAngles.x + 180, eulerAngles.y, eulerAngles.z);
+	newObj.transform.position = position;
+	newObj.transform.rotation = UnityEngine.Quaternion.Euler(newEulerAngles);
+	newObj.transform.localScale = Vector3.New(0.012, 0.012, 0.012);
 end 

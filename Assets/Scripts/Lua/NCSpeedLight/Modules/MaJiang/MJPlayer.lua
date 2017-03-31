@@ -86,6 +86,7 @@ MJPlayer.__index = MJPlayer;
 function MJPlayer.New()
 	local obj = {};
 	setmetatable(obj, MJPlayer);
+	obj.TableCardCount = 0;
 	return obj;
 end
 -- 判断是否是自己
@@ -159,7 +160,7 @@ function MJPlayer:Initialize(data, ishero)
 		self.UICardWidth = 72;
 		self.UICardLastMargin = 18;
 		self.UICardHeadMargin = 36;
-		self.UICardWorldSpaceWidth = 56.7;
+		self.UICardWorldSpaceWidth = 52;
 	elseif self.UIPosition == 1 then
 		-- 手牌
 		self.HandCardRotation = Vector3.New(0, - 90, 0);
@@ -299,6 +300,20 @@ function MJPlayer:GetHandCardPositionByID(id)
 	end
 	return - 1;
 end
+-- 当前玩家桌面上牌的数量 +1
+function MJPlayer:AddTableCardCount()
+	self.TableCardCount = self.TableCardCount + 1;
+	return self.TableCardCount;
+end
+-- 当前玩家桌面上牌的数量 -1
+function MJPlayer:SubTableCardCount()
+	self.TableCardCount = self.TableCardCount - 1;
+	return self.TableCardCount;
+end
+-- 获取当前玩家打出去牌的数量
+function MJPlayer:GetTableCardCount()
+	return self.TableCardCount;
+end
 -- 设置玩家UI
 function MJPlayer:SetupUI()
 	NCSpeedLight.UIHelper.SetLabelText(self.UITransform, "Enter/Center/Label (Name)", self.MJData.m_RoleData.m_Name);
@@ -339,7 +354,7 @@ function MJPlayer:DisplayCards(sort)
 		end
 		local cardGridPanel = self.UITransform:Find("Cards/CardGrid");
 		local gridCom = cardGridPanel:GetComponent(typeof(UIGrid));
-		local currentPos = self.UICardStartPos;
+		local currentPos = self.UICardStartPos - Vector3.New(self.UICardWidth, 0, 0);
 		local operateTotalCount = self.ChiCount + self.PengCount + self.GangCount;
 		if operateTotalCount > 0 then
 			currentPos = currentPos + Vector3.New(operateTotalCount * 3 * self.UICardWorldSpaceWidth + self.UICardHeadMargin, 0, 0);
@@ -350,21 +365,21 @@ function MJPlayer:DisplayCards(sort)
 			local cardObj = cardGridPanel:Find(tostring(i));
 			NCSpeedLight.UIHelper.SetSpriteName(cardObj, "Sprite", MaJiangType.GetString(card.m_Type));
 			local offset = nil;
-			cardObj.localPosition = currentPos;
-			cardObj.gameObject:SetActive(true);
 			if i == # self.HandCardInfo.m_HandCard then
 				offset = Vector3.New(self.UICardWidth + self.UICardLastMargin, 0, 0);
 			else
 				offset = Vector3.New(self.UICardWidth, 0, 0);
 			end
 			currentPos = currentPos + offset;
+			cardObj.localPosition = currentPos;
+			cardObj.gameObject:SetActive(true);
 			index = index + 1;
 		end
 		for i = index, 14 do
 			local cardObj = cardGridPanel:Find(tostring(i));
-			cardObj.localPosition = currentPos;
 			local offset = Vector3.New(self.UICardWidth, 0, 0);
 			currentPos = currentPos + offset;
+			cardObj.localPosition = currentPos;
 			cardObj.gameObject:SetActive(false);
 		end
 	else
@@ -409,7 +424,6 @@ function MJPlayer:MJOT_BuCard(data)
 end
 --出牌
 function MJPlayer:MJOT_SendCard(data)
-	self.TableCardCount = self.TableCardCount + 1;
 	local card = data.m_HandCard[1];
 	Log.Info("MJPlayer:MJOT_SendCard: card index is " .. card.m_Index .. ",type is " .. MaJiangType.GetString(card.m_Type));
 	if self:IsHero() then
@@ -417,9 +431,6 @@ function MJPlayer:MJOT_SendCard(data)
 		local newCardPosition = self:GetHandCardCount();
 		local newCard = self:GetHandCardByPosition(newCardPosition);
 		self:RemoveHandCard(card.m_Index);
-		if self.TableCardCount == nil then
-			self.TableCardCount = 0;
-		end
 		self:SortHandCard();
 		local newCardTargetPosition = self:GetHandCardIndex(newCard);
 		self.UI:PlayOutCardAnimation(card);
@@ -427,6 +438,7 @@ function MJPlayer:MJOT_SendCard(data)
 	else
 		self.UI:PlayOutCardAnimation(card);
 	end
+	self:AddTableCardCount();
 end
 --摊
 function MJPlayer:MJOT_Tan(data)
@@ -435,12 +447,14 @@ end
 function MJPlayer:MJOT_CHI(data)
 	self.ChiCardCount = self.ChiCardCount + 3;
 	self.ChiCount = self.ChiCount + 1;
+	self.PutChiCard(data);
 end
 --勺
 function MJPlayer:MJOT_SAO(data)
 end
 --碰
 function MJPlayer:MJOT_PENG(data)
+	self:PutPengCard(data);
 	self.PengCardCount = self.PengCardCount + 3;
 	self.PengCount = self.PengCount + 1;
 	if self:IsHero() then
@@ -453,6 +467,7 @@ function MJPlayer:MJOT_PENG(data)
 end
 --杠
 function MJPlayer:MJOT_GANG(data)
+	self:PutGangCard(data);
 	self.GangCardCount = self.GangCardCount + 4;
 	self.GangCount = self.GangCount + 1;
 	if self:IsHero() then
@@ -465,6 +480,9 @@ function MJPlayer:MJOT_GANG(data)
 end
 --暗杠
 function MJPlayer:MJOT_AN_GANG(data)
+	self:PutAnGangCard(data);
+	self.GangCardCount = self.GangCardCount + 4;
+	self.GangCount = self.GangCount + 1;
 	if self:IsHero() then
 		for i = 1, # data.m_HandCard do
 			local card = data.m_HandCard[i];
@@ -475,6 +493,7 @@ function MJPlayer:MJOT_AN_GANG(data)
 end
 --补杠
 function MJPlayer:MJOT_BuGang(data)
+	self:PutBuGangCard(data);
 	if self:IsHero() then
 		for i = 1, # data.m_HandCard do
 			local card = data.m_HandCard[i];
@@ -517,4 +536,92 @@ function MJPlayer:GetTableCardPos(varIndex)
 	tempPos = tempPos + Vector3.New(self.TableCardVerticalOffset.x * tempLine, self.TableCardVerticalOffset.y * tempLine, self.TableCardVerticalOffset.z * tempLine);
 	tempPos = tempPos + Vector3.New(self.TableCardHorizontalOffset.x * tempNum, self.TableCardHorizontalOffset.y * tempNum, self.TableCardHorizontalOffset.z * tempNum);
 	return tempPos;
+end
+-- 计算操作的牌的位置
+function MJPlayer:GetOperateCardPos()
+	local totalOperateCount = self.ChiCount + self.PengCount + self.GangCount;
+	local factor = totalOperateCount * 3;
+	local pos = self.OperateCardStartPos + Vector3.New(self.OperateCardOffset.x * factor, self.OperateCardOffset.y * factor, self.OperateCardOffset.z * factor);
+	return pos;
+end
+-- 放置吃的牌
+function MJPlayer:PutChiCard(data)
+end
+-- 放置杠的牌
+function MJPlayer:PutGangCard(data)
+	local card1 = MJSceneController.GetCardByID(data.m_LastCard.m_Index, self.ID);
+	local player = MJScene.GetPlayerByID(card1.LastRoleID);
+	player:SubTableCardCount();
+	local card2 = MJSceneController.GetOneUnuseCard(data.m_HandCard[1].m_Index, data.m_HandCard[1].m_Type, self.ID);
+	local card3 = MJSceneController.GetOneUnuseCard(data.m_HandCard[2].m_Index, data.m_HandCard[2].m_Type, self.ID);
+	local card4 = MJSceneController.GetOneUnuseCard(data.m_HandCard[3].m_Index, data.m_HandCard[3].m_Type, self.ID);
+	local totalOperateCount = self.ChiCount + self.PengCount + self.GangCount;
+	local factor = totalOperateCount * 3;
+	local card1Pos = self.OperateCardStartPos + Vector3.New(self.OperateCardOffset.x * factor, self.OperateCardOffset.y * factor, self.OperateCardOffset.z * factor);
+	local card2Pos = card1Pos + self.OperateCardOffset;
+	local card3Pos = card2Pos + self.OperateCardOffset;
+	local card4Pos = Vector3.New(card2Pos.x, card2Pos.y + MJScene.CardThick, card2Pos.z);
+	card1:Show(card1Pos, self.OperateCardRotation);
+	card2:Show(card2Pos, self.OperateCardRotation);
+	card3:Show(card3Pos, self.OperateCardRotation);
+	card4:Show(card4Pos, self.OperateCardRotation);
+end
+-- 放置暗杠的牌
+function MJPlayer:PutAnGangCard(data)
+	local totalOperateCount = self.ChiCount + self.PengCount + self.GangCount;
+	local factor = totalOperateCount * 3;
+	local card1Pos = self.OperateCardStartPos + Vector3.New(self.OperateCardOffset.x * factor, self.OperateCardOffset.y * factor, self.OperateCardOffset.z * factor);
+	local card2Pos = card1Pos + self.OperateCardOffset;
+	local card3Pos = card2Pos + self.OperateCardOffset;
+	local card4Pos = Vector3.New(card2Pos.x, card2Pos.y + MJScene.CardThick, card2Pos.z);
+	if self:IsHero() then
+		-- 自己暗杠会发详细的牌信息
+		MJSceneController.PutOneBackCard(card1Pos, self.OperateCardRotation);
+		MJSceneController.PutOneBackCard(card2Pos, self.OperateCardRotation);
+		MJSceneController.PutOneBackCard(card3Pos, self.OperateCardRotation);
+		local card4 = MJSceneController.GetOneUnuseCard(data.m_HandCard[1].m_Index, data.m_HandCard[1].m_Type, self.ID);
+		card4:Show(card4Pos, self.OperateCardRotation);
+	else
+		MJSceneController.PutOneBackCard(card1Pos, self.OperateCardRotation);
+		MJSceneController.PutOneBackCard(card2Pos, self.OperateCardRotation);
+		MJSceneController.PutOneBackCard(card3Pos, self.OperateCardRotation);
+		MJSceneController.PutOneBackCard(card4Pos, self.OperateCardRotation);
+	end
+	Log.Info("MJPlayer:PutAnGangCard: card1Pos=" .. tostring(card1Pos) .. ",card2Pos=" .. tostring(card2Pos) .. ",card3Pos=" .. tostring(card3Pos) .. ",card4Pos=" .. tostring(card4Pos));
+end
+-- 放置补杠的牌
+function MJPlayer:PutBuGangCard(data)
+	local card1 = MJSceneController.GetOneUnuseCard(data.m_LastCard.m_Index, data.m_LastCard.m_Type, self.ID);
+	table.sort(data.m_HandCard, function(o1, o2)
+		return o1.m_Index < o2.m_Index;
+	end);
+	local cards = MJSceneController.GetCardByRoleIDAndType(card1.Type, self.ID);
+	table.sort(cards, function(o1, o2)
+		return o1.ID < o2.ID;
+	end);
+	local card2 = cards[2];
+	local card2Pos = card2.GO.transform.position;
+	local card1Pos = Vector3.New(card2Pos.x, card2Pos.y + MJScene.CardThick, card2Pos.z);
+	card1:Show(card1Pos, self.OperateCardRotation);
+end
+-- 放置碰的牌
+function MJPlayer:PutPengCard(data)
+	local card1 = MJSceneController.GetCardByID(data.m_LastCard.m_Index, self.ID);
+	local player = MJScene.GetPlayerByID(card1.LastRoleID);
+	player:SubTableCardCount();
+	local card2 = MJSceneController.GetOneUnuseCard(data.m_HandCard[1].m_Index, data.m_HandCard[1].m_Type, self.ID);
+	local card3 = MJSceneController.GetOneUnuseCard(data.m_HandCard[2].m_Index, data.m_HandCard[2].m_Type, self.ID);
+	local totalOperateCount = self.ChiCount + self.PengCount + self.GangCount;
+	local factor = totalOperateCount * 3;
+	local card1Pos = self.OperateCardStartPos + Vector3.New(self.OperateCardOffset.x * factor, self.OperateCardOffset.y * factor, self.OperateCardOffset.z * factor);
+	local card2Pos = card1Pos + self.OperateCardOffset;
+	local card3Pos = card2Pos + self.OperateCardOffset;
+	-- 根据索引排序位置，方便后面的补杠计算位置
+	local cards = {card1, card2, card3};
+	table.sort(cards, function(o1, o2)
+		return o1.ID < o2.ID;
+	end);
+	cards[1]:Show(card1Pos, self.OperateCardRotation);
+	cards[2]:Show(card2Pos, self.OperateCardRotation);
+	cards[3]:Show(card3Pos, self.OperateCardRotation);
 end
