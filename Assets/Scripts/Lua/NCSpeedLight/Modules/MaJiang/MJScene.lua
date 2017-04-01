@@ -21,6 +21,12 @@ MJScene =
 	TableCardY = 1.24706018,
 	-- 场景内牌的厚度
 	TableCardZ = 0.636123836,
+	-- 手牌的宽度
+	HandCardX = 0.8029202,
+	-- 手牌的高度
+	HandCardY = 1.03921676,
+	-- 手牌的厚度
+	HandCardZ = 0.5301034,
 }
 function MJScene.Initialize()
 	if MJScene.IsInitialized == false then
@@ -289,10 +295,18 @@ function MJScene.ReturnHandCardInfo(evt)
 		return;
 	end
 	MJPlayer.Hero:SetHandCardInfo(msg);
+	-- 设置庄家
 	for key, value in pairs(MJScene.Players) do
-		if value ~= nil then
-			value:StartGame();
+		if value.RealPosition == MJPlayer.Hero.HandCardInfo.m_bankerPos then
+			MJPlayer.Banker = value;
 		end
+	end
+	-- 设置墩牌
+	local fromPlayer = MJScene.GetPlayerByID(msg.m_getCardId);
+	MJGroupCard.Initialize(fromPlayer.UIPosition, msg.m_getCardNum);
+	-- 开始游戏
+	for key, value in pairs(MJScene.Players) do
+		value:StartGame();
 	end
 	UI_MaJiang.SetupCastDice(true);
 	UI_MaJiang.SetupReadyAndInvite(false, false, false);
@@ -462,6 +476,6 @@ function MJScene.ReturnOperateError(evt)
 end
 function MJScene.PlayStartGameEffect()
 	for key, value in pairs(MJScene.Players) do
-		value:DisplayCards(true);
+		value:DisplayHandCard(true);
 	end
 end 
