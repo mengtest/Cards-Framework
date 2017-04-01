@@ -3,17 +3,14 @@ UI_DissolveRoom = {
 	transform = nil,
 	gameObject = nil,
 }
-
 local this = UI_DissolveRoom;
-
 function UI_DissolveRoom.Awake(go)
 	this.gameObject = go;
 	this.transform = go.transform;
 end
-
 function UI_DissolveRoom.Start()
 	local dissolver = MJScene.GetPlayerByID(this.DissolveID);
-	if dissolver ~= MJPlayer.Hero then
+	if dissolver:IsHero() == false then
 		NCSpeedLight.UIHelper.SetActiveState(this.transform, "Button", true);
 		NCSpeedLight.UIHelper.SetButtonEvent(this.transform, "Button/Button1", this.OnClickAgree);
 		NCSpeedLight.UIHelper.SetButtonEvent(this.transform, "Button/Button2", this.OnClickCancel);
@@ -22,7 +19,6 @@ function UI_DissolveRoom.Start()
 	end
 	this.SetupContent();
 end
-
 function UI_DissolveRoom.SetupContent()
 	local dissolver = MJScene.GetPlayerByID(this.DissolveID);
 	local lb0str = "玩家【" .. dissolver.MJData.m_RoleData.m_Name .. "】申请解散房间，请等待其他玩家选择（超过5分钟未做选择）则默认同意";
@@ -38,19 +34,17 @@ function UI_DissolveRoom.SetupContent()
 		end
 	end
 end
-
 function UI_DissolveRoom.OnClickAgree(go)
 	local msg = {};
 	msg.m_Resutl = 0;
-	msg.m_RoleID = Player.Hero.FullInfo.id;
+	msg.m_RoleID = MJPlayer.Hero.ID;
 	msg.m_FBID = SharedVariable.FBInfo.m_FBID;
 	NetManager.SendEventToLogicServer(GameMessage.GM_CHOOSE_IS_CLOSEROOM, PBMessage.GM_SendReady, msg);
 end
-
 function UI_DissolveRoom.OnClickCancel(go)
 	local msg = {};
 	msg.m_Resutl = 1;
-	msg.m_RoleID = Player.Hero.FullInfo.id;
+	msg.m_RoleID = MJPlayer.Hero.ID;
 	msg.m_FBID = SharedVariable.FBInfo.m_FBID;
 	NetManager.SendEventToLogicServer(GameMessage.GM_CHOOSE_IS_CLOSEROOM, PBMessage.GM_SendReady, msg);
-end
+end 

@@ -41,8 +41,6 @@ function DownloadScene.CheckVersion()
 		end
 		UIManager.CloseProgressDialog();
 		local json = NetManager.DecodeJson(www.bytes);
-		json.accountserverip = SharedVariable.IP;
-		json.accountserverport = SharedVariable.PORT;
 		Log.Info("DownloadScene.CheckVersion: account server ip is " .. json.accountserverip);
 		Log.Info("DownloadScene.CheckVersion: account server port is " .. json.accountserverport);
 		local option = ProgressDialogOption:New();

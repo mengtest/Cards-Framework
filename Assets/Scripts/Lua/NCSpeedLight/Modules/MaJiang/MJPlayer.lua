@@ -428,8 +428,10 @@ function MJPlayer:StartGame()
 	self:SetupBanker();
 	if self:IsBanker() then
 		self:SetHandCardCount(14);
+		MJGroupCard.PopFront(14);
 	else
 		self:SetHandCardCount(13);
+		MJGroupCard.PopFront(13);
 	end
 end
 -- 展示玩家的手牌，sort-是否需要排序，lastMargin-最后一张牌是否需要有间隔
@@ -474,16 +476,15 @@ function MJPlayer:DisplayHandCard(sort, lastMargin)
 		end
 		local currentPos = self.HandCardStartPos - self.HandCardOffset;
 		if self.OperateTotalCount > 0 then
-			-- 计算起始位置的差值，*3：偏移3个位置，+1.5：空出1.5个位置
 			local deltaX = self.OperateCardStartPos.x - self.HandCardStartPos.x;
-			currentPos = currentPos + Vector3.New((self.OperateTotalCount * 3 + 2) * self.HandCardOffset.x + deltaX, 0, 0);
+			currentPos = currentPos + Vector3.New((self.OperateTotalCount + 1.5) * self.HandCardOffset.x + deltaX, 0, 0);
 		end
 		local index = 1;
 		for i = 1, self:GetHandCardCount() do
 			local cardObj = cardGridPanel:Find(tostring(i));
 			local offset = self.HandCardOffset;
 			if i == self:GetHandCardCount() and lastMargin == true then
-				offset = offset + Vector3.New(self.UICardLastMargin, 0, 0);
+				offset = offset + self.HandCardOffset / 2;
 			end
 			currentPos = currentPos + offset;
 			cardObj.localPosition = currentPos;
@@ -517,6 +518,7 @@ end
 --抓牌
 function MJPlayer:MJOT_GetCard(data)
 	Log.Info("MJPlayer:MJOT_GetCard: ui is " .. self.UITransform.name .. ",id is " .. self.ID);
+	MJGroupCard.PopFront();
 	self:AddHandCardCount();
 	if self:IsHero() then
 		local card = data.m_HandCard[1];
@@ -531,6 +533,7 @@ end
 --补牌
 function MJPlayer:MJOT_BuCard(data)
 	Log.Info("MJPlayer:MJOT_BuCard: ui is " .. self.UITransform.name .. ",id is " .. self.ID);
+	MJGroupCard.PopRear();
 	self:AddHandCardCount();
 	if self == MJPlayer.Hero then
 		local card = data.m_HandCard[1];
@@ -559,8 +562,8 @@ function MJPlayer:MJOT_SendCard(data)
 		self:AddTableCardCount();
 	else
 		self.UI:PlayOutCardAnimation(card);
-		self:DisplayHandCard(true, false);
 		self:SubHandCardCount();
+		self:DisplayHandCard(true, false);
 		self:AddTableCardCount();
 	end
 end

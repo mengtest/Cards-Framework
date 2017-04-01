@@ -476,6 +476,6 @@ function MJScene.ReturnOperateError(evt)
 end
 function MJScene.PlayStartGameEffect()
 	for key, value in pairs(MJScene.Players) do
-		value:DisplayHandCard(true);
+		value:DisplayHandCard(true, true);
 	end
 end 

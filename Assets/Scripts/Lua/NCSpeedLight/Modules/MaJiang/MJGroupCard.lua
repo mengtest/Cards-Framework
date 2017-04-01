@@ -19,8 +19,13 @@ MJGroupCardEnum =
 		end
 	end
 }
-MJGroupCard = {Cards = {}};
+MJGroupCard = {
+	Cards = {},
+	PopedRearCount,
+};
 function MJGroupCard.Initialize(groupNum, index)
+	MJGroupCard.Cards = {};
+	MJGroupCard.PopedRearCount = 0;
 	local tempCards = {};
 	for i = 0, 3 do
 		local tempName = MJGroupCardEnum.ToString(i);
@@ -37,17 +42,45 @@ function MJGroupCard.Initialize(groupNum, index)
 	for i = 1, startIndex - 1 do
 		table.insert(MJGroupCard.Cards, tempCards[i]);
 	end
-	local tempTableLength = # tempCards;
-	local tempCardsLength = # MJGroupCard.Cards;
-	local a = 1;
+end
+function MJGroupCard.Pop(index)
+	local card = MJGroupCard.Cards[index];
+	card.gameObject:SetActive(false);
+	table.remove(MJGroupCard.Cards, index);
 end
 function MJGroupCard.PopFront(count)
+	if # MJGroupCard.Cards == 0 then
+		Log.Error("MJGroupCard.PopFront: can not pop a card caused by nil cards queue.");
+		return;
+	end
 	if count == nil then
+		MJGroupCard.Pop(1);
 	else
+		for i = 1, count do
+			MJGroupCard.Pop(1);
+		end
 	end
 end
 function MJGroupCard.PopRear(count)
+	if # MJGroupCard.Cards == 0 then
+		Log.Error("MJGroupCard.PopRear: can not pop a card caused by nil cards queue.");
+		return;
+	end
 	if count == nil then
+		if MJGroupCard.PopedRearCount % 2 == 0 and # MJGroupCard.Cards > 1 then
+			MJGroupCard.Pop(# MJGroupCard.Cards - 1);
+		else
+			MJGroupCard.Pop(# MJGroupCard.Cards);
+		end
+		MJGroupCard.PopedRearCount = MJGroupCard.PopedRearCount + 1;
 	else
+		for i = 1, count do
+			if MJGroupCard.PopedRearCount % 2 == 0 and # MJGroupCard.Cards > 1 then
+				MJGroupCard.Pop(# MJGroupCard.Cards - 1);
+			else
+				MJGroupCard.Pop(# MJGroupCard.Cards);
+			end
+			MJGroupCard.PopedRearCount = MJGroupCard.PopedRearCount + 1;
+		end
 	end
 end 
