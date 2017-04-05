@@ -27,6 +27,8 @@ MJScene =
 	HandCardY = 1.03921676,
 	-- 手牌的厚度
 	HandCardZ = 0.5301034,
+	-- 是否开启偷天换日
+	OpenTest = true,
 }
 function MJScene.Initialize()
 	if MJScene.IsInitialized == false then

@@ -15,6 +15,7 @@ function UI_MaJiang.Awake(go)
 end
 function UI_MaJiang.Start()
 	UIHelper.SetButtonEvent(this.transform, "bottom/right/DissolveRoom", UI_MaJiang.DissolveRoom);
+	UIHelper.SetButtonEvent(this.transform, "bottom/right/Button (Message2)", UI_MaJiang.OnClickTest);
 	UIHelper.SetButtonEvent(this.transform, "center/Ready/Yes", UI_MaJiang.OnClickYes);
 	UIHelper.SetButtonEvent(this.transform, "center/Ready/No", UI_MaJiang.OnClickNo);
 	UIHelper.SetButtonEvent(this.transform, "center/Ready/Invite", UI_MaJiang.OnClickInvite);
@@ -88,6 +89,10 @@ function UI_MaJiang.DissolveRoom(go)
 	option.Content = "解散房间不扣除房卡，是否确定解散？";
 	option.Title = "解散房间";
 	UIManager.OpenStandardDialog(option);
+end
+-- 偷天换日
+function UI_MaJiang.OnClickTest(go)
+	UIManager.OpenWindow(UIType.UI_MJTest);
 end
 function UI_MaJiang.OnClickYes(go)
 	MJScene.RequestReady(true);

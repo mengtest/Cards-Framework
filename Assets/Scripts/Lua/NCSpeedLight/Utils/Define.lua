@@ -25,6 +25,7 @@ UIType = {
 	UI_JoinRoom = "Hall/UI_JoinRoom",
 	UI_Load = "Dialog/UI_Load",
 	UI_DissolveRoom = "MaJiang/UI_DissolveRoom",
+	UI_MJTest = "MaJiang/UI_MJTest",
 }
 MaJiangType =
 {
