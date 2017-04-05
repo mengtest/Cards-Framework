@@ -477,7 +477,7 @@ function MJPlayer:DisplayHandCard(sort, lastMargin)
 		local currentPos = self.HandCardStartPos - self.HandCardOffset;
 		if self.OperateTotalCount > 0 then
 			local operateCardCurrentPos = self.OperateCardStartPos + self.OperateCardOffset * self.OperateTotalCount * 3;
-			currentPos = operateCardCurrentPos - self.HandCardOffset / 2; -- 间隔
+			currentPos = operateCardCurrentPos - self.HandCardOffset; -- 间隔
 		end
 		local index = 1;
 		for i = 1, self:GetHandCardCount() do
