@@ -63,14 +63,14 @@ function Game.Update()
 	end
 end
 function Game.OnGUI()
-	-- if UnityEngine.GUI.Button(UnityEngine.Rect(10, 10, 150, 30), "MJGroupCard.PopFront") then
-	-- 	MJGroupCard.PopFront();
+	-- if UnityEngine.GUI.Button(UnityEngine.Rect(10, 10, 150, 30), "MJGroupCardQueue.PopFront") then
+	-- 	MJGroupCardQueue.PopFront();
 	-- end
-	-- if UnityEngine.GUI.Button(UnityEngine.Rect(10, 50, 150, 30), "MJGroupCard.PopFront(2)") then
-	-- 	MJGroupCard.PopFront(2);
+	-- if UnityEngine.GUI.Button(UnityEngine.Rect(10, 50, 150, 30), "MJGroupCardQueue.PopFront(2)") then
+	-- 	MJGroupCardQueue.PopFront(2);
 	-- end
-	-- if UnityEngine.GUI.Button(UnityEngine.Rect(10, 90, 150, 30), "MJGroupCard.PopRear") then
-	-- 	MJGroupCard.PopRear();
+	-- if UnityEngine.GUI.Button(UnityEngine.Rect(10, 90, 150, 30), "MJGroupCardQueue.PopRear") then
+	-- 	MJGroupCardQueue.PopRear();
 	-- end
 end
 function Game.OnDestroy()

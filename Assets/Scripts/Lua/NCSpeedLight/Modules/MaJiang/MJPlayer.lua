@@ -428,10 +428,10 @@ function MJPlayer:StartGame()
 	self:SetupBanker();
 	if self:IsBanker() then
 		self:SetHandCardCount(14);
-		MJGroupCard.PopFront(14);
+		MJGroupCardQueue.PopFront(14);
 	else
 		self:SetHandCardCount(13);
-		MJGroupCard.PopFront(13);
+		MJGroupCardQueue.PopFront(13);
 	end
 end
 -- 展示玩家的手牌，sort-是否需要排序，lastMargin-最后一张牌是否需要有间隔
@@ -476,8 +476,8 @@ function MJPlayer:DisplayHandCard(sort, lastMargin)
 		end
 		local currentPos = self.HandCardStartPos - self.HandCardOffset;
 		if self.OperateTotalCount > 0 then
-			local deltaX = self.OperateCardStartPos.x - self.HandCardStartPos.x;
-			currentPos = currentPos + Vector3.New((self.OperateTotalCount + 1.5) * self.HandCardOffset.x + deltaX, 0, 0);
+			local operateCardCurrentPos = self.OperateCardStartPos + self.OperateCardOffset * self.OperateTotalCount * 3;
+			currentPos = operateCardCurrentPos - self.HandCardOffset / 2; -- 间隔
 		end
 		local index = 1;
 		for i = 1, self:GetHandCardCount() do
@@ -500,7 +500,7 @@ function MJPlayer:DisplayHandCard(sort, lastMargin)
 		end
 	end
 end
--- 播放UI框的缩放,以及投资面板的闪光效果
+-- 播放UI框的缩放,以及骰子面板的闪光效果
 function MJPlayer:PlayUIScaleAndDicePanelGrow(status)
 	-- Log.Info("MJPlayer:PlayUIScaleAndDicePanelGrow: this is " .. self.UITransform.name);
 	local scaleAnimation = self.UITransform:Find("Enter/Center"):GetComponent(typeof(TweenScale));
@@ -518,7 +518,7 @@ end
 --抓牌
 function MJPlayer:MJOT_GetCard(data)
 	Log.Info("MJPlayer:MJOT_GetCard: ui is " .. self.UITransform.name .. ",id is " .. self.ID);
-	MJGroupCard.PopFront();
+	MJGroupCardQueue.PopFront();
 	self:AddHandCardCount();
 	if self:IsHero() then
 		local card = data.m_HandCard[1];
@@ -533,7 +533,7 @@ end
 --补牌
 function MJPlayer:MJOT_BuCard(data)
 	Log.Info("MJPlayer:MJOT_BuCard: ui is " .. self.UITransform.name .. ",id is " .. self.ID);
-	MJGroupCard.PopRear();
+	MJGroupCardQueue.PopRear();
 	self:AddHandCardCount();
 	if self == MJPlayer.Hero then
 		local card = data.m_HandCard[1];

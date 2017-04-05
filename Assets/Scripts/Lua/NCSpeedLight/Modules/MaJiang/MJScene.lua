@@ -305,7 +305,7 @@ function MJScene.ReturnHandCardInfo(evt)
 	end
 	-- 设置墩牌
 	local fromPlayer = MJScene.GetPlayerByID(msg.m_getCardId);
-	MJGroupCard.Initialize(fromPlayer.UIPosition, msg.m_getCardNum);
+	MJGroupCardQueue.PushAll(fromPlayer.UIPosition, msg.m_getCardNum);
 	-- 开始游戏
 	for key, value in pairs(MJScene.Players) do
 		value:StartGame();
