@@ -42,11 +42,13 @@ function MJGroupCardQueue.PushAll(groupNum, index)
 	for i = 1, startIndex - 1 do
 		table.insert(MJGroupCardQueue.Cards, tempCards[i]);
 	end
+	UI_MaJiang.SetupRemainCardCount(MJGroupCardQueue.Count());
 end
 function MJGroupCardQueue.Pop(index)
 	local card = MJGroupCardQueue.Cards[index];
 	card.gameObject:SetActive(false);
 	table.remove(MJGroupCardQueue.Cards, index);
+	UI_MaJiang.SetupRemainCardCount(MJGroupCardQueue.Count());
 end
 function MJGroupCardQueue.PopFront(count)
 	if # MJGroupCardQueue.Cards == 0 then
@@ -83,4 +85,7 @@ function MJGroupCardQueue.PopRear(count)
 			MJGroupCardQueue.PopedRearCount = MJGroupCardQueue.PopedRearCount + 1;
 		end
 	end
+end
+function MJGroupCardQueue.Count()
+	return # MJGroupCardQueue.Cards;
 end 

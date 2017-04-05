@@ -29,15 +29,31 @@ MJScene =
 	HandCardZ = 0.5301034,
 	-- 是否开启偷天换日
 	OpenTest = true,
+	-- 胡牌结算信息
+	HuInfo = nil,
+	-- 副本信息 【PBMessage.GM_BattleFBServerInfo】
+	FBInfo = nil,
+	-- 总回合数
+	TotalRound = 0,
+	-- 当前回合
+	CurrentRound = 0,
 }
 function MJScene.Initialize()
 	if MJScene.IsInitialized == false then
 	end
 end
 function MJScene.Begin()
+	MJScene.FBInfo = SharedVariable.FBInfo;
+	MJScene.TotalRound = MJScene.FBInfo.m_gameCount;
+	MJScene.CurrentRound = 1;
+	MJScene.SimulateResultInfo();
 	UIManager.OpenWindow(UIType.UI_Load);
 	AssetManager.LoadScene(SceneType.MJScene);
 	MJScene.Players = {};
+end
+function MJScene.SimulateResultInfo()
+	local msg = {};
+	msg.m_huRoleid = 0;
 end
 function MJScene.Update()
 end
@@ -401,7 +417,18 @@ function MJScene.ReturnAllReady(evt)
 	UIManager.OpenTipsDialog("对局开始");
 end
 function MJScene.ReturnPlayerHu(evt)
-	Log.Info("MJScene.ReturnPlayerHu");
+	local msg = NetManager.DecodeMsg(PBMessage.GM_HUOperator, evt);
+	if msg == false then
+		Log.Error("MJScene.ReturnPlayerHu: parse msg error," .. PBMessage.GM_HUOperator);
+		return;
+	end
+	Log.Info("MJScene.ReturnPlayerHu: hu role id is " .. msg.m_huRoleid);
+	MJScene.HuInfo = msg;
+	if msg.m_huRoleid == 0 then
+		UIManager.OpenWindow(UIType.UI_MJDraw);
+	else
+		-- if msg.
+	end
 end
 function MJScene.NotifyPlayerLeave(evt)
 	Log.Info("MJScene.NotifyPlayerLeave");

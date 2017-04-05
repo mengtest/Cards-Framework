@@ -72,6 +72,20 @@ function Game.OnGUI()
 	-- if UnityEngine.GUI.Button(UnityEngine.Rect(10, 90, 150, 30), "MJGroupCardQueue.PopRear") then
 	-- 	MJGroupCardQueue.PopRear();
 	-- end
+	if UnityEngine.GUI.Button(UnityEngine.Rect(10, 10, 150, 30), "Open MJ Draw") then
+		UIManager.OpenWindow(UIType.UI_MJDraw);
+	end
+	if UnityEngine.GUI.Button(UnityEngine.Rect(10, 50, 150, 30), "Open MJ Result") then
+		UIManager.OpenWindow(UIType.UI_MJResult);
+	end
+	if UnityEngine.GUI.Button(UnityEngine.Rect(10, 90, 150, 30), "Open MJ Total Result") then
+		UIManager.OpenWindow(UIType.UI_MJTotalResult);
+	end
+	if UnityEngine.GUI.Button(UnityEngine.Rect(10, 130, 150, 30), "Close All Result") then
+		UIManager.CloseWindow(UIType.UI_MJDraw);
+		UIManager.CloseWindow(UIType.UI_MJTotalResult);
+		UIManager.CloseWindow(UIType.UI_MJResult);
+	end
 end
 function Game.OnDestroy()
 	NetManager.DeleteAllConnections();

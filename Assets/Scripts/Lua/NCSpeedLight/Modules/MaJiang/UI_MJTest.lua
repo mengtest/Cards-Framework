@@ -1,3 +1,13 @@
+-----------------------------------------------
+-- Copyright © 2014-2017 NCSpeedLight
+--
+-- FileName: UI_MJTest.lua
+-- Describle:   偷天换日界面
+-- Created By:  Wells Hsu
+-- Date&Time:  2017/2/28 19:11:09
+-- Modify History:
+--
+-----------------------------------------------
 UI_MJTest = {
 	transform = nil,
 	gameObject = nil,
@@ -11,6 +21,9 @@ function UI_MJTest.Awake(go)
 end
 function UI_MJTest.Start()
 	UIHelper.SetButtonEvent(this.transform, "Button", function(obj)
+		UIManager.CloseWindow(UIType.UI_MJTest);
+	end);
+	UIHelper.SetButtonEvent(this.transform, "BG", function(obj)
 		UIManager.CloseWindow(UIType.UI_MJTest);
 	end);
 	UI_MJTest.CloneCard(MaJiangType.MJ_1_WAN, "一万");

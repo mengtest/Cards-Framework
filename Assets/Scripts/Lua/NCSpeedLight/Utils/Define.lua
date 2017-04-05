@@ -26,6 +26,9 @@ UIType = {
 	UI_Load = "Dialog/UI_Load",
 	UI_DissolveRoom = "MaJiang/UI_DissolveRoom",
 	UI_MJTest = "MaJiang/UI_MJTest",
+	UI_MJResult = "MaJiang/UI_MJResult",
+	UI_MJTotalResult = "MaJiang/UI_MJTotalResult",
+	UI_MJDraw = "MaJiang/UI_MJDraw",
 }
 MaJiangType =
 {

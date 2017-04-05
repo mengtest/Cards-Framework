@@ -99,6 +99,8 @@ MJPlayer =
 	ChiCount = 0,
 	-- 吃碰杠的总次数
 	OperateTotalCount = 0,
+	-- 总的积分
+	TotalScore = 0,
 };
 MJPlayer.__index = MJPlayer;
 function MJPlayer.New()
@@ -254,15 +256,20 @@ function MJPlayer:Initialize(data, ishero)
 	Log.Info("MJPlayer:Initialize: OperateCardOffset is " .. tostring(self.OperateCardOffset));
 	Log.Info("MJPlayer:Initialize: OperateCardRotation is " .. tostring(self.OperateCardRotation));
 	Log.Info("MJPlayer:Initialize: finish,self " .. tostring(self));
-	-- if self:IsHero() == false then
-	-- 	self.sceneTransform = MJSceneController.transform:Find("majiangzhuo/backCard/" .. self.UITransform.name);
-	-- end
 end
 function MJPlayer:OnUIDestroy()
 end
 -- data= PBMessage.GM_EntryInfo_Single
 function MJPlayer:SetMJData(data)
 	self.MJData = data;
+end
+-- 获取显示的名字
+function MJPlayer:GetShowName()
+	if string.len(self.MJData.m_RoleData.m_NickName) == 0 then
+		return self.MJData.m_RoleData.m_Name;
+	else
+		return self.MJData.m_RoleData.m_NickName;
+	end
 end
 -- data= PBMessage.GMHandCard
 function MJPlayer:SetHandCardInfo(data)
@@ -394,6 +401,14 @@ end
 function MJPlayer:GetOperateTotalCount()
 	return self.OperateTotalCount;
 end
+-- 设置当前玩家的总积分
+function MJPlayer:GetTotalScore()
+	return self.TotalScore;
+end
+-- 获取当前玩家的总积分
+function MJPlayer:SetTotalScore(score)
+	self.TotalScore = score;
+end
 -- 设置玩家UI
 function MJPlayer:SetupUI()
 	NCSpeedLight.UIHelper.SetLabelText(self.UITransform, "Enter/Center/Label (Name)", self.MJData.m_RoleData.m_Name);
@@ -477,7 +492,7 @@ function MJPlayer:DisplayHandCard(sort, lastMargin)
 		local currentPos = self.HandCardStartPos - self.HandCardOffset;
 		if self.OperateTotalCount > 0 then
 			local operateCardCurrentPos = self.OperateCardStartPos + self.OperateCardOffset * self.OperateTotalCount * 3;
-			currentPos = operateCardCurrentPos - self.HandCardOffset; -- 间隔
+			currentPos = operateCardCurrentPos -(self.HandCardOffset / 2); -- 间隔
 		end
 		local index = 1;
 		for i = 1, self:GetHandCardCount() do

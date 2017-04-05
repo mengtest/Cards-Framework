@@ -1,3 +1,13 @@
+-----------------------------------------------
+-- Copyright © 2014-2017 NCSpeedLight
+--
+-- FileName: UI_MaJiang.lua
+-- Describle:   麻将主界面
+-- Created By:  Wells Hsu
+-- Date&Time:  2017/2/28 19:11:09
+-- Modify History:
+--
+-----------------------------------------------
 require "NCSpeedLight.Modules.MaJiang.UI_HeroPlayer"
 require "NCSpeedLight.Modules.MaJiang.UI_OtherPlayer"
 UI_MaJiang = {
@@ -7,6 +17,7 @@ UI_MaJiang = {
 	UI_Player1,
 	UI_Player2,
 	UI_Player3,
+	CurrentTime = nil,
 }
 local this = UI_MaJiang
 function UI_MaJiang.Awake(go)
@@ -23,9 +34,16 @@ function UI_MaJiang.Start()
 	UIHelper.SetButtonEvent(this.transform, "bottom/right/Operate/Hu", UI_MaJiang.OnClickHu);
 	UIHelper.SetButtonEvent(this.transform, "bottom/right/Operate/DingHu", UI_MaJiang.OnClickDingHu);
 	UIHelper.SetButtonEvent(this.transform, "bottom/right/Operate/Pass", UI_MaJiang.OnClickPass);
+	UI_MaJiang.SetupCurrentRound();
 	UI_MaJiang.SetupPlayerUIVisiable();
 	UI_MaJiang.SetupReadyAndInvite(true, false, true);
 	UI_MaJiang.InitPlayerUI();
+end
+function UI_MaJiang.Update()
+	UI_MaJiang.CurrentTime = os.date("%H:%M");
+	UIHelper.SetLabelText(this.transform, "top/topLeft/CurrentLatency/Label", tostring(UI_MaJiang.CurrentTime));
+end
+function UI_MaJiang.OnDestroy()
 end
 -- 初始化玩家的UI
 function UI_MaJiang.InitPlayerUI()
@@ -78,6 +96,19 @@ function UI_MaJiang.SetupCastDice(status)
 	else
 		NCSpeedLight.UIHelper.SetActiveState(this.transform, "center/CastDice/Button", false);
 	end
+end
+-- 设置当前的局数
+function UI_MaJiang.SetupCurrentRound()
+	UIHelper.SetActiveState(this.transform, "top/topLeft/RemainTime", true);
+	UIHelper.SetActiveState(this.transform, "top/topLeft/RemainTime/Label (Tips)", true);
+	UIHelper.SetActiveState(this.transform, "top/topLeft/RemainTime/Label", true);
+	UIHelper.SetLabelText(this.transform, "top/topLeft/RemainTime/Label (Tips)", "当前局数");
+	UIHelper.SetLabelText(this.transform, "top/topLeft/RemainTime/Label", MJScene.CurrentRound .. "/" .. MJScene.TotalRound);
+end
+-- 设置剩余的牌的个数
+function UI_MaJiang.SetupRemainCardCount(count)
+	UIHelper.SetActiveState(this.transform, "top/topLeft/RemainCards", true);
+	UIHelper.SetLabelText(this.transform, "top/topLeft/RemainCards/Label", tostring(count));
 end
 function UI_MaJiang.DissolveRoom(go)
 	local option = StandardDialogOption:New();
