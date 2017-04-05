@@ -450,7 +450,7 @@ function MJPlayer:DisplayHandCard(sort, lastMargin)
 		for i = 1, # self.HandCardInfo.m_HandCard do
 			local card = self.HandCardInfo.m_HandCard[i];
 			local cardObj = cardGridPanel:Find(tostring(i));
-			NCSpeedLight.UIHelper.SetSpriteName(cardObj, "Sprite", MaJiangType.GetString(card.m_Type));
+			NCSpeedLight.UIHelper.SetSpriteName(cardObj, "Sprite", MaJiangType.ToString(card.m_Type));
 			local offset = nil;
 			if i == # self.HandCardInfo.m_HandCard and lastMargin == true then
 				offset = Vector3.New(self.UICardWidth + self.UICardLastMargin, 0, 0);
@@ -522,7 +522,7 @@ function MJPlayer:MJOT_GetCard(data)
 	self:AddHandCardCount();
 	if self:IsHero() then
 		local card = data.m_HandCard[1];
-		Log.Info("MJPlayer:MJOT_GetCard: hero get one card, card id is " .. card.m_Index .. ",type is " .. MaJiangType.GetString(card.m_Type));
+		Log.Info("MJPlayer:MJOT_GetCard: hero get one card, card id is " .. card.m_Index .. ",type is " .. MaJiangType.ToString(card.m_Type));
 		if card ~= nil then
 			self:AddHandCard(card);
 		end
@@ -537,7 +537,7 @@ function MJPlayer:MJOT_BuCard(data)
 	self:AddHandCardCount();
 	if self == MJPlayer.Hero then
 		local card = data.m_HandCard[1];
-		Log.Info("MJPlayer:MJOT_BuCard: hero get one card, card id is " .. card.m_Index .. ",type is " .. MaJiangType.GetString(card.m_Type));
+		Log.Info("MJPlayer:MJOT_BuCard: hero get one card, card id is " .. card.m_Index .. ",type is " .. MaJiangType.ToString(card.m_Type));
 		if card ~= nil then
 			self:AddHandCard(card);
 		end
@@ -548,7 +548,7 @@ end
 --出牌
 function MJPlayer:MJOT_SendCard(data)
 	local card = data.m_HandCard[1];
-	Log.Info("MJPlayer:MJOT_SendCard: ui is " .. self.UITransform.name .. ",id is " .. self.ID .. ",card id is " .. card.m_Index .. ",type is " .. MaJiangType.GetString(card.m_Type));
+	Log.Info("MJPlayer:MJOT_SendCard: ui is " .. self.UITransform.name .. ",id is " .. self.ID .. ",card id is " .. card.m_Index .. ",type is " .. MaJiangType.ToString(card.m_Type));
 	if self:IsHero() then
 		local cardPosition = self:GetHandCardPositionByID(card.m_Index);
 		local newCardPosition = self:GetHandCardCount();

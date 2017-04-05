@@ -101,7 +101,7 @@ function UI_HeroPlayer:PlayOutCardAnimation(card)
 	tweener.duration = 0.5;
 	tweener.from = UI_HeroPlayer.DragingCardObj.transform;
 	tweener:ResetToBeginning();
-	NCSpeedLight.UIHelper.SetSpriteName(outCardTran, "Sprite", MaJiangType.GetString(card.m_Type));
+	NCSpeedLight.UIHelper.SetSpriteName(outCardTran, "Sprite", MaJiangType.ToString(card.m_Type));
 	outCardTran.gameObject:SetActive(true);
 	local tableCard = MJSceneController.GetOneUnuseCard(card.m_Index, card.m_Type, self.Player.ID);
 	local cardPos = self.Player:GetTableCardPos(self.Player.TableCardCount);
@@ -230,7 +230,7 @@ function UI_HeroPlayer:PlayGetCardAnimation()
 		local cardPos = self.Player:GetHandCardCount();
 		local cardObj = self:GetCardObjByPosition(cardPos);
 		local card = self.Player:GetHandCardByPosition(cardPos);
-		UIHelper.SetSpriteName(cardObj.transform, "Sprite", MaJiangType.GetString(card.m_Type));
+		UIHelper.SetSpriteName(cardObj.transform, "Sprite", MaJiangType.ToString(card.m_Type));
 		cardObj:SetActive(true);
 		local leftCardObj = self:GetCardObjByPosition(cardPos - 1);
 	end;

@@ -235,7 +235,7 @@ end
 -- 请求麻将出牌
 function MJScene.RequestMJOperate_OutCard(card)
 	local cardNum = # MJPlayer.Hero.HandCardInfo.m_HandCard;
-	Log.Info("MJScene.RequestMJOperate_OutCard: current cards count is " .. cardNum .. ",card index is " .. card.m_Index .. ",type is " .. MaJiangType.GetString(card.m_Type));
+	Log.Info("MJScene.RequestMJOperate_OutCard: current cards count is " .. cardNum .. ",card index is " .. card.m_Index .. ",type is " .. MaJiangType.ToString(card.m_Type));
 	local msg = {};
 	msg.m_OperatorType = MaJiangOperatorType.MJOT_SendCard;
 	msg.m_CardNum = cardNum;
@@ -374,7 +374,7 @@ function MJScene.ReturnCanOperatorType(evt)
 		Log.Info("MJScene.ReturnCanOperatorType: operate data,m_OperatorType is " .. MaJiangOperatorType.GetString(data.m_OperatorType) .. ",m_FunID is " .. data.m_FunID .. ",m_OperatorCard is " .. data.m_OperatorCard .. ",m_CardNum is " .. data.m_CardNum);
 		for j = 1, # data.m_HandCard do
 			local handCard = data.m_HandCard[j];
-			Log.Info("MJScene.ReturnCanOperatorType: operate data: handcard" .. tostring(j) .. ": card id is " .. handCard.m_Index .. ", card type is " .. MaJiangType.GetString(handCard.m_Type));
+			Log.Info("MJScene.ReturnCanOperatorType: operate data: handcard" .. tostring(j) .. ": card id is " .. handCard.m_Index .. ", card type is " .. MaJiangType.ToString(handCard.m_Type));
 		end
 	end
 	UI_MaJiang.ShowOperateView(msg.m_Operator);

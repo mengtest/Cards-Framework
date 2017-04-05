@@ -58,20 +58,21 @@ function UI_MJTest.OnDestroy()
 end
 function UI_MJTest.CloneCard(type, text)
 	local tempNewObj = NGUITools.AddChild(this.CloneObj.transform.parent.gameObject, this.CloneObj);
-	tempNewObj.name = MaJiangType.GetString(type);
+	tempNewObj.name = MaJiangType.ToString(type);
 	local tempLable = tempNewObj:GetComponent(typeof(UILabel));
 	if tempLable ~= nil then
 		tempLable.text = text;
 	end
-	UIHelper.SetButtonEvent(tempNewObj.transform, ClickCard);
+	UIHelper.SetButtonEvent(tempNewObj.transform, UI_MJTest.ClickCard);
 	tempNewObj:SetActive(true);
 end
-function ClickCard(varObj)
+function UI_MJTest.ClickCard(varObj)
 	if varObj == nil then return end;
-	local tempType = tonumber(varObj.name);
+	local tempType = MaJiangType.ToInt(varObj.name);
 	local msg = {
 		m_Index = Player.ID,
 		m_Type = tempType
 	};
+	Log.Info("UI_MJTest.ClickCard: tou tian huan ri type is " .. MaJiangType.ToString(tempType));
 	NetManager.SendEventToLogicServer(GameMessage.GM_PlayerNeedCardRequest, PBMessage.GM_PlayerHandCard, msg);
 end 

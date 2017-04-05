@@ -64,7 +64,14 @@ MaJiangType =
 	MJ_FA = 32,
 	MJ_BAI = 33,
 	MJ_NUM = 34,
-	GetString = function(index)
+	ToInt = function(name)
+		for key, value in pairs(MaJiangType) do
+			if key == name then
+				return value;
+			end
+		end
+	end,
+	ToString = function(index)
 		for key, value in pairs(MaJiangType) do
 			if value == index then
 				return tostring(key);

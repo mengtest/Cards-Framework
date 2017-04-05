@@ -12,11 +12,13 @@ Player =
 {
 	EvtProcessor = EvtProcessor.New();
 	FullInfo = nil;
+	ID = 0,
 };
 -- 设置当前玩家的完整信息
 function Player.SetFullInfo(data)
-	Log.Info("Player.SetFullInfo");
+	Log.Info("Player.SetFullInfo: id is " .. tostring(data.id));
 	Player.FullInfo = data;
+	Player.ID = data.id;
 end
 function Player.RegisterEvent(id, func)
 	Player.EvtProcessor:Register(id, func);

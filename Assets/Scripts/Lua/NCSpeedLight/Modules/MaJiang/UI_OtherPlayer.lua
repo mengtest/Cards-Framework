@@ -41,7 +41,7 @@ function UI_OtherPlayer:PlayOutCardAnimation(card)
 	-- tweener.duration = 0.5;
 	-- tweener.from = UI_HeroPlayer.DragingCardObj.transform;
 	-- tweener:ResetToBeginning();
-	-- NCSpeedLight.UIHelper.SetSpriteName(outCardTran, "Sprite", MaJiangType.GetString(card.m_Type));
+	-- NCSpeedLight.UIHelper.SetSpriteName(outCardTran, "Sprite", MaJiangType.ToString(card.m_Type));
 	-- outCardTran.gameObject:SetActive(true);
 	local tableCard = MJSceneController.GetOneUnuseCard(card.m_Index, card.m_Type, self.Player.ID);
 	local cardPos = self.Player:GetTableCardPos(self.Player.TableCardCount);

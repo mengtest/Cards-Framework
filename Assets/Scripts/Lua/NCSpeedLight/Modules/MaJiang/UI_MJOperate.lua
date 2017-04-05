@@ -46,7 +46,7 @@ function UI_MJOperate:ShowPengCard()
 	UIHelper.SetActiveState(self.Card1Transform, "Sprite", tempType == self.OperateData.m_OperatorCard);
 	for i = 1, 3 do
 		local tempTransform = self.transform:Find("Card" .. i);
-		UIHelper.SetSpriteName(tempTransform, MaJiangType.GetString(tempType));
+		UIHelper.SetSpriteName(tempTransform, MaJiangType.ToString(tempType));
 		-- if (varPlayer != null) 
 		-- {
 		--     Helper.SetActiveState(tempTransform, "Jing", varPlayer.CardIsJing(tempType));
@@ -59,7 +59,7 @@ function UI_MJOperate:ShowEatCard()
 	for i = 1, 3 do
 		local tempType = self.OperateData.m_HandCard[i].m_Type;
 		local tempTransform = self.transform:Find("Card" .. i);
-		UIHelper.SetSpriteName(tempTransform, MaJiangType.GetString(tempType));
+		UIHelper.SetSpriteName(tempTransform, MaJiangType.ToString(tempType));
 		UIHelper.SetActiveState(tempTransform, "Sprite", tempType == self.OperateData.m_OperatorCard);
 		-- if (varPlayer != null) 
 		-- {
@@ -74,7 +74,7 @@ function UI_MJOperate:ShowGangCard()
 	UIHelper.SetActiveState(self.Card1Transform, "Sprite", tempType == self.OperateData.m_OperatorCard);
 	for i = 1, 4 do
 		local tempTransform = self.transform:Find("Card" .. i);
-		UIHelper.SetSpriteName(tempTransform, MaJiangType.GetString(tempType));
+		UIHelper.SetSpriteName(tempTransform, MaJiangType.ToString(tempType));
 		-- if (varPlayer != null) 
 		-- {
 		--     Helper.SetActiveState(tempTransform, "Jing", varPlayer.CardIsJing(tempType));
