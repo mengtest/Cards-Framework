@@ -75,4 +75,5 @@ function UI_MJTest.ClickCard(varObj)
 	};
 	Log.Info("UI_MJTest.ClickCard: tou tian huan ri type is " .. MaJiangType.ToString(tempType));
 	NetManager.SendEventToLogicServer(GameMessage.GM_PlayerNeedCardRequest, PBMessage.GM_PlayerHandCard, msg);
+	UIManager.CloseWindow(UIType.UI_MJTest);
 end 
