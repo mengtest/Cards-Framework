@@ -429,6 +429,7 @@ function MJScene.ReturnPlayerHu(evt)
 	if msg.m_huRoleid == 0 then
 		UIManager.OpenWindow(UIType.UI_MJDraw);
 	else
+		UIManager.OpenWindow(UIType.UI_MJResult);
 		-- if msg.
 	end
 end

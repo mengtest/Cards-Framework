@@ -57,14 +57,41 @@ function UI_MJTotalResult.InitView()
 				tempClone:SetParent(tempItem.parent);
 				tempClone.localScale = Vector3.New(1, 1, 1);
 				local tempStr = "";
-				-- if i <= 9 then
-				-- 	tempStr = "第" .. tostring(i) .. "局";
-				-- 	tempStr = string.Format("{0}{1}{2}:", Localization.Get("MaJiang Result A"), Localization.Get("MaJiang Result " + i), Localization.Get("MaJiang Result B"));
-				-- else
-				-- tempStr = "第"
-				-- 	tempStr = string.Format("{0}{1}{2}{3}:", Localization.Get("MaJiang Result A"), Localization.Get("MaJiang Result " + 9), Localization.Get("MaJiang Result " +(i - 10)), Localization.Get("MaJiang Result B"));
-				-- end
+				if i <= 9 then
+					tempStr = "第" .. MJResultText.ToString(i) .. "局";
+				else
+					tempStr = "第" .. MJResultText.ToString(9) .. MJResultText.ToString(i - 10) .. "局";
+				end
+				-- 局数
 				UIHelper.SetLabelText(tempClone, "Label", tempStr);
+				--  当前局数输赢积分
+				local tempScore = MJScene.TotalResultInfo.m_OneData[i].m_ResultInfo[j].m_score;
+				local tempTotalScore = mTotalScore[j] + tempScore;
+				mTotalScore[j] = tempTotalScore;
+				SetLabelPos(tempClone, tempScore);
+				-- 	if (i == 0) 
+				-- 	{
+				-- 		-- 设置名字头像
+				-- 		string tempName=mData.m_OneData[i].m_ResultInfo[j].m_name;
+				-- 		Helper.SetLabelText(tempTrans,"Role/Label (Name)",UIHelper.GetPlayerName(tempName));
+				-- 		string tempID=mData.m_OneData [i].m_ResultInfo [j].m_id;
+				-- 		Helper.SetLabelText(tempTrans,"Role/Label (ID)","ID:"+tempID);
+				-- 		string tempHeadName=mData.m_OneData[i].m_ResultInfo[j].m_headUrl;
+				-- 		Transform tempHead = tempTrans.Find("Role/Sprite (Photo)");
+				-- 		if (tempHead != null)
+				-- 		{
+				-- 			UIWidget tempWidget = UIHelper.CreateHeadPhoto (tempHead.gameObject, tempHeadName);
+				-- 			if (tempWidget != null) 
+				-- 			{
+				-- 				tempWidget.depth = 10;
+				-- 				tempWidget.width = 66;
+				-- 				tempWidget.height = 66;
+				-- 			}
+				-- 		}
+				-- 	}
+				-- 	UIGridReposition (tempItem.parent);
+				-- 	tempClone.gameObject.SetActive (true);
+				-- 	Helper.SetLabelText (tempTrans, "Label (Total)",mTotalScore [j].ToString());
 			end
 		end
 	end

@@ -46,19 +46,19 @@ function Action.New(beginTime, endTime)
 	setmetatable(o, Action);
 	return o;
 end
-function Action:Begin(timeline, deltatime)
+function Action:Begin(timeline)
 	if self.OnBegin ~= nil then
-		self.OnBegin(timeline, deltatime);
+		self.OnBegin(timeline, self.Param);
 	end
 end
-function Action:Update(timeline, deltatime)
+function Action:Update(timeline)
 	if self.OnUpdate ~= nil then
-		self.OnUpdate(timeline, deltatime);
+		self.OnUpdate(timeline, self.Param);
 	end
 end
-function Action:End(timeline, deltatime)
+function Action:End(timeline)
 	if self.OnEnd ~= nil then
-		self.OnEnd(timeline, deltatime);
+		self.OnEnd(timeline, self.Param);
 	end
 end
 -- end of action 
