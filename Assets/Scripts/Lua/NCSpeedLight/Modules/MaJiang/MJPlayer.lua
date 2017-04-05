@@ -409,6 +409,11 @@ end
 function MJPlayer:SetTotalScore(score)
 	self.TotalScore = score;
 end
+-- 增加总积分
+function MJPlayer:AddTotalScore(score)
+	self.TotalScore = self.TotalScore + score;
+	return self.TotalScore;
+end
 -- 设置玩家UI
 function MJPlayer:SetupUI()
 	NCSpeedLight.UIHelper.SetLabelText(self.UITransform, "Enter/Center/Label (Name)", self.MJData.m_RoleData.m_Name);

@@ -18,15 +18,28 @@ function UI_MJDraw.Awake(go)
 	this.transform = go.transform;
 end
 function UI_MJDraw.Start()
+	UI_MJDraw.InitBtnEvent();
 	UI_MJDraw.InitView();
-	UI_MJDraw.InitPlaywayAndRound();
+	UI_MJDraw.SetupPlaywayAndRound();
 end
 function UI_MJDraw.OnDestroy()
 	this.transform = nil;
 	this.gameObject = nil;
 end
+function UI_MJDraw.InitBtnEvent()
+	UIHelper.SetButtonEvent(this.transform, "Buttom/OnceAgain", function(obj)
+	end);
+	UIHelper.SetButtonEvent(this.transform, "Buttom/LookTotalResult", function(obj)
+	end);
+	UIHelper.SetButtonEvent(this.transform, "Buttom/ReturnDeskBtn", function(obj)
+	end);
+end
 function UI_MJDraw.InitView()
-	local allRoleHandCards = MJScene.HuInfo.m_Data;
+	if MJScene.CurrentRound >= MJScene.TotalRound then
+		UIHelper.SetActiveState(this.transform, "Buttom/LookTotalResult", true);
+		UIHelper.SetActiveState(this.transform, "Buttom/OnceAgain", false);
+	end
+	local allRoleHandCards = MJScene.CurrentResultInfo.m_Data;
 	for i = 1, # allRoleHandCards do
 		local card = allRoleHandCards[i];
 		local tempPlayer = MJScene.GetPlayerByID(card.m_roleid);
@@ -70,7 +83,7 @@ function UI_MJDraw.InitView()
 	tempParentGrid:Reposition();
 end
 -- 设置玩法和局数
-function UI_MJDraw.InitPlaywayAndRound()
+function UI_MJDraw.SetupPlaywayAndRound()
 	local tempRounds = "当前局数: " .. MJScene.CurrentRound .. "/" .. MJScene.TotalRound;
 	UIHelper.SetLabelText(this.transform, "LeftTop/Rounds", tempRounds);
 	-- string tempWay = string.Empty;

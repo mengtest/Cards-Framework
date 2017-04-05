@@ -29,14 +29,16 @@ MJScene =
 	HandCardZ = 0.5301034,
 	-- 是否开启偷天换日
 	OpenTest = true,
-	-- 胡牌结算信息
-	HuInfo = nil,
 	-- 副本信息 【PBMessage.GM_BattleFBServerInfo】
 	FBInfo = nil,
 	-- 总回合数
 	TotalRound = 0,
 	-- 当前回合
 	CurrentRound = 0,
+	-- 当前结算信息
+	CurrentResultInfo = nil,
+	-- 总结算信息
+	TotalResultInfo = nil,
 }
 function MJScene.Initialize()
 	if MJScene.IsInitialized == false then
@@ -423,7 +425,7 @@ function MJScene.ReturnPlayerHu(evt)
 		return;
 	end
 	Log.Info("MJScene.ReturnPlayerHu: hu role id is " .. msg.m_huRoleid);
-	MJScene.HuInfo = msg;
+	MJScene.CurrentResultInfo = msg;
 	if msg.m_huRoleid == 0 then
 		UIManager.OpenWindow(UIType.UI_MJDraw);
 	else
@@ -480,13 +482,18 @@ function MJScene.ReturnRoomMasterDissolve(evt)
 	UIManager.OpenStandardDialog(option);
 end
 function MJScene.ReturnShowLastResult(evt)
-	Log.Info("MJScene.ReturnShowLastResult");
+	local msg = NetManager.DecodeMsg(PBMessage.GM_MJCardRoomResult, evt);
+	if msg == false then
+		Log.Error("MJScene.ReturnShowLastResult: parse msg error: " .. PBMessage.GM_MJCardRoomResult);
+		return;
+	end
+	MJScene.TotalResultInfo = msg;
+	Log.Info("MJScene.ReturnShowLastResult: m_count is " .. msg.m_count);
 end
 function MJScene.ReturnRoomRate(evt)
 	Log.Info("MJScene.ReturnRoomRate");
 end
 function MJScene.ReturnCastDice(evt)
-	Log.Info("MJScene.ReturnCastDice");
 	local msg = NetManager.DecodeMsg(PBMessage.GM_PlayerRollRequest, evt);
 	if msg == false then
 		Log.Error("MJScene.ReturnCastDice: parse msg error: " .. PBMessage.GM_PlayerRollRequest);
