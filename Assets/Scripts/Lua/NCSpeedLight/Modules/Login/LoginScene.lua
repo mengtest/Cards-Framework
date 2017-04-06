@@ -298,8 +298,8 @@ function LoginScene.OnRoleLoginReturn(evt)
 			SharedVariable.SelfInfo.ID = msg.id;
 			SharedVariable.SelfInfo.AccountID = msg.accountid;
 			Player.SetFullInfo(msg);
-			-- SceneManager.GotoScene(SceneType.HallScene);
-			HallScene.RequestPlayerInFb();
+			SceneManager.GotoScene(SceneType.HallScene);
+			-- HallScene.RequestPlayerInFb();
 		else
 			Log.Info("LoginScene.OnRoleLoginReturn: role login error caused by \' msg.id<=0\' ");
 			UIManager.CloseWindow(UIType.UI_Load);

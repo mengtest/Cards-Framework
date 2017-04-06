@@ -1,3 +1,13 @@
+-----------------------------------------------
+-- Copyright © 2014-2017 NCSpeedLight
+--
+-- FileName: HallScene.lua
+-- Describle:  游戏大厅，从该场景进入不同的游戏
+-- Created By:  Wells Hsu
+-- Date&Time:  2017/2/28 19:11:09
+-- Modify History:
+--
+-----------------------------------------------
 HallScene =
 {
 	Name = SceneType.HallScene,
@@ -5,13 +15,14 @@ HallScene =
 }
 function HallScene.Initialize()
 	if HallScene.IsInitialized == false then
-		HallScene.RegisterNetEvent();
 	end
 end
 function HallScene.Begin()
+	HallScene.RegisterNetEvent();
 	UIManager.CloseAllWindows();
 	AssetManager.LoadScene(SceneType.HallScene);
 	UIManager.OpenWindow('Hall/UI_Main');
+	HallScene.RequestPlayerInFb();
 end
 function HallScene.Update()
 end
@@ -45,7 +56,7 @@ end
 -- 判断当前玩家是否在副本内
 function HallScene.RequestPlayerInFb()
 	local msg = {
-		request = SharedVariable.SelfInfo.FullInfo.id;
+		request = Player.ID;
 	};
 	NetManager.SendEventToLogicServer(GameMessage.GM_PLAYERISINBATTLE_REQUEST, PBMessage.GM_Request, msg);
 end
@@ -95,28 +106,25 @@ end
 function HallScene.ReturnPlayerInFb(evt)
 	Log.Info("HallScene.ReturnPlayerInFb");
 	local msg = NetManager.DecodeMsg(PBMessage.GM_BattleFBServerInfo, evt);
-	if msg == nil then
+	if msg == false then
 		return;
 	end
 	if msg.m_Result == 0 then
 		-- 房间已存在，直接进入
 		SharedVariable.FBInfo = msg;
-		SceneManager.GotoScene(SceneType.MJScene);
+		local option = StandardDialogOption.New("提示", "当前房间未解散，是否进入？", true,
+		function()
+			SceneManager.GotoScene(SceneType.MJScene);
+		end,
+		function()
+		end);
+		UIManager.OpenStandardDialog(option);
 	else
 		if SceneManager.CurrentScene ~= nil and SceneManager.CurrentScene.Name == SceneType.LoginScene then
 			SceneManager.GotoScene(SceneType.HallScene);
 		else
 			HallScene.RequestCreateRoom();
 		end
-		-- local isInMaJiangRoom = msg.m_FBTypeID >= MJRoomType.R_1 and msg.m_FBTypeID <= MJRoomType.R_2;
-		-- if msg.m_FBTypeID > 0 and isInMaJiangRoom == false then
-		-- 	return;
-		-- end
-		-- local mFirstRequest = false;
-		-- if mFirstRequest then
-		-- else
-		-- 	Player:NotifyEvent(PlayerEventType.PE_MjRoomExist, msg);
-		-- end
 	end
 end
 function HallScene.ReturnAgainEnterFb(evt)
@@ -145,11 +153,13 @@ function HallScene.ReceiveFbInfo(evt)
 end
 function HallScene.ReceiveRespondLoginBattle(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GM_LoginFBServerResult, evt);
-	if msg == false then return end;
+	if msg == false then
+		Log.Error("HallScene.ReceiveRespondLoginBattle: parse msg error," .. PBMessage.GM_LoginFBServerResult);
+		return;
+	end;
 	if msg.result == 0 then
 		Log.Info("HallScene.ReceiveRespondLoginBattle: FBID is " .. SharedVariable.FBInfo.m_FBID);
 		SceneManager.GotoScene(SceneType.MJScene);
-		Player:NotifyEvent(PlayerEventType.PE_ReturnLoginFB, msg);
 	end
 end
 function HallScene.NotifyChangeSomething(evt)

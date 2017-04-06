@@ -1,41 +1,38 @@
-----------------------------------------------------------------
---          // Copyright © 2014-2017 NCSpeedLight
---          //
---          // FileName: UIManager.lua
--- 	        // Describle:
--- 	        // Created By:  Wells Hsu
--- 		    // Date&Time:  2016/1/19 10:03:15
---          // Modify History:
---          //
-----------------------------------------------------------------
-
+-----------------------------------------------
+-- Copyright © 2014-2017 NCSpeedLight
+--
+-- FileName: UIManager.lua
+-- Describle:  窗口管理
+-- Created By:  Wells Hsu
+-- Date&Time:  2017/2/28 19:11:09
+-- Modify History:
+--
+-----------------------------------------------
 StandardDialogOption =
 {
-	Title,
+	Title = "提示",
 	TitleFontSize = 35,
 	TitleSprite,
 	ShowTitleSprite = false,
-	
-	Content,
+	Content = "您确定吗",
 	ContentFontSize = 30,
-	
 	DoubleButton = false,
-	
-	OnClickOK,
-	OnClickCancel,
+	OnClickOK = nil,
+	OnClickCancel = nil,
 }
-
-function StandardDialogOption:New()
-	o = {};
-	setmetatable(o, self);
-	self.__index = self;
-	o.TitleFontSize = 35;
-	o.ShowTitleSprite = false;
-	o.ContentFontSize = 30;
-	o.DoubleButton = false;
-	return o;
+StandardDialogOption.__index = StandardDialogOption;
+function StandardDialogOption.New(title, content, doubleButton, onClickOK, onClickCancel)
+	local obj = {};
+	setmetatable(o, StandardDialogOption);
+	obj.Title = title;
+	obj.Content = content;
+	obj.DoubleButton = doubleButton;
+	obj.OnClickOK = onClickOK;
+	obj.OnClickCancel = onClickCancel;
+	obj.TitleFontSize = 35;
+	obj.ContentFontSize = 30;
+	return obj;
 end
-
 ProgressDialogOption =
 {
 	AutoClose = false,
@@ -47,7 +44,6 @@ ProgressDialogOption =
 	OnAutoClose,
 	OnCancel,
 }
-
 function ProgressDialogOption:New()
 	o = {};
 	setmetatable(o, self);
@@ -58,7 +54,6 @@ function ProgressDialogOption:New()
 	o.ContentFontSize = 26;
 	return o;
 end
-
 UIManager =
 {
 	IsInitialized = false,
@@ -70,27 +65,22 @@ UIManager =
 	DialogRoot = nil,
 	Windows = {};
 };
-
 function UIManager.Initialize()
 	if UIManager.IsInitialized == false then
 		UIManager.IsInitialized = true;
-		
 		local go = UnityEngine.GameObject("UIManager");
 		if NCSpeedLight.SharedVariable.GameHolder ~= nil then
 			go.transform:SetParent(NCSpeedLight.SharedVariable.GameHolder.transform);
 		else
 			UnityEngine.GameObject.DontDestroyOnLoad(go)
 		end
-		
 		UIManager.UIRoot = go:AddComponent(typeof(UIRoot));
 		UIManager.UIRoot.scalingStyle = UIRoot.Scaling.ConstrainedOnMobiles;
 		UIManager.UIRoot.manualHeight = 720;
 		UIManager.UIRoot.manualWidth = 1224;
 		UIManager.UIRoot.maximumHeight = 720;
 		UIManager.UIRoot.minimumHeight = 640;
-		
 		UIManager.UIPanel = go:AddComponent(typeof(UIPanel));
-		
 		local cameraGO = UnityEngine.GameObject("UICamera");
 		cameraGO.transform:SetParent(go.transform);
 		cameraGO.transform.localPosition = UnityEngine.Vector3.back;
@@ -103,26 +93,21 @@ function UIManager.Initialize()
 		-- UIManager.Camera.cullingMask = NCSpeedLight.Helper.OnlyIncluding("UI");
 		UIManager.UICamera = cameraGO:AddComponent(typeof(UICamera));
 		-- UIManager.UICamera.eventReceiverMask = Helper.EverythingBut(mUILayer);
-
 		-- Window root.
 		UIManager.WindowRoot = UnityEngine.GameObject("Window");
 		UIManager.WindowRoot.transform:SetParent(go.transform);
-		
 		-- Dialog root.
 		UIManager.DialogRoot = UnityEngine.GameObject("Dialog");
 		UIManager.DialogRoot.transform:SetParent(go.transform);
-		
 		Log.Info("UIManager.Initialize: success.");
 	else
 		Log.Warning("UIManager.Initialize: UIManager has already been initialized.");
 	end
 end
-
 -- 屏幕分辨率
 function UIManager.ScreenResolution()
 	return UIManager.UIRoot.pixelSizeAdjustment * NGUITools.screenSize;
 end
-
 -- 打开窗口
 function UIManager.OpenWindow(windowName)
 	local window = UIManager.Windows[windowName];
@@ -143,7 +128,6 @@ function UIManager.OpenWindow(windowName)
 	end
 	return go;
 end
-
 function UIManager.CloseWindow(windowName)
 	local window = UIManager.Windows[windowName];
 	if window ~= nil then
@@ -154,14 +138,12 @@ function UIManager.CloseWindow(windowName)
 		AssetManager.UnloadAssetBundle("UI/" .. windowName);
 	end
 end
-
 function UIManager.CloseAllWindows()
 	for key, value in pairs(UIManager.Windows) do
 		UIManager.CloseWindow(key);
 		UIManager.Windows[key] = nil;
 	end
 end
-
 function UIManager.CloseAllWindowsExcept(...)
 	local arg = {...};
 	for key, value in pairs(UIManager.Windows) do
@@ -171,14 +153,12 @@ function UIManager.CloseAllWindowsExcept(...)
 				delete = false;
 			end
 		end
-		
 		if delete then
 			UIManager.CloseWindow(key);
 			UIManager.Windows[key] = nil;
 		end
 	end
 end
-
 function UIManager.OpenStandardDialog(option)
 	if option == nil then
 		Log.Error('Can not open standardDialog,please input option.');
@@ -195,37 +175,29 @@ function UIManager.OpenStandardDialog(option)
 		go = UIManager.SetupDialog(go);
 		UIManager.StandardDialog = go;
 	end
-	
 	local dialog = UIManager.StandardDialog;
 	if dialog ~= nil then
 		local titleSprite = dialog.transform:Find("BG/Title"):GetComponent(typeof(UISprite));
 		local contentLabel = dialog.transform:Find("Label_Content"):GetComponent(typeof(UILabel));
 		local titleLabel = dialog.transform:Find("Label_Title"):GetComponent(typeof(UILabel));
 		if titleSprite ~= nil then
-			
 			titleSprite.enabled = option.ShowTitleSprite;
 			if option.ShowTitleSprite == true then
-				
 				titleSprite.spriteName = option.TitleSprite;
 			end
 		end
 		if titleLabel ~= nil then
-			
 			titleLabel.enabled = not option.ShowTitleSprite;
 			titleLabel.text = option.Title;
 			titleLabel.fontSize = option.TitleFontSize;
 		end
 		if contentLabel ~= nil then
-			
 			contentLabel.text = option.Content;
 			contentLabel.fontSize = option.ContentFontSize;
 		end
-		
 		if option.DoubleButton == true then
-			
 			NCSpeedLight.UIHelper.SetActiveState(dialog.transform, "DoubleBtn", true);
 			NCSpeedLight.UIHelper.SetActiveState(dialog.transform, "SingleBtn", false);
-			
 			NCSpeedLight.UIHelper.SetButtonEvent(dialog.transform, "DoubleBtn/OK",
 			function(go)
 				UIManager.CloseStandardDialog();
@@ -233,7 +205,6 @@ function UIManager.OpenStandardDialog(option)
 					option.OnClickOK(nil);
 				end
 			end);
-			
 			NCSpeedLight.UIHelper.SetButtonEvent(dialog.transform, "DoubleBtn/Cancel",
 			function(go)
 				UIManager.CloseStandardDialog();
@@ -242,10 +213,8 @@ function UIManager.OpenStandardDialog(option)
 				end
 			end);
 		else
-			
 			NCSpeedLight.UIHelper.SetActiveState(dialog.transform, "DoubleBtn", false);
 			NCSpeedLight.UIHelper.SetActiveState(dialog.transform, "SingleBtn", true);
-			
 			NCSpeedLight.UIHelper.SetButtonEvent(dialog.transform, "SingleBtn/OK",
 			function(go)
 				UIManager.CloseStandardDialog();
@@ -257,13 +226,11 @@ function UIManager.OpenStandardDialog(option)
 		dialog:SetActive(true);
 	end
 end
-
 function UIManager.CloseStandardDialog()
 	if UIManager.StandardDialog ~= nil then
 		UIManager.StandardDialog:SetActive(false);
 	end
 end
-
 function UIManager.OpenProgressDialog(option)
 	if option == nil then
 		Log:Error('Can not open progressdialog,please input option.');
@@ -280,7 +247,6 @@ function UIManager.OpenProgressDialog(option)
 		go = UIManager.SetupDialog(go);
 		UIManager.ProgressDialog = go;
 	end
-	
 	local dialog = UIManager.ProgressDialog;
 	if dialog ~= nil then
 		local contentLabel = dialog.transform:Find("Content/Label"):GetComponent(typeof(UILabel));
@@ -288,11 +254,9 @@ function UIManager.OpenProgressDialog(option)
 			contentLabel.text = option.Content;
 			contentLabel.fontSize = option.ContentFontSize;
 		end
-		
 		if UIManager.ProgressDialogTimer ~= nil then
 			UIManager.ProgressDialogTimer:Stop();
 		end
-		
 		if option.AutoClose == true then
 			Timer.New(
 			function()
@@ -305,25 +269,21 @@ function UIManager.OpenProgressDialog(option)
 			false,
 			false);
 		end
-		
 		if option.Cancelable == true then
 			NCSpeedLight.UIHelper.SetButtonEvent(dialog.transform, "BlackBG",
 			function(go)
 				if UIManager.ProgressDialogTimer ~= nil then
 					UIManager.ProgressDialogTimer:Stop();
 				end
-				
 				if option.OnCancel ~= nil then
 					option.OnCancel();
 				end
 				UIManager.CloseProgressDialog();
 			end);
 		end
-		
 		dialog:SetActive(true);
 	end
 end
-
 function UIManager.CloseProgressDialog()
 	if UIManager.ProgressDialog ~= nil then
 		UIManager.ProgressDialog:SetActive(false);
@@ -332,7 +292,6 @@ function UIManager.CloseProgressDialog()
 		UIManager.ProgressDialogTimer:Stop();
 	end
 end
-
 function UIManager.OpenTipsDialog(content)
 	local assetPath;
 	if SharedVariable.ASSETBUNDLE_MODE then
@@ -350,12 +309,10 @@ function UIManager.OpenTipsDialog(content)
 	end
 	return go;
 end
-
 function UIManager.SetupWindow(go)
 	if go == nil then
 		Log.Error("SetupWindow fail caused by null ui prefab.");
 	end
-	
 	go = UnityEngine.GameObject.Instantiate(go);
 	local tran = go.transform;
 	if tran.childCount <= 1 then
@@ -363,18 +320,15 @@ function UIManager.SetupWindow(go)
 		UnityEngine.GameObject.Destroy(go);
 		return nil;
 	end
-	
 	local root = tran:GetChild(0);
 	local camera = root:GetComponent(typeof(UnityEngine.Camera));
 	if camera ~= nil then
 		root = tran:GetChild(1);
 	end
-	
 	if root == nil then
 		Log.Error("SetupWindow fail caused by null ui panel.");
 		return nil;
 	end
-	
 	local window = root.gameObject;
 	root:SetParent(UIManager.WindowRoot.transform);
 	root.localScale = UnityEngine.Vector3.one;
@@ -382,12 +336,10 @@ function UIManager.SetupWindow(go)
 	NCSpeedLight.Helper.SetLayer(window, "UI");
 	return window;
 end
-
 function UIManager.SetupDialog(go)
 	if go == nil then
 		Log.Error("SetupDialog fail caused by null ui prefab.");
 	end
-	
 	go = UnityEngine.GameObject.Instantiate(go);
 	local tran = go.transform;
 	if tran.childCount <= 1 then
@@ -395,18 +347,15 @@ function UIManager.SetupDialog(go)
 		UnityEngine.GameObject.Destroy(go);
 		return nil;
 	end
-	
 	local root = tran:GetChild(0);
 	local camera = root:GetComponent(typeof(UnityEngine.Camera));
 	if camera ~= nil then
 		root = tran:GetChild(1);
 	end
-	
 	if root == nil then
 		Log.Error("SetupDialog fail caused by null ui panel.");
 		return nil;
 	end
-	
 	local dialog = root.gameObject;
 	root:SetParent(UIManager.DialogRoot.transform);
 	root.localScale = UnityEngine.Vector3.one;
