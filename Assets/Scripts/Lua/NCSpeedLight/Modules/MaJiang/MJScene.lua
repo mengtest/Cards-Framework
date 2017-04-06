@@ -8,6 +8,14 @@
 -- Modify History:
 --
 -----------------------------------------------
+MJSceneStatus = {
+	-- 准备
+	Ready = 0,
+	-- 游戏中
+	Game = 1,
+	-- 计算
+	Result = 2,
+}
 MJScene =
 {
 	Name = SceneType.MJScene,
@@ -39,6 +47,8 @@ MJScene =
 	CurrentResultInfo = nil,
 	-- 总结算信息
 	TotalResultInfo = nil,
+	-- 当前场景的状态
+	Status = MJSceneStatus.Ready,
 }
 function MJScene.Initialize()
 	if MJScene.IsInitialized == false then
@@ -70,6 +80,16 @@ function MJScene.OnSceneWasLoaded()
 	UIManager.OpenWindow(UIType.UI_MaJiang);
 	MJScene.RegisterNetEvent();
 	MJScene.RequestAllPlayerInfo();
+end
+-- 继续游戏
+function MJScene.OnceAgain()
+	MJScene.CurrentRound = MJScene.CurrentRound + 1;
+	MJSceneController.Reset();
+	UI_MaJiang.Reset();
+	for key, value in pairs(MJScene.Players) do
+		value:Reset();
+	end
+	MJScene.RequestReady(1);
 end
 function MJScene.RegisterNetEvent()
 	-- 新玩家进入;
@@ -173,6 +193,9 @@ function MJScene.IsMyTurn()
 	else
 		return true;
 	end
+end
+-- 判断当前的牌是不是精
+function MJScene.CardIsJing(type)
 end
 function MJScene.RequestCloseRoom()
 	local msg =

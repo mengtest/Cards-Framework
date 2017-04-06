@@ -45,6 +45,10 @@ function UI_MaJiang.Update()
 end
 function UI_MaJiang.OnDestroy()
 end
+function UI_MaJiang.Reset()
+	UI_MaJiang.SetupCurrentRound();
+	UI_MaJiang.SetupReadyAndInvite(true, false, true);
+end
 -- 初始化玩家的UI
 function UI_MaJiang.InitPlayerUI()
 	UI_MaJiang.UI_Player0 = this.transform:Find("Player0");

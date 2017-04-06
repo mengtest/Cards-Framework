@@ -23,6 +23,7 @@ MJGroupCardQueue = {
 	Cards = {},
 	PopedRearCount,
 };
+-- 将牌放进队列中
 function MJGroupCardQueue.PushAll(groupNum, index)
 	MJGroupCardQueue.Cards = {};
 	MJGroupCardQueue.PopedRearCount = 0;
@@ -31,7 +32,9 @@ function MJGroupCardQueue.PushAll(groupNum, index)
 		local tempName = MJGroupCardEnum.ToString(i);
 		local trans = MJSceneController.transform:Find("majiangzhuo/" .. tempName);
 		for j = 0, trans.childCount - 1 do
-			table.insert(tempCards, trans:GetChild(j));
+			local trans = trans:GetChild(j);
+			trans.gameObject:SetActive(true);
+			table.insert(tempCards, trans);
 		end
 		local c = 1;
 	end
@@ -44,12 +47,14 @@ function MJGroupCardQueue.PushAll(groupNum, index)
 	end
 	UI_MaJiang.SetupRemainCardCount(MJGroupCardQueue.Count());
 end
+-- 弹出指定位置的牌
 function MJGroupCardQueue.Pop(index)
 	local card = MJGroupCardQueue.Cards[index];
 	card.gameObject:SetActive(false);
 	table.remove(MJGroupCardQueue.Cards, index);
 	UI_MaJiang.SetupRemainCardCount(MJGroupCardQueue.Count());
 end
+-- 弹出对列前部的牌
 function MJGroupCardQueue.PopFront(count)
 	if # MJGroupCardQueue.Cards == 0 then
 		Log.Error("MJGroupCardQueue.PopFront: can not pop a card caused by nil cards queue.");
@@ -63,6 +68,7 @@ function MJGroupCardQueue.PopFront(count)
 		end
 	end
 end
+-- 弹出队列后部的牌
 function MJGroupCardQueue.PopRear(count)
 	if # MJGroupCardQueue.Cards == 0 then
 		Log.Error("MJGroupCardQueue.PopRear: can not pop a card caused by nil cards queue.");
@@ -86,6 +92,7 @@ function MJGroupCardQueue.PopRear(count)
 		end
 	end
 end
+-- 队列的个数
 function MJGroupCardQueue.Count()
 	return # MJGroupCardQueue.Cards;
 end 

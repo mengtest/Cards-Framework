@@ -37,6 +37,8 @@ end
 function UI_OtherPlayer:Initialize(player)
 	self.Player = player;
 end
+function UI_OtherPlayer:Reset()
+end
 -- 播放出牌效果
 function UI_OtherPlayer:PlayOutCardAnimation(card)
 	-- local outCardTran = self.transform:Find("OutCard/Card");

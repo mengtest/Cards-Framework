@@ -19,8 +19,6 @@ end
 function UI_HeroPlayer:Awake(go)
 	self.gameObject = go;
 	self.transform = go.transform;
-	-- self.Player.UICardStartPos = UnityEngine.Vector3(- 468, 0, 0);
-	-- self.Player.UICardOffset = UnityEngine.Vector3(72, 0, 0);
 	self.AnimationQueue = AnimationQueue.New();
 end
 function UI_HeroPlayer:Start()
@@ -45,6 +43,15 @@ function UI_HeroPlayer:OnDestroy()
 end
 function UI_HeroPlayer:Initialize(player)
 	self.Player = player;
+end
+function UI_HeroPlayer:Reset()
+	local cardGridTrans = self.transform:Find("Cards/CardGrid");
+	for i = 0, cardGridTrans.childCount - 1 do
+		cardGridTrans:GetChild(i).gameObject:SetActive(false);
+	end
+	if UI_HeroPlayer.DragingCardObj ~= nil then
+		UnityEngine.GameObject.Destroy(UI_HeroPlayer.DragingCardObj);
+	end
 end
 function UI_HeroPlayer.OnStartDragCard(go)
 	-- Log.Info("UI_HeroPlayer.OnStartDragCard: " .. go.name);

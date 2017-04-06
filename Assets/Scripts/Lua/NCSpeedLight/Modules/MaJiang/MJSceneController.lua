@@ -46,6 +46,23 @@ function MJSceneController.OnDestroy()
 	MJSceneController.DeskAnimationTimer = nil;
 	MJSceneController.DiceAnimationTimer = nil;
 end
+-- 重置场景，再来一次时触发
+function MJSceneController.Reset()
+	-- 重置所有的桌面牌对象
+	for key, value in pairs(this.AllCards) do
+		for i = 1, # value do
+			local card = value[i];
+			card:Reset();
+		end
+	end
+	for i = 0, 3 do
+		local tempName = MJGroupCardEnum.ToString(i);
+		local trans = MJSceneController.transform:Find("majiangzhuo/" .. tempName);
+		trans.position = Vector3.New(0, - 999, 0);-- 用于隐藏牌
+	end
+	MJSceneController.DeskAnimationTimer = nil;
+	MJSceneController.DiceAnimationTimer = nil;
+end
 function MJSceneController.PlayDeskAnimation(onFinishCallback)
 	Log.Info("MJSceneController.PlayDeskAnimation");
 	if MJSceneController.MJDeskAnimation ~= nil then

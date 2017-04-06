@@ -2,7 +2,7 @@
 -- Copyright © 2014-2017 NCSpeedLight
 --
 -- FileName: UI_MJResult.lua
--- Describle:   结算界面
+-- Describle:   单局结算界面
 -- Created By:  Wells Hsu
 -- Date&Time:  2017/2/28 19:11:09
 -- Modify History:
@@ -34,20 +34,23 @@ end
 function UI_MJResult.InitBtnEvent()
 	-- 继续游戏
 	UIHelper.SetButtonEvent(this.transform, "Button/Button2", function(obj)
-		MJScene.RepeatGame();
+		MJScene.OnceAgain();
+		UIManager.CloseAllWindowsExcept(UIType.UI_MaJiang);
 	end);
 	-- 分享
 	UIHelper.SetButtonEvent(this.transform, "Button/Button3", function(obj)
 	end);
 	-- 查看总成绩
 	UIHelper.SetButtonEvent(this.transform, "Button/Button4", function(obj)
+		UIManager.CloseAllWindowsExcept(UIType.UI_MaJiang);
+		UIManager.OpenWindow(UIType.UI_MJTotalResult);
 	end);
 	-- 查看牌局
 	UIHelper.SetButtonEvent(this.transform, "Button/Button5", function(obj)
 	end);
 	if MJScene.CurrentRound >= MJScene.TotalRound then
 		UIHelper.SetActiveState(this.transform, "Button/Button4", true);
-		UIHelper.SetActiveState(this.transform, "Button/Button5", false);
+		UIHelper.SetActiveState(this.transform, "Button/Button2", false);
 	end
 end
 -- 设置赢或输或平局

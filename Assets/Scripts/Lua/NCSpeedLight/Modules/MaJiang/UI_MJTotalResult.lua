@@ -19,27 +19,52 @@ function UI_MJTotalResult.Awake(go)
 end
 function UI_MJTotalResult.Start()
 	UI_MJTotalResult.InitBtnEvent();
-	UI_MJTotalResult.InitView();
+	UI_MJTotalResult.DisplayPlaywayAndRound();
+	UI_MJTotalResult.DisplayPlayerInfo();
 end
 function UI_MJTotalResult.OnDestroy()
 	this.transform = nil;
 	this.gameObject = nil;
 end
 function UI_MJTotalResult.InitBtnEvent()
-	UIHelper.SetButtonEvent(this.transform, "Buttom/OnceAgain", function(obj)
+	-- 返回
+	UIHelper.SetButtonEvent(this.transform, "Button/Back", function(obj)
+		SceneManager.GotoScene(SceneType.HallScene);
 	end);
-	UIHelper.SetButtonEvent(this.transform, "Buttom/LookTotalResult", function(obj)
-	end);
-	UIHelper.SetButtonEvent(this.transform, "Buttom/ReturnDeskBtn", function(obj)
+	-- 分享
+	UIHelper.SetButtonEvent(this.transform, "Button/Share", function(obj)
 	end);
 end
-function UI_MJTotalResult.InitView()
-	UI_MJTotalResult.SetupPlaywayAndRound();
+function UI_MJTotalResult.DisplayPlayerInfo()
+	local parent = UIHelper.GetComponent(this.transform, "Grid", typeof(UnityEngine.Transform));
 	if MJScene.TotalResultInfo == nil or MJScene.TotalResultInfo.m_count == 0 then
 		-- 一局也没打
-		UI_MJTotalResult.SetupAllPlayersInfo();
+		for i = 1, # MJScene.Players do
+			local tempPlayer = MJScene.Players[i];
+			local tempTrans = parent:FindChild(tostring(tempPlayer.UIPosition));
+			tempTrans.gameObject:SetActive(true);
+			if tempPlayer:IsBanker() then
+				UIHelper.SetActiveState(tempTrans, "Role/Banker", true);
+			end
+			if tempPlayer:IsRoomMaster() then
+				UIHelper.SetActiveState(tempTrans, "Role/Master", true);
+			end
+			UIHelper.SetLabelText(tempTrans, "Role/Label (Name)", tempPlayer:GetShowName());
+			UIHelper.SetLabelText(tempTrans, "Role/Label (ID)", "ID:" .. tempPlayer.ID);
+			-- 设置头像
+			-- Transform tempHead = tempTrans.Find("Role/Sprite (Photo)");
+			-- 	if (tempHead != null)
+			-- 	{
+			-- 		UIWidget tempWidget = UIHelper.CreateHeadPhoto (tempHead.gameObject, varHead);
+			-- 		if (tempWidget != null) 
+			-- 		{
+			-- 			tempWidget.depth = 10;
+			-- 			tempWidget.width = 66;
+			-- 			tempWidget.height = 66;
+			-- 		}
+			-- 	}
+		end
 	else
-		local parent = UIHelper.GetComponent(this.transform, "Grid", typeof(UnityEngine.Transform));
 		for i = 1, # MJScene.TotalResultInfo.m_OneData do
 			local tempResultInfo = MJScene.TotalResultInfo.m_OneData[i].m_ResultInfo;
 			for j = 1, # tempResultInfo do
@@ -52,6 +77,8 @@ function UI_MJTotalResult.InitView()
 				if tempPlayer:IsRoomMaster() then
 					UIHelper.SetActiveState(tempTrans, "Role/Master", true);
 				end
+				UIHelper.SetLabelText(tempTrans, "Role/Label (Name)", tempPlayer:GetShowName());
+				UIHelper.SetLabelText(tempTrans, "Role/Label (ID)", "ID:" .. tempPlayer.ID);
 				local tempItem = tempTrans:FindChild("ScrollView/UIGrid/Item");
 				local tempClone = UnityEngine.Object.Instantiate(tempItem);
 				tempClone:SetParent(tempItem.parent);
@@ -95,42 +122,13 @@ function UI_MJTotalResult.InitView()
 			end
 		end
 	end
-end
--- 设置所有玩家的信息显示
-function UI_MJTotalResult.SetupAllPlayersInfo()
-	local parent = UIHelper.GetComponent(this.transform, "Grid", typeof(UnityEngine.Transform));
-	for i = 1, # MJScene.Players do
-		local tempPlayer = MJScene.Players[i];
-		local tempTrans = parent:FindChild(tostring(tempPlayer.UIPosition + 1));
-		tempTrans.gameObject:SetActive(true);
-		if tempPlayer:IsBanker() then
-			UIHelper.SetActiveState(tempTrans, "Role/Banker", true);
-		end
-		if tempPlayer:IsRoomMaster() then
-			UIHelper.SetActiveState(tempTrans, "Role/Master", true);
-		end
-		UIHelper.SetLabelText(tempTrans, "Role/Label (Name)", tempPlayer:GetShowName());
-		UIHelper.SetLabelText(tempTrans, "Role/Label (ID)", "ID:" .. tempPlayer.ID);
-		-- 设置头像
-		-- Transform tempHead = tempTrans.Find("Role/Sprite (Photo)");
-		-- 	if (tempHead != null)
-		-- 	{
-		-- 		UIWidget tempWidget = UIHelper.CreateHeadPhoto (tempHead.gameObject, varHead);
-		-- 		if (tempWidget != null) 
-		-- 		{
-		-- 			tempWidget.depth = 10;
-		-- 			tempWidget.width = 66;
-		-- 			tempWidget.height = 66;
-		-- 		}
-		-- 	}
-	end
 	local tempGrid = UIHelper.GetComponent(this.transform, "Grid", typeof(UIGrid));
 	tempGrid:Reposition();
 	tempGrid.enabled = true;
 end
--- 设置玩法和局数
-function UI_MJTotalResult.SetupPlaywayAndRound(roundCount)
-	local tempRounds = "已打局数: " .. roundCount;
+-- 显示玩法和局数
+function UI_MJTotalResult.DisplayPlaywayAndRound()
+	local tempRounds = "已打局数: " .. tostring(MJScene.CurrentRound);
 	UIHelper.SetLabelText(this.transform, "LeftTop/Rounds", tempRounds);
 	-- string tempWay = string.Empty;
 	-- List<MJPlayWay> tempPlayWay=MaJiangPlayWay.GetSingleton ().GetCurrentPlayWay();

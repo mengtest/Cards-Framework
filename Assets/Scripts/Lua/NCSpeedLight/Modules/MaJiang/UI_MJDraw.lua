@@ -28,8 +28,12 @@ function UI_MJDraw.OnDestroy()
 end
 function UI_MJDraw.InitBtnEvent()
 	UIHelper.SetButtonEvent(this.transform, "Buttom/OnceAgain", function(obj)
+		MJScene.OnceAgain();
+		UIManager.CloseAllWindowsExcept(UIType.UI_MaJiang);
 	end);
 	UIHelper.SetButtonEvent(this.transform, "Buttom/LookTotalResult", function(obj)
+		UIManager.CloseAllWindowsExcept(UIType.UI_MaJiang);
+		UIManager.OpenWindow(UIType.UI_MJTotalResult);
 	end);
 	UIHelper.SetButtonEvent(this.transform, "Buttom/ReturnDeskBtn", function(obj)
 	end);
@@ -58,7 +62,7 @@ function UI_MJDraw.InitView()
 		UIHelper.SetLabelText(tempScore, "Label (Hu)/Label", tostring(card.m_Hufeng));
 		UIHelper.SetLabelText(tempScore, "Label (Jiang)/Label", tostring(card.m_reward));
 		UIHelper.SetLabelText(tempScore, "Label (Score)/Label", tostring(card.m_score));
-		UIHelper.SetLabelText(tempTran, "Label (Total)/Label", tostring(tempPlayer:GetTotalScore()));
+		UIHelper.SetLabelText(tempTran, "Label (Total)/Label", tostring(tostring(card.m_TotalScore)));
 		local tempGrid = tempScore:GetComponent(typeof(UIGrid));
 		tempGrid.enabled = true;
 		tempGrid:Reposition();

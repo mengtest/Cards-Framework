@@ -257,6 +257,19 @@ function MJPlayer:Initialize(data, ishero)
 	Log.Info("MJPlayer:Initialize: OperateCardRotation is " .. tostring(self.OperateCardRotation));
 	Log.Info("MJPlayer:Initialize: finish,self " .. tostring(self));
 end
+-- 重置
+function MJPlayer:Reset()
+	if self:IsHero() == false then
+		local handCardTrans = MJSceneController.transform:Find("majiangzhuo/backCard/" .. self.UITransform.name);
+		if handCardTrans ~= nil then
+			handCardTrans.gameObject:SetActive(false);
+		end
+	end
+	self:PlayUIScaleAndDicePanelGrow(false);
+	self.UI:Reset();
+	self.TableCardCount = 0;
+	self.OperateTotalCount = 0;
+end
 function MJPlayer:OnUIDestroy()
 end
 -- data= PBMessage.GM_EntryInfo_Single
@@ -274,7 +287,6 @@ end
 -- data= PBMessage.GMHandCard
 function MJPlayer:SetHandCardInfo(data)
 	self.HandCardInfo = data;
-	self:SortHandCard();
 end
 -- 根据牌的位置索引获取牌的信息
 function MJPlayer:GetHandCardByPosition(pos)
@@ -527,7 +539,7 @@ function MJPlayer:PlayUIScaleAndDicePanelGrow(status)
 	local name = MJPlayerPos.GetString(self.Position);
 	MJSceneController.PlayDicePanelGrowEffect(name, status);
 	scaleAnimation.enabled = status;
-	if self == MJPlayer.Hero then
+	if self:IsHero() then
 		NCSpeedLight.UIHelper.SetActiveState(UI_MaJiang.transform, "center/OperatorPrompt", status);
 	end
 end

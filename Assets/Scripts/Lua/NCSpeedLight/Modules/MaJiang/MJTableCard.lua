@@ -30,6 +30,7 @@ function MJTableCard:Reset()
 	self.ID = - 1;
 	self.RoleID = 0;
 	self.Status = MJTableCardStatus.MJCS_Begin;
+	self:Hide();
 end
 function MJTableCard:Show(position, eulerAngles)
 	if position ~= nil then
