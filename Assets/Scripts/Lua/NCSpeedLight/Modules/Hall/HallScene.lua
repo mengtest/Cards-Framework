@@ -58,6 +58,7 @@ function HallScene.RequestPlayerInFb()
 	local msg = {
 		request = Player.ID;
 	};
+	Log.Info("HallScene.RequestPlayerInFb: request is " .. msg.request);
 	NetManager.SendEventToLogicServer(GameMessage.GM_PLAYERISINBATTLE_REQUEST, PBMessage.GM_Request, msg);
 end
 function HallScene.RequestCreateRoom()
@@ -104,13 +105,14 @@ function HallScene.ReturnRoomRecord(evt)
 	Log.Info("HallScene.ReturnRoomRecord");
 end
 function HallScene.ReturnPlayerInFb(evt)
-	Log.Info("HallScene.ReturnPlayerInFb");
 	local msg = NetManager.DecodeMsg(PBMessage.GM_BattleFBServerInfo, evt);
 	if msg == false then
 		return;
 	end
+	Log.Info("HallScene.ReturnPlayerInFb: msg.m_Result is " .. msg.m_Result);
 	if msg.m_Result == 0 then
-		-- 房间已存在，直接进入
+		Log.Info("HallScene.ReturnPlayerInFb: 玩家在副本中");
+		-- 房间已存在，提示是否进入
 		SharedVariable.FBInfo = msg;
 		local option = StandardDialogOption.New("提示", "当前房间未解散，是否进入？", true,
 		function()
@@ -120,11 +122,7 @@ function HallScene.ReturnPlayerInFb(evt)
 		end);
 		UIManager.OpenStandardDialog(option);
 	else
-		if SceneManager.CurrentScene ~= nil and SceneManager.CurrentScene.Name == SceneType.LoginScene then
-			SceneManager.GotoScene(SceneType.HallScene);
-		else
-			HallScene.RequestCreateRoom();
-		end
+		Log.Info("HallScene.ReturnPlayerInFb: 玩家不在副本中");
 	end
 end
 function HallScene.ReturnAgainEnterFb(evt)
