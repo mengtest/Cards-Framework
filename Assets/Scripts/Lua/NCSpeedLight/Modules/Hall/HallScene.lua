@@ -127,43 +127,12 @@ function HallScene.ReturnPlayerInFb(evt)
 	end
 end
 function HallScene.ReturnAgainEnterFb(evt)
-	-- Log.Info("HallScene.ReturnAgainEnterFb: 收到重连信息");
-	-- local msg = NetManager.DecodeMsg(PBMessage.GM_ReconnectMJData, evt);
-	-- if msg == false then
-	-- 	Log.Error("HallScene.ReturnAgainEnterFb: parse msg error," .. PBMessage.GM_ReconnectMJData);
-	-- 	return;
-	-- end
-	-- Log.Info("HallScene.ReturnAgainEnterFb: 庄家的位置：" .. msg.m_bankerPos);
-	-- Log.Info("HallScene.ReturnAgainEnterFb: 房主的ID：" .. msg.m_RoomMasterID);
-	-- Log.Info("HallScene.ReturnAgainEnterFb: 剩余牌数：" .. msg.m_FreeCard);
-	-- Log.Info("HallScene.ReturnAgainEnterFb: 剩余局数：" .. msg.m_leftCount);
-	-- Log.Info("HallScene.ReturnAgainEnterFb: 总局数：" .. msg.m_totalCount);
-	-- Log.Info("HallScene.ReturnAgainEnterFb: 当前骰子转的次数：" .. msg.m_rollCount);
-	-- Log.Info("HallScene.ReturnAgainEnterFb: 麻将的人数：" .. msg.m_playerCount);
-	-- Log.Info("HallScene.ReturnAgainEnterFb: 打出最后一张牌的角色id：" .. msg.m_lastOutCardRoleId);
-	-- Log.Info("HallScene.ReturnAgainEnterFb: 解散房间剩余的时间：" .. msg.m_closeRoomLeftTime);
-	-- if msg.m_huLastCard ~= nil then
-	-- 	Log.Info("HallScene.ReturnAgainEnterFb: 最后被胡的那张牌：" .. msg.m_huLastCard);
-	-- end
-	-- Log.Info("HallScene.ReturnAgainEnterFb: 从谁面前取牌：" .. msg.m_getCardId);
-	-- Log.Info("HallScene.ReturnAgainEnterFb: 从第几墩取牌：" .. msg.m_getCardNum);
-	-- Log.Info("HallScene.ReturnAgainEnterFb: 当前出牌人的ID（等到操作时赋值0）：" .. msg.m_sendCardID);
-	-- Log.Info("HallScene.ReturnAgainEnterFb: 房间玩法：" .. msg.m_fbplayway);
-	-- if msg.m_saizi ~= nil then
-	-- 	Log.Info("HallScene.ReturnAgainEnterFb: 筛子次数，以及内容：" .. # msg.m_saizi);
-	-- end
-	-- if msg.m_HandCard ~= nil then
-	-- 	Log.Info("HallScene.ReturnAgainEnterFb: 手牌信息：" .. # msg.m_HandCard);
-	-- end
-	-- if msg.m_AllData ~= nil then
-	-- 	Log.Info("HallScene.ReturnAgainEnterFb: 其他玩家信息：" .. # msg.m_AllData);
-	-- end
-	-- if msg.m_CloseRoomData ~= nil then
-	-- 	Log.Info("HallScene.ReturnAgainEnterFb: 解散房间信息：" .. # msg.m_CloseRoomData);
-	-- end
-	-- -- if msg.m_huOperatorData ~= nil then
-	-- -- 	Log.Info("HallScene.ReturnAgainEnterFb: 存在结算信息");
-	-- -- end
+	Log.Info("HallScene.ReturnAgainEnterFb: 收到重连信息");
+	local msg = NetManager.DecodeMsg(PBMessage.GM_ReconnectMJData, evt);
+	if msg == false then
+		Log.Error("HallScene.ReturnAgainEnterFb: parse msg error," .. PBMessage.GM_ReconnectMJData);
+		return;
+	end
 end
 function HallScene.ReceiveFbInfo(evt)
 	Log.Info("HallScene.ReceiveFbInfo");

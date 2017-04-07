@@ -1,3 +1,8 @@
+MJDefine = {
+	TOTAL_CARD_COUNT = 112, -- 牌的总数
+	BANKER_INITIAL_CARD_COUNT = 14, -- 庄家牌的初始数量
+	XIAN_INITIAL_CARD_COUNT = 13,-- 闲家牌的初始数量
+}
 MJResultText = {
 	{0, "一"},
 	{1, "二"},
@@ -23,4 +28,4 @@ MJResultText = {
 			end
 		end
 	end
-} 
+}

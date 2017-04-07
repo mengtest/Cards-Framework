@@ -9,12 +9,14 @@
 --
 -----------------------------------------------
 MJSceneStatus = {
-	-- 准备
-	Ready = 0,
+	-- 等待其他玩家
+	Waiting = 0,
+	-- 所有玩家就绪
+	AllReady = 1,
 	-- 游戏中
-	Game = 1,
+	Game = 2,
 	-- 计算
-	Result = 2,
+	Result = 3,
 }
 MJScene =
 {
@@ -49,7 +51,7 @@ MJScene =
 	-- 总结算信息
 	TotalResultInfo = nil,
 	-- 当前场景的状态
-	Status = MJSceneStatus.Ready,
+	Status = MJSceneStatus.Waiting,
 }
 function MJScene.Initialize()
 	if MJScene.IsInitialized == false then
@@ -75,11 +77,7 @@ function MJScene.OnSceneWasLoaded()
 	Log.Info("MJScene.OnSceneWasLoaded: now bein to open majiang ui and request game fb info or reconnect info.");
 	UIManager.OpenWindow(UIType.UI_MaJiang);
 	MJScene.RegisterNetEvent();
-	if MJScene.NeedReconnect == false then
-		MJScene.RequestAllPlayerInfo();
-	else
-		MJScene.RequestReconnectInfo();
-	end
+	MJScene.RequestAllPlayerInfo();
 end
 -- 继续游戏
 function MJScene.OnceAgain()
@@ -343,9 +341,11 @@ function MJScene.ReturnGamePlayerInfo(evt)
 			end
 		end
 	end
-	MJSceneController.SetupDicePanelDirection();
-	MJSceneController.IsSetupDicePanelRotation = true;
-	UIManager.CloseAllWindowsExcept(UIType.UI_MaJiang);
+	if MJScene.NeedReconnect == true then
+		MJScene.RequestReconnectInfo();
+	else
+		UIManager.CloseAllWindowsExcept(UIType.UI_MaJiang);
+	end
 end
 -- 收到断线重连信息
 function MJScene.ReturnReconnectInfo(evt)
@@ -388,9 +388,28 @@ function MJScene.ReturnReconnectInfo(evt)
 	if msg.m_CloseRoomData ~= nil then
 		Log.Info("HallScene.ReturnReconnectInfo: 解散房间信息：" .. # msg.m_CloseRoomData);
 	end
-	-- if msg.m_huOperatorData ~= nil then
-	-- 	Log.Info("HallScene.ReturnAgainEnterFb: 存在结算信息");
-	-- end
+	if msg.m_huOperatorData ~= nil then
+		Log.Info("HallScene.ReturnAgainEnterFb: 存在结算信息");
+	end
+	if msg.m_FreeCard == MJDefine.TOTAL_CARD_COUNT then
+		-- 对局还没开始
+		Log.Info("HallScene.ReturnAgainEnterFb: 对局还没开始");
+		MJScene.Status = MJSceneStatus.Waiting;
+	else
+		-- 设置庄家
+		UI_MaJiang.SetupReadyAndInvite(false, false, false);
+		if msg.m_sendCardID == 0 then
+			Log.Info("HallScene.ReturnAgainEnterFb: 正在对局中,等待玩家投掷骰子");
+			for key, value in pairs(MJScene.Players) do
+				value:SetupReady(false);
+			end
+			if MJPlayer.Hero:IsBanker() then
+				UI_MaJiang.SetupCastDice(true);
+			end
+		else
+			Log.Info("HallScene.ReturnAgainEnterFb: 正在对局中");
+		end
+	end
 	UIManager.CloseAllWindowsExcept(UIType.UI_MaJiang);
 end
 function MJScene.ReturnHandCardInfo(evt)
@@ -414,7 +433,11 @@ function MJScene.ReturnHandCardInfo(evt)
 	for key, value in pairs(MJScene.Players) do
 		value:StartGame();
 	end
-	UI_MaJiang.SetupCastDice(true);
+	-- 设置骰子面板的朝向
+	MJSceneController.SetupDicePanelDirection();
+	if MJPlayer.Hero:IsBanker() then
+		UI_MaJiang.SetupCastDice(true);
+	end
 	UI_MaJiang.SetupReadyAndInvite(false, false, false);
 end
 function MJScene.ReturnPlayerOutCard(evt)
