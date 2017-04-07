@@ -465,8 +465,17 @@ function MJScene.ReturnReconnectInfo(evt)
 				local popRearCount = 0;
 				for j = 1, # reconnectPlayerData.m_FunHandCardList do
 					local operateData = reconnectPlayerData.m_FunHandCardList[j];
-					if operateData.m_OperatorType == MaJiangOperatorType.MJOT_AN_GANG or operateData.m_OperatorType == MaJiangOperatorType.MJOT_GANG or operateData.m_OperatorType == MaJiangOperatorType.MJOT_BuGang then
+					if operateData.m_OperatorType == MaJiangOperatorType.MJOT_AN_GANG then
 						popRearCount = popRearCount + 1;
+						player:PutAnGangCardWhenReconnect(operateData);
+					elseif operateData.m_OperatorType == MaJiangOperatorType.MJOT_GANG then
+						popRearCount = popRearCount + 1;
+						player:PutGangCardWhenReconnect(operateData);
+					elseif operateData.m_OperatorType == MaJiangOperatorType.MJOT_BuGang then
+						popRearCount = popRearCount + 1;
+						player:PutBuGangCardWhenReconnect(operateData);
+					elseif operateData.m_OperatorType == MaJiangOperatorType.MJOT_PENG then
+						player:PutPengCardWhenReconnect(operateData);
 					end
 					player:AddOperateTotalCount();
 				end
