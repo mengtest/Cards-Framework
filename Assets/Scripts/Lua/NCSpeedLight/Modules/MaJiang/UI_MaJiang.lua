@@ -81,25 +81,17 @@ function UI_MaJiang.SetupPlayerUIVisiable()
 		UIHelper.SetActiveState(this.transform, "Player3", false);
 	end
 end
--- 设置准备和邀请按钮的显示状态 , Yes/No/Invite
-function UI_MaJiang.SetupReadyAndInvite(...)
-	local states = {...};
-	UIHelper.SetActiveState(this.transform, "center/Ready/Yes", states[1]);
-	UIHelper.SetActiveState(this.transform, "center/Ready/No", states[2]);
-	UIHelper.SetActiveState(this.transform, "center/Ready/Invite", states[3]);
+-- 设置准备和邀请按钮的显示状态 , ready/unready/invite
+function UI_MaJiang.SetupReadyAndInvite(ready, unready, invite)
+	Log.Info("UI_MaJiang.SetupReadyAndInvite: " .. tostring(ready) .. "," .. tostring(unready) .. "," .. tostring(invite));
+	UIHelper.SetActiveState(this.transform, "center/Ready/Yes", ready);
+	UIHelper.SetActiveState(this.transform, "center/Ready/No", unready);
+	UIHelper.SetActiveState(this.transform, "center/Ready/Invite", invite);
 end
 -- 设置掷骰子
 function UI_MaJiang.SetupCastDice(status)
 	Log.Info("UI_MaJiang.SetupCastDice: status is " .. tostring(status));
-	if status then
-		if MJPlayer.Hero.MJData.m_RoleData.m_Postion == MJPlayer.Hero.HandCardInfo.m_bankerPos then
-			NCSpeedLight.UIHelper.SetActiveState(this.transform, "center/CastDice/Button", true);
-		else
-			NCSpeedLight.UIHelper.SetActiveState(this.transform, "center/CastDice/Button", false);
-		end
-	else
-		NCSpeedLight.UIHelper.SetActiveState(this.transform, "center/CastDice/Button", false);
-	end
+	UIHelper.SetActiveState(this.transform, "center/CastDice/Button", status);
 end
 -- 设置当前的局数
 function UI_MaJiang.SetupCurrentRound()

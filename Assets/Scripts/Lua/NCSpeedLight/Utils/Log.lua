@@ -49,7 +49,9 @@ function Log.Format(...)
 	local str = "";
 	for i = 1, # args do
 		if args[i] ~= nil then
-			str = str + tostring(args[i]);
+			str = str .. tostring(args[i]);
+		else
+			str = str .. "nil"
 		end
 	end
 	if string.len(str) > 0 then

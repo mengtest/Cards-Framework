@@ -35,7 +35,6 @@ function HallScene.RegisterNetEvent()
 	NetManager.RegisterEvent(GameMessage.GM_MAJIANG_RETURN, HallScene.ReturnEnterMaJiangResult);
 	NetManager.RegisterEvent(GameMessage.GM_ROOM_RECORD_RETURN, HallScene.ReturnRoomRecord);-- 包房记录;
 	NetManager.RegisterEvent(GameMessage.GM_PLAYERISINBATTLE_RETURN, HallScene.ReturnPlayerInFb);  -- 返回玩家是否在副本中;
-	NetManager.RegisterEvent(GameMessage.GM_PLAYERJOINBATTLEAGAIN_RETRUN, HallScene.ReturnAgainEnterFb);
 	NetManager.RegisterEvent(GameMessage.GM_LOGINFB_RETURN, HallScene.ReceiveRespondLoginBattle);
 	NetManager.RegisterEvent(GameMessage.GM_NOTIFY_CHANGE_LONG64, HallScene.NotifyChangeSomething);
 	NetManager.RegisterEvent(GameMessage.GM_NOTIFY_CHANGE_int32, HallScene.NotifyChangeSomethingInt32);
@@ -47,7 +46,6 @@ function HallScene.UnRegisterNetEvent()
 	NetManager.UnregisterEvent(GameMessage.GM_MAJIANG_RETURN, HallScene.ReturnEnterMaJiangResult);
 	NetManager.UnregisterEvent(GameMessage.GM_ROOM_RECORD_RETURN, HallScene.ReturnRoomRecord);-- 包房记录;
 	NetManager.UnregisterEvent(GameMessage.GM_PLAYERISINBATTLE_RETURN, HallScene.ReturnPlayerInFb);  -- 返回玩家是否在副本中;
-	NetManager.UnregisterEvent(GameMessage.GM_PLAYERJOINBATTLEAGAIN_RETRUN, HallScene.ReturnAgainEnterFb);
 	NetManager.UnregisterEvent(GameMessage.GM_LOGINFB_RETURN, HallScene.ReceiveRespondLoginBattle);
 	NetManager.UnregisterEvent(GameMessage.GM_NOTIFY_CHANGE_LONG64, HallScene.NotifyChangeSomething);
 	NetManager.UnregisterEvent(GameMessage.GM_NOTIFY_CHANGE_int32, HallScene.NotifyChangeSomethingInt32);
@@ -124,14 +122,6 @@ function HallScene.ReturnPlayerInFb(evt)
 		UIManager.OpenStandardDialog(option);
 	else
 		Log.Info("HallScene.ReturnPlayerInFb: 玩家不在副本中");
-	end
-end
-function HallScene.ReturnAgainEnterFb(evt)
-	Log.Info("HallScene.ReturnAgainEnterFb: 收到重连信息");
-	local msg = NetManager.DecodeMsg(PBMessage.GM_ReconnectMJData, evt);
-	if msg == false then
-		Log.Error("HallScene.ReturnAgainEnterFb: parse msg error," .. PBMessage.GM_ReconnectMJData);
-		return;
 	end
 end
 function HallScene.ReceiveFbInfo(evt)

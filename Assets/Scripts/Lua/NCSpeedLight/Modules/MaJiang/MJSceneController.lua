@@ -55,16 +55,24 @@ function MJSceneController.Reset()
 			card:Reset();
 		end
 	end
-	for i = 0, 3 do
-		local tempName = MJGroupCardEnum.ToString(i);
-		local trans = MJSceneController.transform:Find("majiangzhuo/" .. tempName);
-		trans.position = Vector3.New(0, - 999, 0);-- 用于隐藏牌
-	end
+	MJSceneController.SetGroupCardActive(false);
 	MJSceneController.DeskAnimationTimer = nil;
 	MJSceneController.DiceAnimationTimer = nil;
 end
-function MJSceneController.PlayDeskAnimation(onFinishCallback)
-	Log.Info("MJSceneController.PlayDeskAnimation");
+-- 设置牌墩的显示/隐藏
+function MJSceneController.SetGroupCardActive(status)
+	for i = 0, 3 do
+		local tempName = MJGroupCardEnum.ToString(i);
+		local trans = MJSceneController.transform:Find("majiangzhuo/" .. tempName);
+		if status == false then
+			trans.position = trans.position + Vector3.New(0, - 999, 0);-- 用于隐藏牌
+		else
+			trans.position = Vector3.New(trans.position.x, 0, trans.position.z); -- 用于显示牌
+		end
+	end
+end
+function MJSceneController.PlayGroupCardAnimation(onFinishCallback)
+	Log.Info("MJSceneController.PlayGroupCardAnimation");
 	if MJSceneController.MJDeskAnimation ~= nil then
 		MJSceneController.MJDeskAnimation:Play();
 		if MJSceneController.DeskAnimationTimer ~= nil then
@@ -72,7 +80,7 @@ function MJSceneController.PlayDeskAnimation(onFinishCallback)
 		else
 			MJSceneController.DeskAnimationTimer = Timer.New(
 			function()
-				Log.Info("MJSceneController.PlayDeskAnimation: finish.");
+				Log.Info("MJSceneController.PlayGroupCardAnimation: finish.");
 				if onFinishCallback ~= nil then
 					onFinishCallback();
 				end

@@ -37,8 +37,8 @@ MJPlayer =
 	ID,
 	-- 游戏数据
 	MJData = nil,
-	-- 手牌信息
-	HandCardInfo = nil,
+	-- 手牌
+	HandCards = nil,
 	-- 桌面牌的起始位置
 	TableCardStartPos = nil,
 	-- 桌面牌的横向位置偏移
@@ -284,14 +284,18 @@ function MJPlayer:GetShowName()
 		return self.MJData.m_RoleData.m_NickName;
 	end
 end
+function MJPlayer:LogKey()
+	local str = "【" .. tostring(self.ID) .. "," .. self.UITransform.name .. "】";
+	return str;
+end
 -- data= PBMessage.GMHandCard
-function MJPlayer:SetHandCardInfo(data)
-	self.HandCardInfo = data;
+function MJPlayer:SetHandCards(data)
+	self.HandCards = data;
 end
 -- 根据牌的位置索引获取牌的信息
 function MJPlayer:GetHandCardByPosition(pos)
 	local var = 1;
-	for key, value in pairs(self.HandCardInfo.m_HandCard) do
+	for key, value in pairs(self.HandCards) do
 		if pos == var then
 			return value;
 		end
@@ -300,7 +304,7 @@ function MJPlayer:GetHandCardByPosition(pos)
 end
 -- 根据牌的ID获取牌的信息
 function MJPlayer:GetHandCardByIndex(index)
-	for key, value in pairs(self.HandCardInfo.m_HandCard) do
+	for key, value in pairs(self.HandCards) do
 		if value.m_Index == index then
 			return value;
 		end
@@ -309,26 +313,26 @@ end
 -- 移除一张牌
 function MJPlayer:RemoveHandCard(index)
 	local var = 1;
-	for key, value in pairs(self.HandCardInfo.m_HandCard) do
+	for key, value in pairs(self.HandCards) do
 		if value.m_Index == index then
-			table.remove(self.HandCardInfo.m_HandCard, var);
+			table.remove(self.HandCards, var);
 			break;
 		end
 		var = var + 1;
 	end
 end
 function MJPlayer:AddHandCard(card)
-	table.insert(self.HandCardInfo.m_HandCard, card);
+	table.insert(self.HandCards, card);
 end
 function MJPlayer:SortHandCard()
-	table.sort(self.HandCardInfo.m_HandCard, function(o1, o2)
+	table.sort(self.HandCards, function(o1, o2)
 		return o1.m_Type < o2.m_Type;
 	end);
 end
 -- 根据牌的对象获取所在的位置
 function MJPlayer:GetHandCardIndex(card)
-	for i = 1, # self.HandCardInfo.m_HandCard do
-		if self.HandCardInfo.m_HandCard[i] == card then
+	for i = 1, # self.HandCards do
+		if self.HandCards[i] == card then
 			return i;
 		end
 	end
@@ -336,8 +340,8 @@ function MJPlayer:GetHandCardIndex(card)
 end
 -- 根据牌的ID获取位置
 function MJPlayer:GetHandCardPositionByID(id)
-	for i = 1, # self.HandCardInfo.m_HandCard do
-		local card = self.HandCardInfo.m_HandCard[i];
+	for i = 1, # self.HandCards do
+		local card = self.HandCards[i];
 		if card.m_Index == id then
 			return i;
 		end
@@ -347,13 +351,13 @@ end
 -- 当前玩家桌面上牌的数量 +1
 function MJPlayer:AddTableCardCount()
 	self.TableCardCount = self.TableCardCount + 1;
-	Log.Info("MJPlayer:AddTableCardCount: ui is " .. self.UITransform.name .. ",id is " .. self.ID .. ",tablecard count is " .. tostring(self.TableCardCount));
+	Log.Info("MJPlayer:AddTableCardCount: " .. self:LogKey() .. ",tablecard count is " .. tostring(self.TableCardCount));
 	return self.TableCardCount;
 end
 -- 当前玩家桌面上牌的数量 -1
 function MJPlayer:SubTableCardCount()
 	self.TableCardCount = self.TableCardCount - 1;
-	Log.Info("MJPlayer:SubTableCardCount: ui is " .. self.UITransform.name .. ",id is " .. self.ID .. ",tablecard count is " .. tostring(self.TableCardCount));
+	Log.Info("MJPlayer:SubTableCardCount: " .. self:LogKey() .. ",tablecard count is " .. tostring(self.TableCardCount));
 	return self.TableCardCount;
 end
 -- 获取当前玩家打出去牌的数量
@@ -376,7 +380,7 @@ function MJPlayer:AddHandCardCount(val)
 	else
 		self.HandCardCount = self.HandCardCount + 1;
 	end
-	Log.Info("MJPlayer:AddHandCardCount: ui is " .. self.UITransform.name .. ",id is " .. self.ID .. ",handcard count is " .. tostring(self.HandCardCount));
+	Log.Info("MJPlayer:AddHandCardCount: " .. self:LogKey() .. ",handcard count is " .. tostring(self.HandCardCount));
 	return self.HandCardCount;
 end
 -- 减少手牌的数量
@@ -386,7 +390,7 @@ function MJPlayer:SubHandCardCount(val)
 	else
 		self.HandCardCount = self.HandCardCount - 1;
 	end
-	Log.Info("MJPlayer:SubHandCardCount: ui is " .. self.UITransform.name .. ",id is " .. self.ID .. ",handcard count is " .. tostring(self.HandCardCount));
+	Log.Info("MJPlayer:SubHandCardCount: " .. self:LogKey() .. ",handcard count is " .. tostring(self.HandCardCount));
 	return self.HandCardCount;
 end
 -- 增加吃碰杠的次数
@@ -396,7 +400,7 @@ function MJPlayer:AddOperateTotalCount(val)
 	else
 		self.OperateTotalCount = self.OperateTotalCount + 1;
 	end
-	Log.Info("MJPlayer:AddOperateTotalCount: ui is " .. self.UITransform.name .. ",id is " .. self.ID .. ",operate total count is " .. tostring(self.OperateTotalCount));
+	Log.Info("MJPlayer:AddOperateTotalCount: " .. self:LogKey() .. ",operate total count is " .. tostring(self.OperateTotalCount));
 	return self.OperateTotalCount;
 end
 -- 减少吃碰杠的次数
@@ -406,7 +410,7 @@ function MJPlayer:SubOperateTotalCount(val)
 	else
 		self.OperateTotalCount = self.OperateTotalCount - 1;
 	end
-	Log.Info("MJPlayer:SubOperateTotalCount: ui is " .. self.UITransform.name .. ",id is " .. self.ID .. ",operate total count is " .. tostring(self.OperateTotalCount));
+	Log.Info("MJPlayer:SubOperateTotalCount:  " .. self:LogKey() .. ",operate total count is " .. tostring(self.OperateTotalCount));
 	return self.OperateTotalCount;
 end
 -- 获取吃碰杠的次数
@@ -438,15 +442,11 @@ function MJPlayer:SetupUI()
 end
 -- 设置Ready标识
 function MJPlayer:SetupReady(status)
-	Log.Info("MJScene.NotifyOneReady: " .. tostring(status) .. ",name is " .. self.UITransform.name);
+	Log.Info("MJPlayer:SetupReady: " .. self:LogKey() .. "status is " .. tostring(status));
 	NCSpeedLight.UIHelper.SetActiveState(self.UITransform, "Enter/Center/Label (Prepare)", status);
-	if self == MJPlayer.Hero then
-		UI_MaJiang.SetupReadyAndInvite(not status, status, true);
-	end
 end
 -- 设置庄家标识
 function MJPlayer:SetupBanker()
-	-- local status = self.MJData.m_RoleData.m_Postion == MJPlayer.Hero.HandCardInfo.m_bankerPos;
 	NCSpeedLight.UIHelper.SetActiveState(self.UITransform, "Enter/Center/Banker", self:IsBanker());
 end
 -- 设置进入/离开状态 Enter/Leave
@@ -456,14 +456,15 @@ function MJPlayer:SetupEnterAndLeave(...)
 	NCSpeedLight.UIHelper.SetActiveState(self.UITransform, "Leave", args[2]);
 end
 function MJPlayer:StartGame()
+	Log.Info("MJPlayer:StartGame: " .. self:LogKey());
 	self:SetupReady(false);
 	self:SetupBanker();
 	if self:IsBanker() then
-		self:SetHandCardCount(14);
-		MJGroupCardQueue.PopFront(14);
+		self:SetHandCardCount(MJDefine.BANKER_INITIAL_CARD_COUNT);
+		MJGroupCardQueue.PopFront(MJDefine.BANKER_INITIAL_CARD_COUNT);
 	else
-		self:SetHandCardCount(13);
-		MJGroupCardQueue.PopFront(13);
+		self:SetHandCardCount(MJDefine.XIAN_INITIAL_CARD_COUNT);
+		MJGroupCardQueue.PopFront(MJDefine.XIAN_INITIAL_CARD_COUNT);
 	end
 end
 -- 展示玩家的手牌，sort-是否需要排序，lastMargin-最后一张牌是否需要有间隔
@@ -479,12 +480,12 @@ function MJPlayer:DisplayHandCard(sort, lastMargin)
 			currentPos = currentPos + Vector3.New(self.OperateTotalCount * 3 * self.UICardWorldSpaceWidth + self.UICardHeadMargin, 0, 0);
 		end
 		local index = 1;
-		for i = 1, # self.HandCardInfo.m_HandCard do
-			local card = self.HandCardInfo.m_HandCard[i];
+		for i = 1, # self.HandCards do
+			local card = self.HandCards[i];
 			local cardObj = cardGridPanel:Find(tostring(i));
 			NCSpeedLight.UIHelper.SetSpriteName(cardObj, "Sprite", MaJiangType.ToString(card.m_Type));
 			local offset = nil;
-			if i == # self.HandCardInfo.m_HandCard and lastMargin == true then
+			if i == # self.HandCards and lastMargin == true then
 				offset = Vector3.New(self.UICardWidth + self.UICardLastMargin, 0, 0);
 			else
 				offset = Vector3.New(self.UICardWidth, 0, 0);
@@ -545,11 +546,11 @@ function MJPlayer:PlayUIScaleAndDicePanelGrow(status)
 end
 -- 自己的回合
 function MJPlayer:MJOT_BEGIN(data)
-	Log.Info("MJPlayer:MJOT_BEGIN: ui is " .. self.UITransform.name .. ",id is " .. self.ID);
+	Log.Info("MJPlayer:MJOT_BEGIN: " .. self:LogKey());
 end
 --抓牌
 function MJPlayer:MJOT_GetCard(data)
-	Log.Info("MJPlayer:MJOT_GetCard: ui is " .. self.UITransform.name .. ",id is " .. self.ID);
+	Log.Info("MJPlayer:MJOT_GetCard: " .. self:LogKey());
 	MJGroupCardQueue.PopFront();
 	self:AddHandCardCount();
 	if self:IsHero() then
@@ -559,12 +560,13 @@ function MJPlayer:MJOT_GetCard(data)
 			self:AddHandCard(card);
 		end
 		self.UI:PlayGetCardAnimation();
+	else
+		self:DisplayHandCard(false, true);
 	end
-	self:DisplayHandCard(false, true);
 end
 --补牌
 function MJPlayer:MJOT_BuCard(data)
-	Log.Info("MJPlayer:MJOT_BuCard: ui is " .. self.UITransform.name .. ",id is " .. self.ID);
+	Log.Info("MJPlayer:MJOT_BuCard: " .. self:LogKey());
 	MJGroupCardQueue.PopRear();
 	self:AddHandCardCount();
 	if self == MJPlayer.Hero then
@@ -580,7 +582,7 @@ end
 --出牌
 function MJPlayer:MJOT_SendCard(data)
 	local card = data.m_HandCard[1];
-	Log.Info("MJPlayer:MJOT_SendCard: ui is " .. self.UITransform.name .. ",id is " .. self.ID .. ",card id is " .. card.m_Index .. ",type is " .. MaJiangType.ToString(card.m_Type));
+	Log.Info("MJPlayer:MJOT_SendCard: " .. self:LogKey() .. ",card id is " .. card.m_Index .. ",type is " .. MaJiangType.ToString(card.m_Type));
 	if self:IsHero() then
 		local cardPosition = self:GetHandCardPositionByID(card.m_Index);
 		local newCardPosition = self:GetHandCardCount();
@@ -703,7 +705,7 @@ function MJPlayer:PutChiCard(data)
 end
 -- 放置杠的牌
 function MJPlayer:PutGangCard(data)
-	Log.Info("MJPlayer:PutGangCard: ui is " .. self.UITransform.name .. ",id is " .. self.ID);
+	Log.Info("MJPlayer:PutGangCard: " .. self:LogKey());
 	local card1 = MJSceneController.GetCardByID(data.m_LastCard.m_Index, self.ID);
 	local player = MJScene.GetPlayerByID(card1.LastRoleID);
 	player:SubTableCardCount();
@@ -722,7 +724,7 @@ function MJPlayer:PutGangCard(data)
 end
 -- 放置暗杠的牌
 function MJPlayer:PutAnGangCard(data)
-	Log.Info("MJPlayer:PutAnGangCard: ui is " .. self.UITransform.name .. ",id is " .. self.ID);
+	Log.Info("MJPlayer:PutAnGangCard: " .. self:LogKey());
 	local factor = self:GetOperateTotalCount() * 3;
 	local card1Pos = self.OperateCardStartPos + Vector3.New(self.OperateCardOffset.x * factor, self.OperateCardOffset.y * factor, self.OperateCardOffset.z * factor);
 	local card2Pos = card1Pos + self.OperateCardOffset;
@@ -745,7 +747,7 @@ function MJPlayer:PutAnGangCard(data)
 end
 -- 放置补杠的牌
 function MJPlayer:PutBuGangCard(data)
-	Log.Info("MJPlayer:PutBuGangCard: ui is " .. self.UITransform.name .. ",id is " .. self.ID);
+	Log.Info("MJPlayer:PutBuGangCard: " .. self:LogKey());
 	local card1 = MJSceneController.GetOneUnuseCard(data.m_LastCard.m_Index, data.m_LastCard.m_Type, self.ID);
 	table.sort(data.m_HandCard, function(o1, o2)
 		return o1.m_Index < o2.m_Index;
@@ -761,7 +763,7 @@ function MJPlayer:PutBuGangCard(data)
 end
 -- 放置碰的牌
 function MJPlayer:PutPengCard(data)
-	Log.Info("MJPlayer:PutPengCard: ui is " .. self.UITransform.name .. ",id is " .. self.ID);
+	Log.Info("MJPlayer:PutPengCard: " .. self:LogKey());
 	local card1 = MJSceneController.GetCardByID(data.m_LastCard.m_Index, self.ID);
 	local player = MJScene.GetPlayerByID(card1.LastRoleID);
 	player:SubTableCardCount();

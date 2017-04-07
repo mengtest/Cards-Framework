@@ -82,7 +82,7 @@ function UI_HeroPlayer.OnStopDragCard(go)
 			return;
 		end
 	end
-	if MJScene.CurrentOperator.Player == MJPlayer.Hero then
+	if MJScene.IsMyTurn() then
 		local cardIndex = tonumber(go.name);
 		local card = MJPlayer.Hero:GetHandCardByPosition(cardIndex);
 		if card == nil then
@@ -218,6 +218,8 @@ function UI_HeroPlayer:PlayInsertCardAnimation(outCardPosition, newCardPosition,
 			local cardObj = cardObjs[i];
 			cardObj.name = tostring(i);
 		end
+		-- 播完动画之后再刷新一遍牌,确保数据的正确性
+		-- self.Player:DisplayHandCard(true, false);
 		line:Next();
 	end;
 	actionLine:AddAction(inactiveOutCardAction);

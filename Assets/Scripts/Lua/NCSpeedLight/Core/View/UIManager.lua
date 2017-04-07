@@ -110,6 +110,7 @@ function UIManager.ScreenResolution()
 end
 -- 打开窗口
 function UIManager.OpenWindow(windowName)
+	Log.Info("UIManager.OpenWindow: " .. windowName);
 	local window = UIManager.Windows[windowName];
 	if window ~= nil then
 		return window;
@@ -129,6 +130,7 @@ function UIManager.OpenWindow(windowName)
 	return go;
 end
 function UIManager.CloseWindow(windowName)
+	Log.Info("UIManager.CloseWindow: " .. windowName);
 	local window = UIManager.Windows[windowName];
 	if window ~= nil then
 		UnityEngine.GameObject.Destroy(window);
