@@ -8,7 +8,7 @@
 -- Modify History:
 --
 -----------------------------------------------
-MJPlayerPos = {
+MJPlayerSeatEnum = {
 	-- 东
 	EAST = 0,
 	-- 南
@@ -17,8 +17,8 @@ MJPlayerPos = {
 	WEST = 2,
 	-- 北
 	NORTH = 3,
-	GetString = function(index)
-		for key, value in pairs(MJPlayerPos) do
+	ToString = function(index)
+		for key, value in pairs(MJPlayerSeatEnum) do
 			if value == index then
 				return tostring(key);
 			end
@@ -73,8 +73,8 @@ MJPlayer =
 	UICardLastMargin = nil,
 	-- UI的位置
 	UIPosition,
-	-- 服务器的位置
-	RealPosition,
+	-- 服务器分配的位置
+	ServerPosition,
 	-- 相对位置
 	Position,
 	-- 对应的UI
@@ -140,9 +140,9 @@ function MJPlayer:Initialize(data, ishero)
 	if self.ID == SharedVariable.FBEntryInfo.m_RoomMasterID then
 		MJPlayer.RoomMaster = self;
 	end
-	self.RealPosition = data.m_RoleData.m_Postion;
-	self.Position = self.RealPosition;
-	local vals = UI_MaJiang.GetPlayerUI(self.RealPosition);
+	self.ServerPosition = data.m_RoleData.m_Postion;
+	self.Position = self.ServerPosition;
+	local vals = UI_MaJiang.GetPlayerUI(self.ServerPosition);
 	self.UI = vals[1];
 	self.UITransform = vals[2];
 	self.UIPosition = vals[3];
@@ -164,7 +164,7 @@ function MJPlayer:Initialize(data, ishero)
 	self:SetupUI();
 	Log.Info("MJPlayer:Initialize: ID is " .. self.ID);
 	Log.Info("MJPlayer:Initialize: UI is " .. self.UITransform.name);
-	Log.Info("MJPlayer:Initialize: RealPosition is " .. self.RealPosition);
+	Log.Info("MJPlayer:Initialize: ServerPosition is " .. self.ServerPosition);
 	Log.Info("MJPlayer:Initialize: UIPosition is " .. self.UIPosition);
 	Log.Info("MJPlayer:Initialize: Position is " .. self.Position);
 	if self.UIPosition == 0 then
@@ -536,7 +536,7 @@ end
 function MJPlayer:PlayUIScaleAndDicePanelGrow(status)
 	-- Log.Info("MJPlayer:PlayUIScaleAndDicePanelGrow: this is " .. self.UITransform.name);
 	local scaleAnimation = self.UITransform:Find("Enter/Center"):GetComponent(typeof(TweenScale));
-	local name = MJPlayerPos.GetString(self.Position);
+	local name = MJPlayerSeatEnum.ToString(self.Position);
 	MJSceneController.PlayDicePanelGrowEffect(name, status);
 	scaleAnimation.enabled = status;
 	if self:IsHero() then

@@ -20,6 +20,7 @@ MJScene =
 {
 	Name = SceneType.MJScene,
 	IsInitialized = false,
+	NeedReconnect = false,
 	Players = nil,
 	CurrentOperator = nil,
 	LastOperator = nil,
@@ -58,14 +59,9 @@ function MJScene.Begin()
 	MJScene.FBInfo = SharedVariable.FBInfo;
 	MJScene.TotalRound = MJScene.FBInfo.m_gameCount;
 	MJScene.CurrentRound = 1;
-	MJScene.SimulateResultInfo();
 	UIManager.OpenWindow(UIType.UI_Load);
 	AssetManager.LoadScene(SceneType.MJScene);
 	MJScene.Players = {};
-end
-function MJScene.SimulateResultInfo()
-	local msg = {};
-	msg.m_huRoleid = 0;
 end
 function MJScene.Update()
 end
@@ -79,10 +75,15 @@ function MJScene.OnSceneWasLoaded()
 	Log.Info("MJScene.OnSceneWasLoaded: now bein to open majiang ui and request game fb info or reconnect info.");
 	UIManager.OpenWindow(UIType.UI_MaJiang);
 	MJScene.RegisterNetEvent();
-	MJScene.RequestAllPlayerInfo();
+	if MJScene.NeedReconnect == false then
+		MJScene.RequestAllPlayerInfo();
+	else
+		MJScene.RequestReconnectInfo();
+	end
 end
 -- 继续游戏
 function MJScene.OnceAgain()
+	Log.Info("MJScene.OnceAgain: 继续游戏");
 	MJScene.CurrentRound = MJScene.CurrentRound + 1;
 	MJSceneController.Reset();
 	UI_MaJiang.Reset();
@@ -91,9 +92,16 @@ function MJScene.OnceAgain()
 	end
 	MJScene.RequestReady(1);
 end
+-- 设置是否需要断线重连
+function MJScene.SetNeedReconnect(var)
+	Log.Info("MJScene.SetNeedReconnect: " .. tostring(var));
+	MJScene.NeedReconnect = var;
+end
 function MJScene.RegisterNetEvent()
+	Log.Info("MJScene.RegisterNetEvent");
 	-- 新玩家进入;
 	NetManager.RegisterEvent(GameMessage.GM_BATTLE_NEW_CHARACTER, MJScene.ReturnGamePlayerInfo);
+	NetManager.RegisterEvent(GameMessage.GM_PLAYERJOINBATTLEAGAIN_RETRUN, MJScene.ReturnReconnectInfo);
 	-- 玩家手牌信息;
 	NetManager.RegisterEvent(GameMessage.GM_HANDCARD_INFO, MJScene.ReturnHandCardInfo);
 	NetManager.RegisterEvent(GameMessage.GM_NOTIFY_PLAYER_OPERATOR, MJScene.ReturnPlayerOutCard);
@@ -116,6 +124,7 @@ function MJScene.RegisterNetEvent()
 	NetManager.RegisterEvent(GameMessage.GM_MJOperator_Error, MJScene.ReturnOperateError);
 end
 function MJScene.UnRegisterNetEvent()
+	Log.Info("MJScene.UnRegisterNetEvent");
 	NetManager.UnregisterEvent(GameMessage.GM_BATTLE_NEW_CHARACTER, MJScene.ReturnGamePlayerInfo);
 	NetManager.UnregisterEvent(GameMessage.GM_HANDCARD_INFO, MJScene.ReturnHandCardInfo);
 	NetManager.UnregisterEvent(GameMessage.GM_NOTIFY_PLAYER_OPERATOR, MJScene.ReturnPlayerOutCard);
@@ -214,6 +223,14 @@ function MJScene.RequestAllPlayerInfo()
 	};
 	NetManager.SendEventToLogicServer(GameMessage.GM_ALL_CHARACTERINFO, PBMessage.GM_LoginFBServer, msg);
 end
+-- 请求断线重连信息
+function MJScene.RequestReconnectInfo()
+	Log.Info("MJScene.RequestReconnectInfo:");
+	local msg = {};
+	msg.m_RoleID = Player.ID;
+	msg.m_FBID = SharedVariable.FBInfo.m_FBID;
+	NetManager.SendEventToLogicServer(GameMessage.GM_PLAYERJOINBATTLEAGAIN_REQUEST, PBMessage.GM_LoginFBServer, msg);
+end
 -- 请求准备，0取消准备，1准备;
 function MJScene.RequestReady(status)
 	local var;
@@ -309,7 +326,7 @@ function MJScene.ReturnGamePlayerInfo(evt)
 				hero = MJPlayer.New();
 				hero:Initialize(playerEntry, true);
 				MJScene.AddPlayer(hero.ID, hero);
-				Log.Info("MJScene.ReturnGamePlayerInfo: Create hero id is " .. hero.ID .. ",server position is " .. hero.RealPosition);
+				Log.Info("MJScene.ReturnGamePlayerInfo: Create hero id is " .. hero.ID .. ",server position is " .. hero.ServerPosition);
 			end
 		end
 	end
@@ -322,12 +339,58 @@ function MJScene.ReturnGamePlayerInfo(evt)
 				player = MJPlayer.New();
 				player:Initialize(playerEntry);
 				MJScene.AddPlayer(player.ID, player);
-				Log.Info("MJScene.ReturnGamePlayerInfo: Create a player id is " .. player.ID .. ",server position is " .. player.RealPosition);
+				Log.Info("MJScene.ReturnGamePlayerInfo: Create a player id is " .. player.ID .. ",server position is " .. player.ServerPosition);
 			end
 		end
 	end
 	MJSceneController.SetupDicePanelDirection();
 	MJSceneController.IsSetupDicePanelRotation = true;
+	UIManager.CloseAllWindowsExcept(UIType.UI_MaJiang);
+end
+-- 收到断线重连信息
+function MJScene.ReturnReconnectInfo(evt)
+	local msg = NetManager.DecodeMsg(PBMessage.GM_ReconnectMJData, evt);
+	if msg == false then
+		Log.Error("MJScene.ReturnReconnectInfo: parse msg error," .. PBMessage.GM_ReconnectMJData);
+		return;
+	end
+	Log.Info("HallScene.ReturnAgainEnterFb: 收到重连信息");
+	local msg = NetManager.DecodeMsg(PBMessage.GM_ReconnectMJData, evt);
+	if msg == false then
+		Log.Error("HallScene.ReturnAgainEnterFb: parse msg error," .. PBMessage.GM_ReconnectMJData);
+		return;
+	end
+	Log.Info("HallScene.ReturnReconnectInfo: 庄家的位置：" .. msg.m_bankerPos);
+	Log.Info("HallScene.ReturnReconnectInfo: 房主的ID：" .. msg.m_RoomMasterID);
+	Log.Info("HallScene.ReturnReconnectInfo: 剩余牌数：" .. msg.m_FreeCard);
+	Log.Info("HallScene.ReturnReconnectInfo: 剩余局数：" .. msg.m_leftCount);
+	Log.Info("HallScene.ReturnReconnectInfo: 总局数：" .. msg.m_totalCount);
+	Log.Info("HallScene.ReturnReconnectInfo: 当前骰子转的次数：" .. msg.m_rollCount);
+	Log.Info("HallScene.ReturnReconnectInfo: 麻将的人数：" .. msg.m_playerCount);
+	Log.Info("HallScene.ReturnReconnectInfo: 打出最后一张牌的角色id：" .. msg.m_lastOutCardRoleId);
+	Log.Info("HallScene.ReturnReconnectInfo: 解散房间剩余的时间：" .. msg.m_closeRoomLeftTime);
+	if msg.m_huLastCard ~= nil then
+		Log.Info("HallScene.ReturnReconnectInfo: 最后被胡的那张牌：" .. msg.m_huLastCard);
+	end
+	Log.Info("HallScene.ReturnReconnectInfo: 从谁面前取牌：" .. msg.m_getCardId);
+	Log.Info("HallScene.ReturnReconnectInfo: 从第几墩取牌：" .. msg.m_getCardNum);
+	Log.Info("HallScene.ReturnReconnectInfo: 当前出牌人的ID（等到操作时赋值0）：" .. msg.m_sendCardID);
+	Log.Info("HallScene.ReturnReconnectInfo: 房间玩法：" .. msg.m_fbplayway);
+	if msg.m_saizi ~= nil then
+		Log.Info("HallScene.ReturnReconnectInfo: 筛子次数，以及内容：" .. # msg.m_saizi);
+	end
+	if msg.m_HandCard ~= nil then
+		Log.Info("HallScene.ReturnReconnectInfo: 手牌信息：" .. # msg.m_HandCard);
+	end
+	if msg.m_AllData ~= nil then
+		Log.Info("HallScene.ReturnReconnectInfo: 其他玩家信息：" .. # msg.m_AllData);
+	end
+	if msg.m_CloseRoomData ~= nil then
+		Log.Info("HallScene.ReturnReconnectInfo: 解散房间信息：" .. # msg.m_CloseRoomData);
+	end
+	-- if msg.m_huOperatorData ~= nil then
+	-- 	Log.Info("HallScene.ReturnAgainEnterFb: 存在结算信息");
+	-- end
 	UIManager.CloseAllWindowsExcept(UIType.UI_MaJiang);
 end
 function MJScene.ReturnHandCardInfo(evt)
@@ -340,7 +403,7 @@ function MJScene.ReturnHandCardInfo(evt)
 	MJPlayer.Hero:SetHandCardInfo(msg);
 	-- 设置庄家
 	for key, value in pairs(MJScene.Players) do
-		if value.RealPosition == MJPlayer.Hero.HandCardInfo.m_bankerPos then
+		if value.ServerPosition == MJPlayer.Hero.HandCardInfo.m_bankerPos then
 			MJPlayer.Banker = value;
 		end
 	end
