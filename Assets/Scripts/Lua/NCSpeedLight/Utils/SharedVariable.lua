@@ -23,7 +23,7 @@ SharedVariable =
 	PORT = "30000",
 	-- IP = "192.168.1.228",	
 	-- PORT = "50000",
-	UseLocalhost = true,
+	UseLocalhost = false,
 }
 SharedVariable.JsonUrl = "http://papamajiangcdn.damaigame.com/json/" .. SharedVariable.CompanyName .. "/" .. SharedVariable.Platform .. "/" .. SharedVariable.Channel .. "/v" .. SharedVariable.Version .. "/qiumo.db?v=" .. tostring(System.DateTime.Now.Ticks);
 function SharedVariable.ASSET_BUNDLE_PATH()

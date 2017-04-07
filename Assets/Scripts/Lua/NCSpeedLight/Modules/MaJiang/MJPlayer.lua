@@ -812,7 +812,7 @@ function MJPlayer:PutAnGangCardWhenReconnect(data)
 		MJSceneController.PutOneBackCard(card1Pos, self.OperateCardRotation);
 		MJSceneController.PutOneBackCard(card2Pos, self.OperateCardRotation);
 		MJSceneController.PutOneBackCard(card3Pos, self.OperateCardRotation);
-		local card4 = MJSceneController.GetOneUnuseCard(data.m_HandCard[1].m_Index, data.m_HandCard[1].m_Type, self.ID);
+		local card4 = MJSceneController.GetOneUnuseCard(data.m_FunHandCard[1].m_Index, data.m_FunHandCard[1].m_Type, self.ID);
 		card4:Show(card4Pos, self.OperateCardRotation);
 	else
 		MJSceneController.PutOneBackCard(card1Pos, self.OperateCardRotation);
@@ -825,10 +825,9 @@ end
 -- 断线重连时，放置补杠的牌
 function MJPlayer:PutBuGangCardWhenReconnect(data)
 	Log.Info("MJPlayer:PutBuGangCardWhenReconnect: " .. self:LogKey());
-	local card1 = MJSceneController.GetOneUnuseCard(data.m_LastCard.m_Index, data.m_LastCard.m_Type, self.ID);
-	table.sort(data.m_HandCard, function(o1, o2)
-		return o1.m_Index < o2.m_Index;
-	end);
+	-- local card1Data = data.m_FunHandCard[1];
+	-- local card2Data = data.m_FunHandCard[2];
+	local card1 = MJSceneController.GetOneUnuseCard(data.m_FunHandCard[1].m_Index, data.m_FunHandCard[1].m_Type, self.ID);
 	local cards = MJSceneController.GetCardByRoleIDAndType(card1.Type, self.ID);
 	table.sort(cards, function(o1, o2)
 		return o1.ID < o2.ID;
@@ -841,11 +840,9 @@ end
 -- 断线重连时，放置碰的牌
 function MJPlayer:PutPengCardWhenReconnect(data)
 	Log.Info("MJPlayer:PutPengCardWhenReconnect: " .. self:LogKey());
-	local card1 = MJSceneController.GetCardByID(data.m_LastCard.m_Index, self.ID);
-	local player = MJScene.GetPlayerByID(card1.LastRoleID);
-	player:SubTableCardCount();
-	local card2 = MJSceneController.GetOneUnuseCard(data.m_HandCard[1].m_Index, data.m_HandCard[1].m_Type, self.ID);
-	local card3 = MJSceneController.GetOneUnuseCard(data.m_HandCard[2].m_Index, data.m_HandCard[2].m_Type, self.ID);
+	local card1 = MJSceneController.GetOneUnuseCard(data.m_FunHandCard[1].m_Index, data.m_FunHandCard[1].m_Type, self.ID);
+	local card2 = MJSceneController.GetOneUnuseCard(data.m_FunHandCard[2].m_Index, data.m_FunHandCard[2].m_Type, self.ID);
+	local card3 = MJSceneController.GetOneUnuseCard(data.m_FunHandCard[3].m_Index, data.m_FunHandCard[3].m_Type, self.ID);
 	local factor = self:GetOperateTotalCount() * 3;
 	local card1Pos = self.OperateCardStartPos + Vector3.New(self.OperateCardOffset.x * factor, self.OperateCardOffset.y * factor, self.OperateCardOffset.z * factor);
 	local card2Pos = card1Pos + self.OperateCardOffset;
