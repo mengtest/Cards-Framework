@@ -1,7 +1,7 @@
 ﻿/*----------------------------------------------------------------
             // Copyright © 2014-2017 NCSpeedLight
             // 
-            // FileName: Main.cs
+            // FileName: Launch.cs
 			// Describle:
 			// Created By:  Wells Hsu
 			// Date&Time:  10/12 星期三 11:49:46
@@ -16,19 +16,22 @@ using LuaInterface;
 
 namespace NCSpeedLight
 {
-    public class Main : MonoBehaviour
+    public class Launch : MonoBehaviour
     {
         private void Awake()
         {
+            Helper.Log("Launch.Awake()");
             DontDestroyOnLoad(gameObject);
             Application.targetFrameRate = 30;
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
-
-            CheckExtractInternalScripts();
+            ExtractInternalScripts();
         }
-
-        private void CheckExtractInternalScripts()
+        /// <summary>
+        /// 解压包内容里的脚本文件
+        /// </summary>
+        private void ExtractInternalScripts()
         {
+            Helper.Log("ExtractInternalScripts.Awake()");
             if (Application.isEditor == true)
             {
                 StartGame();
@@ -38,7 +41,10 @@ namespace NCSpeedLight
                 StartCoroutine(OnExtractInternalScripts());
             }
         }
-
+        /// <summary>
+        /// 协同解压脚本
+        /// </summary>
+        /// <returns></returns>
         private IEnumerator OnExtractInternalScripts()
         {
             string dataPath = SharedVariable.SCRIPT_BUNDLE_PATH;  //数据目录
@@ -113,12 +119,9 @@ namespace NCSpeedLight
                 yield return new WaitForEndOfFrame();
             }
             message = "解包完成!!!";
-
             yield return new WaitForSeconds(0.1f);
             message = string.Empty;
-
             StartGame();
-
         }
 
         private void StartGame()

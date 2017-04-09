@@ -8,14 +8,11 @@
 -- Modify History:
 --
 ----------------------------------------------- 
-
 require "NCSpeedLight.Core.Hotfix.LuaManager"
 require "NCSpeedLight.Utils.APIDefine"
 require "NCSpeedLight.Utils.Log"
 require "NCSpeedLight.Utils.Utility"
-
 Main = {}
-
 function Main.StartGame(go)
 	Log.Initialize();
 	Log.Info("Main.StartGame");
@@ -26,3 +23,9 @@ function Main.StartGame(go)
 		Log.Error("Main.StartGame: error caused by nil gameObject.");
 	end
 end
+Launch = {}
+function Launch.Start(go)
+	Log.Initialize();
+	Log.Info("Launch.Start");
+	LuaComponent.Add(typeof())
+end 

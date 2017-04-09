@@ -2,7 +2,7 @@
            // Copyright © 2014-2017 NCSpeedLight
            // 
            // FileName: LuaComponent.cs
-           // Describle: lua组件
+           // Describle: lua组件,用于lua层面的操作
            // Created By:  Wells Hsu
            // Date&Time:  2016/1/19 10:03:15
            // Modify History:
@@ -25,6 +25,8 @@ namespace NCSpeedLight
         public LuaFunction OnGUIFunction;
         public LuaFunction LateUpdateFunction;
         public LuaFunction OnDestroyFunction;
+        public LuaFunction OnApplicationPauseFunction;
+        public LuaFunction OnApplicationFocusFunction;
         protected virtual void Start()
         {
             if (StartFunction != null) { StartFunction.Call(Table); }
@@ -53,6 +55,14 @@ namespace NCSpeedLight
         {
             if (OnDestroyFunction != null) { OnDestroyFunction.Call(Table); }
         }
+        protected virtual void OnApplicationPause(bool status)
+        {
+            if (OnApplicationPauseFunction != null) { OnApplicationPauseFunction.Call(Table, status); }
+        }
+        protected virtual void OnApplicationFocus(bool status)
+        {
+            if (OnApplicationFocusFunction != null) { OnApplicationFocusFunction.Call(Table, status); }
+        }
         public static void CallAwake(LuaComponent com)
         {
             com.AwakeFunction = com.Table.GetLuaFunction("Awake");
@@ -63,6 +73,8 @@ namespace NCSpeedLight
             com.OnGUIFunction = com.Table.GetLuaFunction("OnGUI");
             com.LateUpdateFunction = com.Table.GetLuaFunction("LateUpdate");
             com.OnDestroyFunction = com.Table.GetLuaFunction("OnDestroy");
+            com.OnApplicationPauseFunction = com.Table.GetLuaFunction("OnApplicationPause");
+            com.OnApplicationFocusFunction = com.Table.GetLuaFunction("OnApplicationFocus");
             if (com.AwakeFunction != null)
             {
                 com.AwakeFunction.Call(com.Table, com.gameObject);
