@@ -72,21 +72,8 @@ function UI_MJDraw.InitView()
 		local tempGrid = tempScore:GetComponent(typeof(UIGrid));
 		tempGrid.enabled = true;
 		tempGrid:Reposition();
-		--  /// 设置头像;
-		--         if (tempPlayer.pRoleInfo != null)
-		--         {
-		-- 			Transform tempPhotoTrans = tempTran.Find("Role/Sprite (Photo)");
-		--             if (tempPhotoTrans != null)
-		--             {
-		--                 UIWidget tempWidget = UIHelper.CreateHeadPhoto(tempPhotoTrans.gameObject, tempPlayer.pShowImage);
-		--                 if (tempWidget != null)
-		--                 {
-		--                     tempWidget.depth = 10;
-		--                     tempWidget.width = 60;
-		--                     tempWidget.height = 60;
-		--                 }
-		--             }
-		--         }
+		-- 设置头像
+		UIHelper.SetTexture(tempTran, "Role/Sprite (Photo)", tempPlayer.MJData.m_RoleData.m_HeadPhotoUrl);
 	end
 	local tempParentGrid = UIHelper.GetComponent(this.transform, "Center", typeof(UIGrid));
 	tempParentGrid.enabled = true;

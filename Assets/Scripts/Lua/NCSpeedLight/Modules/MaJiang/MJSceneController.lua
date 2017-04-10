@@ -22,6 +22,8 @@ MJSceneController = {
 	AllCards = nil,
 	-- 场景中所有的牌的物体对象
 	AllCardsObj = nil,
+	-- 场景中背面的牌
+	BackCards = nil,
 }
 
 local this = MJSceneController;
@@ -60,6 +62,15 @@ function MJSceneController.Reset()
 			card:Reset();
 		end
 	end
+	if MJSceneController.BackCards ~= nil then
+		for i = 1, # MJSceneController.BackCards do
+			local obj = MJSceneController.BackCards[i];
+			if obj ~= nil then
+				UnityEngine.GameObject.Destroy(obj);
+			end
+		end
+	end
+	MJSceneController.BackCards = {};
 	MJSceneController.SetGroupCardActive(false);
 	MJSceneController.DeskAnimationTimer = nil;
 	MJSceneController.DiceAnimationTimer = nil;
@@ -273,4 +284,8 @@ function MJSceneController.PutOneBackCard(position, eulerAngles)
 	newObj.transform.position = position;
 	newObj.transform.rotation = UnityEngine.Quaternion.Euler(newEulerAngles);
 	newObj.transform.localScale = Vector3.New(0.012, 0.012, 0.012);
+	if MJSceneController.BackCards == nil then
+		MJSceneController.BackCards = {};
+	end
+	table.insert(MJSceneController.BackCards, newObj);
 end 

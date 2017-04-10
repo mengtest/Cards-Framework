@@ -432,10 +432,11 @@ function MJPlayer:AddTotalScore(score)
 end
 -- 设置玩家UI
 function MJPlayer:SetupUI()
-	NCSpeedLight.UIHelper.SetLabelText(self.UITransform, "Enter/Center/Label (Name)", self.MJData.m_RoleData.m_Name);
+	UIHelper.SetLabelText(self.UITransform, "Enter/Center/Label (Name)", self.MJData.m_RoleData.m_Name);
+	UIHelper.SetTexture(self.UITransform, "Enter/Center/Icon/Sprite (Photo)", self.MJData.m_RoleData.m_HeadPhotoUrl);
 	-- 显示房主标识
 	if self.MJData.m_RoleData.m_Roleid == SharedVariable.FBEntryInfo.m_RoomMasterID then
-		NCSpeedLight.UIHelper.SetActiveState(self.UITransform, "Enter/Center/Master", true);
+		UIHelper.SetActiveState(self.UITransform, "Enter/Center/Master", true);
 	end
 	self:SetupReady(self.MJData.m_isReady == 1);
 	self:SetupEnterAndLeave(true, false);
@@ -443,17 +444,17 @@ end
 -- 设置Ready标识
 function MJPlayer:SetupReady(status)
 	Log.Info("MJPlayer:SetupReady: " .. self:LogKey() .. "status is " .. tostring(status));
-	NCSpeedLight.UIHelper.SetActiveState(self.UITransform, "Enter/Center/Label (Prepare)", status);
+	UIHelper.SetActiveState(self.UITransform, "Enter/Center/Label (Prepare)", status);
 end
 -- 设置庄家标识
 function MJPlayer:SetupBanker()
-	NCSpeedLight.UIHelper.SetActiveState(self.UITransform, "Enter/Center/Banker", self:IsBanker());
+	UIHelper.SetActiveState(self.UITransform, "Enter/Center/Banker", self:IsBanker());
 end
 -- 设置进入/离开状态 Enter/Leave
 function MJPlayer:SetupEnterAndLeave(...)
 	local args = {...};
-	NCSpeedLight.UIHelper.SetActiveState(self.UITransform, "Enter", args[1]);
-	NCSpeedLight.UIHelper.SetActiveState(self.UITransform, "Leave", args[2]);
+	UIHelper.SetActiveState(self.UITransform, "Enter", args[1]);
+	UIHelper.SetActiveState(self.UITransform, "Leave", args[2]);
 end
 function MJPlayer:StartGame()
 	Log.Info("MJPlayer:StartGame: " .. self:LogKey());
@@ -483,7 +484,7 @@ function MJPlayer:DisplayHandCard(sort, lastMargin)
 		for i = 1, # self.HandCards do
 			local card = self.HandCards[i];
 			local cardObj = cardGridPanel:Find(tostring(i));
-			NCSpeedLight.UIHelper.SetSpriteName(cardObj, "Sprite", MaJiangType.ToString(card.m_Type));
+			UIHelper.SetSpriteName(cardObj, "Sprite", MaJiangType.ToString(card.m_Type));
 			local offset = nil;
 			if i == # self.HandCards and lastMargin == true then
 				offset = Vector3.New(self.UICardWidth + self.UICardLastMargin, 0, 0);
@@ -541,7 +542,7 @@ function MJPlayer:PlayUIScaleAndDicePanelGrow(status)
 	MJSceneController.PlayDicePanelGrowEffect(name, status);
 	scaleAnimation.enabled = status;
 	if self:IsHero() then
-		NCSpeedLight.UIHelper.SetActiveState(UI_MaJiang.transform, "center/OperatorPrompt", status);
+		UIHelper.SetActiveState(UI_MaJiang.transform, "center/OperatorPrompt", status);
 	end
 end
 -- 自己的回合

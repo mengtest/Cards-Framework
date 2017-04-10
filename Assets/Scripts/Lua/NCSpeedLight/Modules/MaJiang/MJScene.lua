@@ -748,7 +748,9 @@ function MJScene.ReturnRoomMasterDissolve(evt)
 	local option = StandardDialogOption:New();
 	option.OnClickOK =
 	function()
-		SceneManager.GotoScene(SceneType.HallScene);
+		UIManager.CloseWindow(UIType.UI_DissolveRoom);
+		UIManager.OpenWindow(UIType.UI_MJTotalResult);
+		-- SceneManager.GotoScene(SceneType.HallScene);
 	end;
 	option.DoubleButton = false;
 	option.Content = "房间已解散,点击确定退出房间";

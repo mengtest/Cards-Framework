@@ -39,8 +39,8 @@ function UI_MJTotalResult.DisplayPlayerInfo()
 	local parent = UIHelper.GetComponent(this.transform, "Grid", typeof(UnityEngine.Transform));
 	if MJScene.TotalResultInfo == nil or MJScene.TotalResultInfo.m_count == 0 then
 		-- 一局也没打
-		for i = 1, # MJScene.Players do
-			local tempPlayer = MJScene.Players[i];
+		for key, value in pairs(MJScene.Players) do
+			local tempPlayer = value;
 			local tempTrans = parent:FindChild(tostring(tempPlayer.UIPosition));
 			tempTrans.gameObject:SetActive(true);
 			if tempPlayer:IsBanker() then
@@ -52,17 +52,7 @@ function UI_MJTotalResult.DisplayPlayerInfo()
 			UIHelper.SetLabelText(tempTrans, "Role/Label (Name)", tempPlayer:GetShowName());
 			UIHelper.SetLabelText(tempTrans, "Role/Label (ID)", "ID:" .. tempPlayer.ID);
 			-- 设置头像
-			-- Transform tempHead = tempTrans.Find("Role/Sprite (Photo)");
-			-- 	if (tempHead != null)
-			-- 	{
-			-- 		UIWidget tempWidget = UIHelper.CreateHeadPhoto (tempHead.gameObject, varHead);
-			-- 		if (tempWidget != null) 
-			-- 		{
-			-- 			tempWidget.depth = 10;
-			-- 			tempWidget.width = 66;
-			-- 			tempWidget.height = 66;
-			-- 		}
-			-- 	}
+			UIHelper.SetTexture(tempTrans, "Role/Sprite (Photo)", tempPlayer.MJData.m_RoleData.m_HeadPhotoUrl);
 		end
 	else
 		for i = 1, # MJScene.TotalResultInfo.m_OneData do
