@@ -46,14 +46,6 @@ MJPlayerType =
 	Robot = 2,
 }
 
-SceneType =
-{
-	DownloadScene = "DownloadScene",
-	LoginScene = "LoginScene",
-	HallScene = "HallScene",
-	MJScene = "MJScene",
-}
-
 MaJiangType =
 {
 	MJ_1_WAN = 0,

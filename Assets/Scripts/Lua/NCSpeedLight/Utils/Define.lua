@@ -11,4 +11,12 @@ UIType = {
 	UI_MJResult = "MaJiang/UI_MJResult",
 	UI_MJTotalResult = "MaJiang/UI_MJTotalResult",
 	UI_MJDraw = "MaJiang/UI_MJDraw",
+}
+
+SceneType =
+{
+	DownloadScene = "DownloadScene",
+	LoginScene = "LoginScene",
+	HallScene = "HallScene",
+	MJScene = "MJScene",
 } 

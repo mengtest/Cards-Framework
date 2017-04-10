@@ -12,9 +12,10 @@ public class NCSpeedLight_UIHelperWrap
 		L.RegFunction("ResetSpringPosition", ResetSpringPosition);
 		L.RegFunction("SetActiveState", SetActiveState);
 		L.RegFunction("SetSpriteName", SetSpriteName);
+		L.RegFunction("SetTexture", SetTexture);
+		L.RegFunction("DownloadImage", DownloadImage);
 		L.RegFunction("SetSpriteAlpha", SetSpriteAlpha);
 		L.RegFunction("GetComponent", GetComponent);
-		L.RegFunction("BytesToString", BytesToString);
 		L.RegFunction("ChangeSpriteColor", ChangeSpriteColor);
 		L.RegFunction("New", _CreateNCSpeedLight_UIHelper);
 		L.RegFunction("__tostring", ToLua.op_ToString);
@@ -242,6 +243,59 @@ public class NCSpeedLight_UIHelperWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SetTexture(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Transform), typeof(string)))
+			{
+				UnityEngine.Transform arg0 = (UnityEngine.Transform)ToLua.ToObject(L, 1);
+				string arg1 = ToLua.ToString(L, 2);
+				UITexture o = NCSpeedLight.UIHelper.SetTexture(arg0, arg1);
+				ToLua.Push(L, o);
+				return 1;
+			}
+			else if (count == 3 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Transform), typeof(string), typeof(string)))
+			{
+				UnityEngine.Transform arg0 = (UnityEngine.Transform)ToLua.ToObject(L, 1);
+				string arg1 = ToLua.ToString(L, 2);
+				string arg2 = ToLua.ToString(L, 3);
+				UITexture o = NCSpeedLight.UIHelper.SetTexture(arg0, arg1, arg2);
+				ToLua.Push(L, o);
+				return 1;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: NCSpeedLight.UIHelper.SetTexture");
+			}
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int DownloadImage(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			string arg0 = ToLua.CheckString(L, 1);
+			UITexture arg1 = (UITexture)ToLua.CheckUnityObject(L, 2, typeof(UITexture));
+			System.Collections.IEnumerator o = NCSpeedLight.UIHelper.DownloadImage(arg0, arg1);
+			ToLua.Push(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int SetSpriteAlpha(IntPtr L)
 	{
 		try
@@ -304,23 +358,6 @@ public class NCSpeedLight_UIHelperWrap
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to method: NCSpeedLight.UIHelper.GetComponent");
 			}
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int BytesToString(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 1);
-			byte[] arg0 = ToLua.CheckByteBuffer(L, 1);
-			string o = NCSpeedLight.UIHelper.BytesToString(arg0);
-			LuaDLL.lua_pushstring(L, o);
-			return 1;
 		}
 		catch(Exception e)
 		{

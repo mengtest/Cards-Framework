@@ -345,7 +345,7 @@ function LoginScene.RequestCreateRole()
 	msg.m_AccountID = LoginScene.Token.AccountID;
 	msg.m_info = nil;
 	msg.m_NickName = LoginScene.Token.AccountID;
-	msg.m_HeadPhotoUrl = "http://tva1.sinaimg.cn/crop.0.0.852.852.180/613e3b5fjw8eph1yzmcabj20no0no0uc.jpg";
+	msg.m_HeadPhotoUrl = "http://d.hiphotos.baidu.com/zhidao/pic/item/b8389b504fc2d562562d540ae51190ef76c66c34.jpg";
 	msg.m_sex = 1;
 	msg.m_UnionID = "10086";
 	NetManager.SendEventToLogicServer(GameMessage.GM_ROLE_CREATE, PBMessage.GMRoleCreate, msg);

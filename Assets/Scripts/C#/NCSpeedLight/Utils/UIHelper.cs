@@ -11,6 +11,7 @@
 
 using UnityEngine;
 using LuaInterface;
+using System.Collections;
 
 namespace NCSpeedLight
 {
@@ -147,6 +148,39 @@ namespace NCSpeedLight
             return null;
         }
 
+        public static UITexture SetTexture(Transform parent, string path, string url)
+        {
+            if (parent == null)
+            {
+                return null;
+            }
+            Transform t = parent.Find(path);
+            return SetTexture(t, url);
+        }
+
+        public static UITexture SetTexture(Transform transform, string url)
+        {
+            if (transform != null)
+            {
+                UITexture texture = transform.GetComponent<UITexture>();
+                Game.Instance.StartCoroutine(DownloadImage(url, texture));
+                return texture;
+            }
+            return null;
+        }
+
+        public static IEnumerator DownloadImage(string url, UITexture texture)
+        {
+            if (string.IsNullOrEmpty(url) || texture == null)
+            {
+                yield break;
+            }
+            WWW www = new WWW(url);
+            yield return www;
+            Texture2D image = www.texture;
+            texture.mainTexture = image;
+        }
+
         public static UISprite SetSpriteAlpha(Transform parent, string path, int alpha)
         {
             if (parent == null)
@@ -195,19 +229,6 @@ namespace NCSpeedLight
             return transform.GetComponent(type);
         }
 
-        public static string BytesToString(byte[] bytes)
-        {
-            try
-            {
-                return System.Text.Encoding.UTF8.GetString(bytes).TrimEnd('\0');
-                //return System.Text.Encoding.GetEncoding("UTF8").GetString(varByte).TrimEnd('\0');
-                //return System.Text.Encoding.Unicode.GetString(varByte).TrimEnd('\0');
-            }
-            catch (System.Exception)
-            {
-                return null;
-            }
-        }
         /// <summary>
         /// 改变图片的显示状态，Isgray=true,则图片设置为灰色,否则设置成白色
         /// </summary>
