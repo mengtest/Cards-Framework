@@ -17,6 +17,7 @@ function HallScene.Initialize()
 	if HallScene.IsInitialized == false then
 	end
 end
+
 function HallScene.Begin()
 	HallScene.RegisterNetEvent();
 	UIManager.CloseAllWindows();
@@ -24,10 +25,19 @@ function HallScene.Begin()
 	UIManager.OpenWindow('Hall/UI_Main');
 	HallScene.RequestPlayerInFb();
 end
+
 function HallScene.Update()
 end
+
 function HallScene.End()
 end
+
+function HallScene.OnApplicationPause(status)
+end
+
+function HallScene.OnApplicationFocus(status)
+end
+
 -- Create Room Logic Begin --
 function HallScene.RegisterNetEvent()
 	NetManager.RegisterEvent(GameMessage.GM_FBSERVERINFO_RETURN, HallScene.ReceiveFbInfo);
@@ -40,6 +50,7 @@ function HallScene.RegisterNetEvent()
 	NetManager.RegisterEvent(GameMessage.GM_NOTIFY_CHANGE_int32, HallScene.NotifyChangeSomethingInt32);
 	NetManager.RegisterEvent(GameMessage.GM_KICKOFF_PLAYER, HallScene.NotifyRe_Register);
 end
+
 function HallScene.UnRegisterNetEvent()
 	NetManager.UnregisterEvent(GameMessage.GM_FBSERVERINFO_RETURN, HallScene.ReceiveFbInfo);
 	NetManager.UnregisterEvent(GameMessage.GM_MAJIANG_NOTIFY_ASKFIREND, HallScene.ReceiveInvitePlayMaJiang);
@@ -51,6 +62,7 @@ function HallScene.UnRegisterNetEvent()
 	NetManager.UnregisterEvent(GameMessage.GM_NOTIFY_CHANGE_int32, HallScene.NotifyChangeSomethingInt32);
 	NetManager.UnregisterEvent(GameMessage.GM_KICKOFF_PLAYER, HallScene.NotifyRe_Register);
 end
+
 -- 判断当前玩家是否在副本内
 function HallScene.RequestPlayerInFb()
 	local msg = {
@@ -59,6 +71,7 @@ function HallScene.RequestPlayerInFb()
 	Log.Info("HallScene.RequestPlayerInFb: request is " .. msg.request);
 	NetManager.SendEventToLogicServer(GameMessage.GM_PLAYERISINBATTLE_REQUEST, PBMessage.GM_Request, msg);
 end
+
 function HallScene.RequestCreateRoom()
 	local msg = {
 		m_roleid = Player.FullInfo.id,

@@ -28,3 +28,9 @@ end
 
 function Scene.OnLevelWasLoaded()
 end
+
+function Scene.OnApplicationPause(status)
+end
+
+function Scene.OnApplicationFocus(status)
+end 

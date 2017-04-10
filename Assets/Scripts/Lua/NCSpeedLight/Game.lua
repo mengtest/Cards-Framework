@@ -118,10 +118,13 @@ end
 function Game.OnApplicationPause(status)
 	Log.Info("Game.OnApplicationPause: " .. tostring(status));
 	if SceneManager.CurrentScene ~= nil then
-		-- SceneManager.CurrentScene.OnApplicationPause(status);
+		SceneManager.CurrentScene.OnApplicationPause(status);
 	end
 end
 
 function Game.OnApplicationFocus(status)
 	Log.Info("Game.OnApplicationFocus: " .. tostring(status));
+	if SceneManager.CurrentScene ~= nil then
+		-- SceneManager.CurrentScene.OnApplicationFocus(status);
+	end
 end

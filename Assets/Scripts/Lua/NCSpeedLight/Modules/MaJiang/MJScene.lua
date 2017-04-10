@@ -67,11 +67,11 @@ function MJScene.Initialize()
 end
 function MJScene.Begin()
 	Log.Info("MJScene.Begin");
+	MJScene.CurrentRound = 0;
 	MJScene.IsSendReconnectEvent = false;
 	MJScene.FBInfo = SharedVariable.FBInfo;
 	MJScene.TotalRound = MJScene.FBInfo.m_gameCount;
-	MJScene.CurrentRound = 1;
-	UIManager.OpenWindow(UIType.UI_Load);
+	UIManager.OpenWindow(UIType.UI_SceneLoad);
 	AssetManager.LoadScene(SceneType.MJScene);
 	MJScene.Players = {};
 end
@@ -90,30 +90,43 @@ function MJScene.OnSceneWasLoaded()
 	MJScene.RegisterNetEvent();
 	MJScene.RequestAllPlayerInfo();
 end
+
 function MJScene.OnApplicationPause(status)
 	if status then
 		Log.Info("MJScene.OnApplicationPause: 游戏进程暂停");
 	else
 		Log.Info("MJScene.OnApplicationPause: 游戏进程恢复，开始请求重连数据");
+		UIManager.OpenWindow(UIType.UI_Progress);
 		MJScene.RequestReconnectInfo();
 	end
 end
+
+function MJScene.OnApplicationFocus(status)
+end
+
 -- 继续游戏
 function MJScene.OnceAgain()
 	Log.Info("MJScene.OnceAgain: 继续游戏");
-	MJScene.CurrentRound = MJScene.CurrentRound + 1;
+	MJScene.Reset();
+	MJScene.RequestReady(1);
+end
+
+-- 重置场景
+function MJScene.Reset()
+	Log.Info("MJScene.Reset()");
 	MJSceneController.Reset();
 	UI_MaJiang.Reset();
 	for key, value in pairs(MJScene.Players) do
 		value:Reset();
 	end
-	MJScene.RequestReady(1);
 end
+
 -- 设置是否需要断线重连
 function MJScene.SetNeedReconnect(var)
 	Log.Info("MJScene.SetNeedReconnect: " .. tostring(var));
 	MJScene.NeedReconnect = var;
 end
+
 function MJScene.RegisterNetEvent()
 	Log.Info("MJScene.RegisterNetEvent");
 	-- 新玩家进入;
@@ -140,6 +153,7 @@ function MJScene.RegisterNetEvent()
 	NetManager.RegisterEvent(GameMessage.GM_PlayerRollTouZi_Request, MJScene.ReturnCastDice);
 	NetManager.RegisterEvent(GameMessage.GM_MJOperator_Error, MJScene.ReturnOperateError);
 end
+
 function MJScene.UnRegisterNetEvent()
 	Log.Info("MJScene.UnRegisterNetEvent");
 	NetManager.UnregisterEvent(GameMessage.GM_BATTLE_NEW_CHARACTER, MJScene.ReturnGamePlayerInfo);
@@ -160,6 +174,7 @@ function MJScene.UnRegisterNetEvent()
 	NetManager.UnregisterEvent(GameMessage.GM_PlayerRollTouZi_Request, MJScene.ReturnCastDice);
 	NetManager.UnregisterEvent(GameMessage.GM_MJOperator_Error, MJScene.ReturnOperateError);
 end
+
 function MJScene.HasPlayer(id)
 	return MJScene.Players[id] == nil;
 end
@@ -299,7 +314,7 @@ function MJScene.RequestMJOperate_Hu()
 	Log.Info("MJScene.RequestMJOperate_Hu: current cards count is " .. MJPlayer.Hero:GetHandCardCount());
 	local msg = {};
 	msg.m_OperatorType = MaJiangOperatorType.MJOT_HU;
-	msg.m_CardNum = cardNum;
+	msg.m_CardNum = MJPlayer.Hero:GetHandCardCount();
 	NetManager.SendEventToLogicServer(GameMessage.GM_CLIENT_REQUEST_OPERATOR, PBMessage.GM_OperatorData, msg);
 end
 -- 请求麻将定胡
@@ -383,14 +398,11 @@ end
 -- 收到断线重连信息
 function MJScene.ReturnReconnectInfo(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GM_ReconnectMJData, evt);
-	for i = 1, # msg.m_HandCard do
-		local cardInfo = msg.m_HandCard[i];
-		Log.Info("cardInfo" .. tostring(i) .. ": " .. cardInfo.m_Index);
-	end
 	if msg == false then
 		Log.Error("MJScene.ReturnReconnectInfo: parse msg error," .. PBMessage.GM_ReconnectMJData);
 		return;
 	end
+	MJScene.Reset();
 	Log.Info("MJScene.ReturnReconnectInfo: 收到重连信息");
 	local msg = NetManager.DecodeMsg(PBMessage.GM_ReconnectMJData, evt);
 	if msg == false then
@@ -433,6 +445,8 @@ function MJScene.ReturnReconnectInfo(evt)
 	MJScene.DiceNumbers = msg.m_saizi;
 	MJScene.GetCardRoleID = msg.m_getCardId;
 	MJScene.GetCardNumber = msg.m_getCardNum;
+	MJScene.CurrentRound = msg.m_leftCount;
+	MJScene.TotalRound = msg.m_totalCount;
 	MJScene.SetupBanker();
 	MJScene.SetupMaster();
 	if msg.m_FreeCard == MJDefine.TOTAL_CARD_COUNT then
@@ -445,9 +459,9 @@ function MJScene.ReturnReconnectInfo(evt)
 		MJScene.SetupBanker();
 		UI_MaJiang.SetupReadyAndInvite(false, false, false);
 		MJSceneController.SetupDicePanelDirection();
-		if msg.m_sendCardID == 0 then
+		if msg.m_rollCount < MJDefine.MAX_CAST_DICE_NUMBER then
 			-- 已经收到手牌信息了,但还没骰子骰子
-			Log.Info("MJScene.ReturnReconnectInfo: 已经收到手牌信息了,但还没骰子骰子");
+			Log.Info("MJScene.ReturnReconnectInfo: 已经收到手牌信息了,掷骰子的次数还没达到最大值，当前次数：" .. tostring(msg.m_rollCount) .. ",最大值：" .. tostring(MJDefine.MAX_CAST_DICE_NUMBER));
 			for key, value in pairs(MJScene.Players) do
 				value:SetupReady(false);
 			end
@@ -459,8 +473,14 @@ function MJScene.ReturnReconnectInfo(evt)
 			Log.Info("MJScene.ReturnReconnectInfo: 已经收到手牌信息了,正在对局中");
 			-- 设置当前玩家以及上一个玩家
 			MJScene.LastOperator = MJScene.GetPlayerByID(msg.m_lastOutCardRoleId);
-			MJScene.CurrentOperator = MJScene.GetPlayerByID(msg.m_sendCardID);
-			MJScene.CurrentOperator:PlayUIScaleAndDicePanelGrow(true);
+			if msg.m_sendCardID ~= 0 then
+				-- 有可能是等待玩家吃碰杠操作
+				MJScene.CurrentOperator = MJScene.GetPlayerByID(msg.m_sendCardID);
+				MJScene.CurrentOperator:PlayUIScaleAndDicePanelGrow(true);
+			end
+			-- 设置当前回合的显示
+			MJScene.CurrentRound = MJScene.CurrentRound + 1;
+			UI_MaJiang.SetupCurrentRound();
 			-- 直接显示牌墩，不播放动画
 			MJSceneController.SetGroupCardActive(true);
 			-- 设置牌墩
@@ -618,7 +638,9 @@ function MJScene.NotifyOneReady(evt)
 	end
 end
 function MJScene.ReturnAllReady(evt)
-	Log.Info("MJScene.ReturnAllReady: 所有玩家就绪，对局开始");
+	MJScene.CurrentRound = MJScene.CurrentRound + 1;
+	UI_MaJiang.SetupCurrentRound();
+	Log.Info("MJScene.ReturnAllReady: 所有玩家就绪,第【" .. tostring(MJScene.CurrentRound) .. "】回合开始");
 	local msg = NetManager.DecodeMsg(PBMessage.GM_NotifyBattleEndTime, evt);
 	for key, value in pairs(MJScene.Players) do
 		value:SetupReady(false);
@@ -724,8 +746,9 @@ function MJScene.ReturnCastDice(evt)
 	end
 end
 function MJScene.ReturnOperateError(evt)
-	Log.Info("MJScene.ReturnOperateError");
 	UIManager.OpenTipsDialog("操作失败");
+	local msg = NetManager.DecodeMsg(PBMessage.GM_MJOperatorError, evt);
+	Log.Info("MJScene.ReturnOperateError: result is " .. tostring(msg.m_Result));
 end
 function MJScene.PlayStartGameEffect()
 	for key, value in pairs(MJScene.Players) do

@@ -38,6 +38,12 @@ function DownloadScene.End()
 	Log.Info("DownloadScene.Begin");
 end
 
+function DownloadScene.OnApplicationPause(status)
+end
+
+function DownloadScene.OnApplicationFocus(status)
+end
+
 function DownloadScene.CheckVersion()
 	if SharedVariable.UseLocalhost == false then
 		local url = SharedVariable.JsonUrl;

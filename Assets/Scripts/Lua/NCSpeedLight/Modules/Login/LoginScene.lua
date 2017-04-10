@@ -20,12 +20,14 @@ LoginScene =
 	LoginRecord = nil,
 	IsInitialized = false,
 };
+
 function LoginScene.Initialize()
 	if LoginScene.IsInitialized == false then
 		LoginScene.IsInitialized = true;
 		LoginScene.OpenLoginRecord();
 	end
 end
+
 function LoginScene.Begin()
 	AssetManager.LoadScene(SceneType.LoginScene);
 	NetManager.RegisterEvent(GameMessage.GM_VERSION_RETURN, LoginScene.OnVerifyVersionReturn);
@@ -37,8 +39,10 @@ function LoginScene.Begin()
 	NetManager.RegisterEvent(GameMessage.GM_ROLE_CREATE_RETURN, LoginScene.OnCreateRoleReturn);
 	LoginScene.RequestVerifyVersion()
 end
+
 function LoginScene.Update()
 end
+
 function LoginScene.End()
 	NetManager.UnregisterEvent(GameMessage.GM_VERSION_RETURN, LoginScene.OnVerifyVersionReturn);
 	NetManager.UnregisterEvent(GameMessage.GM_ACCOUNT_VERIFY_RETURN, LoginScene.OnLoginReturn);
@@ -48,6 +52,13 @@ function LoginScene.End()
 	NetManager.UnregisterEvent(GameMessage.GM_ROLE_LOGIN_RETURN, LoginScene.OnRoleLoginReturn);
 	NetManager.UnregisterEvent(GameMessage.GM_ROLE_CREATE_RETURN, LoginScene.OnCreateRoleReturn);
 end
+
+function LoginScene.OnApplicationPause(status)
+end
+
+function LoginScene.OnApplicationFocus(status)
+end
+
 function LoginScene.OpenLoginRecord()
 	local path = Constants.DATA_PATH .. "Config/LoginRecord.bytes";
 	local buffer = Utility.OpenFile(path);
@@ -65,9 +76,11 @@ function LoginScene.OpenLoginRecord()
 		end
 	end
 end
+
 function LoginScene.GetLoginRecord()
 	return LoginScene.LoginRecord;
 end
+
 function LoginScene.AddLoginRecord(accountStr, passwordStr, latestAreaStr, latestRoleIDStr)
 	if LoginScene.ExistRecord(accountStr) then
 		return
@@ -93,6 +106,7 @@ function LoginScene.AddLoginRecord(accountStr, passwordStr, latestAreaStr, lates
 	LoginScene.LoginRecord = info;
 	LoginScene.SaveLoginRecordFile();
 end
+
 function LoginScene.ExistRecord(accountStr)
 	if LoginScene.LoginRecord ~= nil then
 		for i = 1, # LoginScene.LoginRecord.loginInfo do
@@ -105,6 +119,7 @@ function LoginScene.ExistRecord(accountStr)
 		return false;
 	end
 end
+
 function LoginScene.RemoveLoginRecord(accountStr, passwordStr)
 	if LoginScene.LoginRecord ~= nil then
 		for i = # LoginScene.LoginRecord.loginInfo, 1, - 1 do
@@ -117,11 +132,13 @@ function LoginScene.RemoveLoginRecord(accountStr, passwordStr)
 	end
 	LoginScene.SaveLoginRecordFile();
 end
+
 function LoginScene.SaveLoginRecordFile()
 	local path = Constants.DATA_PATH .. "Config/LoginRecord.bytes";
 	local buffer = NetManager.EncodePB(PBMessage.CFG_LoginRecord, LoginScene.LoginRecord);
 	Utility.SaveFile(path, buffer);
 end
+
 function LoginScene.RequestVerifyVersion()
 	Log.Info("LoginScene.RequestVerifyVersion: Send verify version msg,current version is " .. SharedVariable.Version);
 	local msg = {
@@ -129,6 +146,7 @@ function LoginScene.RequestVerifyVersion()
 	}
 	NetManager.SendEventToLoginServer(GameMessage.GM_VERIFY_VERSION, PBMessage.GM_VerifyVersion, msg)
 end
+
 function LoginScene.OnVerifyVersionReturn(evt)
 	local obj = NetManager.DecodeMsg(PBMessage.GM_VerifyVersionReturn, evt)
 	if obj.result == 0 then
@@ -139,6 +157,7 @@ function LoginScene.OnVerifyVersionReturn(evt)
 		UIManager.OpenTipsDialog("版本不匹配，无法进入游戏");
 	end
 end
+
 function LoginScene.RequestLogin(account, password)
 	local msg =
 	{
@@ -156,8 +175,9 @@ function LoginScene.RequestLogin(account, password)
 		}
 	};
 	NetManager.SendEventToLoginServer(GameMessage.GM_ACCOUNT_VERIFY, PBMessage.GM_AccountRequest, msg);
-	UIManager.OpenWindow(UIType.UI_Load);
+	UIManager.OpenWindow(UIType.UI_SceneLoad);
 end
+
 function LoginScene.OnLoginReturn(evt)
 	UIManager.CloseProgressDialog();
 	local obj = NetManager.DecodeMsg(PBMessage.GM_AccountReturn, evt)
@@ -173,27 +193,28 @@ function LoginScene.OnLoginReturn(evt)
 		-- 请求选区
 		LoginScene.RequestChooseArea();
 	elseif obj.m_Result == 1 then
-		UIManager.CloseWindow(UIType.UI_Load);
+		UIManager.CloseWindow(UIType.UI_SceneLoad);
 		UIManager.OpenTipsDialog("账号密码错误");
 	elseif obj.m_Result == 2 then
-		UIManager.CloseWindow(UIType.UI_Load);
+		UIManager.CloseWindow(UIType.UI_SceneLoad);
 		UIManager.OpenTipsDialog("验证错误");
 	elseif obj.m_Result == 3 then
-		UIManager.CloseWindow(UIType.UI_Load);
+		UIManager.CloseWindow(UIType.UI_SceneLoad);
 		UIManager.OpenTipsDialog("此账号已暂时冻结");
 	elseif obj.m_Result == 4 then
-		UIManager.CloseWindow(UIType.UI_Load);
+		UIManager.CloseWindow(UIType.UI_SceneLoad);
 		UIManager.OpenTipsDialog("账号长度不符合");
 	elseif obj.m_Result == 5 then
-		UIManager.CloseWindow(UIType.UI_Load);
+		UIManager.CloseWindow(UIType.UI_SceneLoad);
 		UIManager.OpenTipsDialog("密码长度不符合");
 	elseif obj.m_Result == 6 then
-		UIManager.CloseWindow(UIType.UI_Load);
+		UIManager.CloseWindow(UIType.UI_SceneLoad);
 		UIManager.OpenTipsDialog("此账号已永久冻结");
 	else
-		UIManager.CloseWindow(UIType.UI_Load);
+		UIManager.CloseWindow(UIType.UI_SceneLoad);
 	end
 end
+
 function LoginScene.RequestRegister(account, password)
 	local msg =
 	{
@@ -211,6 +232,7 @@ function LoginScene.RequestRegister(account, password)
 	}
 	NetManager.SendEventToLoginServer(GameMessage.GM_ACCOUNT_CREATE, PBMessage.GM_AccountCreate, msg)
 end
+
 function LoginScene.OnRegisterReturn(evt)
 	local obj = NetManager.DecodeMsg(PBMessage.GM_AccountCreateReturn, evt)
 	if obj.m_Result == 0 then
@@ -234,6 +256,7 @@ function LoginScene.OnRegisterReturn(evt)
 	else
 	end
 end
+
 function LoginScene.RequestChooseArea()
 	local msg = {
 		m_Account = LoginScene.Token.AccountID,
@@ -242,6 +265,7 @@ function LoginScene.RequestChooseArea()
 	};
 	NetManager.SendEventToLoginServer(GameMessage.GM_CHOOSE_AREA, PBMessage.GM_ChooseArea, msg);
 end
+
 function LoginScene.OnChoseAreaReturn(evt)
 	local obj = NetManager.DecodeMsg(PBMessage.GM_ChooseAreaReturn, evt);
 	if obj.m_Result == 0 then
@@ -251,19 +275,22 @@ function LoginScene.OnChoseAreaReturn(evt)
 		NetManager.CreateConnection(ServerType.Logic, obj.m_ServerIP, obj.m_PortNumber, LoginScene.OnConnectLogicServer, LoginScene.OnDisconnectLogicServer);
 	else
 		Log.Info("LoginScene.OnChoseAreaReturn：选区失败");
-		UIManager.CloseWindow(UIType.UI_Load);
+		UIManager.CloseWindow(UIType.UI_SceneLoad);
 		UIManager.OpenTipsDialog("选区失败");
 	end
 end
+
 function LoginScene.OnConnectLogicServer(connection)
 	Log.Info("LoginScene.OnConnectLogicServer: 成功连接至逻辑服务器");
 	LoginScene.RequestAccountRoles();
 end
+
 function LoginScene.OnDisconnectLogicServer(connection)
 	UIManager.OpenTipsDialog("逻辑服务器异常");
-	UIManager.CloseWindow(UIType.UI_Load);
+	UIManager.CloseWindow(UIType.UI_SceneLoad);
 	Log.Info("LoginScene.OnDisconnectLogicServer: 逻辑服务器异常");
 end
+
 function LoginScene.RequestAccountRoles()
 	local msg = {
 		m_accountID = LoginScene.Token.AccountID,
@@ -271,6 +298,7 @@ function LoginScene.RequestAccountRoles()
 	};
 	NetManager.SendEventToLogicServer(GameMessage.GM_ROLELIST_REQUEST, PBMessage.GMRoleListRequest, msg)
 end
+
 function LoginScene.OnAccountRolesReturn(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GMRoleListEx, evt);
 	if msg.m_roleid ~= 0 then
@@ -280,6 +308,7 @@ function LoginScene.OnAccountRolesReturn(evt)
 		LoginScene.RequestCreateRole();
 	end
 end
+
 function LoginScene.RequestRoleLogin()
 	local msg = {
 		m_AccountID = LoginScene.Token.AccountID,
@@ -289,6 +318,7 @@ function LoginScene.RequestRoleLogin()
 	};
 	NetManager.SendEventToLogicServer(GameMessage.GM_ROLE_LOGIN, PBMessage.GMRoleLogin, msg);
 end
+
 function LoginScene.OnRoleLoginReturn(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GM_FullRoleInfo, evt);
 	if msg ~= nil then
@@ -302,13 +332,14 @@ function LoginScene.OnRoleLoginReturn(evt)
 			-- HallScene.RequestPlayerInFb();
 		else
 			Log.Info("LoginScene.OnRoleLoginReturn: role login error caused by \' msg.id<=0\' ");
-			UIManager.CloseWindow(UIType.UI_Load);
+			UIManager.CloseWindow(UIType.UI_SceneLoad);
 		end
 	else
 		Log.Info("LoginScene.OnRoleLoginReturn: role login error caused by nil msg.");
-		UIManager.CloseWindow(UIType.UI_Load);
+		UIManager.CloseWindow(UIType.UI_SceneLoad);
 	end
 end
+
 function LoginScene.RequestCreateRole()
 	local msg = {};
 	msg.m_AccountID = LoginScene.Token.AccountID;
@@ -319,17 +350,18 @@ function LoginScene.RequestCreateRole()
 	msg.m_UnionID = "10086";
 	NetManager.SendEventToLogicServer(GameMessage.GM_ROLE_CREATE, PBMessage.GMRoleCreate, msg);
 end
+
 function LoginScene.OnCreateRoleReturn(evt)
 	local obj = NetManager.DecodeMsg(PBMessage.GMRoleCreateReturn, evt);
 	if obj ~= nil then
 		if obj.m_Result == 0 then
 			LoginScene.RequestRoleLogin();
 		else
-			UIManager.CloseWindow(UIType.UI_Load);
+			UIManager.CloseWindow(UIType.UI_SceneLoad);
 			Log.Info("LoginScene.OnCreateRoleReturn: role create error , m_Result = " .. obj.m_Result);
 		end
 	else
-		UIManager.CloseWindow(UIType.UI_Load);
+		UIManager.CloseWindow(UIType.UI_SceneLoad);
 		Log.Info("LoginScene.OnCreateRoleReturn: role create error caused by nil msg.");
 	end
 end 
