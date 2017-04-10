@@ -12,20 +12,25 @@ UI_MJDraw = {
 	transform = nil,
 	gameObject = nil,
 }
+
 local this = UI_MJDraw;
+
 function UI_MJDraw.Awake(go)
 	this.gameObject = go;
 	this.transform = go.transform;
 end
+
 function UI_MJDraw.Start()
 	UI_MJDraw.InitBtnEvent();
 	UI_MJDraw.InitView();
 	UI_MJDraw.SetupPlaywayAndRound();
 end
+
 function UI_MJDraw.OnDestroy()
 	this.transform = nil;
 	this.gameObject = nil;
 end
+
 function UI_MJDraw.InitBtnEvent()
 	UIHelper.SetButtonEvent(this.transform, "Buttom/OnceAgain", function(obj)
 		MJScene.OnceAgain();
@@ -38,6 +43,7 @@ function UI_MJDraw.InitBtnEvent()
 	UIHelper.SetButtonEvent(this.transform, "Buttom/ReturnDeskBtn", function(obj)
 	end);
 end
+
 function UI_MJDraw.InitView()
 	if MJScene.CurrentRound >= MJScene.TotalRound then
 		UIHelper.SetActiveState(this.transform, "Buttom/LookTotalResult", true);
@@ -86,6 +92,7 @@ function UI_MJDraw.InitView()
 	tempParentGrid.enabled = true;
 	tempParentGrid:Reposition();
 end
+
 -- 设置玩法和局数
 function UI_MJDraw.SetupPlaywayAndRound()
 	local tempRounds = "当前局数: " .. MJScene.CurrentRound .. "/" .. MJScene.TotalRound;

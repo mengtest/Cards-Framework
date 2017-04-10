@@ -19,10 +19,12 @@ MJGroupCardEnum =
 		end
 	end
 }
+
 MJGroupCardQueue = {
 	Cards = {},
 	PopedRearCount,
 };
+
 -- 将牌放进队列中
 function MJGroupCardQueue.PushAll(groupNum, index)
 	MJGroupCardQueue.Cards = {};
@@ -47,6 +49,7 @@ function MJGroupCardQueue.PushAll(groupNum, index)
 	end
 	UI_MaJiang.SetupRemainCardCount(MJGroupCardQueue.Count());
 end
+
 -- 弹出指定位置的牌
 function MJGroupCardQueue.Pop(index)
 	local card = MJGroupCardQueue.Cards[index];
@@ -54,6 +57,7 @@ function MJGroupCardQueue.Pop(index)
 	table.remove(MJGroupCardQueue.Cards, index);
 	UI_MaJiang.SetupRemainCardCount(MJGroupCardQueue.Count());
 end
+
 -- 弹出对列前部的牌
 function MJGroupCardQueue.PopFront(count)
 	if # MJGroupCardQueue.Cards == 0 then
@@ -68,6 +72,7 @@ function MJGroupCardQueue.PopFront(count)
 		end
 	end
 end
+
 -- 弹出队列后部的牌
 function MJGroupCardQueue.PopRear(count)
 	if # MJGroupCardQueue.Cards == 0 then
@@ -92,6 +97,7 @@ function MJGroupCardQueue.PopRear(count)
 		end
 	end
 end
+
 -- 队列的个数
 function MJGroupCardQueue.Count()
 	return # MJGroupCardQueue.Cards;

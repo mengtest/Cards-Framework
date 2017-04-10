@@ -13,12 +13,15 @@ UI_MJTest = {
 	gameObject = nil,
 	CloneObj = nil,
 }
+
 local this = UI_MJTest;
+
 function UI_MJTest.Awake(go)
 	this.gameObject = go;
 	this.transform = go.transform;
 	this.CloneObj = this.transform:Find("Btn/Table/Label").gameObject;
 end
+
 function UI_MJTest.Start()
 	UIHelper.SetButtonEvent(this.transform, "Button", function(obj)
 		UIManager.CloseWindow(UIType.UI_MJTest);
@@ -65,10 +68,12 @@ function UI_MJTest.Start()
 		tempTable:Reposition();
 	end
 end
+
 function UI_MJTest.OnDestroy()
 	this.transform = nil;
 	this.gameObject = nil;
 end
+
 function UI_MJTest.CloneCard(type, text)
 	local tempNewObj = NGUITools.AddChild(this.CloneObj.transform.parent.gameObject, this.CloneObj);
 	tempNewObj.name = MaJiangType.ToString(type);
@@ -79,6 +84,7 @@ function UI_MJTest.CloneCard(type, text)
 	UIHelper.SetButtonEvent(tempNewObj.transform, UI_MJTest.ClickCard);
 	tempNewObj:SetActive(true);
 end
+
 function UI_MJTest.ClickCard(varObj)
 	if varObj == nil then return end;
 	local tempType = MaJiangType.ToInt(varObj.name);

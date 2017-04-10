@@ -68,13 +68,9 @@ function Game.Update()
 	SceneManager.Update();
 	if Game.Platform == UnityEngine.RuntimePlatform.Android then
 		if UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Escape) == true then
-			local option = StandardDialogOption:New();
-			option.Title = '提示';
-			option.Content = '你确定退出游戏吗？';
-			option.DoubleButton = true;
-			option.OnClickOK = function(go)
+			local option = StandardDialogOption.New("提示", "你确定退出游戏吗", true, function()
 				UnityEngine.Application.Quit();
-			end;
+			end, nil)
 			UIManager.OpenStandardDialog(option);
 		end
 	end

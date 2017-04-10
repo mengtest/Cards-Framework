@@ -10,17 +10,21 @@ UI_HeroPlayer = {
 	OutCardAnimation = nil,
 	AnimationQueue = nil,
 }
+
 UI_HeroPlayer.__index = UI_HeroPlayer;
+
 function UI_HeroPlayer.New()
 	local obj = {};
 	setmetatable(obj, UI_HeroPlayer);
 	return obj;
 end
+
 function UI_HeroPlayer:Awake(go)
 	self.gameObject = go;
 	self.transform = go.transform;
 	self.AnimationQueue = AnimationQueue.New();
 end
+
 function UI_HeroPlayer:Start()
 	local cardGridPanel = self.transform:Find("Cards/CardGrid");
 	local childCount = cardGridPanel.childCount;
@@ -32,6 +36,7 @@ function UI_HeroPlayer:Start()
 		listener.onDragEnd = UI_HeroPlayer.OnStopDragCard;
 	end
 end
+
 function UI_HeroPlayer:OnDestroy()
 	self.gameObject = nil;
 	self.transform = nil;
@@ -41,9 +46,11 @@ function UI_HeroPlayer:OnDestroy()
 	self.Player = nil;
 	UI_HeroPlayer.DragingCardObj = nil;
 end
+
 function UI_HeroPlayer:Initialize(player)
 	self.Player = player;
 end
+
 function UI_HeroPlayer:Reset()
 	local cardGridTrans = self.transform:Find("Cards/CardGrid");
 	for i = 0, cardGridTrans.childCount - 1 do
@@ -53,6 +60,7 @@ function UI_HeroPlayer:Reset()
 		UnityEngine.GameObject.Destroy(UI_HeroPlayer.DragingCardObj);
 	end
 end
+
 function UI_HeroPlayer.OnStartDragCard(go)
 	-- Log.Info("UI_HeroPlayer.OnStartDragCard: " .. go.name);
 	if UI_HeroPlayer.DragingCardObj ~= nil then
@@ -66,6 +74,7 @@ function UI_HeroPlayer.OnStartDragCard(go)
 	UI_HeroPlayer.DragingCardObj.transform.localRotation = UnityEngine.Quaternion.identity;
 	UI_HeroPlayer.DragingCardObj.transform.position = go.transform.position;
 end
+
 function UI_HeroPlayer.OnDragCard(go, delta)
 	if UI_HeroPlayer.DragingCardObj ~= nil then
 		delta = delta * UIManager.UIRoot.pixelSizeAdjustment;
@@ -74,6 +83,7 @@ function UI_HeroPlayer.OnDragCard(go, delta)
 		UI_HeroPlayer.DragingCardObj.transform.position = newPos;
 	end
 end
+
 function UI_HeroPlayer.OnStopDragCard(go)
 	-- Log.Info("UI_HeroPlayer.OnStopDragCard: " .. go.name);
 	if UI_HeroPlayer.DragingCardObj ~= nil then
@@ -94,6 +104,7 @@ function UI_HeroPlayer.OnStopDragCard(go)
 		UIManager.OpenTipsDialog("不是你的回合，无法出牌");
 	end
 end
+
 -- 播放出牌效果
 function UI_HeroPlayer:PlayOutCardAnimation(card)
 	local outCardTran = self.transform:Find("OutCard/Card");
@@ -114,6 +125,7 @@ function UI_HeroPlayer:PlayOutCardAnimation(card)
 	local cardPos = self.Player:GetTableCardPos(self.Player.TableCardCount);
 	tableCard:Show(cardPos, self.Player.TableCardRotation);
 end
+
 -- 播放插牌动画
 function UI_HeroPlayer:PlayInsertCardAnimation(outCardPosition, newCardPosition, newCardTargetPosition)
 	local actionLine = ActionLine.New(ActionLinePlayMode.Queue, true);
@@ -231,6 +243,7 @@ function UI_HeroPlayer:PlayInsertCardAnimation(outCardPosition, newCardPosition,
 	self.AnimationQueue:Push(actionLine);
 	self.AnimationQueue:Resume();
 end
+
 -- 播放抓牌效果
 function UI_HeroPlayer:PlayGetCardAnimation()
 	local actionLine = ActionLine.New(ActionLinePlayMode.Parallel, true);
@@ -269,6 +282,7 @@ function UI_HeroPlayer:PlayGetCardAnimation()
 	self.AnimationQueue:Push(actionLine);
 	self.AnimationQueue:Resume();
 end
+
 -- 根据索引获取牌的对象
 function UI_HeroPlayer:GetCardObjByPosition(pos)
 	local tran = self.transform:Find("Cards/CardGrid/" .. tostring(pos));

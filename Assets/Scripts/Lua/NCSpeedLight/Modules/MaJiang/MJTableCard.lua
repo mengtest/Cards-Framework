@@ -8,6 +8,7 @@ MJTableCardStatus = {
 	MJCS_AnGang = 6,  -- 被玩家暗杠过的牌;
 	MJCS_Hu = 7,  -- 被玩家胡过的牌;
 }
+
 MJTableCard =
 {
 	GO = nil, -- 牌的正面
@@ -18,7 +19,9 @@ MJTableCard =
 	Type = MaJiangType.MJ_1_TIAO, -- 牌的类型
 	ID = - 1, -- 牌的ID
 };
+
 MJTableCard.__index = MJTableCard;
+
 function MJTableCard.New()
 	local obj = {};
 	setmetatable(obj, MJTableCard);
@@ -26,12 +29,14 @@ function MJTableCard.New()
 	obj.RoleID = 0;
 	return obj;
 end
+
 function MJTableCard:Reset()
 	self.ID = - 1;
 	self.RoleID = 0;
 	self.Status = MJTableCardStatus.MJCS_Begin;
 	self:Hide();
 end
+
 function MJTableCard:Show(position, eulerAngles)
 	if position ~= nil then
 		self.GO.transform.position = position;
@@ -41,15 +46,19 @@ function MJTableCard:Show(position, eulerAngles)
 	end
 	self.GO:SetActive(true);
 end
+
 function MJTableCard:Hide()
 	self.GO:SetActive(false);
 end
+
 function MJTableCard:SetStatus(status)
 	self.Status = status;
 end
+
 function MJTableCard:SetID(id)
 	self.ID = id;
 end
+
 function MJTableCard:SetRoleID(roleID)
 	self.LastRoleID = self.RoleID;
 	self.RoleID = roleID;

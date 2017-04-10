@@ -12,11 +12,14 @@ UI_MJResult = {
 	transform = nil,
 	gameObject = nil,
 }
+
 local this = UI_MJResult;
+
 function UI_MJResult.Awake(go)
 	this.gameObject = go;
 	this.transform = go.transform;
 end
+
 function UI_MJResult.Start()
 	UI_MJResult.InitBtnEvent();
 	UI_MJResult.DisplayWinOrLose();
@@ -26,10 +29,12 @@ function UI_MJResult.Start()
 	UI_MJResult.DisplayPlayerInfo();
 	UI_MJResult.DisplayPlaywayAndRound();
 end
+
 function UI_MJResult.OnDestroy()
 	this.transform = nil;
 	this.gameObject = nil;
 end
+
 -- 设置按钮事件
 function UI_MJResult.InitBtnEvent()
 	-- 继续游戏
@@ -53,6 +58,7 @@ function UI_MJResult.InitBtnEvent()
 		UIHelper.SetActiveState(this.transform, "Button/Button2", false);
 	end
 end
+
 -- 设置赢或输或平局
 function UI_MJResult.DisplayWinOrLose()
 	local myscore;
@@ -96,6 +102,7 @@ function UI_MJResult.DisplayWinOrLose()
 		UIHelper.ChangeSpriteColor(this.transform, "bk/star2/Sprite5", false);
 	end
 end
+
 -- 设置奖码
 function UI_MJResult.DisplayJiangMa()
 	local tempCloneTrans = this.transform:Find("Reward/Clone");
@@ -115,6 +122,7 @@ function UI_MJResult.DisplayJiangMa()
 	tempGrid:Reposition();
 	tempGrid.enabled = true;
 end
+
 -- 展示胡的类型
 function UI_MJResult.DisplayHuType()
 	--  只有自摸和抢杠 1.自摸
@@ -125,6 +133,7 @@ function UI_MJResult.DisplayHuType()
 	end
 	UIHelper.SetActiveState(this.transform, "Card/Type", true);
 end
+
 -- 展示胡了的牌
 function UI_MJResult.DisplayHuCards()
 	local tempHuId = MJScene.CurrentResultInfo.m_huRoleid;
@@ -154,6 +163,7 @@ function UI_MJResult.DisplayHuCards()
 		end
 	end
 end
+
 -- 展示玩家信息
 function UI_MJResult.DisplayPlayerInfo()
 	local allRoleHandCards = MJScene.CurrentResultInfo.m_Data;
@@ -199,6 +209,7 @@ function UI_MJResult.DisplayPlayerInfo()
 	tempParentGrid.enabled = true;
 	tempParentGrid:Reposition();
 end
+
 -- 设置当前玩法和当前的回合
 function UI_MJResult.DisplayPlaywayAndRound()
 	local tempRounds = "当前局数: " .. MJScene.CurrentRound .. "/" .. MJScene.TotalRound;

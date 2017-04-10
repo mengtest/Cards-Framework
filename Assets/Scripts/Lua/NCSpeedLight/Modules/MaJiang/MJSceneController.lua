@@ -23,7 +23,9 @@ MJSceneController = {
 	-- 场景中所有的牌的物体对象
 	AllCardsObj = nil,
 }
+
 local this = MJSceneController;
+
 function MJSceneController.Awake(go)
 	if go ~= nil then
 		MJSceneController.gameObject = go;
@@ -35,9 +37,11 @@ function MJSceneController.Awake(go)
 	MJSceneController.IsSetupDicePanelRotation = false;
 	MJScene.OnSceneWasLoaded();
 end
+
 function MJSceneController.Start()
 	MJSceneController.SetupRoomNumber();
 end
+
 function MJSceneController.OnDestroy()
 	MJSceneController.transform = nil;
 	MJSceneController.gameObject = nil;
@@ -46,6 +50,7 @@ function MJSceneController.OnDestroy()
 	MJSceneController.DeskAnimationTimer = nil;
 	MJSceneController.DiceAnimationTimer = nil;
 end
+
 -- 重置场景，再来一次时触发
 function MJSceneController.Reset()
 	-- 重置所有的桌面牌对象
@@ -59,6 +64,7 @@ function MJSceneController.Reset()
 	MJSceneController.DeskAnimationTimer = nil;
 	MJSceneController.DiceAnimationTimer = nil;
 end
+
 -- 设置牌墩的显示/隐藏
 function MJSceneController.SetGroupCardActive(status)
 	if status == true then
@@ -67,6 +73,7 @@ function MJSceneController.SetGroupCardActive(status)
 		MJSceneController.MJDeskAnimation:Play("Inactive");
 	end
 end
+
 function MJSceneController.PlayGroupCardAnimation(onFinishCallback)
 	Log.Info("MJSceneController.PlayGroupCardAnimation");
 	if MJSceneController.MJDeskAnimation ~= nil then
@@ -86,6 +93,7 @@ function MJSceneController.PlayGroupCardAnimation(onFinishCallback)
 		MJSceneController.DeskAnimationTimer:Start();
 	end
 end
+
 function MJSceneController.PlayDiceAnimation(number1, number2, onFinishCallback)
 	local number = number1;
 	if number1 > number2 then
@@ -111,6 +119,7 @@ function MJSceneController.PlayDiceAnimation(number1, number2, onFinishCallback)
 	end
 	MJSceneController.DiceAnimationTimer:Start();
 end
+
 -- 设置房间号
 function MJSceneController.SetupRoomNumber()
 	if SharedVariable.FBInfo ~= nil then
@@ -131,9 +140,11 @@ function MJSceneController.SetupRoomNumber()
 		end
 	end
 end
+
 -- 设置玩法
 function MJSceneController.SetupPlayWay()
 end
+
 -- 设置骰子面板的朝向
 function MJSceneController.SetupDicePanelDirection()
 	if MJSceneController.IsSetupDicePanelRotation == false then
@@ -145,14 +156,18 @@ function MJSceneController.SetupDicePanelDirection()
 		panel.rotation = rotation;
 	end
 end
+
 -- 播放骰子面板的东南西北闪光效果
 function MJSceneController.PlayDicePanelGrowEffect(name, status)
 	UIHelper.SetActiveState(this.transform, "majiangzhuo/direction/Flicker/" .. name, status);
 end
+
 function MJSceneController.ShowArrow()
 end
+
 function MJSceneController.HideArrow()
 end
+
 -- 初始化桌子上的牌
 function MJSceneController.CloneTableCards()
 	if MJSceneController.AllCardsObj == nil then
@@ -166,6 +181,7 @@ function MJSceneController.CloneTableCards()
 	MJSceneController.InitMJCards("majiangzhuo/Card/Tong", MaJiangType.MJ_1_TONG);
 	MJSceneController.InitMJCards("majiangzhuo/Card/Zhi", MaJiangType.MJ_DONG);
 end
+
 function MJSceneController.InitMJCards(path, startCardType)
 	local tempTrans = this.transform:Find(path);
 	if tempTrans == nil then return end;
@@ -197,6 +213,7 @@ function MJSceneController.InitMJCards(path, startCardType)
 		-- table.insert(this.AllCards, {tempCardType, tempList});
 	end
 end
+
 function MJSceneController.CreateMJCard(obj, type)
 	local card = MJTableCard.New();
 	card.GO = obj;
@@ -205,6 +222,7 @@ function MJSceneController.CreateMJCard(obj, type)
 	card.Type = type;
 	return card;
 end
+
 -- 获取一张未使用的牌对象
 function MJSceneController.GetOneUnuseCard(ID, type, roleID)
 	local cards = this.AllCards[type];
@@ -217,6 +235,7 @@ function MJSceneController.GetOneUnuseCard(ID, type, roleID)
 		end
 	end
 end
+
 -- 根据牌的ID获取对象,如果roleID不为空，则更改这张牌的拥有者
 function MJSceneController.GetCardByID(ID, roleID)
 	for key, value in pairs(this.AllCards) do
@@ -231,6 +250,7 @@ function MJSceneController.GetCardByID(ID, roleID)
 		end
 	end
 end
+
 -- 根据牌的类型和角色的ID获取牌，返回数组
 function MJSceneController.GetCardByRoleIDAndType(type, roleID)
 	local cards = this.AllCards[type];
@@ -243,6 +263,7 @@ function MJSceneController.GetCardByRoleIDAndType(type, roleID)
 	end
 	return outCards;
 end
+
 -- 放置一张反面的牌用于显示
 function MJSceneController.PutOneBackCard(position, eulerAngles)
 	local cardParent = this.transform:Find("majiangzhuo/Card/Gang/");
