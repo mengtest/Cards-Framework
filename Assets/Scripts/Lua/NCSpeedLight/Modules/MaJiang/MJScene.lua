@@ -55,6 +55,8 @@ MJScene =
 	TotalRound = 0,
 	-- 当前回合
 	CurrentRound = 0,
+	-- 完成的回合
+	FinishedRound = 0,
 	-- 当前结算信息
 	CurrentResultInfo = nil,
 	-- 总结算信息
@@ -71,6 +73,7 @@ end
 function MJScene.Begin()
 	Log.Info("MJScene.Begin");
 	MJScene.CurrentRound = 0;
+	MJScene.FinishedRound = 0;
 	MJScene.IsSendReconnectEvent = false;
 	MJScene.FBInfo = SharedVariable.FBInfo;
 	MJScene.TotalRound = MJScene.FBInfo.m_gameCount;
@@ -478,6 +481,11 @@ function MJScene.ReturnReconnectInfo(evt)
 	MJScene.GetCardNumber = msg.m_getCardNum;
 	MJScene.CurrentRound = msg.m_leftCount;
 	MJScene.TotalRound = msg.m_totalCount;
+	MJScene.FinishedRound = MJScene.CurrentRound - 1;
+	if MJScene.FinishedRound < 0 then
+		MJScene.FinishedRound = 0;
+	end
+	
 	MJScene.SetupBanker();
 	MJScene.SetupMaster();
 	if msg.m_FreeCard == MJDefine.TOTAL_CARD_COUNT then
@@ -692,6 +700,7 @@ function MJScene.ReturnPlayerHu(evt)
 		return;
 	end
 	Log.Info("MJScene.ReturnPlayerHu: hu role id is " .. msg.m_huRoleid);
+	MJScene.FinishedRound = MJScene.FinishedRound + 1;
 	MJScene.CurrentResultInfo = msg;
 	if msg.m_huRoleid == 0 then
 		UIManager.OpenWindow(UIType.UI_MJDraw);

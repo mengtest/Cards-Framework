@@ -11,21 +11,29 @@
 UI_MJTotalResult = {
 	transform = nil,
 	gameObject = nil,
+	TotalScores = nil;
 }
+
 local this = UI_MJTotalResult;
+
 function UI_MJTotalResult.Awake(go)
 	this.gameObject = go;
 	this.transform = go.transform;
 end
+
 function UI_MJTotalResult.Start()
+	UI_MJTotalResult.TotalScores = {};
 	UI_MJTotalResult.InitBtnEvent();
 	UI_MJTotalResult.DisplayPlaywayAndRound();
 	UI_MJTotalResult.DisplayPlayerInfo();
+	UI_MJTotalResult.DisplayWinner();
 end
+
 function UI_MJTotalResult.OnDestroy()
 	this.transform = nil;
 	this.gameObject = nil;
 end
+
 function UI_MJTotalResult.InitBtnEvent()
 	-- 返回
 	UIHelper.SetButtonEvent(this.transform, "Button/Back", function(obj)
@@ -35,6 +43,7 @@ function UI_MJTotalResult.InitBtnEvent()
 	UIHelper.SetButtonEvent(this.transform, "Button/Share", function(obj)
 	end);
 end
+
 function UI_MJTotalResult.DisplayPlayerInfo()
 	local parent = UIHelper.GetComponent(this.transform, "Grid", typeof(UnityEngine.Transform));
 	if MJScene.TotalResultInfo == nil or MJScene.TotalResultInfo.m_count == 0 then
@@ -57,8 +66,10 @@ function UI_MJTotalResult.DisplayPlayerInfo()
 	else
 		for i = 1, # MJScene.TotalResultInfo.m_OneData do
 			local tempResultInfo = MJScene.TotalResultInfo.m_OneData[i].m_ResultInfo;
+			
 			for j = 1, # tempResultInfo do
-				local tempPlayer = MJScene.GetPlayerByID(tempResultInfo[j].m_roleid);
+				local singleResultInfo = tempResultInfo[j];
+				local tempPlayer = MJScene.GetPlayerByID(singleResultInfo.m_roleid);
 				local tempTrans = parent:FindChild(tempPlayer.UIPosition);
 				tempTrans.gameObject:SetActive(true);
 				if tempPlayer:IsBanker() then
@@ -69,46 +80,38 @@ function UI_MJTotalResult.DisplayPlayerInfo()
 				end
 				UIHelper.SetLabelText(tempTrans, "Role/Label (Name)", tempPlayer:GetShowName());
 				UIHelper.SetLabelText(tempTrans, "Role/Label (ID)", "ID:" .. tempPlayer.ID);
+				-- 设置头像
+				UIHelper.SetTexture(tempTrans, "Role/Sprite (Photo)", tempPlayer.MJData.m_RoleData.m_HeadPhotoUrl);
 				local tempItem = tempTrans:FindChild("ScrollView/UIGrid/Item");
 				local tempClone = UnityEngine.Object.Instantiate(tempItem);
 				tempClone:SetParent(tempItem.parent);
 				tempClone.localScale = Vector3.New(1, 1, 1);
 				local tempStr = "";
 				if i <= 9 then
-					tempStr = "第" .. MJResultText.ToString(i) .. "局";
+					tempStr = "第" .. MJResultText.ToString(i - 1) .. "局: ";
 				else
-					tempStr = "第" .. MJResultText.ToString(9) .. MJResultText.ToString(i - 10) .. "局";
+					tempStr = "第" .. MJResultText.ToString(9) .. MJResultText.ToString(i - 10) .. "局: ";
 				end
-				-- 局数
+				tempStr = tempStr .. tostring(singleResultInfo.m_score);
+				-- 单局结算信息
 				UIHelper.SetLabelText(tempClone, "Label", tempStr);
-				--  当前局数输赢积分
-				local tempScore = MJScene.TotalResultInfo.m_OneData[i].m_ResultInfo[j].m_score;
-				local tempTotalScore = mTotalScore[j] + tempScore;
-				mTotalScore[j] = tempTotalScore;
-				SetLabelPos(tempClone, tempScore);
-				-- 	if (i == 0) 
-				-- 	{
-				-- 		-- 设置名字头像
-				-- 		string tempName=mData.m_OneData[i].m_ResultInfo[j].m_name;
-				-- 		Helper.SetLabelText(tempTrans,"Role/Label (Name)",UIHelper.GetPlayerName(tempName));
-				-- 		string tempID=mData.m_OneData [i].m_ResultInfo [j].m_id;
-				-- 		Helper.SetLabelText(tempTrans,"Role/Label (ID)","ID:"+tempID);
-				-- 		string tempHeadName=mData.m_OneData[i].m_ResultInfo[j].m_headUrl;
-				-- 		Transform tempHead = tempTrans.Find("Role/Sprite (Photo)");
-				-- 		if (tempHead != null)
-				-- 		{
-				-- 			UIWidget tempWidget = UIHelper.CreateHeadPhoto (tempHead.gameObject, tempHeadName);
-				-- 			if (tempWidget != null) 
-				-- 			{
-				-- 				tempWidget.depth = 10;
-				-- 				tempWidget.width = 66;
-				-- 				tempWidget.height = 66;
-				-- 			}
-				-- 		}
-				-- 	}
-				-- 	UIGridReposition (tempItem.parent);
-				-- 	tempClone.gameObject.SetActive (true);
-				-- 	Helper.SetLabelText (tempTrans, "Label (Total)",mTotalScore [j].ToString());
+				tempClone.gameObject:SetActive(true);
+				-- 记录至集合中，便于统计总得分
+				local tempScore = UI_MJTotalResult.TotalScores[tempPlayer];
+				if tempScore == nil then
+					tempScore = singleResultInfo.m_score;
+				else
+					tempScore = tempScore + singleResultInfo.m_score;
+				end
+				UI_MJTotalResult.TotalScores[tempPlayer] = tempScore;
+				
+				-- 设置总成绩
+				UIHelper.SetLabelText(tempTrans, "Label (Total)", tostring(tempScore));
+				
+				local uiGrid = UIHelper.GetComponent(tempTrans, "ScrollView/UIGrid", typeof(UIGrid));
+				uiGrid:Reposition();
+				uiGrid.enabled = true;
+				
 			end
 		end
 	end
@@ -116,9 +119,27 @@ function UI_MJTotalResult.DisplayPlayerInfo()
 	tempGrid:Reposition();
 	tempGrid.enabled = true;
 end
+
+-- 设置大赢家的显示
+function UI_MJTotalResult.DisplayWinner()
+	local winner;
+	local maxScore = - 9999999;
+	for key, value in pairs(UI_MJTotalResult.TotalScores) do
+		if value > maxScore then
+			winner = key;
+			maxScore = value;
+		end
+	end
+	if winner ~= nil then
+		local parent = UIHelper.GetComponent(this.transform, "Grid", typeof(UnityEngine.Transform));
+		local tempTrans = parent:FindChild(tostring(winner.UIPosition));
+		UIHelper.SetActiveState(tempTrans, "bk/Winner", true);
+	end
+end
+
 -- 显示玩法和局数
 function UI_MJTotalResult.DisplayPlaywayAndRound()
-	local tempRounds = "已打局数: " .. tostring(MJScene.CurrentRound);
+	local tempRounds = "已打局数: " .. tostring(MJScene.FinishedRound);
 	UIHelper.SetLabelText(this.transform, "LeftTop/Rounds", tempRounds);
 	-- string tempWay = string.Empty;
 	-- List<MJPlayWay> tempPlayWay=MaJiangPlayWay.GetSingleton ().GetCurrentPlayWay();
