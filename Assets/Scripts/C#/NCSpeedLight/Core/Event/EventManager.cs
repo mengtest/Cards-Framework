@@ -14,7 +14,6 @@ using System.Collections.Generic;
 
 namespace NCSpeedLight
 {
-
     public delegate void EventHandlerDelegate(Evt evt);
 
     public class EventManager

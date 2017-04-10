@@ -24,8 +24,6 @@ public static class DelegateFactory
 		dict.Add(typeof(System.Comparison<int>), System_Comparison_int);
 		dict.Add(typeof(NCSpeedLight.ServerConnection.ConnectionDelegate), NCSpeedLight_ServerConnection_ConnectionDelegate);
 		dict.Add(typeof(UIEventListener.VoidDelegate), UIEventListener_VoidDelegate);
-		dict.Add(typeof(NCSpeedLight.VPTimer.ArgCallback), NCSpeedLight_VPTimer_ArgCallback);
-		dict.Add(typeof(NCSpeedLight.VPTimer.Callback), NCSpeedLight_VPTimer_Callback);
 		dict.Add(typeof(UnityEngine.Camera.CameraCallback), UnityEngine_Camera_CameraCallback);
 		dict.Add(typeof(UnityEngine.Application.LogCallback), UnityEngine_Application_LogCallback);
 		dict.Add(typeof(UnityEngine.Application.AdvertisingIdentifierCallback), UnityEngine_Application_AdvertisingIdentifierCallback);
@@ -512,96 +510,6 @@ public static class DelegateFactory
 		{
 			UIEventListener_VoidDelegate_Event target = new UIEventListener_VoidDelegate_Event(func, self);
 			UIEventListener.VoidDelegate d = target.CallWithSelf;
-			target.method = d.Method;
-			return d;
-		}
-	}
-
-	class NCSpeedLight_VPTimer_ArgCallback_Event : LuaDelegate
-	{
-		public NCSpeedLight_VPTimer_ArgCallback_Event(LuaFunction func) : base(func) { }
-		public NCSpeedLight_VPTimer_ArgCallback_Event(LuaFunction func, LuaTable self) : base(func, self) { }
-
-		public void Call(object param0)
-		{
-			func.BeginPCall();
-			func.Push(param0);
-			func.PCall();
-			func.EndPCall();
-		}
-
-		public void CallWithSelf(object param0)
-		{
-			func.BeginPCall();
-			func.Push(self);
-			func.Push(param0);
-			func.PCall();
-			func.EndPCall();
-		}
-	}
-
-	public static Delegate NCSpeedLight_VPTimer_ArgCallback(LuaFunction func, LuaTable self, bool flag)
-	{
-		if (func == null)
-		{
-			NCSpeedLight.VPTimer.ArgCallback fn = delegate(object param0) { };
-			return fn;
-		}
-
-		if(!flag)
-		{
-			NCSpeedLight_VPTimer_ArgCallback_Event target = new NCSpeedLight_VPTimer_ArgCallback_Event(func);
-			NCSpeedLight.VPTimer.ArgCallback d = target.Call;
-			target.method = d.Method;
-			return d;
-		}
-		else
-		{
-			NCSpeedLight_VPTimer_ArgCallback_Event target = new NCSpeedLight_VPTimer_ArgCallback_Event(func, self);
-			NCSpeedLight.VPTimer.ArgCallback d = target.CallWithSelf;
-			target.method = d.Method;
-			return d;
-		}
-	}
-
-	class NCSpeedLight_VPTimer_Callback_Event : LuaDelegate
-	{
-		public NCSpeedLight_VPTimer_Callback_Event(LuaFunction func) : base(func) { }
-		public NCSpeedLight_VPTimer_Callback_Event(LuaFunction func, LuaTable self) : base(func, self) { }
-
-		public void Call()
-		{
-			func.Call();
-		}
-
-		public void CallWithSelf()
-		{
-			func.BeginPCall();
-			func.Push(self);
-			func.PCall();
-			func.EndPCall();
-		}
-	}
-
-	public static Delegate NCSpeedLight_VPTimer_Callback(LuaFunction func, LuaTable self, bool flag)
-	{
-		if (func == null)
-		{
-			NCSpeedLight.VPTimer.Callback fn = delegate() { };
-			return fn;
-		}
-
-		if(!flag)
-		{
-			NCSpeedLight_VPTimer_Callback_Event target = new NCSpeedLight_VPTimer_Callback_Event(func);
-			NCSpeedLight.VPTimer.Callback d = target.Call;
-			target.method = d.Method;
-			return d;
-		}
-		else
-		{
-			NCSpeedLight_VPTimer_Callback_Event target = new NCSpeedLight_VPTimer_Callback_Event(func, self);
-			NCSpeedLight.VPTimer.Callback d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}

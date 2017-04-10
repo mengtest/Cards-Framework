@@ -39,9 +39,6 @@ public static class CustomSettings
         _DT(typeof(System.Comparison<int>)),
         _DT(typeof(ServerConnection.ConnectionDelegate)),
         _DT(typeof(UIEventListener.VoidDelegate)),
-        _DT(typeof(VPTimer.ArgCallback)),
-        _DT(typeof(VPTimer.Callback)),
-
     };
 
     //在这里添加你要导出注册到lua的类型列表
@@ -189,23 +186,7 @@ public static class CustomSettings
          _GT(typeof(AndroidAdapter)),
          _GT(typeof(iOSAdapter)),
 
-         //_GT(typeof(SceneManager)),
-         //_GT(typeof(Scene)),
-         //_GT(typeof(Scene.LAYER)),
-         //_GT(typeof(Scene.Type)),
-
-
-         _GT(typeof(PersistentManager)),
-
-         _GT(typeof(VersionManager)),
-
          _GT(typeof(Constants)),
-
-         //_GT(typeof(Game)),
-
-         _GT(typeof(VPTimer)),
-         _GT(typeof(VPTimer.Handle)),
-         _GT(typeof(VPTimer.Stats)),
 
          _GT(typeof(TipsDialog)),
          _GT(typeof(InvisiableOnTweenFinish)),
