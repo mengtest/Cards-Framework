@@ -13,37 +13,47 @@ Log =
 	Buffer = {},
 	FilePath = nil,
 }
+
+-- 初始化
 function Log.Initialize()
 	local fileName = os.date("%Y-%m-%d_%H:%M:%S");
 	fileName = string.gsub(fileName, "/", "-");
 	fileName = string.gsub(fileName, " ", "_");
 	fileName = string.gsub(fileName, ":", "_");
 	fileName = fileName .. ".log";
-	local logDirectory = NCSpeedLight.SharedVariable.DATA_PATH .. "Log/";
+	local logDirectory = Constants.DATA_PATH .. "Log/";
 	if CSDirectory.Exists(logDirectory) == false then
 		CSDirectory.CreateDirectory(logDirectory);
 	end
-	Log.FilePath = NCSpeedLight.SharedVariable.DATA_PATH .. "Log/" .. fileName;
+	Log.FilePath = Constants.DATA_PATH .. "Log/" .. fileName;
 	Log.Info("Log.Initialize: log file path is " .. Log.FilePath);
 end
+
+-- 记录错误信息
 function Log.Error(obj)
 	local time = os.date("%H:%M:%S");
 	local str = "[Log.Error][" .. time .. "-" .. Time.frameCount .. "] " .. tostring(obj);
 	print(str);
 	table.insert(Log.Buffer, str);
 end
+
+-- 记录日志
 function Log.Info(obj)
 	local time = os.date("%H:%M:%S");
 	local str = "[Log.Info][" .. time .. "-" .. Time.frameCount .. "] " .. tostring(obj);
 	print(str);
 	table.insert(Log.Buffer, str);
 end
+
+-- 记录警告信息
 function Log.Warning(obj)
 	local time = os.date("%H:%M:%S");
 	local str = "[Log.Warning][" .. time .. "-" .. Time.frameCount .. "] " .. tostring(obj);
 	print(str);
 	table.insert(Log.Buffer, str);
 end
+
+-- 日志格式化
 function Log.Format(...)
 	local args = {...};
 	local str = "";
@@ -61,6 +71,7 @@ function Log.Format(...)
 		table.insert(Log.Buffer, newStr);
 	end
 end
+
 -- 将buffer中的log写入文件
 function Log.Close()
 	if CSFile.Exists(Log.FilePath) then

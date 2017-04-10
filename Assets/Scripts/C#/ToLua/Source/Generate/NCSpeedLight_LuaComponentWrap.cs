@@ -23,6 +23,8 @@ public class NCSpeedLight_LuaComponentWrap
 		L.RegVar("OnGUIFunction", get_OnGUIFunction, set_OnGUIFunction);
 		L.RegVar("LateUpdateFunction", get_LateUpdateFunction, set_LateUpdateFunction);
 		L.RegVar("OnDestroyFunction", get_OnDestroyFunction, set_OnDestroyFunction);
+		L.RegVar("OnApplicationPauseFunction", get_OnApplicationPauseFunction, set_OnApplicationPauseFunction);
+		L.RegVar("OnApplicationFocusFunction", get_OnApplicationFocusFunction, set_OnApplicationFocusFunction);
 		L.EndClass();
 	}
 
@@ -302,6 +304,44 @@ public class NCSpeedLight_LuaComponentWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_OnApplicationPauseFunction(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			NCSpeedLight.LuaComponent obj = (NCSpeedLight.LuaComponent)o;
+			LuaInterface.LuaFunction ret = obj.OnApplicationPauseFunction;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnApplicationPauseFunction on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_OnApplicationFocusFunction(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			NCSpeedLight.LuaComponent obj = (NCSpeedLight.LuaComponent)o;
+			LuaInterface.LuaFunction ret = obj.OnApplicationFocusFunction;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnApplicationFocusFunction on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_Table(IntPtr L)
 	{
 		object o = null;
@@ -469,6 +509,44 @@ public class NCSpeedLight_LuaComponentWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnDestroyFunction on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_OnApplicationPauseFunction(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			NCSpeedLight.LuaComponent obj = (NCSpeedLight.LuaComponent)o;
+			LuaFunction arg0 = ToLua.CheckLuaFunction(L, 2);
+			obj.OnApplicationPauseFunction = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnApplicationPauseFunction on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_OnApplicationFocusFunction(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			NCSpeedLight.LuaComponent obj = (NCSpeedLight.LuaComponent)o;
+			LuaFunction arg0 = ToLua.CheckLuaFunction(L, 2);
+			obj.OnApplicationFocusFunction = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnApplicationFocusFunction on a nil value" : e.Message);
 		}
 	}
 }

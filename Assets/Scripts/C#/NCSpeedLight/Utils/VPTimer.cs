@@ -219,9 +219,9 @@ namespace NCSpeedLight
             {
                 m_MainObject = new GameObject("VPTimer");
                 m_MainObject.AddComponent<VPTimer>();
-                if (NCSpeedLight.Game.Instance)
+                if (Game.Instance)
                 {
-                    m_MainObject.transform.SetParent(NCSpeedLight.Game.Instance.transform);
+                    m_MainObject.transform.SetParent(Game.Instance.transform);
                 }
                 else
                 {

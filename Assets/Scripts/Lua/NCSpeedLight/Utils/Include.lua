@@ -8,6 +8,12 @@
 -- Modify History:
 --
 -----------------------------------------------
+require "NCSpeedLight.Core.API.C#APIDefine"
+require "NCSpeedLight.Core.API.APIDefine"
+
+require "NCSpeedLight.Utils.Log"
+require "NCSpeedLight.Utils.Utility"
+
 require "NCSpeedLight.3rd.pbc.protobuf"
 require("NCSpeedLight.Utils.LuaDebug")("localhost", 7003)
 require "NCSpeedLight.Utils.Protocol.GameMessage"

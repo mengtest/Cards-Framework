@@ -69,11 +69,7 @@ function UIManager.Initialize()
 	if UIManager.IsInitialized == false then
 		UIManager.IsInitialized = true;
 		local go = UnityEngine.GameObject("UIManager");
-		if NCSpeedLight.SharedVariable.GameHolder ~= nil then
-			go.transform:SetParent(NCSpeedLight.SharedVariable.GameHolder.transform);
-		else
-			UnityEngine.GameObject.DontDestroyOnLoad(go)
-		end
+		go.transform:SetParent(Game.transform);
 		UIManager.UIRoot = go:AddComponent(typeof(UIRoot));
 		UIManager.UIRoot.scalingStyle = UIRoot.Scaling.ConstrainedOnMobiles;
 		UIManager.UIRoot.manualHeight = 720;

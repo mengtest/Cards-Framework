@@ -2,20 +2,13 @@
 using System;
 using LuaInterface;
 
-public class NCSpeedLight_SharedVariableWrap
+public class NCSpeedLight_ConstantsWrap
 {
 	public static void Register(LuaState L)
 	{
-		L.BeginStaticLibs("SharedVariable");
-		L.RegConstant("LOGIN_SERVER_PORT", 50000);
-		L.RegConstant("UI_ROOT_HEIGHT", 720);
-		L.RegConstant("UI_ROOT_WIDTH", 1224);
-		L.RegConstant("COPY_ID", 10001);
-		L.RegVar("LOGIN_SERVER_ADDRESS", get_LOGIN_SERVER_ADDRESS, set_LOGIN_SERVER_ADDRESS);
-		L.RegVar("IsSinglePlayer", get_IsSinglePlayer, set_IsSinglePlayer);
+		L.BeginStaticLibs("Constants");
 		L.RegVar("GAME_NAME", get_GAME_NAME, set_GAME_NAME);
 		L.RegVar("ENCRYPT_LUA", get_ENCRYPT_LUA, set_ENCRYPT_LUA);
-		L.RegVar("SCREEN_SCALE", get_SCREEN_SCALE, null);
 		L.RegVar("DATA_PATH", get_DATA_PATH, null);
 		L.RegVar("SCRIPT_BUNDLE_PATH", get_SCRIPT_BUNDLE_PATH, null);
 		L.RegVar("ASSET_BUNDLE_PATH", get_ASSET_BUNDLE_PATH, null);
@@ -24,36 +17,7 @@ public class NCSpeedLight_SharedVariableWrap
 		L.RegVar("PLATFORM", get_PLATFORM, null);
 		L.RegVar("PLATFORM_NAME", get_PLATFORM_NAME, null);
 		L.RegVar("LUA_BUNDLE_MODE", get_LUA_BUNDLE_MODE, null);
-		L.RegVar("GameHolder", get_GameHolder, null);
 		L.EndStaticLibs();
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_LOGIN_SERVER_ADDRESS(IntPtr L)
-	{
-		try
-		{
-			LuaDLL.lua_pushstring(L, NCSpeedLight.SharedVariable.LOGIN_SERVER_ADDRESS);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_IsSinglePlayer(IntPtr L)
-	{
-		try
-		{
-			LuaDLL.lua_pushboolean(L, NCSpeedLight.SharedVariable.IsSinglePlayer);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -61,7 +25,7 @@ public class NCSpeedLight_SharedVariableWrap
 	{
 		try
 		{
-			LuaDLL.lua_pushstring(L, NCSpeedLight.SharedVariable.GAME_NAME);
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.GAME_NAME);
 			return 1;
 		}
 		catch(Exception e)
@@ -75,21 +39,7 @@ public class NCSpeedLight_SharedVariableWrap
 	{
 		try
 		{
-			LuaDLL.lua_pushboolean(L, NCSpeedLight.SharedVariable.ENCRYPT_LUA);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_SCREEN_SCALE(IntPtr L)
-	{
-		try
-		{
-			LuaDLL.lua_pushnumber(L, NCSpeedLight.SharedVariable.SCREEN_SCALE);
+			LuaDLL.lua_pushboolean(L, NCSpeedLight.Constants.ENCRYPT_LUA);
 			return 1;
 		}
 		catch(Exception e)
@@ -103,7 +53,7 @@ public class NCSpeedLight_SharedVariableWrap
 	{
 		try
 		{
-			LuaDLL.lua_pushstring(L, NCSpeedLight.SharedVariable.DATA_PATH);
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.DATA_PATH);
 			return 1;
 		}
 		catch(Exception e)
@@ -117,7 +67,7 @@ public class NCSpeedLight_SharedVariableWrap
 	{
 		try
 		{
-			LuaDLL.lua_pushstring(L, NCSpeedLight.SharedVariable.SCRIPT_BUNDLE_PATH);
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.SCRIPT_BUNDLE_PATH);
 			return 1;
 		}
 		catch(Exception e)
@@ -131,7 +81,7 @@ public class NCSpeedLight_SharedVariableWrap
 	{
 		try
 		{
-			LuaDLL.lua_pushstring(L, NCSpeedLight.SharedVariable.ASSET_BUNDLE_PATH);
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.ASSET_BUNDLE_PATH);
 			return 1;
 		}
 		catch(Exception e)
@@ -145,7 +95,7 @@ public class NCSpeedLight_SharedVariableWrap
 	{
 		try
 		{
-			LuaDLL.lua_pushstring(L, NCSpeedLight.SharedVariable.BUILD_BUNDLE_LOG_PATH);
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.BUILD_BUNDLE_LOG_PATH);
 			return 1;
 		}
 		catch(Exception e)
@@ -159,7 +109,7 @@ public class NCSpeedLight_SharedVariableWrap
 	{
 		try
 		{
-			LuaDLL.lua_pushstring(L, NCSpeedLight.SharedVariable.APP_CONTENT_PATH);
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.APP_CONTENT_PATH);
 			return 1;
 		}
 		catch(Exception e)
@@ -173,7 +123,7 @@ public class NCSpeedLight_SharedVariableWrap
 	{
 		try
 		{
-			ToLua.Push(L, NCSpeedLight.SharedVariable.PLATFORM);
+			ToLua.Push(L, NCSpeedLight.Constants.PLATFORM);
 			return 1;
 		}
 		catch(Exception e)
@@ -187,7 +137,7 @@ public class NCSpeedLight_SharedVariableWrap
 	{
 		try
 		{
-			LuaDLL.lua_pushstring(L, NCSpeedLight.SharedVariable.PLATFORM_NAME);
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.PLATFORM_NAME);
 			return 1;
 		}
 		catch(Exception e)
@@ -201,52 +151,8 @@ public class NCSpeedLight_SharedVariableWrap
 	{
 		try
 		{
-			LuaDLL.lua_pushboolean(L, NCSpeedLight.SharedVariable.LUA_BUNDLE_MODE);
+			LuaDLL.lua_pushboolean(L, NCSpeedLight.Constants.LUA_BUNDLE_MODE);
 			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_GameHolder(IntPtr L)
-	{
-		try
-		{
-			ToLua.Push(L, NCSpeedLight.SharedVariable.GameHolder);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_LOGIN_SERVER_ADDRESS(IntPtr L)
-	{
-		try
-		{
-			string arg0 = ToLua.CheckString(L, 2);
-			NCSpeedLight.SharedVariable.LOGIN_SERVER_ADDRESS = arg0;
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_IsSinglePlayer(IntPtr L)
-	{
-		try
-		{
-			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
-			NCSpeedLight.SharedVariable.IsSinglePlayer = arg0;
-			return 0;
 		}
 		catch(Exception e)
 		{
@@ -260,7 +166,7 @@ public class NCSpeedLight_SharedVariableWrap
 		try
 		{
 			string arg0 = ToLua.CheckString(L, 2);
-			NCSpeedLight.SharedVariable.GAME_NAME = arg0;
+			NCSpeedLight.Constants.GAME_NAME = arg0;
 			return 0;
 		}
 		catch(Exception e)
@@ -275,7 +181,7 @@ public class NCSpeedLight_SharedVariableWrap
 		try
 		{
 			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
-			NCSpeedLight.SharedVariable.ENCRYPT_LUA = arg0;
+			NCSpeedLight.Constants.ENCRYPT_LUA = arg0;
 			return 0;
 		}
 		catch(Exception e)

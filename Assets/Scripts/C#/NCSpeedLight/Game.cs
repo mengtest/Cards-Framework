@@ -1,7 +1,7 @@
 ﻿/*----------------------------------------------------------------
             // Copyright © 2014-2017 NCSpeedLight
             // 
-            // FileName: Launch.cs
+            // FileName: Game.cs
 			// Describle:
 			// Created By:  Wells Hsu
 			// Date&Time:  10/12 星期三 11:49:46
@@ -16,11 +16,22 @@ using LuaInterface;
 
 namespace NCSpeedLight
 {
-    public class Launch : MonoBehaviour
+    public class Game : MonoBehaviour
     {
+        public static Game Instance;
+        private bool OK = false;
+        public LuaFunction AwakeFunction;
+        public LuaFunction UpdateFunction;
+        public LuaFunction OnGUIFunction;
+        public LuaFunction LateUpdateFunction;
+        public LuaFunction OnDestroyFunction;
+        public LuaFunction OnApplicationPauseFunction;
+        public LuaFunction OnApplicationFocusFunction;
+
         private void Awake()
         {
-            Helper.Log("Launch.Awake()");
+            Instance = this;
+            Helper.Log("Game.Awake()");
             DontDestroyOnLoad(gameObject);
             Application.targetFrameRate = 30;
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
@@ -31,7 +42,7 @@ namespace NCSpeedLight
         /// </summary>
         private void ExtractInternalScripts()
         {
-            Helper.Log("ExtractInternalScripts.Awake()");
+            Helper.Log("Game.ExtractInternalScripts.Awake()");
             if (Application.isEditor == true)
             {
                 StartGame();
@@ -47,8 +58,9 @@ namespace NCSpeedLight
         /// <returns></returns>
         private IEnumerator OnExtractInternalScripts()
         {
-            string dataPath = SharedVariable.SCRIPT_BUNDLE_PATH;  //数据目录
-            string resPath = SharedVariable.APP_CONTENT_PATH + "Scripts/"; //游戏包资源目录
+            Helper.Log("Game.OnExtractInternalScripts.Awake()");
+            string dataPath = Constants.SCRIPT_BUNDLE_PATH;  //数据目录
+            string resPath = Constants.APP_CONTENT_PATH + "Scripts/"; //游戏包资源目录
 
             if (Directory.Exists(dataPath))
             {
@@ -123,23 +135,68 @@ namespace NCSpeedLight
             message = string.Empty;
             StartGame();
         }
-
+        /// <summary>
+        /// 启动游戏
+        /// </summary>
         private void StartGame()
         {
-            Destroy(this);
-            LuaManager.Initialize();
-            LuaManager.Root.transform.SetParent(transform);
-            if (SharedVariable.LUA_BUNDLE_MODE)
+            OK = true;
+
+            LuaManager.Initialize();// 加载内置的bundle
+
+            LuaManager.DoString("require 'NCSpeedLight.Game'");
+            AwakeFunction = LuaManager.LuaState.GetFunction("Game.Awake");
+            UpdateFunction = LuaManager.LuaState.GetFunction("Game.Update");
+            LateUpdateFunction = LuaManager.LuaState.GetFunction("Game.LateUpdate");
+            OnGUIFunction = LuaManager.LuaState.GetFunction("Game.OnGUI");
+            OnDestroyFunction = LuaManager.LuaState.GetFunction("Game.OnDestroy");
+            OnApplicationPauseFunction = LuaManager.LuaState.GetFunction("Game.OnApplicationPause");
+            OnApplicationFocusFunction = LuaManager.LuaState.GetFunction("Game.OnApplicationFocus");
+            if (AwakeFunction != null)
             {
-                LuaManager.LuaLoader.AddBundle("ncspeedlight");
-                LuaManager.LuaLoader.AddBundle("ncspeedlight_core_hotfix");
-                LuaManager.LuaLoader.AddBundle("ncspeedlight_utils");
+                AwakeFunction.Call(gameObject);
             }
-            LuaManager.DoString("require 'NCSpeedLight.Main'");
-            LuaFunction func = LuaManager.LuaState.GetFunction("Main.StartGame");
-            if (func != null)
+        }
+        private void Update()
+        {
+            if (OK && UpdateFunction != null)
             {
-                func.Call(gameObject);
+                UpdateFunction.Call();
+            }
+        }
+        private void LateUpdate()
+        {
+            if (OK && LateUpdateFunction != null)
+            {
+                LateUpdateFunction.Call();
+            }
+        }
+        private void OnGUI()
+        {
+            if (OK && OnGUIFunction != null)
+            {
+                OnGUIFunction.Call();
+            }
+        }
+        private void OnDestroy()
+        {
+            if (OK && OnDestroyFunction != null)
+            {
+                OnDestroyFunction.Call();
+            }
+        }
+        private void OnApplicationPause(bool status)
+        {
+            if (OK && OnApplicationPauseFunction != null)
+            {
+                OnApplicationPauseFunction.Call(status);
+            }
+        }
+        private void OnApplicationFocus(bool status)
+        {
+            if (OK && OnApplicationFocusFunction != null)
+            {
+                OnApplicationFocusFunction.Call(status);
             }
         }
     }

@@ -199,7 +199,7 @@ public static class CustomSettings
 
          _GT(typeof(VersionManager)),
 
-         _GT(typeof(SharedVariable)),
+         _GT(typeof(Constants)),
 
          //_GT(typeof(Game)),
 

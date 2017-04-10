@@ -183,7 +183,7 @@ public static class LuaBinder
 		NCSpeedLight_iOSAdapterWrap.Register(L);
 		NCSpeedLight_PersistentManagerWrap.Register(L);
 		NCSpeedLight_VersionManagerWrap.Register(L);
-		NCSpeedLight_SharedVariableWrap.Register(L);
+		NCSpeedLight_ConstantsWrap.Register(L);
 		NCSpeedLight_VPTimerWrap.Register(L);
 		NCSpeedLight_TipsDialogWrap.Register(L);
 		NCSpeedLight_InvisiableOnTweenFinishWrap.Register(L);

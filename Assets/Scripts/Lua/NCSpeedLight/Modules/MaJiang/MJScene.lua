@@ -90,6 +90,14 @@ function MJScene.OnSceneWasLoaded()
 	MJScene.RegisterNetEvent();
 	MJScene.RequestAllPlayerInfo();
 end
+function MJScene.OnApplicationPause(status)
+	if status then
+		Log.Info("MJScene.OnApplicationPause: 游戏进程暂停");
+	else
+		Log.Info("MJScene.OnApplicationPause: 游戏进程恢复，开始请求重连数据");
+		MJScene.RequestReconnectInfo();
+	end
+end
 -- 继续游戏
 function MJScene.OnceAgain()
 	Log.Info("MJScene.OnceAgain: 继续游戏");
@@ -229,13 +237,14 @@ end
 function MJScene.RequestCloseRoom()
 	local msg =
 	{
-		m_RoleID = MJPlayer.Hero.MJData.m_RoleData.m_Roleid,
+		m_RoleID = Player.ID,
 		m_FBID = SharedVariable.FBInfo.m_FBID,
 	};
 	NetManager.SendEventToLogicServer(GameMessage.GM_MASTERCLOSEROOM_REQUEST, PBMessage.GM_LoginFBServer, msg);
 end
 -- 请求玩家位置，庄家是谁
 function MJScene.RequestAllPlayerInfo()
+	Log.Info("MJScene.RequestAllPlayerInfo");
 	local msg =
 	{
 		m_FBID = SharedVariable.FBInfo.m_FBID,
@@ -374,6 +383,10 @@ end
 -- 收到断线重连信息
 function MJScene.ReturnReconnectInfo(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GM_ReconnectMJData, evt);
+	for i = 1, # msg.m_HandCard do
+		local cardInfo = msg.m_HandCard[i];
+		Log.Info("cardInfo" .. tostring(i) .. ": " .. cardInfo.m_Index);
+	end
 	if msg == false then
 		Log.Error("MJScene.ReturnReconnectInfo: parse msg error," .. PBMessage.GM_ReconnectMJData);
 		return;

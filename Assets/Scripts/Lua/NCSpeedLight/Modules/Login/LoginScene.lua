@@ -49,7 +49,7 @@ function LoginScene.End()
 	NetManager.UnregisterEvent(GameMessage.GM_ROLE_CREATE_RETURN, LoginScene.OnCreateRoleReturn);
 end
 function LoginScene.OpenLoginRecord()
-	local path = NCSpeedLight.SharedVariable.DATA_PATH .. "Config/LoginRecord.bytes";
+	local path = Constants.DATA_PATH .. "Config/LoginRecord.bytes";
 	local buffer = Utility.OpenFile(path);
 	if buffer == nil then
 		Log.Error("LoginScene.OpenLoginRecord: Can not open login record file,is this file exists?  " .. path);
@@ -118,7 +118,7 @@ function LoginScene.RemoveLoginRecord(accountStr, passwordStr)
 	LoginScene.SaveLoginRecordFile();
 end
 function LoginScene.SaveLoginRecordFile()
-	local path = NCSpeedLight.SharedVariable.DATA_PATH .. "Config/LoginRecord.bytes";
+	local path = Constants.DATA_PATH .. "Config/LoginRecord.bytes";
 	local buffer = NetManager.EncodePB(PBMessage.CFG_LoginRecord, LoginScene.LoginRecord);
 	Utility.SaveFile(path, buffer);
 end

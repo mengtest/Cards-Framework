@@ -270,14 +270,14 @@ namespace NCSpeedLight
                 }
             }
 
-            if (Directory.Exists(SharedVariable.BUILD_BUNDLE_LOG_PATH) == false)
+            if (Directory.Exists(Constants.BUILD_BUNDLE_LOG_PATH) == false)
             {
-                Directory.CreateDirectory(SharedVariable.BUILD_BUNDLE_LOG_PATH);
+                Directory.CreateDirectory(Constants.BUILD_BUNDLE_LOG_PATH);
             }
 
             // 输出至配置文件
-            EditorUtility.OutputTXT(SharedVariable.BUILD_BUNDLE_LOG_PATH + "SourceAssets.txt", m_SourceAssets);
-            EditorUtility.OutputTXT(SharedVariable.BUILD_BUNDLE_LOG_PATH + "SharedAssets.txt", m_SharedAssets);
+            EditorUtility.OutputTXT(Constants.BUILD_BUNDLE_LOG_PATH + "SourceAssets.txt", m_SourceAssets);
+            EditorUtility.OutputTXT(Constants.BUILD_BUNDLE_LOG_PATH + "SharedAssets.txt", m_SharedAssets);
         }
 
         /// <summary>
@@ -340,7 +340,7 @@ namespace NCSpeedLight
                 Directory.CreateDirectory(folder);
             }
 
-            string md5File = SharedVariable.BUILD_BUNDLE_LOG_PATH + "/MD5Index.txt"; // 输出md5值索引
+            string md5File = Constants.BUILD_BUNDLE_LOG_PATH + "/MD5Index.txt"; // 输出md5值索引
             var dir = new FileInfo(md5File).Directory;
             if (!dir.Exists)
             {

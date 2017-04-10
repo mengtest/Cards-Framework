@@ -3,8 +3,7 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\C#\NCSpeedLight\3rd\NGUI\ReadMe - 3.7.8.txt">
     <Files>
       <File FileName="Assets\Scripts\C#\NCSpeedLight\3rd\NGUI\ReadMe - 3.7.8.txt" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\C#\NCSpeedLight\3rd\NGUI\Scripts\Tweening\SpringPosition.cs" Line="9" Column="14" />
-      <File FileName="Assets\Scripts\C#\NCSpeedLight\Main.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\C#\NCSpeedLight\3rd\NGUI\Scripts\Tweening\SpringPosition.cs" Line="1" Column="1" />
       <File FileName="Assets\Editor\NCSpeedLight\LuaPBProcessor.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>

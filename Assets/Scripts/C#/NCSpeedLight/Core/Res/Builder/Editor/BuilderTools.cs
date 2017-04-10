@@ -64,16 +64,16 @@ namespace NCSpeedLight
                 EditorUtility.BeginContents(false);
                 if (GUILayout.Button("Delete AssetBundle/Assets", GUILayout.Width(295)))
                 {
-                    if (Directory.Exists(SharedVariable.ASSET_BUNDLE_PATH))
+                    if (Directory.Exists(Constants.ASSET_BUNDLE_PATH))
                     {
-                        Directory.Delete(SharedVariable.ASSET_BUNDLE_PATH, true);
+                        Directory.Delete(Constants.ASSET_BUNDLE_PATH, true);
                     }
                 }
                 if (GUILayout.Button("Delete AssetBundle/Scripts", GUILayout.Width(295)))
                 {
-                    if (Directory.Exists(SharedVariable.SCRIPT_BUNDLE_PATH))
+                    if (Directory.Exists(Constants.SCRIPT_BUNDLE_PATH))
                     {
-                        Directory.Delete(SharedVariable.SCRIPT_BUNDLE_PATH, true);
+                        Directory.Delete(Constants.SCRIPT_BUNDLE_PATH, true);
                     }
                 }
                 if (GUILayout.Button("Copy Assets To Streaming", GUILayout.Width(295)))
@@ -107,7 +107,7 @@ namespace NCSpeedLight
                     string path = AssetDatabase.GetAssetPath(assets[i]);
                     m_WaitingBuildAssets.Add(path);
                 }
-                AssetBuilder builder = new AssetBuilder(m_WaitingBuildAssets, SharedVariable.ASSET_BUNDLE_PATH, m_WaitingBuildAssets);
+                AssetBuilder builder = new AssetBuilder(m_WaitingBuildAssets, Constants.ASSET_BUNDLE_PATH, m_WaitingBuildAssets);
                 builder.BuildSingle();
             }
         }
@@ -167,7 +167,7 @@ namespace NCSpeedLight
             m_WaitingBuildAssets = new List<string>();
             string directory = EditorUtility.NormallizePath(Application.dataPath + "/Resources/Bundle/");
             CollectAssets(directory);
-            AssetBuilder builder = new AssetBuilder(m_WaitingBuildAssets, SharedVariable.ASSET_BUNDLE_PATH, m_WaitingBuildAssets);
+            AssetBuilder builder = new AssetBuilder(m_WaitingBuildAssets, Constants.ASSET_BUNDLE_PATH, m_WaitingBuildAssets);
             builder.BuildAll();
         }
 
@@ -183,12 +183,12 @@ namespace NCSpeedLight
                 Directory.CreateDirectory(Application.streamingAssetsPath + "/Scripts/");
             }
             List<string> files = new List<string>();
-            LuaBuilder.CollectFiles(SharedVariable.SCRIPT_BUNDLE_PATH, files, "*.*");
+            LuaBuilder.CollectFiles(Constants.SCRIPT_BUNDLE_PATH, files, "*.*");
             for (int i = 0; i < files.Count; i++)
             {
                 string file = files[i];
                 string targetFile = string.Empty;
-                targetFile = Application.streamingAssetsPath + "/Scripts/" + file.Substring(SharedVariable.SCRIPT_BUNDLE_PATH.Length);
+                targetFile = Application.streamingAssetsPath + "/Scripts/" + file.Substring(Constants.SCRIPT_BUNDLE_PATH.Length);
                 File.Copy(file, targetFile, true);
             }
             AssetDatabase.Refresh();
@@ -206,12 +206,12 @@ namespace NCSpeedLight
                 Directory.CreateDirectory(Application.streamingAssetsPath + "/Assets/");
             }
             List<string> files = new List<string>();
-            LuaBuilder.CollectFiles(SharedVariable.ASSET_BUNDLE_PATH, files, "*.*");
+            LuaBuilder.CollectFiles(Constants.ASSET_BUNDLE_PATH, files, "*.*");
             for (int i = 0; i < files.Count; i++)
             {
                 string file = files[i];
                 string targetFile = string.Empty;
-                targetFile = Application.streamingAssetsPath + "/Assets/" + file.Substring(SharedVariable.ASSET_BUNDLE_PATH.Length);
+                targetFile = Application.streamingAssetsPath + "/Assets/" + file.Substring(Constants.ASSET_BUNDLE_PATH.Length);
                 File.Copy(file, targetFile, true);
             }
             AssetDatabase.Refresh();
@@ -612,14 +612,14 @@ namespace NCSpeedLight
                 Debug.LogError("Directory doesn't exist: " + LUA_SCRIPT_DIRECTORY);
                 return false;
             }
-            if (Directory.Exists(SharedVariable.SCRIPT_BUNDLE_PATH) == false)
+            if (Directory.Exists(Constants.SCRIPT_BUNDLE_PATH) == false)
             {
-                Directory.CreateDirectory(SharedVariable.SCRIPT_BUNDLE_PATH);
+                Directory.CreateDirectory(Constants.SCRIPT_BUNDLE_PATH);
             }
             else
             {
-                Directory.Delete(SharedVariable.SCRIPT_BUNDLE_PATH, true);
-                Directory.CreateDirectory(SharedVariable.SCRIPT_BUNDLE_PATH);
+                Directory.Delete(Constants.SCRIPT_BUNDLE_PATH, true);
+                Directory.CreateDirectory(Constants.SCRIPT_BUNDLE_PATH);
             }
             return true;
         }
@@ -665,7 +665,7 @@ namespace NCSpeedLight
             CollectFiles(LUA_SCRIPT_DIRECTORY, files, "*.pb");
             for (int i = 0; i < files.Count; i++)
             {
-                string outputPath = SharedVariable.SCRIPT_BUNDLE_PATH + Path.GetFileName(files[i]);
+                string outputPath = Constants.SCRIPT_BUNDLE_PATH + Path.GetFileName(files[i]);
                 File.Copy(files[i], outputPath, true);
             }
         }
@@ -691,7 +691,7 @@ namespace NCSpeedLight
                 BuildAssetBundleOptions options = BuildAssetBundleOptions.CollectDependencies | BuildAssetBundleOptions.CompleteAssets |
                                                 BuildAssetBundleOptions.DeterministicAssetBundle | BuildAssetBundleOptions.UncompressedAssetBundle;
 
-                string outputPath = SharedVariable.SCRIPT_BUNDLE_PATH + bundleName;
+                string outputPath = Constants.SCRIPT_BUNDLE_PATH + bundleName;
 
                 if (File.Exists(outputPath))
                 {
@@ -719,7 +719,7 @@ namespace NCSpeedLight
 
         private static void GenerateLuaFileIndex()
         {
-            string directory = SharedVariable.SCRIPT_BUNDLE_PATH;
+            string directory = Constants.SCRIPT_BUNDLE_PATH;
             string filePath = directory + "/manifest.txt";
             if (File.Exists(filePath))
             {

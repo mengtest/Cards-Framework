@@ -13,7 +13,7 @@ namespace NCSpeedLight
             if (!EditorApplication.isPlaying)
             {
                 EditorApplication.SaveAssets();
-                EditorSceneManager.OpenScene(Application.dataPath + "/Scenes/DownloadScene.unity");
+                EditorSceneManager.OpenScene(Application.dataPath + "/Launcher.unity");
                 EditorApplication.isPlaying = true;
             }
         }

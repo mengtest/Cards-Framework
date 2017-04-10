@@ -1,14 +1,28 @@
+-----------------------------------------------
+-- Copyright © 2014-2017 NCSpeedLight
+--
+-- FileName: DownloadScene.lua
+-- Describle:  处理资源更新相关逻辑
+-- Created By:  Wells Hsu
+-- Date&Time:  2017/2/28 19:11:09
+-- Modify History:
+--
+-----------------------------------------------
 DownloadScene =
 {
 	Name = SceneType.DownloadScene,
 	IsInitialized = false,
 };
+
 function DownloadScene.Initialize()
 	if DownloadScene.IsInitialized == false then
 		DownloadScene.IsInitialized = true;
 	end
 end
+
 function DownloadScene.Begin()
+	Log.Info("DownloadScene.Begin");
+	AssetManager.LoadScene(DownloadScene.Name);
 	--    if UnityEngine.Application.platform == UnityEngine.RuntimePlatform.Android or UnityEngine.Application.platform == UnityEngine.RuntimePlatform.IPhonePlayer then
 	--        UIManager.OpenWindow("Login/Tencent/QQWXBG")
 	--    else
@@ -16,10 +30,14 @@ function DownloadScene.Begin()
 	--    end
 	coroutine.start(DownloadScene.CheckVersion)
 end
+
 function DownloadScene.Update()
 end
+
 function DownloadScene.End()
+	Log.Info("DownloadScene.Begin");
 end
+
 function DownloadScene.CheckVersion()
 	if SharedVariable.UseLocalhost == false then
 		local url = SharedVariable.JsonUrl;
@@ -66,12 +84,15 @@ function DownloadScene.CheckVersion()
 		NetManager.CreateConnection(ServerType.Login, SharedVariable.IP, SharedVariable.PORT, DownloadScene.OnConnectLoginServer, DownloadScene.OnDisconnectLoginServer);
 	end
 end
+
 function DownloadScene.OnConnectLoginServer(connection)
 	UIManager.CloseProgressDialog();
-	Log.Info("DownloadScene.OnConnectLoginServer: 成功连接至账号服务器");
+	Log.Info("DownloadScene.OnConnectLoginServer: 连接至账号服务器");
 	SceneManager.GotoScene(SceneType.LoginScene);
 end
+
 function DownloadScene.OnDisconnectLoginServer(connection)
 	UIManager.CloseProgressDialog();
+	Log.Info("DownloadScene.OnConnectLoginServer: 账号服务器异常");
 	UIManager.OpenTipsDialog("账号服务器异常");
 end 

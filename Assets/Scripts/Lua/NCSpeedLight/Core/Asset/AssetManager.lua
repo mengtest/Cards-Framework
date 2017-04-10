@@ -8,7 +8,6 @@
 -- Modify History:
 --
 -----------------------------------------------
-
 AssetManager =
 {
 	IsInitialited = false,
@@ -31,7 +30,7 @@ function AssetManager.Initialize()
 end
 
 function AssetManager.LoadAssetbundleManifest()
-	local path = NCSpeedLight.SharedVariable.ASSET_BUNDLE_PATH .. NCSpeedLight.SharedVariable.PLATFORM_NAME;
+	local path = Constants.ASSET_BUNDLE_PATH .. Constants.PLATFORM_NAME;
 	local bundle = UnityEngine.AssetBundle.LoadFromFile(path);
 	if bundle ~= nil then
 		AssetManager.Manifest = NCSpeedLight.Helper.LoadAssetFromBundle("AssetBundleManifest", typeof(UnityEngine.AssetBundleManifest), bundle);
@@ -75,7 +74,7 @@ function AssetManager.LoadDependency(bundleName)
 	end
 	local bundleInfo = AssetManager.LoadedBundles[bundleName];
 	if bundleInfo == nil or bundleInfo.Bundle == nil then
-		local path = NCSpeedLight.SharedVariable.ASSET_BUNDLE_PATH .. bundleName;
+		local path = Constants.ASSET_BUNDLE_PATH .. bundleName;
 		local bundle = UnityEngine.AssetBundle.LoadFromFile(path);
 		bundleInfo = {RefCount = 1, Bundle = bundle};
 		AssetManager.LoadedBundles[bundleName] = bundleInfo;
@@ -114,4 +113,4 @@ function AssetManager.UnloadDependency(bundleName)
 	end
 end
 
-return this;
+return this; 

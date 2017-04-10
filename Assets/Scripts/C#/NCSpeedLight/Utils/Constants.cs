@@ -1,8 +1,8 @@
 ﻿/*----------------------------------------------------------------
             // Copyright © 2014-2017 NCSpeedLight
             // 
-            // FileName: SharedVariable.cs
-			// Describle:
+            // FileName: Constants.cs
+			// Describle:   应用程序全局常量
 			// Created By:  Wells Hsu
 			// Date&Time:  10/12 星期三 11:49:46
             // Modify History:
@@ -13,28 +13,8 @@ using UnityEngine;
 
 namespace NCSpeedLight
 {
-    public static class SharedVariable
+    public static class Constants
     {
-        //public static string LOGIN_SERVER_ADDRESS = "jinxianmajiangappts.damaigame.com";
-        public static string LOGIN_SERVER_ADDRESS = "192.168.0.228";
-
-        //public const int LOGIN_SERVER_PORT = 20000;
-        public const int LOGIN_SERVER_PORT = 50000;
-
-        public const int UI_ROOT_HEIGHT = 720;
-        public const int UI_ROOT_WIDTH = 1224;
-        public static float SCREEN_SCALE
-        {
-            get
-            {
-                return (float)UI_ROOT_HEIGHT / (float)Screen.height;
-            }
-        }
-
-        public static bool IsSinglePlayer = false;
-
-        public const int COPY_ID = 10001;
-
         public static string GAME_NAME = "Cards";
 
         public static string DATA_PATH
@@ -186,14 +166,6 @@ namespace NCSpeedLight
                 {
                     return false;
                 }
-            }
-        }
-
-        public static GameObject GameHolder
-        {
-            get
-            {
-                return Game.Instance == null ? null : Game.Instance.gameObject;
             }
         }
     }

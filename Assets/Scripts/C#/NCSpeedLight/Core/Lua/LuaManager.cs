@@ -48,7 +48,7 @@ namespace NCSpeedLight
         public static void Initialize()
         {
             Root = new GameObject("LuaManager");
-
+            Root.transform.SetParent(Game.Instance.transform);
             Root.AddComponent<LuaManager>();
 
             LuaState = new LuaState();
@@ -63,7 +63,7 @@ namespace NCSpeedLight
 
             InitializeLuaDirectory();
 
-            if (SharedVariable.LUA_BUNDLE_MODE)
+            if (Constants.LUA_BUNDLE_MODE)
             {
                 InitializeToLuaBundle();
             }
@@ -73,7 +73,10 @@ namespace NCSpeedLight
             LuaLooper = Instance.gameObject.AddComponent<LuaLooper>();
             LuaLooper.luaState = LuaState;
 
-            InitializeLuaFiles();
+            if (Constants.LUA_BUNDLE_MODE)
+            {
+                InitializeInternalLuaBundle();
+            }
         }
 
         private static void InitializeLibs()
@@ -105,9 +108,28 @@ namespace NCSpeedLight
             LuaState.EndPreLoad();
         }
 
-        private static void InitializeLuaFiles()
+        private static void InitializeInternalLuaBundle()
         {
-            //DoString("require 'NCSpeedLight/Utils/Define'");
+            string  manifest = Constants.ASSET_BUNDLE_PATH + "Scripts/manifest.txt";
+            Helper.Log("LuaManager.InitializeInternalLuaBundle: manifest path is " + manifest);
+            if (File.Exists(manifest) == false)
+            {
+                Helper.LogError("LuaManager.InitializeInternalLuaBundle: error caused by nil file.");
+                return;
+            }
+            string[] lines = File.ReadAllLines(manifest);
+            if (lines == null || lines.Length == 0)
+            {
+                Helper.LogError("LuaManager.InitializeInternalLuaBundle: error caused by nil file.");
+                return;
+            }
+            for (int i = 0; i < lines.Length - 1; i++)
+            {
+                string line = lines[i];
+                string bundleName = line.Split('|')[0];
+                Helper.Log("LuaManager.InitializeInternalLuaBundle: add bundle named " + bundleName);
+                LuaLoader.AddBundle(bundleName);
+            }
         }
 
         private static void InitializeLuaDirectory()
@@ -192,7 +214,7 @@ namespace NCSpeedLight
                 return;
             }
             string fileName = bundleName.ToLower();
-            string url = SharedVariable.SCRIPT_BUNDLE_PATH + fileName;
+            string url = Constants.SCRIPT_BUNDLE_PATH + fileName;
             if (File.Exists(url))
             {
                 AssetBundle bundle = AssetBundle.LoadFromFile(url);
