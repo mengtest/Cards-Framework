@@ -60,20 +60,45 @@ function UI_MaJiang.InitPlayerUI()
 	LuaComponent.Add(UI_MaJiang.UI_Player2.gameObject, UI_OtherPlayer);
 	LuaComponent.Add(UI_MaJiang.UI_Player3.gameObject, UI_OtherPlayer);
 end
-function UI_MaJiang.GetPlayerUI(realPos)
-	local heroPos = MJPlayer.Hero.MJData.m_RoleData.m_Postion;
-	if SharedVariable.FBInfo.m_FBTypeID == MJRoomType.R_1 then
-		if heroPos == realPos then
+
+-- 获取玩家的UI
+function UI_MaJiang.GetPlayerUI(serverPos)
+	local heroPos = MJPlayer.Hero.ServerPosition;
+	if SharedVariable.FBInfo.m_FBTypeID == MJRoomType.R_1 then -- 二人场
+		if heroPos == serverPos then
 			local uiCom = LuaComponent.Get(UI_MaJiang.UI_Player0.gameObject, UI_HeroPlayer);
 			return {uiCom, UI_MaJiang.UI_Player0, 0};
 		else
 			local uiCom = LuaComponent.Get(UI_MaJiang.UI_Player2.gameObject, UI_OtherPlayer);
 			return {uiCom, UI_MaJiang.UI_Player2, 2};
 		end
-	else
-		return nil;
+	elseif SharedVariable.FBInfo.m_FBTypeID == MJRoomType.R_2 then -- 四人场
+		if heroPos == serverPos then
+			local uiCom = LuaComponent.Get(UI_MaJiang.UI_Player0.gameObject, UI_HeroPlayer);
+			return {uiCom, UI_MaJiang.UI_Player0, 0};
+		else
+			local offset = 4 - heroPos;
+			local pos =(offset + serverPos) % 4;
+			local uiTransform = UI_MaJiang.GetPlayerUIByPosition(pos);
+			local uiCom = LuaComponent.Get(uiTransform.gameObject, UI_OtherPlayer);
+			return {uiCom, uiTransform, pos};
+		end
 	end
 end
+
+-- 通过UI的位置获取对象
+function UI_MaJiang.GetPlayerUIByPosition(pos)
+	if pos == 0 then
+		return UI_MaJiang.UI_Player0;
+	elseif pos == 1 then
+		return UI_MaJiang.UI_Player1;
+	elseif pos == 2 then
+		return UI_MaJiang.UI_Player2;
+	elseif pos == 3 then
+		return UI_MaJiang.UI_Player3;
+	end
+end
+
 -- 设置player ui显示
 function UI_MaJiang.SetupPlayerUIVisiable()
 	if SharedVariable.FBInfo.m_FBTypeID == MJRoomType.R_1 then

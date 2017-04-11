@@ -73,13 +73,20 @@ function HallScene.RequestPlayerInFb()
 end
 
 function HallScene.RequestCreateRoom()
-	local msg = {
-		m_roleid = Player.FullInfo.id,
-		m_fbtypeid = MJRoomType.R_1,
-		m_fbplayway = "2,",
-		m_roomcount = 6,
-		m_playerCount = 4,
-	};
+	Log.Info("HallScene.RequestCreateRoom");
+	-- local msg = {
+	-- 	m_roleid = Player.FullInfo.id,
+	-- 	m_fbtypeid = MJRoomType.R_1,
+	-- 	m_fbplayway = "2,",
+	-- 	m_roomcount = 6,
+	-- 	m_playerCount = 4,
+	-- };
+	local msg = {};
+	msg.m_roleid = Player.ID;
+	msg.m_fbtypeid = MJRoomType.R_2; -- 四人场
+	msg.m_fbplayway = "2,"; -- 玩法
+	msg.m_roomcount = 6;-- 回合数
+	msg.m_playerCount = 4;	
 	NetManager.SendEventToLogicServer(GameMessage.GM_MAJIANG_REQUEST, PBMessage.GMMJRequest, msg);
 end
 function HallScene.RequestLoginFb()

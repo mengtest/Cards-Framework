@@ -184,22 +184,29 @@ function MJScene.UnRegisterNetEvent()
 	NetManager.UnregisterEvent(GameMessage.GM_MJOperator_Error, MJScene.ReturnOperateError);
 end
 
-function MJScene.HasPlayer(id)
-	return MJScene.Players[id] == nil;
-end
-
-function MJScene.AddPlayer(id, player)
-	if MJScene.Players[id] == nil then
-		MJScene.Players[id] = player;
-	end
-end
-
-function MJScene.RemovePlayer(id)
-	for key, value in pairs(MJScene.Players) do
-		if key == id then
-			table.remove(MJScene.Players, key);
+function MJScene.HasPlayer(player)
+	if player == nil then return false end;
+	for i = 1, # MJScene.Players do
+		if player == MJScene.Players[i] then
+			return true;
 		end
 	end
+	return false;
+end
+
+function MJScene.AddPlayer(player)
+	if MJScene.HasPlayer(player) then return false end;
+	table.insert(MJScene.Players, player);
+end
+
+function MJScene.RemovePlayer(player)
+	for i = 1, # MJScene.Players do
+		if player == MJScene.Players[i] then
+			table.remove(MJScene.Players, i);
+			return true;
+		end
+	end
+	return false;
 end
 
 function MJScene.InitPlayerData(data)
@@ -242,7 +249,7 @@ end
 -- 根据ID获取玩家对象
 function MJScene.GetPlayerByID(id)
 	for key, value in pairs(MJScene.Players) do
-		if value ~= nil and value.MJData.m_RoleData.m_Roleid == id then
+		if value ~= nil and value.ID == id then
 			return value;
 		end
 	end
@@ -250,11 +257,7 @@ end
 
 -- 获取玩家的个数
 function MJScene.GetPlayerCount()
-	local count = 0;
-	for key, value in pairs(MJScene.Players) do
-		count = count + 1;
-	end
-	return count;
+	return # MJScene.Players;
 end
 
 -- 当前是否是我的回合
@@ -398,7 +401,7 @@ function MJScene.ReturnGamePlayerInfo(evt)
 			if playerEntry ~= nil and playerEntry.m_RoleData ~= nil and playerEntry.m_RoleData.m_Roleid == Player.FullInfo.id then
 				hero = MJPlayer.New();
 				hero:Initialize(playerEntry, true);
-				MJScene.AddPlayer(hero.ID, hero);
+				MJScene.AddPlayer(hero);
 				Log.Info("MJScene.ReturnGamePlayerInfo: Create hero id is " .. hero.ID .. ",server position is " .. hero.ServerPosition);
 			end
 		end
@@ -411,7 +414,7 @@ function MJScene.ReturnGamePlayerInfo(evt)
 			if player == nil then
 				player = MJPlayer.New();
 				player:Initialize(playerEntry);
-				MJScene.AddPlayer(player.ID, player);
+				MJScene.AddPlayer(player);
 				Log.Info("MJScene.ReturnGamePlayerInfo: Create a player id is " .. player.ID .. ",server position is " .. player.ServerPosition);
 			end
 		end
@@ -711,18 +714,19 @@ function MJScene.ReturnPlayerHu(evt)
 end
 
 function MJScene.NotifyPlayerLeave(evt)
-	Log.Info("MJScene.NotifyPlayerLeave");
 	local msg = NetManager.DecodeMsg(PBMessage.GM_LeaveBattle, evt);
 	if msg == false then
 		Log.Error("MJScene.NotifyPlayerLeave: parse msg error: " .. PBMessage.GM_LeaveBattle);
 		return;
 	end
+	Log.Info("MJScene.NotifyPlayerLeave: id is " .. tostring(msg.roleID));
 	local player = MJScene.GetPlayerByID(msg.roleID);
 	if player ~= nil then
 		local str = "玩家 " .. player.MJData.m_RoleData.m_Name .. " 离开房间";
 		UIManager.OpenTipsDialog(str);
 		player:SetupEnterAndLeave(false, true);
 	end
+	MJScene.RemovePlayer(player);
 end
 
 function MJScene.NotifyChat(evt)

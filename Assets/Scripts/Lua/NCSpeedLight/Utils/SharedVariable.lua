@@ -2,6 +2,7 @@ SharedVariable =
 {
 	CompanyName = "hongzhong",
 	Version = "1.0.0",
+	-- Version = "1.3.0",
 	Channel = "hongzhong",
 	Platform = "Android",
 	TargetFramerate = 30,
@@ -19,10 +20,10 @@ SharedVariable =
 	FBInfo = nil,
 	FBEntryInfo = nil,
 	DeskOffset = 0,
-	IP = "192.168.1.177",
-	PORT = "30000",
-	-- IP = "192.168.1.228",	
-	-- PORT = "50000",
+	-- IP = "192.168.1.177",
+	-- PORT = "30000",
+	IP = "192.168.1.228",	
+	PORT = "50000",
 	UseLocalhost = false,
 }
 SharedVariable.JsonUrl = "http://papamajiangcdn.damaigame.com/json/" .. SharedVariable.CompanyName .. "/" .. SharedVariable.Platform .. "/" .. SharedVariable.Channel .. "/v" .. SharedVariable.Version .. "/qiumo.db?v=" .. tostring(System.DateTime.Now.Ticks);

@@ -178,13 +178,13 @@ function MJPlayer:Initialize(data, ishero)
 			self.TableCardStartPos = Vector3.New(- 5.8, 3.82, - 1.1);
 		else
 			self.TableCardColumnLimit = 8;
-			self.TableCardStartPos = Vector3.New(- 6.5, 3.6, - 9.5);
+			self.TableCardStartPos = Vector3.New(- 2.1, 3.82, - 3.6);
 		end
 		self.TableCardRotation = Vector3.New(90, 0, 0);
 		self.TableCardHorizontalOffset = Vector3.New(MJScene.TableCardX, 0, 0);
 		self.TableCardVerticalOffset = Vector3.New(0, 0, - MJScene.TableCardY);
 		-- 操作的牌
-		self.OperateCardStartPos = Vector3.New(- 9.390512, 3.6, - 9.5);
+		self.OperateCardStartPos = self.HandCardStartPos - self.HandCardOffset * 3;
 		self.OperateCardOffset = Vector3.New(MJScene.TableCardX, 0, 0);
 		self.OperateCardRotation = Vector3.New(90, 0, 0);
 		self.UICardStartPos = Vector3.New(- 468, 0, 0);
@@ -204,9 +204,9 @@ function MJPlayer:Initialize(data, ishero)
 		self.TableCardHorizontalOffset = Vector3.New(0, 0, MJScene.TableCardX);
 		self.TableCardVerticalOffset = Vector3.New(MJScene.TableCardY, 0, 0);
 		-- 操作的牌
-		self.OperateCardStartPos = Vector3.New(- 9.390512, 3.6, - 9.5);
-		self.OperateCardOffset = Vector3.New(MJScene.TableCardX, 0, 0);
-		self.OperateCardRotation = Vector3.New(90, 0, 0);
+		self.OperateCardStartPos = self.HandCardStartPos - self.HandCardOffset * 3;
+		self.OperateCardOffset = Vector3.New(0, 0, MJScene.TableCardX);
+		self.OperateCardRotation = Vector3.New(90, - 90, 0);
 	elseif self.UIPosition == 2 then
 		-- 手牌
 		self.HandCardRotation = Vector3.New(0, 180, 0);
@@ -224,7 +224,7 @@ function MJPlayer:Initialize(data, ishero)
 		self.TableCardHorizontalOffset = Vector3.New(- MJScene.TableCardX, 0, 0);
 		self.TableCardVerticalOffset = Vector3.New(0, 0, MJScene.TableCardY);
 		-- 操作的牌
-		self.OperateCardStartPos = Vector3.New(8.490512, 4, 8.7);
+		self.OperateCardStartPos = self.HandCardStartPos - self.HandCardOffset * 3;
 		self.OperateCardOffset = Vector3.New(- MJScene.TableCardX, 0, 0);
 		self.OperateCardRotation = Vector3.New(90, 180, 0);
 	elseif self.UIPosition == 3 then
@@ -232,16 +232,15 @@ function MJPlayer:Initialize(data, ishero)
 		self.HandCardRotation = Vector3.New(0, 90, 0);
 		self.HandCardOffset = Vector3.New(0, 0, - MJScene.HandCardX);
 		self.HandCardStartPos = Vector3.New(- 10.5, 4, 4.8);
-		-- 桌面的牌
 		self.TableCardColumnLimit = 8;
 		self.TableCardStartPos = Vector3.New(- 3.32, 3.67, 2.22);
 		self.TableCardRotation = Vector3.New(90, - 90, 0);
 		self.TableCardHorizontalOffset = Vector3.New(0, 0, - MJScene.TableCardX);
 		self.TableCardVerticalOffset = Vector3.New(- MJScene.TableCardY, 0, 0);
 		-- 操作的牌
-		self.OperateCardStartPos = Vector3.New(8.490512, 4, 8.7);
-		self.OperateCardOffset = Vector3.New(- MJScene.TableCardX, 0, 0);
-		self.OperateCardRotation = Vector3.New(90, 180, 0);
+		self.OperateCardStartPos = self.HandCardStartPos - self.HandCardOffset * 3;
+		self.OperateCardOffset = Vector3.New(0, 0, - MJScene.TableCardX);
+		self.OperateCardRotation = Vector3.New(90, 90, 0);
 	else
 	end
 	Log.Info("MJPlayer:Initialize: HandCardRotation is " .. tostring(self.HandCardRotation));
@@ -522,6 +521,7 @@ function MJPlayer:DisplayHandCard(sort, lastMargin)
 			end
 			currentPos = currentPos + offset;
 			cardObj.localPosition = currentPos;
+			cardObj.localRotation = Quaternion.Euler(self.HandCardRotation);
 			cardObj.gameObject:SetActive(true);
 			index = index + 1;
 		end
@@ -530,6 +530,7 @@ function MJPlayer:DisplayHandCard(sort, lastMargin)
 			local offset = self.HandCardOffset;
 			currentPos = currentPos + offset;
 			cardObj.localPosition = currentPos;
+			cardObj.localRotation = Quaternion.Euler(self.HandCardRotation);
 			cardObj.gameObject:SetActive(false);
 		end
 	end
