@@ -32,10 +32,11 @@ function NetManager.InitPBMessage()
 	end
 end
 
-function NetManager.CreateConnection(serverType, host, port, onConnected, onDisconnected)
+function NetManager.CreateConnection(serverType, host, port, onConnected, onDisconnected, onReconnected)
 	local listener = NCSpeedLight.ServerConnection.Listener();
-	listener.OnConnect = onConnected;
-	listener.OnDisconnect = onDisconnected;
+	listener.OnConnected = onConnected;
+	listener.OnDisconnected = onDisconnected;
+	listener.OnReconnected = onReconnected;
 	return NCSpeedLight.NetManager.CreateConnection(serverType, host, port, listener);
 end
 

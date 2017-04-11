@@ -12,17 +12,13 @@
 using System;
 using System.Net;
 using System.Net.Sockets;
-using System.IO;
 using System.Threading;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using UnityEngine;
-
 
 namespace NCSpeedLight
 {
     public delegate void HandleConnectDelegate();
-    public class SocketConnect
+    class SocketConnect
     {
         private Socket m_Socket; // socket instance
         private string m_IP; // address
@@ -38,31 +34,28 @@ namespace NCSpeedLight
         private LinkedList<NetPacket> m_ReceivedPackets; // received packets
         private System.Object m_ReceiveObject; // the receive locked object
 
-        private HandleConnectDelegate m_ConnectFunction;
-        private HandleConnectDelegate m_DisconnectFunction;
+        private HandleConnectDelegate m_ConnectFunc;
+        private HandleConnectDelegate m_DisconnectFunc;
+        private HandleConnectDelegate m_ReconnectedFunc;
 
-        private bool m_NeedCallConnected;
-        private bool m_NeedCallDisconnected;
+        private Thread m_ReceiveThread;
+        private Thread m_SendThread;
 
-        public HandleConnectDelegate OnConnectCallback
+        public HandleConnectDelegate OnConnected
         {
-            get { return m_ConnectFunction; }
-            set { m_ConnectFunction = value; }
+            get { return m_ConnectFunc; }
+            set { m_ConnectFunc = value; }
         }
-        public HandleConnectDelegate OnDisconnectCallback
+        public HandleConnectDelegate OnDisconnected
         {
-            get { return m_DisconnectFunction; }
-            set { m_DisconnectFunction = value; }
+            get { return m_DisconnectFunc; }
+            set { m_DisconnectFunc = value; }
         }
-        public bool NeedCallConnected
+
+        public HandleConnectDelegate OnReconnected
         {
-            get { return m_NeedCallConnected; }
-            set { m_NeedCallConnected = value; }
-        }
-        public bool NeedCallDisconnected
-        {
-            get { return m_NeedCallDisconnected; }
-            set { m_NeedCallDisconnected = value; }
+            get { return m_ReconnectedFunc; }
+            set { m_ReconnectedFunc = value; }
         }
 
         public bool IsConnected
@@ -70,12 +63,46 @@ namespace NCSpeedLight
             get { return m_IsConnected; }
         }
 
-        public SocketConnect()
+        public void CallConnectedFunction()
+        {
+            if (OnConnected != null)
+            {
+                Loom.QueueOnMainThread(() =>
+                {
+                    OnConnected();
+                });
+            }
+        }
+
+        public void CallDisconnectedFunction()
+        {
+            if (OnDisconnected != null)
+            {
+                Loom.QueueOnMainThread(() =>
+                {
+                    OnDisconnected();
+                });
+            }
+        }
+
+        public void CallReconnectedFunction()
+        {
+            if (OnReconnected != null)
+            {
+                Loom.QueueOnMainThread(() =>
+                {
+                    OnReconnected();
+                });
+            }
+        }
+
+        public SocketConnect(string ip, int port)
         {
             m_IsConnected = false;
             m_NeedClose = false;
+            m_IP = ip;
+            m_Port = port;
         }
-        ~SocketConnect() { /*Close();*/ }
 
         public void Close()
         {
@@ -84,7 +111,6 @@ namespace NCSpeedLight
             {
                 try
                 {
-                    m_NeedCallDisconnected = true;
                     if (m_Socket.Connected)
                     {
                         m_Socket.Shutdown(SocketShutdown.Both);
@@ -98,112 +124,177 @@ namespace NCSpeedLight
             }
             m_Socket = null;
             m_IsConnected = false;
+            if (m_ReceiveThread != null)
+            {
+                m_ReceiveThread.Abort();
+            }
+            if (m_SendThread != null)
+            {
+                m_SendThread.Abort();
+            }
+            m_ReceiveThread = null;
+            m_SendThread = null;
         }
 
-        /// <summary>
-        /// Connect to server with ip and port number
-        /// </summary>
-        /// <param name="ip"></param>
-        /// <param name="portNumber"></param>
-        /// <returns></returns>
-        public bool Connect(string ip, int portNumber)
+        public bool Connect()
         {
             if (m_IsConnected)
             {
                 Close();
             }
-
-            m_IP = ip;
-            m_Port = portNumber;
-            m_NeedCallConnected = false;
-            m_NeedCallDisconnected = false;
-
             IPAddress[] addresses = null;
             try
             {
-                addresses = Dns.GetHostAddresses(ip);
+                addresses = Dns.GetHostAddresses(m_IP);
             }
-            catch (Exception e)
+            catch
             {
-                //Helper.LogError("Dns.GetHostAddresses(ip) error,exception detail: " + e.Message);
-                if (m_DisconnectFunction != null)
-                {
-                    m_DisconnectFunction();
-                }
+                CallDisconnectedFunction();
                 return false;
             }
-
             if (addresses == null || addresses.Length == 0)
             {
-                if (m_DisconnectFunction != null)
-                {
-                    m_DisconnectFunction();
-                }
+                CallDisconnectedFunction();
                 return false;
             }
             try
             {
-                IPEndPoint formatedIP = new IPEndPoint(addresses[0], portNumber);
+                IPEndPoint formatedIP = new IPEndPoint(addresses[0], m_Port);
                 m_Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                m_Socket.BeginConnect(formatedIP, new AsyncCallback(OnConnectedServer), m_Socket);
+                m_Socket.BeginConnect(formatedIP, new AsyncCallback((result) =>
+                {
+                    Socket skt = (Socket)result.AsyncState;
+                    if (skt.Connected)
+                    {
+                        m_IsConnected = true;
+
+                        InitNetworkThread();
+
+                        CallConnectedFunction();
+                    }
+                    else
+                    {
+                        m_IsConnected = false;
+                        CallDisconnectedFunction();
+                    }
+                }), m_Socket);
                 m_IsConnected = false;
             }
-            catch (Exception e)
+            catch
             {
-                if (m_DisconnectFunction != null)
-                {
-                    m_DisconnectFunction();
-                }
+                CallDisconnectedFunction();
                 return false;
             }
             return true;
         }
         public bool Reconnect()
         {
-            return Connect(m_IP, m_Port);
-        }
-        private void OnConnectedServer(IAsyncResult result)
-        {
-            Socket skt = (Socket)result.AsyncState;
-            if (skt.Connected)
+            if (m_IsConnected)
             {
-                m_IsConnected = true;
-                m_NeedCallConnected = true;
-                m_NeedCallDisconnected = false;
+                Close();
+            }
 
-                InitNetworkThread();
-            }
-            else
+            IPAddress[] addresses = null;
+            try
             {
-                m_IsConnected = false;
-                m_NeedCallDisconnected = true;
-                m_NeedCallConnected = false;
+                addresses = Dns.GetHostAddresses(m_IP);
             }
+            catch
+            {
+                OnReconnectFail();
+                return false;
+            }
+
+            if (addresses == null || addresses.Length == 0)
+            {
+                OnReconnectFail();
+                return false;
+            }
+            try
+            {
+                IPEndPoint formatedIP = new IPEndPoint(addresses[0], m_Port);
+                m_Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                m_Socket.BeginConnect(formatedIP, (result) =>
+                {
+                    Socket skt = (Socket)result.AsyncState;
+                    if (skt.Connected)
+                    {
+                        m_IsConnected = true;
+                        InitNetworkThread();
+                        CallReconnectedFunction();
+                    }
+                    else
+                    {
+                        m_IsConnected = false;
+                        OnReconnectFail();
+                    }
+                }
+                , m_Socket);
+                m_IsConnected = false;
+            }
+            catch
+            {
+                OnReconnectFail();
+                return false;
+            }
+            return true;
         }
+        private void OnReconnectFail()
+        {
+            Reconnect();
+        }
+
         private bool InitNetworkThread()
         {
             if (m_WillBeSentPackets == null)
+            {
                 m_WillBeSentPackets = new LinkedList<NetPacket>();
-
-            if (m_SendObject == null)
-                m_SendObject = new System.Object();
+            }
 
             m_SendEvent = new ManualResetEvent(false);
 
             m_ReceivedPackets = new LinkedList<NetPacket>();
-            m_ReceiveObject = new System.Object();
 
-            Thread receiveThread = new Thread(ReceiveThreadLooper);
-            receiveThread.Start();
+            m_ReceiveObject = new object();
+            m_SendObject = new object();
 
-            Thread sendThread = new Thread(SendThreadLooper);
-            sendThread.Start();
+            m_ReceiveThread = new Thread(() =>
+            {
+                m_ReceivedHeader = new byte[NetPacket.PACK_HEAD_SIZE];
+
+                while (m_Socket != null && m_NeedClose == false)
+                {
+                    bool b = ReadPacketHeader();
+                    if (b == false)
+                    {
+                        m_NeedClose = true;
+                        return;
+                    }
+                    b = ReadPacketBody();
+                    if (b == false)
+                    {
+                        m_NeedClose = true;
+                        return;
+                    }
+                }
+            });
+            Loom.QueueOnMainThread(() =>
+            {
+                m_ReceiveThread.Start();
+            });
+
+            m_SendThread = new Thread(SendFunc);
+            Loom.QueueOnMainThread(() =>
+            {
+                m_SendThread.Start();
+            });
+
             return true;
         }
 
-        private void ReceiveThreadLooper()
+        private void ReceiveFunc()
         {
-            m_ReceivedHeader = new Byte[NetPacket.PACK_HEAD_SIZE];
+            m_ReceivedHeader = new byte[NetPacket.PACK_HEAD_SIZE];
 
             while (m_Socket != null && m_NeedClose == false)
             {
@@ -211,13 +302,13 @@ namespace NCSpeedLight
                 if (b == false)
                 {
                     m_NeedClose = true;
-                    break;
+                    return;
                 }
                 b = ReadPacketBody();
                 if (b == false)
                 {
                     m_NeedClose = true;
-                    break;
+                    return;
                 }
             }
         }
@@ -236,6 +327,7 @@ namespace NCSpeedLight
                 }
 
                 int receiveSize = m_Socket.Receive(m_ReceivedHeader, NetPacket.PACK_HEAD_SIZE, SocketFlags.None);
+                Helper.LogError("receiveSize is " + receiveSize);
                 if (receiveSize == 0)
                 {
                     return false;
@@ -291,7 +383,7 @@ namespace NCSpeedLight
             {
                 return false;
             }
-            Byte[] packetBuffer = packet.GetBuffer();
+            byte[] packetBuffer = packet.GetBuffer();
 
             try
             {
@@ -413,7 +505,7 @@ namespace NCSpeedLight
             }
         }
 
-        private void SendThreadLooper()
+        private void SendFunc()
         {
             while (m_NeedClose == false && m_IsConnected == true && m_Socket != null)
             {
@@ -470,28 +562,18 @@ namespace NCSpeedLight
     }
     public class ServerConnection
     {
-        #region [Declration]
         public delegate void ConnectionDelegate(ServerConnection connection);
         public class Listener
         {
-            public ConnectionDelegate OnConnect;
-            public ConnectionDelegate OnUpdate;
-            public ConnectionDelegate OnDisconnect;
-            public Listener()
-            {
-                OnDisconnect = new ConnectionDelegate(Func);
-                OnConnect = new ConnectionDelegate(Func);
-                OnUpdate = new ConnectionDelegate(Func);
-            }
-            private void Func(ServerConnection connection) { }
+            public ConnectionDelegate OnConnected;
+            public ConnectionDelegate OnDisconnected;
+            public ConnectionDelegate OnReconnected;
         }
 
         private SocketConnect m_Socket; // socket connection
         private Listener m_ConnectionStateListener; // net state listener
         private List<NetPacket> m_PacketsBuffer = new List<NetPacket>(); // packets' buffer
-        #endregion
 
-        #region [Functions]
 
         public Listener GetStateListener() { return m_ConnectionStateListener; }
 
@@ -500,18 +582,20 @@ namespace NCSpeedLight
         public bool IsConnected()
         {
             if (m_Socket == null)
+            {
                 return false;
-
+            }
             return m_Socket.IsConnected;
         }
 
         public bool Connect(string host, int port)
         {
             Disconnect();
-            m_Socket = new SocketConnect();
-            m_Socket.OnConnectCallback = OnConnected;
-            m_Socket.OnDisconnectCallback = OnDisconnected;
-            return m_Socket.Connect(host, port);
+            m_Socket = new SocketConnect(host, port);
+            m_Socket.OnConnected = OnConnected;
+            m_Socket.OnDisconnected = OnDisconnected;
+            m_Socket.OnReconnected = OnReconnected;
+            return m_Socket.Connect();
         }
 
         public bool Reconnect()
@@ -535,17 +619,25 @@ namespace NCSpeedLight
 
         private void OnConnected()
         {
-            if (m_ConnectionStateListener != null && m_ConnectionStateListener.OnConnect != null)
+            if (m_ConnectionStateListener != null && m_ConnectionStateListener.OnConnected != null)
             {
-                m_ConnectionStateListener.OnConnect(this);
+                m_ConnectionStateListener.OnConnected(this);
             }
         }
 
         private void OnDisconnected()
         {
-            if (m_ConnectionStateListener != null && m_ConnectionStateListener.OnDisconnect != null)
+            if (m_ConnectionStateListener != null && m_ConnectionStateListener.OnDisconnected != null)
             {
-                m_ConnectionStateListener.OnDisconnect(this);
+                m_ConnectionStateListener.OnDisconnected(this);
+            }
+        }
+
+        private void OnReconnected()
+        {
+            if (m_ConnectionStateListener != null && m_ConnectionStateListener.OnReconnected != null)
+            {
+                m_ConnectionStateListener.OnReconnected(this);
             }
         }
 
@@ -553,18 +645,6 @@ namespace NCSpeedLight
         {
             if (m_Socket != null)
             {
-                if (m_Socket.NeedCallConnected && m_Socket.OnConnectCallback != null)
-                {
-                    m_Socket.NeedCallConnected = false;
-                    m_Socket.OnConnectCallback();
-                }
-                else if (m_Socket.NeedCallDisconnected && m_Socket.OnDisconnectCallback != null)
-                {
-                    m_Socket.NeedCallDisconnected = false;
-                    m_Socket.OnDisconnectCallback();
-                    return;
-                }
-
                 if (m_Socket.m_NeedClose)
                 {
                     m_Socket.Close();
@@ -600,11 +680,6 @@ namespace NCSpeedLight
                     }
                 }
             }
-
-            if (m_ConnectionStateListener != null)
-            {
-                m_ConnectionStateListener.OnUpdate(this);
-            }
         }
 
         public bool SendMessage(int id, Byte[] data, int playerID, int serverID)
@@ -620,6 +695,5 @@ namespace NCSpeedLight
         {
             return SendMessage(id, new byte[] { 0 }, 0, 0);
         }
-        #endregion
     }
 }

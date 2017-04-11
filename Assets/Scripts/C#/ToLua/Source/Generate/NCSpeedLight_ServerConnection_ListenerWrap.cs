@@ -9,9 +9,9 @@ public class NCSpeedLight_ServerConnection_ListenerWrap
 		L.BeginClass(typeof(NCSpeedLight.ServerConnection.Listener), typeof(System.Object));
 		L.RegFunction("New", _CreateNCSpeedLight_ServerConnection_Listener);
 		L.RegFunction("__tostring", ToLua.op_ToString);
-		L.RegVar("OnConnect", get_OnConnect, set_OnConnect);
-		L.RegVar("OnUpdate", get_OnUpdate, set_OnUpdate);
-		L.RegVar("OnDisconnect", get_OnDisconnect, set_OnDisconnect);
+		L.RegVar("OnConnected", get_OnConnected, set_OnConnected);
+		L.RegVar("OnDisconnected", get_OnDisconnected, set_OnDisconnected);
+		L.RegVar("OnReconnected", get_OnReconnected, set_OnReconnected);
 		L.EndClass();
 	}
 
@@ -40,7 +40,7 @@ public class NCSpeedLight_ServerConnection_ListenerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_OnConnect(IntPtr L)
+	static int get_OnConnected(IntPtr L)
 	{
 		object o = null;
 
@@ -48,18 +48,18 @@ public class NCSpeedLight_ServerConnection_ListenerWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			NCSpeedLight.ServerConnection.Listener obj = (NCSpeedLight.ServerConnection.Listener)o;
-			NCSpeedLight.ServerConnection.ConnectionDelegate ret = obj.OnConnect;
+			NCSpeedLight.ServerConnection.ConnectionDelegate ret = obj.OnConnected;
 			ToLua.Push(L, ret);
 			return 1;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnConnect on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnConnected on a nil value" : e.Message);
 		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_OnUpdate(IntPtr L)
+	static int get_OnDisconnected(IntPtr L)
 	{
 		object o = null;
 
@@ -67,18 +67,18 @@ public class NCSpeedLight_ServerConnection_ListenerWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			NCSpeedLight.ServerConnection.Listener obj = (NCSpeedLight.ServerConnection.Listener)o;
-			NCSpeedLight.ServerConnection.ConnectionDelegate ret = obj.OnUpdate;
+			NCSpeedLight.ServerConnection.ConnectionDelegate ret = obj.OnDisconnected;
 			ToLua.Push(L, ret);
 			return 1;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnUpdate on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnDisconnected on a nil value" : e.Message);
 		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_OnDisconnect(IntPtr L)
+	static int get_OnReconnected(IntPtr L)
 	{
 		object o = null;
 
@@ -86,18 +86,18 @@ public class NCSpeedLight_ServerConnection_ListenerWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			NCSpeedLight.ServerConnection.Listener obj = (NCSpeedLight.ServerConnection.Listener)o;
-			NCSpeedLight.ServerConnection.ConnectionDelegate ret = obj.OnDisconnect;
+			NCSpeedLight.ServerConnection.ConnectionDelegate ret = obj.OnReconnected;
 			ToLua.Push(L, ret);
 			return 1;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnDisconnect on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnReconnected on a nil value" : e.Message);
 		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_OnConnect(IntPtr L)
+	static int set_OnConnected(IntPtr L)
 	{
 		object o = null;
 
@@ -118,17 +118,17 @@ public class NCSpeedLight_ServerConnection_ListenerWrap
 				arg0 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.ServerConnection.ConnectionDelegate), func) as NCSpeedLight.ServerConnection.ConnectionDelegate;
 			}
 
-			obj.OnConnect = arg0;
+			obj.OnConnected = arg0;
 			return 0;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnConnect on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnConnected on a nil value" : e.Message);
 		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_OnUpdate(IntPtr L)
+	static int set_OnDisconnected(IntPtr L)
 	{
 		object o = null;
 
@@ -149,17 +149,17 @@ public class NCSpeedLight_ServerConnection_ListenerWrap
 				arg0 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.ServerConnection.ConnectionDelegate), func) as NCSpeedLight.ServerConnection.ConnectionDelegate;
 			}
 
-			obj.OnUpdate = arg0;
+			obj.OnDisconnected = arg0;
 			return 0;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnUpdate on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnDisconnected on a nil value" : e.Message);
 		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_OnDisconnect(IntPtr L)
+	static int set_OnReconnected(IntPtr L)
 	{
 		object o = null;
 
@@ -180,12 +180,12 @@ public class NCSpeedLight_ServerConnection_ListenerWrap
 				arg0 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.ServerConnection.ConnectionDelegate), func) as NCSpeedLight.ServerConnection.ConnectionDelegate;
 			}
 
-			obj.OnDisconnect = arg0;
+			obj.OnReconnected = arg0;
 			return 0;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnDisconnect on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnReconnected on a nil value" : e.Message);
 		}
 	}
 }

@@ -12,6 +12,7 @@ public class Loom : MonoBehaviour
 
     private static Loom _current;
     private int _count;
+    private float _currentTime;
     public static Loom Current
     {
         get
@@ -130,6 +131,7 @@ public class Loom : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        _currentTime = Time.time;
         lock (_actions)
         {
             _currentActions.Clear();
@@ -146,7 +148,13 @@ public class Loom : MonoBehaviour
         lock (_delayed)
         {
             _currentDelayed.Clear();
-            _currentDelayed.AddRange(_delayed.Where(d => d.time <= Time.time));
+            for (int i = 0; i < _delayed.Count; i++)
+            {
+                if (_delayed[i].time <= _currentTime)
+                {
+                    _currentDelayed.Add(_delayed[i]);
+                }
+            }
             for (int i = 0; i < _currentDelayed.Count; i++)
             {
                 _delayed.Remove(_currentDelayed[i]);
