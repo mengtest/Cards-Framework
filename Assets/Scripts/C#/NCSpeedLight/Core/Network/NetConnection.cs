@@ -278,16 +278,10 @@ namespace NCSpeedLight
                     }
                 }
             });
-            Loom.QueueOnMainThread(() =>
-            {
-                m_ReceiveThread.Start();
-            });
+            m_ReceiveThread.Start();
 
             m_SendThread = new Thread(SendFunc);
-            Loom.QueueOnMainThread(() =>
-            {
-                m_SendThread.Start();
-            });
+            m_SendThread.Start();
 
             return true;
         }
@@ -325,9 +319,7 @@ namespace NCSpeedLight
                 {
                     m_ReceivedHeader[i] = 0;
                 }
-
                 int receiveSize = m_Socket.Receive(m_ReceivedHeader, NetPacket.PACK_HEAD_SIZE, SocketFlags.None);
-                Helper.LogError("receiveSize is " + receiveSize);
                 if (receiveSize == 0)
                 {
                     return false;

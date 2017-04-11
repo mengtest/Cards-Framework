@@ -35,6 +35,7 @@ namespace NCSpeedLight
             DontDestroyOnLoad(gameObject);
             Application.targetFrameRate = 30;
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
+            Loom.Initialize();
             ExtractInternalScripts();
         }
         /// <summary>

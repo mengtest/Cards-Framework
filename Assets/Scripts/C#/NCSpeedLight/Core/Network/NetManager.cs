@@ -46,27 +46,27 @@ namespace NCSpeedLight
         public static bool CreateConnection(int type, string host, int port, ServerConnection.Listener listener)
         {
             DeleteConnection(type);
-            //Loom.QueueOnMainThread(delegate
-            //{
+            Loom.QueueOnMainThread(delegate
+            {
                 ServerConnection connection = new ServerConnection();
                 m_Connections.Add(type, connection);
                 connection.SetNetStateListener(listener);
                 connection.Connect(host, port);
-            //});
+            });
             return true;
         }
 
         public static void DeleteConnection(int type)
         {
-            //Loom.QueueOnMainThread(delegate
-            //{
+            Loom.QueueOnMainThread(delegate
+            {
                 ServerConnection connection;
                 if (m_Connections.TryGetValue(type, out connection))
                 {
                     connection.Disconnect();
                     m_Connections.Remove(type);
                 }
-            //});
+            });
         }
 
         public static ServerConnection GetConnection(int type)

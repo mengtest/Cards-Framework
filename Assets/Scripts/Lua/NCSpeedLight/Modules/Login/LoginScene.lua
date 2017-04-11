@@ -287,7 +287,7 @@ function LoginScene.OnChoseAreaReturn(evt)
 		Log.Info("LoginScene.OnChoseAreaReturn: logic server port is " .. obj.m_PortNumber);
 		LoginScene.LogicServerIP = obj.m_ServerIP;
 		LoginScene.LoginServerPort = obj.m_PortNumber;
-		NetManager.CreateConnection(ServerType.Logic, LoginScene.LogicServerIP, LoginScene.LoginServerPort, LoginScene.OnConnectLogicServer, LoginScene.OnDisconnectLogicServer);
+		NetManager.CreateConnection(ServerType.Logic, LoginScene.LogicServerIP, LoginScene.LoginServerPort, LoginScene.OnConnectLogicServer, LoginScene.OnDisconnectLogicServer, LoginScene.OnReconnectLogicServer);
 	else
 		Log.Info("LoginScene.OnChoseAreaReturn：选区失败");
 		UIManager.CloseWindow(UIType.UI_SceneLoad);
@@ -312,17 +312,13 @@ function LoginScene.OnDisconnectLogicServer(connection)
 	local option = ProgressDialogOption.New();
 	option.Content = "网络异常，重新连接中...";
 	UIManager.OpenProgressDialog(option);
-	NetManager.CreateConnection(ServerType.Logic, LoginScene.LogicServerIP, LoginScene.LoginServerPort, LoginScene.OnReconnectSuccess, LoginScene.OnReconnectFail);
+	connection:Reconnect();
 	Log.Info("LoginScene.OnDisconnectLogicServer: 逻辑服务器异常,启动重连,时间戳：" .. tostring(LoginScene.DisconnectTimeStamp));
 end
 
-function LoginScene.OnReconnectFail(connection)
-	NetManager.CreateConnection(ServerType.Logic, LoginScene.LogicServerIP, LoginScene.LoginServerPort, LoginScene.OnReconnectSuccess, LoginScene.OnReconnectFail);
-end
-
-function LoginScene.OnReconnectSuccess(connection)
+function LoginScene.OnReconnectLogicServer(connection)
 	UIManager.CloseProgressDialog();
-	Log.Info("LoginScene.OnReconnectSuccess: 成功重连至逻辑服务器,耗时：" .. tostring(Time.realtimeSinceStartup - LoginScene.DisconnectTimeStamp) .. "s");
+	Log.Info("LoginScene.OnReconnectLogicServer: 成功重连至逻辑服务器,耗时：" .. tostring(Time.realtimeSinceStartup - LoginScene.DisconnectTimeStamp) .. "s");
 	if SceneManager.CurrentScene ~= nil then
 		SceneManager.CurrentScene.OnReconnectToLogicServer();
 	end
