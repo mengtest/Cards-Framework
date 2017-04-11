@@ -44,6 +44,15 @@ end
 function DownloadScene.OnApplicationFocus(status)
 end
 
+function DownloadScene.OnConnectToLogicServer()
+end
+
+function DownloadScene.OnReconnectToLogicServer()
+end
+
+function DownloadScene.OnDisconnectFromLogicServer()
+end
+
 function DownloadScene.CheckVersion()
 	if SharedVariable.UseLocalhost == false then
 		local url = SharedVariable.JsonUrl;
@@ -100,5 +109,4 @@ end
 function DownloadScene.OnDisconnectLoginServer(connection)
 	UIManager.CloseProgressDialog();
 	Log.Info("DownloadScene.OnConnectLoginServer: 账号服务器异常");
-	UIManager.OpenTipsDialog("账号服务器异常");
 end 

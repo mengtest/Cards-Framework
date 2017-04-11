@@ -23,7 +23,7 @@ StandardDialogOption =
 StandardDialogOption.__index = StandardDialogOption;
 function StandardDialogOption.New(title, content, doubleButton, onClickOK, onClickCancel)
 	local obj = {};
-	setmetatable(o, StandardDialogOption);
+	setmetatable(obj, StandardDialogOption);
 	obj.Title = title;
 	obj.Content = content;
 	obj.DoubleButton = doubleButton;
@@ -44,15 +44,15 @@ ProgressDialogOption =
 	OnAutoClose,
 	OnCancel,
 }
-function ProgressDialogOption:New()
-	o = {};
-	setmetatable(o, self);
-	self.__index = self;
-	o.AutoClose = false;
-	o.Cancelable = false;
-	o.Timeout = 10;
-	o.ContentFontSize = 26;
-	return o;
+ProgressDialogOption.__index = ProgressDialogOption;
+function ProgressDialogOption.New()
+	local obj = {};
+	setmetatable(obj, ProgressDialogOption);
+	obj.AutoClose = false;
+	obj.Cancelable = false;
+	obj.Timeout = 10;
+	obj.ContentFontSize = 26;
+	return obj;
 end
 UIManager =
 {

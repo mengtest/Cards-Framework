@@ -38,6 +38,15 @@ end
 function HallScene.OnApplicationFocus(status)
 end
 
+function HallScene.OnConnectToLogicServer()
+end
+
+function HallScene.OnReconnectToLogicServer()
+end
+
+function HallScene.OnDisconnectFromLogicServer()
+end
+
 -- Create Room Logic Begin --
 function HallScene.RegisterNetEvent()
 	NetManager.RegisterEvent(GameMessage.GM_FBSERVERINFO_RETURN, HallScene.ReceiveFbInfo);

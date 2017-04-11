@@ -113,6 +113,18 @@ end
 function MJScene.OnApplicationFocus(status)
 end
 
+function MJScene.OnConnectToLogicServer()
+end
+
+function MJScene.OnReconnectToLogicServer()
+	Log.Info("MJScene.OnReconnectToLogicServer");
+	MJScene.RequestReconnectInfo();
+end
+
+function MJScene.OnDisconnectFromLogicServer()
+	Log.Info("MJScene.OnDisconnectFromLogicServer");
+end
+
 -- 继续游戏
 function MJScene.OnceAgain()
 	Log.Info("MJScene.OnceAgain: 继续游戏");

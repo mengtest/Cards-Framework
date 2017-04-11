@@ -33,4 +33,13 @@ function Scene.OnApplicationPause(status)
 end
 
 function Scene.OnApplicationFocus(status)
-end 
+end
+
+function Scene.OnConnectToLogicServer()
+end
+
+function Scene.OnReconnectToLogicServer()
+end
+
+function Scene.OnDisconnectFromLogicServer()
+end

@@ -125,7 +125,7 @@ namespace NCSpeedLight
             }
             catch (Exception e)
             {
-                Debug.LogError("Dns.GetHostAddresses(ip) error,exception detail: " + e.Message);
+                //Helper.LogError("Dns.GetHostAddresses(ip) error,exception detail: " + e.Message);
                 if (m_DisconnectFunction != null)
                 {
                     m_DisconnectFunction();
@@ -266,6 +266,7 @@ namespace NCSpeedLight
             }
             catch (Exception e)
             {
+                Helper.LogError("SocketConnect.ReadPacketHeader: error msg: " + e.Message);
                 return false;
             }
         }
