@@ -19,7 +19,7 @@ namespace NCSpeedLight
         public StatusDelegate OnConnectedFunc;
         public StatusDelegate OnDisconnectedFunc;
         public StatusDelegate OnReconnectedFunc;
-        private byte[] ReceivedHeader = new byte[NetPacket.PACK_HEAD_SIZE];
+        private static byte[] ReceivedHeader = new byte[NetPacket.PACK_HEAD_SIZE];
         public ServerConnection(string host, int port)
         {
             Host = host;
@@ -94,13 +94,14 @@ namespace NCSpeedLight
         public void StartListenReceive()
         {
             ReceivedHeader = new byte[NetPacket.PACK_HEAD_SIZE];
-            Socket.BeginReceive(ReceivedHeader, 0, ReceivedHeader.Length, SocketFlags.None, OnReceiveCallback, Socket);
+            Socket.BeginReceive(ReceivedHeader, 0, ReceivedHeader.Length, SocketFlags.None, OnReceiveCallback, this);
         }
-        private void OnReceiveCallback(IAsyncResult result)
+        public static void OnReceiveCallback(IAsyncResult result)
         {
+            ServerConnection connection = result as ServerConnection;
             try
             {
-                int bytesReceived = Socket.EndReceive(result);
+                int bytesReceived = connection.Socket.EndReceive(result);
                 Helper.Log("OnReceiveCallback.bytesReceived: " + bytesReceived);
                 if (bytesReceived == NetPacket.PACK_HEAD_SIZE)
                 {
@@ -117,7 +118,7 @@ namespace NCSpeedLight
                     else
                     {
                         byte[] bodyBuffer = packet.GetBody();
-                        Socket.Receive(bodyBuffer, SocketFlags.None);
+                        connection.Socket.Receive(bodyBuffer, SocketFlags.None);
                         packet.SetBody(bodyBuffer);
                     }
                     Loom.QueueOnMainThread(() =>
@@ -126,25 +127,27 @@ namespace NCSpeedLight
                     });
                     // continue listen.
                     ReceivedHeader = new byte[NetPacket.PACK_HEAD_SIZE];
-                    Socket.BeginReceive(ReceivedHeader, 0, ReceivedHeader.Length, SocketFlags.None, OnReceiveCallback, Socket);
+                    connection.Socket.BeginReceive(ReceivedHeader, 0, ReceivedHeader.Length, SocketFlags.None, OnReceiveCallback, connection);
                 }
                 else
                 {
-                    if (Socket.Connected)//上次socket的状态
+                    if (connection.Socket.Connected)//上次socket的状态
                     {
-                        OnSocketDisconnected();
+                        connection.OnSocketDisconnected();
                     }
                 }
             }
             catch (Exception e)
             {
-                SocketErrorStr = e.Message;
-                Disconnect();
-                OnSocketDisconnected();//Keepalive检测网线断开引发的异常在这里捕获
+                connection.SocketErrorStr = e.Message;
+                Helper.LogError("SocketError: " + connection.SocketErrorStr);
+                connection.Disconnect();
+                connection.OnSocketDisconnected();//Keepalive检测网线断开引发的异常在这里捕获
             }
         }
         private void OnSendCallback(IAsyncResult result)
         {
+            Helper.LogError("OnSendCallback");
             Socket.EndSend(result);
         }
         public bool Connect()
