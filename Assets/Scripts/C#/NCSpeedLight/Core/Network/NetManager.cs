@@ -17,11 +17,7 @@ namespace NCSpeedLight
     {
         private static NetManager m_Instance;
 
-        private static Dictionary<int, ServerConnection> m_Connections = null;
-
-        private static Dictionary<int, ServerConnection>.Enumerator m_Enumerator;
-
-        private static List<ServerConnection> m_Buffer = null;
+        private static Dictionary<int, ServerConnection> m_Connections = new Dictionary<int, ServerConnection>();
 
         public static NetManager Instance
         {
@@ -40,33 +36,31 @@ namespace NCSpeedLight
         public static void Initialize()
         {
             m_Connections = new Dictionary<int, ServerConnection>();
-            m_Buffer = new List<ServerConnection>();
         }
 
-        public static bool CreateConnection(int type, string host, int port, ServerConnection.Listener listener)
+        public static ServerConnection ConnectTo(int type, string host, int post, ServerConnection.StatusDelegate onConnected, ServerConnection.StatusDelegate onDisconnected, ServerConnection.StatusDelegate onReconnected)
         {
-            DeleteConnection(type);
-            Loom.QueueOnMainThread(delegate
+            if (m_Connections.ContainsKey(type))
             {
-                ServerConnection connection = new ServerConnection();
-                m_Connections.Add(type, connection);
-                connection.SetNetStateListener(listener);
-                connection.Connect(host, port);
-            });
-            return true;
+                DisconnectFrom(type);
+            }
+            ServerConnection connection = new ServerConnection(host, post);
+            connection.OnConnectedFunc = onConnected;
+            connection.OnDisconnectedFunc = onDisconnected;
+            connection.OnReconnectedFunc = onReconnected;
+            connection.Connect();
+            m_Connections.Add(type, connection);
+            return connection;
         }
 
-        public static void DeleteConnection(int type)
+        public static void DisconnectFrom(int type)
         {
-            Loom.QueueOnMainThread(delegate
+            ServerConnection connection = null;
+            if (m_Connections.TryGetValue(type, out connection))
             {
-                ServerConnection connection;
-                if (m_Connections.TryGetValue(type, out connection))
-                {
-                    connection.Disconnect();
-                    m_Connections.Remove(type);
-                }
-            });
+                connection.Disconnect();
+                m_Connections.Remove(type);
+            }
         }
 
         public static ServerConnection GetConnection(int type)
@@ -76,44 +70,19 @@ namespace NCSpeedLight
             return connection;
         }
 
-        public static void Update()
-        {
-            if (m_Buffer.Count != 0)
-            {
-                m_Buffer.Clear();
-            }
-            m_Enumerator = m_Connections.GetEnumerator();
-            for (int i = 0; i < m_Connections.Count; i++)
-            {
-                m_Enumerator.MoveNext();
-                if (m_Enumerator.Current.Value != null)
-                {
-                    m_Enumerator.Current.Value.Update();
-                }
-            }
-        }
-
-        public static void DeleteAllConnections()
+        public static void DisconnectAll()
         {
             Dictionary<int, ServerConnection>.Enumerator it = m_Connections.GetEnumerator();
             for (int i = 0; i < m_Connections.Count; i++)
             {
                 it.MoveNext();
-                ServerConnection client = it.Current.Value;
-                if (client != null)
-                    client.Disconnect();
+                ServerConnection connection = it.Current.Value;
+                if (connection != null)
+                {
+                    connection.Disconnect();
+                }
             }
             m_Connections.Clear();
-            m_Connections = null;
-        }
-
-        public static void SendEvent(int id, byte[] buffer, int playerID, int serverID, int type = 1)
-        {
-            ServerConnection connection = GetConnection(type);
-            if (connection != null && connection.IsConnected())
-            {
-                connection.SendMessage(id, buffer, playerID, serverID);
-            }
         }
 
         public static void RegisterEvent(int id, EventHandlerDelegate func)
@@ -124,6 +93,19 @@ namespace NCSpeedLight
         public static void UnregisterEvent(int id, EventHandlerDelegate func)
         {
             Instance.Unbind(id, func);
+        }
+
+        public static void SendEvent(int msgID, byte[] msgBuffer, int playerID, int serverID, int serverType = 1)
+        {
+            ServerConnection connection = null;
+            if (m_Connections.TryGetValue(serverType, out connection))
+            {
+                NetPacket packet = new NetPacket(msgID, msgBuffer.Length);
+                packet.SetBody(msgBuffer);
+                packet.SetUserData(playerID);
+                packet.SetServerID(serverID);
+                connection.Send(packet);
+            }
         }
 
         public static void NotifyEvent(Evt evt)

@@ -287,7 +287,7 @@ function LoginScene.OnChoseAreaReturn(evt)
 		Log.Info("LoginScene.OnChoseAreaReturn: logic server port is " .. obj.m_PortNumber);
 		LoginScene.LogicServerIP = obj.m_ServerIP;
 		LoginScene.LoginServerPort = obj.m_PortNumber;
-		NetManager.CreateConnection(ServerType.Logic, LoginScene.LogicServerIP, LoginScene.LoginServerPort, LoginScene.OnConnectLogicServer, LoginScene.OnDisconnectLogicServer, LoginScene.OnReconnectLogicServer);
+		NetManager.ConnectTo(ServerType.Logic, LoginScene.LogicServerIP, LoginScene.LoginServerPort, LoginScene.OnConnectLogicServer, LoginScene.OnDisconnectLogicServer, LoginScene.OnReconnectLogicServer);
 	else
 		Log.Info("LoginScene.OnChoseAreaReturn：选区失败");
 		UIManager.CloseWindow(UIType.UI_SceneLoad);

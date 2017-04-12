@@ -261,19 +261,16 @@ namespace NCSpeedLight
             m_ReceiveThread = new Thread(() =>
             {
                 m_ReceivedHeader = new byte[NetPacket.PACK_HEAD_SIZE];
-
-                while (m_Socket != null && m_NeedClose == false)
+                while (m_Socket != null)
                 {
-                    bool b = ReadPacketHeader();
-                    if (b == false)
+                    if (ReadPacketHeader() == false)
                     {
-                        m_NeedClose = true;
+                        Close();
                         return;
                     }
-                    b = ReadPacketBody();
-                    if (b == false)
+                    if (ReadPacketBody() == false)
                     {
-                        m_NeedClose = true;
+                        Close();
                         return;
                     }
                 }
@@ -286,26 +283,6 @@ namespace NCSpeedLight
             return true;
         }
 
-        private void ReceiveFunc()
-        {
-            m_ReceivedHeader = new byte[NetPacket.PACK_HEAD_SIZE];
-
-            while (m_Socket != null && m_NeedClose == false)
-            {
-                bool b = ReadPacketHeader();
-                if (b == false)
-                {
-                    m_NeedClose = true;
-                    return;
-                }
-                b = ReadPacketBody();
-                if (b == false)
-                {
-                    m_NeedClose = true;
-                    return;
-                }
-            }
-        }
 
         private bool ReadPacketHeader()
         {
@@ -371,7 +348,7 @@ namespace NCSpeedLight
             }
             NetPacket packet = new NetPacket(msgID, bodySize);
 
-            if (packet.SetPacketHeader(m_ReceivedHeader) == false)
+            if (packet.SetHeader(m_ReceivedHeader) == false)
             {
                 return false;
             }
@@ -412,9 +389,8 @@ namespace NCSpeedLight
                 }
                 return true;
             }
-            catch (Exception e)
+            catch
             {
-                Close();
                 return false;
             }
         }
@@ -434,7 +410,7 @@ namespace NCSpeedLight
             if (b == false) return false;
             b = packet.SetServerID(1);
             if (b == false) return false;
-            packet.SetData(newData);
+            packet.SetBody(newData);
 
             if (m_SendObject == null)
             {

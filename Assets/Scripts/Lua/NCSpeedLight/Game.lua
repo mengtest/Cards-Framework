@@ -64,7 +64,6 @@ end
 
 function Game.Update()
 	ActionLine.Update();
-	NetManager.Update();
 	SceneManager.Update();
 	if Game.Platform == UnityEngine.RuntimePlatform.Android then
 		if UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Escape) == true then
@@ -107,7 +106,7 @@ end
 
 function Game.OnDestroy()
 	Log.Info("Game.OnDestroy");
-	NetManager.DeleteAllConnections();
+	NetManager.DisconnectAll();
 	Log.Close();
 end
 

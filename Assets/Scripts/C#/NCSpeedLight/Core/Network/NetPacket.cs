@@ -16,7 +16,7 @@ namespace NCSpeedLight
     public class NetPacket
     {
         private int m_MessageID;// message id
-        private Byte[] m_Buffer;// message buffer,include header and body
+        private byte[] m_Buffer;// message buffer,include header and body
 
         public const int PACK_VERSION_OFFSET = 2;// packet version
         public const int PACK_LENGTH_OFFSET = 3;// length offset
@@ -37,11 +37,11 @@ namespace NCSpeedLight
         public NetPacket(int msgID, int bodySize)
         {
             m_MessageID = msgID;
-            m_Buffer = new Byte[bodySize + PACK_HEAD_SIZE];
+            m_Buffer = new byte[bodySize + PACK_HEAD_SIZE];
             m_Buffer[0] = 8;
             m_Buffer[1] = 8;
 
-            Byte[] bytes = BitConverter.GetBytes(PACK_VERSION);
+            byte[] bytes = BitConverter.GetBytes(PACK_VERSION);
             Array.Copy(bytes, 0, m_Buffer, PACK_VERSION_OFFSET, bytes.Length);
 
             bytes = BitConverter.GetBytes(bodySize + PACK_HEAD_SIZE);
@@ -62,19 +62,19 @@ namespace NCSpeedLight
             }
             return true;
         }
-        public Byte[] GetBuffer() { return m_Buffer; }
+        public byte[] GetBuffer() { return m_Buffer; }
         public int GetMessageID() { return m_MessageID; }
-        public Byte[] GetBody()
+        public byte[] GetBody()
         {
             if (m_Buffer == null || m_Buffer.Length <= PACK_HEAD_SIZE)
             {
                 return null;
             }
-            Byte[] data = new Byte[m_Buffer.Length - PACK_HEAD_SIZE];
+            byte[] data = new byte[m_Buffer.Length - PACK_HEAD_SIZE];
             Array.Copy(m_Buffer, PACK_HEAD_SIZE, data, 0, data.Length);
             return data;
         }
-        public bool SetPacketHeader(Byte[] data)
+        public bool SetHeader(byte[] data)
         {
             if (data == null || data.Length < PACK_HEAD_SIZE)
                 return false;
@@ -114,7 +114,7 @@ namespace NCSpeedLight
             int data = BitConverter.ToInt32(m_Buffer, PACK_USERDATA_OFFSET);
             return data;
         }
-        public bool SetData(Byte[] data)
+        public bool SetBody(Byte[] data)
         {
             if (data == null)
                 return false;

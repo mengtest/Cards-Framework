@@ -8,14 +8,13 @@ public class NCSpeedLight_NetManagerWrap
 	{
 		L.BeginClass(typeof(NCSpeedLight.NetManager), typeof(NCSpeedLight.EventManager));
 		L.RegFunction("Initialize", Initialize);
-		L.RegFunction("CreateConnection", CreateConnection);
-		L.RegFunction("DeleteConnection", DeleteConnection);
+		L.RegFunction("ConnectTo", ConnectTo);
+		L.RegFunction("DisconnectFrom", DisconnectFrom);
 		L.RegFunction("GetConnection", GetConnection);
-		L.RegFunction("Update", Update);
-		L.RegFunction("DeleteAllConnections", DeleteAllConnections);
-		L.RegFunction("SendEvent", SendEvent);
+		L.RegFunction("DisconnectAll", DisconnectAll);
 		L.RegFunction("RegisterEvent", RegisterEvent);
 		L.RegFunction("UnregisterEvent", UnregisterEvent);
+		L.RegFunction("SendEvent", SendEvent);
 		L.RegFunction("NotifyEvent", NotifyEvent);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("Instance", get_Instance, null);
@@ -38,17 +37,55 @@ public class NCSpeedLight_NetManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int CreateConnection(IntPtr L)
+	static int ConnectTo(IntPtr L)
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 4);
+			ToLua.CheckArgsCount(L, 6);
 			int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
 			string arg1 = ToLua.CheckString(L, 2);
 			int arg2 = (int)LuaDLL.luaL_checknumber(L, 3);
-			NCSpeedLight.ServerConnection.Listener arg3 = (NCSpeedLight.ServerConnection.Listener)ToLua.CheckObject(L, 4, typeof(NCSpeedLight.ServerConnection.Listener));
-			bool o = NCSpeedLight.NetManager.CreateConnection(arg0, arg1, arg2, arg3);
-			LuaDLL.lua_pushboolean(L, o);
+			NCSpeedLight.ServerConnection.StatusDelegate arg3 = null;
+			LuaTypes funcType4 = LuaDLL.lua_type(L, 4);
+
+			if (funcType4 != LuaTypes.LUA_TFUNCTION)
+			{
+				 arg3 = (NCSpeedLight.ServerConnection.StatusDelegate)ToLua.CheckObject(L, 4, typeof(NCSpeedLight.ServerConnection.StatusDelegate));
+			}
+			else
+			{
+				LuaFunction func = ToLua.ToLuaFunction(L, 4);
+				arg3 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.ServerConnection.StatusDelegate), func) as NCSpeedLight.ServerConnection.StatusDelegate;
+			}
+
+			NCSpeedLight.ServerConnection.StatusDelegate arg4 = null;
+			LuaTypes funcType5 = LuaDLL.lua_type(L, 5);
+
+			if (funcType5 != LuaTypes.LUA_TFUNCTION)
+			{
+				 arg4 = (NCSpeedLight.ServerConnection.StatusDelegate)ToLua.CheckObject(L, 5, typeof(NCSpeedLight.ServerConnection.StatusDelegate));
+			}
+			else
+			{
+				LuaFunction func = ToLua.ToLuaFunction(L, 5);
+				arg4 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.ServerConnection.StatusDelegate), func) as NCSpeedLight.ServerConnection.StatusDelegate;
+			}
+
+			NCSpeedLight.ServerConnection.StatusDelegate arg5 = null;
+			LuaTypes funcType6 = LuaDLL.lua_type(L, 6);
+
+			if (funcType6 != LuaTypes.LUA_TFUNCTION)
+			{
+				 arg5 = (NCSpeedLight.ServerConnection.StatusDelegate)ToLua.CheckObject(L, 6, typeof(NCSpeedLight.ServerConnection.StatusDelegate));
+			}
+			else
+			{
+				LuaFunction func = ToLua.ToLuaFunction(L, 6);
+				arg5 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.ServerConnection.StatusDelegate), func) as NCSpeedLight.ServerConnection.StatusDelegate;
+			}
+
+			NCSpeedLight.ServerConnection o = NCSpeedLight.NetManager.ConnectTo(arg0, arg1, arg2, arg3, arg4, arg5);
+			ToLua.PushObject(L, o);
 			return 1;
 		}
 		catch(Exception e)
@@ -58,13 +95,13 @@ public class NCSpeedLight_NetManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int DeleteConnection(IntPtr L)
+	static int DisconnectFrom(IntPtr L)
 	{
 		try
 		{
 			ToLua.CheckArgsCount(L, 1);
 			int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
-			NCSpeedLight.NetManager.DeleteConnection(arg0);
+			NCSpeedLight.NetManager.DisconnectFrom(arg0);
 			return 0;
 		}
 		catch(Exception e)
@@ -91,47 +128,12 @@ public class NCSpeedLight_NetManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int Update(IntPtr L)
+	static int DisconnectAll(IntPtr L)
 	{
 		try
 		{
 			ToLua.CheckArgsCount(L, 0);
-			NCSpeedLight.NetManager.Update();
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int DeleteAllConnections(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 0);
-			NCSpeedLight.NetManager.DeleteAllConnections();
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int SendEvent(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 5);
-			int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
-			byte[] arg1 = ToLua.CheckByteBuffer(L, 2);
-			int arg2 = (int)LuaDLL.luaL_checknumber(L, 3);
-			int arg3 = (int)LuaDLL.luaL_checknumber(L, 4);
-			int arg4 = (int)LuaDLL.luaL_checknumber(L, 5);
-			NCSpeedLight.NetManager.SendEvent(arg0, arg1, arg2, arg3, arg4);
+			NCSpeedLight.NetManager.DisconnectAll();
 			return 0;
 		}
 		catch(Exception e)
@@ -190,6 +192,26 @@ public class NCSpeedLight_NetManagerWrap
 			}
 
 			NCSpeedLight.NetManager.UnregisterEvent(arg0, arg1);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SendEvent(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 5);
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
+			byte[] arg1 = ToLua.CheckByteBuffer(L, 2);
+			int arg2 = (int)LuaDLL.luaL_checknumber(L, 3);
+			int arg3 = (int)LuaDLL.luaL_checknumber(L, 4);
+			int arg4 = (int)LuaDLL.luaL_checknumber(L, 5);
+			NCSpeedLight.NetManager.SendEvent(arg0, arg1, arg2, arg3, arg4);
 			return 0;
 		}
 		catch(Exception e)

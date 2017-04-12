@@ -32,28 +32,20 @@ function NetManager.InitPBMessage()
 	end
 end
 
-function NetManager.CreateConnection(serverType, host, port, onConnected, onDisconnected, onReconnected)
-	local listener = NCSpeedLight.ServerConnection.Listener();
-	listener.OnConnected = onConnected;
-	listener.OnDisconnected = onDisconnected;
-	listener.OnReconnected = onReconnected;
-	return NCSpeedLight.NetManager.CreateConnection(serverType, host, port, listener);
+function NetManager.ConnectTo(serverType, host, port, onConnected, onDisconnected, onReconnected)
+	return NCSpeedLight.NetManager.ConnectTo(serverType, host, port, onConnected, onDisconnected, onReconnected);
 end
 
-function NetManager.DeleteConnection(serverType)
-	return NCSpeedLight.NetManager.DeleteConnection(serverType);
+function NetManager.DisconnectFrom(serverType)
+	return NCSpeedLight.NetManager.DisconnectFrom(serverType);
 end
 
 function NetManager.GetConnection(serverType)
 	return NCSpeedLight.NetManager.GetConnection(serverType);
 end
 
-function NetManager.Update()
-	return NCSpeedLight.NetManager.Update();
-end
-
-function NetManager.DeleteAllConnections()
-	return NCSpeedLight.NetManager.DeleteAllConnections();
+function NetManager.DisconnectAll()
+	return NCSpeedLight.NetManager.DisconnectAll();
 end
 
 -- 发送消息至登录服务器

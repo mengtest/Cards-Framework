@@ -7,17 +7,23 @@ public class NCSpeedLight_ServerConnectionWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(NCSpeedLight.ServerConnection), typeof(System.Object));
-		L.RegFunction("GetStateListener", GetStateListener);
-		L.RegFunction("SetNetStateListener", SetNetStateListener);
 		L.RegFunction("IsConnected", IsConnected);
+		L.RegFunction("StartListenReceive", StartListenReceive);
 		L.RegFunction("Connect", Connect);
 		L.RegFunction("Reconnect", Reconnect);
 		L.RegFunction("Disconnect", Disconnect);
-		L.RegFunction("Update", Update);
-		L.RegFunction("SendMessage", SendMessage);
-		L.RegFunction("SendEmpty", SendEmpty);
+		L.RegFunction("Send", Send);
 		L.RegFunction("New", _CreateNCSpeedLight_ServerConnection);
 		L.RegFunction("__tostring", ToLua.op_ToString);
+		L.RegVar("Host", get_Host, set_Host);
+		L.RegVar("Port", get_Port, set_Port);
+		L.RegVar("ReconnectInterval", get_ReconnectInterval, set_ReconnectInterval);
+		L.RegVar("Socket", get_Socket, set_Socket);
+		L.RegVar("SocketErrorStr", get_SocketErrorStr, set_SocketErrorStr);
+		L.RegVar("OnConnectedFunc", get_OnConnectedFunc, set_OnConnectedFunc);
+		L.RegVar("OnDisconnectedFunc", get_OnDisconnectedFunc, set_OnDisconnectedFunc);
+		L.RegVar("OnReconnectedFunc", get_OnReconnectedFunc, set_OnReconnectedFunc);
+		L.RegFunction("StatusDelegate", NCSpeedLight_ServerConnection_StatusDelegate);
 		L.EndClass();
 	}
 
@@ -28,9 +34,11 @@ public class NCSpeedLight_ServerConnectionWrap
 		{
 			int count = LuaDLL.lua_gettop(L);
 
-			if (count == 0)
+			if (count == 2)
 			{
-				NCSpeedLight.ServerConnection obj = new NCSpeedLight.ServerConnection();
+				string arg0 = ToLua.CheckString(L, 1);
+				int arg1 = (int)LuaDLL.luaL_checknumber(L, 2);
+				NCSpeedLight.ServerConnection obj = new NCSpeedLight.ServerConnection(arg0, arg1);
 				ToLua.PushObject(L, obj);
 				return 1;
 			}
@@ -38,40 +46,6 @@ public class NCSpeedLight_ServerConnectionWrap
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to ctor method: NCSpeedLight.ServerConnection.New");
 			}
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int GetStateListener(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 1);
-			NCSpeedLight.ServerConnection obj = (NCSpeedLight.ServerConnection)ToLua.CheckObject(L, 1, typeof(NCSpeedLight.ServerConnection));
-			NCSpeedLight.ServerConnection.Listener o = obj.GetStateListener();
-			ToLua.PushObject(L, o);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int SetNetStateListener(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 2);
-			NCSpeedLight.ServerConnection obj = (NCSpeedLight.ServerConnection)ToLua.CheckObject(L, 1, typeof(NCSpeedLight.ServerConnection));
-			NCSpeedLight.ServerConnection.Listener arg0 = (NCSpeedLight.ServerConnection.Listener)ToLua.CheckObject(L, 2, typeof(NCSpeedLight.ServerConnection.Listener));
-			obj.SetNetStateListener(arg0);
-			return 0;
 		}
 		catch(Exception e)
 		{
@@ -97,15 +71,29 @@ public class NCSpeedLight_ServerConnectionWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int StartListenReceive(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			NCSpeedLight.ServerConnection obj = (NCSpeedLight.ServerConnection)ToLua.CheckObject(L, 1, typeof(NCSpeedLight.ServerConnection));
+			obj.StartListenReceive();
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int Connect(IntPtr L)
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 3);
+			ToLua.CheckArgsCount(L, 1);
 			NCSpeedLight.ServerConnection obj = (NCSpeedLight.ServerConnection)ToLua.CheckObject(L, 1, typeof(NCSpeedLight.ServerConnection));
-			string arg0 = ToLua.CheckString(L, 2);
-			int arg1 = (int)LuaDLL.luaL_checknumber(L, 3);
-			bool o = obj.Connect(arg0, arg1);
+			bool o = obj.Connect();
 			LuaDLL.lua_pushboolean(L, o);
 			return 1;
 		}
@@ -139,43 +127,7 @@ public class NCSpeedLight_ServerConnectionWrap
 		{
 			ToLua.CheckArgsCount(L, 1);
 			NCSpeedLight.ServerConnection obj = (NCSpeedLight.ServerConnection)ToLua.CheckObject(L, 1, typeof(NCSpeedLight.ServerConnection));
-			obj.Disconnect();
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int Update(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 1);
-			NCSpeedLight.ServerConnection obj = (NCSpeedLight.ServerConnection)ToLua.CheckObject(L, 1, typeof(NCSpeedLight.ServerConnection));
-			obj.Update();
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int SendMessage(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 5);
-			NCSpeedLight.ServerConnection obj = (NCSpeedLight.ServerConnection)ToLua.CheckObject(L, 1, typeof(NCSpeedLight.ServerConnection));
-			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
-			byte[] arg1 = ToLua.CheckByteBuffer(L, 3);
-			int arg2 = (int)LuaDLL.luaL_checknumber(L, 4);
-			int arg3 = (int)LuaDLL.luaL_checknumber(L, 5);
-			bool o = obj.SendMessage(arg0, arg1, arg2, arg3);
+			bool o = obj.Disconnect();
 			LuaDLL.lua_pushboolean(L, o);
 			return 1;
 		}
@@ -186,15 +138,381 @@ public class NCSpeedLight_ServerConnectionWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int SendEmpty(IntPtr L)
+	static int Send(IntPtr L)
 	{
 		try
 		{
 			ToLua.CheckArgsCount(L, 2);
 			NCSpeedLight.ServerConnection obj = (NCSpeedLight.ServerConnection)ToLua.CheckObject(L, 1, typeof(NCSpeedLight.ServerConnection));
+			NCSpeedLight.NetPacket arg0 = (NCSpeedLight.NetPacket)ToLua.CheckObject(L, 2, typeof(NCSpeedLight.NetPacket));
+			obj.Send(arg0);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_Host(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			NCSpeedLight.ServerConnection obj = (NCSpeedLight.ServerConnection)o;
+			string ret = obj.Host;
+			LuaDLL.lua_pushstring(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index Host on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_Port(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			NCSpeedLight.ServerConnection obj = (NCSpeedLight.ServerConnection)o;
+			int ret = obj.Port;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index Port on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_ReconnectInterval(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			NCSpeedLight.ServerConnection obj = (NCSpeedLight.ServerConnection)o;
+			float ret = obj.ReconnectInterval;
+			LuaDLL.lua_pushnumber(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index ReconnectInterval on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_Socket(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			NCSpeedLight.ServerConnection obj = (NCSpeedLight.ServerConnection)o;
+			System.Net.Sockets.Socket ret = obj.Socket;
+			ToLua.PushObject(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index Socket on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_SocketErrorStr(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			NCSpeedLight.ServerConnection obj = (NCSpeedLight.ServerConnection)o;
+			string ret = obj.SocketErrorStr;
+			LuaDLL.lua_pushstring(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index SocketErrorStr on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_OnConnectedFunc(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			NCSpeedLight.ServerConnection obj = (NCSpeedLight.ServerConnection)o;
+			NCSpeedLight.ServerConnection.StatusDelegate ret = obj.OnConnectedFunc;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnConnectedFunc on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_OnDisconnectedFunc(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			NCSpeedLight.ServerConnection obj = (NCSpeedLight.ServerConnection)o;
+			NCSpeedLight.ServerConnection.StatusDelegate ret = obj.OnDisconnectedFunc;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnDisconnectedFunc on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_OnReconnectedFunc(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			NCSpeedLight.ServerConnection obj = (NCSpeedLight.ServerConnection)o;
+			NCSpeedLight.ServerConnection.StatusDelegate ret = obj.OnReconnectedFunc;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnReconnectedFunc on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_Host(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			NCSpeedLight.ServerConnection obj = (NCSpeedLight.ServerConnection)o;
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.Host = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index Host on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_Port(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			NCSpeedLight.ServerConnection obj = (NCSpeedLight.ServerConnection)o;
 			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
-			bool o = obj.SendEmpty(arg0);
-			LuaDLL.lua_pushboolean(L, o);
+			obj.Port = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index Port on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_ReconnectInterval(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			NCSpeedLight.ServerConnection obj = (NCSpeedLight.ServerConnection)o;
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
+			obj.ReconnectInterval = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index ReconnectInterval on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_Socket(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			NCSpeedLight.ServerConnection obj = (NCSpeedLight.ServerConnection)o;
+			System.Net.Sockets.Socket arg0 = (System.Net.Sockets.Socket)ToLua.CheckObject(L, 2, typeof(System.Net.Sockets.Socket));
+			obj.Socket = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index Socket on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_SocketErrorStr(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			NCSpeedLight.ServerConnection obj = (NCSpeedLight.ServerConnection)o;
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.SocketErrorStr = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index SocketErrorStr on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_OnConnectedFunc(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			NCSpeedLight.ServerConnection obj = (NCSpeedLight.ServerConnection)o;
+			NCSpeedLight.ServerConnection.StatusDelegate arg0 = null;
+			LuaTypes funcType2 = LuaDLL.lua_type(L, 2);
+
+			if (funcType2 != LuaTypes.LUA_TFUNCTION)
+			{
+				 arg0 = (NCSpeedLight.ServerConnection.StatusDelegate)ToLua.CheckObject(L, 2, typeof(NCSpeedLight.ServerConnection.StatusDelegate));
+			}
+			else
+			{
+				LuaFunction func = ToLua.ToLuaFunction(L, 2);
+				arg0 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.ServerConnection.StatusDelegate), func) as NCSpeedLight.ServerConnection.StatusDelegate;
+			}
+
+			obj.OnConnectedFunc = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnConnectedFunc on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_OnDisconnectedFunc(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			NCSpeedLight.ServerConnection obj = (NCSpeedLight.ServerConnection)o;
+			NCSpeedLight.ServerConnection.StatusDelegate arg0 = null;
+			LuaTypes funcType2 = LuaDLL.lua_type(L, 2);
+
+			if (funcType2 != LuaTypes.LUA_TFUNCTION)
+			{
+				 arg0 = (NCSpeedLight.ServerConnection.StatusDelegate)ToLua.CheckObject(L, 2, typeof(NCSpeedLight.ServerConnection.StatusDelegate));
+			}
+			else
+			{
+				LuaFunction func = ToLua.ToLuaFunction(L, 2);
+				arg0 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.ServerConnection.StatusDelegate), func) as NCSpeedLight.ServerConnection.StatusDelegate;
+			}
+
+			obj.OnDisconnectedFunc = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnDisconnectedFunc on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_OnReconnectedFunc(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			NCSpeedLight.ServerConnection obj = (NCSpeedLight.ServerConnection)o;
+			NCSpeedLight.ServerConnection.StatusDelegate arg0 = null;
+			LuaTypes funcType2 = LuaDLL.lua_type(L, 2);
+
+			if (funcType2 != LuaTypes.LUA_TFUNCTION)
+			{
+				 arg0 = (NCSpeedLight.ServerConnection.StatusDelegate)ToLua.CheckObject(L, 2, typeof(NCSpeedLight.ServerConnection.StatusDelegate));
+			}
+			else
+			{
+				LuaFunction func = ToLua.ToLuaFunction(L, 2);
+				arg0 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.ServerConnection.StatusDelegate), func) as NCSpeedLight.ServerConnection.StatusDelegate;
+			}
+
+			obj.OnReconnectedFunc = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnReconnectedFunc on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int NCSpeedLight_ServerConnection_StatusDelegate(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.ServerConnection.StatusDelegate), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.ServerConnection.StatusDelegate), func, self);
+				ToLua.Push(L, arg1);
+			}
 			return 1;
 		}
 		catch(Exception e)

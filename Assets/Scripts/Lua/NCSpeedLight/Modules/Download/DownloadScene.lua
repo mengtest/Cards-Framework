@@ -84,7 +84,7 @@ function DownloadScene.CheckVersion()
 			UIManager.OpenTipsDialog("请求超时，请检查设备的网络状况");
 		end;
 		UIManager.OpenProgressDialog(option);
-		NetManager.CreateConnection(ServerType.Login, json.accountserverip, json.accountserverport, DownloadScene.OnConnectLoginServer, DownloadScene.OnDisconnectLoginServer);
+		NetManager.ConnectTo(ServerType.Login, json.accountserverip, json.accountserverport, DownloadScene.OnConnectLoginServer, DownloadScene.OnDisconnectLoginServer, nil);
 	else
 		Log.Info("DownloadScene.CheckVersion: account server ip is " .. SharedVariable.IP);
 		Log.Info("DownloadScene.CheckVersion: account server port is " .. SharedVariable.PORT);
@@ -96,7 +96,7 @@ function DownloadScene.CheckVersion()
 			UIManager.OpenTipsDialog("请求超时，请检查设备的网络状况");
 		end;
 		UIManager.OpenProgressDialog(option);
-		NetManager.CreateConnection(ServerType.Login, SharedVariable.IP, SharedVariable.PORT, DownloadScene.OnConnectLoginServer, DownloadScene.OnDisconnectLoginServer);
+		NetManager.ConnectTo(ServerType.Login, SharedVariable.IP, SharedVariable.PORT, DownloadScene.OnConnectLoginServer, DownloadScene.OnDisconnectLoginServer, nil);
 	end
 end
 
