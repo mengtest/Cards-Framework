@@ -40,8 +40,6 @@ require "NCSpeedLight.Modules.MaJiang.UI_MJOperate"
 require "NCSpeedLight.Modules.MaJiang.MJSceneController"
 require "NCSpeedLight.Modules.MaJiang.MJDefine"
 
-require "NCSpeedLight.Core.Network.TestReconnect"
-
 Game =
 {
 	GO = nil,
