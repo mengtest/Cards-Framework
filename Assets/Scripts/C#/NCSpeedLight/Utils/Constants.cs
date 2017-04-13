@@ -15,7 +15,7 @@ namespace NCSpeedLight
 {
     public static class Constants
     {
-        public static string GAME_NAME = "Cards";
+        public static string GAME_NAME = "HZMJ_LUA";
 
         public static string DATA_PATH
         {
@@ -41,6 +41,14 @@ namespace NCSpeedLight
             }
         }
 
+        public static string BUILD_SCRIPT_BUNDLE_PATH
+        {
+            get
+            {
+                return Application.dataPath.Substring(0, Application.dataPath.IndexOf("/Assets")) + "/AssetBundles/" + PLATFORM_NAME + "/Scripts/";
+            }
+        }
+
         public static string SCRIPT_BUNDLE_PATH
         {
             get
@@ -51,7 +59,7 @@ namespace NCSpeedLight
                 }
                 else if (Application.isEditor)
                 {
-                    return Application.dataPath.Substring(0, Application.dataPath.IndexOf("/Assets")) + "/AssetBundles/" + PLATFORM_NAME + "/Scripts/";
+                    return DATA_PATH + "Scripts/";
                 }
                 else
                 {

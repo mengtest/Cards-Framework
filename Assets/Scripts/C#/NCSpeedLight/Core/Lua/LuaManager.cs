@@ -110,7 +110,7 @@ namespace NCSpeedLight
 
         private static void InitializeInternalLuaBundle()
         {
-            string  manifest = Constants.ASSET_BUNDLE_PATH + "Scripts/manifest.txt";
+            string manifest = Constants.ASSET_BUNDLE_PATH + "Scripts/manifest.txt";
             Helper.Log("LuaManager.InitializeInternalLuaBundle: manifest path is " + manifest);
             if (File.Exists(manifest) == false)
             {

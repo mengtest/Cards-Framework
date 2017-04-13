@@ -38,13 +38,11 @@ namespace NCSpeedLight
             Loom.Initialize();
             ExtractInternalScripts();
         }
-        /// <summary>
-        /// 解压包内容里的脚本文件
-        /// </summary>
+
         private void ExtractInternalScripts()
         {
             Helper.Log("Game.ExtractInternalScripts.Awake()");
-            if (Application.isEditor == true)
+            if (Application.isEditor == true && Constants.LUA_BUNDLE_MODE == false)
             {
                 StartGame();
             }
@@ -53,92 +51,124 @@ namespace NCSpeedLight
                 StartCoroutine(OnExtractInternalScripts());
             }
         }
-        /// <summary>
-        /// 协同解压脚本
-        /// </summary>
-        /// <returns></returns>
+
         private IEnumerator OnExtractInternalScripts()
         {
             Helper.Log("Game.OnExtractInternalScripts.Awake()");
             string dataPath = Constants.SCRIPT_BUNDLE_PATH;  //数据目录
-            string resPath = Constants.APP_CONTENT_PATH + "Scripts/"; //游戏包资源目录
+            string internalPath = Constants.APP_CONTENT_PATH + "Scripts/"; //游戏包资源目录
 
-            if (Directory.Exists(dataPath))
+            if (Directory.Exists(dataPath) == false)
             {
-                Directory.Delete(dataPath, true);
-            }
-            Directory.CreateDirectory(dataPath);
-
-            string infile = resPath + "manifest.txt";
-            string outfile = dataPath + "manifest.txt";
-            if (File.Exists(outfile))
-            {
-                File.Delete(outfile);
+                Directory.CreateDirectory(dataPath);
             }
 
-            string message = "正在解包文件:>manifest.txt";
-            Debug.Log(message);
+            string internalManifestFile = internalPath + "manifest.txt";
+            string manifestFile = dataPath + "manifest.txt";
+            string tempManifestFile = dataPath + "manifest_temp.txt";
 
+            // 备份旧的manifest
+            if (File.Exists(manifestFile))
+            {
+                File.Copy(manifestFile, tempManifestFile, true);
+            }
+
+            // 从包文件里面解出manifest
             if (Application.platform == RuntimePlatform.Android)
             {
-                WWW www = new WWW(infile);
+                WWW www = new WWW(internalManifestFile);
                 yield return www;
 
                 if (www.isDone)
                 {
-                    File.WriteAllBytes(outfile, www.bytes);
+                    File.WriteAllBytes(manifestFile, www.bytes);
                 }
                 yield return 0;
             }
             else
             {
-                File.Copy(infile, outfile, true);
+                File.Copy(internalManifestFile, manifestFile, true);
             }
             yield return new WaitForEndOfFrame();
 
-            //释放所有文件到数据目录
-            string[] files = File.ReadAllLines(outfile);
-            foreach (var file in files)
+            // 对比两个manifest是否相同
+            string md5old = Helper.MD5File(tempManifestFile);
+            string md5new = Helper.MD5File(manifestFile);
+            if (md5old != md5new)
             {
-                string[] fs = file.Split('|');
-                infile = resPath + fs[0];  //
-                outfile = dataPath + fs[0];
+                Helper.Log("Game.OnExtractInternalScripts: md5 is different,start to extract.");
 
-                message = "正在解包文件:>" + fs[0];
-                Debug.Log("正在解包文件:>" + infile);
+                // 读出文件列表
+                string[] files = File.ReadAllLines(manifestFile);
 
-                string dir = Path.GetDirectoryName(outfile);
-                if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+                // 删除原有文件
+                if (Directory.Exists(dataPath))
+                {
+                    Directory.Delete(dataPath, true);
+                }
+                Directory.CreateDirectory(dataPath);
 
+                // 拷贝新的manifest文件
                 if (Application.platform == RuntimePlatform.Android)
                 {
-                    WWW www = new WWW(infile);
+                    WWW www = new WWW(internalManifestFile);
                     yield return www;
 
                     if (www.isDone)
                     {
-                        File.WriteAllBytes(outfile, www.bytes);
+                        File.WriteAllBytes(manifestFile, www.bytes);
                     }
                     yield return 0;
                 }
                 else
                 {
-                    if (File.Exists(outfile))
-                    {
-                        File.Delete(outfile);
-                    }
-                    File.Copy(infile, outfile, true);
+                    File.Copy(internalManifestFile, manifestFile, true);
                 }
                 yield return new WaitForEndOfFrame();
+
+                // 拷贝清单里的其他文件
+                foreach (var file in files)
+                {
+                    string[] fs = file.Split('|');
+                    string internalFilePath = internalPath + fs[0];
+                    string filePath = dataPath + fs[0];
+                    Helper.Log("Game.OnExtractInternalScripts: extracting " + internalFilePath + " to " + filePath);
+                    string dir = Path.GetDirectoryName(filePath);
+                    if (Directory.Exists(dir) == false)
+                    {
+                        Directory.CreateDirectory(dir);
+                    }
+
+                    if (Application.platform == RuntimePlatform.Android)
+                    {
+                        WWW www = new WWW(internalFilePath);
+                        yield return www;
+                        if (www.isDone)
+                        {
+                            File.WriteAllBytes(filePath, www.bytes);
+                        }
+                        yield return 0;
+                    }
+                    else
+                    {
+                        if (File.Exists(filePath))
+                        {
+                            File.Delete(filePath);
+                        }
+                        File.Copy(internalFilePath, filePath, true);
+                    }
+                    yield return new WaitForEndOfFrame();
+                }
             }
-            message = "解包完成!!!";
+            else
+            {
+                Helper.Log("Game.OnExtractInternalScripts: md5 is same,neednt extract.");
+            }
             yield return new WaitForSeconds(0.1f);
-            message = string.Empty;
+            Helper.Log("Game.OnExtractInternalScripts: extract internal scripts done.");
             StartGame();
         }
-        /// <summary>
-        /// 启动游戏
-        /// </summary>
+
         private void StartGame()
         {
             OK = true;
@@ -158,6 +188,12 @@ namespace NCSpeedLight
                 AwakeFunction.Call(gameObject);
             }
         }
+
+        public void RestartGame()
+        {
+
+        }
+
         private void Update()
         {
             if (OK && UpdateFunction != null)

@@ -67,7 +67,7 @@ public class NCSpeedLight_ConstantsWrap
 	{
 		try
 		{
-			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.SCRIPT_BUNDLE_PATH);
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.BUILD_SCRIPT_BUNDLE_PATH);
 			return 1;
 		}
 		catch(Exception e)

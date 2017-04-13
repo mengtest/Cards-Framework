@@ -1091,6 +1091,10 @@ namespace NCSpeedLight
 
         public static string MD5File(string file)
         {
+            if (File.Exists(file) == false)
+            {
+                return string.Empty;
+            }
             try
             {
                 FileStream fs = new FileStream(file, FileMode.Open);
@@ -1105,9 +1109,9 @@ namespace NCSpeedLight
                 }
                 return sb.ToString();
             }
-            catch (Exception ex)
+            catch
             {
-                throw new Exception("MD5File() fail, error:" + ex.Message);
+                return string.Empty;
             }
         }
 
