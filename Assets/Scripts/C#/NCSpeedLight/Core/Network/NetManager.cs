@@ -17,7 +17,7 @@ namespace NCSpeedLight
     {
         private static NetManager m_Instance;
 
-        private static Dictionary<int, ServerConnection> m_Connections = new Dictionary<int, ServerConnection>();
+        private static Dictionary<int, NetConnection> m_Connections = new Dictionary<int, NetConnection>();
 
         public static NetManager Instance
         {
@@ -35,19 +35,19 @@ namespace NCSpeedLight
 
         public static void Initialize()
         {
-            m_Connections = new Dictionary<int, ServerConnection>();
+            m_Connections = new Dictionary<int, NetConnection>();
         }
 
-        public static ServerConnection ConnectTo(int type, string host, int post, ServerConnection.StatusDelegate onConnected, ServerConnection.StatusDelegate onDisconnected, ServerConnection.StatusDelegate onReconnected)
+        public static NetConnection ConnectTo(int type, string host, int post, NetConnection.StatusDelegate onConnected, NetConnection.StatusDelegate onDisconnected, NetConnection.StatusDelegate onReconnected, NetConnection.StatusDelegate onErrorOccupied)
         {
             if (m_Connections.ContainsKey(type))
             {
                 DisconnectFrom(type);
             }
-            ServerConnection connection = new ServerConnection(host, post);
-            connection.OnConnectedFunc = onConnected;
-            connection.OnDisconnectedFunc = onDisconnected;
-            connection.OnReconnectedFunc = onReconnected;
+            NetConnection connection = new NetConnection(host, post, onConnected, onDisconnected, onReconnected, onErrorOccupied);
+            connection.OnConnected = onConnected;
+            connection.OnDisconnected = onDisconnected;
+            connection.OnReconnected = onReconnected;
             connection.Connect();
             m_Connections.Add(type, connection);
             return connection;
@@ -55,7 +55,7 @@ namespace NCSpeedLight
 
         public static void DisconnectFrom(int type)
         {
-            ServerConnection connection = null;
+            NetConnection connection = null;
             if (m_Connections.TryGetValue(type, out connection))
             {
                 connection.Disconnect();
@@ -63,20 +63,20 @@ namespace NCSpeedLight
             }
         }
 
-        public static ServerConnection GetConnection(int type)
+        public static NetConnection GetConnection(int type)
         {
-            ServerConnection connection;
+            NetConnection connection;
             m_Connections.TryGetValue(type, out connection);
             return connection;
         }
 
         public static void DisconnectAll()
         {
-            Dictionary<int, ServerConnection>.Enumerator it = m_Connections.GetEnumerator();
+            Dictionary<int, NetConnection>.Enumerator it = m_Connections.GetEnumerator();
             for (int i = 0; i < m_Connections.Count; i++)
             {
                 it.MoveNext();
-                ServerConnection connection = it.Current.Value;
+                NetConnection connection = it.Current.Value;
                 if (connection != null)
                 {
                     connection.Disconnect();
@@ -97,12 +97,12 @@ namespace NCSpeedLight
 
         public static void SendEvent(int msgID, byte[] msgBuffer, int playerID, int serverID, int serverType = 1)
         {
-            ServerConnection connection = null;
+            NetConnection connection = null;
             if (m_Connections.TryGetValue(serverType, out connection))
             {
                 NetPacket packet = new NetPacket(msgID, msgBuffer.Length);
                 packet.SetBody(msgBuffer);
-                packet.SetUserData(playerID);
+                packet.SetPlayerID(playerID);
                 packet.SetServerID(serverID);
                 connection.Send(packet);
             }

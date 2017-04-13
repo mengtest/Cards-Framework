@@ -29,6 +29,8 @@ function LoginScene.Initialize()
 	if LoginScene.IsInitialized == false then
 		LoginScene.IsInitialized = true;
 		LoginScene.OpenLoginRecord();
+		NetManager.RegisterEvent(GameMessage.GM_RESTORE_CONNECT_FROM_OFFLINEHANG_FAILED, LoginScene.OnReturnReconnectToLogicServerFail);
+		NetManager.RegisterEvent(GameMessage.GM_RESTORE_CONNECT_FROM_OFFLINEHANG_OK, LoginScene.OnReturnReconnectToLogicServerSuccess);
 	end
 end
 
@@ -41,6 +43,7 @@ function LoginScene.Begin()
 	NetManager.RegisterEvent(GameMessage.GM_ROLELIST_RETURN, LoginScene.OnAccountRolesReturn);
 	NetManager.RegisterEvent(GameMessage.GM_ROLE_LOGIN_RETURN, LoginScene.OnRoleLoginReturn);
 	NetManager.RegisterEvent(GameMessage.GM_ROLE_CREATE_RETURN, LoginScene.OnCreateRoleReturn);
+	
 	LoginScene.RequestVerifyVersion()
 end
 
@@ -287,7 +290,7 @@ function LoginScene.OnChoseAreaReturn(evt)
 		Log.Info("LoginScene.OnChoseAreaReturn: logic server port is " .. obj.m_PortNumber);
 		LoginScene.LogicServerIP = obj.m_ServerIP;
 		LoginScene.LoginServerPort = obj.m_PortNumber;
-		NetManager.ConnectTo(ServerType.Logic, LoginScene.LogicServerIP, LoginScene.LoginServerPort, LoginScene.OnConnectLogicServer, LoginScene.OnDisconnectLogicServer, LoginScene.OnReconnectLogicServer);
+		NetManager.ConnectTo(ServerType.Logic, LoginScene.LogicServerIP, LoginScene.LoginServerPort, LoginScene.OnConnectLogicServer, LoginScene.OnDisconnectLogicServer, LoginScene.OnReconnectLogicServer, LoginScene.OnLogicServerErrorOccupied);
 	else
 		Log.Info("LoginScene.OnChoseAreaReturn：选区失败");
 		UIManager.CloseWindow(UIType.UI_SceneLoad);
@@ -305,23 +308,46 @@ function LoginScene.OnConnectLogicServer(connection)
 end
 
 function LoginScene.OnDisconnectLogicServer(connection)
+	Log.Info("LoginScene.OnDisconnectLogicServer");
 	if SceneManager.CurrentScene ~= nil then
 		SceneManager.CurrentScene.OnDisconnectFromLogicServer();
 	end
-	LoginScene.DisconnectTimeStamp = Time.realtimeSinceStartup;
-	local option = ProgressDialogOption.New();
-	option.Content = "网络异常，重新连接中...";
-	UIManager.OpenProgressDialog(option);
-	connection:Reconnect();
-	Log.Info("LoginScene.OnDisconnectLogicServer: 逻辑服务器异常,启动重连,时间戳：" .. tostring(LoginScene.DisconnectTimeStamp));
 end
 
 function LoginScene.OnReconnectLogicServer(connection)
 	UIManager.CloseProgressDialog();
 	Log.Info("LoginScene.OnReconnectLogicServer: 成功重连至逻辑服务器,耗时：" .. tostring(Time.realtimeSinceStartup - LoginScene.DisconnectTimeStamp) .. "s");
+	LoginScene.RequestReconnectToLogicServer();
+end
+
+function LoginScene.OnLogicServerErrorOccupied(connection, error)
+	Log.Error("LoginScene.OnLogicServerErrorOccupied: error message: " .. error);
+	LoginScene.DisconnectTimeStamp = Time.realtimeSinceStartup;
+	local option = ProgressDialogOption.New();
+	option.Content = "网络异常，重新连接中...";
+	UIManager.OpenProgressDialog(option);
+	connection:Reconnect();
+	Log.Info("LoginScene.OnLogicServerErrorOccupied: 逻辑服务器异常,启动重连,时间戳：" .. tostring(LoginScene.DisconnectTimeStamp));
+end
+
+function LoginScene.RequestReconnectToLogicServer()
+	Log.Info("LoginScene.RequestReconnectToLogicServer");
+	local msg = {};
+	msg.m_AccountID = LoginScene.Token.AccountID;
+	msg.m_RoleID = LoginScene.Token.RoleID;
+	msg.m_randstr = LoginScene.Token.AccountToken;
+	NetManager.SendEventToLogicServer(GameMessage.GM_RESTORE_CONNECT_FROM_OFFLINEHANG, PBMessage.GMOffLineReconnect, msg);
+end
+
+function LoginScene.OnReturnReconnectToLogicServerSuccess(evt)
+	Log.Info("LoginScene.OnReturnReconnectToLogicServerSuccess");
 	if SceneManager.CurrentScene ~= nil then
 		SceneManager.CurrentScene.OnReconnectToLogicServer();
 	end
+end
+
+function LoginScene.OnReturnReconnectToLogicServerFail(evt)
+	Log.Info("LoginScene.OnReturnReconnectToLogicServerFail");
 end
 
 function LoginScene.RequestAccountRoles()

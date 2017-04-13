@@ -22,7 +22,7 @@ public static class DelegateFactory
 		dict.Add(typeof(System.Predicate<int>), System_Predicate_int);
 		dict.Add(typeof(System.Action<int>), System_Action_int);
 		dict.Add(typeof(System.Comparison<int>), System_Comparison_int);
-		dict.Add(typeof(NCSpeedLight.ServerConnection.StatusDelegate), NCSpeedLight_ServerConnection_StatusDelegate);
+		dict.Add(typeof(NCSpeedLight.NetConnection.StatusDelegate), NCSpeedLight_NetConnection_StatusDelegate);
 		dict.Add(typeof(UIEventListener.VoidDelegate), UIEventListener_VoidDelegate);
 		dict.Add(typeof(UnityEngine.Camera.CameraCallback), UnityEngine_Camera_CameraCallback);
 		dict.Add(typeof(UnityEngine.Application.LogCallback), UnityEngine_Application_LogCallback);
@@ -421,48 +421,50 @@ public static class DelegateFactory
 		}
 	}
 
-	class NCSpeedLight_ServerConnection_StatusDelegate_Event : LuaDelegate
+	class NCSpeedLight_NetConnection_StatusDelegate_Event : LuaDelegate
 	{
-		public NCSpeedLight_ServerConnection_StatusDelegate_Event(LuaFunction func) : base(func) { }
-		public NCSpeedLight_ServerConnection_StatusDelegate_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+		public NCSpeedLight_NetConnection_StatusDelegate_Event(LuaFunction func) : base(func) { }
+		public NCSpeedLight_NetConnection_StatusDelegate_Event(LuaFunction func, LuaTable self) : base(func, self) { }
 
-		public void Call(NCSpeedLight.ServerConnection param0)
+		public void Call(NCSpeedLight.NetConnection param0, object param1)
 		{
 			func.BeginPCall();
 			func.PushObject(param0);
+			func.Push(param1);
 			func.PCall();
 			func.EndPCall();
 		}
 
-		public void CallWithSelf(NCSpeedLight.ServerConnection param0)
+		public void CallWithSelf(NCSpeedLight.NetConnection param0, object param1)
 		{
 			func.BeginPCall();
 			func.Push(self);
 			func.PushObject(param0);
+			func.Push(param1);
 			func.PCall();
 			func.EndPCall();
 		}
 	}
 
-	public static Delegate NCSpeedLight_ServerConnection_StatusDelegate(LuaFunction func, LuaTable self, bool flag)
+	public static Delegate NCSpeedLight_NetConnection_StatusDelegate(LuaFunction func, LuaTable self, bool flag)
 	{
 		if (func == null)
 		{
-			NCSpeedLight.ServerConnection.StatusDelegate fn = delegate(NCSpeedLight.ServerConnection param0) { };
+			NCSpeedLight.NetConnection.StatusDelegate fn = delegate(NCSpeedLight.NetConnection param0, object param1) { };
 			return fn;
 		}
 
 		if(!flag)
 		{
-			NCSpeedLight_ServerConnection_StatusDelegate_Event target = new NCSpeedLight_ServerConnection_StatusDelegate_Event(func);
-			NCSpeedLight.ServerConnection.StatusDelegate d = target.Call;
+			NCSpeedLight_NetConnection_StatusDelegate_Event target = new NCSpeedLight_NetConnection_StatusDelegate_Event(func);
+			NCSpeedLight.NetConnection.StatusDelegate d = target.Call;
 			target.method = d.Method;
 			return d;
 		}
 		else
 		{
-			NCSpeedLight_ServerConnection_StatusDelegate_Event target = new NCSpeedLight_ServerConnection_StatusDelegate_Event(func, self);
-			NCSpeedLight.ServerConnection.StatusDelegate d = target.CallWithSelf;
+			NCSpeedLight_NetConnection_StatusDelegate_Event target = new NCSpeedLight_NetConnection_StatusDelegate_Event(func, self);
+			NCSpeedLight.NetConnection.StatusDelegate d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}

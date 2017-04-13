@@ -37,7 +37,7 @@ public static class CustomSettings
         _DT(typeof(System.Predicate<int>)),
         _DT(typeof(System.Action<int>)),
         _DT(typeof(System.Comparison<int>)),
-        _DT(typeof(ServerConnection.StatusDelegate)),
+        _DT(typeof(NetConnection.StatusDelegate)),
         _DT(typeof(UIEventListener.VoidDelegate)),
     };
 
@@ -175,7 +175,7 @@ public static class CustomSettings
 
 
          _GT(typeof(NetManager)),
-         _GT(typeof(ServerConnection)),
+         _GT(typeof(NetConnection)),
 
          _GT(typeof(Helper)),
          _GT(typeof(UIHelper)),

@@ -2,7 +2,7 @@
             // Copyright © 2014-2017 NCSpeedLight
             // 
             // FileName: NetPacket.cs
-			// Describle:  
+			// Describle:  消息包
 			// Created By:  Wells Hsu
 			// Date&Time:  2016/3/3 19:11:09
             // Modify History:
@@ -16,7 +16,8 @@ namespace NCSpeedLight
     public class NetPacket
     {
         private int m_MessageID;// message id
-        private byte[] m_Buffer;// message buffer,include header and body
+        private byte[] m_HeaderBuffer;
+        private byte[] m_BodyBuffer;
 
         public const int PACK_VERSION_OFFSET = 2;// packet version
         public const int PACK_LENGTH_OFFSET = 3;// length offset
@@ -29,28 +30,27 @@ namespace NCSpeedLight
         public const int PACK_VERSION = 1;// packet version
         public const int PACK_CODE_MSG_VERSION = 3;//
 
-        /// <summary>
-        /// Constructor,generate packet header.
-        /// </summary>
-        /// <param name="msgID"></param>
-        /// <param name="bodySize"></param>
-        public NetPacket(int msgID, int bodySize)
+        public NetPacket(int id, int bodySize)
         {
-            m_MessageID = msgID;
-            m_Buffer = new byte[bodySize + PACK_HEAD_SIZE];
-            m_Buffer[0] = 8;
-            m_Buffer[1] = 8;
+            m_MessageID = id;
+            m_HeaderBuffer = new byte[PACK_HEAD_SIZE];
+            m_HeaderBuffer[0] = 8;
+            m_HeaderBuffer[1] = 8;
 
             byte[] bytes = BitConverter.GetBytes(PACK_VERSION);
-            Array.Copy(bytes, 0, m_Buffer, PACK_VERSION_OFFSET, bytes.Length);
+            Array.Copy(bytes, 0, m_HeaderBuffer, PACK_VERSION_OFFSET, bytes.Length);
 
             bytes = BitConverter.GetBytes(bodySize + PACK_HEAD_SIZE);
-            Array.Copy(bytes, 0, m_Buffer, PACK_LENGTH_OFFSET, bytes.Length);
+            Array.Copy(bytes, 0, m_HeaderBuffer, PACK_LENGTH_OFFSET, bytes.Length);
 
             bytes = BitConverter.GetBytes(m_MessageID);
-            Array.Copy(bytes, 0, m_Buffer, PACK_MESSAGEID_OFFSET, bytes.Length);
+            Array.Copy(bytes, 0, m_HeaderBuffer, PACK_MESSAGEID_OFFSET, bytes.Length);
+
+            if (bodySize < 0) bodySize = 0;
+            m_BodyBuffer = new byte[bodySize];
         }
-        public static bool IsPacketHeader(Byte[] data)
+
+        public static bool IsPacketHeader(byte[] data)
         {
             if (data.Length != PACK_HEAD_SIZE)
             {
@@ -62,73 +62,84 @@ namespace NCSpeedLight
             }
             return true;
         }
-        public byte[] GetBuffer() { return m_Buffer; }
-        public int GetMessageID() { return m_MessageID; }
-        public byte[] GetBody()
+
+        public byte[] GetBuffer()
         {
-            if (m_Buffer == null || m_Buffer.Length <= PACK_HEAD_SIZE)
-            {
-                return null;
-            }
-            byte[] data = new byte[m_Buffer.Length - PACK_HEAD_SIZE];
-            Array.Copy(m_Buffer, PACK_HEAD_SIZE, data, 0, data.Length);
-            return data;
+            byte[] buffer = new byte[GetTotalSize()];
+            Array.Copy(m_HeaderBuffer, 0, buffer, 0, m_HeaderBuffer.Length);
+            Array.Copy(m_BodyBuffer, 0, buffer, m_HeaderBuffer.Length, m_BodyBuffer.Length);
+            return buffer;
         }
+
+        public int GetMessageID() { return m_MessageID; }
+
         public bool SetHeader(byte[] data)
         {
             if (data == null || data.Length < PACK_HEAD_SIZE)
                 return false;
+            Array.Copy(data, 0, m_HeaderBuffer, 0, PACK_HEAD_SIZE);
+            return true;
+        }
 
-            if (m_Buffer == null || m_Buffer.Length < PACK_HEAD_SIZE)
-                return false;
-            Array.Copy(data, 0, m_Buffer, 0, data.Length);
+        public bool SetPlayerID(int id)
+        {
+            byte[] bytes = BitConverter.GetBytes(id);
+            Array.Copy(bytes, 0, m_HeaderBuffer, PACK_USERDATA_OFFSET, bytes.Length);
             return true;
         }
-        public bool SetUserData(int userData)
+
+        public int GetPlayerID()
         {
-            if (m_Buffer == null || m_Buffer.Length < PACK_HEAD_SIZE)
-            {
-                return false;
-            }
-            byte[] bytes = BitConverter.GetBytes(userData);
-            Array.Copy(bytes, 0, m_Buffer, PACK_USERDATA_OFFSET, bytes.Length);
-            return true;
-        }
-        public int GetUserData()
-        {
-            int data = BitConverter.ToInt32(m_Buffer, PACK_USERDATA_OFFSET);
+            int data = BitConverter.ToInt32(m_HeaderBuffer, PACK_USERDATA_OFFSET);
             return data;
         }
+
         public bool SetServerID(int id)
         {
-            if (m_Buffer == null || m_Buffer.Length < PACK_HEAD_SIZE)
-            {
-                return false;
-            }
             byte[] bytes = BitConverter.GetBytes(id);
-            Array.Copy(bytes, 0, m_Buffer, PACK_SERVERID_OFFSET, bytes.Length);
+            Array.Copy(bytes, 0, m_HeaderBuffer, PACK_SERVERID_OFFSET, bytes.Length);
             return true;
         }
+
         public int GetServerID()
         {
-            int data = BitConverter.ToInt32(m_Buffer, PACK_USERDATA_OFFSET);
+            int data = BitConverter.ToInt32(m_HeaderBuffer, PACK_USERDATA_OFFSET);
             return data;
         }
-        public bool SetBody(Byte[] data)
-        {
-            if (data == null)
-                return false;
-            if (m_Buffer == null || m_Buffer.Length < data.Length + PACK_HEAD_SIZE)
-                return false;
 
-            Array.Copy(data, 0, m_Buffer, PACK_MESSAGE_OFFSET, data.Length);
+        public bool SetBody(byte[] data)
+        {
+            m_BodyBuffer = data;
             return true;
         }
+
+        public byte[] GetBody()
+        {
+            return m_BodyBuffer;
+        }
+
         public int GetTotalSize()
         {
-            if (m_Buffer == null)
+            if (m_BodyBuffer == null)
+            {
+                return PACK_HEAD_SIZE;
+            }
+            else
+            {
+                return m_BodyBuffer.Length + PACK_HEAD_SIZE;
+            }
+        }
+
+        public int GetBodySize()
+        {
+            if (m_BodyBuffer == null)
+            {
                 return 0;
-            return m_Buffer.Length;
+            }
+            else
+            {
+                return m_BodyBuffer.Length;
+            }
         }
     }
 }

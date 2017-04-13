@@ -3,9 +3,6 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Text;
-using NCSpeedLight;
-
-//https://msdn.microsoft.com/zh-cn/library/bew39x2a
 
 // State object for receiving data from remote device.
 public class StateObject
@@ -44,7 +41,7 @@ public class AsynchronousClient
             // Establish the remote endpoint for the socket.
             // The name of the 
             // remote device is "host.contoso.com".
-            IPHostEntry ipHostInfo = Dns.Resolve("host.contoso.com");
+            IPHostEntry ipHostInfo = Dns.Resolve(Dns.GetHostName());
             IPAddress ipAddress = ipHostInfo.AddressList[0];
             IPEndPoint remoteEP = new IPEndPoint(ipAddress, port);
 
@@ -57,8 +54,16 @@ public class AsynchronousClient
                 new AsyncCallback(ConnectCallback), client);
             connectDone.WaitOne();
 
+            // Send test data to the remote device.
+            Send(client, "This is a test<EOF>");
+            sendDone.WaitOne();
+
             // Receive the response from the remote device.
             Receive(client);
+            receiveDone.WaitOne();
+
+            // Write the response to the console.
+            Console.WriteLine("Response received : {0}", response);
 
             // Release the socket.
             client.Shutdown(SocketShutdown.Both);
@@ -149,10 +154,13 @@ public class AsynchronousClient
         }
     }
 
-    private static void Send(Socket client, NetPacket packet)
+    private static void Send(Socket client, String data)
     {
+        // Convert the string data to byte data using ASCII encoding.
+        byte[] byteData = Encoding.ASCII.GetBytes(data);
+
         // Begin sending the data to the remote device.
-        client.BeginSend(packet.GetBuffer(), 0, packet.GetTotalSize(), 0,
+        client.BeginSend(byteData, 0, byteData.Length, 0,
             new AsyncCallback(SendCallback), client);
     }
 
@@ -176,9 +184,11 @@ public class AsynchronousClient
         }
     }
 
-    //public static int Main(String[] args)
-    //{
-    //    StartClient();
-    //    return 0;
-    //}
+    public static int Main(String[] args)
+    {
+        StartClient();
+        StartClient();
+        StartClient();
+        return 0;
+    }
 }

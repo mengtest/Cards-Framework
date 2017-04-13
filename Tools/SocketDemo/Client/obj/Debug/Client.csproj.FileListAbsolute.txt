@@ -1,0 +1,5 @@
+H:\Personal\Github\Cards-Framework\Tools\SocketDemo\Client\bin\Debug\Client.exe.config
+H:\Personal\Github\Cards-Framework\Tools\SocketDemo\Client\bin\Debug\Client.exe
+H:\Personal\Github\Cards-Framework\Tools\SocketDemo\Client\bin\Debug\Client.pdb
+H:\Personal\Github\Cards-Framework\Tools\SocketDemo\Client\obj\Debug\Client.exe
+H:\Personal\Github\Cards-Framework\Tools\SocketDemo\Client\obj\Debug\Client.pdb

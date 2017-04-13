@@ -32,8 +32,8 @@ function NetManager.InitPBMessage()
 	end
 end
 
-function NetManager.ConnectTo(serverType, host, port, onConnected, onDisconnected, onReconnected)
-	return NCSpeedLight.NetManager.ConnectTo(serverType, host, port, onConnected, onDisconnected, onReconnected);
+function NetManager.ConnectTo(serverType, host, port, onConnected, onDisconnected, onReconnected, onErrorOccupied)
+	return NCSpeedLight.NetManager.ConnectTo(serverType, host, port, onConnected, onDisconnected, onReconnected, onErrorOccupied);
 end
 
 function NetManager.DisconnectFrom(serverType)

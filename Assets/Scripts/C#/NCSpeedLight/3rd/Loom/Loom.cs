@@ -11,8 +11,9 @@ public class Loom : MonoBehaviour
     static int numThreads;
 
     private static Loom _current;
-    private int _count;
     private float _currentTime;
+
+    private static int _mainThreadID;
     public static Loom Current
     {
         get
@@ -26,6 +27,7 @@ public class Loom : MonoBehaviour
     {
         _current = this;
         initialized = true;
+        _mainThreadID = Thread.CurrentThread.ManagedThreadId;
     }
 
     static bool initialized;
@@ -58,6 +60,10 @@ public class Loom : MonoBehaviour
 
     List<DelayedQueueItem> _currentDelayed = new List<DelayedQueueItem>();
 
+    public static bool IsInMainThread(int threadID)
+    {
+        return _mainThreadID == threadID;
+    }
     public static void QueueOnMainThread(Action action)
     {
         QueueOnMainThread(action, 0f);
@@ -73,9 +79,17 @@ public class Loom : MonoBehaviour
         }
         else
         {
-            lock (Current._actions)
+            int threadID = Thread.CurrentThread.ManagedThreadId;
+            if (IsInMainThread(threadID))
             {
-                Current._actions.Add(action);
+                action();
+            }
+            else
+            {
+                lock (Current._actions)
+                {
+                    Current._actions.Add(action);
+                }
             }
         }
     }

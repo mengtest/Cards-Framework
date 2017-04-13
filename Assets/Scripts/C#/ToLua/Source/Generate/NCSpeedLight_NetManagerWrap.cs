@@ -41,50 +41,63 @@ public class NCSpeedLight_NetManagerWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 6);
+			ToLua.CheckArgsCount(L, 7);
 			int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
 			string arg1 = ToLua.CheckString(L, 2);
 			int arg2 = (int)LuaDLL.luaL_checknumber(L, 3);
-			NCSpeedLight.ServerConnection.StatusDelegate arg3 = null;
+			NCSpeedLight.NetConnection.StatusDelegate arg3 = null;
 			LuaTypes funcType4 = LuaDLL.lua_type(L, 4);
 
 			if (funcType4 != LuaTypes.LUA_TFUNCTION)
 			{
-				 arg3 = (NCSpeedLight.ServerConnection.StatusDelegate)ToLua.CheckObject(L, 4, typeof(NCSpeedLight.ServerConnection.StatusDelegate));
+				 arg3 = (NCSpeedLight.NetConnection.StatusDelegate)ToLua.CheckObject(L, 4, typeof(NCSpeedLight.NetConnection.StatusDelegate));
 			}
 			else
 			{
 				LuaFunction func = ToLua.ToLuaFunction(L, 4);
-				arg3 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.ServerConnection.StatusDelegate), func) as NCSpeedLight.ServerConnection.StatusDelegate;
+				arg3 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.NetConnection.StatusDelegate), func) as NCSpeedLight.NetConnection.StatusDelegate;
 			}
 
-			NCSpeedLight.ServerConnection.StatusDelegate arg4 = null;
+			NCSpeedLight.NetConnection.StatusDelegate arg4 = null;
 			LuaTypes funcType5 = LuaDLL.lua_type(L, 5);
 
 			if (funcType5 != LuaTypes.LUA_TFUNCTION)
 			{
-				 arg4 = (NCSpeedLight.ServerConnection.StatusDelegate)ToLua.CheckObject(L, 5, typeof(NCSpeedLight.ServerConnection.StatusDelegate));
+				 arg4 = (NCSpeedLight.NetConnection.StatusDelegate)ToLua.CheckObject(L, 5, typeof(NCSpeedLight.NetConnection.StatusDelegate));
 			}
 			else
 			{
 				LuaFunction func = ToLua.ToLuaFunction(L, 5);
-				arg4 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.ServerConnection.StatusDelegate), func) as NCSpeedLight.ServerConnection.StatusDelegate;
+				arg4 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.NetConnection.StatusDelegate), func) as NCSpeedLight.NetConnection.StatusDelegate;
 			}
 
-			NCSpeedLight.ServerConnection.StatusDelegate arg5 = null;
+			NCSpeedLight.NetConnection.StatusDelegate arg5 = null;
 			LuaTypes funcType6 = LuaDLL.lua_type(L, 6);
 
 			if (funcType6 != LuaTypes.LUA_TFUNCTION)
 			{
-				 arg5 = (NCSpeedLight.ServerConnection.StatusDelegate)ToLua.CheckObject(L, 6, typeof(NCSpeedLight.ServerConnection.StatusDelegate));
+				 arg5 = (NCSpeedLight.NetConnection.StatusDelegate)ToLua.CheckObject(L, 6, typeof(NCSpeedLight.NetConnection.StatusDelegate));
 			}
 			else
 			{
 				LuaFunction func = ToLua.ToLuaFunction(L, 6);
-				arg5 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.ServerConnection.StatusDelegate), func) as NCSpeedLight.ServerConnection.StatusDelegate;
+				arg5 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.NetConnection.StatusDelegate), func) as NCSpeedLight.NetConnection.StatusDelegate;
 			}
 
-			NCSpeedLight.ServerConnection o = NCSpeedLight.NetManager.ConnectTo(arg0, arg1, arg2, arg3, arg4, arg5);
+			NCSpeedLight.NetConnection.StatusDelegate arg6 = null;
+			LuaTypes funcType7 = LuaDLL.lua_type(L, 7);
+
+			if (funcType7 != LuaTypes.LUA_TFUNCTION)
+			{
+				 arg6 = (NCSpeedLight.NetConnection.StatusDelegate)ToLua.CheckObject(L, 7, typeof(NCSpeedLight.NetConnection.StatusDelegate));
+			}
+			else
+			{
+				LuaFunction func = ToLua.ToLuaFunction(L, 7);
+				arg6 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.NetConnection.StatusDelegate), func) as NCSpeedLight.NetConnection.StatusDelegate;
+			}
+
+			NCSpeedLight.NetConnection o = NCSpeedLight.NetManager.ConnectTo(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
 			ToLua.PushObject(L, o);
 			return 1;
 		}
@@ -117,7 +130,7 @@ public class NCSpeedLight_NetManagerWrap
 		{
 			ToLua.CheckArgsCount(L, 1);
 			int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
-			NCSpeedLight.ServerConnection o = NCSpeedLight.NetManager.GetConnection(arg0);
+			NCSpeedLight.NetConnection o = NCSpeedLight.NetManager.GetConnection(arg0);
 			ToLua.PushObject(L, o);
 			return 1;
 		}

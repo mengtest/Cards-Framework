@@ -40,6 +40,8 @@ require "NCSpeedLight.Modules.MaJiang.UI_MJOperate"
 require "NCSpeedLight.Modules.MaJiang.MJSceneController"
 require "NCSpeedLight.Modules.MaJiang.MJDefine"
 
+require "NCSpeedLight.Core.Network.TestReconnect"
+
 Game =
 {
 	GO = nil,
@@ -79,11 +81,11 @@ function Game.LateUpdate()
 end
 
 function Game.OnGUI()
-	-- if UnityEngine.GUI.Button(UnityEngine.Rect(10, 10, 150, 30), "MJGroupCardQueue.PopFront") then
-	-- 	MJGroupCardQueue.PopFront();
+	-- if UnityEngine.GUI.Button(UnityEngine.Rect(10, 10, 150, 30), "TestReconnect.Connect") then
+	-- 	TestReconnect.Connect();
 	-- end
-	-- if UnityEngine.GUI.Button(UnityEngine.Rect(10, 50, 150, 30), "MJGroupCardQueue.PopFront(2)") then
-	-- 	MJGroupCardQueue.PopFront(2);
+	-- if UnityEngine.GUI.Button(UnityEngine.Rect(10, 50, 150, 30), "TestReconnect.SendMsg") then
+	-- 	TestReconnect.SendMsg();
 	-- end
 	-- if UnityEngine.GUI.Button(UnityEngine.Rect(10, 90, 150, 30), "MJGroupCardQueue.PopRear") then
 	-- 	MJGroupCardQueue.PopRear();
@@ -111,14 +113,14 @@ function Game.OnDestroy()
 end
 
 function Game.OnApplicationPause(status)
-	Log.Info("Game.OnApplicationPause: " .. tostring(status));
+	-- Log.Info("Game.OnApplicationPause: " .. tostring(status));
 	if SceneManager.CurrentScene ~= nil then
 		SceneManager.CurrentScene.OnApplicationPause(status);
 	end
 end
 
 function Game.OnApplicationFocus(status)
-	Log.Info("Game.OnApplicationFocus: " .. tostring(status));
+	-- Log.Info("Game.OnApplicationFocus: " .. tostring(status));
 	if SceneManager.CurrentScene ~= nil then
 		-- SceneManager.CurrentScene.OnApplicationFocus(status);
 	end
