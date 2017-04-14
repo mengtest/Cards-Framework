@@ -65,7 +65,9 @@ namespace NCSpeedLight
 
             if (Constants.LUA_BUNDLE_MODE)
             {
+                LuaLoader = new LuaLoader();
                 InitializeToLuaBundle();
+                InitializeInternalLuaBundle();
             }
 
             LuaState.Start();
@@ -73,10 +75,7 @@ namespace NCSpeedLight
             LuaLooper = Instance.gameObject.AddComponent<LuaLooper>();
             LuaLooper.luaState = LuaState;
 
-            if (Constants.LUA_BUNDLE_MODE)
-            {
-                InitializeInternalLuaBundle();
-            }
+
         }
 
         private static void InitializeLibs()
@@ -127,8 +126,11 @@ namespace NCSpeedLight
             {
                 string line = lines[i];
                 string bundleName = line.Split('|')[0];
-                Helper.Log("LuaManager.InitializeInternalLuaBundle: add bundle named " + bundleName);
-                LuaLoader.AddBundle(bundleName);
+                if (bundleName.EndsWith(".assetbundle"))
+                {
+                    Helper.Log("LuaManager.InitializeInternalLuaBundle: add bundle named " + bundleName);
+                    LuaLoader.AddBundle(bundleName);
+                }
             }
         }
 
@@ -139,13 +141,11 @@ namespace NCSpeedLight
 
         private static void InitializeToLuaBundle()
         {
-            LuaLoader = new LuaLoader();
-
-            LuaLoader.AddBundle("tolua");
-            LuaLoader.AddBundle("tolua_system");
-            LuaLoader.AddBundle("tolua_system_reflection");
-            LuaLoader.AddBundle("tolua_unityengine");
-            LuaLoader.AddBundle("tolua_misc");
+            LuaLoader.AddBundle("tolua.assetbundle");
+            LuaLoader.AddBundle("tolua_system.assetbundle");
+            LuaLoader.AddBundle("tolua_system_reflection.assetbundle");
+            LuaLoader.AddBundle("tolua_unityengine.assetbundle");
+            LuaLoader.AddBundle("tolua_misc.assetbundle");
         }
 
         public static object[] DoFile(string filename)
@@ -209,7 +209,8 @@ namespace NCSpeedLight
         /// <param name="bundleName"></param>
         public void AddBundle(string bundleName)
         {
-            if (base.zipMap.ContainsKey(bundleName) == true)
+            string key = bundleName.Substring(0, bundleName.IndexOf(".assetbundle"));
+            if (base.zipMap.ContainsKey(key) == true)
             {
                 return;
             }
@@ -220,7 +221,7 @@ namespace NCSpeedLight
                 AssetBundle bundle = AssetBundle.LoadFromFile(url);
                 if (bundle != null)
                 {
-                    base.AddSearchBundle(bundleName, bundle);
+                    base.AddSearchBundle(key, bundle);
                 }
             }
             else

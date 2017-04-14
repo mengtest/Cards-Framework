@@ -20,6 +20,7 @@ namespace NCSpeedLight
     {
         public static Game Instance;
         private bool OK = false;
+        public UIUpdate UpdateUI;
         public LuaFunction AwakeFunction;
         public LuaFunction UpdateFunction;
         public LuaFunction OnGUIFunction;
@@ -36,146 +37,16 @@ namespace NCSpeedLight
             Application.targetFrameRate = Constants.TARGET_FRAME_RATE;
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
             Loom.Initialize();
-            ExtractInternalScripts();
         }
 
-        private void ExtractInternalScripts()
+        private void Start()
         {
-            Helper.Log("Game.ExtractInternalScripts");
-            if (Application.isEditor == true && Constants.LUA_BUNDLE_MODE == false)
-            {
-                StartGame();
-            }
-            else
-            {
-                StartCoroutine(OnExtractInternalScripts());
-            }
+            UpdateUI.StartUpdate();
         }
 
-        private IEnumerator OnExtractInternalScripts()
-        {
-            Helper.Log("Game.OnExtractInternalScripts: start.");
-            string dataPath = Constants.SCRIPT_BUNDLE_PATH;  //数据目录
-            string contentPath = Constants.APP_CONTENT_PATH + "Scripts/"; //游戏包资源目录
-            Helper.Log("Game.OnExtractInternalScripts: data path is " + dataPath);
-            Helper.Log("Game.OnExtractInternalScripts: content path is " + contentPath);
-            if (Directory.Exists(dataPath) == false)
-            {
-                Directory.CreateDirectory(dataPath);
-            }
-
-            string contentManifestFile = contentPath + "manifest.txt";
-            string manifestFile = dataPath + "manifest.txt";
-            string tempManifestFile = dataPath + "manifest_temp.txt";
-
-            // 备份旧的manifest
-            if (File.Exists(manifestFile))
-            {
-                File.Copy(manifestFile, tempManifestFile, true);
-            }
-
-            // 从包文件里面解出manifest
-            if (Application.platform == RuntimePlatform.Android)
-            {
-                WWW www = new WWW(contentManifestFile);
-                yield return www;
-
-                if (www.isDone)
-                {
-                    File.WriteAllBytes(manifestFile, www.bytes);
-                }
-                yield return 0;
-            }
-            else
-            {
-                File.Copy(contentManifestFile, manifestFile, true);
-            }
-            yield return new WaitForEndOfFrame();
-
-            // 对比两个manifest是否相同
-            string md5old = Helper.MD5File(tempManifestFile);
-            string md5new = Helper.MD5File(manifestFile);
-            if (md5old != md5new)
-            {
-                Helper.Log("Game.OnExtractInternalScripts: md5 is different,start to extract.");
-
-                // 读出文件列表
-                string[] files = File.ReadAllLines(manifestFile);
-
-                // 删除原有文件
-                if (Directory.Exists(dataPath))
-                {
-                    Directory.Delete(dataPath, true);
-                }
-                Directory.CreateDirectory(dataPath);
-
-                // 拷贝新的manifest文件
-                if (Application.platform == RuntimePlatform.Android)
-                {
-                    WWW www = new WWW(contentManifestFile);
-                    yield return www;
-
-                    if (www.isDone)
-                    {
-                        File.WriteAllBytes(manifestFile, www.bytes);
-                    }
-                    yield return 0;
-                }
-                else
-                {
-                    File.Copy(contentManifestFile, manifestFile, true);
-                }
-                yield return new WaitForEndOfFrame();
-
-                // 拷贝清单里的其他文件
-                foreach (var file in files)
-                {
-                    string[] fs = file.Split('|');
-                    string internalFilePath = contentPath + fs[0];
-                    string filePath = dataPath + fs[0];
-                    Helper.Log("Game.OnExtractInternalScripts: extracting " + internalFilePath + " to " + filePath);
-                    string dir = Path.GetDirectoryName(filePath);
-                    if (Directory.Exists(dir) == false)
-                    {
-                        Directory.CreateDirectory(dir);
-                    }
-
-                    if (Application.platform == RuntimePlatform.Android)
-                    {
-                        WWW www = new WWW(internalFilePath);
-                        yield return www;
-                        if (www.isDone)
-                        {
-                            File.WriteAllBytes(filePath, www.bytes);
-                        }
-                        yield return 0;
-                    }
-                    else
-                    {
-                        if (File.Exists(filePath))
-                        {
-                            File.Delete(filePath);
-                        }
-                        File.Copy(internalFilePath, filePath, true);
-                    }
-                    yield return new WaitForEndOfFrame();
-                }
-            }
-            else
-            {
-                Helper.Log("Game.OnExtractInternalScripts: md5 is same,neednt extract.");
-            }
-            yield return new WaitForSeconds(0.1f);
-            Helper.Log("Game.OnExtractInternalScripts: extract internal scripts done.");
-            StartGame();
-        }
-
-        private void StartGame()
+        public void StartGame()
         {
             OK = true;
-
-            LuaManager.Initialize();// 加载内置的bundle
-
             LuaManager.DoString("require 'NCSpeedLight.Game'");
             AwakeFunction = LuaManager.LuaState.GetFunction("Game.Awake");
             UpdateFunction = LuaManager.LuaState.GetFunction("Game.Update");

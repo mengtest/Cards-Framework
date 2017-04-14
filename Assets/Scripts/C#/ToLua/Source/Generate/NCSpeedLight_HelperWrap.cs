@@ -1085,7 +1085,7 @@ public class NCSpeedLight_HelperWrap
 		{
 			ToLua.CheckArgsCount(L, 1);
 			string arg0 = ToLua.CheckString(L, 1);
-			string o = NCSpeedLight.Helper.MD5File(arg0);
+			string o = NCSpeedLight.Helper.FileMD5(arg0);
 			LuaDLL.lua_pushstring(L, o);
 			return 1;
 		}

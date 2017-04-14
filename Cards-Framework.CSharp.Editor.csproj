@@ -269,9 +269,7 @@
     <None Include="Assets\Scripts\C#\NCSpeedLight\3rd\NGUI\Resources\Shaders\Unlit - Transparent Packed 2.shader" />
     <None Include="Assets\Scripts\C#\NCSpeedLight\3rd\NGUI\Resources\Shaders\Unlit - Transparent Packed 3.shader" />
     <None Include="Assets\Scripts\C#\NCSpeedLight\3rd\NGUI\Resources\Shaders\Unlit - Transparent Packed.shader" />
-    <None Include="Assets\Scripts\C#\NCSpeedLight\3rd\RongCloud\Android\AndroidManifest.xml" />
     <None Include="Assets\Scripts\C#\ToLua\readme.txt" />
-    <None Include="Assets\StreamingAssets\Scripts\manifest.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

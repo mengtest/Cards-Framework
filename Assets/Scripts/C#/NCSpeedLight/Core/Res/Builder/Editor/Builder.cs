@@ -376,7 +376,7 @@ namespace NCSpeedLight
                         List<UnityEngine.Object> assets = new List<Object>();
                         assets.Add(mainAssets);
 
-                        string md5 = Helper.MD5File(path);
+                        string md5 = Helper.FileMD5(path);
                         string outFile = folder + md5;
 
                         if (File.Exists(outFile) == false)

@@ -219,23 +219,13 @@
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\3rd\NGUI\Scripts\UI\UITexture.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\3rd\NGUI\Scripts\UI\UITooltip.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\3rd\NGUI\Scripts\UI\UIViewport.cs" />
-    <Compile Include="Assets\Scripts\C#\NCSpeedLight\3rd\ShareSDK\Android\AndroidImpl.cs" />
-    <Compile Include="Assets\Scripts\C#\NCSpeedLight\3rd\ShareSDK\ContentType.cs" />
-    <Compile Include="Assets\Scripts\C#\NCSpeedLight\3rd\ShareSDK\MiniJSON.cs" />
-    <Compile Include="Assets\Scripts\C#\NCSpeedLight\3rd\ShareSDK\PCShaderSDK.cs" />
-    <Compile Include="Assets\Scripts\C#\NCSpeedLight\3rd\ShareSDK\PlatformType.cs" />
-    <Compile Include="Assets\Scripts\C#\NCSpeedLight\3rd\ShareSDK\ResponseState.cs" />
-    <Compile Include="Assets\Scripts\C#\NCSpeedLight\3rd\ShareSDK\ShareContent.cs" />
-    <Compile Include="Assets\Scripts\C#\NCSpeedLight\3rd\ShareSDK\ShareSDK.cs" />
-    <Compile Include="Assets\Scripts\C#\NCSpeedLight\3rd\ShareSDK\ShareSDKDevInfo.cs" />
-    <Compile Include="Assets\Scripts\C#\NCSpeedLight\3rd\ShareSDK\ShareSDKImpl.cs" />
-    <Compile Include="Assets\Scripts\C#\NCSpeedLight\3rd\ShareSDK\iOS\iOSImpl.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Core\Event\Event.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Core\Event\EventManager.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Core\Event\GlobalEventManager.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Core\Lua\LuaBehaviour.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Core\Lua\LuaComponent.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Core\Lua\LuaManager.cs" />
+    <Compile Include="Assets\Scripts\C#\NCSpeedLight\Core\Lua\LuaManifest.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Core\Lua\LuaView.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Core\Media\AudioManager.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Core\Network\NetConnection.cs" />
@@ -259,6 +249,7 @@
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\Helper.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\ImageCache.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\UIHelper.cs" />
+    <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\UIUpdate.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\View\FPSPrinter.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\View\GetBlurBackground.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\View\InvisiableOnTweenFinish.cs" />
@@ -595,9 +586,7 @@
     <None Include="Assets\Scripts\C#\NCSpeedLight\3rd\NGUI\Resources\Shaders\Unlit - Transparent Packed 2.shader" />
     <None Include="Assets\Scripts\C#\NCSpeedLight\3rd\NGUI\Resources\Shaders\Unlit - Transparent Packed 3.shader" />
     <None Include="Assets\Scripts\C#\NCSpeedLight\3rd\NGUI\Resources\Shaders\Unlit - Transparent Packed.shader" />
-    <None Include="Assets\Scripts\C#\NCSpeedLight\3rd\RongCloud\Android\AndroidManifest.xml" />
     <None Include="Assets\Scripts\C#\ToLua\readme.txt" />
-    <None Include="Assets\StreamingAssets\Scripts\manifest.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

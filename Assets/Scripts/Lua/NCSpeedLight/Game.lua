@@ -117,6 +117,7 @@ function Game.OnApplicationPause(status)
 	end
 end
 
+
 function Game.OnApplicationFocus(status)
 	-- Log.Info("Game.OnApplicationFocus: " .. tostring(status));
 	if SceneManager.CurrentScene ~= nil then

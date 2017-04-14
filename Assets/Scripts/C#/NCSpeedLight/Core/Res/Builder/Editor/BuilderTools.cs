@@ -681,6 +681,7 @@ namespace NCSpeedLight
                 string bundleName = directory.Substring(directory.IndexOf("Lua/") + 4);
                 bundleName = bundleName.Replace("/", "_");
                 bundleName = bundleName.ToLower();
+                bundleName = bundleName + ".assetbundle";
                 List<UnityEngine.Object> assets = new List<UnityEngine.Object>();
                 for (int i = 0; i < files.Length; i++)
                 {
@@ -733,9 +734,10 @@ namespace NCSpeedLight
             {
                 string file = files[i];
                 if (file.EndsWith(".meta")) continue;
-                string md5 = Helper.MD5File(file);
+                string md5 = Helper.FileMD5(file);
                 string value = file.Replace(directory, string.Empty);
-                sw.WriteLine(value + "|" + md5);
+                int size = Helper.FileSize(file);
+                sw.WriteLine(value + "|" + md5 + "|" + size);
             }
             sw.Close();
             fs.Close();

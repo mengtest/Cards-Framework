@@ -1089,15 +1089,15 @@ namespace NCSpeedLight
             }
         }
 
-        public static string MD5File(string file)
+        public static string FileMD5(string filePath)
         {
-            if (File.Exists(file) == false)
+            if (File.Exists(filePath) == false)
             {
                 return string.Empty;
             }
             try
             {
-                FileStream fs = new FileStream(file, FileMode.Open);
+                FileStream fs = new FileStream(filePath, FileMode.Open);
                 MD5 md5 = new MD5CryptoServiceProvider();
                 byte[] retVal = md5.ComputeHash(fs);
                 fs.Close();
@@ -1113,6 +1113,38 @@ namespace NCSpeedLight
             {
                 return string.Empty;
             }
+        }
+
+        public static int FileSize(string filePath)
+        {
+            if (File.Exists(filePath) == false)
+            {
+                return 0;
+            }
+            try
+            {
+                FileStream fs = new FileStream(filePath, FileMode.Open);
+                int length = (int)fs.Length;
+                fs.Close();
+                return length;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        public static string BytesMD5(byte[] bytes)
+        {
+            MD5 md5 = new MD5CryptoServiceProvider();
+            byte[] retVal = md5.ComputeHash(bytes);
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < retVal.Length; i++)
+            {
+                sb.Append(retVal[i].ToString("x2"));
+            }
+            return sb.ToString();
         }
 
         [LuaInterface.LuaByteBuffer]
