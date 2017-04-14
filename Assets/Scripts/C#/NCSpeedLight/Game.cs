@@ -31,9 +31,9 @@ namespace NCSpeedLight
         private void Awake()
         {
             Instance = this;
-            Helper.Log("Game.Awake()");
+            Helper.Log("Game.Awake");
             DontDestroyOnLoad(gameObject);
-            Application.targetFrameRate = 30;
+            Application.targetFrameRate = Constants.TARGET_FRAME_RATE;
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
             Loom.Initialize();
             ExtractInternalScripts();
@@ -41,7 +41,7 @@ namespace NCSpeedLight
 
         private void ExtractInternalScripts()
         {
-            Helper.Log("Game.ExtractInternalScripts.Awake()");
+            Helper.Log("Game.ExtractInternalScripts");
             if (Application.isEditor == true && Constants.LUA_BUNDLE_MODE == false)
             {
                 StartGame();
@@ -54,16 +54,17 @@ namespace NCSpeedLight
 
         private IEnumerator OnExtractInternalScripts()
         {
-            Helper.Log("Game.OnExtractInternalScripts.Awake()");
+            Helper.Log("Game.OnExtractInternalScripts: start.");
             string dataPath = Constants.SCRIPT_BUNDLE_PATH;  //数据目录
-            string internalPath = Constants.APP_CONTENT_PATH + "Scripts/"; //游戏包资源目录
-
+            string contentPath = Constants.APP_CONTENT_PATH + "Scripts/"; //游戏包资源目录
+            Helper.Log("Game.OnExtractInternalScripts: data path is " + dataPath);
+            Helper.Log("Game.OnExtractInternalScripts: content path is " + contentPath);
             if (Directory.Exists(dataPath) == false)
             {
                 Directory.CreateDirectory(dataPath);
             }
 
-            string internalManifestFile = internalPath + "manifest.txt";
+            string contentManifestFile = contentPath + "manifest.txt";
             string manifestFile = dataPath + "manifest.txt";
             string tempManifestFile = dataPath + "manifest_temp.txt";
 
@@ -76,7 +77,7 @@ namespace NCSpeedLight
             // 从包文件里面解出manifest
             if (Application.platform == RuntimePlatform.Android)
             {
-                WWW www = new WWW(internalManifestFile);
+                WWW www = new WWW(contentManifestFile);
                 yield return www;
 
                 if (www.isDone)
@@ -87,7 +88,7 @@ namespace NCSpeedLight
             }
             else
             {
-                File.Copy(internalManifestFile, manifestFile, true);
+                File.Copy(contentManifestFile, manifestFile, true);
             }
             yield return new WaitForEndOfFrame();
 
@@ -111,7 +112,7 @@ namespace NCSpeedLight
                 // 拷贝新的manifest文件
                 if (Application.platform == RuntimePlatform.Android)
                 {
-                    WWW www = new WWW(internalManifestFile);
+                    WWW www = new WWW(contentManifestFile);
                     yield return www;
 
                     if (www.isDone)
@@ -122,7 +123,7 @@ namespace NCSpeedLight
                 }
                 else
                 {
-                    File.Copy(internalManifestFile, manifestFile, true);
+                    File.Copy(contentManifestFile, manifestFile, true);
                 }
                 yield return new WaitForEndOfFrame();
 
@@ -130,7 +131,7 @@ namespace NCSpeedLight
                 foreach (var file in files)
                 {
                     string[] fs = file.Split('|');
-                    string internalFilePath = internalPath + fs[0];
+                    string internalFilePath = contentPath + fs[0];
                     string filePath = dataPath + fs[0];
                     Helper.Log("Game.OnExtractInternalScripts: extracting " + internalFilePath + " to " + filePath);
                     string dir = Path.GetDirectoryName(filePath);

@@ -10,6 +10,7 @@ public class NCSpeedLight_ConstantsWrap
 		L.RegVar("GAME_NAME", get_GAME_NAME, set_GAME_NAME);
 		L.RegVar("ENCRYPT_LUA", get_ENCRYPT_LUA, set_ENCRYPT_LUA);
 		L.RegVar("DATA_PATH", get_DATA_PATH, null);
+		L.RegVar("BUILD_SCRIPT_BUNDLE_PATH", get_BUILD_SCRIPT_BUNDLE_PATH, null);
 		L.RegVar("SCRIPT_BUNDLE_PATH", get_SCRIPT_BUNDLE_PATH, null);
 		L.RegVar("ASSET_BUNDLE_PATH", get_ASSET_BUNDLE_PATH, null);
 		L.RegVar("BUILD_BUNDLE_LOG_PATH", get_BUILD_BUNDLE_LOG_PATH, null);
@@ -63,11 +64,25 @@ public class NCSpeedLight_ConstantsWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_SCRIPT_BUNDLE_PATH(IntPtr L)
+	static int get_BUILD_SCRIPT_BUNDLE_PATH(IntPtr L)
 	{
 		try
 		{
 			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.BUILD_SCRIPT_BUNDLE_PATH);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_SCRIPT_BUNDLE_PATH(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.SCRIPT_BUNDLE_PATH);
 			return 1;
 		}
 		catch(Exception e)

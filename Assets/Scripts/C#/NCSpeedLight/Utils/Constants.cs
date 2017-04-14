@@ -17,6 +17,8 @@ namespace NCSpeedLight
     {
         public static string GAME_NAME = "HZMJ_LUA";
 
+        public static int TARGET_FRAME_RATE = 30;
+
         public static string DATA_PATH
         {
             get

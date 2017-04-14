@@ -14,18 +14,22 @@ Player =
 	FullInfo = nil;
 	ID = 0,
 };
+
 -- 设置当前玩家的完整信息
 function Player.SetFullInfo(data)
 	Log.Info("Player.SetFullInfo: id is " .. tostring(data.id));
 	Player.FullInfo = data;
 	Player.ID = data.id;
 end
+
 function Player.RegisterEvent(id, func)
 	Player.EvtProcessor:Register(id, func);
 end
+
 function Player.UnregisterEvent(id, func)
 	Player.EvtProcessor:Unregister(id, player);
 end
+
 function Player.NotifyEvent(id, param)
 	Player.EvtProcessor:Notify(id, param);
 end

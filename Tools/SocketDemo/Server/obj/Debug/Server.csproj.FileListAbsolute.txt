@@ -1,6 +1,0 @@
-H:\Personal\Github\Cards-Framework\Tools\SocketDemo\Server\bin\Debug\Server.exe.config
-H:\Personal\Github\Cards-Framework\Tools\SocketDemo\Server\bin\Debug\Server.exe
-H:\Personal\Github\Cards-Framework\Tools\SocketDemo\Server\bin\Debug\Server.pdb
-H:\Personal\Github\Cards-Framework\Tools\SocketDemo\Server\obj\Debug\Server.exe
-H:\Personal\Github\Cards-Framework\Tools\SocketDemo\Server\obj\Debug\Server.pdb
-H:\Personal\Github\Cards-Framework\Tools\SocketDemo\Server\obj\Debug\Server.csprojResolveAssemblyReference.cache

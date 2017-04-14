@@ -1,1 +1,0 @@
-H:\Personal\Github\Cards-Framework\Tools\SocketDemo\SocketDemo\bin\Debug\SocketDemo.exe.config
