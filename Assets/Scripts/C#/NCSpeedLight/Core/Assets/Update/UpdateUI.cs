@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace NCSpeedLight
 {
-    public class UIUpdate : MonoBehaviour
+    public class UpdateUI : MonoBehaviour
     {
         public enum Status
         {

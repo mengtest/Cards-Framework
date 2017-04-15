@@ -20,7 +20,7 @@ namespace NCSpeedLight
     {
         public static Game Instance;
         private bool OK = false;
-        public UIUpdate UpdateUI;
+        public UpdateUI UpdateUI;
         public LuaFunction AwakeFunction;
         public LuaFunction UpdateFunction;
         public LuaFunction OnGUIFunction;

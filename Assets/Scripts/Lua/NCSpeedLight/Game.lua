@@ -59,7 +59,7 @@ function Game.Awake(go)
 	UIManager.Initialize();
 	NetManager.Initialize();
 	SceneManager.Initialize();
-	UIManager.OpenTipsDialog("喜喜喜喜");
+	UIManager.OpenTipsDialog("周末了");
 	SceneManager.GotoScene(SceneType.DownloadScene);
 end
 
