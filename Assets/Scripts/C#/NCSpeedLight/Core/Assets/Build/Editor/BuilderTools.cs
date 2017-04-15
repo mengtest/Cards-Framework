@@ -148,6 +148,7 @@ namespace NCSpeedLight
         public static void BuildAssetBundle()
         {
             string outputPath = Path.Combine(Utility.AssetBundlesOutputPath, Utility.GetPlatformName());
+            //outputPath += "/Assets";
             if (!Directory.Exists(outputPath))
                 Directory.CreateDirectory(outputPath);
 
