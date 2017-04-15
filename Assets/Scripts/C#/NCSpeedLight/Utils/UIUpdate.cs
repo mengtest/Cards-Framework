@@ -20,8 +20,8 @@ namespace NCSpeedLight
         public GameObject StatusCheck;
         public GameObject StatusDownload;
         public GameObject StatusEnterGame;
-        private static string AssetsURL = "http://192.168.1.146:9555/" + Constants.PLATFORM_NAME + "/Assets/";
-        private static string ScriptsURL = "http://192.168.1.146:9555/" + Constants.PLATFORM_NAME + "/Scripts/";
+        private static string AssetsURL;
+        private static string ScriptsURL;
 
         private string ContentScriptsManifestMD5 = string.Empty;
         private string LocalScriptsManifestMD5 = string.Empty;
@@ -34,16 +34,22 @@ namespace NCSpeedLight
         private LuaManifest LocalLuaManifest = null;
         private LuaManifest RemoteLuaManifest = null;
 
-        private static string ManifestAtLoacl = Constants.SCRIPT_BUNDLE_PATH + "manifest.txt";
-        private static string ManifestAtContent = Constants.APP_CONTENT_PATH + "manifest.txt";
-        private static string ManifestAtRemote = ScriptsURL + "manifest.txt";
+        private static string ManifestAtLoacl;
+        private static string ManifestAtContent;
+        private static string ManifestAtRemote;
 
         private float CostTime = 0f;
         private bool Done = false;
 
+        public LabelDotsAnimation LableAnimation;
+
         void Awake()
         {
-            ProgressBar.value = 0;
+            AssetsURL = "http://192.168.1.146:9555/" + Constants.PLATFORM_NAME + "/Assets/";
+            ScriptsURL = "http://192.168.1.146:9555/" + Constants.PLATFORM_NAME + "/Scripts/";
+            ManifestAtLoacl = Constants.SCRIPT_BUNDLE_PATH + "manifest.txt";
+            ManifestAtContent = Constants.APP_CONTENT_PATH + "manifest.txt";
+            ManifestAtRemote = ScriptsURL + "manifest.txt";
         }
 
         void Start()
@@ -52,17 +58,17 @@ namespace NCSpeedLight
 
         void Update()
         {
-            CostTime += Time.deltaTime;
-            if (Done == false)
-            {
-                float deltaValue = Time.deltaTime / 20;
-                ProgressBar.value += deltaValue;
-            }
-            else
-            {
-                float deltaValue = Time.deltaTime;
-                ProgressBar.value += deltaValue;
-            }
+            //CostTime += Time.deltaTime;
+            //if (Done == false)
+            //{
+            //    float deltaValue = Time.deltaTime / 20;
+            //    ProgressBar.value += deltaValue;
+            //}
+            //else
+            //{
+            //    float deltaValue = Time.deltaTime;
+            //    ProgressBar.value += deltaValue;
+            //}
         }
         public void StartUpdate()
         {
@@ -86,12 +92,12 @@ namespace NCSpeedLight
         }
         public void SwitchStatus(string tips)
         {
-            Tips.text = tips;
+            LableAnimation.SetContent(tips);
         }
 
         private IEnumerator ProcessUpdate()
         {
-            SwitchStatus("正在检查资源文件...");
+            SwitchStatus("正在检查资源文件");
             yield return StartCoroutine(CheckNetStatus());
             yield return StartCoroutine(RequestJson());
             //yield return StartCoroutine(CompareScriptsManifest());
@@ -111,7 +117,7 @@ namespace NCSpeedLight
 
         private IEnumerator RequestJson()
         {
-            SwitchStatus("正在检查更新...");
+            SwitchStatus("正在检查更新");
             yield return 0;
         }
 
@@ -208,7 +214,7 @@ namespace NCSpeedLight
 
         private IEnumerator DownloadScripts(List<LuaManifest.FileInfo> fileInfos)
         {
-            SwitchStatus("正在检查更新...");
+            SwitchStatus("正在下载更新");
             Helper.Log("UIUpdate.DownloadScripts: start.");
             string dataPath = Constants.SCRIPT_BUNDLE_PATH;  //数据目录
             Helper.Log("UIUpdate.DownloadScripts: data path is " + dataPath);
@@ -271,7 +277,7 @@ namespace NCSpeedLight
 
         private IEnumerator InitializeLua()
         {
-            SwitchStatus("正在进入游戏...");
+            SwitchStatus("正在进入游戏");
             LuaManager.Initialize();// 加载内置的bundle
             yield return 0;
         }
@@ -279,15 +285,9 @@ namespace NCSpeedLight
         private IEnumerator StartGame()
         {
             Done = true;
-            float progressValue = 1 - ProgressBar.value;
-            if (progressValue > 0)
-            {
-                float wait = progressValue / Time.deltaTime;
-                yield return new WaitForSeconds(wait);
-            }
             Game.Instance.StartGame();
             yield return new WaitForSeconds(0.1f);
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
             yield return 0;
         }
     }

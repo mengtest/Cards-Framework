@@ -9,16 +9,17 @@ public class UnityEngine_RectWrap
 		L.BeginClass(typeof(UnityEngine.Rect), null);
 		L.RegFunction("MinMaxRect", MinMaxRect);
 		L.RegFunction("Set", Set);
-		L.RegFunction("ToString", ToString);
 		L.RegFunction("Contains", Contains);
 		L.RegFunction("Overlaps", Overlaps);
 		L.RegFunction("NormalizedToPoint", NormalizedToPoint);
 		L.RegFunction("PointToNormalized", PointToNormalized);
 		L.RegFunction("GetHashCode", GetHashCode);
 		L.RegFunction("Equals", Equals);
+		L.RegFunction("ToString", ToString);
 		L.RegFunction("New", _CreateUnityEngine_Rect);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
+		L.RegVar("zero", get_zero, null);
 		L.RegVar("x", get_x, set_x);
 		L.RegVar("y", get_y, set_y);
 		L.RegVar("position", get_position, set_position);
@@ -118,39 +119,6 @@ public class UnityEngine_RectWrap
 			obj.Set(arg0, arg1, arg2, arg3);
 			ToLua.SetBack(L, 1, obj);
 			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int ToString(IntPtr L)
-	{
-		try
-		{
-			int count = LuaDLL.lua_gettop(L);
-
-			if (count == 1 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Rect)))
-			{
-				UnityEngine.Rect obj = (UnityEngine.Rect)ToLua.ToObject(L, 1);
-				string o = obj.ToString();
-				LuaDLL.lua_pushstring(L, o);
-				return 1;
-			}
-			else if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Rect), typeof(string)))
-			{
-				UnityEngine.Rect obj = (UnityEngine.Rect)ToLua.ToObject(L, 1);
-				string arg0 = ToLua.ToString(L, 2);
-				string o = obj.ToString(arg0);
-				LuaDLL.lua_pushstring(L, o);
-				return 1;
-			}
-			else
-			{
-				return LuaDLL.luaL_throw(L, "invalid arguments to method: UnityEngine.Rect.ToString");
-			}
 		}
 		catch(Exception e)
 		{
@@ -278,6 +246,24 @@ public class UnityEngine_RectWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int op_Equality(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			UnityEngine.Rect arg0 = (UnityEngine.Rect)ToLua.ToObject(L, 1);
+			UnityEngine.Rect arg1 = (UnityEngine.Rect)ToLua.ToObject(L, 2);
+			bool o = arg0 == arg1;
+			LuaDLL.lua_pushboolean(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int GetHashCode(IntPtr L)
 	{
 		try
@@ -315,15 +301,44 @@ public class UnityEngine_RectWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int op_Equality(IntPtr L)
+	static int ToString(IntPtr L)
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 2);
-			UnityEngine.Rect arg0 = (UnityEngine.Rect)ToLua.ToObject(L, 1);
-			UnityEngine.Rect arg1 = (UnityEngine.Rect)ToLua.ToObject(L, 2);
-			bool o = arg0 == arg1;
-			LuaDLL.lua_pushboolean(L, o);
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 1 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Rect)))
+			{
+				UnityEngine.Rect obj = (UnityEngine.Rect)ToLua.ToObject(L, 1);
+				string o = obj.ToString();
+				LuaDLL.lua_pushstring(L, o);
+				return 1;
+			}
+			else if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Rect), typeof(string)))
+			{
+				UnityEngine.Rect obj = (UnityEngine.Rect)ToLua.ToObject(L, 1);
+				string arg0 = ToLua.ToString(L, 2);
+				string o = obj.ToString(arg0);
+				LuaDLL.lua_pushstring(L, o);
+				return 1;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: UnityEngine.Rect.ToString");
+			}
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_zero(IntPtr L)
+	{
+		try
+		{
+			ToLua.PushValue(L, UnityEngine.Rect.zero);
 			return 1;
 		}
 		catch(Exception e)

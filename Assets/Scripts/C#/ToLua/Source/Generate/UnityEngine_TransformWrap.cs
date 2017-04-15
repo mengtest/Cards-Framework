@@ -8,6 +8,7 @@ public class UnityEngine_TransformWrap
 	{
 		L.BeginClass(typeof(UnityEngine.Transform), typeof(UnityEngine.Component));
 		L.RegFunction("SetParent", SetParent);
+		L.RegFunction("SetPositionAndRotation", SetPositionAndRotation);
 		L.RegFunction("Translate", Translate);
 		L.RegFunction("Rotate", Rotate);
 		L.RegFunction("RotateAround", RotateAround);
@@ -47,6 +48,8 @@ public class UnityEngine_TransformWrap
 		L.RegVar("childCount", get_childCount, null);
 		L.RegVar("lossyScale", get_lossyScale, null);
 		L.RegVar("hasChanged", get_hasChanged, set_hasChanged);
+		L.RegVar("hierarchyCapacity", get_hierarchyCapacity, set_hierarchyCapacity);
+		L.RegVar("hierarchyCount", get_hierarchyCount, null);
 		L.EndClass();
 	}
 
@@ -76,6 +79,24 @@ public class UnityEngine_TransformWrap
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to method: UnityEngine.Transform.SetParent");
 			}
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SetPositionAndRotation(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			UnityEngine.Transform obj = (UnityEngine.Transform)ToLua.CheckObject(L, 1, typeof(UnityEngine.Transform));
+			UnityEngine.Vector3 arg0 = ToLua.ToVector3(L, 2);
+			UnityEngine.Quaternion arg1 = ToLua.ToQuaternion(L, 3);
+			obj.SetPositionAndRotation(arg0, arg1);
+			return 0;
 		}
 		catch(Exception e)
 		{
@@ -1018,6 +1039,44 @@ public class UnityEngine_TransformWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_hierarchyCapacity(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Transform obj = (UnityEngine.Transform)o;
+			int ret = obj.hierarchyCapacity;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index hierarchyCapacity on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_hierarchyCount(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Transform obj = (UnityEngine.Transform)o;
+			int ret = obj.hierarchyCount;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index hierarchyCount on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_position(IntPtr L)
 	{
 		object o = null;
@@ -1242,6 +1301,25 @@ public class UnityEngine_TransformWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index hasChanged on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_hierarchyCapacity(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Transform obj = (UnityEngine.Transform)o;
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			obj.hierarchyCapacity = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index hierarchyCapacity on a nil value" : e.Message);
 		}
 	}
 }

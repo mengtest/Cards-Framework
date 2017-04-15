@@ -34,9 +34,9 @@ public static class CustomSettings
     {
         _DT(typeof(Action)),
         _DT(typeof(UnityEngine.Events.UnityAction)),
-        _DT(typeof(System.Predicate<int>)),
-        _DT(typeof(System.Action<int>)),
-        _DT(typeof(System.Comparison<int>)),
+        _DT(typeof(Predicate<int>)),
+        _DT(typeof(Action<int>)),
+        _DT(typeof(Comparison<int>)),
         _DT(typeof(NetConnection.StatusDelegate)),
         _DT(typeof(UIEventListener.VoidDelegate)),
     };
@@ -44,38 +44,9 @@ public static class CustomSettings
     //在这里添加你要导出注册到lua的类型列表
     public static BindType[] customTypeList =
     {                
-        //------------------------为例子导出--------------------------------
-        //_GT(typeof(TestEventListener)),
-        //_GT(typeof(TestProtol)),
-        //_GT(typeof(TestAccount)),
-        //_GT(typeof(Dictionary<int, TestAccount>)).SetLibName("AccountMap"),
-        //_GT(typeof(KeyValuePair<int, TestAccount>)),    
-        //_GT(typeof(TestExport)),
-        //_GT(typeof(TestExport.Space)),
-        //-------------------------------------------------------------------        
                 
         _GT(typeof(Debugger)).SetNameSpace(null),        
 
-#if USING_DOTWEENING
-        _GT(typeof(DG.Tweening.DOTween)),
-        _GT(typeof(DG.Tweening.Tween)).SetBaseType(typeof(System.Object)).AddExtendType(typeof(DG.Tweening.TweenExtensions)),
-        _GT(typeof(DG.Tweening.Sequence)).AddExtendType(typeof(DG.Tweening.TweenSettingsExtensions)),
-        _GT(typeof(DG.Tweening.Tweener)).AddExtendType(typeof(DG.Tweening.TweenSettingsExtensions)),
-        _GT(typeof(DG.Tweening.LoopType)),
-        _GT(typeof(DG.Tweening.PathMode)),
-        _GT(typeof(DG.Tweening.PathType)),
-        _GT(typeof(DG.Tweening.RotateMode)),
-        _GT(typeof(Component)).AddExtendType(typeof(DG.Tweening.ShortcutExtensions)),
-        _GT(typeof(Transform)).AddExtendType(typeof(DG.Tweening.ShortcutExtensions)),
-        _GT(typeof(Light)).AddExtendType(typeof(DG.Tweening.ShortcutExtensions)),
-        _GT(typeof(Material)).AddExtendType(typeof(DG.Tweening.ShortcutExtensions)),
-        _GT(typeof(Rigidbody)).AddExtendType(typeof(DG.Tweening.ShortcutExtensions)),
-        _GT(typeof(Camera)).AddExtendType(typeof(DG.Tweening.ShortcutExtensions)),
-        _GT(typeof(AudioSource)).AddExtendType(typeof(DG.Tweening.ShortcutExtensions)),
-        //_GT(typeof(LineRenderer)).AddExtendType(typeof(DG.Tweening.ShortcutExtensions)),
-        //_GT(typeof(TrailRenderer)).AddExtendType(typeof(DG.Tweening.ShortcutExtensions)),    
-#else
-                                         
         _GT(typeof(Component)),
         _GT(typeof(Transform)),
         _GT(typeof(Material)),
@@ -83,9 +54,6 @@ public static class CustomSettings
         _GT(typeof(Rigidbody)),
         _GT(typeof(Camera)),
         _GT(typeof(AudioSource)),
-        //_GT(typeof(LineRenderer))
-        //_GT(typeof(TrailRenderer))
-#endif
       
         _GT(typeof(Behaviour)),
         _GT(typeof(MonoBehaviour)),
@@ -111,9 +79,7 @@ public static class CustomSettings
 
         _GT(typeof(LightType)),
         _GT(typeof(SleepTimeout)),
-#if UNITY_5_3_OR_NEWER
-        _GT(typeof(UnityEngine.Experimental.Director.DirectorPlayer)),
-#endif
+ 
         _GT(typeof(Animator)),
         _GT(typeof(Input)),
         _GT(typeof(KeyCode)),
@@ -122,11 +88,6 @@ public static class CustomSettings
 
 
         _GT(typeof(MeshRenderer)),
-#if !UNITY_5_4_OR_NEWER
-        _GT(typeof(ParticleEmitter)),
-        _GT(typeof(ParticleRenderer)),
-        _GT(typeof(ParticleAnimator)), 
-#endif
                               
         _GT(typeof(BoxCollider)),
         _GT(typeof(MeshCollider)),
@@ -148,9 +109,9 @@ public static class CustomSettings
         _GT(typeof(RenderTexture)),
         _GT(typeof(Resources)),
 
-        _GT(typeof(UnityEngine.GUI)),
-        _GT(typeof(UnityEngine.GUIContent)),
-        _GT(typeof(UnityEngine.Rect)),
+        _GT(typeof(GUI)),
+        _GT(typeof(GUIContent)),
+        _GT(typeof(Rect)),
 
         _GT(typeof(UnityEngine.SceneManagement.SceneManager)),
 
@@ -285,7 +246,7 @@ public static class CustomSettings
          
         #region System
         _GT(typeof(BitConverter)),
-        _GT(typeof(System.DateTime)),
+        _GT(typeof(DateTime)),
         #endregion
      
         #region System.IO
@@ -308,11 +269,6 @@ public static class CustomSettings
     public static List<Type> dynamicList = new List<Type>()
     {
         typeof(MeshRenderer),
-#if !UNITY_5_4_OR_NEWER
-        typeof(ParticleEmitter),
-        typeof(ParticleRenderer),
-        typeof(ParticleAnimator),
-#endif
 
         typeof(BoxCollider),
         typeof(MeshCollider),

@@ -10,21 +10,16 @@ public class UnityEngine_RuntimePlatformWrap
 		L.RegVar("OSXEditor", get_OSXEditor, null);
 		L.RegVar("OSXPlayer", get_OSXPlayer, null);
 		L.RegVar("WindowsPlayer", get_WindowsPlayer, null);
-		L.RegVar("OSXWebPlayer", get_OSXWebPlayer, null);
 		L.RegVar("OSXDashboardPlayer", get_OSXDashboardPlayer, null);
-		L.RegVar("WindowsWebPlayer", get_WindowsWebPlayer, null);
 		L.RegVar("WindowsEditor", get_WindowsEditor, null);
 		L.RegVar("IPhonePlayer", get_IPhonePlayer, null);
-		L.RegVar("XBOX360", get_XBOX360, null);
-		L.RegVar("PS3", get_PS3, null);
 		L.RegVar("Android", get_Android, null);
 		L.RegVar("LinuxPlayer", get_LinuxPlayer, null);
+		L.RegVar("LinuxEditor", get_LinuxEditor, null);
 		L.RegVar("WebGLPlayer", get_WebGLPlayer, null);
 		L.RegVar("WSAPlayerX86", get_WSAPlayerX86, null);
 		L.RegVar("WSAPlayerX64", get_WSAPlayerX64, null);
 		L.RegVar("WSAPlayerARM", get_WSAPlayerARM, null);
-		L.RegVar("WP8Player", get_WP8Player, null);
-		L.RegVar("BlackBerryPlayer", get_BlackBerryPlayer, null);
 		L.RegVar("TizenPlayer", get_TizenPlayer, null);
 		L.RegVar("PSP2", get_PSP2, null);
 		L.RegVar("PS4", get_PS4, null);
@@ -33,6 +28,7 @@ public class UnityEngine_RuntimePlatformWrap
 		L.RegVar("SamsungTVPlayer", get_SamsungTVPlayer, null);
 		L.RegVar("WiiU", get_WiiU, null);
 		L.RegVar("tvOS", get_tvOS, null);
+		L.RegVar("Switch", get_Switch, null);
 		L.RegFunction("IntToEnum", IntToEnum);
 		L.EndEnum();
 	}
@@ -59,23 +55,9 @@ public class UnityEngine_RuntimePlatformWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_OSXWebPlayer(IntPtr L)
-	{
-		ToLua.Push(L, UnityEngine.RuntimePlatform.OSXWebPlayer);
-		return 1;
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_OSXDashboardPlayer(IntPtr L)
 	{
 		ToLua.Push(L, UnityEngine.RuntimePlatform.OSXDashboardPlayer);
-		return 1;
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_WindowsWebPlayer(IntPtr L)
-	{
-		ToLua.Push(L, UnityEngine.RuntimePlatform.WindowsWebPlayer);
 		return 1;
 	}
 
@@ -94,20 +76,6 @@ public class UnityEngine_RuntimePlatformWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_XBOX360(IntPtr L)
-	{
-		ToLua.Push(L, UnityEngine.RuntimePlatform.XBOX360);
-		return 1;
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_PS3(IntPtr L)
-	{
-		ToLua.Push(L, UnityEngine.RuntimePlatform.PS3);
-		return 1;
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_Android(IntPtr L)
 	{
 		ToLua.Push(L, UnityEngine.RuntimePlatform.Android);
@@ -118,6 +86,13 @@ public class UnityEngine_RuntimePlatformWrap
 	static int get_LinuxPlayer(IntPtr L)
 	{
 		ToLua.Push(L, UnityEngine.RuntimePlatform.LinuxPlayer);
+		return 1;
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_LinuxEditor(IntPtr L)
+	{
+		ToLua.Push(L, UnityEngine.RuntimePlatform.LinuxEditor);
 		return 1;
 	}
 
@@ -146,20 +121,6 @@ public class UnityEngine_RuntimePlatformWrap
 	static int get_WSAPlayerARM(IntPtr L)
 	{
 		ToLua.Push(L, UnityEngine.RuntimePlatform.WSAPlayerARM);
-		return 1;
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_WP8Player(IntPtr L)
-	{
-		ToLua.Push(L, UnityEngine.RuntimePlatform.WP8Player);
-		return 1;
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_BlackBerryPlayer(IntPtr L)
-	{
-		ToLua.Push(L, UnityEngine.RuntimePlatform.BlackBerryPlayer);
 		return 1;
 	}
 
@@ -216,6 +177,13 @@ public class UnityEngine_RuntimePlatformWrap
 	static int get_tvOS(IntPtr L)
 	{
 		ToLua.Push(L, UnityEngine.RuntimePlatform.tvOS);
+		return 1;
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_Switch(IntPtr L)
+	{
+		ToLua.Push(L, UnityEngine.RuntimePlatform.Switch);
 		return 1;
 	}
 

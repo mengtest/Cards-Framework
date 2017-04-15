@@ -8,6 +8,7 @@ public class NCSpeedLight_ConstantsWrap
 	{
 		L.BeginStaticLibs("Constants");
 		L.RegVar("GAME_NAME", get_GAME_NAME, set_GAME_NAME);
+		L.RegVar("TARGET_FRAME_RATE", get_TARGET_FRAME_RATE, set_TARGET_FRAME_RATE);
 		L.RegVar("ENCRYPT_LUA", get_ENCRYPT_LUA, set_ENCRYPT_LUA);
 		L.RegVar("DATA_PATH", get_DATA_PATH, null);
 		L.RegVar("BUILD_SCRIPT_BUNDLE_PATH", get_BUILD_SCRIPT_BUNDLE_PATH, null);
@@ -27,6 +28,20 @@ public class NCSpeedLight_ConstantsWrap
 		try
 		{
 			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.GAME_NAME);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_TARGET_FRAME_RATE(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushinteger(L, NCSpeedLight.Constants.TARGET_FRAME_RATE);
 			return 1;
 		}
 		catch(Exception e)
@@ -182,6 +197,21 @@ public class NCSpeedLight_ConstantsWrap
 		{
 			string arg0 = ToLua.CheckString(L, 2);
 			NCSpeedLight.Constants.GAME_NAME = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_TARGET_FRAME_RATE(IntPtr L)
+	{
+		try
+		{
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			NCSpeedLight.Constants.TARGET_FRAME_RATE = arg0;
 			return 0;
 		}
 		catch(Exception e)

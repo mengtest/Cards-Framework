@@ -33,6 +33,7 @@ function StandardDialogOption.New(title, content, doubleButton, onClickOK, onCli
 	obj.ContentFontSize = 30;
 	return obj;
 end
+
 ProgressDialogOption =
 {
 	AutoClose = false,
@@ -54,6 +55,7 @@ function ProgressDialogOption.New()
 	obj.ContentFontSize = 26;
 	return obj;
 end
+
 UIManager =
 {
 	IsInitialized = false,
@@ -68,33 +70,41 @@ UIManager =
 function UIManager.Initialize()
 	if UIManager.IsInitialized == false then
 		UIManager.IsInitialized = true;
-		local go = UnityEngine.GameObject("UIManager");
-		go.transform:SetParent(Game.transform);
-		UIManager.UIRoot = go:AddComponent(typeof(UIRoot));
-		UIManager.UIRoot.scalingStyle = UIRoot.Scaling.ConstrainedOnMobiles;
-		UIManager.UIRoot.manualHeight = 720;
-		UIManager.UIRoot.manualWidth = 1224;
-		UIManager.UIRoot.maximumHeight = 720;
-		UIManager.UIRoot.minimumHeight = 640;
-		UIManager.UIPanel = go:AddComponent(typeof(UIPanel));
-		local cameraGO = UnityEngine.GameObject("UICamera");
-		cameraGO.transform:SetParent(go.transform);
-		cameraGO.transform.localPosition = UnityEngine.Vector3.back;
-		UIManager.Camera = cameraGO:AddComponent(typeof(UnityEngine.Camera));
-		UIManager.Camera.orthographic = true;
-		UIManager.Camera.orthographicSize = 1;
-		UIManager.Camera.nearClipPlane = - 10;
-		UIManager.Camera.depth = 1;
-		UIManager.Camera.clearFlags = UnityEngine.CameraClearFlags.Depth; --CameraClearFlags.Nothing;
-		-- UIManager.Camera.cullingMask = NCSpeedLight.Helper.OnlyIncluding("UI");
-		UIManager.UICamera = cameraGO:AddComponent(typeof(UICamera));
-		-- UIManager.UICamera.eventReceiverMask = Helper.EverythingBut(mUILayer);
-		-- Window root.
-		UIManager.WindowRoot = UnityEngine.GameObject("Window");
-		UIManager.WindowRoot.transform:SetParent(go.transform);
-		-- Dialog root.
-		UIManager.DialogRoot = UnityEngine.GameObject("Dialog");
-		UIManager.DialogRoot.transform:SetParent(go.transform);
+		-- local go = UnityEngine.GameObject("UIManager");
+		-- go.transform:SetParent(Game.transform);
+		-- UIManager.UIRoot = go:AddComponent(typeof(UIRoot));
+		-- UIManager.UIRoot.scalingStyle = UIRoot.Scaling.ConstrainedOnMobiles;
+		-- UIManager.UIRoot.manualHeight = 720;
+		-- UIManager.UIRoot.manualWidth = 1224;
+		-- UIManager.UIRoot.maximumHeight = 720;
+		-- UIManager.UIRoot.minimumHeight = 640;
+		-- UIManager.UIPanel = go:AddComponent(typeof(UIPanel));
+		-- local cameraGO = UnityEngine.GameObject("UICamera");
+		-- cameraGO.transform:SetParent(go.transform);
+		-- cameraGO.transform.localPosition = UnityEngine.Vector3.back;
+		-- UIManager.Camera = cameraGO:AddComponent(typeof(UnityEngine.Camera));
+		-- UIManager.Camera.orthographic = true;
+		-- UIManager.Camera.orthographicSize = 1;
+		-- UIManager.Camera.nearClipPlane = - 10;
+		-- UIManager.Camera.depth = 1;
+		-- UIManager.Camera.clearFlags = UnityEngine.CameraClearFlags.Depth; --CameraClearFlags.Nothing;
+		-- -- UIManager.Camera.cullingMask = NCSpeedLight.Helper.OnlyIncluding("UI");
+		-- UIManager.UICamera = cameraGO:AddComponent(typeof(UICamera));
+		-- -- UIManager.UICamera.eventReceiverMask = Helper.EverythingBut(mUILayer);
+		-- -- Window root.
+		-- UIManager.WindowRoot = UnityEngine.GameObject("Window");
+		-- UIManager.WindowRoot.transform:SetParent(go.transform);
+		-- -- Dialog root.
+		-- UIManager.DialogRoot = UnityEngine.GameObject("Dialog");
+		-- UIManager.DialogRoot.transform:SetParent(go.transform);
+		-- 使用预置的配置
+		local go = UnityEngine.GameObject.Find("Game/UIManager");
+		UIManager.UIRoot = go:GetComponent(typeof(UIRoot));
+		UIManager.UIPanel = go:GetComponent(typeof(UIPanel));
+		local cameraGO = UnityEngine.GameObject.Find("Game/UIManager/UICamera");
+		UIManager.Camera = cameraGO:GetComponent(typeof(UnityEngine.Camera));
+		UIManager.WindowRoot = UnityEngine.GameObject.Find("Game/UIManager/Window");
+		UIManager.DialogRoot = UnityEngine.GameObject.Find("Game/UIManager/Dialog");
 		Log.Info("UIManager.Initialize: success.");
 	else
 		Log.Warning("UIManager.Initialize: UIManager has already been initialized.");

@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "Unlit/Transparent Colored"
 {
 	Properties
@@ -56,7 +58,7 @@ Shader "Unlit/Transparent Colored"
 
 			v2f vert (appdata_t v)
 			{
-				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.texcoord = v.texcoord;
 				o.color = v.color;
 				o.rounded_texcoord = v.texcoord - float2(0.5, 0.5);
