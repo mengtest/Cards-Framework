@@ -515,7 +515,6 @@
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_InputWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_KeyCodeWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_LightTypeWrap.cs" />
-    <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_LightWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_MaterialWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_MeshColliderWrap.cs" />
     <Compile Include="Assets\Scripts\C#\ToLua\Source\Generate\UnityEngine_MeshRendererWrap.cs" />
