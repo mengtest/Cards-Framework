@@ -287,7 +287,7 @@ namespace NCSpeedLight
             Done = true;
             Game.Instance.StartGame();
             yield return new WaitForSeconds(0.1f);
-            //gameObject.SetActive(false);
+            gameObject.SetActive(false);
             yield return 0;
         }
     }

@@ -59,6 +59,7 @@ function Game.Awake(go)
 	UIManager.Initialize();
 	NetManager.Initialize();
 	SceneManager.Initialize();
+	UIManager.OpenTipsDialog("喜喜喜喜");
 	SceneManager.GotoScene(SceneType.DownloadScene);
 end
 
@@ -67,7 +68,7 @@ function Game.Update()
 	SceneManager.Update();
 	if Game.Platform == UnityEngine.RuntimePlatform.Android then
 		if UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Escape) == true then
-			local option = StandardDialogOption.New("提示", "你确定退出游戏吗", true, function()
+			local option = StandardDialogOption.New("提示", "确定退出游戏吗?", true, function()
 				UnityEngine.Application.Quit();
 			end, nil)
 			UIManager.OpenStandardDialog(option);
