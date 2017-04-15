@@ -56,7 +56,9 @@ namespace NCSpeedLight
 
             InitializeLibs();
             InitializeCJson();
+#if !UNITY_ANDROID || !UNITY_IOS 
             InitializeLuaSocket();
+#endif
             LuaState.LuaSetTop(0);
             LuaBinder.Bind(LuaState);
             LuaCoroutine.Register(LuaState, Instance);
