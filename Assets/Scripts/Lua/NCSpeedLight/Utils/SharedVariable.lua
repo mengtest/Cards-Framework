@@ -8,7 +8,7 @@ SharedVariable =
 	TargetFramerate = 30,
 	ProtobufProcessor = require 'protobuf',
 	JsonProcessor = require 'cjson',
-	ASSETBUNDLE_MODE = false,
+	ASSETBUNDLE_MODE = true,
 	SelfInfo =
 	{
 		ID = - 1,

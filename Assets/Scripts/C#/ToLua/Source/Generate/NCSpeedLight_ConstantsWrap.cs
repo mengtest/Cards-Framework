@@ -9,16 +9,26 @@ public class NCSpeedLight_ConstantsWrap
 		L.BeginStaticLibs("Constants");
 		L.RegVar("GAME_NAME", get_GAME_NAME, set_GAME_NAME);
 		L.RegVar("TARGET_FRAME_RATE", get_TARGET_FRAME_RATE, set_TARGET_FRAME_RATE);
+		L.RegVar("ASSET_BUNDLE_MANIFEST_FILE", get_ASSET_BUNDLE_MANIFEST_FILE, set_ASSET_BUNDLE_MANIFEST_FILE);
+		L.RegVar("ASSET_MANIFEST_FILE", get_ASSET_MANIFEST_FILE, set_ASSET_MANIFEST_FILE);
+		L.RegVar("SCRIPT_MANIFEST_FILE", get_SCRIPT_MANIFEST_FILE, set_SCRIPT_MANIFEST_FILE);
 		L.RegVar("ENCRYPT_LUA", get_ENCRYPT_LUA, set_ENCRYPT_LUA);
+		L.RegVar("SCRIPT_BUNDLE_FILE_EXTENSION", get_SCRIPT_BUNDLE_FILE_EXTENSION, null);
+		L.RegVar("ASSET_BUNDLE_FILE_EXTENSION", get_ASSET_BUNDLE_FILE_EXTENSION, null);
+		L.RegVar("LUA_SCRIPT_WORKSPACE", get_LUA_SCRIPT_WORKSPACE, set_LUA_SCRIPT_WORKSPACE);
+		L.RegVar("BUNDLE_ASSET_WORKSPACE", get_BUNDLE_ASSET_WORKSPACE, set_BUNDLE_ASSET_WORKSPACE);
+		L.RegVar("BUNDLE_SCENE_WORKSPACE", get_BUNDLE_SCENE_WORKSPACE, set_BUNDLE_SCENE_WORKSPACE);
+		L.RegVar("RESOURCE_WORKSPACE", get_RESOURCE_WORKSPACE, set_RESOURCE_WORKSPACE);
 		L.RegVar("DATA_PATH", get_DATA_PATH, null);
 		L.RegVar("BUILD_SCRIPT_BUNDLE_PATH", get_BUILD_SCRIPT_BUNDLE_PATH, null);
+		L.RegVar("BUILD_ASSET_BUNDLE_PATH", get_BUILD_ASSET_BUNDLE_PATH, null);
 		L.RegVar("SCRIPT_BUNDLE_PATH", get_SCRIPT_BUNDLE_PATH, null);
 		L.RegVar("ASSET_BUNDLE_PATH", get_ASSET_BUNDLE_PATH, null);
 		L.RegVar("BUILD_BUNDLE_LOG_PATH", get_BUILD_BUNDLE_LOG_PATH, null);
 		L.RegVar("APP_CONTENT_PATH", get_APP_CONTENT_PATH, null);
-		L.RegVar("PLATFORM", get_PLATFORM, null);
 		L.RegVar("PLATFORM_NAME", get_PLATFORM_NAME, null);
-		L.RegVar("LUA_BUNDLE_MODE", get_LUA_BUNDLE_MODE, null);
+		L.RegVar("SCRIPT_BUNDLE_MODE", get_SCRIPT_BUNDLE_MODE, null);
+		L.RegVar("ASSET_BUNDLE_MODE", get_ASSET_BUNDLE_MODE, null);
 		L.EndStaticLibs();
 	}
 
@@ -51,11 +61,137 @@ public class NCSpeedLight_ConstantsWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_ASSET_BUNDLE_MANIFEST_FILE(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.ASSET_BUNDLE_MANIFEST_FILE);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_ASSET_MANIFEST_FILE(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.ASSET_MANIFEST_FILE);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_SCRIPT_MANIFEST_FILE(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.SCRIPT_MANIFEST_FILE);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_ENCRYPT_LUA(IntPtr L)
 	{
 		try
 		{
 			LuaDLL.lua_pushboolean(L, NCSpeedLight.Constants.ENCRYPT_LUA);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_SCRIPT_BUNDLE_FILE_EXTENSION(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.SCRIPT_BUNDLE_FILE_EXTENSION);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_ASSET_BUNDLE_FILE_EXTENSION(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.ASSET_BUNDLE_FILE_EXTENSION);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_LUA_SCRIPT_WORKSPACE(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.LUA_SCRIPT_WORKSPACE);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_BUNDLE_ASSET_WORKSPACE(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.BUNDLE_ASSET_WORKSPACE);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_BUNDLE_SCENE_WORKSPACE(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.BUNDLE_SCENE_WORKSPACE);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_RESOURCE_WORKSPACE(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.RESOURCE_WORKSPACE);
 			return 1;
 		}
 		catch(Exception e)
@@ -84,6 +220,20 @@ public class NCSpeedLight_ConstantsWrap
 		try
 		{
 			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.BUILD_SCRIPT_BUNDLE_PATH);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_BUILD_ASSET_BUNDLE_PATH(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.BUILD_ASSET_BUNDLE_PATH);
 			return 1;
 		}
 		catch(Exception e)
@@ -149,20 +299,6 @@ public class NCSpeedLight_ConstantsWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_PLATFORM(IntPtr L)
-	{
-		try
-		{
-			ToLua.Push(L, NCSpeedLight.Constants.PLATFORM);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_PLATFORM_NAME(IntPtr L)
 	{
 		try
@@ -177,11 +313,25 @@ public class NCSpeedLight_ConstantsWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_LUA_BUNDLE_MODE(IntPtr L)
+	static int get_SCRIPT_BUNDLE_MODE(IntPtr L)
 	{
 		try
 		{
-			LuaDLL.lua_pushboolean(L, NCSpeedLight.Constants.LUA_BUNDLE_MODE);
+			LuaDLL.lua_pushboolean(L, NCSpeedLight.Constants.SCRIPT_BUNDLE_MODE);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_ASSET_BUNDLE_MODE(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushboolean(L, NCSpeedLight.Constants.ASSET_BUNDLE_MODE);
 			return 1;
 		}
 		catch(Exception e)
@@ -221,12 +371,117 @@ public class NCSpeedLight_ConstantsWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_ASSET_BUNDLE_MANIFEST_FILE(IntPtr L)
+	{
+		try
+		{
+			string arg0 = ToLua.CheckString(L, 2);
+			NCSpeedLight.Constants.ASSET_BUNDLE_MANIFEST_FILE = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_ASSET_MANIFEST_FILE(IntPtr L)
+	{
+		try
+		{
+			string arg0 = ToLua.CheckString(L, 2);
+			NCSpeedLight.Constants.ASSET_MANIFEST_FILE = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_SCRIPT_MANIFEST_FILE(IntPtr L)
+	{
+		try
+		{
+			string arg0 = ToLua.CheckString(L, 2);
+			NCSpeedLight.Constants.SCRIPT_MANIFEST_FILE = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_ENCRYPT_LUA(IntPtr L)
 	{
 		try
 		{
 			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
 			NCSpeedLight.Constants.ENCRYPT_LUA = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_LUA_SCRIPT_WORKSPACE(IntPtr L)
+	{
+		try
+		{
+			string arg0 = ToLua.CheckString(L, 2);
+			NCSpeedLight.Constants.LUA_SCRIPT_WORKSPACE = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_BUNDLE_ASSET_WORKSPACE(IntPtr L)
+	{
+		try
+		{
+			string arg0 = ToLua.CheckString(L, 2);
+			NCSpeedLight.Constants.BUNDLE_ASSET_WORKSPACE = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_BUNDLE_SCENE_WORKSPACE(IntPtr L)
+	{
+		try
+		{
+			string arg0 = ToLua.CheckString(L, 2);
+			NCSpeedLight.Constants.BUNDLE_SCENE_WORKSPACE = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_RESOURCE_WORKSPACE(IntPtr L)
+	{
+		try
+		{
+			string arg0 = ToLua.CheckString(L, 2);
+			NCSpeedLight.Constants.RESOURCE_WORKSPACE = arg0;
 			return 0;
 		}
 		catch(Exception e)

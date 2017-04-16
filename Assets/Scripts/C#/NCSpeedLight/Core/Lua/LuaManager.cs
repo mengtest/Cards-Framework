@@ -67,7 +67,7 @@ namespace NCSpeedLight
 
             InitializeLuaDirectory();
 
-            if (Constants.LUA_BUNDLE_MODE)
+            if (Constants.SCRIPT_BUNDLE_MODE)
             {
                 LuaLoader = new LuaLoader();
                 InitializeToLuaBundle();

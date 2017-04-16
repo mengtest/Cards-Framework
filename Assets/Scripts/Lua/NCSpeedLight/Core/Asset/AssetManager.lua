@@ -14,6 +14,7 @@ AssetManager =
 	Manifest = nil,
 	Instance = nil,
 	LoadedBundles = {},
+	currentLoad = 0,
 };
 
 local this = AssetManager;
@@ -30,7 +31,7 @@ function AssetManager.Initialize()
 end
 
 function AssetManager.LoadAssetbundleManifest()
-	local path = Constants.ASSET_BUNDLE_PATH .. Constants.PLATFORM_NAME;
+	local path = Constants.ASSET_BUNDLE_PATH .. Constants.ASSET_BUNDLE_MANIFEST_FILE;
 	local bundle = UnityEngine.AssetBundle.LoadFromFile(path);
 	if bundle ~= nil then
 		AssetManager.Manifest = NCSpeedLight.Helper.LoadAssetFromBundle("AssetBundleManifest", typeof(UnityEngine.AssetBundleManifest), bundle);
@@ -46,6 +47,8 @@ function AssetManager.LoadAsset(assetPath, type)
 		local assetName = string.sub(assetPath, index + 1, string.len(assetPath));
 		local bundleName = string.sub(assetPath, 1, index - 1);
 		bundleName = string.gsub(bundleName, "/", "_");
+		bundleName = string.lower(bundleName);
+		bundleName = bundleName .. ".asset";
 		local bundle = AssetManager.LoadAssetBundle(bundleName);
 		if bundle ~= nil then
 			return NCSpeedLight.Helper.LoadAssetFromBundle(assetName, type, bundle);
@@ -58,20 +61,39 @@ function AssetManager.LoadAsset(assetPath, type)
 end
 
 function AssetManager.LoadScene(sceneName)
-	return UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+	if SharedVariable.ASSETBUNDLE_MODE then
+		local bundleName = "bundle_scenes.asset";
+		local bundle = AssetManager.LoadAssetBundle(bundleName);
+		if bundle == nil then
+			Log.Error("AssetManager.LoadScene: can not load scene caused by nil scene bundle file.");
+		else
+			return UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+		end
+	else
+	end
+end
+
+function AssetManager.UnloadScene(sceneName)
 end
 
 function AssetManager.LoadAssetBundle(bundleName)
-	return AssetManager.LoadDependency(bundleName);
+	local loadedDependencies = {};
+	return AssetManager.LoadDependency(bundleName, loadedDependencies);
 end
 
-function AssetManager.LoadDependency(bundleName)
+function AssetManager.LoadDependency(bundleName, loadedDependencies)
 	local dependencies = AssetManager.Manifest:GetAllDependencies(bundleName);
-	if dependencies ~= nil and dependencies.Length > 0 then
+	-- 存在引用且没有循环引用
+	if dependencies ~= nil and dependencies.Length > 0 and loadedDependencies[bundleName] == nil then
 		for i = 0, dependencies.Length - 1 do
-			AssetManager.LoadDependency(dependencies[i]);
+			AssetManager.LoadDependency(dependencies[i], loadedDependencies);
 		end
 	end
+	if AssetManager.currentLoad > 200 then
+		return;
+	end
+	AssetManager.currentLoad = AssetManager.currentLoad + 1;
+	Log.Info("AssetManager.LoadDependency: " .. bundleName);
 	local bundleInfo = AssetManager.LoadedBundles[bundleName];
 	if bundleInfo == nil or bundleInfo.Bundle == nil then
 		local path = Constants.ASSET_BUNDLE_PATH .. bundleName;
@@ -81,6 +103,7 @@ function AssetManager.LoadDependency(bundleName)
 	else
 		bundleInfo.RefCount = bundleInfo.RefCount + 1;
 	end
+	loadedDependencies[bundleName] = 1;
 	return bundleInfo.Bundle;
 end
 

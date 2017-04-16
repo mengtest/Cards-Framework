@@ -110,31 +110,28 @@ function UIManager.Initialize()
 		Log.Warning("UIManager.Initialize: UIManager has already been initialized.");
 	end
 end
+
 -- 屏幕分辨率
 function UIManager.ScreenResolution()
 	return UIManager.UIRoot.pixelSizeAdjustment * NGUITools.screenSize;
 end
+
 -- 打开窗口
 function UIManager.OpenWindow(windowName)
 	Log.Info("UIManager.OpenWindow: " .. windowName);
 	local window = UIManager.Windows[windowName];
 	if window ~= nil then
 		return window;
-	else
-		local assetPath;
-		if SharedVariable.ASSETBUNDLE_MODE then
-			assetPath = "UI/" .. windowName;
-		else
-			assetPath = "Bundle/UI/" .. windowName;
-		end
-		local go = AssetManager.LoadAsset(assetPath, typeof(UnityEngine.GameObject));
-		go = UIManager.SetupWindow(go);
-		if go ~= nil then
-			UIManager.Windows[windowName] = go;
-		end
+	end
+	local assetPath = "Bundle/Prefab/UI/" .. windowName;
+	local go = AssetManager.LoadAsset(assetPath, typeof(UnityEngine.GameObject));
+	go = UIManager.SetupWindow(go);
+	if go ~= nil then
+		UIManager.Windows[windowName] = go;
 	end
 	return go;
 end
+
 function UIManager.CloseWindow(windowName)
 	Log.Info("UIManager.CloseWindow: " .. windowName);
 	local window = UIManager.Windows[windowName];
@@ -146,12 +143,14 @@ function UIManager.CloseWindow(windowName)
 		AssetManager.UnloadAssetBundle("UI/" .. windowName);
 	end
 end
+
 function UIManager.CloseAllWindows()
 	for key, value in pairs(UIManager.Windows) do
 		UIManager.CloseWindow(key);
 		UIManager.Windows[key] = nil;
 	end
 end
+
 function UIManager.CloseAllWindowsExcept(...)
 	local arg = {...};
 	for key, value in pairs(UIManager.Windows) do
@@ -167,18 +166,14 @@ function UIManager.CloseAllWindowsExcept(...)
 		end
 	end
 end
+
 function UIManager.OpenStandardDialog(option)
 	if option == nil then
 		Log.Error('Can not open standardDialog,please input option.');
 		return;
 	end
 	if UIManager.StandardDialog == nil then
-		local assetPath;
-		if SharedVariable.ASSETBUNDLE_MODE then
-			assetPath = "UI/Dialog/StandardDialog";
-		else
-			assetPath = "Bundle/UI/Dialog/StandardDialog";
-		end
+		local assetPath = "Bundle/Prefab/UI/Dialog/StandardDialog";
 		local go = AssetManager.LoadAsset(assetPath, typeof(UnityEngine.GameObject));
 		go = UIManager.SetupDialog(go);
 		UIManager.StandardDialog = go;
@@ -234,23 +229,20 @@ function UIManager.OpenStandardDialog(option)
 		dialog:SetActive(true);
 	end
 end
+
 function UIManager.CloseStandardDialog()
 	if UIManager.StandardDialog ~= nil then
 		UIManager.StandardDialog:SetActive(false);
 	end
 end
+
 function UIManager.OpenProgressDialog(option)
 	if option == nil then
 		Log:Error('Can not open progressdialog,please input option.');
 		return;
 	end
 	if UIManager.ProgressDialog == nil then
-		local assetPath;
-		if SharedVariable.ASSETBUNDLE_MODE then
-			assetPath = "UI/Dialog/ProgressDialog";
-		else
-			assetPath = "Bundle/UI/Dialog/ProgressDialog";
-		end
+		local assetPath = "Bundle/Prefab/UI/Dialog/ProgressDialog";
 		local go = AssetManager.LoadAsset(assetPath, typeof(UnityEngine.GameObject));
 		go = UIManager.SetupDialog(go);
 		UIManager.ProgressDialog = go;
@@ -292,6 +284,7 @@ function UIManager.OpenProgressDialog(option)
 		dialog:SetActive(true);
 	end
 end
+
 function UIManager.CloseProgressDialog()
 	if UIManager.ProgressDialog ~= nil then
 		UIManager.ProgressDialog:SetActive(false);
@@ -300,13 +293,9 @@ function UIManager.CloseProgressDialog()
 		UIManager.ProgressDialogTimer:Stop();
 	end
 end
+
 function UIManager.OpenTipsDialog(content)
-	local assetPath;
-	if SharedVariable.ASSETBUNDLE_MODE then
-		assetPath = "UI/Dialog/TipsDialog";
-	else
-		assetPath = "Bundle/UI/Dialog/TipsDialog";
-	end
+	local assetPath = "Bundle/Prefab/UI/Dialog/TipsDialog";
 	local go = AssetManager.LoadAsset(assetPath, typeof(UnityEngine.GameObject));
 	go = UIManager.SetupDialog(go);
 	if go ~= nil then

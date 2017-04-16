@@ -30,9 +30,9 @@ namespace NCSpeedLight
         private string[] LocalScriptsManifest = null;
         private string[] RemoteScriptsManifest = null;
 
-        private LuaManifest ContentLuaManifest = null;
-        private LuaManifest LocalLuaManifest = null;
-        private LuaManifest RemoteLuaManifest = null;
+        private FileManifest ContentLuaManifest = null;
+        private FileManifest LocalLuaManifest = null;
+        private FileManifest RemoteLuaManifest = null;
 
         private static string ManifestAtLoacl;
         private static string ManifestAtContent;
@@ -45,8 +45,8 @@ namespace NCSpeedLight
 
         void Awake()
         {
-            AssetsURL = "http://192.168.1.146:9555/" + Constants.PLATFORM_NAME + "/Assets/";
-            ScriptsURL = "http://192.168.1.146:9555/" + Constants.PLATFORM_NAME + "/Scripts/";
+            AssetsURL = "http://localhost:9555/" + Constants.PLATFORM_NAME + "/Assets/";
+            ScriptsURL = "http://localhost:9555/" + Constants.PLATFORM_NAME + "/Scripts/";
             ManifestAtLoacl = Constants.SCRIPT_BUNDLE_PATH + "manifest.txt";
             ManifestAtContent = Constants.APP_CONTENT_PATH + "manifest.txt";
             ManifestAtRemote = ScriptsURL + "manifest.txt";
@@ -74,9 +74,9 @@ namespace NCSpeedLight
         {
             CostTime = 0;
             Done = false;
-            if (Application.isEditor && Constants.LUA_BUNDLE_MODE)
+            if (Application.isEditor && Constants.SCRIPT_BUNDLE_MODE)
             {
-                if (Constants.LUA_BUNDLE_MODE)
+                if (Constants.SCRIPT_BUNDLE_MODE)
                 {
                     StartCoroutine(ProcessUpdate());
                 }
@@ -123,20 +123,20 @@ namespace NCSpeedLight
 
         private IEnumerator UpdateScripts()
         {
-            ContentLuaManifest = new LuaManifest(ManifestAtContent);
-            yield return StartCoroutine(ContentLuaManifest.Load(true, false));
-            LocalLuaManifest = new LuaManifest(ManifestAtLoacl);
-            yield return StartCoroutine(LocalLuaManifest.Load(false, false));
-            RemoteLuaManifest = new LuaManifest(ManifestAtRemote);
-            yield return StartCoroutine(RemoteLuaManifest.Load(false, true));
+            ContentLuaManifest = new FileManifest(Constants.SCRIPT_BUNDLE_PATH, ScriptsURL, Constants.SCRIPT_MANIFEST_FILE);
+            yield return StartCoroutine(ContentLuaManifest.Initialize(true, false));
+            LocalLuaManifest = new FileManifest(Constants.SCRIPT_BUNDLE_PATH, ScriptsURL, Constants.SCRIPT_MANIFEST_FILE);
+            yield return StartCoroutine(LocalLuaManifest.Initialize(false, false));
+            RemoteLuaManifest = new FileManifest(Constants.SCRIPT_BUNDLE_PATH, ScriptsURL, Constants.SCRIPT_MANIFEST_FILE);
+            yield return StartCoroutine(RemoteLuaManifest.Initialize(false, true));
 
-            if (LocalLuaManifest.Files.Count == 0)
+            if (LocalLuaManifest.FileInfos.Count == 0)
             {
                 // 本地不存在文件，从安装包中解压出来
                 yield return StartCoroutine(ExtractInternalScripts());
                 // 重置本地清单列表
-                LocalLuaManifest = new LuaManifest(ManifestAtLoacl);
-                yield return LocalLuaManifest.Load(false, false);
+                LocalLuaManifest = new FileManifest(Constants.SCRIPT_BUNDLE_PATH, ScriptsURL, Constants.SCRIPT_MANIFEST_FILE);
+                yield return LocalLuaManifest.Initialize(false, false);
             }
             else
             {
@@ -144,7 +144,7 @@ namespace NCSpeedLight
             }
 
 
-            LuaManifest.DifferInfo differInfo = LocalLuaManifest.CompareWith(RemoteLuaManifest);
+            FileManifest.DifferInfo differInfo = LocalLuaManifest.CompareWith(RemoteLuaManifest);
             if (differInfo.Modified.Count > 0)
             {
                 // 下载服务器差异的文件
@@ -182,9 +182,9 @@ namespace NCSpeedLight
             Directory.CreateDirectory(dataPath);
 
             // 拷贝清单里的其他文件
-            for (int i = 0; i < ContentLuaManifest.Files.Count; i++)
+            for (int i = 0; i < ContentLuaManifest.FileInfos.Count; i++)
             {
-                LuaManifest.FileInfo fileInfo = ContentLuaManifest.Files[i];
+                FileManifest.FileInfo fileInfo = ContentLuaManifest.FileInfos[i];
                 string contentFilePath = contentPath + fileInfo.Name;
                 string localFilePath = dataPath + fileInfo.Name;
                 Helper.Log("UIUpdate.ExtractInternalScripts: extract " + contentFilePath + " to " + localFilePath);
@@ -212,7 +212,7 @@ namespace NCSpeedLight
             yield return 0;
         }
 
-        private IEnumerator DownloadScripts(List<LuaManifest.FileInfo> fileInfos)
+        private IEnumerator DownloadScripts(List<FileManifest.FileInfo> fileInfos)
         {
             SwitchStatus("正在下载更新");
             Helper.Log("UIUpdate.DownloadScripts: start.");
@@ -225,7 +225,7 @@ namespace NCSpeedLight
             WWW www = null;
             for (int i = 0; i < fileInfos.Count; i++)
             {
-                LuaManifest.FileInfo fileInfo = fileInfos[i];
+                FileManifest.FileInfo fileInfo = fileInfos[i];
                 string remoteFilePath = ScriptsURL + fileInfo.Name;
                 string localFilePath = Constants.SCRIPT_BUNDLE_PATH + fileInfo.Name;
                 Helper.Log("UIUpdate.DownloadScripts: download from " + remoteFilePath + " to " + localFilePath);
@@ -241,7 +241,7 @@ namespace NCSpeedLight
             yield return 0;
         }
 
-        private IEnumerator DeleteOldScripts(List<LuaManifest.FileInfo> fileInfos)
+        private IEnumerator DeleteOldScripts(List<FileManifest.FileInfo> fileInfos)
         {
             Helper.Log("UIUpdate.DeleteOldScripts: start.");
             string dataPath = Constants.SCRIPT_BUNDLE_PATH;  //数据目录
@@ -249,7 +249,7 @@ namespace NCSpeedLight
 
             for (int i = 0; i < fileInfos.Count; i++)
             {
-                LuaManifest.FileInfo fileInfo = fileInfos[i];
+                FileManifest.FileInfo fileInfo = fileInfos[i];
                 string filePath = dataPath + fileInfo.Name;
 
                 if (File.Exists(filePath))
