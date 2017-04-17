@@ -59,7 +59,7 @@ function Game.Awake(go)
 	UIManager.Initialize();
 	NetManager.Initialize();
 	SceneManager.Initialize();
-	UIManager.OpenTipsDialog("Asset Update Done!");
+	UIManager.OpenTipsDialog("已经更新至最新版本!");
 	SceneManager.GotoScene(SceneType.DownloadScene);
 end
 

@@ -137,3 +137,47 @@ MaJiangOperatorType =
 		end
 	end
 };
+
+-- 麻将内玩法
+MJPlayWay =
+{
+	PW_Begin = 0,
+	-- 红中麻将
+	PW_7DUI = 1,        -- 可胡7对
+	PW_1MA = 2,         -- 一码全中
+	PW_2MA = 3,         -- 扎2码
+	PW_4MA = 4,         -- 扎4码
+	PW_6MA = 5,         -- 扎6码
+	
+	-- 新余麻将
+	PW_LONG = 6,        -- 一条龙
+	PW_16BEI = 7,       -- 16倍
+	PW_32BEI = 8,       -- 32倍
+	PW_64BEI = 9,       -- 64倍
+	PW_NOBEI = 10,       -- 不封顶
+	
+	-- 南昌麻将
+	PW_WXJ = 11,         -- 无下精;
+	PW_HTSXJ = 12,       -- 上下精;
+	PW_MDL = 13,         -- 埋地雷;
+	
+	PW_TYSG = 14,        -- 同一首歌;
+	PW_HTYX = 15,        -- 回头一笑;
+	
+	PW_End = 16,
+	
+	ToInt = function(name)
+		for key, value in pairs(MJPlayWay) do
+			if key == name then
+				return value;
+			end
+		end
+	end,
+	ToString = function(index)
+		for key, value in pairs(MJPlayWay) do
+			if value == index then
+				return tostring(key);
+			end
+		end
+	end
+}; 

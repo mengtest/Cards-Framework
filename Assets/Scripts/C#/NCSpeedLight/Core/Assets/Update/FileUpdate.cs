@@ -122,10 +122,6 @@ namespace NCSpeedLight
             string dataPath = Constants.LOCAL_SCRIPT_BUNDLE_PATH;  //数据目录
             Helper.Log("FileUpdate.DownloadScript: data path is " + dataPath);
 
-            // 保存manifest文件至本地
-            string localManifestPath = Constants.LOCAL_SCRIPT_BUNDLE_PATH + Constants.SCRIPT_MANIFEST_FILE;
-            File.WriteAllBytes(localManifestPath, RemoteScriptManifest.Bytes);
-
             WWW www = null;
             for (int i = 0; i < fileInfos.Count; i++)
             {
@@ -141,6 +137,11 @@ namespace NCSpeedLight
                 }
                 yield return new WaitForEndOfFrame();
             }
+
+            // 保存manifest文件至本地
+            string localManifestPath = Constants.LOCAL_SCRIPT_BUNDLE_PATH + Constants.SCRIPT_MANIFEST_FILE;
+            File.WriteAllBytes(localManifestPath, RemoteScriptManifest.Bytes);
+
             Helper.Log("FileUpdate.DownloadScript: done.");
             yield return 0;
         }
@@ -267,10 +268,6 @@ namespace NCSpeedLight
             string dataPath = Constants.LOCAL_ASSET_BUNDLE_PATH;  //数据目录
             Helper.Log("FileUpdate.DownloadAsset: data path is " + dataPath);
 
-            // 保存manifest文件至本地
-            string localManifestPath = Constants.LOCAL_ASSET_BUNDLE_PATH + Constants.ASSET_MANIFEST_FILE;
-            File.WriteAllBytes(localManifestPath, RemoteAssetManifest.Bytes);
-
             WWW www = null;
             for (int i = 0; i < fileInfos.Count; i++)
             {
@@ -286,6 +283,11 @@ namespace NCSpeedLight
                 }
                 yield return new WaitForEndOfFrame();
             }
+
+            // 保存manifest文件至本地
+            string localManifestPath = Constants.LOCAL_ASSET_BUNDLE_PATH + Constants.ASSET_MANIFEST_FILE;
+            File.WriteAllBytes(localManifestPath, RemoteAssetManifest.Bytes);
+
             Helper.Log("FileUpdate.DownloadAsset: done.");
             yield return 0;
         }
