@@ -59,7 +59,7 @@ function Game.Awake(go)
 	UIManager.Initialize();
 	NetManager.Initialize();
 	SceneManager.Initialize();
-	UIManager.OpenTipsDialog("周末了");
+	UIManager.OpenTipsDialog("Asset Update Done!");
 	SceneManager.GotoScene(SceneType.DownloadScene);
 end
 

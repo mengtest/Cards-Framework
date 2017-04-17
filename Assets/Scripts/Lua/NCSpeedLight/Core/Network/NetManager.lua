@@ -22,7 +22,7 @@ end
 
 -- 初始化PB文件，注册lua解析
 function NetManager.InitPBMessage()
-	local path = Constants.SCRIPT_BUNDLE_PATH .. "PBMessage.pb";
+	local path = Constants.LOCAL_SCRIPT_BUNDLE_PATH .. "PBMessage.pb";
 	local buffer = Utility.OpenFile(path);
 	if buffer == nil then
 		Log.Error("NetManager.InitPBMessage: open pb file error.");

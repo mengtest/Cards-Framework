@@ -68,9 +68,9 @@ namespace NCSpeedLight
                 BuilderEditorUtils.BeginContents(false);
                 if (GUILayout.Button("Delete AssetBundle/Assets", GUILayout.Width(295)))
                 {
-                    if (Directory.Exists(Constants.ASSET_BUNDLE_PATH))
+                    if (Directory.Exists(Constants.LOCAL_ASSET_BUNDLE_PATH))
                     {
-                        Directory.Delete(Constants.ASSET_BUNDLE_PATH, true);
+                        Directory.Delete(Constants.LOCAL_ASSET_BUNDLE_PATH, true);
                     }
                 }
                 if (GUILayout.Button("Delete AssetBundle/Scripts", GUILayout.Width(295)))
@@ -178,12 +178,12 @@ namespace NCSpeedLight
                 Directory.CreateDirectory(Application.streamingAssetsPath + "/Assets/");
             }
             List<string> files = new List<string>();
-            ScriptBuilder.CollectFiles(Constants.ASSET_BUNDLE_PATH, files, "*.*");
+            ScriptBuilder.CollectFiles(Constants.LOCAL_ASSET_BUNDLE_PATH, files, "*.*");
             for (int i = 0; i < files.Count; i++)
             {
                 string file = files[i];
                 string targetFile = string.Empty;
-                targetFile = Application.streamingAssetsPath + "/Assets/" + file.Substring(Constants.ASSET_BUNDLE_PATH.Length);
+                targetFile = Application.streamingAssetsPath + "/Assets/" + file.Substring(Constants.LOCAL_ASSET_BUNDLE_PATH.Length);
                 File.Copy(file, targetFile, true);
             }
             AssetDatabase.Refresh();

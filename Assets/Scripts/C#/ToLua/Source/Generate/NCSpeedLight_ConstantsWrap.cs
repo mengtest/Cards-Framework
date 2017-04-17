@@ -22,13 +22,14 @@ public class NCSpeedLight_ConstantsWrap
 		L.RegVar("DATA_PATH", get_DATA_PATH, null);
 		L.RegVar("BUILD_SCRIPT_BUNDLE_PATH", get_BUILD_SCRIPT_BUNDLE_PATH, null);
 		L.RegVar("BUILD_ASSET_BUNDLE_PATH", get_BUILD_ASSET_BUNDLE_PATH, null);
-		L.RegVar("SCRIPT_BUNDLE_PATH", get_SCRIPT_BUNDLE_PATH, null);
-		L.RegVar("ASSET_BUNDLE_PATH", get_ASSET_BUNDLE_PATH, null);
-		L.RegVar("BUILD_BUNDLE_LOG_PATH", get_BUILD_BUNDLE_LOG_PATH, null);
-		L.RegVar("APP_CONTENT_PATH", get_APP_CONTENT_PATH, null);
+		L.RegVar("STREAMING_PATH", get_STREAMING_PATH, null);
 		L.RegVar("PLATFORM_NAME", get_PLATFORM_NAME, null);
 		L.RegVar("SCRIPT_BUNDLE_MODE", get_SCRIPT_BUNDLE_MODE, null);
 		L.RegVar("ASSET_BUNDLE_MODE", get_ASSET_BUNDLE_MODE, null);
+		L.RegVar("LOCAL_ASSET_BUNDLE_PATH", get_LOCAL_ASSET_BUNDLE_PATH, null);
+		L.RegVar("LOCAL_SCRIPT_BUNDLE_PATH", get_LOCAL_SCRIPT_BUNDLE_PATH, null);
+		L.RegVar("REMOTE_ASSET_BUNDLE_PATH", get_REMOTE_ASSET_BUNDLE_PATH, null);
+		L.RegVar("REMOTE_SCRIPT_BUNDLE_PATH", get_REMOTE_SCRIPT_BUNDLE_PATH, null);
 		L.EndStaticLibs();
 	}
 
@@ -243,53 +244,11 @@ public class NCSpeedLight_ConstantsWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_SCRIPT_BUNDLE_PATH(IntPtr L)
+	static int get_STREAMING_PATH(IntPtr L)
 	{
 		try
 		{
-			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.SCRIPT_BUNDLE_PATH);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_ASSET_BUNDLE_PATH(IntPtr L)
-	{
-		try
-		{
-			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.ASSET_BUNDLE_PATH);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_BUILD_BUNDLE_LOG_PATH(IntPtr L)
-	{
-		try
-		{
-			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.BUILD_BUNDLE_LOG_PATH);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_APP_CONTENT_PATH(IntPtr L)
-	{
-		try
-		{
-			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.APP_CONTENT_PATH);
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.STREAMING_PATH);
 			return 1;
 		}
 		catch(Exception e)
@@ -332,6 +291,62 @@ public class NCSpeedLight_ConstantsWrap
 		try
 		{
 			LuaDLL.lua_pushboolean(L, NCSpeedLight.Constants.ASSET_BUNDLE_MODE);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_LOCAL_ASSET_BUNDLE_PATH(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.LOCAL_ASSET_BUNDLE_PATH);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_LOCAL_SCRIPT_BUNDLE_PATH(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.LOCAL_SCRIPT_BUNDLE_PATH);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_REMOTE_ASSET_BUNDLE_PATH(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.REMOTE_ASSET_BUNDLE_PATH);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_REMOTE_SCRIPT_BUNDLE_PATH(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.REMOTE_SCRIPT_BUNDLE_PATH);
 			return 1;
 		}
 		catch(Exception e)

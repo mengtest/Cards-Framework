@@ -113,7 +113,7 @@ namespace NCSpeedLight
 
         private static void InitializeInternalLuaBundle()
         {
-            string manifest = Constants.ASSET_BUNDLE_PATH + "Scripts/manifest.txt";
+            string manifest = Constants.LOCAL_SCRIPT_BUNDLE_PATH + Constants.SCRIPT_MANIFEST_FILE;
             Helper.Log("LuaManager.InitializeInternalLuaBundle: manifest path is " + manifest);
             if (File.Exists(manifest) == false)
             {
@@ -130,7 +130,7 @@ namespace NCSpeedLight
             {
                 string line = lines[i];
                 string bundleName = line.Split('|')[0];
-                if (bundleName.EndsWith(".assetbundle"))
+                if (bundleName.EndsWith(Constants.SCRIPT_BUNDLE_FILE_EXTENSION))
                 {
                     Helper.Log("LuaManager.InitializeInternalLuaBundle: add bundle named " + bundleName);
                     LuaLoader.AddBundle(bundleName);
@@ -145,11 +145,11 @@ namespace NCSpeedLight
 
         private static void InitializeToLuaBundle()
         {
-            LuaLoader.AddBundle("tolua.assetbundle");
-            LuaLoader.AddBundle("tolua_system.assetbundle");
-            LuaLoader.AddBundle("tolua_system_reflection.assetbundle");
-            LuaLoader.AddBundle("tolua_unityengine.assetbundle");
-            LuaLoader.AddBundle("tolua_misc.assetbundle");
+            LuaLoader.AddBundle("tolua" + Constants.SCRIPT_BUNDLE_FILE_EXTENSION);
+            LuaLoader.AddBundle("tolua_system" + Constants.SCRIPT_BUNDLE_FILE_EXTENSION);
+            LuaLoader.AddBundle("tolua_system_reflection" + Constants.SCRIPT_BUNDLE_FILE_EXTENSION);
+            LuaLoader.AddBundle("tolua_unityengine" + Constants.SCRIPT_BUNDLE_FILE_EXTENSION);
+            LuaLoader.AddBundle("tolua_misc" + Constants.SCRIPT_BUNDLE_FILE_EXTENSION);
         }
 
         public static object[] DoFile(string filename)
@@ -213,13 +213,13 @@ namespace NCSpeedLight
         /// <param name="bundleName"></param>
         public void AddBundle(string bundleName)
         {
-            string key = bundleName.Substring(0, bundleName.IndexOf(".assetbundle"));
+            string key = bundleName.Substring(0, bundleName.IndexOf(Constants.SCRIPT_BUNDLE_FILE_EXTENSION));
             if (base.zipMap.ContainsKey(key) == true)
             {
                 return;
             }
             string fileName = bundleName.ToLower();
-            string url = Constants.SCRIPT_BUNDLE_PATH + fileName;
+            string url = Constants.LOCAL_SCRIPT_BUNDLE_PATH + fileName;
             if (File.Exists(url))
             {
                 AssetBundle bundle = AssetBundle.LoadFromFile(url);

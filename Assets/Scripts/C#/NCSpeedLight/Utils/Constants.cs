@@ -64,59 +64,8 @@ namespace NCSpeedLight
         public static string ASSET_MANIFEST_FILE = "manifest.txt";
 
         public static string SCRIPT_MANIFEST_FILE = "manifest.txt";
-
-        public static string SCRIPT_BUNDLE_PATH
-        {
-            get
-            {
-                if (Application.isMobilePlatform || Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.OSXPlayer)
-                {
-                    return Application.persistentDataPath + "/Scripts/";
-                }
-                else if (Application.isEditor)
-                {
-                    return DATA_PATH + "Scripts/";
-                }
-                else
-                {
-                    return string.Empty;
-                }
-            }
-        }
-
-        public static string ASSET_BUNDLE_PATH
-        {
-            get
-            {
-                if (Application.isMobilePlatform || Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.OSXPlayer)
-                {
-                    //return Application.persistentDataPath + "/Assets/";
-                    return Application.persistentDataPath + "/";
-                }
-                else if (Application.isEditor)
-                {
-                    //return Application.dataPath.Substring(0, Application.dataPath.IndexOf("/Assets")) + "/AssetBundles/" + PLATFORM_NAME + "/Assets/";
-                    return Application.dataPath.Substring(0, Application.dataPath.IndexOf("/Assets")) + "/AssetBundles/" + PLATFORM_NAME + "/Assets/";
-                }
-                else
-                {
-                    return string.Empty;
-                }
-            }
-        }
-
-        public static string BUILD_BUNDLE_LOG_PATH
-        {
-            get
-            {
-                return Application.dataPath.Substring(0, Application.dataPath.IndexOf("/Assets")) + "/AssetBundles/" + PLATFORM_NAME + "/Log/";
-            }
-        }
-
-        /// <summary>
-        /// 应用程序内容路径
-        /// </summary>
-        public static string APP_CONTENT_PATH
+    
+        public static string STREAMING_PATH
         {
             get
             {
@@ -146,12 +95,11 @@ namespace NCSpeedLight
 #elif UNITY_ANDROID
                 return "Android";
 #elif UNITY_IPHONE
-    return "iOS";        
+                return "iOS";
 #else
     return string.Empty;        
 #endif
             }
-
         }
 
         public static bool ENCRYPT_LUA = true;
@@ -166,7 +114,7 @@ namespace NCSpeedLight
                 }
                 else if (Application.isEditor)
                 {
-                    return false;
+                    return true;
                 }
                 else
                 {
@@ -205,5 +153,59 @@ namespace NCSpeedLight
         public static string BUNDLE_SCENE_WORKSPACE = Application.dataPath + "/Resources/Bundle/Scenes/";
 
         public static string RESOURCE_WORKSPACE = Application.dataPath + "/Resources/";
+
+        public static string LOCAL_ASSET_BUNDLE_PATH
+        {
+            get
+            {
+                if (Application.isMobilePlatform || Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.OSXPlayer)
+                {
+                    return Application.persistentDataPath + "/Assets/";
+                }
+                else if (Application.isEditor)
+                {
+                    return DATA_PATH + "Assets/";
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+        }
+
+        public static string LOCAL_SCRIPT_BUNDLE_PATH
+        {
+            get
+            {
+                if (Application.isMobilePlatform || Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.OSXPlayer)
+                {
+                    return Application.persistentDataPath + "/Scripts/";
+                }
+                else if (Application.isEditor)
+                {
+                    return DATA_PATH + "Scripts/";
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+        }
+
+        public static string REMOTE_ASSET_BUNDLE_PATH
+        {
+            get
+            {
+                return "http://192.168.1.146:9555/" + PLATFORM_NAME + "/Assets/";
+            }
+        }
+
+        public static string REMOTE_SCRIPT_BUNDLE_PATH
+        {
+            get
+            {
+                return "http://192.168.1.146:9555/" + PLATFORM_NAME + "/Scripts/";
+            }
+        }
     }
 }

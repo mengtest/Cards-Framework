@@ -31,7 +31,7 @@ function AssetManager.Initialize()
 end
 
 function AssetManager.LoadAssetbundleManifest()
-	local path = Constants.ASSET_BUNDLE_PATH .. Constants.ASSET_BUNDLE_MANIFEST_FILE;
+	local path = Constants.LOCAL_ASSET_BUNDLE_PATH .. Constants.ASSET_BUNDLE_MANIFEST_FILE;
 	local bundle = UnityEngine.AssetBundle.LoadFromFile(path);
 	if bundle ~= nil then
 		AssetManager.Manifest = NCSpeedLight.Helper.LoadAssetFromBundle("AssetBundleManifest", typeof(UnityEngine.AssetBundleManifest), bundle);
@@ -81,7 +81,7 @@ function AssetManager.LoadAssetBundle(bundleName)
 	local bundleInfo = AssetManager.LoadedBundles[bundleName];
 	if bundleInfo == nil or bundleInfo.Bundle == nil then
 		AssetManager.LoadDependency(bundleName);
-		local bundleFilePath = Constants.ASSET_BUNDLE_PATH .. bundleName;
+		local bundleFilePath = Constants.LOCAL_ASSET_BUNDLE_PATH .. bundleName;
 		local bundle = UnityEngine.AssetBundle.LoadFromFile(bundleFilePath);
 		bundleInfo = {RefCount = 1, Bundle = bundle};
 		AssetManager.LoadedBundles[bundleName] = bundleInfo;
@@ -98,7 +98,7 @@ function AssetManager.LoadDependency(bundleName)
 			local depName = dependencies[i];
 			local bundleInfo = AssetManager.LoadedBundles[depName];
 			if bundleInfo == nil or bundleInfo.Bundle == nil then
-				local bundleFilePath = Constants.ASSET_BUNDLE_PATH .. depName;
+				local bundleFilePath = Constants.LOCAL_ASSET_BUNDLE_PATH .. depName;
 				local bundle = UnityEngine.AssetBundle.LoadFromFile(bundleFilePath);
 				bundleInfo = {RefCount = 1, Bundle = bundle};
 				AssetManager.LoadedBundles[depName] = bundleInfo;

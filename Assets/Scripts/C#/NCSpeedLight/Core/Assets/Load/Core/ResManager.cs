@@ -327,7 +327,7 @@ namespace NCSpeedLight
         }
         public static void LoadAssetBundleManifest()
         {
-            string path = Constants.ASSET_BUNDLE_PATH + Constants.PLATFORM_NAME;
+            string path = Constants.LOCAL_ASSET_BUNDLE_PATH + Constants.PLATFORM_NAME;
             AssetBundle bundle = AssetBundle.LoadFromFile(path);
             if (bundle)
             {
