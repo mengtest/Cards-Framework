@@ -178,7 +178,7 @@ function UI_MJResult.DisplayPlayerInfo()
 		if tempPlayer:IsRoomMaster() then
 			UIHelper.SetActiveState(tempTran, "Role/Master", true);
 		end
-		UIHelper.SetLabelText(tempTran, "Label (Name)", tempPlayer:GetShowName());
+		UIHelper.SetLabelText(tempTran, "Label (Name)", tempPlayer.Name);
 		UIHelper.SetLabelText(tempTran, "Label (ID)", "ID:" .. tostring(tempPlayer.ID));
 		local tempScore = tempTran:FindChild("Score");
 		UIHelper.SetLabelText(tempScore, "Label (Gang)/Label", tostring(card.m_anGang + card.m_Gang));
@@ -190,7 +190,7 @@ function UI_MJResult.DisplayPlayerInfo()
 		tempGrid.enabled = true;
 		tempGrid:Reposition();
 		-- 设置头像
-		UIHelper.SetTexture(tempTran, "Role/Sprite (Photo)", tempPlayer.MJData.m_RoleData.m_HeadPhotoUrl);
+		UIHelper.SetTexture(tempTran, "Role/Sprite (Photo)", tempPlayer.HeadURL);
 	end
 	local tempParentGrid = UIHelper.GetComponent(this.transform, "Grid", typeof(UIGrid));
 	tempParentGrid.enabled = true;

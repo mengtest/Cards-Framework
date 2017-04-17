@@ -24,7 +24,6 @@ MJScene =
 	Name = SceneType.MJScene,
 	IsInitialized = false,
 	NeedReconnect = false,
-	IsSendReconnectEvent = false,
 	RoomMasterID = 0,
 	BankerPosition = 0,
 	DiceNumbers = nil,
@@ -74,7 +73,6 @@ function MJScene.Begin()
 	Log.Info("MJScene.Begin");
 	MJScene.CurrentRound = 0;
 	MJScene.FinishedRound = 0;
-	MJScene.IsSendReconnectEvent = false;
 	MJScene.FBInfo = SharedVariable.FBInfo;
 	MJScene.TotalRound = MJScene.FBInfo.m_gameCount;
 	UIManager.OpenWindow(UIType.UI_SceneLoad);
@@ -97,7 +95,11 @@ function MJScene.OnSceneWasLoaded()
 	Log.Info("MJScene.OnSceneWasLoaded: now bein to open majiang ui and request game fb info or reconnect info.");
 	UIManager.OpenWindow(UIType.UI_MaJiang);
 	MJScene.RegisterNetEvent();
-	MJScene.RequestAllPlayerInfo();
+	if MJScene.NeedReconnect then
+		MJScene.RequestReconnectInfo();
+	else
+		MJScene.RequestAllPlayerInfo();
+	end
 end
 
 function MJScene.OnApplicationPause(status)
@@ -105,7 +107,6 @@ function MJScene.OnApplicationPause(status)
 		Log.Info("MJScene.OnApplicationPause: 游戏进程暂停");
 	else
 		Log.Info("MJScene.OnApplicationPause: 游戏进程恢复，开始请求重连数据");
-		UIManager.OpenWindow(UIType.UI_Progress);
 		MJScene.RequestReconnectInfo();
 	end
 end
@@ -250,9 +251,9 @@ function MJScene.GetPlayerByUIPosition(pos)
 end
 
 -- 根据真实位置获取玩家对象
-function MJScene.GetPlayerByPosition(pos)
+function MJScene.GetPlayerByServerPosition(pos)
 	for key, value in pairs(MJScene.Players) do
-		if value ~= nil and value.MJData.m_RoleData.m_Postion == pos then
+		if value ~= nil and value.ServerPosition == pos then
 			return value;
 		end
 	end
@@ -308,7 +309,6 @@ end
 -- 请求断线重连信息
 function MJScene.RequestReconnectInfo()
 	Log.Info("MJScene.RequestReconnectInfo:");
-	MJScene.IsSendReconnectEvent = true;
 	local msg = {};
 	msg.m_RoleID = Player.ID;
 	msg.m_FBID = SharedVariable.FBInfo.m_FBID;
@@ -332,10 +332,10 @@ end
 -- 请求投掷骰子
 function MJScene.RequestCastDice()
 	local msg = {
-		m_roleid = MJPlayer.Hero.MJData.m_RoleData.m_Roleid,
-		m_pos = MJPlayer.Hero.MJData.m_RoleData.m_Postion,
+		m_roleid = MJPlayer.Hero.ID,
+		m_pos = MJPlayer.Hero.ServerPosition,
 	};
-	Log.Info("MJScene.RequestCastDic: roleid is " .. MJPlayer.Hero.MJData.m_RoleData.m_Roleid .. ",pos is " .. MJPlayer.Hero.MJData.m_RoleData.m_Postion);
+	Log.Info("MJScene.RequestCastDic: roleid is " .. MJPlayer.Hero.ID .. ",pos is " .. MJPlayer.Hero.ServerPosition);
 	NetManager.SendEventToLogicServer(GameMessage.GM_PlayerRollTouZi_Request, PBMessage.GM_PlayerRollRequest, msg);
 end
 
@@ -405,14 +405,26 @@ function MJScene.ReturnGamePlayerInfo(evt)
 	end
 	Log.Info("MJScene.ReturnGamePlayerInfo: RoomMasterID is " .. MJScene.RoomMasterID .. ",current player count is " .. # msg.m_Character);
 	SharedVariable.FBEntryInfo = msg;
-	local hero = MJScene.GetPlayerByID(Player.FullInfo.id);
+	MJScene.RoomMasterID = msg.m_RoomMasterID;
+	local hero = MJScene.GetPlayerByID(Player.ID);
 	if hero == nil then
 		-- 先创建自己的数据
 		for i = 1, # SharedVariable.FBEntryInfo.m_Character do
 			local playerEntry = SharedVariable.FBEntryInfo.m_Character[i];
-			if playerEntry ~= nil and playerEntry.m_RoleData ~= nil and playerEntry.m_RoleData.m_Roleid == Player.FullInfo.id then
+			if playerEntry.m_RoleData.m_Roleid == Player.ID then
 				hero = MJPlayer.New();
-				hero:Initialize(playerEntry, true);
+				MJPlayer.Hero = hero;
+				hero:SetData(playerEntry.m_RoleData.m_Roleid,
+				playerEntry.m_RoleData.m_NickName,
+				playerEntry.m_RoleData.m_HeadPhotoUrl,
+				playerEntry.m_RoleData.m_Sex,
+				playerEntry.m_reallyPos,
+				playerEntry.m_isReady,
+				playerEntry.m_totalScore,
+				playerEntry.m_Longitude,
+				playerEntry.m_Latitude);
+				hero:SetUI();
+				hero:SetCardDisplayParam();
 				MJScene.AddPlayer(hero);
 				Log.Info("MJScene.ReturnGamePlayerInfo: Create hero id is " .. hero.ID .. ",server position is " .. hero.ServerPosition);
 			end
@@ -425,23 +437,24 @@ function MJScene.ReturnGamePlayerInfo(evt)
 			local player = MJScene.GetPlayerByID(playerEntry.m_RoleData.m_Roleid);
 			if player == nil then
 				player = MJPlayer.New();
-				player:Initialize(playerEntry);
+				player:SetData(playerEntry.m_RoleData.m_Roleid,
+				playerEntry.m_RoleData.m_NickName,
+				playerEntry.m_RoleData.m_HeadPhotoUrl,
+				playerEntry.m_RoleData.m_Sex,
+				playerEntry.m_reallyPos,
+				playerEntry.m_isReady,
+				playerEntry.m_totalScore,
+				playerEntry.m_Longitude,
+				playerEntry.m_Latitude);
+				player:SetUI();
+				player:SetCardDisplayParam();
 				MJScene.AddPlayer(player);
 				Log.Info("MJScene.ReturnGamePlayerInfo: Create a player id is " .. player.ID .. ",server position is " .. player.ServerPosition);
 			end
 		end
 	end
-	MJScene.RoomMasterID = msg.m_RoomMasterID;
 	MJScene.SetupMaster();
-	if MJScene.NeedReconnect == true then
-		if MJScene.IsSendReconnectEvent == false then
-			MJScene.RequestReconnectInfo();
-		else
-			Log.Info("MJScene.ReturnGamePlayerInfo: already send reconnect request,neednt send any more.");
-		end
-	else
-		UIManager.CloseAllWindowsExcept(UIType.UI_MaJiang);
-	end
+	UIManager.CloseAllWindowsExcept(UIType.UI_MaJiang);
 end
 
 -- 收到断线重连信息
@@ -489,6 +502,7 @@ function MJScene.ReturnReconnectInfo(evt)
 	if msg.m_huOperatorData ~= nil then
 		Log.Info("MJScene.ReturnReconnectInfo: 存在结算信息");
 	end
+	
 	MJScene.BankerPosition = msg.m_bankerPos;
 	MJScene.RoomMasterID = msg.m_RoomMasterID;
 	MJScene.DiceNumbers = msg.m_saizi;
@@ -499,6 +513,73 @@ function MJScene.ReturnReconnectInfo(evt)
 	MJScene.FinishedRound = MJScene.CurrentRound - 1;
 	if MJScene.FinishedRound < 0 then
 		MJScene.FinishedRound = 0;
+	end
+	
+	
+	-- player 为空，则代表当前场景内没有玩家，这时开始创建玩家
+	if MJScene.GetPlayerCount() == 0 then
+		-- 创建主角
+		for i = 1, # msg.m_AllData do
+			local data = msg.m_AllData[i];
+			if data.m_roleid == Player.ID then
+				local player = MJPlayer.New();
+				MJPlayer.Hero = player;
+				player:SetData(data.m_roleid,
+				data.m_NickName,
+				data.m_HeadPhotoUrl,
+				data.m_Sex,
+				data.m_Postion,
+				data.m_IsReady,
+				data.m_TotalScore,
+				data.m_Longitude,
+				data.m_Latitude);
+				player:SetUI(true);
+				player:SetCardDisplayParam();
+				MJScene.AddPlayer(player);
+				Log.Info("MJScene.ReturnReconnectInfo: Create hero id is " .. player.ID .. ",server position is " .. player.ServerPosition);
+			end
+		end
+		
+		-- 创建其他玩家
+		for i = 1, # msg.m_AllData do
+			local data = msg.m_AllData[i];
+			local player = MJScene.GetPlayerByID(data.m_roleid);
+			if player == nil then
+				player = MJPlayer.New();
+				player:SetData(data.m_roleid,
+				data.m_NickName,
+				data.m_HeadPhotoUrl,
+				data.m_Sex,
+				data.m_Postion,
+				data.m_IsReady,
+				data.m_TotalScore,
+				data.m_Longitude,
+				data.m_Latitude);
+				player:SetUI();
+				player:SetCardDisplayParam();
+				MJScene.AddPlayer(player);
+				Log.Info("MJScene.ReturnReconnectInfo: Create player id is " .. player.ID .. ",server position is " .. player.ServerPosition);
+			end
+		end
+	else
+		-- 创建其他玩家
+		for i = 1, # msg.m_AllData do
+			local data = msg.m_AllData[i];
+			local player = MJScene.GetPlayerByID(data.m_roleid);
+			if player ~= nil then
+				player:SetData(data.m_roleid,
+				data.m_NickName,
+				data.m_HeadPhotoUrl,
+				data.m_Sex,
+				data.m_Postion,
+				data.m_IsReady,
+				data.m_TotalScore,
+				data.m_Longitude,
+				data.m_Latitude);
+				player:SetUI();
+				player:SetCardDisplayParam();
+			end
+		end
 	end
 	
 	MJScene.SetupBanker();
@@ -734,7 +815,7 @@ function MJScene.NotifyPlayerLeave(evt)
 	Log.Info("MJScene.NotifyPlayerLeave: id is " .. tostring(msg.roleID));
 	local player = MJScene.GetPlayerByID(msg.roleID);
 	if player ~= nil then
-		local str = "玩家 " .. player.MJData.m_RoleData.m_Name .. " 离开房间";
+		local str = "玩家 " .. player.Name .. " 离开房间";
 		UIManager.OpenTipsDialog(str);
 		player:SetupEnterAndLeave(false, true);
 	end

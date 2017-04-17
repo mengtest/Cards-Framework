@@ -58,10 +58,10 @@ function UI_MJTotalResult.DisplayPlayerInfo()
 			if tempPlayer:IsRoomMaster() then
 				UIHelper.SetActiveState(tempTrans, "Role/Master", true);
 			end
-			UIHelper.SetLabelText(tempTrans, "Role/Label (Name)", tempPlayer:GetShowName());
+			UIHelper.SetLabelText(tempTrans, "Role/Label (Name)", tempPlayer.Name);
 			UIHelper.SetLabelText(tempTrans, "Role/Label (ID)", "ID:" .. tempPlayer.ID);
 			-- 设置头像
-			UIHelper.SetTexture(tempTrans, "Role/Sprite (Photo)", tempPlayer.MJData.m_RoleData.m_HeadPhotoUrl);
+			UIHelper.SetTexture(tempTrans, "Role/Sprite (Photo)", tempPlayer.HeadURL);
 		end
 	else
 		for i = 1, # MJScene.TotalResultInfo.m_OneData do
@@ -78,10 +78,10 @@ function UI_MJTotalResult.DisplayPlayerInfo()
 				if tempPlayer:IsRoomMaster() then
 					UIHelper.SetActiveState(tempTrans, "Role/Master", true);
 				end
-				UIHelper.SetLabelText(tempTrans, "Role/Label (Name)", tempPlayer:GetShowName());
+				UIHelper.SetLabelText(tempTrans, "Role/Label (Name)", tempPlayer.Name);
 				UIHelper.SetLabelText(tempTrans, "Role/Label (ID)", "ID:" .. tempPlayer.ID);
 				-- 设置头像
-				UIHelper.SetTexture(tempTrans, "Role/Sprite (Photo)", tempPlayer.MJData.m_RoleData.m_HeadPhotoUrl);
+				UIHelper.SetTexture(tempTrans, "Role/Sprite (Photo)", tempPlayer.HeadURL);
 				local tempItem = tempTrans:FindChild("ScrollView/UIGrid/Item");
 				local tempClone = UnityEngine.Object.Instantiate(tempItem);
 				tempClone:SetParent(tempItem.parent);

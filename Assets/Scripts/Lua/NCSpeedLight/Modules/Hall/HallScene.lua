@@ -153,21 +153,25 @@ end
 function HallScene.ReceiveFbInfo(evt)
 	Log.Info("HallScene.ReceiveFbInfo");
 	local msg = NetManager.DecodeMsg(PBMessage.GM_BattleFBServerInfo, evt);
-	if msg == nil then
+	if msg == false then
 		Log.Error("HallScene.ReceiveFbInfo parse msg error.");
 	else -- required int32 m_Result=1;			//0 成功,1副本不存在,2 你已经在副本了,3副本已满，4副本人数已满
 		if msg.m_Result == 0 then
-			Log.Info("HallScene.ReceiveFbInfo：成功进入副本");
+			Log.Info("HallScene.ReceiveFbInfo：成功进入房间");
 			SharedVariable.FBInfo = msg;
 			HallScene.RequestLoginFb();
 		elseif msg.m_Result == 1 then
-			Log.Info("HallScene.ReceiveFbInfo：副本不存在");
+			UIManager.OpenTipsDialog("房间不存在");
+			Log.Info("HallScene.ReceiveFbInfo：房间不存在");
 		elseif msg.m_Result == 2 then
-			Log.Info("HallScene.ReceiveFbInfo：你已经在副本了");
+			UIManager.OpenTipsDialog("你已经在其他的房间内");
+			Log.Info("HallScene.ReceiveFbInfo：你已经在其他的房间内");
 		elseif msg.m_Result == 3 then
-			Log.Info("HallScene.ReceiveFbInfo：副本已满");
+			UIManager.OpenTipsDialog("房间已满");
+			Log.Info("HallScene.ReceiveFbInfo：房间已满");
 		elseif msg.m_Result == 4 then
-			Log.Info("HallScene.ReceiveFbInfo：副本人数已满");
+			UIManager.OpenTipsDialog("房间人数已满");
+			Log.Info("HallScene.ReceiveFbInfo：房间人数已满");
 		end
 	end
 end

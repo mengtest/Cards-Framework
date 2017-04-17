@@ -25,13 +25,13 @@ end
 
 function UI_DissolveRoom.SetupContent()
 	local dissolver = MJScene.GetPlayerByID(this.DissolveID);
-	local lb0str = "玩家【" .. dissolver.MJData.m_RoleData.m_Name .. "】申请解散房间，请等待其他玩家选择（超过5分钟未做选择）则默认同意";
+	local lb0str = "玩家【" .. dissolver.Name .. "】申请解散房间，请等待其他玩家选择（超过5分钟未做选择）则默认同意";
 	NCSpeedLight.UIHelper.SetLabelText(this.transform, "Center/0", lb0str);
 	NCSpeedLight.UIHelper.SetActiveState(this.transform, "Center/0", true);
 	local index = 1;
 	for key, value in pairs(MJScene.Players) do
 		if value ~= dissolver then
-			local lbstr = "【" .. value.MJData.m_RoleData.m_Name .. "】  等待选择";
+			local lbstr = "【" .. value.Name .. "】  等待选择";
 			NCSpeedLight.UIHelper.SetLabelText(this.transform, "Center/" .. index, lbstr);
 			NCSpeedLight.UIHelper.SetActiveState(this.transform, "Center/" .. index, true);
 			index = index + 1;
