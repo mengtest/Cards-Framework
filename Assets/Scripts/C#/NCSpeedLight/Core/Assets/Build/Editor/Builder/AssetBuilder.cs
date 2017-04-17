@@ -27,8 +27,6 @@ namespace NCSpeedLight
         {
             OnPreBuild();
             PrepareDirectory();
-            ClearAssetBundleTag();
-            SetupAssetBundleTag();
             ProcessBuild();
             GenerateManifest();
             CaculateDiffer();
@@ -52,68 +50,7 @@ namespace NCSpeedLight
                 Directory.CreateDirectory(Constants.BUILD_ASSET_BUNDLE_PATH);
             }
         }
-        private void ClearAssetBundleTag()
-        {
-            List<string> assets = new List<string>();
-            BuilderEditorUtils.CollectAssets(Constants.RESOURCE_WORKSPACE, assets);
-            for (int i = 0; i < assets.Count; i++)
-            {
-                string asset = assets[i];
-                AssetImporter assetImporter = AssetImporter.GetAtPath(asset);
-                if (assetImporter)
-                {
-                    assetImporter.SetAssetBundleNameAndVariant(string.Empty, string.Empty);
-                }
-            }
-            AssetDatabase.Refresh();
-        }
-        private void SetupAssetBundleTag()
-        {
-            List<string> sourceAssets = new List<string>();
-            List<string> doneAssets = new List<string>();
-            BuilderEditorUtils.CollectAssets(Constants.BUNDLE_ASSET_WORKSPACE, sourceAssets);
-            for (int i = 0; i < sourceAssets.Count; i++)
-            {
-                string asset = sourceAssets[i];
-                AssetImporter assetImporter = AssetImporter.GetAtPath(asset);
-                asset = asset.Substring("Assets/Resources/".Length);
-                asset = asset.Substring(0, asset.LastIndexOf("/"));
-                asset = asset.Replace("\\", "/");
-                asset = asset.Replace("/", "_");
-                asset += Constants.ASSET_BUNDLE_FILE_EXTENSION;
-                if (assetImporter)
-                {
-                    assetImporter.SetAssetBundleNameAndVariant(asset, string.Empty);
-                }
-            }
-            Dictionary<string, List<string>> dependAssets = BuilderEditorUtils.CollectAssetDependency(sourceAssets);
-            Dictionary<string, List<string>>.Enumerator ir = dependAssets.GetEnumerator();
-            for (int i = 0; i < dependAssets.Count; i++)
-            {
-                ir.MoveNext();
-                KeyValuePair<string, List<string>> kvp = ir.Current;
-                List<string> assets = kvp.Value;
-                for (int j = 0; j < assets.Count; j++)
-                {
-                    string asset = assets[j];
-                    if (doneAssets.Contains(asset) == false)
-                    {
-                        doneAssets.Add(asset);
-                        AssetImporter assetImporter = AssetImporter.GetAtPath(asset);
-                        asset = asset.Substring("Assets/Resources/".Length);
-                        asset = asset.Substring(0, asset.LastIndexOf("/"));
-                        asset = asset.Replace("\\", "/");
-                        asset = asset.Replace("/", "_");
-                        asset += Constants.ASSET_BUNDLE_FILE_EXTENSION;
-                        if (assetImporter)
-                        {
-                            assetImporter.SetAssetBundleNameAndVariant(asset, string.Empty);
-                        }
-                    }
-                }
-            }
-            AssetDatabase.Refresh();
-        }
+     
         private void ProcessBuild()
         {
             BuildPipeline.BuildAssetBundles(Constants.BUILD_ASSET_BUNDLE_PATH, BuildAssetBundleOptions.None, EditorUserBuildSettings.activeBuildTarget);
