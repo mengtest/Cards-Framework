@@ -67,6 +67,7 @@ UIManager =
 	DialogRoot = nil,
 	Windows = {};
 };
+
 function UIManager.Initialize()
 	if UIManager.IsInitialized == false then
 		UIManager.IsInitialized = true;
@@ -306,6 +307,7 @@ function UIManager.OpenTipsDialog(content)
 	end
 	return go;
 end
+
 function UIManager.SetupWindow(go)
 	if go == nil then
 		Log.Error("SetupWindow fail caused by null ui prefab.");
@@ -333,6 +335,7 @@ function UIManager.SetupWindow(go)
 	NCSpeedLight.Helper.SetLayer(window, "UI");
 	return window;
 end
+
 function UIManager.SetupDialog(go)
 	if go == nil then
 		Log.Error("SetupDialog fail caused by null ui prefab.");

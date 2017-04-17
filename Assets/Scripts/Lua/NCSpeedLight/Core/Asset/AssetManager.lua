@@ -70,6 +70,7 @@ function AssetManager.LoadScene(sceneName)
 			return UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
 		end
 	else
+		return UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
 	end
 end
 
@@ -77,43 +78,53 @@ function AssetManager.UnloadScene(sceneName)
 end
 
 function AssetManager.LoadAssetBundle(bundleName)
-	local loadedDependencies = {};
-	return AssetManager.LoadDependency(bundleName, loadedDependencies);
-end
-
-function AssetManager.LoadDependency(bundleName, loadedDependencies)
-	local dependencies = AssetManager.Manifest:GetAllDependencies(bundleName);
-	-- 存在引用且没有循环引用
-	if dependencies ~= nil and dependencies.Length > 0 and loadedDependencies[bundleName] == nil then
-		for i = 0, dependencies.Length - 1 do
-			AssetManager.LoadDependency(dependencies[i], loadedDependencies);
-		end
-	end
-	if AssetManager.currentLoad > 200 then
-		return;
-	end
-	AssetManager.currentLoad = AssetManager.currentLoad + 1;
-	Log.Info("AssetManager.LoadDependency: " .. bundleName);
 	local bundleInfo = AssetManager.LoadedBundles[bundleName];
 	if bundleInfo == nil or bundleInfo.Bundle == nil then
-		local path = Constants.ASSET_BUNDLE_PATH .. bundleName;
-		local bundle = UnityEngine.AssetBundle.LoadFromFile(path);
+		AssetManager.LoadDependency(bundleName);
+		local bundleFilePath = Constants.ASSET_BUNDLE_PATH .. bundleName;
+		local bundle = UnityEngine.AssetBundle.LoadFromFile(bundleFilePath);
 		bundleInfo = {RefCount = 1, Bundle = bundle};
 		AssetManager.LoadedBundles[bundleName] = bundleInfo;
 	else
 		bundleInfo.RefCount = bundleInfo.RefCount + 1;
 	end
-	loadedDependencies[bundleName] = 1;
 	return bundleInfo.Bundle;
+end
+
+function AssetManager.LoadDependency(bundleName)
+	local dependencies = AssetManager.Manifest:GetAllDependencies(bundleName);
+	if dependencies ~= nil and dependencies.Length > 0 then
+		for i = 0, dependencies.Length - 1 do
+			local depName = dependencies[i];
+			local bundleInfo = AssetManager.LoadedBundles[depName];
+			if bundleInfo == nil or bundleInfo.Bundle == nil then
+				local bundleFilePath = Constants.ASSET_BUNDLE_PATH .. depName;
+				local bundle = UnityEngine.AssetBundle.LoadFromFile(bundleFilePath);
+				bundleInfo = {RefCount = 1, Bundle = bundle};
+				AssetManager.LoadedBundles[depName] = bundleInfo;
+			else
+				bundleInfo.RefCount = bundleInfo.RefCount + 1;
+			end
+		end
+	end
 end
 
 function AssetManager.UnloadAssetBundle(assetPath)
 	local index = string.find(assetPath, "/[^/]*$")
 	local bundleName = string.sub(assetPath, 1, index - 1);
 	bundleName = string.gsub(bundleName, "/", "_");
+	bundleName = string.lower(bundleName);
+	bundleName = bundleName .. ".asset";
+	AssetManager.UnloadDependency(bundleName);
 	local bundleInfo = AssetManager.LoadedBundles[bundleName];
-	if bundleInfo ~= nil and bundleInfo.Bundle ~= nil then
-		return AssetManager.UnloadDependency(bundleName);
+	if bundleInfo ~= nil then
+		bundleInfo.RefCount = bundleInfo.RefCount - 1;
+		if bundleInfo.RefCount <= 0 then
+			if bundleInfo.Bundle ~= nil then
+				bundleInfo.Bundle:Unload(true);
+				AssetManager.LoadedBundles[depName] = nil;
+			end
+		end
 	end
 end
 
@@ -121,16 +132,16 @@ function AssetManager.UnloadDependency(bundleName)
 	local dependencies = AssetManager.Manifest:GetAllDependencies(bundleName);
 	if dependencies ~= nil and dependencies.Length > 0 then
 		for i = 0, dependencies.Length - 1 do
-			AssetManager.UnloadDependency(dependencies[i]);
-		end
-	end
-	local bundleInfo = AssetManager.LoadedBundles[bundleName];
-	if bundleInfo ~= nil then
-		bundleInfo.RefCount = bundleInfo.RefCount - 1;
-		if bundleInfo.RefCount <= 0 then
-			if bundleInfo.Bundle ~= nil then
-				bundleInfo.Bundle:Unload(true);
-				AssetManager.LoadedBundles[bundleName] = nil;
+			local depName = dependencies[i];
+			local bundleInfo = AssetManager.LoadedBundles[depName];
+			if bundleInfo ~= nil then
+				bundleInfo.RefCount = bundleInfo.RefCount - 1;
+				if bundleInfo.RefCount <= 0 then
+					if bundleInfo.Bundle ~= nil then
+						bundleInfo.Bundle:Unload(true);
+						AssetManager.LoadedBundles[depName] = nil;
+					end
+				end
 			end
 		end
 	end
