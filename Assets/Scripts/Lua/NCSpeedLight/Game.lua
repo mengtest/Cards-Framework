@@ -113,6 +113,7 @@ end
 
 function Game.OnApplicationPause(status)
 	-- Log.Info("Game.OnApplicationPause: " .. tostring(status));
+	NCSpeedLight.LuaManager.GC();
 	if SceneManager.CurrentScene ~= nil then
 		SceneManager.CurrentScene.OnApplicationPause(status);
 	end

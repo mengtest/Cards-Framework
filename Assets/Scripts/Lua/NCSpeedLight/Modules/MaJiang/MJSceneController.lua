@@ -24,6 +24,9 @@ MJSceneController = {
 	AllCardsObj = nil,
 	-- 场景中背面的牌
 	BackCards = nil,
+	
+	-- 墩牌的显示状态
+	GroupCardActive = false,
 }
 
 local this = MJSceneController;
@@ -71,7 +74,6 @@ function MJSceneController.Reset()
 		end
 	end
 	MJSceneController.BackCards = {};
-	MJSceneController.SetGroupCardActive(false);
 	MJSceneController.DeskAnimationTimer = nil;
 	MJSceneController.DiceAnimationTimer = nil;
 end
@@ -79,14 +81,21 @@ end
 -- 设置牌墩的显示/隐藏
 function MJSceneController.SetGroupCardActive(status)
 	if status == true then
-		MJSceneController.MJDeskAnimation:Play("Active");
+		if	MJSceneController.GroupCardActive == false then
+			MJSceneController.GroupCardActive = true;
+			MJSceneController.MJDeskAnimation:Play("Active");
+		end
 	else
-		MJSceneController.MJDeskAnimation:Play("Inactive");
+		if	MJSceneController.GroupCardActive == true then
+			MJSceneController.GroupCardActive = false;
+			MJSceneController.MJDeskAnimation:Play("Inactive");
+		end
 	end
 end
 
 function MJSceneController.PlayGroupCardAnimation(onFinishCallback)
 	Log.Info("MJSceneController.PlayGroupCardAnimation");
+	MJSceneController.GroupCardActive = true;
 	if MJSceneController.MJDeskAnimation ~= nil then
 		MJSceneController.MJDeskAnimation:Play();
 		if MJSceneController.DeskAnimationTimer ~= nil then
@@ -158,11 +167,13 @@ end
 
 -- 设置骰子面板的朝向
 function MJSceneController.SetupDicePanelDirection()
-	if MJSceneController.IsSetupDicePanelRotation == false then
-		MJSceneController.IsSetupDicePanelRotation = true;
-		local y = MJPlayer.Hero.Position * 90;
+	if MJPlayer.Hero == nil then
+		Log.Error("MJSceneController.SetupDicePanelDirection: error caused by nil MJPlayer.Hero instance.");
+	else
+		Log.Info("MJSceneController.SetupDicePanelDirection: hero position is " .. MJPlayer.Hero.Position);
+		local y =(MJPlayer.Hero.Position + 1) * 90;
 		local panel = MJSceneController.transform:Find("majiangzhuo/direction");
-		local eulerAngles = UnityEngine.Vector3(0, y + panel.rotation.eulerAngles.y, 0);
+		local eulerAngles = UnityEngine.Vector3(0, y, 0);
 		local rotation = UnityEngine.Quaternion.Euler(eulerAngles)
 		panel.rotation = rotation;
 	end
@@ -177,6 +188,21 @@ function MJSceneController.ShowArrow()
 end
 
 function MJSceneController.HideArrow()
+end
+
+function MJSceneController.PlayOperateEffect(name, operateType)
+	local trans = MJSceneController.transform:Find("majiangzhuo/Effect/" .. name);
+	local effect = nil;
+	if operateType == MaJiangOperatorType.MJOT_AN_GANG or operateType == MaJiangOperatorType.MJOT_BuGang or operateType == MaJiangOperatorType.MJOT_GANG then
+		effect = trans:Find("gang");
+	elseif operateType == MaJiangOperatorType.MJOT_CHI then
+		effect = trans:Find("chi");
+	elseif operateType == MaJiangOperatorType.MJOT_PENG then
+		effect = trans:Find("peng");
+	elseif operateType == MaJiangOperatorType.MJOT_HU then
+		effect = trans:Find("hu");
+	end
+	effect.gameObject:SetActive(true);
 end
 
 -- 初始化桌子上的牌

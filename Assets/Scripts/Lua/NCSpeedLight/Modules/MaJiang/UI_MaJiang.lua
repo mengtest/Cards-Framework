@@ -10,6 +10,7 @@
 -----------------------------------------------
 require "NCSpeedLight.Modules.MaJiang.UI_HeroPlayer"
 require "NCSpeedLight.Modules.MaJiang.UI_OtherPlayer"
+
 UI_MaJiang = {
 	transform,
 	gameObject,
@@ -20,10 +21,12 @@ UI_MaJiang = {
 	CurrentTime = nil,
 }
 local this = UI_MaJiang
+
 function UI_MaJiang.Awake(go)
 	this.gameObject = go;
 	this.transform = go.transform;
 end
+
 function UI_MaJiang.Start()
 	UIHelper.SetButtonEvent(this.transform, "bottom/right/DissolveRoom", UI_MaJiang.DissolveRoom);
 	UIHelper.SetButtonEvent(this.transform, "bottom/right/Button (Message2)", UI_MaJiang.OnClickTest);
@@ -39,16 +42,20 @@ function UI_MaJiang.Start()
 	UI_MaJiang.SetupReadyAndInvite(true, false, true);
 	UI_MaJiang.InitPlayerUI();
 end
+
 function UI_MaJiang.Update()
-	UI_MaJiang.CurrentTime = os.date("%H:%M");
-	UIHelper.SetLabelText(this.transform, "top/topLeft/CurrentLatency/Label", tostring(UI_MaJiang.CurrentTime));
+	-- UI_MaJiang.CurrentTime = os.date("%H:%M");
+	-- UIHelper.SetLabelText(this.transform, "top/topLeft/CurrentLatency/Label", tostring(UI_MaJiang.CurrentTime));
 end
+
 function UI_MaJiang.OnDestroy()
 end
+
 function UI_MaJiang.Reset()
 	UI_MaJiang.SetupCurrentRound();
 	UI_MaJiang.SetupReadyAndInvite(true, false, true);
 end
+
 -- 初始化玩家的UI
 function UI_MaJiang.InitPlayerUI()
 	UI_MaJiang.UI_Player0 = this.transform:Find("Player0");
@@ -106,6 +113,7 @@ function UI_MaJiang.SetupPlayerUIVisiable()
 		UIHelper.SetActiveState(this.transform, "Player3", false);
 	end
 end
+
 -- 设置准备和邀请按钮的显示状态 , ready/unready/invite
 function UI_MaJiang.SetupReadyAndInvite(ready, unready, invite)
 	Log.Info("UI_MaJiang.SetupReadyAndInvite: " .. tostring(ready) .. "," .. tostring(unready) .. "," .. tostring(invite));
@@ -113,11 +121,13 @@ function UI_MaJiang.SetupReadyAndInvite(ready, unready, invite)
 	UIHelper.SetActiveState(this.transform, "center/Ready/No", unready);
 	UIHelper.SetActiveState(this.transform, "center/Ready/Invite", invite);
 end
+
 -- 设置掷骰子
 function UI_MaJiang.SetupCastDice(status)
 	Log.Info("UI_MaJiang.SetupCastDice: status is " .. tostring(status));
 	UIHelper.SetActiveState(this.transform, "center/CastDice/Button", status);
 end
+
 -- 设置当前的局数
 function UI_MaJiang.SetupCurrentRound()
 	UIHelper.SetActiveState(this.transform, "top/topLeft/RemainTime", true);
@@ -126,11 +136,13 @@ function UI_MaJiang.SetupCurrentRound()
 	UIHelper.SetLabelText(this.transform, "top/topLeft/RemainTime/Label (Tips)", "当前局数");
 	UIHelper.SetLabelText(this.transform, "top/topLeft/RemainTime/Label", MJScene.CurrentRound .. "/" .. MJScene.TotalRound);
 end
+
 -- 设置剩余的牌的个数
 function UI_MaJiang.SetupRemainCardCount(count)
 	UIHelper.SetActiveState(this.transform, "top/topLeft/RemainCards", true);
 	UIHelper.SetLabelText(this.transform, "top/topLeft/RemainCards/Label", tostring(count));
 end
+
 function UI_MaJiang.DissolveRoom(go)
 	local option = StandardDialogOption:New();
 	option.OnClickOK =
@@ -142,33 +154,42 @@ function UI_MaJiang.DissolveRoom(go)
 	option.Title = "解散房间";
 	UIManager.OpenStandardDialog(option);
 end
+
 -- 偷天换日
 function UI_MaJiang.OnClickTest(go)
 	UIManager.OpenWindow(UIType.UI_MJTest);
 end
+
 function UI_MaJiang.OnClickYes(go)
 	MJScene.RequestReady(true);
 end
+
 function UI_MaJiang.OnClickNo(go)
 	MJScene.RequestReady(false);
 end
+
 function UI_MaJiang.OnClickInvite(go)
 end
+
 function UI_MaJiang.OnClickCastDice(go)
 	MJScene.RequestCastDice();
 end
+
 function UI_MaJiang.OnClickHu(go)
 	UI_MaJiang.HideOperateView();
 	MJScene.RequestMJOperate_Hu();
 end
+
 function UI_MaJiang.OnClickDingHu(go)
 	UI_MaJiang.HideOperateView();
 	MJScene.RequestMJOperate_DingHu();
 end
+
 function UI_MaJiang.OnClickPass(go)
 	UI_MaJiang.HideOperateView();
 	MJScene.RequestMJOperate_Guo();
 end
+
 -- 显示吃碰杠胡界面
 function UI_MaJiang.ShowOperateView(operations)
 	local tempDic = {};
@@ -230,11 +251,13 @@ function UI_MaJiang.ShowOperateView(operations)
 		tempGang3Trans.localPosition = Vector3.New(tempGang3Trans.localPosition.x - 112, 0, 0);
 	end
 end
+
 -- 隐藏吃碰杠胡界面
 function UI_MaJiang.HideOperateView()
 	UIHelper.SetActiveState(this.transform, "bottom/right/Operate", false);
 	UIHelper.SetActiveState(this.transform, "bottom/right/Bg", false);
 end
+
 -- 初始化吃的界面
 function UI_MaJiang.InitEatView(operations)
 	local tempList = {};
@@ -261,6 +284,7 @@ function UI_MaJiang.InitEatView(operations)
 		end
 	end
 end
+
 -- 初始化碰的界面
 function UI_MaJiang.InitPengView(operations)
 	for i = 1, # operations do
@@ -277,6 +301,7 @@ function UI_MaJiang.InitPengView(operations)
 		end
 	end
 end
+
 -- 初始化杠的界面
 function UI_MaJiang.InitGangView(operations)
 	local tempList = {};

@@ -26,8 +26,7 @@ MJPlayerSeatEnum = {
 	end
 }
 
-MJPlayer =
-{
+MJPlayer = {
 	-- 主角
 	Hero = nil,
 	
@@ -63,68 +62,96 @@ MJPlayer =
 	
 	-- 手牌
 	HandCards = nil,
-	-- 桌面牌的起始位置
-	TableCardStartPos = nil,
-	-- 桌面牌的横向位置偏移
-	TableCardHorizontalOffset = nil,
-	-- 桌面牌的纵向位置偏移
-	TableCardVerticalOffset = nil,
-	-- 桌面牌的旋转
-	TableCardRotation = nil,
-	-- 桌面牌的列数限制
-	TableCardColumnLimit = nil,
-	-- 手牌牌的起始位置
-	HandCardStartPos = nil,
-	-- 手牌的横向位置偏移
-	HandCardOffset = nil,
-	-- 手牌的旋转
-	HandCardRotation = nil,
-	-- 操作的牌的起始位置
-	OperateCardStartPos = nil,
-	-- 操作的牌的偏移
-	OperateCardOffset = nil,
-	-- 操作的牌的旋转
-	OperateCardRotation = nil,
-	-- UI牌的起始位置
-	UICardStartPos = nil,
-	-- UI牌的宽度
-	UICardWidth = nil,
-	-- UI牌在场景内的宽度
-	UICardWorldSpaceWidth = nil,
-	-- UI牌距离操作牌的边距
-	UICardHeadMargin = nil,
-	-- UI最后一张牌的边距
-	UICardLastMargin = nil,
+	
 	-- UI的位置
 	UIPosition,
+	
 	-- 服务器分配的位置
 	ServerPosition,
+	
 	-- 相对位置
 	Position,
+	
 	-- 对应的UI
 	UI,
+	
 	-- 对应的UI物体
 	UITransform,
+	
 	-- 已经打出牌的个数，不包括吃，碰杠的牌
 	TableCardCount = 0,
+	
 	-- 玩家手上的牌的个数
 	HandCardCount = 0,
+	
 	-- 碰的牌个数
 	PengCardCount = 0,
+	
 	-- 碰的次数
 	PengCount = 0,
+	
 	-- 杠的牌个数
 	GangCardCount = 0,
+	
 	-- 杠的次数
 	GangCount = 0,
+	
 	-- 吃的牌个数
 	ChiCardCount = 0,
+	
 	-- 吃的次数
 	ChiCount = 0,
+	
 	-- 吃碰杠的总次数
 	OperateTotalCount = 0,
-	-- 总的积分
-	TotalScore = 0,
+	
+	-- 桌面牌的起始位置
+	TableCardStartPos = nil,
+	
+	-- 桌面牌的横向位置偏移
+	TableCardHorizontalOffset = nil,
+	
+	-- 桌面牌的纵向位置偏移
+	TableCardVerticalOffset = nil,
+	
+	-- 桌面牌的旋转
+	TableCardRotation = nil,
+	
+	-- 桌面牌的列数限制
+	TableCardColumnLimit = nil,
+	
+	-- 手牌牌的起始位置
+	HandCardStartPos = nil,
+	
+	-- 手牌的横向位置偏移
+	HandCardOffset = nil,
+	
+	-- 手牌的旋转
+	HandCardRotation = nil,
+	
+	-- 操作的牌的起始位置
+	OperateCardStartPos = nil,
+	
+	-- 操作的牌的偏移
+	OperateCardOffset = nil,
+	
+	-- 操作的牌的旋转
+	OperateCardRotation = nil,
+	
+	-- UI牌的起始位置
+	UICardStartPos = nil,
+	
+	-- UI牌的宽度
+	UICardWidth = nil,
+	
+	-- UI牌在场景内的宽度
+	UICardWorldSpaceWidth = nil,
+	
+	-- UI牌距离操作牌的边距
+	UICardHeadMargin = nil,
+	
+	-- UI最后一张牌的边距
+	UICardLastMargin = nil,
 };
 MJPlayer.__index = MJPlayer;
 function MJPlayer.New()
@@ -180,13 +207,16 @@ function MJPlayer:SetUI()
 	if self.ID == MJScene.RoomMasterID then
 		MJPlayer.RoomMaster = self;
 	end
-	self.Position = self.ServerPosition;
+	-- 获取玩家的UI位置
 	local vals = UI_MaJiang.GetPlayerUI(self.ServerPosition);
 	self.UI = vals[1];
 	self.UITransform = vals[2];
 	self.UIPosition = vals[3];
-	local isTwoPlayers = SharedVariable.FBInfo.m_FBTypeID == MJRoomType.R_1;
+	
+	-- 定位玩家的东南西北位置
+	self.Position = self.ServerPosition;
 	if self:IsHero() == false then
+		local isTwoPlayers = SharedVariable.FBInfo.m_FBTypeID == MJRoomType.R_1;
 		if isTwoPlayers then
 			if MJPlayer.Hero.Position == 0 then
 				self.Position = 2;
@@ -210,6 +240,7 @@ end
 
 -- 设置该玩家牌展示的相关参数
 function MJPlayer:SetCardDisplayParam()
+	local isTwoPlayers = SharedVariable.FBInfo.m_FBTypeID == MJRoomType.R_1;
 	if self.UIPosition == 0 then
 		-- 手牌
 		self.HandCardRotation = Vector3.New(- 18, 90, 0);
@@ -671,6 +702,7 @@ function MJPlayer:MJOT_CHI(data)
 	self.ChiCount = self.ChiCount + 1;
 	self.PutChiCard(data);
 	self:AddOperateTotalCount();
+	MJSceneController.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_CHI);
 end
 
 --勺
@@ -689,6 +721,7 @@ function MJPlayer:MJOT_PENG(data)
 		end
 	end
 	self:DisplayHandCard(true, false);
+	MJSceneController.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_PENG);
 end
 
 --杠
@@ -703,6 +736,7 @@ function MJPlayer:MJOT_GANG(data)
 		end
 	end
 	self:DisplayHandCard(true, false);
+	MJSceneController.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_GANG);
 end
 
 --暗杠
@@ -717,6 +751,7 @@ function MJPlayer:MJOT_AN_GANG(data)
 		end
 	end
 	self:DisplayHandCard(true, false);
+	MJSceneController.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_AN_GANG);
 end
 
 --补杠
@@ -730,6 +765,7 @@ function MJPlayer:MJOT_BuGang(data)
 		end
 	end
 	self:DisplayHandCard(true, false);
+	MJSceneController.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_BuGang);
 end
 
 --过
@@ -738,6 +774,7 @@ end
 
 --胡
 function MJPlayer:MJOT_HU(data)
+	MJSceneController.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_HU);
 end
 
 --定胡

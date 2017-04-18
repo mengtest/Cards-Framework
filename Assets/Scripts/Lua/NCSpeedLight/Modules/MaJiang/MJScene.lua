@@ -418,7 +418,7 @@ function MJScene.ReturnGamePlayerInfo(evt)
 				playerEntry.m_RoleData.m_NickName,
 				playerEntry.m_RoleData.m_HeadPhotoUrl,
 				playerEntry.m_RoleData.m_Sex,
-				playerEntry.m_reallyPos,
+				playerEntry.m_RoleData.m_Postion,
 				playerEntry.m_isReady,
 				playerEntry.m_totalScore,
 				playerEntry.m_Longitude,
@@ -441,7 +441,7 @@ function MJScene.ReturnGamePlayerInfo(evt)
 				playerEntry.m_RoleData.m_NickName,
 				playerEntry.m_RoleData.m_HeadPhotoUrl,
 				playerEntry.m_RoleData.m_Sex,
-				playerEntry.m_reallyPos,
+				playerEntry.m_RoleData.m_Postion,
 				playerEntry.m_isReady,
 				playerEntry.m_totalScore,
 				playerEntry.m_Longitude,
@@ -603,6 +603,8 @@ function MJScene.ReturnReconnectInfo(evt)
 			if MJPlayer.Hero:IsBanker() then
 				UI_MaJiang.SetupCastDice(true);
 			end
+			-- 隐藏
+			MJSceneController.SetGroupCardActive(false);
 		else
 			-- 已经收到手牌信息了,正在对局中
 			Log.Info("MJScene.ReturnReconnectInfo: 已经收到手牌信息了,正在对局中");

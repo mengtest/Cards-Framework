@@ -273,6 +273,7 @@
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\Constants.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\Helper.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\ImageCache.cs" />
+    <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\ScheduleHide.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\UIHelper.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\View\FPSPrinter.cs" />
     <Compile Include="Assets\Scripts\C#\NCSpeedLight\Utils\View\GetBlurBackground.cs" />
