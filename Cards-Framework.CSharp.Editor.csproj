@@ -135,6 +135,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Cards-Framework.CSharp.Plugins.csproj">
+      <Project>{4BBE1FB9-4A43-07E5-D1A6-B430F1A61F0F}</Project>
+      <Name>Cards-Framework.CSharp.Plugins</Name>
+    </ProjectReference>
     <ProjectReference Include="Cards-Framework.CSharp.csproj">
       <Project>{0F958834-A47C-D795-26DE-1F5F9B6A391D}</Project>
       <Name>Cards-Framework.CSharp</Name>
@@ -260,6 +264,15 @@
     <Compile Include="Assets\Scripts\C#\ToLua\Editor\ToLuaTree.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Plugins\Android\ShareSDK\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\Android\ShareSDK\res\drawable\ssdk_oks_classic_platform_cell_back.xml" />
+    <None Include="Assets\Plugins\Android\ShareSDK\res\drawable\ssdk_oks_classic_progressbar.xml" />
+    <None Include="Assets\Plugins\Android\ShareSDK\res\values-en\ssdk_oks_strings.xml" />
+    <None Include="Assets\Plugins\Android\ShareSDK\res\values-en\ssdk_strings.xml" />
+    <None Include="Assets\Plugins\Android\ShareSDK\res\values\ssdk_instapaper_strings.xml" />
+    <None Include="Assets\Plugins\Android\ShareSDK\res\values\ssdk_oks_color_drawables.xml" />
+    <None Include="Assets\Plugins\Android\ShareSDK\res\values\ssdk_oks_strings.xml" />
+    <None Include="Assets\Plugins\Android\ShareSDK\res\values\ssdk_strings.xml" />
     <None Include="Assets\Resources\Bundle\Prefab\UI\MaJiang\View\Atlas\record.txt" />
     <None Include="Assets\Resources\Internal\UI\text.txt" />
     <None Include="Assets\Resources\Raw\3rd\NGUI\Resources\Shaders\Unlit - Premultiplied Colored (TextureClip).shader" />

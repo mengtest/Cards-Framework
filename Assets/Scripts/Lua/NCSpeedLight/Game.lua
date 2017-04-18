@@ -52,14 +52,11 @@ function Game.Awake(go)
 	Game.transform = go.transform;
 	Log.Initialize();
 	Log.Info("Game.Awake");
-	UnityEngine.Application.targetFrameRate = SharedVariable.TargetFramerate; -- 固定帧率
-	UnityEngine.Screen.sleepTimeout = UnityEngine.SleepTimeout.NeverSleep; -- 禁止息屏
 	Game.Platform = UnityEngine.Application.platform;
 	AssetManager.Initialize();
 	UIManager.Initialize();
 	NetManager.Initialize();
 	SceneManager.Initialize();
-	-- UIManager.OpenTipsDialog("已经更新至最新版本!");
 	SceneManager.GotoScene(SceneType.DownloadScene);
 end
 
