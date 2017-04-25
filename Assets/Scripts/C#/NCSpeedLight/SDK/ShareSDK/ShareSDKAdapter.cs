@@ -8,8 +8,8 @@ namespace NCSpeedLight
     public class ShareSDKAdapter : MonoBehaviour
     {
         private static ShareSDK ssdk;
-        private List<ShareSDK.EventHandler> authHandlers = new List<ShareSDK.EventHandler>();
-        private List<ShareSDK.EventHandler> shareHandlers = new List<ShareSDK.EventHandler>();
+        private static List<ShareSDK.EventHandler> authHandlers = new List<ShareSDK.EventHandler>();
+        private static List<ShareSDK.EventHandler> shareHandlers = new List<ShareSDK.EventHandler>();
 
         void Start()
         {
@@ -46,6 +46,10 @@ namespace NCSpeedLight
             {
                 ssdk.CancelAuthorize(PlatformType.WeChat);
                 ssdk.Authorize(PlatformType.WeChat);
+                if(authHandlers.Contains(handler) == false)
+                {
+                    authHandlers.Add(handler);
+                }
             }
             else
             {

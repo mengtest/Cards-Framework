@@ -16,7 +16,8 @@ function UI_MobileLogin.Start()
 	end);
 	UIHelper.SetButtonEvent(this.transform, "Btn_Wechat",
 	function(obj)
-		ShareSDKAdapter.AuthWechat(function(...)
+		ShareSDKAdapter.AuthWechat(
+		function(reqID, state, platformType, result)
 			UIManager.OpenTipsDialog("微信授权成功");
 		end);
 	end);

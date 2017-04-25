@@ -41,8 +41,8 @@ end
 function UI_Register.OnDestroy()
 end
 function UI_Register.onClickBack(go)
-	UIManager.CloseWindow("Login/ui_register")
-	UIManager.OpenWindow("Login/ui_normalLogin")
+	UIManager.CloseWindow(UIType.UI_Register);
+	UIManager.OpenWindow(UIType.UI_NormalLogin);
 end
 function UI_Register.onClickSubmit(go)
 	if string.len(ipAccount.value) == 0 then

@@ -31,7 +31,7 @@ end
 function UI_NormalLogin.Start()
 	lbAccount = transform:Find("Input (account)/Label"):GetComponent("UILabel");
 	ipPassword = transform:Find("Input (password)"):GetComponent("UIInput");
-	if LoginScene.LoginRecord ~= nil and # LoginScene.LoginRecord.loginInfo >= 1 then
+	if LoginScene.LoginRecord ~= nil and #LoginScene.LoginRecord.loginInfo >= 1 then
 		local firstInfo = LoginScene.LoginRecord.loginInfo[1];
 		if lbAccount ~= nil then
 			lbAccount.text = firstInfo.account;
@@ -54,6 +54,7 @@ function UI_NormalLogin.LateUpdate()
 end
 function UI_NormalLogin.OnDestroy()
 end
+
 function onClickLogin(go)
 	if string.len(lbAccount.text) == 0 then
 		UIManager.OpenTipsDialog("请输入账号");
@@ -67,10 +68,12 @@ function onClickLogin(go)
 	-- LoginScene:AddLoginRecord(lbAccount.text, ipPassword.value);
 	LoginScene.RequestLogin(lbAccount.text, ipPassword.value);
 end
+
 function onClickRegister(go)
-	UIManager.CloseWindow("Login/ui_normalLogin");
-	UIManager.OpenWindow("Login/ui_register");
+	UIManager.CloseWindow(UIType.UI_NormalLogin);
+	UIManager.OpenWindow(UIType.UI_Register);
 end
+
 function onClickArrow(go)
 	isRecordPanelOpen = not isRecordPanelOpen;
 	if isRecordPanelOpen == true then
@@ -81,6 +84,7 @@ function onClickArrow(go)
 		recordLoginInfo = nil;
 	end
 end
+
 function displayRecordPanel()
 	local bg = transform:Find("Panel/Sprite"):GetComponent("UISprite");
 	local panel = transform:Find("Panel/Accounts");
@@ -89,7 +93,7 @@ function displayRecordPanel()
 	if LoginScene.LoginRecord ~= nil and LoginScene.LoginRecord.loginInfo ~= nil then
 		if bg == nil or panel == nil or item == nil or otherAccountItem == nil then return end;
 		local index = 0;
-		for i = 1, # LoginScene.LoginRecord.loginInfo do
+		for i = 1, #LoginScene.LoginRecord.loginInfo do
 			local info = LoginScene.LoginRecord.loginInfo[i];
 			local childItem = UnityEngine.GameObject.Instantiate(item);
 			childItem:SetParent(panel);
@@ -141,7 +145,7 @@ function getRecordPanelHeight(count)
 	end
 end
 function clearRecordPanel()
-	for i = 1, # recordLoginInfo do
+	for i = 1, #recordLoginInfo do
 		local item = recordLoginInfo[i];
 		if item ~= nil and item[1] ~= nil then
 			UnityEngine.GameObject.Destroy(item[1]);
@@ -178,7 +182,7 @@ function onClickOtherAccount(go)
 end
 function TryGetLoginRecordInfo(go)
 	UnityEngine.GameObject.Destroy(go);
-	for i = 1, # recordLoginInfo do
+	for i = 1, #recordLoginInfo do
 		local info = recordLoginInfo[i];
 		local item1 = info[1];
 		local item2 = info[2];
