@@ -2,7 +2,7 @@
 -- Copyright © 2014-2017 NCSpeedLight
 --
 -- FileName: LoginScene.lua
--- Describle:  登录场景
+-- Describle:  登录场景,这里控制所有登录逻辑
 -- Created By:  Wells Hsu
 -- Date&Time:  2017/2/28 19:11:09
 -- Modify History:
@@ -45,8 +45,7 @@ function LoginScene.Begin()
 	NetManager.RegisterEvent(GameMessage.GM_ROLELIST_RETURN, LoginScene.OnAccountRolesReturn);
 	NetManager.RegisterEvent(GameMessage.GM_ROLE_LOGIN_RETURN, LoginScene.OnRoleLoginReturn);
 	NetManager.RegisterEvent(GameMessage.GM_ROLE_CREATE_RETURN, LoginScene.OnCreateRoleReturn);
-	
-	LoginScene.RequestVerifyVersion()
+	LoginScene.ConnnectLoginServer();
 end
 
 function LoginScene.Update()
@@ -88,7 +87,7 @@ function LoginScene.OpenLoginRecord()
 			Log.Error("LoginScene.OpenLoginRecord: decode login record error");
 		else
 			LoginScene.LoginRecord = record;
-			for i = 1, # record.loginInfo do
+			for i = 1, #record.loginInfo do
 				Log.Info("LoginScene.OpenLoginRecord: recorded account: " .. record.loginInfo[i].account .. ",password: " .. record.loginInfo[i].password);
 			end
 		end
@@ -113,7 +112,7 @@ function LoginScene.AddLoginRecord(accountStr, passwordStr, latestAreaStr, lates
 		}
 	}
 	if LoginScene.LoginRecord ~= nil then
-		for i = 1, # LoginScene.LoginRecord.loginInfo do
+		for i = 1, #LoginScene.LoginRecord.loginInfo do
 			if i > 2 then break end
 			info.loginInfo[i + 1] = {
 				account = LoginScene.LoginRecord.loginInfo[i].account,
@@ -127,7 +126,7 @@ end
 
 function LoginScene.ExistRecord(accountStr)
 	if LoginScene.LoginRecord ~= nil then
-		for i = 1, # LoginScene.LoginRecord.loginInfo do
+		for i = 1, #LoginScene.LoginRecord.loginInfo do
 			local info = LoginScene.LoginRecord.loginInfo[i];
 			if info ~= nil and info.account == accountStr then
 				return true;
@@ -140,7 +139,7 @@ end
 
 function LoginScene.RemoveLoginRecord(accountStr, passwordStr)
 	if LoginScene.LoginRecord ~= nil then
-		for i = # LoginScene.LoginRecord.loginInfo, 1, - 1 do
+		for i = #LoginScene.LoginRecord.loginInfo, 1, - 1 do
 			local item = LoginScene.LoginRecord.loginInfo[i];
 			if item.account == accountStr and item.password == passwordStr then
 				table.remove(LoginScene.LoginRecord.loginInfo, i);
@@ -157,10 +156,34 @@ function LoginScene.SaveLoginRecordFile()
 	Utility.SaveFile(path, buffer);
 end
 
+-- 连接登录服务器
+function LoginScene.ConnnectLoginServer()
+	local option = ProgressDialogOption.New();
+	option.AutoClose = true;
+	option.Timeout = 10;
+	option.Content = "连接服务器中...";
+	option.OnAutoClose = function()
+		UIManager.OpenTipsDialog("请求超时，请检查设备的网络状况");
+	end;
+	-- UIManager.OpenProgressDialog(option);
+	Log.Info("LoginScene.ConnnectLoginServer: login server ip is " .. Constants.ACCOUNT_SERVER_IP);
+	Log.Info("LoginScene.ConnnectLoginServer: login server port is " .. Constants.ACCOUNT_SERVER_PORT);
+	NetManager.ConnectTo(ServerType.Login, Constants.ACCOUNT_SERVER_IP, Constants.ACCOUNT_SERVER_PORT,
+	function(connection)
+		Log.Info("LoginScene.ConnnectLoginServer: 连接至登录服务器");
+		UIManager.CloseProgressDialog();
+		LoginScene.RequestVerifyVersion();
+	end,
+	function(connection)
+		Log.Info("LoginScene.ConnnectLoginServer: 断开与登录服务器的连接");
+	end,
+	nil);
+end
+
 function LoginScene.RequestVerifyVersion()
-	Log.Info("LoginScene.RequestVerifyVersion: Send verify version msg,current version is " .. SharedVariable.Version);
+	Log.Info("LoginScene.RequestVerifyVersion: Send verify version msg,current version is " .. Constants.VERSION);
 	local msg = {
-		version = SharedVariable.Version;
+		version = Constants.VERSION;
 	}
 	NetManager.SendEventToLoginServer(GameMessage.GM_VERIFY_VERSION, PBMessage.GM_VerifyVersion, msg)
 end
@@ -168,8 +191,12 @@ end
 function LoginScene.OnVerifyVersionReturn(evt)
 	local obj = NetManager.DecodeMsg(PBMessage.GM_VerifyVersionReturn, evt)
 	if obj.result == 0 then
-		UIManager.OpenWindow("Login/ui_normalLogin")
 		Log.Info("LoginScene.OnVerifyVersionReturn: sccuss.");
+		if Game.Platform == UnityEngine.RuntimePlatform.Android or Game.Platform == UnityEngine.RuntimePlatform.IPhonePlayer then
+			UIManager.OpenWindow(UIType.UI_MobileLogin);
+		else
+			UIManager.OpenWindow(UIType.UI_NormalLogin);
+		end
 	else
 		Log.Error("LoginScene.OnVerifyVersionReturn: version doesn\'t match,can not enter game,please update.");
 		UIManager.OpenTipsDialog("版本不匹配，无法进入游戏");

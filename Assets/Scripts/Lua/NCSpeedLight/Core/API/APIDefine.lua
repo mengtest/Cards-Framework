@@ -11,4 +11,5 @@
 UIHelper = NCSpeedLight.UIHelper;
 LuaComponent = NCSpeedLight.LuaComponent;
 Constants = NCSpeedLight.Constants;
-LuaManager = NCSpeedLight.LuaManager; 
+LuaManager = NCSpeedLight.LuaManager;
+ShareSDKAdapter = NCSpeedLight.ShareSDKAdapter; 

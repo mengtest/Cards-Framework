@@ -15,11 +15,10 @@ namespace cn.sharesdk.unity3d
     {
         private int reqID;
         //配置ShareSDK AppKey
-        //注:此处区分仅为demo测试而区分，实际使用时可以不区分安卓或iOS
 #if UNITY_ANDROID
-        public string appKey = "1d3346ead58ce";
+        public string appKey = "18dc2bc72897a";
 #elif UNITY_IPHONE
-		public string appKey = "1d3357a59bd70";
+		public string appKey = "118dc263fe8d58";
 #else
         public string appKey = "not support on current platform";
 #endif

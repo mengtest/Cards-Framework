@@ -9,16 +9,89 @@
             //
 //----------------------------------------------------------------*/
 
+using System;
 using UnityEngine;
 
 namespace NCSpeedLight
 {
     public static class Constants
     {
-        public static string GAME_NAME = "HZMJ_LUA";
+        /// <summary>
+        /// 游戏名称.
+        /// </summary>
+        public static string GAME_NAME = "PPNC";
 
+        /// <summary>
+        /// 公司名称
+        /// </summary>
+        public static string COMPANY_NAME = "papa";
+
+        /// <summary>
+        /// 渠道名称
+        /// </summary>
+        public static string CHANNEL = "papa";
+
+        /// <summary>
+        /// 主版本号（应用程序版本号）
+        /// </summary>
+        public static string MAJOR_VERSION = "1";
+
+        /// <summary>
+        /// 中版本号（资源版本号）
+        /// </summary>
+        public static string MIDDLE_VERSION
+        {
+            get
+            {
+                return "8";
+            }
+        }
+
+        /// <summary>
+        /// 小版本号（脚本版本号）
+        /// </summary>
+        public static string MINIOR_VERSION
+        {
+            get
+            {
+                return "0";
+            }
+        }
+
+        /// <summary>
+        /// 版本号
+        /// </summary>
+        public static string VERSION
+        {
+            get
+            {
+                string version = "{0}.{1}.{2}";
+                version = Helper.StringFormat(version, MAJOR_VERSION, MIDDLE_VERSION, MINIOR_VERSION);
+                return version;
+            }
+        }
+
+        /// <summary>
+        /// 请求的Json地址
+        /// </summary>
+        public static string JSON_URL
+        {
+            get
+            {
+                string url = "http://papamajiangcdn.damaigame.com/json/{0}/{1}/{2}/v{3}/qiumo.db?v={4}";
+                url = Helper.StringFormat(url, COMPANY_NAME, PLATFORM_NAME, CHANNEL, VERSION, DateTime.Now.Ticks);
+                return url;
+            }
+        }
+
+        /// <summary>
+        /// 目标帧率
+        /// </summary>
         public static int TARGET_FRAME_RATE = 25;
 
+        /// <summary>
+        /// 存储目录
+        /// </summary>
         public static string DATA_PATH
         {
             get
@@ -43,6 +116,9 @@ namespace NCSpeedLight
             }
         }
 
+        /// <summary>
+        /// 编译的脚本包路径
+        /// </summary>
         public static string BUILD_SCRIPT_BUNDLE_PATH
         {
             get
@@ -51,6 +127,9 @@ namespace NCSpeedLight
             }
         }
 
+        /// <summary>
+        /// 编译的资源包路径
+        /// </summary>
         public static string BUILD_ASSET_BUNDLE_PATH
         {
             get
@@ -59,12 +138,24 @@ namespace NCSpeedLight
             }
         }
 
+        /// <summary>
+        /// Unity assetbundle 清单文件
+        /// </summary>
         public static string ASSET_BUNDLE_MANIFEST_FILE = "Assets";
 
+        /// <summary>
+        /// 资源清单文件
+        /// </summary>
         public static string ASSET_MANIFEST_FILE = "manifest.txt";
 
+        /// <summary>
+        /// 脚本清单文件
+        /// </summary>
         public static string SCRIPT_MANIFEST_FILE = "manifest.txt";
 
+        /// <summary>
+        /// 程序包内容目录
+        /// </summary>
         public static string STREAMING_PATH
         {
             get
@@ -86,6 +177,9 @@ namespace NCSpeedLight
             }
         }
 
+        /// <summary>
+        /// 当前平台名称
+        /// </summary>
         public static string PLATFORM_NAME
         {
             get
@@ -102,8 +196,14 @@ namespace NCSpeedLight
             }
         }
 
+        /// <summary>
+        /// 是否加密lua
+        /// </summary>
         public static bool ENCRYPT_LUA = true;
 
+        /// <summary>
+        /// 是否启用ScriptBundle模式
+        /// </summary>
         public static bool SCRIPT_BUNDLE_MODE
         {
             get
@@ -123,6 +223,9 @@ namespace NCSpeedLight
             }
         }
 
+        /// <summary>
+        /// 是否启用AssetBundle模式
+        /// </summary>
         public static bool ASSET_BUNDLE_MODE
         {
             get
@@ -133,7 +236,7 @@ namespace NCSpeedLight
                 }
                 else if (Application.isEditor)
                 {
-                    return true;
+                    return false;
                 }
                 else
                 {
@@ -142,18 +245,39 @@ namespace NCSpeedLight
             }
         }
 
+        /// <summary>
+        /// 脚本包后缀
+        /// </summary>
         public const string SCRIPT_BUNDLE_FILE_EXTENSION = ".script";
 
+        /// <summary>
+        /// 资源包后缀
+        /// </summary>
         public const string ASSET_BUNDLE_FILE_EXTENSION = ".asset";
 
+        /// <summary>
+        /// 脚本资源目录
+        /// </summary>
         public static string LUA_SCRIPT_WORKSPACE = Application.dataPath + "/Scripts/Lua/";
 
+        /// <summary>
+        /// 需要打包的资源目录
+        /// </summary>
         public static string BUNDLE_ASSET_WORKSPACE = Application.dataPath + "/Resources/Bundle/";
 
+        /// <summary>
+        /// 需要打包的场景目录
+        /// </summary>
         public static string BUNDLE_SCENE_WORKSPACE = Application.dataPath + "/Resources/Bundle/Scenes/";
 
+        /// <summary>
+        /// 资源目录
+        /// </summary>
         public static string RESOURCE_WORKSPACE = Application.dataPath + "/Resources/";
 
+        /// <summary>
+        /// 本地资源包目录
+        /// </summary>
         public static string LOCAL_ASSET_BUNDLE_PATH
         {
             get
@@ -173,6 +297,9 @@ namespace NCSpeedLight
             }
         }
 
+        /// <summary>
+        /// 本地脚本包目录
+        /// </summary>
         public static string LOCAL_SCRIPT_BUNDLE_PATH
         {
             get
@@ -192,6 +319,9 @@ namespace NCSpeedLight
             }
         }
 
+        /// <summary>
+        /// 远端资源目录
+        /// </summary>
         public static string REMOTE_ASSET_BUNDLE_PATH
         {
             get
@@ -200,12 +330,119 @@ namespace NCSpeedLight
             }
         }
 
+        /// <summary>
+        /// 远端脚本目录
+        /// </summary>
         public static string REMOTE_SCRIPT_BUNDLE_PATH
         {
             get
             {
                 return "http://192.168.1.146:9555/" + PLATFORM_NAME + "/Scripts/";
             }
+        }
+
+        /// <summary>
+        /// 登录服务器地址
+        /// </summary>
+        public static string ACCOUNT_SERVER_IP
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// 登录服务器端口
+        /// </summary>
+        public static int ACCOUNT_SERVER_PORT
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// 最新的版本
+        /// </summary>
+        public static string NEWEST_VERSION
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// 安装包下载地址
+        /// </summary>
+        public static string PKG_DOWNLOAD_URL
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// 安装包大小
+        /// </summary>
+        public static int PKG_SIZE
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// 微信回调地址
+        /// </summary>
+        public static string WECHAT_URL
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// 问题反馈地址
+        /// </summary>
+        public static string FEEDBACK_URL
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// 融云key
+        /// </summary>
+        public static string RONGCLOUD_KEY
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// 融云secret
+        /// </summary>
+        public static string RONGCLOUD_SECRET
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// 分享标题
+        /// </summary>
+        public static string SHARE_TITLE
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// 分享内容
+        /// </summary>
+        public static string SHARE_CONTENT
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// 分享至朋友圈的内容
+        /// </summary>
+        public static string SHARE_MOMENT_CONTENT
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// 分享的链接
+        /// </summary>
+        public static string SHARE_URL
+        {
+            get; set;
         }
     }
 }

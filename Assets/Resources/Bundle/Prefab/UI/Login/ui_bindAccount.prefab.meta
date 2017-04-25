@@ -1,9 +1,9 @@
 fileFormatVersion: 2
-guid: fee7d3b1e945b1240bdd08b6a978832f
-timeCreated: 1466412296
+guid: 7caef1ac597e43b49a11424891a87cac
+timeCreated: 1493101802
 licenseType: Pro
 NativeFormatImporter:
-  mainObjectFileID: -1
+  mainObjectFileID: 100100000
   userData: 
   assetBundleName: bundle_prefab_ui_login.asset
   assetBundleVariant: 

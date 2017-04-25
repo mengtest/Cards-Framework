@@ -14,6 +14,7 @@ public abstract class UIBasicSprite : UIWidget
 		Tiled,
 		Filled,
 		Advanced,
+        Mirrored,
 	}
 
 	public enum FillDirection
@@ -328,7 +329,11 @@ public abstract class UIBasicSprite : UIWidget
 			case Type.Advanced:
 			AdvancedFill(verts, uvs, cols);
 			break;
-		}
+
+            case Type.Mirrored:
+            MirroredFill(verts, uvs, cols);
+            break;
+        }
 	}
 
 	/// <summary>
@@ -991,11 +996,111 @@ public abstract class UIBasicSprite : UIWidget
 		}
 	}
 
-	/// <summary>
-	/// Adjust the specified quad, making it be radially filled instead.
-	/// </summary>
 
-	static bool RadialCut (Vector2[] xy, Vector2[] uv, float fill, bool invert, int corner)
+    void MirroredFill(BetterList<Vector3> verts, BetterList<Vector2> uvs, BetterList<Color> cols)
+    {
+        Texture tex = mainTexture;
+        if (tex == null) return;
+
+        Vector2 size = new Vector2(mInnerUV.width * tex.width, mInnerUV.height * tex.height);
+        size *= pixelSize;
+        if (tex == null || size.x < 2f || size.y < 2f) return;
+
+        Color32 c = drawingColor;
+        Vector4 v = drawingDimensions;
+        Vector4 u = new Vector4(mInnerUV.xMin, mInnerUV.yMin, mInnerUV.xMax, mInnerUV.yMax);
+
+        float x0 = v.x;
+        float y0 = v.y;
+
+        float u0 = u.x;
+        float v0 = u.y;
+        bool yb = true;
+        while (y0 < v.w)
+        {
+            x0 = v.x;
+            float y1 = y0 + size.y;
+            float v1 = u.w;
+
+            if (y1 > v.w)
+            {
+                v1 = Mathf.Lerp(u.y, u.w, (v.w - y0) / size.y);
+                y1 = v.w;
+            }
+            bool b = true;
+            while (x0 < v.z)
+            {
+                float x1 = x0 + size.x;
+                float u1 = u.z;
+
+                if (x1 > v.z)
+                {
+                    u1 = Mathf.Lerp(u.x, u.z, (v.z - x0) / size.x);
+                    x1 = v.z;
+                }
+                float offset = 0.3f;
+                verts.Add(new Vector3(x0 - offset, y0 - offset));
+                verts.Add(new Vector3(x0 - offset, y1 + offset));
+                verts.Add(new Vector3(x1 + offset, y1 + offset));
+                verts.Add(new Vector3(x1 + offset, y0 - offset));
+
+                float yoffset = size.y != 1 ? 0.001f : 0.0f;
+                float xoffset = size.x != 1 ? 0.001f : 0.0f;
+                if (yb)
+                {
+                    if (b)
+                    {
+                        uvs.Add(new Vector2(u0 - xoffset, v0));
+                        uvs.Add(new Vector2(u0 - xoffset, v1 + yoffset));
+                        uvs.Add(new Vector2(u1, v1 + yoffset));
+                        uvs.Add(new Vector2(u1, v0));
+                    }
+                    else
+                    {
+                        uvs.Add(new Vector2(u1, v0));
+                        uvs.Add(new Vector2(u1, v1 + yoffset));
+                        uvs.Add(new Vector2(u0 - xoffset, v1 + yoffset));
+                        uvs.Add(new Vector2(u0 - xoffset, v0));
+                    }
+                }
+                else
+                {
+                    if (b)
+                    {
+                        uvs.Add(new Vector2(u0 - xoffset, v1 + yoffset));
+                        uvs.Add(new Vector2(u0 - xoffset, v0));
+                        uvs.Add(new Vector2(u1, v0));
+                        uvs.Add(new Vector2(u1, v1 + yoffset));
+                    }
+                    else
+                    {
+                        uvs.Add(new Vector2(u1, v1 + yoffset));
+                        uvs.Add(new Vector2(u1, v0));
+                        uvs.Add(new Vector2(u0 - xoffset, v0));
+                        uvs.Add(new Vector2(u0 - xoffset, v1 + yoffset));
+                    }
+                }
+
+                cols.Add(c);
+                cols.Add(c);
+                cols.Add(c);
+                cols.Add(c);
+
+                x0 += size.x;
+                b = !b;
+            }
+            yb = !yb;
+            y0 += size.y;
+        }
+    }
+
+
+
+    /// <summary>
+    /// Adjust the specified quad, making it be radially filled instead.
+    /// </summary>
+
+    static bool RadialCut (Vector2[] xy, Vector2[] uv, float fill, bool invert, int corner)
 	{
 		// Nothing to fill
 		if (fill < 0.001f) return false;

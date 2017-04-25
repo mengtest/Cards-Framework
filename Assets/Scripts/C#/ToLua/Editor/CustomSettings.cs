@@ -6,6 +6,7 @@ using NCSpeedLight;
 
 using BindType = ToLuaMenu.BindType;
 using System.Reflection;
+using cn.sharesdk.unity3d;
 
 public static class CustomSettings
 {
@@ -39,6 +40,7 @@ public static class CustomSettings
         _DT(typeof(Comparison<int>)),
         _DT(typeof(NetConnection.StatusDelegate)),
         _DT(typeof(UIEventListener.VoidDelegate)),
+        _DT(typeof(cn.sharesdk.unity3d.ShareSDK.EventHandler)),
     };
 
     //在这里添加你要导出注册到lua的类型列表
@@ -120,11 +122,11 @@ public static class CustomSettings
          _GT(typeof(Evt)),
          _GT(typeof(ResManager)),
 
-         //_GT(typeof(UIManager)),
-         //_GT(typeof(UIManager.StandardDialogOption)),
-         //_GT(typeof(UIManager.ProgressDialogOption)),
-         //_GT(typeof(UIManager.DialogType)),
-
+         //_GT(typeof(AMapAdapter)),
+         _GT(typeof(ShareSDKAdapter)),
+         _GT(typeof(ResponseState)),
+         _GT(typeof(PlatformType)),
+         //_GT(typeof(RongCloudAdapter)),
 
          _GT(typeof(AudioManager)),
 
@@ -258,6 +260,9 @@ public static class CustomSettings
         _GT(typeof(System.IO.DirectoryInfo)),
 #endregion
 
+        #region System.Collections
+        _GT(typeof(System.Collections.Hashtable)),
+        #endregion
     };
 
     public static List<Type> dynamicList = new List<Type>()

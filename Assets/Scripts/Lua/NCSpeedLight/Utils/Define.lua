@@ -1,4 +1,9 @@
 UIType = {
+	UI_NormalLogin = "Login/UI_NormalLogin",
+	UI_MobileLogin = "Login/UI_MobileLogin",
+	UI_Register = "Login/UI_Register",
+	UI_WXLogin = "",
+	UI_Register = "",
 	UI_MaJiang = "MaJiang/UI_MaJiang",
 	UI_Share = "Hall/UI_Share",
 	UI_Record = "Hall/UI_Record",

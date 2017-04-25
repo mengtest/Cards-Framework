@@ -24,6 +24,7 @@ public static class DelegateFactory
 		dict.Add(typeof(System.Comparison<int>), System_Comparison_int);
 		dict.Add(typeof(NCSpeedLight.NetConnection.StatusDelegate), NCSpeedLight_NetConnection_StatusDelegate);
 		dict.Add(typeof(UIEventListener.VoidDelegate), UIEventListener_VoidDelegate);
+		dict.Add(typeof(cn.sharesdk.unity3d.ShareSDK.EventHandler), cn_sharesdk_unity3d_ShareSDK_EventHandler);
 		dict.Add(typeof(UnityEngine.Camera.CameraCallback), UnityEngine_Camera_CameraCallback);
 		dict.Add(typeof(UnityEngine.Application.LowMemoryCallback), UnityEngine_Application_LowMemoryCallback);
 		dict.Add(typeof(UnityEngine.Application.AdvertisingIdentifierCallback), UnityEngine_Application_AdvertisingIdentifierCallback);
@@ -524,6 +525,59 @@ public static class DelegateFactory
 		{
 			UIEventListener_VoidDelegate_Event target = new UIEventListener_VoidDelegate_Event(func, self);
 			UIEventListener.VoidDelegate d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	class cn_sharesdk_unity3d_ShareSDK_EventHandler_Event : LuaDelegate
+	{
+		public cn_sharesdk_unity3d_ShareSDK_EventHandler_Event(LuaFunction func) : base(func) { }
+		public cn_sharesdk_unity3d_ShareSDK_EventHandler_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(int param0, cn.sharesdk.unity3d.ResponseState param1, cn.sharesdk.unity3d.PlatformType param2, System.Collections.Hashtable param3)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.Push(param1);
+			func.Push(param2);
+			func.PushObject(param3);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(int param0, cn.sharesdk.unity3d.ResponseState param1, cn.sharesdk.unity3d.PlatformType param2, System.Collections.Hashtable param3)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.Push(param1);
+			func.Push(param2);
+			func.PushObject(param3);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public static Delegate cn_sharesdk_unity3d_ShareSDK_EventHandler(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			cn.sharesdk.unity3d.ShareSDK.EventHandler fn = delegate(int param0, cn.sharesdk.unity3d.ResponseState param1, cn.sharesdk.unity3d.PlatformType param2, System.Collections.Hashtable param3) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			cn_sharesdk_unity3d_ShareSDK_EventHandler_Event target = new cn_sharesdk_unity3d_ShareSDK_EventHandler_Event(func);
+			cn.sharesdk.unity3d.ShareSDK.EventHandler d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			cn_sharesdk_unity3d_ShareSDK_EventHandler_Event target = new cn_sharesdk_unity3d_ShareSDK_EventHandler_Event(func, self);
+			cn.sharesdk.unity3d.ShareSDK.EventHandler d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}

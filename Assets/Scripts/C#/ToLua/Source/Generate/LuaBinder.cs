@@ -166,6 +166,7 @@ public static class LuaBinder
 		NCSpeedLight_GlobalEventManagerWrap.Register(L);
 		NCSpeedLight_EvtWrap.Register(L);
 		NCSpeedLight_ResManagerWrap.Register(L);
+		NCSpeedLight_ShareSDKAdapterWrap.Register(L);
 		NCSpeedLight_AudioManagerWrap.Register(L);
 		NCSpeedLight_LuaManagerWrap.Register(L);
 		NCSpeedLight_LuaBehaviourWrap.Register(L);
@@ -187,6 +188,17 @@ public static class LuaBinder
 		L.EndModule();
 		L.BeginModule("Helper");
 		L.RegFunction("ChildDelegate", NCSpeedLight_Helper_ChildDelegate);
+		L.EndModule();
+		L.EndModule();
+		L.BeginModule("cn");
+		L.BeginModule("sharesdk");
+		L.BeginModule("unity3d");
+		cn_sharesdk_unity3d_ResponseStateWrap.Register(L);
+		cn_sharesdk_unity3d_PlatformTypeWrap.Register(L);
+		L.BeginModule("ShareSDK");
+		L.RegFunction("EventHandler", cn_sharesdk_unity3d_ShareSDK_EventHandler);
+		L.EndModule();
+		L.EndModule();
 		L.EndModule();
 		L.EndModule();
 		L.BeginModule("UIRoot");
@@ -217,6 +229,9 @@ public static class LuaBinder
 		System_IO_DirectoryInfoWrap.Register(L);
 		System_IO_FileSystemInfoWrap.Register(L);
 		System_IO_StreamWrap.Register(L);
+		L.EndModule();
+		L.BeginModule("Collections");
+		System_Collections_HashtableWrap.Register(L);
 		L.EndModule();
 		L.EndModule();
 		L.BeginModule("LuaInterface");
@@ -714,6 +729,33 @@ public static class LuaBinder
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
 				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.Helper.ChildDelegate), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int cn_sharesdk_unity3d_ShareSDK_EventHandler(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(cn.sharesdk.unity3d.ShareSDK.EventHandler), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(cn.sharesdk.unity3d.ShareSDK.EventHandler), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;

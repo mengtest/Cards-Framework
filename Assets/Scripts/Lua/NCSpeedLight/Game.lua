@@ -28,7 +28,6 @@ require "NCSpeedLight.Core.Scene.SceneManager"
 require "NCSpeedLight.Core.Asset.AssetManager"
 require "NCSpeedLight.Core.Action.ActionLine"
 require "NCSpeedLight.Core.Action.AnimationQueue"
-require "NCSpeedLight.Modules.Download.DownloadScene"
 require "NCSpeedLight.Modules.Login.LoginScene"
 require "NCSpeedLight.Modules.Login.Player"
 require "NCSpeedLight.Modules.Hall.HallScene"
@@ -57,7 +56,7 @@ function Game.Awake(go)
 	UIManager.Initialize();
 	NetManager.Initialize();
 	SceneManager.Initialize();
-	SceneManager.GotoScene(SceneType.DownloadScene);
+	SceneManager.GotoScene(SceneType.LoginScene);
 end
 
 function Game.Update()
