@@ -7,13 +7,32 @@ public class UIDragDropItemWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(UIDragDropItem), typeof(UnityEngine.MonoBehaviour));
+		L.RegFunction("StartDragging", StartDragging);
 		L.RegFunction("StopDragging", StopDragging);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("restriction", get_restriction, set_restriction);
 		L.RegVar("cloneOnDrag", get_cloneOnDrag, set_cloneOnDrag);
 		L.RegVar("pressAndHoldDelay", get_pressAndHoldDelay, set_pressAndHoldDelay);
+		L.RegVar("interactable", get_interactable, set_interactable);
+		L.RegVar("draggedItems", get_draggedItems, set_draggedItems);
 		L.EndClass();
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int StartDragging(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UIDragDropItem obj = (UIDragDropItem)ToLua.CheckObject(L, 1, typeof(UIDragDropItem));
+			obj.StartDragging();
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -109,6 +128,39 @@ public class UIDragDropItemWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_interactable(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIDragDropItem obj = (UIDragDropItem)o;
+			bool ret = obj.interactable;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index interactable on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_draggedItems(IntPtr L)
+	{
+		try
+		{
+			ToLua.PushObject(L, UIDragDropItem.draggedItems);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_restriction(IntPtr L)
 	{
 		object o = null;
@@ -162,6 +214,40 @@ public class UIDragDropItemWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index pressAndHoldDelay on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_interactable(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIDragDropItem obj = (UIDragDropItem)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.interactable = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index interactable on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_draggedItems(IntPtr L)
+	{
+		try
+		{
+			System.Collections.Generic.List<UIDragDropItem> arg0 = (System.Collections.Generic.List<UIDragDropItem>)ToLua.CheckObject(L, 2, typeof(System.Collections.Generic.List<UIDragDropItem>));
+			UIDragDropItem.draggedItems = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
 		}
 	}
 }

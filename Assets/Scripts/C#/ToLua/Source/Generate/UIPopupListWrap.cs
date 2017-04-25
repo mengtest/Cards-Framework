@@ -7,9 +7,14 @@ public class UIPopupListWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(UIPopupList), typeof(UIWidgetContainer));
+		L.RegFunction("Set", Set);
 		L.RegFunction("Clear", Clear);
 		L.RegFunction("AddItem", AddItem);
+		L.RegFunction("RemoveItem", RemoveItem);
+		L.RegFunction("RemoveItemByData", RemoveItemByData);
+		L.RegFunction("Start", Start);
 		L.RegFunction("Close", Close);
+		L.RegFunction("CloseSelf", CloseSelf);
 		L.RegFunction("Show", Show);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
@@ -21,6 +26,8 @@ public class UIPopupListWrap
 		L.RegVar("fontStyle", get_fontStyle, set_fontStyle);
 		L.RegVar("backgroundSprite", get_backgroundSprite, set_backgroundSprite);
 		L.RegVar("highlightSprite", get_highlightSprite, set_highlightSprite);
+		L.RegVar("background2DSprite", get_background2DSprite, set_background2DSprite);
+		L.RegVar("highlight2DSprite", get_highlight2DSprite, set_highlight2DSprite);
 		L.RegVar("position", get_position, set_position);
 		L.RegVar("alignment", get_alignment, set_alignment);
 		L.RegVar("items", get_items, set_items);
@@ -31,13 +38,36 @@ public class UIPopupListWrap
 		L.RegVar("highlightColor", get_highlightColor, set_highlightColor);
 		L.RegVar("isAnimated", get_isAnimated, set_isAnimated);
 		L.RegVar("isLocalized", get_isLocalized, set_isLocalized);
+		L.RegVar("separatePanel", get_separatePanel, set_separatePanel);
+		L.RegVar("overlap", get_overlap, set_overlap);
 		L.RegVar("openOn", get_openOn, set_openOn);
 		L.RegVar("onChange", get_onChange, set_onChange);
+		L.RegVar("startingPosition", get_startingPosition, set_startingPosition);
+		L.RegVar("source", get_source, set_source);
 		L.RegVar("ambigiousFont", get_ambigiousFont, set_ambigiousFont);
 		L.RegVar("isOpen", get_isOpen, null);
 		L.RegVar("value", get_value, set_value);
 		L.RegVar("data", get_data, null);
+		L.RegVar("isColliderEnabled", get_isColliderEnabled, null);
 		L.EndClass();
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Set(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			UIPopupList obj = (UIPopupList)ToLua.CheckObject(L, 1, typeof(UIPopupList));
+			string arg0 = ToLua.CheckString(L, 2);
+			bool arg1 = LuaDLL.luaL_checkboolean(L, 3);
+			obj.Set(arg0, arg1);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -90,13 +120,78 @@ public class UIPopupListWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int Close(IntPtr L)
+	static int RemoveItem(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			UIPopupList obj = (UIPopupList)ToLua.CheckObject(L, 1, typeof(UIPopupList));
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.RemoveItem(arg0);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int RemoveItemByData(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			UIPopupList obj = (UIPopupList)ToLua.CheckObject(L, 1, typeof(UIPopupList));
+			object arg0 = ToLua.ToVarObject(L, 2);
+			obj.RemoveItemByData(arg0);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Start(IntPtr L)
 	{
 		try
 		{
 			ToLua.CheckArgsCount(L, 1);
 			UIPopupList obj = (UIPopupList)ToLua.CheckObject(L, 1, typeof(UIPopupList));
-			obj.Close();
+			obj.Start();
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Close(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 0);
+			UIPopupList.Close();
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int CloseSelf(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UIPopupList obj = (UIPopupList)ToLua.CheckObject(L, 1, typeof(UIPopupList));
+			obj.CloseSelf();
 			return 0;
 		}
 		catch(Exception e)
@@ -283,6 +378,44 @@ public class UIPopupListWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index highlightSprite on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_background2DSprite(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIPopupList obj = (UIPopupList)o;
+			UnityEngine.Sprite ret = obj.background2DSprite;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index background2DSprite on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_highlight2DSprite(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIPopupList obj = (UIPopupList)o;
+			UnityEngine.Sprite ret = obj.highlight2DSprite;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index highlight2DSprite on a nil value" : e.Message);
 		}
 	}
 
@@ -477,6 +610,44 @@ public class UIPopupListWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_separatePanel(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIPopupList obj = (UIPopupList)o;
+			bool ret = obj.separatePanel;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index separatePanel on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_overlap(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIPopupList obj = (UIPopupList)o;
+			int ret = obj.overlap;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index overlap on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_openOn(IntPtr L)
 	{
 		object o = null;
@@ -515,6 +686,44 @@ public class UIPopupListWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_startingPosition(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIPopupList obj = (UIPopupList)o;
+			UnityEngine.Vector3 ret = obj.startingPosition;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index startingPosition on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_source(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIPopupList obj = (UIPopupList)o;
+			UnityEngine.GameObject ret = obj.source;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index source on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_ambigiousFont(IntPtr L)
 	{
 		object o = null;
@@ -536,19 +745,14 @@ public class UIPopupListWrap
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_isOpen(IntPtr L)
 	{
-		object o = null;
-
 		try
 		{
-			o = ToLua.ToObject(L, 1);
-			UIPopupList obj = (UIPopupList)o;
-			bool ret = obj.isOpen;
-			LuaDLL.lua_pushboolean(L, ret);
+			LuaDLL.lua_pushboolean(L, UIPopupList.isOpen);
 			return 1;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index isOpen on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e);
 		}
 	}
 
@@ -587,6 +791,25 @@ public class UIPopupListWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index data on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_isColliderEnabled(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIPopupList obj = (UIPopupList)o;
+			bool ret = obj.isColliderEnabled;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index isColliderEnabled on a nil value" : e.Message);
 		}
 	}
 
@@ -735,6 +958,44 @@ public class UIPopupListWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index highlightSprite on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_background2DSprite(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIPopupList obj = (UIPopupList)o;
+			UnityEngine.Sprite arg0 = (UnityEngine.Sprite)ToLua.CheckUnityObject(L, 2, typeof(UnityEngine.Sprite));
+			obj.background2DSprite = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index background2DSprite on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_highlight2DSprite(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIPopupList obj = (UIPopupList)o;
+			UnityEngine.Sprite arg0 = (UnityEngine.Sprite)ToLua.CheckUnityObject(L, 2, typeof(UnityEngine.Sprite));
+			obj.highlight2DSprite = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index highlight2DSprite on a nil value" : e.Message);
 		}
 	}
 
@@ -929,6 +1190,44 @@ public class UIPopupListWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_separatePanel(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIPopupList obj = (UIPopupList)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.separatePanel = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index separatePanel on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_overlap(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIPopupList obj = (UIPopupList)o;
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			obj.overlap = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index overlap on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_openOn(IntPtr L)
 	{
 		object o = null;
@@ -963,6 +1262,44 @@ public class UIPopupListWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index onChange on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_startingPosition(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIPopupList obj = (UIPopupList)o;
+			UnityEngine.Vector3 arg0 = ToLua.ToVector3(L, 2);
+			obj.startingPosition = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index startingPosition on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_source(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIPopupList obj = (UIPopupList)o;
+			UnityEngine.GameObject arg0 = (UnityEngine.GameObject)ToLua.CheckUnityObject(L, 2, typeof(UnityEngine.GameObject));
+			obj.source = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index source on a nil value" : e.Message);
 		}
 	}
 

@@ -13,6 +13,7 @@ public class UIRectWrap
 		L.RegFunction("Update", Update);
 		L.RegFunction("UpdateAnchors", UpdateAnchors);
 		L.RegFunction("SetAnchor", SetAnchor);
+		L.RegFunction("SetScreenRect", SetScreenRect);
 		L.RegFunction("ResetAnchors", ResetAnchors);
 		L.RegFunction("ResetAndUpdateAnchors", ResetAndUpdateAnchors);
 		L.RegFunction("SetRect", SetRect);
@@ -147,6 +148,17 @@ public class UIRectWrap
 				obj.SetAnchor(arg0);
 				return 0;
 			}
+			else if (count == 6 && TypeChecker.CheckTypes(L, 1, typeof(UIRect), typeof(UnityEngine.GameObject), typeof(float), typeof(float), typeof(float), typeof(float)))
+			{
+				UIRect obj = (UIRect)ToLua.ToObject(L, 1);
+				UnityEngine.GameObject arg0 = (UnityEngine.GameObject)ToLua.ToObject(L, 2);
+				float arg1 = (float)LuaDLL.lua_tonumber(L, 3);
+				float arg2 = (float)LuaDLL.lua_tonumber(L, 4);
+				float arg3 = (float)LuaDLL.lua_tonumber(L, 5);
+				float arg4 = (float)LuaDLL.lua_tonumber(L, 6);
+				obj.SetAnchor(arg0, arg1, arg2, arg3, arg4);
+				return 0;
+			}
 			else if (count == 6 && TypeChecker.CheckTypes(L, 1, typeof(UIRect), typeof(UnityEngine.GameObject), typeof(int), typeof(int), typeof(int), typeof(int)))
 			{
 				UIRect obj = (UIRect)ToLua.ToObject(L, 1);
@@ -158,10 +170,59 @@ public class UIRectWrap
 				obj.SetAnchor(arg0, arg1, arg2, arg3, arg4);
 				return 0;
 			}
+			else if (count == 9 && TypeChecker.CheckTypes(L, 1, typeof(UIRect), typeof(float), typeof(int), typeof(float), typeof(int), typeof(float), typeof(int), typeof(float), typeof(int)))
+			{
+				UIRect obj = (UIRect)ToLua.ToObject(L, 1);
+				float arg0 = (float)LuaDLL.lua_tonumber(L, 2);
+				int arg1 = (int)LuaDLL.lua_tonumber(L, 3);
+				float arg2 = (float)LuaDLL.lua_tonumber(L, 4);
+				int arg3 = (int)LuaDLL.lua_tonumber(L, 5);
+				float arg4 = (float)LuaDLL.lua_tonumber(L, 6);
+				int arg5 = (int)LuaDLL.lua_tonumber(L, 7);
+				float arg6 = (float)LuaDLL.lua_tonumber(L, 8);
+				int arg7 = (int)LuaDLL.lua_tonumber(L, 9);
+				obj.SetAnchor(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+				return 0;
+			}
+			else if (count == 10 && TypeChecker.CheckTypes(L, 1, typeof(UIRect), typeof(UnityEngine.GameObject), typeof(float), typeof(int), typeof(float), typeof(int), typeof(float), typeof(int), typeof(float), typeof(int)))
+			{
+				UIRect obj = (UIRect)ToLua.ToObject(L, 1);
+				UnityEngine.GameObject arg0 = (UnityEngine.GameObject)ToLua.ToObject(L, 2);
+				float arg1 = (float)LuaDLL.lua_tonumber(L, 3);
+				int arg2 = (int)LuaDLL.lua_tonumber(L, 4);
+				float arg3 = (float)LuaDLL.lua_tonumber(L, 5);
+				int arg4 = (int)LuaDLL.lua_tonumber(L, 6);
+				float arg5 = (float)LuaDLL.lua_tonumber(L, 7);
+				int arg6 = (int)LuaDLL.lua_tonumber(L, 8);
+				float arg7 = (float)LuaDLL.lua_tonumber(L, 9);
+				int arg8 = (int)LuaDLL.lua_tonumber(L, 10);
+				obj.SetAnchor(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+				return 0;
+			}
 			else
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to method: UIRect.SetAnchor");
 			}
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SetScreenRect(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 5);
+			UIRect obj = (UIRect)ToLua.CheckObject(L, 1, typeof(UIRect));
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			int arg1 = (int)LuaDLL.luaL_checknumber(L, 3);
+			int arg2 = (int)LuaDLL.luaL_checknumber(L, 4);
+			int arg3 = (int)LuaDLL.luaL_checknumber(L, 5);
+			obj.SetScreenRect(arg0, arg1, arg2, arg3);
+			return 0;
 		}
 		catch(Exception e)
 		{

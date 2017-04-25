@@ -7,6 +7,13 @@ public class UIKeyNavigationWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(UIKeyNavigation), typeof(UnityEngine.MonoBehaviour));
+		L.RegFunction("GetLeft", GetLeft);
+		L.RegFunction("GetRight", GetRight);
+		L.RegFunction("GetUp", GetUp);
+		L.RegFunction("GetDown", GetDown);
+		L.RegFunction("Get", Get);
+		L.RegFunction("OnNavigate", OnNavigate);
+		L.RegFunction("OnKey", OnKey);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("list", get_list, set_list);
@@ -16,8 +23,134 @@ public class UIKeyNavigationWrap
 		L.RegVar("onLeft", get_onLeft, set_onLeft);
 		L.RegVar("onRight", get_onRight, set_onRight);
 		L.RegVar("onClick", get_onClick, set_onClick);
+		L.RegVar("onTab", get_onTab, set_onTab);
 		L.RegVar("startsSelected", get_startsSelected, set_startsSelected);
+		L.RegVar("mLastFrame", get_mLastFrame, set_mLastFrame);
+		L.RegVar("current", get_current, null);
+		L.RegVar("isColliderEnabled", get_isColliderEnabled, null);
 		L.EndClass();
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetLeft(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UIKeyNavigation obj = (UIKeyNavigation)ToLua.CheckObject(L, 1, typeof(UIKeyNavigation));
+			UnityEngine.GameObject o = obj.GetLeft();
+			ToLua.Push(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetRight(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UIKeyNavigation obj = (UIKeyNavigation)ToLua.CheckObject(L, 1, typeof(UIKeyNavigation));
+			UnityEngine.GameObject o = obj.GetRight();
+			ToLua.Push(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetUp(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UIKeyNavigation obj = (UIKeyNavigation)ToLua.CheckObject(L, 1, typeof(UIKeyNavigation));
+			UnityEngine.GameObject o = obj.GetUp();
+			ToLua.Push(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetDown(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UIKeyNavigation obj = (UIKeyNavigation)ToLua.CheckObject(L, 1, typeof(UIKeyNavigation));
+			UnityEngine.GameObject o = obj.GetDown();
+			ToLua.Push(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Get(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 4);
+			UIKeyNavigation obj = (UIKeyNavigation)ToLua.CheckObject(L, 1, typeof(UIKeyNavigation));
+			UnityEngine.Vector3 arg0 = ToLua.ToVector3(L, 2);
+			float arg1 = (float)LuaDLL.luaL_checknumber(L, 3);
+			float arg2 = (float)LuaDLL.luaL_checknumber(L, 4);
+			UnityEngine.GameObject o = obj.Get(arg0, arg1, arg2);
+			ToLua.Push(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int OnNavigate(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			UIKeyNavigation obj = (UIKeyNavigation)ToLua.CheckObject(L, 1, typeof(UIKeyNavigation));
+			UnityEngine.KeyCode arg0 = (UnityEngine.KeyCode)ToLua.CheckObject(L, 2, typeof(UnityEngine.KeyCode));
+			obj.OnNavigate(arg0);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int OnKey(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			UIKeyNavigation obj = (UIKeyNavigation)ToLua.CheckObject(L, 1, typeof(UIKeyNavigation));
+			UnityEngine.KeyCode arg0 = (UnityEngine.KeyCode)ToLua.CheckObject(L, 2, typeof(UnityEngine.KeyCode));
+			obj.OnKey(arg0);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -167,6 +300,25 @@ public class UIKeyNavigationWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_onTab(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIKeyNavigation obj = (UIKeyNavigation)o;
+			UnityEngine.GameObject ret = obj.onTab;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index onTab on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_startsSelected(IntPtr L)
 	{
 		object o = null;
@@ -182,6 +334,53 @@ public class UIKeyNavigationWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index startsSelected on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_mLastFrame(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushinteger(L, UIKeyNavigation.mLastFrame);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_current(IntPtr L)
+	{
+		try
+		{
+			ToLua.Push(L, UIKeyNavigation.current);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_isColliderEnabled(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIKeyNavigation obj = (UIKeyNavigation)o;
+			bool ret = obj.isColliderEnabled;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index isColliderEnabled on a nil value" : e.Message);
 		}
 	}
 
@@ -315,6 +514,25 @@ public class UIKeyNavigationWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_onTab(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIKeyNavigation obj = (UIKeyNavigation)o;
+			UnityEngine.GameObject arg0 = (UnityEngine.GameObject)ToLua.CheckUnityObject(L, 2, typeof(UnityEngine.GameObject));
+			obj.onTab = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index onTab on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_startsSelected(IntPtr L)
 	{
 		object o = null;
@@ -330,6 +548,21 @@ public class UIKeyNavigationWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index startsSelected on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_mLastFrame(IntPtr L)
+	{
+		try
+		{
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			UIKeyNavigation.mLastFrame = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
 		}
 	}
 }

@@ -20,17 +20,20 @@ public class UIScrollViewWrap
 		L.RegFunction("Press", Press);
 		L.RegFunction("Drag", Drag);
 		L.RegFunction("Scroll", Scroll);
+		L.RegFunction("OnPan", OnPan);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("list", get_list, set_list);
 		L.RegVar("movement", get_movement, set_movement);
 		L.RegVar("dragEffect", get_dragEffect, set_dragEffect);
 		L.RegVar("restrictWithinPanel", get_restrictWithinPanel, set_restrictWithinPanel);
+		L.RegVar("constrainOnDrag", get_constrainOnDrag, set_constrainOnDrag);
 		L.RegVar("disableDragIfFits", get_disableDragIfFits, set_disableDragIfFits);
 		L.RegVar("smoothDragStart", get_smoothDragStart, set_smoothDragStart);
 		L.RegVar("iOSDragEmulation", get_iOSDragEmulation, set_iOSDragEmulation);
 		L.RegVar("scrollWheelFactor", get_scrollWheelFactor, set_scrollWheelFactor);
 		L.RegVar("momentumAmount", get_momentumAmount, set_momentumAmount);
+		L.RegVar("dampenStrength", get_dampenStrength, set_dampenStrength);
 		L.RegVar("horizontalScrollBar", get_horizontalScrollBar, set_horizontalScrollBar);
 		L.RegVar("verticalScrollBar", get_verticalScrollBar, set_verticalScrollBar);
 		L.RegVar("showScrollBars", get_showScrollBars, set_showScrollBars);
@@ -304,6 +307,23 @@ public class UIScrollViewWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int OnPan(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			UIScrollView obj = (UIScrollView)ToLua.CheckObject(L, 1, typeof(UIScrollView));
+			UnityEngine.Vector2 arg0 = ToLua.ToVector2(L, 2);
+			obj.OnPan(arg0);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int op_Equality(IntPtr L)
 	{
 		try
@@ -389,6 +409,25 @@ public class UIScrollViewWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index restrictWithinPanel on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_constrainOnDrag(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIScrollView obj = (UIScrollView)o;
+			bool ret = obj.constrainOnDrag;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index constrainOnDrag on a nil value" : e.Message);
 		}
 	}
 
@@ -484,6 +523,25 @@ public class UIScrollViewWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index momentumAmount on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_dampenStrength(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIScrollView obj = (UIScrollView)o;
+			float ret = obj.dampenStrength;
+			LuaDLL.lua_pushnumber(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index dampenStrength on a nil value" : e.Message);
 		}
 	}
 
@@ -902,6 +960,25 @@ public class UIScrollViewWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_constrainOnDrag(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIScrollView obj = (UIScrollView)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.constrainOnDrag = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index constrainOnDrag on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_disableDragIfFits(IntPtr L)
 	{
 		object o = null;
@@ -993,6 +1070,25 @@ public class UIScrollViewWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index momentumAmount on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_dampenStrength(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIScrollView obj = (UIScrollView)o;
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
+			obj.dampenStrength = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index dampenStrength on a nil value" : e.Message);
 		}
 	}
 

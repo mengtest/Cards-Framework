@@ -9,7 +9,6 @@ public class UIWrapContentWrap
 		L.BeginClass(typeof(UIWrapContent), typeof(UnityEngine.MonoBehaviour));
 		L.RegFunction("SortBasedOnScrollMovement", SortBasedOnScrollMovement);
 		L.RegFunction("SortAlphabetically", SortAlphabetically);
-		L.RegFunction("ResetChildPositions", ResetChildPositions);
 		L.RegFunction("WrapContent", WrapContent);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
@@ -17,6 +16,7 @@ public class UIWrapContentWrap
 		L.RegVar("cullContent", get_cullContent, set_cullContent);
 		L.RegVar("minIndex", get_minIndex, set_minIndex);
 		L.RegVar("maxIndex", get_maxIndex, set_maxIndex);
+		L.RegVar("hideInactive", get_hideInactive, set_hideInactive);
 		L.RegVar("onInitializeItem", get_onInitializeItem, set_onInitializeItem);
 		L.RegFunction("OnInitializeItem", UIWrapContent_OnInitializeItem);
 		L.EndClass();
@@ -46,22 +46,6 @@ public class UIWrapContentWrap
 			ToLua.CheckArgsCount(L, 1);
 			UIWrapContent obj = (UIWrapContent)ToLua.CheckObject(L, 1, typeof(UIWrapContent));
 			obj.SortAlphabetically();
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int ResetChildPositions(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 1);
-			UIWrapContent obj = (UIWrapContent)ToLua.CheckObject(L, 1, typeof(UIWrapContent));
-			obj.ResetChildPositions();
 			return 0;
 		}
 		catch(Exception e)
@@ -181,6 +165,25 @@ public class UIWrapContentWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_hideInactive(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIWrapContent obj = (UIWrapContent)o;
+			bool ret = obj.hideInactive;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index hideInactive on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_onInitializeItem(IntPtr L)
 	{
 		object o = null;
@@ -272,6 +275,25 @@ public class UIWrapContentWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index maxIndex on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_hideInactive(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIWrapContent obj = (UIWrapContent)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.hideInactive = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index hideInactive on a nil value" : e.Message);
 		}
 	}
 

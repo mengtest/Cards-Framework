@@ -8,6 +8,7 @@ public class UIToggleWrap
 	{
 		L.BeginClass(typeof(UIToggle), typeof(UIWidgetContainer));
 		L.RegFunction("GetActiveToggle", GetActiveToggle);
+		L.RegFunction("Start", Start);
 		L.RegFunction("Set", Set);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
@@ -15,13 +16,17 @@ public class UIToggleWrap
 		L.RegVar("current", get_current, set_current);
 		L.RegVar("group", get_group, set_group);
 		L.RegVar("activeSprite", get_activeSprite, set_activeSprite);
+		L.RegVar("invertSpriteState", get_invertSpriteState, set_invertSpriteState);
 		L.RegVar("activeAnimation", get_activeAnimation, set_activeAnimation);
+		L.RegVar("animator", get_animator, set_animator);
+		L.RegVar("tween", get_tween, set_tween);
 		L.RegVar("startsActive", get_startsActive, set_startsActive);
 		L.RegVar("instantTween", get_instantTween, set_instantTween);
 		L.RegVar("optionCanBeNone", get_optionCanBeNone, set_optionCanBeNone);
 		L.RegVar("onChange", get_onChange, set_onChange);
 		L.RegVar("validator", get_validator, set_validator);
 		L.RegVar("value", get_value, set_value);
+		L.RegVar("isColliderEnabled", get_isColliderEnabled, null);
 		L.RegFunction("Validate", UIToggle_Validate);
 		L.EndClass();
 	}
@@ -44,14 +49,31 @@ public class UIToggleWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Start(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UIToggle obj = (UIToggle)ToLua.CheckObject(L, 1, typeof(UIToggle));
+			obj.Start();
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int Set(IntPtr L)
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 2);
+			ToLua.CheckArgsCount(L, 3);
 			UIToggle obj = (UIToggle)ToLua.CheckObject(L, 1, typeof(UIToggle));
 			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
-			obj.Set(arg0);
+			bool arg1 = LuaDLL.luaL_checkboolean(L, 3);
+			obj.Set(arg0, arg1);
 			return 0;
 		}
 		catch(Exception e)
@@ -145,6 +167,25 @@ public class UIToggleWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_invertSpriteState(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIToggle obj = (UIToggle)o;
+			bool ret = obj.invertSpriteState;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index invertSpriteState on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_activeAnimation(IntPtr L)
 	{
 		object o = null;
@@ -160,6 +201,44 @@ public class UIToggleWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index activeAnimation on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_animator(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIToggle obj = (UIToggle)o;
+			UnityEngine.Animator ret = obj.animator;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index animator on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_tween(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIToggle obj = (UIToggle)o;
+			UITweener ret = obj.tween;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index tween on a nil value" : e.Message);
 		}
 	}
 
@@ -278,6 +357,25 @@ public class UIToggleWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_isColliderEnabled(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIToggle obj = (UIToggle)o;
+			bool ret = obj.isColliderEnabled;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index isColliderEnabled on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_list(IntPtr L)
 	{
 		try
@@ -346,6 +444,25 @@ public class UIToggleWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_invertSpriteState(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIToggle obj = (UIToggle)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.invertSpriteState = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index invertSpriteState on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_activeAnimation(IntPtr L)
 	{
 		object o = null;
@@ -361,6 +478,44 @@ public class UIToggleWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index activeAnimation on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_animator(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIToggle obj = (UIToggle)o;
+			UnityEngine.Animator arg0 = (UnityEngine.Animator)ToLua.CheckUnityObject(L, 2, typeof(UnityEngine.Animator));
+			obj.animator = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index animator on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_tween(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIToggle obj = (UIToggle)o;
+			UITweener arg0 = (UITweener)ToLua.CheckUnityObject(L, 2, typeof(UITweener));
+			obj.tween = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index tween on a nil value" : e.Message);
 		}
 	}
 

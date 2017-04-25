@@ -7,7 +7,10 @@ public class UIProgressBarWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(UIProgressBar), typeof(UIWidgetContainer));
+		L.RegFunction("Set", Set);
+		L.RegFunction("Start", Start);
 		L.RegFunction("ForceUpdate", ForceUpdate);
+		L.RegFunction("OnPan", OnPan);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("current", get_current, set_current);
@@ -27,6 +30,40 @@ public class UIProgressBarWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Set(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			UIProgressBar obj = (UIProgressBar)ToLua.CheckObject(L, 1, typeof(UIProgressBar));
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
+			bool arg1 = LuaDLL.luaL_checkboolean(L, 3);
+			obj.Set(arg0, arg1);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Start(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UIProgressBar obj = (UIProgressBar)ToLua.CheckObject(L, 1, typeof(UIProgressBar));
+			obj.Start();
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int ForceUpdate(IntPtr L)
 	{
 		try
@@ -34,6 +71,23 @@ public class UIProgressBarWrap
 			ToLua.CheckArgsCount(L, 1);
 			UIProgressBar obj = (UIProgressBar)ToLua.CheckObject(L, 1, typeof(UIProgressBar));
 			obj.ForceUpdate();
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int OnPan(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			UIProgressBar obj = (UIProgressBar)ToLua.CheckObject(L, 1, typeof(UIProgressBar));
+			UnityEngine.Vector2 arg0 = ToLua.ToVector2(L, 2);
+			obj.OnPan(arg0);
 			return 0;
 		}
 		catch(Exception e)

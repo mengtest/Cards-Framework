@@ -7,10 +7,28 @@ public class UIDragScrollViewWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(UIDragScrollView), typeof(UnityEngine.MonoBehaviour));
+		L.RegFunction("OnPan", OnPan);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("scrollView", get_scrollView, set_scrollView);
 		L.EndClass();
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int OnPan(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			UIDragScrollView obj = (UIDragScrollView)ToLua.CheckObject(L, 1, typeof(UIDragScrollView));
+			UnityEngine.Vector2 arg0 = ToLua.ToVector2(L, 2);
+			obj.OnPan(arg0);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

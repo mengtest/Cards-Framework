@@ -140,10 +140,6 @@ public static class CustomSettings
          _GT(typeof(Helper)),
          _GT(typeof(UIHelper)),
 
-         _GT(typeof(SDKManager)),
-         _GT(typeof(AndroidAdapter)),
-         _GT(typeof(iOSAdapter)),
-
          _GT(typeof(Constants)),
 
          _GT(typeof(TipsDialog)),
@@ -163,7 +159,6 @@ public static class CustomSettings
          _GT(typeof(UIButtonColor)),
          _GT(typeof(UIButtonKeys)),
          _GT(typeof(UIButtonMessage)),
-         _GT(typeof(UIButtonMessageExtended)),
          _GT(typeof(UIButtonOffset)),
          _GT(typeof(UIButtonRotation)),
          _GT(typeof(UIButtonScale)),

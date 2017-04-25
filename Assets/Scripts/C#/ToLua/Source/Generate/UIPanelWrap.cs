@@ -18,6 +18,7 @@ public class UIPanelWrap
 		L.RegFunction("SetDirty", SetDirty);
 		L.RegFunction("ParentHasChanged", ParentHasChanged);
 		L.RegFunction("SortWidgets", SortWidgets);
+		L.RegFunction("FillDrawCall", FillDrawCall);
 		L.RegFunction("FindDrawCall", FindDrawCall);
 		L.RegFunction("AddWidget", AddWidget);
 		L.RegFunction("RemoveWidget", RemoveWidget);
@@ -45,6 +46,7 @@ public class UIPanelWrap
 		L.RegVar("worldToLocal", get_worldToLocal, set_worldToLocal);
 		L.RegVar("drawCallClipRange", get_drawCallClipRange, set_drawCallClipRange);
 		L.RegVar("onClipMove", get_onClipMove, set_onClipMove);
+		L.RegVar("sortingLayerName", get_sortingLayerName, set_sortingLayerName);
 		L.RegVar("nextUnusedDepth", get_nextUnusedDepth, null);
 		L.RegVar("canBeAnchored", get_canBeAnchored, null);
 		L.RegVar("alpha", get_alpha, set_alpha);
@@ -283,6 +285,24 @@ public class UIPanelWrap
 			UIPanel obj = (UIPanel)ToLua.CheckObject(L, 1, typeof(UIPanel));
 			obj.SortWidgets();
 			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int FillDrawCall(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			UIPanel obj = (UIPanel)ToLua.CheckObject(L, 1, typeof(UIPanel));
+			UIDrawCall arg0 = (UIDrawCall)ToLua.CheckUnityObject(L, 2, typeof(UIDrawCall));
+			bool o = obj.FillDrawCall(arg0);
+			LuaDLL.lua_pushboolean(L, o);
+			return 1;
 		}
 		catch(Exception e)
 		{
@@ -805,6 +825,25 @@ public class UIPanelWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index onClipMove on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_sortingLayerName(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIPanel obj = (UIPanel)o;
+			string ret = obj.sortingLayerName;
+			LuaDLL.lua_pushstring(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index sortingLayerName on a nil value" : e.Message);
 		}
 	}
 
@@ -1542,6 +1581,25 @@ public class UIPanelWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index onClipMove on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_sortingLayerName(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIPanel obj = (UIPanel)o;
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.sortingLayerName = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index sortingLayerName on a nil value" : e.Message);
 		}
 	}
 

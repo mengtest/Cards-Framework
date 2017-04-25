@@ -16,6 +16,7 @@ public class UI2DSpriteWrap
 		L.RegVar("material", get_material, set_material);
 		L.RegVar("shader", get_shader, set_shader);
 		L.RegVar("mainTexture", get_mainTexture, null);
+		L.RegVar("fixedAspect", get_fixedAspect, set_fixedAspect);
 		L.RegVar("premultipliedAlpha", get_premultipliedAlpha, null);
 		L.RegVar("pixelSize", get_pixelSize, null);
 		L.RegVar("drawingDimensions", get_drawingDimensions, null);
@@ -48,7 +49,7 @@ public class UI2DSpriteWrap
 			UI2DSprite obj = (UI2DSprite)ToLua.CheckObject(L, 1, typeof(UI2DSprite));
 			BetterList<UnityEngine.Vector3> arg0 = (BetterList<UnityEngine.Vector3>)ToLua.CheckObject(L, 2, typeof(BetterList<UnityEngine.Vector3>));
 			BetterList<UnityEngine.Vector2> arg1 = (BetterList<UnityEngine.Vector2>)ToLua.CheckObject(L, 3, typeof(BetterList<UnityEngine.Vector2>));
-			BetterList<UnityEngine.Color32> arg2 = (BetterList<UnityEngine.Color32>)ToLua.CheckObject(L, 4, typeof(BetterList<UnityEngine.Color32>));
+			BetterList<UnityEngine.Color> arg2 = (BetterList<UnityEngine.Color>)ToLua.CheckObject(L, 4, typeof(BetterList<UnityEngine.Color>));
 			obj.OnFill(arg0, arg1, arg2);
 			return 0;
 		}
@@ -168,6 +169,25 @@ public class UI2DSpriteWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index mainTexture on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_fixedAspect(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UI2DSprite obj = (UI2DSprite)o;
+			bool ret = obj.fixedAspect;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index fixedAspect on a nil value" : e.Message);
 		}
 	}
 
@@ -320,6 +340,25 @@ public class UI2DSpriteWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index shader on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_fixedAspect(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UI2DSprite obj = (UI2DSprite)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.fixedAspect = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index fixedAspect on a nil value" : e.Message);
 		}
 	}
 

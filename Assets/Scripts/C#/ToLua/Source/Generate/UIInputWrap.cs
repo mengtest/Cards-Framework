@@ -7,7 +7,9 @@ public class UIInputWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(UIInput), typeof(UnityEngine.MonoBehaviour));
+		L.RegFunction("Set", Set);
 		L.RegFunction("Validate", Validate);
+		L.RegFunction("Start", Start);
 		L.RegFunction("Submit", Submit);
 		L.RegFunction("UpdateLabel", UpdateLabel);
 		L.RegFunction("RemoveFocus", RemoveFocus);
@@ -33,6 +35,7 @@ public class UIInputWrap
 		L.RegVar("onChange", get_onChange, set_onChange);
 		L.RegVar("onValidate", get_onValidate, set_onValidate);
 		L.RegVar("defaultText", get_defaultText, set_defaultText);
+		L.RegVar("defaultColor", get_defaultColor, set_defaultColor);
 		L.RegVar("inputShouldBeHidden", get_inputShouldBeHidden, null);
 		L.RegVar("value", get_value, set_value);
 		L.RegVar("isSelected", get_isSelected, set_isSelected);
@@ -42,6 +45,24 @@ public class UIInputWrap
 		L.RegVar("caret", get_caret, null);
 		L.RegFunction("OnValidate", UIInput_OnValidate);
 		L.EndClass();
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Set(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			UIInput obj = (UIInput)ToLua.CheckObject(L, 1, typeof(UIInput));
+			string arg0 = ToLua.CheckString(L, 2);
+			bool arg1 = LuaDLL.luaL_checkboolean(L, 3);
+			obj.Set(arg0, arg1);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -55,6 +76,22 @@ public class UIInputWrap
 			string o = obj.Validate(arg0);
 			LuaDLL.lua_pushstring(L, o);
 			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Start(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UIInput obj = (UIInput)ToLua.CheckObject(L, 1, typeof(UIInput));
+			obj.Start();
+			return 0;
 		}
 		catch(Exception e)
 		{
@@ -489,6 +526,25 @@ public class UIInputWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index defaultText on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_defaultColor(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIInput obj = (UIInput)o;
+			UnityEngine.Color ret = obj.defaultColor;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index defaultColor on a nil value" : e.Message);
 		}
 	}
 
@@ -968,6 +1024,25 @@ public class UIInputWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index defaultText on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_defaultColor(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIInput obj = (UIInput)o;
+			UnityEngine.Color arg0 = ToLua.ToColor(L, 2);
+			obj.defaultColor = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index defaultColor on a nil value" : e.Message);
 		}
 	}
 

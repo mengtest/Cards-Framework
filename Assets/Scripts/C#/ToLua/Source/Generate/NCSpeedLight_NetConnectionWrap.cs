@@ -22,7 +22,7 @@ public class NCSpeedLight_NetConnectionWrap
 		L.RegVar("OnConnected", get_OnConnected, set_OnConnected);
 		L.RegVar("OnDisconnected", get_OnDisconnected, set_OnDisconnected);
 		L.RegVar("OnReconnected", get_OnReconnected, set_OnReconnected);
-		L.RegVar("OnErrorOccupied", get_OnErrorOccupied, set_OnErrorOccupied);
+		L.RegVar("OnErrorOccurred", get_OnErrorOccurred, set_OnErrorOccurred);
 		L.RegVar("IsConnected", get_IsConnected, null);
 		L.RegFunction("StatusDelegate", NCSpeedLight_NetConnection_StatusDelegate);
 		L.EndClass();
@@ -343,7 +343,7 @@ public class NCSpeedLight_NetConnectionWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_OnErrorOccupied(IntPtr L)
+	static int get_OnErrorOccurred(IntPtr L)
 	{
 		object o = null;
 
@@ -351,13 +351,13 @@ public class NCSpeedLight_NetConnectionWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			NCSpeedLight.NetConnection obj = (NCSpeedLight.NetConnection)o;
-			NCSpeedLight.NetConnection.StatusDelegate ret = obj.OnErrorOccupied;
+			NCSpeedLight.NetConnection.StatusDelegate ret = obj.OnErrorOccurred;
 			ToLua.Push(L, ret);
 			return 1;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnErrorOccupied on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnErrorOccurred on a nil value" : e.Message);
 		}
 	}
 
@@ -588,7 +588,7 @@ public class NCSpeedLight_NetConnectionWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_OnErrorOccupied(IntPtr L)
+	static int set_OnErrorOccurred(IntPtr L)
 	{
 		object o = null;
 
@@ -609,12 +609,12 @@ public class NCSpeedLight_NetConnectionWrap
 				arg0 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.NetConnection.StatusDelegate), func) as NCSpeedLight.NetConnection.StatusDelegate;
 			}
 
-			obj.OnErrorOccupied = arg0;
+			obj.OnErrorOccurred = arg0;
 			return 0;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnErrorOccupied on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnErrorOccurred on a nil value" : e.Message);
 		}
 	}
 

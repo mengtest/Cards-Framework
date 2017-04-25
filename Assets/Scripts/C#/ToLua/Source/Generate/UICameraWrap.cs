@@ -8,18 +8,18 @@ public class UICameraWrap
 	{
 		L.BeginClass(typeof(UICamera), typeof(UnityEngine.MonoBehaviour));
 		L.RegFunction("IsPressed", IsPressed);
+		L.RegFunction("CountInputSources", CountInputSources);
 		L.RegFunction("Raycast", Raycast);
 		L.RegFunction("IsHighlighted", IsHighlighted);
 		L.RegFunction("FindCameraForLayer", FindCameraForLayer);
 		L.RegFunction("Notify", Notify);
-		L.RegFunction("GetMouse", GetMouse);
-		L.RegFunction("GetTouch", GetTouch);
-		L.RegFunction("RemoveTouch", RemoveTouch);
 		L.RegFunction("ProcessMouse", ProcessMouse);
 		L.RegFunction("ProcessTouches", ProcessTouches);
 		L.RegFunction("ProcessOthers", ProcessOthers);
 		L.RegFunction("ProcessTouch", ProcessTouch);
+		L.RegFunction("CancelNextTooltip", CancelNextTooltip);
 		L.RegFunction("ShowTooltip", ShowTooltip);
+		L.RegFunction("HideTooltip", HideTooltip);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("list", get_list, set_list);
@@ -27,10 +27,15 @@ public class UICameraWrap
 		L.RegVar("GetKeyUp", get_GetKeyUp, set_GetKeyUp);
 		L.RegVar("GetKey", get_GetKey, set_GetKey);
 		L.RegVar("GetAxis", get_GetAxis, set_GetAxis);
+		L.RegVar("GetAnyKeyDown", get_GetAnyKeyDown, set_GetAnyKeyDown);
+		L.RegVar("GetMouse", get_GetMouse, set_GetMouse);
+		L.RegVar("GetTouch", get_GetTouch, set_GetTouch);
+		L.RegVar("RemoveTouch", get_RemoveTouch, set_RemoveTouch);
 		L.RegVar("onScreenResize", get_onScreenResize, set_onScreenResize);
 		L.RegVar("eventType", get_eventType, set_eventType);
 		L.RegVar("eventsGoToColliders", get_eventsGoToColliders, set_eventsGoToColliders);
 		L.RegVar("eventReceiverMask", get_eventReceiverMask, set_eventReceiverMask);
+		L.RegVar("processEventsIn", get_processEventsIn, set_processEventsIn);
 		L.RegVar("debug", get_debug, set_debug);
 		L.RegVar("useMouse", get_useMouse, set_useMouse);
 		L.RegVar("useTouch", get_useTouch, set_useTouch);
@@ -39,30 +44,34 @@ public class UICameraWrap
 		L.RegVar("useController", get_useController, set_useController);
 		L.RegVar("stickyTooltip", get_stickyTooltip, set_stickyTooltip);
 		L.RegVar("tooltipDelay", get_tooltipDelay, set_tooltipDelay);
+		L.RegVar("longPressTooltip", get_longPressTooltip, set_longPressTooltip);
 		L.RegVar("mouseDragThreshold", get_mouseDragThreshold, set_mouseDragThreshold);
 		L.RegVar("mouseClickThreshold", get_mouseClickThreshold, set_mouseClickThreshold);
 		L.RegVar("touchDragThreshold", get_touchDragThreshold, set_touchDragThreshold);
 		L.RegVar("touchClickThreshold", get_touchClickThreshold, set_touchClickThreshold);
 		L.RegVar("rangeDistance", get_rangeDistance, set_rangeDistance);
-		L.RegVar("scrollAxisName", get_scrollAxisName, set_scrollAxisName);
-		L.RegVar("verticalAxisName", get_verticalAxisName, set_verticalAxisName);
 		L.RegVar("horizontalAxisName", get_horizontalAxisName, set_horizontalAxisName);
+		L.RegVar("verticalAxisName", get_verticalAxisName, set_verticalAxisName);
+		L.RegVar("horizontalPanAxisName", get_horizontalPanAxisName, set_horizontalPanAxisName);
+		L.RegVar("verticalPanAxisName", get_verticalPanAxisName, set_verticalPanAxisName);
+		L.RegVar("scrollAxisName", get_scrollAxisName, set_scrollAxisName);
+		L.RegVar("commandClick", get_commandClick, set_commandClick);
 		L.RegVar("submitKey0", get_submitKey0, set_submitKey0);
 		L.RegVar("submitKey1", get_submitKey1, set_submitKey1);
 		L.RegVar("cancelKey0", get_cancelKey0, set_cancelKey0);
 		L.RegVar("cancelKey1", get_cancelKey1, set_cancelKey1);
+		L.RegVar("autoHideCursor", get_autoHideCursor, set_autoHideCursor);
 		L.RegVar("onCustomInput", get_onCustomInput, set_onCustomInput);
 		L.RegVar("showTooltips", get_showTooltips, set_showTooltips);
-		L.RegVar("lastTouchPosition", get_lastTouchPosition, set_lastTouchPosition);
+		L.RegVar("ignoreAllEvents", get_ignoreAllEvents, set_ignoreAllEvents);
+		L.RegVar("ignoreControllerInput", get_ignoreControllerInput, set_ignoreControllerInput);
 		L.RegVar("lastWorldPosition", get_lastWorldPosition, set_lastWorldPosition);
 		L.RegVar("lastHit", get_lastHit, set_lastHit);
 		L.RegVar("current", get_current, set_current);
 		L.RegVar("currentCamera", get_currentCamera, set_currentCamera);
-		L.RegVar("currentScheme", get_currentScheme, set_currentScheme);
+		L.RegVar("onSchemeChange", get_onSchemeChange, set_onSchemeChange);
 		L.RegVar("currentTouchID", get_currentTouchID, set_currentTouchID);
-		L.RegVar("currentKey", get_currentKey, set_currentKey);
 		L.RegVar("currentTouch", get_currentTouch, set_currentTouch);
-		L.RegVar("inputHasFocus", get_inputHasFocus, set_inputHasFocus);
 		L.RegVar("fallThrough", get_fallThrough, set_fallThrough);
 		L.RegVar("onClick", get_onClick, set_onClick);
 		L.RegVar("onDoubleClick", get_onDoubleClick, set_onDoubleClick);
@@ -77,28 +86,47 @@ public class UICameraWrap
 		L.RegVar("onDragEnd", get_onDragEnd, set_onDragEnd);
 		L.RegVar("onDrop", get_onDrop, set_onDrop);
 		L.RegVar("onKey", get_onKey, set_onKey);
+		L.RegVar("onNavigate", get_onNavigate, set_onNavigate);
+		L.RegVar("onPan", get_onPan, set_onPan);
 		L.RegVar("onTooltip", get_onTooltip, set_onTooltip);
 		L.RegVar("onMouseMove", get_onMouseMove, set_onMouseMove);
 		L.RegVar("controller", get_controller, set_controller);
+		L.RegVar("activeTouches", get_activeTouches, set_activeTouches);
 		L.RegVar("isDragging", get_isDragging, set_isDragging);
-		L.RegVar("hoveredObject", get_hoveredObject, set_hoveredObject);
+		L.RegVar("GetInputTouchCount", get_GetInputTouchCount, set_GetInputTouchCount);
+		L.RegVar("GetInputTouch", get_GetInputTouch, set_GetInputTouch);
+		L.RegVar("disableController", get_disableController, set_disableController);
+		L.RegVar("lastEventPosition", get_lastEventPosition, set_lastEventPosition);
+		L.RegVar("first", get_first, null);
+		L.RegVar("currentScheme", get_currentScheme, set_currentScheme);
+		L.RegVar("currentKey", get_currentKey, set_currentKey);
 		L.RegVar("currentRay", get_currentRay, null);
+		L.RegVar("inputHasFocus", get_inputHasFocus, null);
 		L.RegVar("cachedCamera", get_cachedCamera, null);
+		L.RegVar("tooltipObject", get_tooltipObject, null);
 		L.RegVar("isOverUI", get_isOverUI, null);
+		L.RegVar("hoveredObject", get_hoveredObject, set_hoveredObject);
+		L.RegVar("controllerNavigationObject", get_controllerNavigationObject, set_controllerNavigationObject);
 		L.RegVar("selectedObject", get_selectedObject, set_selectedObject);
-		L.RegVar("touchCount", get_touchCount, null);
 		L.RegVar("dragCount", get_dragCount, null);
 		L.RegVar("mainCamera", get_mainCamera, null);
 		L.RegVar("eventHandler", get_eventHandler, null);
+		L.RegFunction("GetTouchCallback", UICamera_GetTouchCallback);
+		L.RegFunction("GetTouchCountCallback", UICamera_GetTouchCountCallback);
 		L.RegFunction("MoveDelegate", UICamera_MoveDelegate);
 		L.RegFunction("BoolDelegate", UICamera_BoolDelegate);
+		L.RegFunction("VectorDelegate", UICamera_VectorDelegate);
 		L.RegFunction("KeyCodeDelegate", UICamera_KeyCodeDelegate);
 		L.RegFunction("ObjectDelegate", UICamera_ObjectDelegate);
 		L.RegFunction("VoidDelegate", UICamera_VoidDelegate);
-		L.RegFunction("VectorDelegate", UICamera_VectorDelegate);
 		L.RegFunction("FloatDelegate", UICamera_FloatDelegate);
+		L.RegFunction("OnSchemeChange", UICamera_OnSchemeChange);
 		L.RegFunction("OnCustomInput", UICamera_OnCustomInput);
 		L.RegFunction("OnScreenResize", UICamera_OnScreenResize);
+		L.RegFunction("RemoveTouchDelegate", UICamera_RemoveTouchDelegate);
+		L.RegFunction("GetTouchDelegate", UICamera_GetTouchDelegate);
+		L.RegFunction("GetMouseDelegate", UICamera_GetMouseDelegate);
+		L.RegFunction("GetAnyKeyFunc", UICamera_GetAnyKeyFunc);
 		L.RegFunction("GetAxisFunc", UICamera_GetAxisFunc);
 		L.RegFunction("GetKeyStateFunc", UICamera_GetKeyStateFunc);
 		L.EndClass();
@@ -122,15 +150,45 @@ public class UICameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int CountInputSources(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 0);
+			int o = UICamera.CountInputSources();
+			LuaDLL.lua_pushinteger(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int Raycast(IntPtr L)
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 1);
-			UnityEngine.Vector3 arg0 = ToLua.ToVector3(L, 1);
-			bool o = UICamera.Raycast(arg0);
-			LuaDLL.lua_pushboolean(L, o);
-			return 1;
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 1 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Vector3)))
+			{
+				UnityEngine.Vector3 arg0 = ToLua.ToVector3(L, 1);
+				bool o = UICamera.Raycast(arg0);
+				LuaDLL.lua_pushboolean(L, o);
+				return 1;
+			}
+			else if (count == 1 && TypeChecker.CheckTypes(L, 1, typeof(UICamera.MouseOrTouch)))
+			{
+				UICamera.MouseOrTouch arg0 = (UICamera.MouseOrTouch)ToLua.ToObject(L, 1);
+				UICamera.Raycast(arg0);
+				return 0;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: UICamera.Raycast");
+			}
 		}
 		catch(Exception e)
 		{
@@ -182,56 +240,6 @@ public class UICameraWrap
 			string arg1 = ToLua.CheckString(L, 2);
 			object arg2 = ToLua.ToVarObject(L, 3);
 			UICamera.Notify(arg0, arg1, arg2);
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int GetMouse(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 1);
-			int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
-			UICamera.MouseOrTouch o = UICamera.GetMouse(arg0);
-			ToLua.PushObject(L, o);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int GetTouch(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 1);
-			int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
-			UICamera.MouseOrTouch o = UICamera.GetTouch(arg0);
-			ToLua.PushObject(L, o);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int RemoveTouch(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 1);
-			int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
-			UICamera.RemoveTouch(arg0);
 			return 0;
 		}
 		catch(Exception e)
@@ -307,15 +315,46 @@ public class UICameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int CancelNextTooltip(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 0);
+			UICamera.CancelNextTooltip();
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int ShowTooltip(IntPtr L)
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 2);
-			UICamera obj = (UICamera)ToLua.CheckObject(L, 1, typeof(UICamera));
-			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
-			obj.ShowTooltip(arg0);
-			return 0;
+			ToLua.CheckArgsCount(L, 1);
+			UnityEngine.GameObject arg0 = (UnityEngine.GameObject)ToLua.CheckUnityObject(L, 1, typeof(UnityEngine.GameObject));
+			bool o = UICamera.ShowTooltip(arg0);
+			LuaDLL.lua_pushboolean(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int HideTooltip(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 0);
+			bool o = UICamera.HideTooltip();
+			LuaDLL.lua_pushboolean(L, o);
+			return 1;
 		}
 		catch(Exception e)
 		{
@@ -412,6 +451,62 @@ public class UICameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_GetAnyKeyDown(IntPtr L)
+	{
+		try
+		{
+			ToLua.Push(L, UICamera.GetAnyKeyDown);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_GetMouse(IntPtr L)
+	{
+		try
+		{
+			ToLua.Push(L, UICamera.GetMouse);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_GetTouch(IntPtr L)
+	{
+		try
+		{
+			ToLua.Push(L, UICamera.GetTouch);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_RemoveTouch(IntPtr L)
+	{
+		try
+		{
+			ToLua.Push(L, UICamera.RemoveTouch);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_onScreenResize(IntPtr L)
 	{
 		try
@@ -479,6 +574,25 @@ public class UICameraWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index eventReceiverMask on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_processEventsIn(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UICamera obj = (UICamera)o;
+			UICamera.ProcessEventsIn ret = obj.processEventsIn;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index processEventsIn on a nil value" : e.Message);
 		}
 	}
 
@@ -635,6 +749,25 @@ public class UICameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_longPressTooltip(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UICamera obj = (UICamera)o;
+			bool ret = obj.longPressTooltip;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index longPressTooltip on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_mouseDragThreshold(IntPtr L)
 	{
 		object o = null;
@@ -730,7 +863,7 @@ public class UICameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_scrollAxisName(IntPtr L)
+	static int get_horizontalAxisName(IntPtr L)
 	{
 		object o = null;
 
@@ -738,13 +871,13 @@ public class UICameraWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			UICamera obj = (UICamera)o;
-			string ret = obj.scrollAxisName;
+			string ret = obj.horizontalAxisName;
 			LuaDLL.lua_pushstring(L, ret);
 			return 1;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index scrollAxisName on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index horizontalAxisName on a nil value" : e.Message);
 		}
 	}
 
@@ -768,7 +901,7 @@ public class UICameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_horizontalAxisName(IntPtr L)
+	static int get_horizontalPanAxisName(IntPtr L)
 	{
 		object o = null;
 
@@ -776,13 +909,70 @@ public class UICameraWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			UICamera obj = (UICamera)o;
-			string ret = obj.horizontalAxisName;
+			string ret = obj.horizontalPanAxisName;
 			LuaDLL.lua_pushstring(L, ret);
 			return 1;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index horizontalAxisName on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index horizontalPanAxisName on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_verticalPanAxisName(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UICamera obj = (UICamera)o;
+			string ret = obj.verticalPanAxisName;
+			LuaDLL.lua_pushstring(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index verticalPanAxisName on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_scrollAxisName(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UICamera obj = (UICamera)o;
+			string ret = obj.scrollAxisName;
+			LuaDLL.lua_pushstring(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index scrollAxisName on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_commandClick(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UICamera obj = (UICamera)o;
+			bool ret = obj.commandClick;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index commandClick on a nil value" : e.Message);
 		}
 	}
 
@@ -863,6 +1053,25 @@ public class UICameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_autoHideCursor(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UICamera obj = (UICamera)o;
+			bool ret = obj.autoHideCursor;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index autoHideCursor on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_onCustomInput(IntPtr L)
 	{
 		try
@@ -891,11 +1100,25 @@ public class UICameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_lastTouchPosition(IntPtr L)
+	static int get_ignoreAllEvents(IntPtr L)
 	{
 		try
 		{
-			ToLua.Push(L, UICamera.lastTouchPosition);
+			LuaDLL.lua_pushboolean(L, UICamera.ignoreAllEvents);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_ignoreControllerInput(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushboolean(L, UICamera.ignoreControllerInput);
 			return 1;
 		}
 		catch(Exception e)
@@ -961,11 +1184,11 @@ public class UICameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_currentScheme(IntPtr L)
+	static int get_onSchemeChange(IntPtr L)
 	{
 		try
 		{
-			ToLua.Push(L, UICamera.currentScheme);
+			ToLua.Push(L, UICamera.onSchemeChange);
 			return 1;
 		}
 		catch(Exception e)
@@ -989,39 +1212,11 @@ public class UICameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_currentKey(IntPtr L)
-	{
-		try
-		{
-			ToLua.Push(L, UICamera.currentKey);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_currentTouch(IntPtr L)
 	{
 		try
 		{
 			ToLua.PushObject(L, UICamera.currentTouch);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_inputHasFocus(IntPtr L)
-	{
-		try
-		{
-			LuaDLL.lua_pushboolean(L, UICamera.inputHasFocus);
 			return 1;
 		}
 		catch(Exception e)
@@ -1227,6 +1422,34 @@ public class UICameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_onNavigate(IntPtr L)
+	{
+		try
+		{
+			ToLua.Push(L, UICamera.onNavigate);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_onPan(IntPtr L)
+	{
+		try
+		{
+			ToLua.Push(L, UICamera.onPan);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_onTooltip(IntPtr L)
 	{
 		try
@@ -1269,6 +1492,20 @@ public class UICameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_activeTouches(IntPtr L)
+	{
+		try
+		{
+			ToLua.PushObject(L, UICamera.activeTouches);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_isDragging(IntPtr L)
 	{
 		try
@@ -1283,11 +1520,95 @@ public class UICameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_hoveredObject(IntPtr L)
+	static int get_GetInputTouchCount(IntPtr L)
 	{
 		try
 		{
-			ToLua.Push(L, UICamera.hoveredObject);
+			ToLua.Push(L, UICamera.GetInputTouchCount);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_GetInputTouch(IntPtr L)
+	{
+		try
+		{
+			ToLua.Push(L, UICamera.GetInputTouch);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_disableController(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushboolean(L, UICamera.disableController);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_lastEventPosition(IntPtr L)
+	{
+		try
+		{
+			ToLua.Push(L, UICamera.lastEventPosition);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_first(IntPtr L)
+	{
+		try
+		{
+			ToLua.Push(L, UICamera.first);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_currentScheme(IntPtr L)
+	{
+		try
+		{
+			ToLua.Push(L, UICamera.currentScheme);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_currentKey(IntPtr L)
+	{
+		try
+		{
+			ToLua.Push(L, UICamera.currentKey);
 			return 1;
 		}
 		catch(Exception e)
@@ -1302,6 +1623,20 @@ public class UICameraWrap
 		try
 		{
 			ToLua.Push(L, UICamera.currentRay);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_inputHasFocus(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushboolean(L, UICamera.inputHasFocus);
 			return 1;
 		}
 		catch(Exception e)
@@ -1330,6 +1665,20 @@ public class UICameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_tooltipObject(IntPtr L)
+	{
+		try
+		{
+			ToLua.Push(L, UICamera.tooltipObject);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_isOverUI(IntPtr L)
 	{
 		try
@@ -1344,11 +1693,11 @@ public class UICameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_selectedObject(IntPtr L)
+	static int get_hoveredObject(IntPtr L)
 	{
 		try
 		{
-			ToLua.Push(L, UICamera.selectedObject);
+			ToLua.Push(L, UICamera.hoveredObject);
 			return 1;
 		}
 		catch(Exception e)
@@ -1358,11 +1707,25 @@ public class UICameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_touchCount(IntPtr L)
+	static int get_controllerNavigationObject(IntPtr L)
 	{
 		try
 		{
-			LuaDLL.lua_pushinteger(L, UICamera.touchCount);
+			ToLua.Push(L, UICamera.controllerNavigationObject);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_selectedObject(IntPtr L)
+	{
+		try
+		{
+			ToLua.Push(L, UICamera.selectedObject);
 			return 1;
 		}
 		catch(Exception e)
@@ -1537,6 +1900,114 @@ public class UICameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_GetAnyKeyDown(IntPtr L)
+	{
+		try
+		{
+			UICamera.GetAnyKeyFunc arg0 = null;
+			LuaTypes funcType2 = LuaDLL.lua_type(L, 2);
+
+			if (funcType2 != LuaTypes.LUA_TFUNCTION)
+			{
+				 arg0 = (UICamera.GetAnyKeyFunc)ToLua.CheckObject(L, 2, typeof(UICamera.GetAnyKeyFunc));
+			}
+			else
+			{
+				LuaFunction func = ToLua.ToLuaFunction(L, 2);
+				arg0 = DelegateFactory.CreateDelegate(typeof(UICamera.GetAnyKeyFunc), func) as UICamera.GetAnyKeyFunc;
+			}
+
+			UICamera.GetAnyKeyDown = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_GetMouse(IntPtr L)
+	{
+		try
+		{
+			UICamera.GetMouseDelegate arg0 = null;
+			LuaTypes funcType2 = LuaDLL.lua_type(L, 2);
+
+			if (funcType2 != LuaTypes.LUA_TFUNCTION)
+			{
+				 arg0 = (UICamera.GetMouseDelegate)ToLua.CheckObject(L, 2, typeof(UICamera.GetMouseDelegate));
+			}
+			else
+			{
+				LuaFunction func = ToLua.ToLuaFunction(L, 2);
+				arg0 = DelegateFactory.CreateDelegate(typeof(UICamera.GetMouseDelegate), func) as UICamera.GetMouseDelegate;
+			}
+
+			UICamera.GetMouse = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_GetTouch(IntPtr L)
+	{
+		try
+		{
+			UICamera.GetTouchDelegate arg0 = null;
+			LuaTypes funcType2 = LuaDLL.lua_type(L, 2);
+
+			if (funcType2 != LuaTypes.LUA_TFUNCTION)
+			{
+				 arg0 = (UICamera.GetTouchDelegate)ToLua.CheckObject(L, 2, typeof(UICamera.GetTouchDelegate));
+			}
+			else
+			{
+				LuaFunction func = ToLua.ToLuaFunction(L, 2);
+				arg0 = DelegateFactory.CreateDelegate(typeof(UICamera.GetTouchDelegate), func) as UICamera.GetTouchDelegate;
+			}
+
+			UICamera.GetTouch = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_RemoveTouch(IntPtr L)
+	{
+		try
+		{
+			UICamera.RemoveTouchDelegate arg0 = null;
+			LuaTypes funcType2 = LuaDLL.lua_type(L, 2);
+
+			if (funcType2 != LuaTypes.LUA_TFUNCTION)
+			{
+				 arg0 = (UICamera.RemoveTouchDelegate)ToLua.CheckObject(L, 2, typeof(UICamera.RemoveTouchDelegate));
+			}
+			else
+			{
+				LuaFunction func = ToLua.ToLuaFunction(L, 2);
+				arg0 = DelegateFactory.CreateDelegate(typeof(UICamera.RemoveTouchDelegate), func) as UICamera.RemoveTouchDelegate;
+			}
+
+			UICamera.RemoveTouch = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_onScreenResize(IntPtr L)
 	{
 		try
@@ -1617,6 +2088,25 @@ public class UICameraWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index eventReceiverMask on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_processEventsIn(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UICamera obj = (UICamera)o;
+			UICamera.ProcessEventsIn arg0 = (UICamera.ProcessEventsIn)ToLua.CheckObject(L, 2, typeof(UICamera.ProcessEventsIn));
+			obj.processEventsIn = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index processEventsIn on a nil value" : e.Message);
 		}
 	}
 
@@ -1773,6 +2263,25 @@ public class UICameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_longPressTooltip(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UICamera obj = (UICamera)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.longPressTooltip = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index longPressTooltip on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_mouseDragThreshold(IntPtr L)
 	{
 		object o = null;
@@ -1868,7 +2377,7 @@ public class UICameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_scrollAxisName(IntPtr L)
+	static int set_horizontalAxisName(IntPtr L)
 	{
 		object o = null;
 
@@ -1877,12 +2386,12 @@ public class UICameraWrap
 			o = ToLua.ToObject(L, 1);
 			UICamera obj = (UICamera)o;
 			string arg0 = ToLua.CheckString(L, 2);
-			obj.scrollAxisName = arg0;
+			obj.horizontalAxisName = arg0;
 			return 0;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index scrollAxisName on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index horizontalAxisName on a nil value" : e.Message);
 		}
 	}
 
@@ -1906,7 +2415,7 @@ public class UICameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_horizontalAxisName(IntPtr L)
+	static int set_horizontalPanAxisName(IntPtr L)
 	{
 		object o = null;
 
@@ -1915,12 +2424,69 @@ public class UICameraWrap
 			o = ToLua.ToObject(L, 1);
 			UICamera obj = (UICamera)o;
 			string arg0 = ToLua.CheckString(L, 2);
-			obj.horizontalAxisName = arg0;
+			obj.horizontalPanAxisName = arg0;
 			return 0;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index horizontalAxisName on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index horizontalPanAxisName on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_verticalPanAxisName(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UICamera obj = (UICamera)o;
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.verticalPanAxisName = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index verticalPanAxisName on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_scrollAxisName(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UICamera obj = (UICamera)o;
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.scrollAxisName = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index scrollAxisName on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_commandClick(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UICamera obj = (UICamera)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.commandClick = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index commandClick on a nil value" : e.Message);
 		}
 	}
 
@@ -2001,6 +2567,25 @@ public class UICameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_autoHideCursor(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UICamera obj = (UICamera)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.autoHideCursor = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index autoHideCursor on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_onCustomInput(IntPtr L)
 	{
 		try
@@ -2043,12 +2628,27 @@ public class UICameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_lastTouchPosition(IntPtr L)
+	static int set_ignoreAllEvents(IntPtr L)
 	{
 		try
 		{
-			UnityEngine.Vector2 arg0 = ToLua.ToVector2(L, 2);
-			UICamera.lastTouchPosition = arg0;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			UICamera.ignoreAllEvents = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_ignoreControllerInput(IntPtr L)
+	{
+		try
+		{
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			UICamera.ignoreControllerInput = arg0;
 			return 0;
 		}
 		catch(Exception e)
@@ -2118,12 +2718,24 @@ public class UICameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_currentScheme(IntPtr L)
+	static int set_onSchemeChange(IntPtr L)
 	{
 		try
 		{
-			UICamera.ControlScheme arg0 = (UICamera.ControlScheme)ToLua.CheckObject(L, 2, typeof(UICamera.ControlScheme));
-			UICamera.currentScheme = arg0;
+			UICamera.OnSchemeChange arg0 = null;
+			LuaTypes funcType2 = LuaDLL.lua_type(L, 2);
+
+			if (funcType2 != LuaTypes.LUA_TFUNCTION)
+			{
+				 arg0 = (UICamera.OnSchemeChange)ToLua.CheckObject(L, 2, typeof(UICamera.OnSchemeChange));
+			}
+			else
+			{
+				LuaFunction func = ToLua.ToLuaFunction(L, 2);
+				arg0 = DelegateFactory.CreateDelegate(typeof(UICamera.OnSchemeChange), func) as UICamera.OnSchemeChange;
+			}
+
+			UICamera.onSchemeChange = arg0;
 			return 0;
 		}
 		catch(Exception e)
@@ -2148,42 +2760,12 @@ public class UICameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_currentKey(IntPtr L)
-	{
-		try
-		{
-			UnityEngine.KeyCode arg0 = (UnityEngine.KeyCode)ToLua.CheckObject(L, 2, typeof(UnityEngine.KeyCode));
-			UICamera.currentKey = arg0;
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_currentTouch(IntPtr L)
 	{
 		try
 		{
 			UICamera.MouseOrTouch arg0 = (UICamera.MouseOrTouch)ToLua.CheckObject(L, 2, typeof(UICamera.MouseOrTouch));
 			UICamera.currentTouch = arg0;
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_inputHasFocus(IntPtr L)
-	{
-		try
-		{
-			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
-			UICamera.inputHasFocus = arg0;
 			return 0;
 		}
 		catch(Exception e)
@@ -2559,6 +3141,60 @@ public class UICameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_onNavigate(IntPtr L)
+	{
+		try
+		{
+			UICamera.KeyCodeDelegate arg0 = null;
+			LuaTypes funcType2 = LuaDLL.lua_type(L, 2);
+
+			if (funcType2 != LuaTypes.LUA_TFUNCTION)
+			{
+				 arg0 = (UICamera.KeyCodeDelegate)ToLua.CheckObject(L, 2, typeof(UICamera.KeyCodeDelegate));
+			}
+			else
+			{
+				LuaFunction func = ToLua.ToLuaFunction(L, 2);
+				arg0 = DelegateFactory.CreateDelegate(typeof(UICamera.KeyCodeDelegate), func) as UICamera.KeyCodeDelegate;
+			}
+
+			UICamera.onNavigate = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_onPan(IntPtr L)
+	{
+		try
+		{
+			UICamera.VectorDelegate arg0 = null;
+			LuaTypes funcType2 = LuaDLL.lua_type(L, 2);
+
+			if (funcType2 != LuaTypes.LUA_TFUNCTION)
+			{
+				 arg0 = (UICamera.VectorDelegate)ToLua.CheckObject(L, 2, typeof(UICamera.VectorDelegate));
+			}
+			else
+			{
+				LuaFunction func = ToLua.ToLuaFunction(L, 2);
+				arg0 = DelegateFactory.CreateDelegate(typeof(UICamera.VectorDelegate), func) as UICamera.VectorDelegate;
+			}
+
+			UICamera.onPan = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_onTooltip(IntPtr L)
 	{
 		try
@@ -2628,12 +3264,141 @@ public class UICameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_activeTouches(IntPtr L)
+	{
+		try
+		{
+			System.Collections.Generic.List<UICamera.MouseOrTouch> arg0 = (System.Collections.Generic.List<UICamera.MouseOrTouch>)ToLua.CheckObject(L, 2, typeof(System.Collections.Generic.List<UICamera.MouseOrTouch>));
+			UICamera.activeTouches = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_isDragging(IntPtr L)
 	{
 		try
 		{
 			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
 			UICamera.isDragging = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_GetInputTouchCount(IntPtr L)
+	{
+		try
+		{
+			UICamera.GetTouchCountCallback arg0 = null;
+			LuaTypes funcType2 = LuaDLL.lua_type(L, 2);
+
+			if (funcType2 != LuaTypes.LUA_TFUNCTION)
+			{
+				 arg0 = (UICamera.GetTouchCountCallback)ToLua.CheckObject(L, 2, typeof(UICamera.GetTouchCountCallback));
+			}
+			else
+			{
+				LuaFunction func = ToLua.ToLuaFunction(L, 2);
+				arg0 = DelegateFactory.CreateDelegate(typeof(UICamera.GetTouchCountCallback), func) as UICamera.GetTouchCountCallback;
+			}
+
+			UICamera.GetInputTouchCount = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_GetInputTouch(IntPtr L)
+	{
+		try
+		{
+			UICamera.GetTouchCallback arg0 = null;
+			LuaTypes funcType2 = LuaDLL.lua_type(L, 2);
+
+			if (funcType2 != LuaTypes.LUA_TFUNCTION)
+			{
+				 arg0 = (UICamera.GetTouchCallback)ToLua.CheckObject(L, 2, typeof(UICamera.GetTouchCallback));
+			}
+			else
+			{
+				LuaFunction func = ToLua.ToLuaFunction(L, 2);
+				arg0 = DelegateFactory.CreateDelegate(typeof(UICamera.GetTouchCallback), func) as UICamera.GetTouchCallback;
+			}
+
+			UICamera.GetInputTouch = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_disableController(IntPtr L)
+	{
+		try
+		{
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			UICamera.disableController = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_lastEventPosition(IntPtr L)
+	{
+		try
+		{
+			UnityEngine.Vector2 arg0 = ToLua.ToVector2(L, 2);
+			UICamera.lastEventPosition = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_currentScheme(IntPtr L)
+	{
+		try
+		{
+			UICamera.ControlScheme arg0 = (UICamera.ControlScheme)ToLua.CheckObject(L, 2, typeof(UICamera.ControlScheme));
+			UICamera.currentScheme = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_currentKey(IntPtr L)
+	{
+		try
+		{
+			UnityEngine.KeyCode arg0 = (UnityEngine.KeyCode)ToLua.CheckObject(L, 2, typeof(UnityEngine.KeyCode));
+			UICamera.currentKey = arg0;
 			return 0;
 		}
 		catch(Exception e)
@@ -2658,6 +3423,21 @@ public class UICameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_controllerNavigationObject(IntPtr L)
+	{
+		try
+		{
+			UnityEngine.GameObject arg0 = (UnityEngine.GameObject)ToLua.CheckUnityObject(L, 2, typeof(UnityEngine.GameObject));
+			UICamera.controllerNavigationObject = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_selectedObject(IntPtr L)
 	{
 		try
@@ -2665,6 +3445,60 @@ public class UICameraWrap
 			UnityEngine.GameObject arg0 = (UnityEngine.GameObject)ToLua.CheckUnityObject(L, 2, typeof(UnityEngine.GameObject));
 			UICamera.selectedObject = arg0;
 			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int UICamera_GetTouchCallback(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.GetTouchCallback), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.GetTouchCallback), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int UICamera_GetTouchCountCallback(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.GetTouchCountCallback), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.GetTouchCountCallback), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
 		}
 		catch(Exception e)
 		{
@@ -2716,6 +3550,33 @@ public class UICameraWrap
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
 				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.BoolDelegate), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int UICamera_VectorDelegate(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.VectorDelegate), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.VectorDelegate), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;
@@ -2808,33 +3669,6 @@ public class UICameraWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int UICamera_VectorDelegate(IntPtr L)
-	{
-		try
-		{
-			int count = LuaDLL.lua_gettop(L);
-			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
-
-			if (count == 1)
-			{
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.VectorDelegate), func);
-				ToLua.Push(L, arg1);
-			}
-			else
-			{
-				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.VectorDelegate), func, self);
-				ToLua.Push(L, arg1);
-			}
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int UICamera_FloatDelegate(IntPtr L)
 	{
 		try
@@ -2851,6 +3685,33 @@ public class UICameraWrap
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
 				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.FloatDelegate), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int UICamera_OnSchemeChange(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.OnSchemeChange), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.OnSchemeChange), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;
@@ -2905,6 +3766,114 @@ public class UICameraWrap
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
 				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.OnScreenResize), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int UICamera_RemoveTouchDelegate(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.RemoveTouchDelegate), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.RemoveTouchDelegate), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int UICamera_GetTouchDelegate(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.GetTouchDelegate), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.GetTouchDelegate), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int UICamera_GetMouseDelegate(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.GetMouseDelegate), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.GetMouseDelegate), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int UICamera_GetAnyKeyFunc(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.GetAnyKeyFunc), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.GetAnyKeyFunc), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;

@@ -23,6 +23,7 @@ public class UIEventTriggerWrap
 		L.RegVar("onDragOver", get_onDragOver, set_onDragOver);
 		L.RegVar("onDragOut", get_onDragOut, set_onDragOut);
 		L.RegVar("onDrag", get_onDrag, set_onDrag);
+		L.RegVar("isColliderEnabled", get_isColliderEnabled, null);
 		L.EndClass();
 	}
 
@@ -302,6 +303,25 @@ public class UIEventTriggerWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index onDrag on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_isColliderEnabled(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIEventTrigger obj = (UIEventTrigger)o;
+			bool ret = obj.isColliderEnabled;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index isColliderEnabled on a nil value" : e.Message);
 		}
 	}
 

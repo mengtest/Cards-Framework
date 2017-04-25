@@ -8,6 +8,8 @@ public class UIPlayAnimationWrap
 	{
 		L.BeginClass(typeof(UIPlayAnimation), typeof(UnityEngine.MonoBehaviour));
 		L.RegFunction("Play", Play);
+		L.RegFunction("PlayForward", PlayForward);
+		L.RegFunction("PlayReverse", PlayReverse);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("current", get_current, set_current);
@@ -50,6 +52,38 @@ public class UIPlayAnimationWrap
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to method: UIPlayAnimation.Play");
 			}
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int PlayForward(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UIPlayAnimation obj = (UIPlayAnimation)ToLua.CheckObject(L, 1, typeof(UIPlayAnimation));
+			obj.PlayForward();
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int PlayReverse(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UIPlayAnimation obj = (UIPlayAnimation)ToLua.CheckObject(L, 1, typeof(UIPlayAnimation));
+			obj.PlayReverse();
+			return 0;
 		}
 		catch(Exception e)
 		{

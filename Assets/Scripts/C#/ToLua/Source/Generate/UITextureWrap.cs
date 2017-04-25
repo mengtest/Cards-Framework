@@ -47,7 +47,7 @@ public class UITextureWrap
 			UITexture obj = (UITexture)ToLua.CheckObject(L, 1, typeof(UITexture));
 			BetterList<UnityEngine.Vector3> arg0 = (BetterList<UnityEngine.Vector3>)ToLua.CheckObject(L, 2, typeof(BetterList<UnityEngine.Vector3>));
 			BetterList<UnityEngine.Vector2> arg1 = (BetterList<UnityEngine.Vector2>)ToLua.CheckObject(L, 3, typeof(BetterList<UnityEngine.Vector2>));
-			BetterList<UnityEngine.Color32> arg2 = (BetterList<UnityEngine.Color32>)ToLua.CheckObject(L, 4, typeof(BetterList<UnityEngine.Color32>));
+			BetterList<UnityEngine.Color> arg2 = (BetterList<UnityEngine.Color>)ToLua.CheckObject(L, 4, typeof(BetterList<UnityEngine.Color>));
 			obj.OnFill(arg0, arg1, arg2);
 			return 0;
 		}

@@ -30,6 +30,7 @@ public class NGUIToolsWrap
 		L.RegFunction("AddSprite", AddSprite);
 		L.RegFunction("GetRoot", GetRoot);
 		L.RegFunction("Destroy", Destroy);
+		L.RegFunction("DestroyChildren", DestroyChildren);
 		L.RegFunction("DestroyImmediate", DestroyImmediate);
 		L.RegFunction("Broadcast", Broadcast);
 		L.RegFunction("IsChild", IsChild);
@@ -40,6 +41,7 @@ public class NGUIToolsWrap
 		L.RegFunction("SetLayer", SetLayer);
 		L.RegFunction("Round", Round);
 		L.RegFunction("MakePixelPerfect", MakePixelPerfect);
+		L.RegFunction("FitOnScreen", FitOnScreen);
 		L.RegFunction("Save", Save);
 		L.RegFunction("Load", Load);
 		L.RegFunction("ApplyPMA", ApplyPMA);
@@ -48,6 +50,9 @@ public class NGUIToolsWrap
 		L.RegFunction("GetWorldCorners", GetWorldCorners);
 		L.RegFunction("GetFuncName", GetFuncName);
 		L.RegFunction("ImmediatelyCreateDrawCalls", ImmediatelyCreateDrawCalls);
+		L.RegFunction("KeyToCaption", KeyToCaption);
+		L.RegFunction("GammaToLinearSpace", GammaToLinearSpace);
+		L.RegVar("keys", get_keys, set_keys);
 		L.RegVar("soundVolume", get_soundVolume, set_soundVolume);
 		L.RegVar("fileAccess", get_fileAccess, null);
 		L.RegVar("clipboard", get_clipboard, set_clipboard);
@@ -305,6 +310,32 @@ public class NGUIToolsWrap
 				ToLua.Push(L, o);
 				return 1;
 			}
+			else if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.GameObject), typeof(int)))
+			{
+				UnityEngine.GameObject arg0 = (UnityEngine.GameObject)ToLua.ToObject(L, 1);
+				int arg1 = (int)LuaDLL.lua_tonumber(L, 2);
+				UnityEngine.GameObject o = NGUITools.AddChild(arg0, arg1);
+				ToLua.Push(L, o);
+				return 1;
+			}
+			else if (count == 3 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.GameObject), typeof(UnityEngine.GameObject), typeof(int)))
+			{
+				UnityEngine.GameObject arg0 = (UnityEngine.GameObject)ToLua.ToObject(L, 1);
+				UnityEngine.GameObject arg1 = (UnityEngine.GameObject)ToLua.ToObject(L, 2);
+				int arg2 = (int)LuaDLL.lua_tonumber(L, 3);
+				UnityEngine.GameObject o = NGUITools.AddChild(arg0, arg1, arg2);
+				ToLua.Push(L, o);
+				return 1;
+			}
+			else if (count == 3 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.GameObject), typeof(bool), typeof(int)))
+			{
+				UnityEngine.GameObject arg0 = (UnityEngine.GameObject)ToLua.ToObject(L, 1);
+				bool arg1 = LuaDLL.lua_toboolean(L, 2);
+				int arg2 = (int)LuaDLL.lua_tonumber(L, 3);
+				UnityEngine.GameObject o = NGUITools.AddChild(arg0, arg1, arg2);
+				ToLua.Push(L, o);
+				return 1;
+			}
 			else
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to method: NGUITools.AddChild");
@@ -545,11 +576,12 @@ public class NGUIToolsWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 3);
+			ToLua.CheckArgsCount(L, 4);
 			UnityEngine.GameObject arg0 = (UnityEngine.GameObject)ToLua.CheckUnityObject(L, 1, typeof(UnityEngine.GameObject));
 			UIAtlas arg1 = (UIAtlas)ToLua.CheckUnityObject(L, 2, typeof(UIAtlas));
 			string arg2 = ToLua.CheckString(L, 3);
-			UISprite o = NGUITools.AddSprite(arg0, arg1, arg2);
+			int arg3 = (int)LuaDLL.luaL_checknumber(L, 4);
+			UISprite o = NGUITools.AddSprite(arg0, arg1, arg2, arg3);
 			ToLua.Push(L, o);
 			return 1;
 		}
@@ -584,6 +616,22 @@ public class NGUIToolsWrap
 			ToLua.CheckArgsCount(L, 1);
 			UnityEngine.Object arg0 = (UnityEngine.Object)ToLua.CheckUnityObject(L, 1, typeof(UnityEngine.Object));
 			NGUITools.Destroy(arg0);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int DestroyChildren(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UnityEngine.Transform arg0 = (UnityEngine.Transform)ToLua.CheckUnityObject(L, 1, typeof(UnityEngine.Transform));
+			NGUITools.DestroyChildren(arg0);
 			return 0;
 		}
 		catch(Exception e)
@@ -807,6 +855,52 @@ public class NGUIToolsWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int FitOnScreen(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 3 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Camera), typeof(UnityEngine.Transform), typeof(UnityEngine.Vector3)))
+			{
+				UnityEngine.Camera arg0 = (UnityEngine.Camera)ToLua.ToObject(L, 1);
+				UnityEngine.Transform arg1 = (UnityEngine.Transform)ToLua.ToObject(L, 2);
+				UnityEngine.Vector3 arg2 = ToLua.ToVector3(L, 3);
+				NGUITools.FitOnScreen(arg0, arg1, arg2);
+				return 0;
+			}
+			else if (count == 4 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Camera), typeof(UnityEngine.Transform), typeof(UnityEngine.Transform), typeof(UnityEngine.Vector3)))
+			{
+				UnityEngine.Camera arg0 = (UnityEngine.Camera)ToLua.ToObject(L, 1);
+				UnityEngine.Transform arg1 = (UnityEngine.Transform)ToLua.ToObject(L, 2);
+				UnityEngine.Transform arg2 = (UnityEngine.Transform)ToLua.ToObject(L, 3);
+				UnityEngine.Vector3 arg3 = ToLua.ToVector3(L, 4);
+				NGUITools.FitOnScreen(arg0, arg1, arg2, arg3);
+				return 0;
+			}
+			else if (count == 5 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Camera), typeof(UnityEngine.Transform), typeof(UnityEngine.Transform), typeof(UnityEngine.Vector3), typeof(LuaInterface.LuaOut<UnityEngine.Bounds>)))
+			{
+				UnityEngine.Camera arg0 = (UnityEngine.Camera)ToLua.ToObject(L, 1);
+				UnityEngine.Transform arg1 = (UnityEngine.Transform)ToLua.ToObject(L, 2);
+				UnityEngine.Transform arg2 = (UnityEngine.Transform)ToLua.ToObject(L, 3);
+				UnityEngine.Vector3 arg3 = ToLua.ToVector3(L, 4);
+				UnityEngine.Bounds arg4;
+				NGUITools.FitOnScreen(arg0, arg1, arg2, arg3, out arg4);
+				ToLua.Push(L, arg4);
+				return 1;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: NGUITools.FitOnScreen");
+			}
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int Save(IntPtr L)
 	{
 		try
@@ -1009,6 +1103,54 @@ public class NGUIToolsWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int KeyToCaption(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UnityEngine.KeyCode arg0 = (UnityEngine.KeyCode)ToLua.CheckObject(L, 1, typeof(UnityEngine.KeyCode));
+			string o = NGUITools.KeyToCaption(arg0);
+			LuaDLL.lua_pushstring(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GammaToLinearSpace(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UnityEngine.Color arg0 = ToLua.ToColor(L, 1);
+			UnityEngine.Color o = NGUITools.GammaToLinearSpace(arg0);
+			ToLua.Push(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_keys(IntPtr L)
+	{
+		try
+		{
+			ToLua.Push(L, NGUITools.keys);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_soundVolume(IntPtr L)
 	{
 		try
@@ -1057,6 +1199,21 @@ public class NGUIToolsWrap
 		{
 			ToLua.Push(L, NGUITools.screenSize);
 			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_keys(IntPtr L)
+	{
+		try
+		{
+			UnityEngine.KeyCode[] arg0 = ToLua.CheckObjectArray<UnityEngine.KeyCode>(L, 2);
+			NGUITools.keys = arg0;
+			return 0;
 		}
 		catch(Exception e)
 		{

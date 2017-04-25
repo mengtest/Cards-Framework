@@ -8,6 +8,7 @@ public class UIButtonColorWrap
 	{
 		L.BeginClass(typeof(UIButtonColor), typeof(UIWidgetContainer));
 		L.RegFunction("ResetDefaultColor", ResetDefaultColor);
+		L.RegFunction("CacheDefaultColor", CacheDefaultColor);
 		L.RegFunction("SetState", SetState);
 		L.RegFunction("UpdateColor", UpdateColor);
 		L.RegFunction("__eq", op_Equality);
@@ -31,6 +32,22 @@ public class UIButtonColorWrap
 			ToLua.CheckArgsCount(L, 1);
 			UIButtonColor obj = (UIButtonColor)ToLua.CheckObject(L, 1, typeof(UIButtonColor));
 			obj.ResetDefaultColor();
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int CacheDefaultColor(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UIButtonColor obj = (UIButtonColor)ToLua.CheckObject(L, 1, typeof(UIButtonColor));
+			obj.CacheDefaultColor();
 			return 0;
 		}
 		catch(Exception e)

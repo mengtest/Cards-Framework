@@ -13,6 +13,7 @@ public class UITooltipWrap
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("uiCamera", get_uiCamera, set_uiCamera);
 		L.RegVar("text", get_text, set_text);
+		L.RegVar("tooltipRoot", get_tooltipRoot, set_tooltipRoot);
 		L.RegVar("background", get_background, set_background);
 		L.RegVar("appearSpeed", get_appearSpeed, set_appearSpeed);
 		L.RegVar("scalingTransitions", get_scalingTransitions, set_scalingTransitions);
@@ -104,6 +105,25 @@ public class UITooltipWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index text on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_tooltipRoot(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UITooltip obj = (UITooltip)o;
+			UnityEngine.GameObject ret = obj.tooltipRoot;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index tooltipRoot on a nil value" : e.Message);
 		}
 	}
 
@@ -213,6 +233,25 @@ public class UITooltipWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index text on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_tooltipRoot(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UITooltip obj = (UITooltip)o;
+			UnityEngine.GameObject arg0 = (UnityEngine.GameObject)ToLua.CheckUnityObject(L, 2, typeof(UnityEngine.GameObject));
+			obj.tooltipRoot = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index tooltipRoot on a nil value" : e.Message);
 		}
 	}
 

@@ -19,7 +19,6 @@ public static class LuaBinder
 		UIButtonColorWrap.Register(L);
 		UIButtonKeysWrap.Register(L);
 		UIButtonMessageWrap.Register(L);
-		UIButtonMessageExtendedWrap.Register(L);
 		UIButtonOffsetWrap.Register(L);
 		UIButtonRotationWrap.Register(L);
 		UIButtonScaleWrap.Register(L);
@@ -176,9 +175,6 @@ public static class LuaBinder
 		NCSpeedLight_NetConnectionWrap.Register(L);
 		NCSpeedLight_HelperWrap.Register(L);
 		NCSpeedLight_UIHelperWrap.Register(L);
-		NCSpeedLight_SDKManagerWrap.Register(L);
-		NCSpeedLight_AndroidAdapterWrap.Register(L);
-		NCSpeedLight_iOSAdapterWrap.Register(L);
 		NCSpeedLight_ConstantsWrap.Register(L);
 		NCSpeedLight_TipsDialogWrap.Register(L);
 		NCSpeedLight_InvisiableOnTweenFinishWrap.Register(L);
@@ -278,8 +274,13 @@ public static class LuaBinder
 		L.BeginModule("UICamera");
 		L.RegFunction("GetKeyStateFunc", UICamera_GetKeyStateFunc);
 		L.RegFunction("GetAxisFunc", UICamera_GetAxisFunc);
+		L.RegFunction("GetAnyKeyFunc", UICamera_GetAnyKeyFunc);
+		L.RegFunction("GetMouseDelegate", UICamera_GetMouseDelegate);
+		L.RegFunction("GetTouchDelegate", UICamera_GetTouchDelegate);
+		L.RegFunction("RemoveTouchDelegate", UICamera_RemoveTouchDelegate);
 		L.RegFunction("OnScreenResize", UICamera_OnScreenResize);
 		L.RegFunction("OnCustomInput", UICamera_OnCustomInput);
+		L.RegFunction("OnSchemeChange", UICamera_OnSchemeChange);
 		L.RegFunction("VoidDelegate", UICamera_VoidDelegate);
 		L.RegFunction("BoolDelegate", UICamera_BoolDelegate);
 		L.RegFunction("FloatDelegate", UICamera_FloatDelegate);
@@ -287,9 +288,14 @@ public static class LuaBinder
 		L.RegFunction("ObjectDelegate", UICamera_ObjectDelegate);
 		L.RegFunction("KeyCodeDelegate", UICamera_KeyCodeDelegate);
 		L.RegFunction("MoveDelegate", UICamera_MoveDelegate);
+		L.RegFunction("GetTouchCountCallback", UICamera_GetTouchCountCallback);
+		L.RegFunction("GetTouchCallback", UICamera_GetTouchCallback);
 		L.EndModule();
 		L.BeginModule("UIInput");
 		L.RegFunction("OnValidate", UIInput_OnValidate);
+		L.EndModule();
+		L.BeginModule("UILabel");
+		L.RegFunction("ModifierFunc", UILabel_ModifierFunc);
 		L.EndModule();
 		L.BeginModule("UIPanel");
 		L.RegFunction("OnGeometryUpdated", UIPanel_OnGeometryUpdated);
@@ -1502,6 +1508,114 @@ public static class LuaBinder
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int UICamera_GetAnyKeyFunc(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.GetAnyKeyFunc), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.GetAnyKeyFunc), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int UICamera_GetMouseDelegate(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.GetMouseDelegate), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.GetMouseDelegate), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int UICamera_GetTouchDelegate(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.GetTouchDelegate), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.GetTouchDelegate), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int UICamera_RemoveTouchDelegate(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.RemoveTouchDelegate), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.RemoveTouchDelegate), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int UICamera_OnScreenResize(IntPtr L)
 	{
 		try
@@ -1545,6 +1659,33 @@ public static class LuaBinder
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
 				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.OnCustomInput), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int UICamera_OnSchemeChange(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.OnSchemeChange), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.OnSchemeChange), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;
@@ -1745,6 +1886,60 @@ public static class LuaBinder
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int UICamera_GetTouchCountCallback(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.GetTouchCountCallback), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.GetTouchCountCallback), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int UICamera_GetTouchCallback(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.GetTouchCallback), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UICamera.GetTouchCallback), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int UIInput_OnValidate(IntPtr L)
 	{
 		try
@@ -1761,6 +1956,33 @@ public static class LuaBinder
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
 				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UIInput.OnValidate), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int UILabel_ModifierFunc(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UILabel.ModifierFunc), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UILabel.ModifierFunc), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;

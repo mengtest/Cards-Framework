@@ -7,12 +7,125 @@ public class UIKeyBindingWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(UIKeyBinding), typeof(UnityEngine.MonoBehaviour));
+		L.RegFunction("IsBound", IsBound);
+		L.RegFunction("IsModifierActive", IsModifierActive);
+		L.RegFunction("ToString", ToString);
+		L.RegFunction("GetString", GetString);
+		L.RegFunction("GetKeyCode", GetKeyCode);
+		L.RegFunction("GetActiveModifier", GetActiveModifier);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("keyCode", get_keyCode, set_keyCode);
 		L.RegVar("modifier", get_modifier, set_modifier);
 		L.RegVar("action", get_action, set_action);
+		L.RegVar("captionText", get_captionText, null);
 		L.EndClass();
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int IsBound(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UnityEngine.KeyCode arg0 = (UnityEngine.KeyCode)ToLua.CheckObject(L, 1, typeof(UnityEngine.KeyCode));
+			bool o = UIKeyBinding.IsBound(arg0);
+			LuaDLL.lua_pushboolean(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int IsModifierActive(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UIKeyBinding.Modifier arg0 = (UIKeyBinding.Modifier)ToLua.CheckObject(L, 1, typeof(UIKeyBinding.Modifier));
+			bool o = UIKeyBinding.IsModifierActive(arg0);
+			LuaDLL.lua_pushboolean(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ToString(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UIKeyBinding obj = (UIKeyBinding)ToLua.CheckObject(L, 1, typeof(UIKeyBinding));
+			string o = obj.ToString();
+			LuaDLL.lua_pushstring(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetString(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			UnityEngine.KeyCode arg0 = (UnityEngine.KeyCode)ToLua.CheckObject(L, 1, typeof(UnityEngine.KeyCode));
+			UIKeyBinding.Modifier arg1 = (UIKeyBinding.Modifier)ToLua.CheckObject(L, 2, typeof(UIKeyBinding.Modifier));
+			string o = UIKeyBinding.GetString(arg0, arg1);
+			LuaDLL.lua_pushstring(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetKeyCode(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			string arg0 = ToLua.CheckString(L, 1);
+			UnityEngine.KeyCode arg1;
+			UIKeyBinding.Modifier arg2;
+			bool o = UIKeyBinding.GetKeyCode(arg0, out arg1, out arg2);
+			LuaDLL.lua_pushboolean(L, o);
+			ToLua.Push(L, arg1);
+			ToLua.Push(L, arg2);
+			return 3;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetActiveModifier(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 0);
+			UIKeyBinding.Modifier o = UIKeyBinding.GetActiveModifier();
+			ToLua.Push(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -87,6 +200,25 @@ public class UIKeyBindingWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index action on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_captionText(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIKeyBinding obj = (UIKeyBinding)o;
+			string ret = obj.captionText;
+			LuaDLL.lua_pushstring(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index captionText on a nil value" : e.Message);
 		}
 	}
 

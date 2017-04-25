@@ -60,8 +60,13 @@ public static class DelegateFactory
 		dict.Add(typeof(UIWidget.HitCheck), UIWidget_HitCheck);
 		dict.Add(typeof(UICamera.GetKeyStateFunc), UICamera_GetKeyStateFunc);
 		dict.Add(typeof(UICamera.GetAxisFunc), UICamera_GetAxisFunc);
+		dict.Add(typeof(UICamera.GetAnyKeyFunc), UICamera_GetAnyKeyFunc);
+		dict.Add(typeof(UICamera.GetMouseDelegate), UICamera_GetMouseDelegate);
+		dict.Add(typeof(UICamera.GetTouchDelegate), UICamera_GetTouchDelegate);
+		dict.Add(typeof(UICamera.RemoveTouchDelegate), UICamera_RemoveTouchDelegate);
 		dict.Add(typeof(UICamera.OnScreenResize), UICamera_OnScreenResize);
 		dict.Add(typeof(UICamera.OnCustomInput), UICamera_OnCustomInput);
+		dict.Add(typeof(UICamera.OnSchemeChange), UICamera_OnSchemeChange);
 		dict.Add(typeof(UICamera.VoidDelegate), UICamera_VoidDelegate);
 		dict.Add(typeof(UICamera.BoolDelegate), UICamera_BoolDelegate);
 		dict.Add(typeof(UICamera.FloatDelegate), UICamera_FloatDelegate);
@@ -69,7 +74,10 @@ public static class DelegateFactory
 		dict.Add(typeof(UICamera.ObjectDelegate), UICamera_ObjectDelegate);
 		dict.Add(typeof(UICamera.KeyCodeDelegate), UICamera_KeyCodeDelegate);
 		dict.Add(typeof(UICamera.MoveDelegate), UICamera_MoveDelegate);
+		dict.Add(typeof(UICamera.GetTouchCountCallback), UICamera_GetTouchCountCallback);
+		dict.Add(typeof(UICamera.GetTouchCallback), UICamera_GetTouchCallback);
 		dict.Add(typeof(UIInput.OnValidate), UIInput_OnValidate);
+		dict.Add(typeof(UILabel.ModifierFunc), UILabel_ModifierFunc);
 		dict.Add(typeof(UIPanel.OnGeometryUpdated), UIPanel_OnGeometryUpdated);
 		dict.Add(typeof(UIPanel.OnClippingMoved), UIPanel_OnClippingMoved);
 		dict.Add(typeof(System.AsyncCallback), System_AsyncCallback);
@@ -1987,7 +1995,7 @@ public static class DelegateFactory
 		public UIWidget_OnPostFillCallback_Event(LuaFunction func) : base(func) { }
 		public UIWidget_OnPostFillCallback_Event(LuaFunction func, LuaTable self) : base(func, self) { }
 
-		public void Call(UIWidget param0, int param1, BetterList<UnityEngine.Vector3> param2, BetterList<UnityEngine.Vector2> param3, BetterList<UnityEngine.Color32> param4)
+		public void Call(UIWidget param0, int param1, BetterList<UnityEngine.Vector3> param2, BetterList<UnityEngine.Vector2> param3, BetterList<UnityEngine.Color> param4)
 		{
 			func.BeginPCall();
 			func.Push(param0);
@@ -1999,7 +2007,7 @@ public static class DelegateFactory
 			func.EndPCall();
 		}
 
-		public void CallWithSelf(UIWidget param0, int param1, BetterList<UnityEngine.Vector3> param2, BetterList<UnityEngine.Vector2> param3, BetterList<UnityEngine.Color32> param4)
+		public void CallWithSelf(UIWidget param0, int param1, BetterList<UnityEngine.Vector3> param2, BetterList<UnityEngine.Vector2> param3, BetterList<UnityEngine.Color> param4)
 		{
 			func.BeginPCall();
 			func.Push(self);
@@ -2017,7 +2025,7 @@ public static class DelegateFactory
 	{
 		if (func == null)
 		{
-			UIWidget.OnPostFillCallback fn = delegate(UIWidget param0, int param1, BetterList<UnityEngine.Vector3> param2, BetterList<UnityEngine.Vector2> param3, BetterList<UnityEngine.Color32> param4) { };
+			UIWidget.OnPostFillCallback fn = delegate(UIWidget param0, int param1, BetterList<UnityEngine.Vector3> param2, BetterList<UnityEngine.Vector2> param3, BetterList<UnityEngine.Color> param4) { };
 			return fn;
 		}
 
@@ -2237,6 +2245,206 @@ public static class DelegateFactory
 		}
 	}
 
+	class UICamera_GetAnyKeyFunc_Event : LuaDelegate
+	{
+		public UICamera_GetAnyKeyFunc_Event(LuaFunction func) : base(func) { }
+		public UICamera_GetAnyKeyFunc_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public bool Call()
+		{
+			func.BeginPCall();
+			func.PCall();
+			bool ret = func.CheckBoolean();
+			func.EndPCall();
+			return ret;
+		}
+
+		public bool CallWithSelf()
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.PCall();
+			bool ret = func.CheckBoolean();
+			func.EndPCall();
+			return ret;
+		}
+	}
+
+	public static Delegate UICamera_GetAnyKeyFunc(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			UICamera.GetAnyKeyFunc fn = delegate() { return false; };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			UICamera_GetAnyKeyFunc_Event target = new UICamera_GetAnyKeyFunc_Event(func);
+			UICamera.GetAnyKeyFunc d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			UICamera_GetAnyKeyFunc_Event target = new UICamera_GetAnyKeyFunc_Event(func, self);
+			UICamera.GetAnyKeyFunc d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	class UICamera_GetMouseDelegate_Event : LuaDelegate
+	{
+		public UICamera_GetMouseDelegate_Event(LuaFunction func) : base(func) { }
+		public UICamera_GetMouseDelegate_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public UICamera.MouseOrTouch Call(int param0)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.PCall();
+			UICamera.MouseOrTouch ret = (UICamera.MouseOrTouch)func.CheckObject(typeof(UICamera.MouseOrTouch));
+			func.EndPCall();
+			return ret;
+		}
+
+		public UICamera.MouseOrTouch CallWithSelf(int param0)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.PCall();
+			UICamera.MouseOrTouch ret = (UICamera.MouseOrTouch)func.CheckObject(typeof(UICamera.MouseOrTouch));
+			func.EndPCall();
+			return ret;
+		}
+	}
+
+	public static Delegate UICamera_GetMouseDelegate(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			UICamera.GetMouseDelegate fn = delegate(int param0) { return null; };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			UICamera_GetMouseDelegate_Event target = new UICamera_GetMouseDelegate_Event(func);
+			UICamera.GetMouseDelegate d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			UICamera_GetMouseDelegate_Event target = new UICamera_GetMouseDelegate_Event(func, self);
+			UICamera.GetMouseDelegate d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	class UICamera_GetTouchDelegate_Event : LuaDelegate
+	{
+		public UICamera_GetTouchDelegate_Event(LuaFunction func) : base(func) { }
+		public UICamera_GetTouchDelegate_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public UICamera.MouseOrTouch Call(int param0, bool param1)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.Push(param1);
+			func.PCall();
+			UICamera.MouseOrTouch ret = (UICamera.MouseOrTouch)func.CheckObject(typeof(UICamera.MouseOrTouch));
+			func.EndPCall();
+			return ret;
+		}
+
+		public UICamera.MouseOrTouch CallWithSelf(int param0, bool param1)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.Push(param1);
+			func.PCall();
+			UICamera.MouseOrTouch ret = (UICamera.MouseOrTouch)func.CheckObject(typeof(UICamera.MouseOrTouch));
+			func.EndPCall();
+			return ret;
+		}
+	}
+
+	public static Delegate UICamera_GetTouchDelegate(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			UICamera.GetTouchDelegate fn = delegate(int param0, bool param1) { return null; };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			UICamera_GetTouchDelegate_Event target = new UICamera_GetTouchDelegate_Event(func);
+			UICamera.GetTouchDelegate d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			UICamera_GetTouchDelegate_Event target = new UICamera_GetTouchDelegate_Event(func, self);
+			UICamera.GetTouchDelegate d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	class UICamera_RemoveTouchDelegate_Event : LuaDelegate
+	{
+		public UICamera_RemoveTouchDelegate_Event(LuaFunction func) : base(func) { }
+		public UICamera_RemoveTouchDelegate_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(int param0)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(int param0)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public static Delegate UICamera_RemoveTouchDelegate(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			UICamera.RemoveTouchDelegate fn = delegate(int param0) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			UICamera_RemoveTouchDelegate_Event target = new UICamera_RemoveTouchDelegate_Event(func);
+			UICamera.RemoveTouchDelegate d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			UICamera_RemoveTouchDelegate_Event target = new UICamera_RemoveTouchDelegate_Event(func, self);
+			UICamera.RemoveTouchDelegate d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
 	class UICamera_OnScreenResize_Event : LuaDelegate
 	{
 		public UICamera_OnScreenResize_Event(LuaFunction func) : base(func) { }
@@ -2318,6 +2526,49 @@ public static class DelegateFactory
 		{
 			UICamera_OnCustomInput_Event target = new UICamera_OnCustomInput_Event(func, self);
 			UICamera.OnCustomInput d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	class UICamera_OnSchemeChange_Event : LuaDelegate
+	{
+		public UICamera_OnSchemeChange_Event(LuaFunction func) : base(func) { }
+		public UICamera_OnSchemeChange_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call()
+		{
+			func.Call();
+		}
+
+		public void CallWithSelf()
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public static Delegate UICamera_OnSchemeChange(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			UICamera.OnSchemeChange fn = delegate() { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			UICamera_OnSchemeChange_Event target = new UICamera_OnSchemeChange_Event(func);
+			UICamera.OnSchemeChange d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			UICamera_OnSchemeChange_Event target = new UICamera_OnSchemeChange_Event(func, self);
+			UICamera.OnSchemeChange d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}
@@ -2662,6 +2913,106 @@ public static class DelegateFactory
 		}
 	}
 
+	class UICamera_GetTouchCountCallback_Event : LuaDelegate
+	{
+		public UICamera_GetTouchCountCallback_Event(LuaFunction func) : base(func) { }
+		public UICamera_GetTouchCountCallback_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public int Call()
+		{
+			func.BeginPCall();
+			func.PCall();
+			int ret = (int)func.CheckNumber();
+			func.EndPCall();
+			return ret;
+		}
+
+		public int CallWithSelf()
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.PCall();
+			int ret = (int)func.CheckNumber();
+			func.EndPCall();
+			return ret;
+		}
+	}
+
+	public static Delegate UICamera_GetTouchCountCallback(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			UICamera.GetTouchCountCallback fn = delegate() { return 0; };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			UICamera_GetTouchCountCallback_Event target = new UICamera_GetTouchCountCallback_Event(func);
+			UICamera.GetTouchCountCallback d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			UICamera_GetTouchCountCallback_Event target = new UICamera_GetTouchCountCallback_Event(func, self);
+			UICamera.GetTouchCountCallback d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	class UICamera_GetTouchCallback_Event : LuaDelegate
+	{
+		public UICamera_GetTouchCallback_Event(LuaFunction func) : base(func) { }
+		public UICamera_GetTouchCallback_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public UICamera.Touch Call(int param0)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.PCall();
+			UICamera.Touch ret = (UICamera.Touch)func.CheckObject(typeof(UICamera.Touch));
+			func.EndPCall();
+			return ret;
+		}
+
+		public UICamera.Touch CallWithSelf(int param0)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.PCall();
+			UICamera.Touch ret = (UICamera.Touch)func.CheckObject(typeof(UICamera.Touch));
+			func.EndPCall();
+			return ret;
+		}
+	}
+
+	public static Delegate UICamera_GetTouchCallback(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			UICamera.GetTouchCallback fn = delegate(int param0) { return null; };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			UICamera_GetTouchCallback_Event target = new UICamera_GetTouchCallback_Event(func);
+			UICamera.GetTouchCallback d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			UICamera_GetTouchCallback_Event target = new UICamera_GetTouchCallback_Event(func, self);
+			UICamera.GetTouchCallback d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
 	class UIInput_OnValidate_Event : LuaDelegate
 	{
 		public UIInput_OnValidate_Event(LuaFunction func) : base(func) { }
@@ -2712,6 +3063,57 @@ public static class DelegateFactory
 		{
 			UIInput_OnValidate_Event target = new UIInput_OnValidate_Event(func, self);
 			UIInput.OnValidate d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	class UILabel_ModifierFunc_Event : LuaDelegate
+	{
+		public UILabel_ModifierFunc_Event(LuaFunction func) : base(func) { }
+		public UILabel_ModifierFunc_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public string Call(string param0)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.PCall();
+			string ret = func.CheckString();
+			func.EndPCall();
+			return ret;
+		}
+
+		public string CallWithSelf(string param0)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.PCall();
+			string ret = func.CheckString();
+			func.EndPCall();
+			return ret;
+		}
+	}
+
+	public static Delegate UILabel_ModifierFunc(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			UILabel.ModifierFunc fn = delegate(string param0) { return null; };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			UILabel_ModifierFunc_Event target = new UILabel_ModifierFunc_Event(func);
+			UILabel.ModifierFunc d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			UILabel_ModifierFunc_Event target = new UILabel_ModifierFunc_Event(func, self);
+			UILabel.ModifierFunc d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}

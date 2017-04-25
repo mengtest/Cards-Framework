@@ -8,6 +8,7 @@ public class UIRootWrap
 	{
 		L.BeginClass(typeof(UIRoot), typeof(UnityEngine.MonoBehaviour));
 		L.RegFunction("GetPixelSizeAdjustment", GetPixelSizeAdjustment);
+		L.RegFunction("UpdateScale", UpdateScale);
 		L.RegFunction("Broadcast", Broadcast);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
@@ -54,6 +55,23 @@ public class UIRootWrap
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to method: UIRoot.GetPixelSizeAdjustment");
 			}
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int UpdateScale(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			UIRoot obj = (UIRoot)ToLua.CheckObject(L, 1, typeof(UIRoot));
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.UpdateScale(arg0);
+			return 0;
 		}
 		catch(Exception e)
 		{

@@ -31,6 +31,8 @@ public class UILabelWrap
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("keepCrispWhenShrunk", get_keepCrispWhenShrunk, set_keepCrispWhenShrunk);
+		L.RegVar("customModifier", get_customModifier, set_customModifier);
+		L.RegVar("finalFontSize", get_finalFontSize, null);
 		L.RegVar("isAnchoredHorizontally", get_isAnchoredHorizontally, null);
 		L.RegVar("isAnchoredVertically", get_isAnchoredVertically, null);
 		L.RegVar("material", get_material, set_material);
@@ -52,6 +54,8 @@ public class UILabelWrap
 		L.RegVar("floatSpacingY", get_floatSpacingY, set_floatSpacingY);
 		L.RegVar("effectiveSpacingY", get_effectiveSpacingY, null);
 		L.RegVar("effectiveSpacingX", get_effectiveSpacingX, null);
+		L.RegVar("overflowEllipsis", get_overflowEllipsis, set_overflowEllipsis);
+		L.RegVar("overflowWidth", get_overflowWidth, set_overflowWidth);
 		L.RegVar("supportEncoding", get_supportEncoding, set_supportEncoding);
 		L.RegVar("symbolStyle", get_symbolStyle, set_symbolStyle);
 		L.RegVar("overflowMethod", get_overflowMethod, set_overflowMethod);
@@ -66,6 +70,9 @@ public class UILabelWrap
 		L.RegVar("processedText", get_processedText, null);
 		L.RegVar("printedSize", get_printedSize, null);
 		L.RegVar("localSize", get_localSize, null);
+		L.RegVar("modifier", get_modifier, set_modifier);
+		L.RegVar("printedText", get_printedText, null);
+		L.RegFunction("ModifierFunc", UILabel_ModifierFunc);
 		L.EndClass();
 	}
 
@@ -341,7 +348,7 @@ public class UILabelWrap
 			UILabel obj = (UILabel)ToLua.CheckObject(L, 1, typeof(UILabel));
 			BetterList<UnityEngine.Vector3> arg0 = (BetterList<UnityEngine.Vector3>)ToLua.CheckObject(L, 2, typeof(BetterList<UnityEngine.Vector3>));
 			BetterList<UnityEngine.Vector2> arg1 = (BetterList<UnityEngine.Vector2>)ToLua.CheckObject(L, 3, typeof(BetterList<UnityEngine.Vector2>));
-			BetterList<UnityEngine.Color32> arg2 = (BetterList<UnityEngine.Color32>)ToLua.CheckObject(L, 4, typeof(BetterList<UnityEngine.Color32>));
+			BetterList<UnityEngine.Color> arg2 = (BetterList<UnityEngine.Color>)ToLua.CheckObject(L, 4, typeof(BetterList<UnityEngine.Color>));
 			obj.OnFill(arg0, arg1, arg2);
 			return 0;
 		}
@@ -379,7 +386,7 @@ public class UILabelWrap
 			UILabel obj = (UILabel)ToLua.CheckObject(L, 1, typeof(UILabel));
 			BetterList<UnityEngine.Vector3> arg0 = (BetterList<UnityEngine.Vector3>)ToLua.CheckObject(L, 2, typeof(BetterList<UnityEngine.Vector3>));
 			BetterList<UnityEngine.Vector2> arg1 = (BetterList<UnityEngine.Vector2>)ToLua.CheckObject(L, 3, typeof(BetterList<UnityEngine.Vector2>));
-			BetterList<UnityEngine.Color32> arg2 = (BetterList<UnityEngine.Color32>)ToLua.CheckObject(L, 4, typeof(BetterList<UnityEngine.Color32>));
+			BetterList<UnityEngine.Color> arg2 = (BetterList<UnityEngine.Color>)ToLua.CheckObject(L, 4, typeof(BetterList<UnityEngine.Color>));
 			int arg3 = (int)LuaDLL.luaL_checknumber(L, 5);
 			int arg4 = (int)LuaDLL.luaL_checknumber(L, 6);
 			float arg5 = (float)LuaDLL.luaL_checknumber(L, 7);
@@ -548,6 +555,44 @@ public class UILabelWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index keepCrispWhenShrunk on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_customModifier(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UILabel obj = (UILabel)o;
+			UILabel.ModifierFunc ret = obj.customModifier;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index customModifier on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_finalFontSize(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UILabel obj = (UILabel)o;
+			int ret = obj.finalFontSize;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index finalFontSize on a nil value" : e.Message);
 		}
 	}
 
@@ -951,6 +996,44 @@ public class UILabelWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_overflowEllipsis(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UILabel obj = (UILabel)o;
+			bool ret = obj.overflowEllipsis;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index overflowEllipsis on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_overflowWidth(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UILabel obj = (UILabel)o;
+			int ret = obj.overflowWidth;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index overflowWidth on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_supportEncoding(IntPtr L)
 	{
 		object o = null;
@@ -1217,6 +1300,44 @@ public class UILabelWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_modifier(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UILabel obj = (UILabel)o;
+			UILabel.Modifier ret = obj.modifier;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index modifier on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_printedText(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UILabel obj = (UILabel)o;
+			string ret = obj.printedText;
+			LuaDLL.lua_pushstring(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index printedText on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_keepCrispWhenShrunk(IntPtr L)
 	{
 		object o = null;
@@ -1232,6 +1353,37 @@ public class UILabelWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index keepCrispWhenShrunk on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_customModifier(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UILabel obj = (UILabel)o;
+			UILabel.ModifierFunc arg0 = null;
+			LuaTypes funcType2 = LuaDLL.lua_type(L, 2);
+
+			if (funcType2 != LuaTypes.LUA_TFUNCTION)
+			{
+				 arg0 = (UILabel.ModifierFunc)ToLua.CheckObject(L, 2, typeof(UILabel.ModifierFunc));
+			}
+			else
+			{
+				LuaFunction func = ToLua.ToLuaFunction(L, 2);
+				arg0 = DelegateFactory.CreateDelegate(typeof(UILabel.ModifierFunc), func) as UILabel.ModifierFunc;
+			}
+
+			obj.customModifier = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index customModifier on a nil value" : e.Message);
 		}
 	}
 
@@ -1540,6 +1692,44 @@ public class UILabelWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_overflowEllipsis(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UILabel obj = (UILabel)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.overflowEllipsis = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index overflowEllipsis on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_overflowWidth(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UILabel obj = (UILabel)o;
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			obj.overflowWidth = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index overflowWidth on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_supportEncoding(IntPtr L)
 	{
 		object o = null;
@@ -1688,6 +1878,52 @@ public class UILabelWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index effectDistance on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_modifier(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UILabel obj = (UILabel)o;
+			UILabel.Modifier arg0 = (UILabel.Modifier)ToLua.CheckObject(L, 2, typeof(UILabel.Modifier));
+			obj.modifier = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index modifier on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int UILabel_ModifierFunc(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UILabel.ModifierFunc), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UILabel.ModifierFunc), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
 		}
 	}
 }

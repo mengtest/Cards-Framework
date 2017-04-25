@@ -7,9 +7,26 @@ public class LanguageSelectionWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(LanguageSelection), typeof(UnityEngine.MonoBehaviour));
+		L.RegFunction("Refresh", Refresh);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.EndClass();
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Refresh(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			LanguageSelection obj = (LanguageSelection)ToLua.CheckObject(L, 1, typeof(LanguageSelection));
+			obj.Refresh();
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

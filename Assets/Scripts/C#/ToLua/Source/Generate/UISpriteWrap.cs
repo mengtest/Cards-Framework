@@ -16,6 +16,9 @@ public class UISpriteWrap
 		L.RegVar("atlas", get_atlas, set_atlas);
 		L.RegVar("spriteName", get_spriteName, set_spriteName);
 		L.RegVar("isValid", get_isValid, null);
+		L.RegVar("applyGradient", get_applyGradient, set_applyGradient);
+		L.RegVar("gradientTop", get_gradientTop, set_gradientTop);
+		L.RegVar("gradientBottom", get_gradientBottom, set_gradientBottom);
 		L.RegVar("border", get_border, null);
 		L.RegVar("pixelSize", get_pixelSize, null);
 		L.RegVar("minWidth", get_minWidth, null);
@@ -67,7 +70,7 @@ public class UISpriteWrap
 			UISprite obj = (UISprite)ToLua.CheckObject(L, 1, typeof(UISprite));
 			BetterList<UnityEngine.Vector3> arg0 = (BetterList<UnityEngine.Vector3>)ToLua.CheckObject(L, 2, typeof(BetterList<UnityEngine.Vector3>));
 			BetterList<UnityEngine.Vector2> arg1 = (BetterList<UnityEngine.Vector2>)ToLua.CheckObject(L, 3, typeof(BetterList<UnityEngine.Vector2>));
-			BetterList<UnityEngine.Color32> arg2 = (BetterList<UnityEngine.Color32>)ToLua.CheckObject(L, 4, typeof(BetterList<UnityEngine.Color32>));
+			BetterList<UnityEngine.Color> arg2 = (BetterList<UnityEngine.Color>)ToLua.CheckObject(L, 4, typeof(BetterList<UnityEngine.Color>));
 			obj.OnFill(arg0, arg1, arg2);
 			return 0;
 		}
@@ -168,6 +171,63 @@ public class UISpriteWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index isValid on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_applyGradient(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UISprite obj = (UISprite)o;
+			bool ret = obj.applyGradient;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index applyGradient on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_gradientTop(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UISprite obj = (UISprite)o;
+			UnityEngine.Color ret = obj.gradientTop;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index gradientTop on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_gradientBottom(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UISprite obj = (UISprite)o;
+			UnityEngine.Color ret = obj.gradientBottom;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index gradientBottom on a nil value" : e.Message);
 		}
 	}
 
@@ -320,6 +380,63 @@ public class UISpriteWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index spriteName on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_applyGradient(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UISprite obj = (UISprite)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.applyGradient = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index applyGradient on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_gradientTop(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UISprite obj = (UISprite)o;
+			UnityEngine.Color arg0 = ToLua.ToColor(L, 2);
+			obj.gradientTop = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index gradientTop on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_gradientBottom(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UISprite obj = (UISprite)o;
+			UnityEngine.Color arg0 = ToLua.ToColor(L, 2);
+			obj.gradientBottom = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index gradientBottom on a nil value" : e.Message);
 		}
 	}
 }

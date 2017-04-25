@@ -15,6 +15,7 @@ public class UIDragResizeWrap
 		L.RegVar("minHeight", get_minHeight, set_minHeight);
 		L.RegVar("maxWidth", get_maxWidth, set_maxWidth);
 		L.RegVar("maxHeight", get_maxHeight, set_maxHeight);
+		L.RegVar("updateAnchors", get_updateAnchors, set_updateAnchors);
 		L.EndClass();
 	}
 
@@ -151,6 +152,25 @@ public class UIDragResizeWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_updateAnchors(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIDragResize obj = (UIDragResize)o;
+			bool ret = obj.updateAnchors;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index updateAnchors on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_target(IntPtr L)
 	{
 		object o = null;
@@ -261,6 +281,25 @@ public class UIDragResizeWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index maxHeight on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_updateAnchors(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UIDragResize obj = (UIDragResize)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.updateAnchors = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index updateAnchors on a nil value" : e.Message);
 		}
 	}
 }

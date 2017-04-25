@@ -12,7 +12,6 @@
 using System;
 using System.Net.Sockets;
 using System.Net;
-using System.Threading;
 
 namespace NCSpeedLight
 {
@@ -23,7 +22,7 @@ namespace NCSpeedLight
             OnConnected,
             OnDisconnected,
             OnReconnected,
-            OnErrorOccupied,
+            OnErrorrOccurred,
         }
 
         public delegate void StatusDelegate(NetConnection connection, object param);
@@ -36,16 +35,16 @@ namespace NCSpeedLight
         public StatusDelegate OnConnected;
         public StatusDelegate OnDisconnected;
         public StatusDelegate OnReconnected;
-        public StatusDelegate OnErrorOccupied;
+        public StatusDelegate OnErrorOccurred;
 
-        public NetConnection(string host, int port, StatusDelegate onConnected, StatusDelegate onDisconnected, StatusDelegate onReconnected, StatusDelegate onErrorOccupied)
+        public NetConnection(string host, int port, StatusDelegate onConnected, StatusDelegate onDisconnected, StatusDelegate onReconnected, StatusDelegate onErrorOccurred)
         {
             Host = host;
             Port = port;
             OnConnected = onConnected;
             OnDisconnected = onDisconnected;
             OnReconnected = onReconnected;
-            OnErrorOccupied = onErrorOccupied;
+            OnErrorOccurred = onErrorOccurred;
         }
 
         public bool IsConnected
@@ -74,7 +73,7 @@ namespace NCSpeedLight
             }
             catch (Exception e)
             {
-                ErrorOccupied(e.Message);
+                ErrorrOccurred(e.Message);
             }
         }
 
@@ -123,8 +122,8 @@ namespace NCSpeedLight
                 case CallbackType.OnReconnected:
                     func = OnReconnected;
                     break;
-                case CallbackType.OnErrorOccupied:
-                    func = OnErrorOccupied;
+                case CallbackType.OnErrorrOccurred:
+                    func = OnErrorOccurred;
                     break;
                 default:
                     break;
@@ -138,7 +137,7 @@ namespace NCSpeedLight
             });
         }
 
-        private void ErrorOccupied(string error)
+        private void ErrorrOccurred(string error)
         {
             Error = error;
             if (Socket != null)
@@ -149,7 +148,7 @@ namespace NCSpeedLight
                 }
                 Socket.Close();
             }
-            Callback(CallbackType.OnErrorOccupied, error);
+            Callback(CallbackType.OnErrorrOccurred, error);
         }
 
         private void RepeatReconnect()
@@ -185,7 +184,7 @@ namespace NCSpeedLight
             }
             catch (Exception e)
             {
-                ErrorOccupied(e.Message);
+                ErrorrOccurred(e.Message);
             }
         }
 
@@ -241,12 +240,12 @@ namespace NCSpeedLight
                 else
                 {
                     string err = "bytes read count is zero";
-                    ErrorOccupied(err);
+                    ErrorrOccurred(err);
                 }
             }
             catch (Exception e)
             {
-                ErrorOccupied(e.Message);
+                ErrorrOccurred(e.Message);
             }
         }
 
@@ -267,12 +266,12 @@ namespace NCSpeedLight
                 else
                 {
                     string err = "bytes read count is zero";
-                    ErrorOccupied(err);
+                    ErrorrOccurred(err);
                 }
             }
             catch (Exception e)
             {
-                ErrorOccupied(e.Message);
+                ErrorrOccurred(e.Message);
             }
         }
 
@@ -284,7 +283,7 @@ namespace NCSpeedLight
             }
             catch (Exception e)
             {
-                ErrorOccupied(e.Message);
+                ErrorrOccurred(e.Message);
             }
         }
     }

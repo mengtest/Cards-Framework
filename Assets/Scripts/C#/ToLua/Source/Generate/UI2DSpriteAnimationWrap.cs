@@ -12,6 +12,7 @@ public class UI2DSpriteAnimationWrap
 		L.RegFunction("ResetToBeginning", ResetToBeginning);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
+		L.RegVar("frameIndex", get_frameIndex, set_frameIndex);
 		L.RegVar("ignoreTimeScale", get_ignoreTimeScale, set_ignoreTimeScale);
 		L.RegVar("loop", get_loop, set_loop);
 		L.RegVar("frames", get_frames, set_frames);
@@ -83,6 +84,25 @@ public class UI2DSpriteAnimationWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_frameIndex(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UI2DSpriteAnimation obj = (UI2DSpriteAnimation)o;
+			int ret = obj.frameIndex;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index frameIndex on a nil value" : e.Message);
 		}
 	}
 
@@ -178,6 +198,25 @@ public class UI2DSpriteAnimationWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index framesPerSecond on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_frameIndex(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UI2DSpriteAnimation obj = (UI2DSpriteAnimation)o;
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			obj.frameIndex = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index frameIndex on a nil value" : e.Message);
 		}
 	}
 
