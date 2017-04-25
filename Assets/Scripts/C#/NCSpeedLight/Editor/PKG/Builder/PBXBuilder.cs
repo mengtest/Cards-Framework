@@ -60,6 +60,8 @@ namespace NCSpeedLight
 
     public static class PBXBuilder
     {
+
+#if UNITY_IOS
         [PostProcessBuild]
         public static void OnPostProcessBuild(BuildTarget target, string pathToBuiltProject)
         {
@@ -68,6 +70,7 @@ namespace NCSpeedLight
             EditInfoPlist(pathToBuiltProject);
             EditUnityAppController(pathToBuiltProject);
         }
+#endif
 
         /// <summary>
         /// Edit project settings.
