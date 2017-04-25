@@ -25,3 +25,6 @@
 /Tools/protocol/protocLua/PBMessage.pb
 /Tools/protocol/protocLua/PBMessage.lua
 /Tools/protocol/protocLua/GameMessage.lua
+/Cards-Framework.sln
+/Cards-Framework.CSharp.Editor.csproj
+/Cards-Framework.CSharp.csproj
