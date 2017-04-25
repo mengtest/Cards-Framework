@@ -20,7 +20,7 @@ namespace NCSpeedLight
 
         void Awake()
         {
-            if (Application.isEditor)
+            if (Application.isEditor == false)
             {
                 Debug.Log("AMapAdapter.Awake: unity construct");
 #if UNITY_ANDROID
@@ -28,7 +28,7 @@ namespace NCSpeedLight
                 AndroidContext = AndroidContextClass.GetStatic<AndroidJavaObject>("currentActivity");
                 AndroidInstance = new AndroidJavaObject("com.hsu.location.LocationUtils", AndroidContext);
 #elif UNITY_IOS
-		    LocInitialize();
+		        LocInitialize();
 #endif
             }
         }
