@@ -50,6 +50,7 @@ public class NCSpeedLight_ConstantsWrap
 		L.RegVar("SHARE_CONTENT", get_SHARE_CONTENT, set_SHARE_CONTENT);
 		L.RegVar("SHARE_MOMENT_CONTENT", get_SHARE_MOMENT_CONTENT, set_SHARE_MOMENT_CONTENT);
 		L.RegVar("SHARE_URL", get_SHARE_URL, set_SHARE_URL);
+		L.RegVar("SHARE_ICON", get_SHARE_ICON, set_SHARE_ICON);
 		L.EndStaticLibs();
 	}
 
@@ -656,6 +657,20 @@ public class NCSpeedLight_ConstantsWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_SHARE_ICON(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.SHARE_ICON);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_GAME_NAME(IntPtr L)
 	{
 		try
@@ -1037,6 +1052,21 @@ public class NCSpeedLight_ConstantsWrap
 		{
 			string arg0 = ToLua.CheckString(L, 2);
 			NCSpeedLight.Constants.SHARE_URL = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_SHARE_ICON(IntPtr L)
+	{
+		try
+		{
+			string arg0 = ToLua.CheckString(L, 2);
+			NCSpeedLight.Constants.SHARE_ICON = arg0;
 			return 0;
 		}
 		catch(Exception e)

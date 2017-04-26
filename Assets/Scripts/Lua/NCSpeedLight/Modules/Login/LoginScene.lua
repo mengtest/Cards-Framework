@@ -37,6 +37,7 @@ function LoginScene.Initialize()
 end
 
 function LoginScene.Begin()
+	NCSpeedLight.InternalUI.Instance:OpenBG();
 	AssetManager.LoadScene(SceneType.LoginScene);
 	NetManager.RegisterEvent(GameMessage.GM_VERSION_RETURN, LoginScene.OnVerifyVersionReturn);
 	NetManager.RegisterEvent(GameMessage.GM_ACCOUNT_VERIFY_RETURN, LoginScene.OnLoginReturn);
@@ -204,21 +205,23 @@ function LoginScene.OnVerifyVersionReturn(evt)
 end
 
 function LoginScene.RequestLogin(account, password)
-	local msg =
-	{
-		m_AccountName = account,
-		m_Password = password,
-		platform = 0,
-		accountLogInfo =
-		{
-			platformID = 1,
-			ditchID = "2",
-			version = "1.0.1",
-			accountID = 99988254,
-			macAddress = "4D6MDJJ",
-			deviceUUID = "547SFHBSDFHESYHTRY",
-		}
-	};
+	local msg = {};
+	msg.m_AccountName = account;
+	msg.m_Password = password;
+	if UnityEngine.Application.isMobilePlatform then
+		msg.platform = 1;
+	else
+		msg.platform = 0;
+	end
+	msg.accountLogInfo = {
+		platformID = 1,
+		ditchID = "2",
+		version = "1.8.0",
+		accountID = 99988254,
+		macAddress = "4D6MDJJ",
+		deviceUUID = "547SFHBSDFHESYHTRY",
+	}
+	Log.Info("LoginScene.RequestLogin: platform is " .. msg.platform .. ",account is " .. msg.m_AccountName);
 	NetManager.SendEventToLoginServer(GameMessage.GM_ACCOUNT_VERIFY, PBMessage.GM_AccountRequest, msg);
 	UIManager.OpenWindow(UIType.UI_SceneLoad);
 end
@@ -284,20 +287,20 @@ function LoginScene.OnRegisterReturn(evt)
 		UIManager.OpenTipsDialog("创建成功")
 		-- 保存账号信息至本地
 		LoginScene.AddLoginRecord(LoginScene.currentAccount, LoginScene.currentPassword);
-		UIManager.CloseWindow("Login/ui_register")
-		UIManager.OpenWindow("Login/ui_normalLogin")
+		UIManager.CloseWindow(UIType.UI_Register);
+		UIManager.OpenWindow(UIType.UI_NormalLogin);
 	elseif obj.m_Result == 1 then
 		UIManager.OpenTipsDialog("存在账号")
 		-- 保存账号信息至本地
 		LoginScene.AddLoginRecord(LoginScene.currentAccount, LoginScene.currentPassword);
-		UIManager.CloseWindow("Login/ui_register")
-		UIManager.OpenWindow("Login/ui_normalLogin")
+		UIManager.CloseWindow(UIType.UI_Register);
+		UIManager.OpenWindow(UIType.UI_NormalLogin);
 	elseif obj.m_Result == 2 then
-		UIManager.OpenTipsDialog("账号长度不符合")
+		UIManager.OpenTipsDialog("账号长度不符合");
 	elseif obj.m_Result == 3 then
-		UIManager.OpenTipsDialog("密码长度不符合")
+		UIManager.OpenTipsDialog("密码长度不符合");
 	elseif obj.m_Result == 4 then
-		UIManager.OpenTipsDialog("是关键字")
+		UIManager.OpenTipsDialog("是关键字");
 	else
 	end
 end
@@ -314,6 +317,7 @@ end
 function LoginScene.OnChoseAreaReturn(evt)
 	local obj = NetManager.DecodeMsg(PBMessage.GM_ChooseAreaReturn, evt);
 	if obj.m_Result == 0 then
+		UIManager.CloseWindow(UIType.UI_MobileLogin);
 		Log.Info("LoginScene.OnChoseAreaReturn：选区成功,开始连接逻辑服务器");
 		Log.Info("LoginScene.OnChoseAreaReturn: logic server ip is " .. obj.m_ServerIP);
 		Log.Info("LoginScene.OnChoseAreaReturn: logic server port is " .. obj.m_PortNumber);

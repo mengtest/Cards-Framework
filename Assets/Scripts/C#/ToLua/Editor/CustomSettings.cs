@@ -40,14 +40,16 @@ public static class CustomSettings
         _DT(typeof(Comparison<int>)),
         _DT(typeof(NetConnection.StatusDelegate)),
         _DT(typeof(UIEventListener.VoidDelegate)),
-        _DT(typeof(cn.sharesdk.unity3d.ShareSDK.EventHandler)),
+        _DT(typeof(ShareSDKAdapter.AuthCallbackDelegate)),
+        _DT(typeof(ShareSDKAdapter.ShareCallbackDelegate)),
+
     };
 
     //在这里添加你要导出注册到lua的类型列表
     public static BindType[] customTypeList =
-    {                
-                
-        _GT(typeof(Debugger)).SetNameSpace(null),        
+    {
+
+        _GT(typeof(Debugger)).SetNameSpace(null),
 
         _GT(typeof(Component)),
         _GT(typeof(Transform)),
@@ -55,7 +57,7 @@ public static class CustomSettings
         _GT(typeof(Rigidbody)),
         _GT(typeof(Camera)),
         _GT(typeof(AudioSource)),
-      
+
         _GT(typeof(Behaviour)),
         _GT(typeof(MonoBehaviour)),
         _GT(typeof(GameObject)),
@@ -80,7 +82,7 @@ public static class CustomSettings
 
         _GT(typeof(LightType)),
         _GT(typeof(SleepTimeout)),
- 
+
         _GT(typeof(Animator)),
         _GT(typeof(Input)),
         _GT(typeof(KeyCode)),
@@ -89,7 +91,7 @@ public static class CustomSettings
 
 
         _GT(typeof(MeshRenderer)),
-                              
+
         _GT(typeof(BoxCollider)),
         _GT(typeof(MeshCollider)),
         _GT(typeof(SphereCollider)),
@@ -124,8 +126,9 @@ public static class CustomSettings
 
          //_GT(typeof(AMapAdapter)),
          _GT(typeof(ShareSDKAdapter)),
-         _GT(typeof(ResponseState)),
-         _GT(typeof(PlatformType)),
+         _GT(typeof(ShareSDKAdapter.RetType)),
+         _GT(typeof(ShareSDKAdapter.AuthInfo)),
+
          //_GT(typeof(RongCloudAdapter)),
 
          _GT(typeof(AudioManager)),
@@ -148,6 +151,8 @@ public static class CustomSettings
          _GT(typeof(InvisiableOnTweenFinish)),
 
          _GT(typeof(LuaComponent)),
+
+         _GT(typeof(InternalUI)),
 
 #endregion
 

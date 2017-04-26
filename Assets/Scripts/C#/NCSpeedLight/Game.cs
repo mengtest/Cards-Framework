@@ -19,8 +19,8 @@ namespace NCSpeedLight
     public class Game : MonoBehaviour
     {
         public static Game Instance;
-        private bool OK = false;
-        public UpdateUI UpdateUI;
+        private bool ok = false;
+        public InternalUI InternalUI;
         public LuaFunction AwakeFunction;
         public LuaFunction UpdateFunction;
         public LuaFunction OnGUIFunction;
@@ -32,7 +32,6 @@ namespace NCSpeedLight
         private void Awake()
         {
             Instance = this;
-            Helper.Log("Game.Awake");
             DontDestroyOnLoad(gameObject);
             Application.targetFrameRate = Constants.TARGET_FRAME_RATE;
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
@@ -41,12 +40,16 @@ namespace NCSpeedLight
 
         private void Start()
         {
-            UpdateUI.StartUpdate();
+            InternalUI.OpenBG();
+            InternalUI.OpenUpdate();
+            InternalUI.UpdateUI.StartUpdate();
         }
 
-        public void StartGame()
+        public void Launch()
         {
-            OK = true;
+            InternalUI.CloseDialog();
+            InternalUI.CloseUpdate();
+            ok = true;
             LuaManager.DoString("require 'NCSpeedLight.Game'");
             AwakeFunction = LuaManager.LuaState.GetFunction("Game.Awake");
             UpdateFunction = LuaManager.LuaState.GetFunction("Game.Update");
@@ -68,42 +71,42 @@ namespace NCSpeedLight
 
         private void Update()
         {
-            if (OK && UpdateFunction != null)
+            if (ok && UpdateFunction != null)
             {
                 UpdateFunction.Call();
             }
         }
         private void LateUpdate()
         {
-            if (OK && LateUpdateFunction != null)
+            if (ok && LateUpdateFunction != null)
             {
                 LateUpdateFunction.Call();
             }
         }
         private void OnGUI()
         {
-            if (OK && OnGUIFunction != null)
+            if (ok && OnGUIFunction != null)
             {
                 OnGUIFunction.Call();
             }
         }
         private void OnDestroy()
         {
-            if (OK && OnDestroyFunction != null)
+            if (ok && OnDestroyFunction != null)
             {
                 OnDestroyFunction.Call();
             }
         }
         private void OnApplicationPause(bool status)
         {
-            if (OK && OnApplicationPauseFunction != null)
+            if (ok && OnApplicationPauseFunction != null)
             {
                 OnApplicationPauseFunction.Call(status);
             }
         }
         private void OnApplicationFocus(bool status)
         {
-            if (OK && OnApplicationFocusFunction != null)
+            if (ok && OnApplicationFocusFunction != null)
             {
                 OnApplicationFocusFunction.Call(status);
             }

@@ -36,6 +36,39 @@ namespace NCSpeedLight
                     return Added.Count > 0 || Modified.Count > 0 || Deleted.Count > 0;
                 }
             }
+
+            public bool NeedUpdate
+            {
+                get
+                {
+                    return Added.Count > 0 || Modified.Count > 0;
+                }
+            }
+
+            public int UpdateSize
+            {
+                get
+                {
+                    int size = 0;
+                    for (int i = 0; i < Added.Count; i++)
+                    {
+                        FileInfo info = Added[i];
+                        if (info != null)
+                        {
+                            size += info.Size;
+                        }
+                    }
+                    for (int i = 0; i < Modified.Count; i++)
+                    {
+                        FileInfo info = Modified[i];
+                        if (info != null)
+                        {
+                            size += info.Size;
+                        }
+                    }
+                    return size;
+                }
+            }
         }
 
         public int TotalFileSize;

@@ -8,10 +8,13 @@ public class NCSpeedLight_ShareSDKAdapterWrap
 	{
 		L.BeginClass(typeof(NCSpeedLight.ShareSDKAdapter), typeof(UnityEngine.MonoBehaviour));
 		L.RegFunction("AuthWechat", AuthWechat);
+		L.RegFunction("GetWechatAuthInfo", GetWechatAuthInfo);
 		L.RegFunction("ShareWechatMoment", ShareWechatMoment);
 		L.RegFunction("ShareWechatFriend", ShareWechatFriend);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
+		L.RegFunction("AuthCallbackDelegate", NCSpeedLight_ShareSDKAdapter_AuthCallbackDelegate);
+		L.RegFunction("ShareCallbackDelegate", NCSpeedLight_ShareSDKAdapter_ShareCallbackDelegate);
 		L.EndClass();
 	}
 
@@ -21,21 +24,37 @@ public class NCSpeedLight_ShareSDKAdapterWrap
 		try
 		{
 			ToLua.CheckArgsCount(L, 1);
-			cn.sharesdk.unity3d.ShareSDK.EventHandler arg0 = null;
+			NCSpeedLight.ShareSDKAdapter.AuthCallbackDelegate arg0 = null;
 			LuaTypes funcType1 = LuaDLL.lua_type(L, 1);
 
 			if (funcType1 != LuaTypes.LUA_TFUNCTION)
 			{
-				 arg0 = (cn.sharesdk.unity3d.ShareSDK.EventHandler)ToLua.CheckObject(L, 1, typeof(cn.sharesdk.unity3d.ShareSDK.EventHandler));
+				 arg0 = (NCSpeedLight.ShareSDKAdapter.AuthCallbackDelegate)ToLua.CheckObject(L, 1, typeof(NCSpeedLight.ShareSDKAdapter.AuthCallbackDelegate));
 			}
 			else
 			{
 				LuaFunction func = ToLua.ToLuaFunction(L, 1);
-				arg0 = DelegateFactory.CreateDelegate(typeof(cn.sharesdk.unity3d.ShareSDK.EventHandler), func) as cn.sharesdk.unity3d.ShareSDK.EventHandler;
+				arg0 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.ShareSDKAdapter.AuthCallbackDelegate), func) as NCSpeedLight.ShareSDKAdapter.AuthCallbackDelegate;
 			}
 
 			NCSpeedLight.ShareSDKAdapter.AuthWechat(arg0);
 			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetWechatAuthInfo(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 0);
+			NCSpeedLight.ShareSDKAdapter.AuthInfo o = NCSpeedLight.ShareSDKAdapter.GetWechatAuthInfo();
+			ToLua.PushObject(L, o);
+			return 1;
 		}
 		catch(Exception e)
 		{
@@ -49,17 +68,17 @@ public class NCSpeedLight_ShareSDKAdapterWrap
 		try
 		{
 			ToLua.CheckArgsCount(L, 1);
-			cn.sharesdk.unity3d.ShareSDK.EventHandler arg0 = null;
+			NCSpeedLight.ShareSDKAdapter.ShareCallbackDelegate arg0 = null;
 			LuaTypes funcType1 = LuaDLL.lua_type(L, 1);
 
 			if (funcType1 != LuaTypes.LUA_TFUNCTION)
 			{
-				 arg0 = (cn.sharesdk.unity3d.ShareSDK.EventHandler)ToLua.CheckObject(L, 1, typeof(cn.sharesdk.unity3d.ShareSDK.EventHandler));
+				 arg0 = (NCSpeedLight.ShareSDKAdapter.ShareCallbackDelegate)ToLua.CheckObject(L, 1, typeof(NCSpeedLight.ShareSDKAdapter.ShareCallbackDelegate));
 			}
 			else
 			{
 				LuaFunction func = ToLua.ToLuaFunction(L, 1);
-				arg0 = DelegateFactory.CreateDelegate(typeof(cn.sharesdk.unity3d.ShareSDK.EventHandler), func) as cn.sharesdk.unity3d.ShareSDK.EventHandler;
+				arg0 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.ShareSDKAdapter.ShareCallbackDelegate), func) as NCSpeedLight.ShareSDKAdapter.ShareCallbackDelegate;
 			}
 
 			NCSpeedLight.ShareSDKAdapter.ShareWechatMoment(arg0);
@@ -77,17 +96,17 @@ public class NCSpeedLight_ShareSDKAdapterWrap
 		try
 		{
 			ToLua.CheckArgsCount(L, 1);
-			cn.sharesdk.unity3d.ShareSDK.EventHandler arg0 = null;
+			NCSpeedLight.ShareSDKAdapter.ShareCallbackDelegate arg0 = null;
 			LuaTypes funcType1 = LuaDLL.lua_type(L, 1);
 
 			if (funcType1 != LuaTypes.LUA_TFUNCTION)
 			{
-				 arg0 = (cn.sharesdk.unity3d.ShareSDK.EventHandler)ToLua.CheckObject(L, 1, typeof(cn.sharesdk.unity3d.ShareSDK.EventHandler));
+				 arg0 = (NCSpeedLight.ShareSDKAdapter.ShareCallbackDelegate)ToLua.CheckObject(L, 1, typeof(NCSpeedLight.ShareSDKAdapter.ShareCallbackDelegate));
 			}
 			else
 			{
 				LuaFunction func = ToLua.ToLuaFunction(L, 1);
-				arg0 = DelegateFactory.CreateDelegate(typeof(cn.sharesdk.unity3d.ShareSDK.EventHandler), func) as cn.sharesdk.unity3d.ShareSDK.EventHandler;
+				arg0 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.ShareSDKAdapter.ShareCallbackDelegate), func) as NCSpeedLight.ShareSDKAdapter.ShareCallbackDelegate;
 			}
 
 			NCSpeedLight.ShareSDKAdapter.ShareWechatFriend(arg0);
@@ -109,6 +128,60 @@ public class NCSpeedLight_ShareSDKAdapterWrap
 			UnityEngine.Object arg1 = (UnityEngine.Object)ToLua.ToObject(L, 2);
 			bool o = arg0 == arg1;
 			LuaDLL.lua_pushboolean(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int NCSpeedLight_ShareSDKAdapter_AuthCallbackDelegate(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.ShareSDKAdapter.AuthCallbackDelegate), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.ShareSDKAdapter.AuthCallbackDelegate), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int NCSpeedLight_ShareSDKAdapter_ShareCallbackDelegate(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.ShareSDKAdapter.ShareCallbackDelegate), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.ShareSDKAdapter.ShareCallbackDelegate), func, self);
+				ToLua.Push(L, arg1);
+			}
 			return 1;
 		}
 		catch(Exception e)

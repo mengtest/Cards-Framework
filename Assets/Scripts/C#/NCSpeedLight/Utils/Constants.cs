@@ -24,12 +24,15 @@ namespace NCSpeedLight
         /// <summary>
         /// 公司名称
         /// </summary>
-        public static string COMPANY_NAME = "papa";
+        //public static string COMPANY_NAME = "papa";
+        public static string COMPANY_NAME = "hongzhong";
 
         /// <summary>
         /// 渠道名称
         /// </summary>
-        public static string CHANNEL = "papa";
+        //public static string CHANNEL = "papa";
+        public static string CHANNEL = "hongzhong";
+
 
         /// <summary>
         /// 主版本号（应用程序版本号）
@@ -43,7 +46,7 @@ namespace NCSpeedLight
         {
             get
             {
-                return "8";
+                return "0";
             }
         }
 
@@ -78,6 +81,7 @@ namespace NCSpeedLight
         {
             get
             {
+                //string url = "http://papamajiangcdn.damaigame.com/json/{0}/{1}/{2}/v{3}/qiumo.db?v={4}";
                 string url = "http://papamajiangcdn.damaigame.com/json/{0}/{1}/{2}/v{3}/qiumo.db?v={4}";
                 url = Helper.StringFormat(url, COMPANY_NAME, PLATFORM_NAME, CHANNEL, VERSION, DateTime.Now.Ticks);
                 return url;
@@ -214,7 +218,7 @@ namespace NCSpeedLight
                 }
                 else if (Application.isEditor)
                 {
-                    return false;
+                    return true;
                 }
                 else
                 {
@@ -236,7 +240,7 @@ namespace NCSpeedLight
                 }
                 else if (Application.isEditor)
                 {
-                    return false;
+                    return true;
                 }
                 else
                 {
@@ -441,6 +445,14 @@ namespace NCSpeedLight
         /// 分享的链接
         /// </summary>
         public static string SHARE_URL
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// 分享的图片
+        /// </summary>
+        public static string SHARE_ICON
         {
             get; set;
         }

@@ -9,68 +9,77 @@ namespace NCSpeedLight
 {
     public class UpdateUI : MonoBehaviour
     {
-        public enum Status
-        {
-            Check,
-            Download,
-            EnterGame,
-        }
-        public UIProgressBar ProgressBar;
-        public UILabel Tips;
-        public Status CurrentStatus = Status.Check;
-        public GameObject StatusCheck;
-        public GameObject StatusDownload;
-        public GameObject StatusEnterGame;
-
-        private float CostTime = 0f;
-        private bool Done = false;
-
-        public LabelDotsAnimation LableAnimation;
-
+        private UIProgressBar progressBar;
+        private UILabel labelTips;
         public FileUpdate FileUpdate;
-        void Awake()
+
+        private void Awake()
         {
             FileUpdate = new FileUpdate(this);
+            progressBar = UIHelper.GetComponent(transform, "Progress Bar", typeof(UIProgressBar)) as UIProgressBar;
+            labelTips = UIHelper.GetComponent(transform, "Tips/Content", typeof(UILabel)) as UILabel;
+        }
+
+        public void SetTips(string tips)
+        {
+            labelTips.text = tips;
+        }
+
+        public void UpdateProgressBar(int current, int total)
+        {
+            if (progressBar.gameObject.activeSelf == false)
+            {
+                progressBar.gameObject.SetActive(true);
+            }
+            if (total < 1024 * 1024)
+            {
+                UIHelper.SetLabelText(progressBar.transform, "Label", current / 1024 + "/" + total / 1024 + " KB");
+            }
+            else
+            {
+                UIHelper.SetLabelText(progressBar.transform, "Label", (current / (1024 * 1024f)).ToString("0.00") + "/" + (total / (1024 * 1024f)).ToString("0.00") + " MB");
+            }
+            progressBar.value = (current * 1f / total);
+        }
+
+        public void HideProgressBar()
+        {
+            progressBar.gameObject.SetActive(false);
+            progressBar.value = 0;
         }
 
         public void StartUpdate()
         {
-            CostTime = 0;
-            Done = false;
             StartCoroutine(ProcessUpdate());
-        }
-
-        public void SwitchStatus(string tips)
-        {
-            LableAnimation.SetContent(tips);
         }
 
         private IEnumerator ProcessUpdate()
         {
-            SwitchStatus("正在请求服务器...");
+            SetTips("正在连接服务器...");
             using (WWW www = new WWW(Constants.JSON_URL))
             {
+                Helper.Log("UpdateUI.ProcessUpdate: request json @ " + Constants.JSON_URL);
                 yield return www;
                 if (string.IsNullOrEmpty(www.error) == false)
                 {
-                    SwitchStatus(www.error);
+                    SetTips(www.error);
                     yield break;
                 }
                 else if (www.isDone == false)
                 {
-                    SwitchStatus("Can not get json.");
+                    SetTips("Can not get json.");
                     yield break;
                 }
                 else
                 {
-                    if (ParseJson(www.text)==false)
+                    if (ParseJson(www.text) == false)
                     {
-                        SwitchStatus("Parse json error.");
+                        SetTips("Parse json error.");
                         yield break;
                     }
                 }
             }
-            SwitchStatus("正在检查资源文件");
+            SetTips("正在检查更新...");
             if (Application.isEditor)
             {
                 if (Constants.SCRIPT_BUNDLE_MODE)
@@ -114,7 +123,7 @@ namespace NCSpeedLight
                 Dictionary<string, string> dic = JsonReader.Deserialize<Dictionary<string, string>>(json);
                 if (dic == null || dic.Count == 0)
                 {
-                    SwitchStatus("Decode json error.");
+                    SetTips("Decode json error.");
                     return false;
                 }
                 Dictionary<string, string>.Enumerator ir = dic.GetEnumerator();
@@ -140,6 +149,7 @@ namespace NCSpeedLight
                         case "urlpush":
                             break;
                         case "urlicon":
+                            Constants.SHARE_ICON = kvp.Value;
                             break;
                         case "urldownload":
                             Constants.PKG_DOWNLOAD_URL = kvp.Value;
@@ -175,25 +185,18 @@ namespace NCSpeedLight
             }
             catch (Exception e)
             {
-                SwitchStatus(e.Message);
+                SetTips(e.Message);
                 return false;
             }
             return true;
         }
-        private IEnumerator CheckNetStatus()
-        {
-            Helper.Log("UIUpdate.CheckNetStatus: done.");
-            yield return 0;
-        }
 
         private IEnumerator StartGame()
         {
-            Done = true;
-            SwitchStatus("正在进入游戏");
-            LuaManager.Initialize();// 加载内置的bundle
-            Game.Instance.StartGame();
+            SetTips("正在进入游戏...");
             yield return new WaitForSeconds(0.1f);
-            gameObject.SetActive(false);
+            LuaManager.Initialize();// 加载内置的bundle
+            Game.Instance.Launch();
             yield return 0;
         }
     }

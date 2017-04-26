@@ -17,6 +17,8 @@ namespace NCSpeedLight
 
         public UpdateUI UpdateUI;
 
+        private int scriptSize = 0;
+        private int assetSize = 0;
         public FileUpdate(UpdateUI ui)
         {
             UpdateUI = ui;
@@ -51,15 +53,21 @@ namespace NCSpeedLight
             }
             else
             {
+                if (differInfo.NeedUpdate)
+                {
+                    UpdateUI.SetTips("正在下载补丁文件...");
+                    scriptSize = 0;
+                    UpdateUI.UpdateProgressBar(scriptSize, differInfo.UpdateSize);
+                }
                 if (differInfo.Modified.Count > 0)
                 {
                     // 下载服务器差异的文件
-                    yield return UpdateUI.StartCoroutine(DownloadScript(differInfo.Modified));
+                    yield return UpdateUI.StartCoroutine(DownloadScript(differInfo.Modified, differInfo));
                 }
                 if (differInfo.Added.Count > 0)
                 {
                     // 下载服务器新增的文件
-                    yield return UpdateUI.StartCoroutine(DownloadScript(differInfo.Added));
+                    yield return UpdateUI.StartCoroutine(DownloadScript(differInfo.Added, differInfo));
                 }
                 if (differInfo.Deleted.Count > 0)
                 {
@@ -115,9 +123,8 @@ namespace NCSpeedLight
             yield return 0;
         }
 
-        private IEnumerator DownloadScript(List<FileManifest.FileInfo> fileInfos)
+        private IEnumerator DownloadScript(List<FileManifest.FileInfo> fileInfos, FileManifest.DifferInfo differ)
         {
-            UpdateUI.SwitchStatus("正在下载脚本文件");
             Helper.Log("FileUpdate.DownloadScript: start.");
             string dataPath = Constants.LOCAL_SCRIPT_BUNDLE_PATH;  //数据目录
             Helper.Log("FileUpdate.DownloadScript: data path is " + dataPath);
@@ -133,11 +140,14 @@ namespace NCSpeedLight
                 yield return www;
                 if (www.isDone)
                 {
+                    scriptSize += www.bytes.Length;
+                    UpdateUI.UpdateProgressBar(scriptSize, differ.UpdateSize);
                     File.WriteAllBytes(localFilePath, www.bytes);
                 }
                 yield return new WaitForEndOfFrame();
             }
 
+            //UpdateUI.HideProgressBar();
             // 保存manifest文件至本地
             string localManifestPath = Constants.LOCAL_SCRIPT_BUNDLE_PATH + Constants.SCRIPT_MANIFEST_FILE;
             File.WriteAllBytes(localManifestPath, RemoteScriptManifest.Bytes);
@@ -197,15 +207,21 @@ namespace NCSpeedLight
             }
             else
             {
+                if (differInfo.NeedUpdate)
+                {
+                    UpdateUI.SetTips("正在下载资源文件...");
+                    assetSize = 0;
+                    UpdateUI.UpdateProgressBar(assetSize, differInfo.UpdateSize);
+                }
                 if (differInfo.Modified.Count > 0)
                 {
                     // 下载服务器差异的文件
-                    yield return UpdateUI.StartCoroutine(DownloadAsset(differInfo.Modified));
+                    yield return UpdateUI.StartCoroutine(DownloadAsset(differInfo.Modified, differInfo));
                 }
                 if (differInfo.Added.Count > 0)
                 {
                     // 下载服务器新增的文件
-                    yield return UpdateUI.StartCoroutine(DownloadAsset(differInfo.Added));
+                    yield return UpdateUI.StartCoroutine(DownloadAsset(differInfo.Added, differInfo));
                 }
                 if (differInfo.Deleted.Count > 0)
                 {
@@ -261,9 +277,8 @@ namespace NCSpeedLight
             yield return 0;
         }
 
-        private IEnumerator DownloadAsset(List<FileManifest.FileInfo> fileInfos)
+        private IEnumerator DownloadAsset(List<FileManifest.FileInfo> fileInfos, FileManifest.DifferInfo differInfo)
         {
-            UpdateUI.SwitchStatus("正在下载资源文件");
             Helper.Log("FileUpdate.DownloadAsset: start.");
             string dataPath = Constants.LOCAL_ASSET_BUNDLE_PATH;  //数据目录
             Helper.Log("FileUpdate.DownloadAsset: data path is " + dataPath);
@@ -279,11 +294,14 @@ namespace NCSpeedLight
                 yield return www;
                 if (www.isDone)
                 {
+                    assetSize += www.bytes.Length;
+                    UpdateUI.UpdateProgressBar(assetSize, differInfo.UpdateSize);
                     File.WriteAllBytes(localFilePath, www.bytes);
                 }
                 yield return new WaitForEndOfFrame();
             }
 
+            //UpdateUI.HideProgressBar();
             // 保存manifest文件至本地
             string localManifestPath = Constants.LOCAL_ASSET_BUNDLE_PATH + Constants.ASSET_MANIFEST_FILE;
             File.WriteAllBytes(localManifestPath, RemoteAssetManifest.Bytes);

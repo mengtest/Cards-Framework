@@ -180,25 +180,21 @@ public static class LuaBinder
 		NCSpeedLight_TipsDialogWrap.Register(L);
 		NCSpeedLight_InvisiableOnTweenFinishWrap.Register(L);
 		NCSpeedLight_LuaComponentWrap.Register(L);
+		NCSpeedLight_InternalUIWrap.Register(L);
 		NCSpeedLight_EventManagerWrap.Register(L);
 		L.RegFunction("EventHandlerDelegate", NCSpeedLight_EventHandlerDelegate);
 		L.RegFunction("LoadAssetCallback", NCSpeedLight_LoadAssetCallback);
+		L.BeginModule("ShareSDKAdapter");
+		NCSpeedLight_ShareSDKAdapter_RetTypeWrap.Register(L);
+		NCSpeedLight_ShareSDKAdapter_AuthInfoWrap.Register(L);
+		L.RegFunction("AuthCallbackDelegate", NCSpeedLight_ShareSDKAdapter_AuthCallbackDelegate);
+		L.RegFunction("ShareCallbackDelegate", NCSpeedLight_ShareSDKAdapter_ShareCallbackDelegate);
+		L.EndModule();
 		L.BeginModule("NetConnection");
 		L.RegFunction("StatusDelegate", NCSpeedLight_NetConnection_StatusDelegate);
 		L.EndModule();
 		L.BeginModule("Helper");
 		L.RegFunction("ChildDelegate", NCSpeedLight_Helper_ChildDelegate);
-		L.EndModule();
-		L.EndModule();
-		L.BeginModule("cn");
-		L.BeginModule("sharesdk");
-		L.BeginModule("unity3d");
-		cn_sharesdk_unity3d_ResponseStateWrap.Register(L);
-		cn_sharesdk_unity3d_PlatformTypeWrap.Register(L);
-		L.BeginModule("ShareSDK");
-		L.RegFunction("EventHandler", cn_sharesdk_unity3d_ShareSDK_EventHandler);
-		L.EndModule();
-		L.EndModule();
 		L.EndModule();
 		L.EndModule();
 		L.BeginModule("UIRoot");
@@ -686,6 +682,60 @@ public static class LuaBinder
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int NCSpeedLight_ShareSDKAdapter_AuthCallbackDelegate(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.ShareSDKAdapter.AuthCallbackDelegate), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.ShareSDKAdapter.AuthCallbackDelegate), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int NCSpeedLight_ShareSDKAdapter_ShareCallbackDelegate(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.ShareSDKAdapter.ShareCallbackDelegate), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.ShareSDKAdapter.ShareCallbackDelegate), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int NCSpeedLight_NetConnection_StatusDelegate(IntPtr L)
 	{
 		try
@@ -729,33 +779,6 @@ public static class LuaBinder
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
 				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.Helper.ChildDelegate), func, self);
-				ToLua.Push(L, arg1);
-			}
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int cn_sharesdk_unity3d_ShareSDK_EventHandler(IntPtr L)
-	{
-		try
-		{
-			int count = LuaDLL.lua_gettop(L);
-			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
-
-			if (count == 1)
-			{
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(cn.sharesdk.unity3d.ShareSDK.EventHandler), func);
-				ToLua.Push(L, arg1);
-			}
-			else
-			{
-				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(cn.sharesdk.unity3d.ShareSDK.EventHandler), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;

@@ -20,6 +20,7 @@ end
 
 function HallScene.Begin()
 	HallScene.RegisterNetEvent();
+	NCSpeedLight.InternalUI.Instance:CloseBG();
 	UIManager.CloseAllWindows();
 	AssetManager.LoadScene(SceneType.HallScene);
 	UIManager.OpenWindow('Hall/UI_Main');
