@@ -159,7 +159,7 @@ namespace NCSpeedLight
             PlistElementArray layer1Array = dict.CreateArray("URL Types");
             PlistElementDict layer1Dict = layer1Array.AddDict();
             PlistElementArray layer2Array = layer1Dict.CreateArray("URL Schemes");
-            layer2Array.AddString("wx4868b35061f87885");
+            layer2Array.AddString("wxf75bd5ce5ce91151");
 
             plistDocument.WriteToFile(plistPath);
         }
