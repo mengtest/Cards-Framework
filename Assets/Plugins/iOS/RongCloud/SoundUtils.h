@@ -5,28 +5,28 @@ static AVAudioPlayer*  g_Audioplayer=nil;
 #if defined(__cplusplus)
 extern "C"
 {
-    int play(char* uri,float volume = 1)
+    int PlayVoice(char* uri,float volume = 1)
     {
         if(uri==nil)
         {
-            NSLog(@"SoundUtils.Play: uri is nil");
+            NSLog(@"PlayVoice: uri is nil");
             return -1;
         }
         
-        NSLog(@"SoundUtils.Play: uri is: %s",uri);
+        NSLog(@"PlayVoice: uri is: %s",uri);
         
         NSString * path= [NSString stringWithFormat:@"%s",uri];
         
         NSURL *url=[NSURL fileURLWithPath:path];
         if(url==nil)
         {
-            NSLog(@"SoundUtils.Play: url is nil.");
+            NSLog(@"PlayVoice: url is nil.");
             return -2;
         }
         else
         {
             NSString* tempath =  [url path];
-            NSLog(@"SoundUtils.Play: url is:%@",tempath);
+            NSLog(@"PlayVoice: url is:%@",tempath);
         }
         
         
@@ -55,17 +55,17 @@ extern "C"
             BOOL b = [g_Audioplayer play];
             if(b)
             {
-                NSLog(@"SoundUtils.Play: success.");
+                NSLog(@"PlayVoice: success.");
                 return 0;
             }
             else
             {
-                NSLog(@"SoundUtils.Play: fail.");
+                NSLog(@"PlayVoice: fail.");
             }
         }
         else
         {
-            NSLog(@"SoundUtils.Play: AVAudioPlayer instance is nil.");
+            NSLog(@"PlayVoice: AVAudioPlayer instance is nil.");
         }
         return -1;
     }
