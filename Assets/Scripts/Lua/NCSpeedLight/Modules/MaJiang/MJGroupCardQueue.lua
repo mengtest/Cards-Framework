@@ -53,14 +53,16 @@ end
 -- 弹出指定位置的牌
 function MJGroupCardQueue.Pop(index)
 	local card = MJGroupCardQueue.Cards[index];
-	card.gameObject:SetActive(false);
-	table.remove(MJGroupCardQueue.Cards, index);
-	UI_MaJiang.SetupRemainCardCount(MJGroupCardQueue.Count());
+	if card ~= nil then
+		card.gameObject:SetActive(false);
+		table.remove(MJGroupCardQueue.Cards, index);
+		UI_MaJiang.SetupRemainCardCount(MJGroupCardQueue.Count());	
+	end
 end
 
 -- 弹出对列前部的牌
 function MJGroupCardQueue.PopFront(count)
-	if # MJGroupCardQueue.Cards == 0 then
+	if #MJGroupCardQueue.Cards == 0 then
 		Log.Error("MJGroupCardQueue.PopFront: can not pop a card caused by nil cards queue.");
 		return;
 	end
@@ -75,23 +77,23 @@ end
 
 -- 弹出队列后部的牌
 function MJGroupCardQueue.PopRear(count)
-	if # MJGroupCardQueue.Cards == 0 then
+	if #MJGroupCardQueue.Cards == 0 then
 		Log.Error("MJGroupCardQueue.PopRear: can not pop a card caused by nil cards queue.");
 		return;
 	end
 	if count == nil then
-		if MJGroupCardQueue.PopedRearCount % 2 == 0 and # MJGroupCardQueue.Cards > 1 then
-			MJGroupCardQueue.Pop(# MJGroupCardQueue.Cards - 1);
+		if MJGroupCardQueue.PopedRearCount % 2 == 0 and #MJGroupCardQueue.Cards > 1 then
+			MJGroupCardQueue.Pop(#MJGroupCardQueue.Cards - 1);
 		else
-			MJGroupCardQueue.Pop(# MJGroupCardQueue.Cards);
+			MJGroupCardQueue.Pop(#MJGroupCardQueue.Cards);
 		end
 		MJGroupCardQueue.PopedRearCount = MJGroupCardQueue.PopedRearCount + 1;
 	else
 		for i = 1, count do
-			if MJGroupCardQueue.PopedRearCount % 2 == 0 and # MJGroupCardQueue.Cards > 1 then
-				MJGroupCardQueue.Pop(# MJGroupCardQueue.Cards - 1);
+			if MJGroupCardQueue.PopedRearCount % 2 == 0 and #MJGroupCardQueue.Cards > 1 then
+				MJGroupCardQueue.Pop(#MJGroupCardQueue.Cards - 1);
 			else
-				MJGroupCardQueue.Pop(# MJGroupCardQueue.Cards);
+				MJGroupCardQueue.Pop(#MJGroupCardQueue.Cards);
 			end
 			MJGroupCardQueue.PopedRearCount = MJGroupCardQueue.PopedRearCount + 1;
 		end
@@ -100,5 +102,5 @@ end
 
 -- 队列的个数
 function MJGroupCardQueue.Count()
-	return # MJGroupCardQueue.Cards;
+	return #MJGroupCardQueue.Cards;
 end 

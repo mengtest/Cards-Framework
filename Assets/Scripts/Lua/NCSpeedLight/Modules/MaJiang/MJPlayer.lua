@@ -546,10 +546,10 @@ function MJPlayer:StartGame()
 	self:SetupBanker();
 	if self:IsBanker() then
 		self:SetHandCardCount(MJDefine.BANKER_INITIAL_CARD_COUNT);
-		MJGroupCardQueue.PopFront(MJDefine.BANKER_INITIAL_CARD_COUNT);
+		-- MJGroupCardQueue.PopFront(MJDefine.BANKER_INITIAL_CARD_COUNT);
 	else
 		self:SetHandCardCount(MJDefine.XIAN_INITIAL_CARD_COUNT);
-		MJGroupCardQueue.PopFront(MJDefine.XIAN_INITIAL_CARD_COUNT);
+		-- MJGroupCardQueue.PopFront(MJDefine.XIAN_INITIAL_CARD_COUNT);
 	end
 end
 

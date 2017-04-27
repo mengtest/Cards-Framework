@@ -908,25 +908,40 @@ function MJScene.ReturnCastDice(evt)
 		return;
 	end
 	Log.Info("MJScene.ReturnCastDice: dice number is : " .. msg.m_pos);
-	UI_MaJiang.SetupCastDice(false);
-	MJSceneController.PlayDiceAnimation(MJScene.DiceNumbers[1], MJScene.DiceNumbers[2], nil);
-	MJSceneController.PlayGroupCardAnimation(function()
-		MJScene.PlayStartGameEffect();
-	end);
+	
+	
 	-- 设置墩牌
 	local fromPlayer = MJScene.GetPlayerByID(MJScene.GetCardRoleID);
 	Log.Info("MJScene.ReturnCastDice: 从" .. fromPlayer:LogKey() .. "的第【" .. tostring(MJScene.GetCardNumber) .. "】墩开始抓牌");
 	MJGroupCardQueue.PushAll(fromPlayer.UIPosition, MJScene.GetCardNumber);
-	-- 开始游戏
-	for key, value in pairs(MJScene.Players) do
-		value:StartGame();
-	end
+	
+	UI_MaJiang.SetupCastDice(false);
+	MJSceneController.PlayDiceAnimation(MJScene.DiceNumbers[1], MJScene.DiceNumbers[2], nil);
+	MJSceneController.PlayGroupCardAnimation(function()
+		-- MJScene.PlayStartGameEffect();
+		StartCoroutine(MJScene.PlaySendCardAnimation);
+	end);
 end
 
 function MJScene.ReturnOperateError(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GM_MJOperatorError, evt);
 	Log.Info("MJScene.ReturnOperateError: result is " .. tostring(msg.m_Result));
 	MJScene.RequestReconnectInfo(); -- 操作失败时刷新桌面的数据
+end
+
+function MJScene.PlaySendCardAnimation()
+	MJGroupCardQueue.PopFront(MJScene.GetPlayerCount() * 4);
+	WaitForSeconds(0.2)
+	MJGroupCardQueue.PopFront(MJScene.GetPlayerCount() * 4);
+	WaitForSeconds(0.2)
+	MJGroupCardQueue.PopFront(MJScene.GetPlayerCount() * 4);
+	WaitForSeconds(0.2)
+	MJGroupCardQueue.PopFront(MJScene.GetPlayerCount() + 1);
+	-- 开始游戏
+	for key, value in pairs(MJScene.Players) do
+		value:StartGame();
+		value:DisplayHandCard(true, true);
+	end
 end
 
 function MJScene.PlayStartGameEffect()
