@@ -66,6 +66,7 @@ namespace NCSpeedLight
                         Helper.Log("ShareSDKAdapter.authHandler: authInfo.userID is " + authInfo.userID);
 
                         authInfo.unionID = authInfoTable["unionID"] as string;
+                        Constants.WX_UNION_ID = authInfo.unionID;
                         Helper.Log("ShareSDKAdapter.authHandler: authInfo.unionID is " + authInfo.unionID);
 
                         long.TryParse(authInfoTable["expiresTime"] as string, out authInfo.expiresTime);
@@ -172,6 +173,7 @@ namespace NCSpeedLight
                         Helper.Log("ShareSDKAdapter.GetWechatAuthInfo: authInfo.userID is " + authInfo.userID);
 
                         authInfo.unionID = authInfoTable["unionID"] as string;
+                        Constants.WX_UNION_ID = authInfo.unionID;
                         Helper.Log("ShareSDKAdapter.GetWechatAuthInfo: authInfo.unionID is " + authInfo.unionID);
 
                         long.TryParse(authInfoTable["expiresTime"] as string, out authInfo.expiresTime);
@@ -206,9 +208,10 @@ namespace NCSpeedLight
             ShareContent content = new ShareContent();
             content.SetTitle(Constants.SHARE_TITLE);
             content.SetText(Constants.SHARE_CONTENT);
-            content.SetUrl(Constants.PKG_DOWNLOAD_URL);
+            content.SetUrl(Constants.PKG_DOWNLOAD_URL + Constants.WX_UNION_ID + "&");
             content.SetImageUrl(Constants.SHARE_ICON);
             content.SetShareType(ContentType.Webpage);
+            content.SetShareContentCustomize(PlatformType.WeChatMoments, content);
             ssdk.ShareContent(PlatformType.WeChatMoments, content);
         }
 
@@ -217,10 +220,16 @@ namespace NCSpeedLight
             ShareContent content = new ShareContent();
             content.SetTitle(Constants.SHARE_TITLE);
             content.SetText(Constants.SHARE_CONTENT);
-            content.SetUrl(Constants.PKG_DOWNLOAD_URL);
+            content.SetUrl(Constants.PKG_DOWNLOAD_URL + Constants.WX_UNION_ID + "&");
             content.SetImageUrl(Constants.SHARE_ICON);
-            content.SetShareType(ContentType.Image);
+            content.SetShareType(ContentType.Webpage);
+            content.SetShareContentCustomize(PlatformType.WeChat, content);
             ssdk.ShareContent(PlatformType.WeChat, content);
+        }
+
+        public static void InviteWechatFriend(ShareCallbackDelegate handler)
+        {
+
         }
     }
 }

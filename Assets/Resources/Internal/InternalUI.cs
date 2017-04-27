@@ -22,6 +22,14 @@ namespace NCSpeedLight
             Instance = this;
         }
 
+        private void Update()
+        {
+            if (Application.platform == RuntimePlatform.Android && Input.GetKeyDown(KeyCode.Escape))
+            {
+                OpenDialog(true, "提示", "你确定退出游戏吗？", () => { Application.Quit(); });
+            }
+        }
+
         private void OnDestroy()
         {
             Instance = null;

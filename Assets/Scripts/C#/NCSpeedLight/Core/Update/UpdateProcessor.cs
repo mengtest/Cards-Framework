@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace NCSpeedLight
 {
-    public class FileUpdate
+    public class UpdateProcessor
     {
         public FileManifest LocalScriptManifest;
         public FileManifest RemoteScriptManifest;
@@ -15,28 +15,28 @@ namespace NCSpeedLight
         public FileManifest RemoteAssetManifest;
         public FileManifest ContentAssetManifest;
 
-        public UpdateUI UpdateUI;
+        public UpdateUI UI;
 
         private int scriptSize = 0;
         private int assetSize = 0;
-        public FileUpdate(UpdateUI ui)
+        public UpdateProcessor(UpdateUI ui)
         {
-            UpdateUI = ui;
+            UI = ui;
         }
 
         public IEnumerator UpdateScript()
         {
             ContentScriptManifest = new FileManifest(Constants.LOCAL_SCRIPT_BUNDLE_PATH, Constants.REMOTE_SCRIPT_BUNDLE_PATH, Constants.SCRIPT_MANIFEST_FILE);
-            yield return UpdateUI.StartCoroutine(ContentScriptManifest.Initialize(true, false));
+            yield return UI.StartCoroutine(ContentScriptManifest.Initialize(true, false));
             LocalScriptManifest = new FileManifest(Constants.LOCAL_SCRIPT_BUNDLE_PATH, Constants.REMOTE_SCRIPT_BUNDLE_PATH, Constants.SCRIPT_MANIFEST_FILE);
-            yield return UpdateUI.StartCoroutine(LocalScriptManifest.Initialize(false, false));
+            yield return UI.StartCoroutine(LocalScriptManifest.Initialize(false, false));
             RemoteScriptManifest = new FileManifest(Constants.LOCAL_SCRIPT_BUNDLE_PATH, Constants.REMOTE_SCRIPT_BUNDLE_PATH, Constants.SCRIPT_MANIFEST_FILE);
-            yield return UpdateUI.StartCoroutine(RemoteScriptManifest.Initialize(false, true));
+            yield return UI.StartCoroutine(RemoteScriptManifest.Initialize(false, true));
 
             if (LocalScriptManifest.FileInfos.Count == 0)
             {
                 // 本地不存在文件，从安装包中解压出来
-                yield return UpdateUI.StartCoroutine(ExtractStreamingScript());
+                yield return UI.StartCoroutine(ExtractStreamingScript());
                 // 重置本地清单列表
                 LocalScriptManifest = new FileManifest(Constants.LOCAL_SCRIPT_BUNDLE_PATH, Constants.REMOTE_SCRIPT_BUNDLE_PATH, Constants.SCRIPT_MANIFEST_FILE);
                 yield return LocalScriptManifest.Initialize(false, false);
@@ -55,24 +55,24 @@ namespace NCSpeedLight
             {
                 if (differInfo.NeedUpdate)
                 {
-                    UpdateUI.SetTips("正在下载补丁文件...");
+                    UI.SetTips("正在下载补丁文件...");
                     scriptSize = 0;
-                    UpdateUI.UpdateProgressBar(scriptSize, differInfo.UpdateSize);
+                    UI.UpdateProgressBar(scriptSize, differInfo.UpdateSize);
                 }
                 if (differInfo.Modified.Count > 0)
                 {
                     // 下载服务器差异的文件
-                    yield return UpdateUI.StartCoroutine(DownloadScript(differInfo.Modified, differInfo));
+                    yield return UI.StartCoroutine(DownloadScript(differInfo.Modified, differInfo));
                 }
                 if (differInfo.Added.Count > 0)
                 {
                     // 下载服务器新增的文件
-                    yield return UpdateUI.StartCoroutine(DownloadScript(differInfo.Added, differInfo));
+                    yield return UI.StartCoroutine(DownloadScript(differInfo.Added, differInfo));
                 }
                 if (differInfo.Deleted.Count > 0)
                 {
                     // 删除服务器不存在的文件
-                    yield return UpdateUI.StartCoroutine(DeleteOldScript(differInfo.Deleted));
+                    yield return UI.StartCoroutine(DeleteOldScript(differInfo.Deleted));
                 }
             }
             yield return 0;
@@ -141,7 +141,7 @@ namespace NCSpeedLight
                 if (www.isDone)
                 {
                     scriptSize += www.bytes.Length;
-                    UpdateUI.UpdateProgressBar(scriptSize, differ.UpdateSize);
+                    UI.UpdateProgressBar(scriptSize, differ.UpdateSize);
                     File.WriteAllBytes(localFilePath, www.bytes);
                 }
                 yield return new WaitForEndOfFrame();
@@ -182,16 +182,16 @@ namespace NCSpeedLight
         public IEnumerator UpdateAsset()
         {
             ContentAssetManifest = new FileManifest(Constants.LOCAL_ASSET_BUNDLE_PATH, Constants.REMOTE_ASSET_BUNDLE_PATH, Constants.ASSET_MANIFEST_FILE);
-            yield return UpdateUI.StartCoroutine(ContentAssetManifest.Initialize(true, false));
+            yield return UI.StartCoroutine(ContentAssetManifest.Initialize(true, false));
             LocalAssetManifest = new FileManifest(Constants.LOCAL_ASSET_BUNDLE_PATH, Constants.REMOTE_ASSET_BUNDLE_PATH, Constants.ASSET_MANIFEST_FILE);
-            yield return UpdateUI.StartCoroutine(LocalAssetManifest.Initialize(false, false));
+            yield return UI.StartCoroutine(LocalAssetManifest.Initialize(false, false));
             RemoteAssetManifest = new FileManifest(Constants.LOCAL_ASSET_BUNDLE_PATH, Constants.REMOTE_ASSET_BUNDLE_PATH, Constants.ASSET_MANIFEST_FILE);
-            yield return UpdateUI.StartCoroutine(RemoteAssetManifest.Initialize(false, true));
+            yield return UI.StartCoroutine(RemoteAssetManifest.Initialize(false, true));
 
             if (LocalAssetManifest.FileInfos.Count == 0)
             {
                 // 本地不存在文件，从安装包中解压出来
-                yield return UpdateUI.StartCoroutine(ExtractStreamingAsset());
+                yield return UI.StartCoroutine(ExtractStreamingAsset());
                 // 重置本地清单列表
                 LocalAssetManifest = new FileManifest(Constants.LOCAL_ASSET_BUNDLE_PATH, Constants.REMOTE_ASSET_BUNDLE_PATH, Constants.ASSET_MANIFEST_FILE);
                 yield return LocalAssetManifest.Initialize(false, false);
@@ -209,24 +209,24 @@ namespace NCSpeedLight
             {
                 if (differInfo.NeedUpdate)
                 {
-                    UpdateUI.SetTips("正在下载资源文件...");
+                    UI.SetTips("正在下载资源文件...");
                     assetSize = 0;
-                    UpdateUI.UpdateProgressBar(assetSize, differInfo.UpdateSize);
+                    UI.UpdateProgressBar(assetSize, differInfo.UpdateSize);
                 }
                 if (differInfo.Modified.Count > 0)
                 {
                     // 下载服务器差异的文件
-                    yield return UpdateUI.StartCoroutine(DownloadAsset(differInfo.Modified, differInfo));
+                    yield return UI.StartCoroutine(DownloadAsset(differInfo.Modified, differInfo));
                 }
                 if (differInfo.Added.Count > 0)
                 {
                     // 下载服务器新增的文件
-                    yield return UpdateUI.StartCoroutine(DownloadAsset(differInfo.Added, differInfo));
+                    yield return UI.StartCoroutine(DownloadAsset(differInfo.Added, differInfo));
                 }
                 if (differInfo.Deleted.Count > 0)
                 {
                     // 删除服务器不存在的文件
-                    yield return UpdateUI.StartCoroutine(DeleteOldAsset(differInfo.Deleted));
+                    yield return UI.StartCoroutine(DeleteOldAsset(differInfo.Deleted));
                 }
             }
             yield return 0;
@@ -295,7 +295,7 @@ namespace NCSpeedLight
                 if (www.isDone)
                 {
                     assetSize += www.bytes.Length;
-                    UpdateUI.UpdateProgressBar(assetSize, differInfo.UpdateSize);
+                    UI.UpdateProgressBar(assetSize, differInfo.UpdateSize);
                     File.WriteAllBytes(localFilePath, www.bytes);
                 }
                 yield return new WaitForEndOfFrame();

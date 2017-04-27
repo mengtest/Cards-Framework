@@ -4,10 +4,10 @@ local assert = assert
 local sproto = {}
 local host = {}
 
-local weak_mt = { __mode = "kv" }
-local sproto_mt = { __index = sproto }
-local sproto_nogc = { __index = sproto }
-local host_mt = { __index = host }
+local weak_mt = {__mode = "kv"}
+local sproto_mt = {__index = sproto}
+local sproto_nogc = {__index = sproto}
+local host_mt = {__index = host}
 
 function sproto_mt:__gc()
 	core.deleteproto(self.__cobj)
@@ -17,8 +17,8 @@ function sproto.new(bin)
 	local cobj = assert(core.newproto(bin))
 	local self = {
 		__cobj = cobj,
-		__tcache = setmetatable( {} , weak_mt ),
-		__pcache = setmetatable( {} , weak_mt ),
+		__tcache = setmetatable({}, weak_mt),
+		__pcache = setmetatable({}, weak_mt),
 	}
 	return setmetatable(self, sproto_mt)
 end
@@ -26,20 +26,20 @@ end
 function sproto.sharenew(cobj)
 	local self = {
 		__cobj = cobj,
-		__tcache = setmetatable( {} , weak_mt ),
-		__pcache = setmetatable( {} , weak_mt ),
+		__tcache = setmetatable({}, weak_mt),
+		__pcache = setmetatable({}, weak_mt),
 	}
 	return setmetatable(self, sproto_nogc)
 end
 
 function sproto.parse(ptext)
-	local parser = require "3rd/sproto/sprotoparser"
+	local parser = require "Third/sproto/sprotoparser"
 	local pbin = parser.parse(ptext)
 	return sproto.new(pbin)
 end
 
-function sproto:host( packagename )
-	packagename = packagename or  "package"
+function sproto:host(packagename)
+	packagename = packagename or "package"
 	local obj = {
 		__proto = self,
 		__package = core.querytype(self.__cobj, packagename),
@@ -54,7 +54,7 @@ local function querytype(self, typename)
 		v = core.querytype(self.__cobj, typename)
 		self.__tcache[typename] = v
 	end
-
+	
 	return v
 end
 
@@ -88,14 +88,14 @@ local function queryproto(self, pname)
 		end
 		v = {
 			request = req,
-			response =resp,
+			response = resp,
 			name = pname,
 			tag = tag,
 		}
 		self.__pcache[pname] = v
-		self.__pcache[tag]  = v
+		self.__pcache[tag] = v
 	end
-
+	
 	return v
 end
 
@@ -103,9 +103,9 @@ function sproto:request_encode(protoname, tbl)
 	local p = queryproto(self, protoname)
 	local request = p.request
 	if request then
-		return core.encode(request,tbl) , p.tag
+		return core.encode(request, tbl), p.tag
 	else
-		return "" , p.tag
+		return "", p.tag
 	end
 end
 
@@ -113,7 +113,7 @@ function sproto:response_encode(protoname, tbl)
 	local p = queryproto(self, protoname)
 	local response = p.response
 	if response then
-		return core.encode(response,tbl)
+		return core.encode(response, tbl)
 	else
 		return ""
 	end
@@ -123,7 +123,7 @@ function sproto:request_decode(protoname, ...)
 	local p = queryproto(self, protoname)
 	local request = p.request
 	if request then
-		return core.decode(request,...) , p.name
+		return core.decode(request, ...), p.name
 	else
 		return nil, p.name
 	end
@@ -133,7 +133,7 @@ function sproto:response_decode(protoname, ...)
 	local p = queryproto(self, protoname)
 	local response = p.response
 	if response then
-		return core.decode(response,...)
+		return core.decode(response, ...)
 	end
 end
 
@@ -213,14 +213,14 @@ function host:attach(sp)
 		header_tmp.type = proto.tag
 		header_tmp.session = session
 		local header = core.encode(self.__package, header_tmp)
-
+		
 		if session then
 			self.__session[session] = proto.response or true
 		end
-
+		
 		if args then
 			local content = core.encode(proto.request, args)
-			return core.pack(header ..  content)
+			return core.pack(header .. content)
 		else
 			return core.pack(header)
 		end

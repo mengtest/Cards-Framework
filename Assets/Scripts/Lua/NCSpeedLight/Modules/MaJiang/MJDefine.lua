@@ -1,10 +1,19 @@
+
 MJDefine = {
 	TOTAL_CARD_COUNT = 112, -- 牌的总数
 	BANKER_INITIAL_CARD_COUNT = 14, -- 庄家牌的初始数量
 	XIAN_INITIAL_CARD_COUNT = 13,-- 闲家牌的初始数量
 	MAX_CAST_DICE_NUMBER = 1,-- 最多的掷骰子的次数
+	TableCardX = 0.9635041, -- 场景内牌的宽度
+	TableCardY = 1.24706018,-- 场景内牌的高度
+	TableCardZ = 0.636123836,-- 场景内牌的厚度
+	HandCardX = 0.8029202,-- 手牌的宽度
+	HandCardY = 1.03921676,-- 手牌的高度
+	HandCardZ = 0.5301034,-- 手牌的厚度
+	OpenTest = true,-- 是否开启偷天换日
 }
 
+-- 计算字符对应
 MJResultText = {
 	{0, "一"},
 	{1, "二"},
@@ -39,13 +48,7 @@ MJRoomType =
 	R_3 = 10004,
 }
 
-MJPlayerType =
-{
-	Hero = 0,
-	Player = 1,
-	Robot = 2,
-}
-
+-- 麻将牌类型
 MaJiangType =
 {
 	MJ_1_WAN = 0,
@@ -99,6 +102,7 @@ MaJiangType =
 	end
 };
 
+-- 麻将操作类型
 MaJiangOperatorType =
 {
 	--开始

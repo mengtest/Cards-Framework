@@ -22,11 +22,13 @@ public class NCSpeedLight_ConstantsWrap
 		L.RegVar("BUNDLE_ASSET_WORKSPACE", get_BUNDLE_ASSET_WORKSPACE, set_BUNDLE_ASSET_WORKSPACE);
 		L.RegVar("BUNDLE_SCENE_WORKSPACE", get_BUNDLE_SCENE_WORKSPACE, set_BUNDLE_SCENE_WORKSPACE);
 		L.RegVar("RESOURCE_WORKSPACE", get_RESOURCE_WORKSPACE, set_RESOURCE_WORKSPACE);
-		L.RegVar("MIDDLE_VERSION", get_MIDDLE_VERSION, null);
-		L.RegVar("MINIOR_VERSION", get_MINIOR_VERSION, null);
+		L.RegVar("FORCE_UPDATE", get_FORCE_UPDATE, null);
+		L.RegVar("MIDDLE_VERSION", get_MIDDLE_VERSION, set_MIDDLE_VERSION);
+		L.RegVar("MINIOR_VERSION", get_MINIOR_VERSION, set_MINIOR_VERSION);
 		L.RegVar("VERSION", get_VERSION, null);
 		L.RegVar("JSON_URL", get_JSON_URL, null);
 		L.RegVar("DATA_PATH", get_DATA_PATH, null);
+		L.RegVar("CONFIG_PATH", get_CONFIG_PATH, null);
 		L.RegVar("BUILD_SCRIPT_BUNDLE_PATH", get_BUILD_SCRIPT_BUNDLE_PATH, null);
 		L.RegVar("BUILD_ASSET_BUNDLE_PATH", get_BUILD_ASSET_BUNDLE_PATH, null);
 		L.RegVar("STREAMING_PATH", get_STREAMING_PATH, null);
@@ -51,6 +53,7 @@ public class NCSpeedLight_ConstantsWrap
 		L.RegVar("SHARE_MOMENT_CONTENT", get_SHARE_MOMENT_CONTENT, set_SHARE_MOMENT_CONTENT);
 		L.RegVar("SHARE_URL", get_SHARE_URL, set_SHARE_URL);
 		L.RegVar("SHARE_ICON", get_SHARE_ICON, set_SHARE_ICON);
+		L.RegVar("WX_UNION_ID", get_WX_UNION_ID, set_WX_UNION_ID);
 		L.EndStaticLibs();
 	}
 
@@ -101,7 +104,7 @@ public class NCSpeedLight_ConstantsWrap
 	{
 		try
 		{
-			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.MAJOR_VERSION);
+			LuaDLL.lua_pushinteger(L, NCSpeedLight.Constants.MAJOR_VERSION);
 			return 1;
 		}
 		catch(Exception e)
@@ -265,11 +268,25 @@ public class NCSpeedLight_ConstantsWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_FORCE_UPDATE(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushboolean(L, NCSpeedLight.Constants.FORCE_UPDATE);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_MIDDLE_VERSION(IntPtr L)
 	{
 		try
 		{
-			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.MIDDLE_VERSION);
+			LuaDLL.lua_pushinteger(L, NCSpeedLight.Constants.MIDDLE_VERSION);
 			return 1;
 		}
 		catch(Exception e)
@@ -283,7 +300,7 @@ public class NCSpeedLight_ConstantsWrap
 	{
 		try
 		{
-			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.MINIOR_VERSION);
+			LuaDLL.lua_pushinteger(L, NCSpeedLight.Constants.MINIOR_VERSION);
 			return 1;
 		}
 		catch(Exception e)
@@ -326,6 +343,20 @@ public class NCSpeedLight_ConstantsWrap
 		try
 		{
 			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.DATA_PATH);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_CONFIG_PATH(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.CONFIG_PATH);
 			return 1;
 		}
 		catch(Exception e)
@@ -671,6 +702,20 @@ public class NCSpeedLight_ConstantsWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_WX_UNION_ID(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.WX_UNION_ID);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_GAME_NAME(IntPtr L)
 	{
 		try
@@ -720,7 +765,7 @@ public class NCSpeedLight_ConstantsWrap
 	{
 		try
 		{
-			string arg0 = ToLua.CheckString(L, 2);
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
 			NCSpeedLight.Constants.MAJOR_VERSION = arg0;
 			return 0;
 		}
@@ -857,6 +902,36 @@ public class NCSpeedLight_ConstantsWrap
 		{
 			string arg0 = ToLua.CheckString(L, 2);
 			NCSpeedLight.Constants.RESOURCE_WORKSPACE = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_MIDDLE_VERSION(IntPtr L)
+	{
+		try
+		{
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			NCSpeedLight.Constants.MIDDLE_VERSION = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_MINIOR_VERSION(IntPtr L)
+	{
+		try
+		{
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			NCSpeedLight.Constants.MINIOR_VERSION = arg0;
 			return 0;
 		}
 		catch(Exception e)
@@ -1067,6 +1142,21 @@ public class NCSpeedLight_ConstantsWrap
 		{
 			string arg0 = ToLua.CheckString(L, 2);
 			NCSpeedLight.Constants.SHARE_ICON = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_WX_UNION_ID(IntPtr L)
+	{
+		try
+		{
+			string arg0 = ToLua.CheckString(L, 2);
+			NCSpeedLight.Constants.WX_UNION_ID = arg0;
 			return 0;
 		}
 		catch(Exception e)

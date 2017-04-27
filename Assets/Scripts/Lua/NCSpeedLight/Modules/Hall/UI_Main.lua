@@ -30,6 +30,9 @@ function UI_Main.InitBtnEvt()
 	UIHelper.SetButtonEvent(this.transform, "bottom/function/Record", UI_Main.OnClickRecord);
 	UIHelper.SetButtonEvent(this.transform, "bottom/function/Message", UI_Main.OnClickMessage);
 	UIHelper.SetButtonEvent(this.transform, "bottom/function/More", UI_Main.OnClickMore);
+	UIHelper.SetButtonEvent(this.transform, "bottom/function/Return", UI_Main.OnClickReturn);
+	UIHelper.SetButtonEvent(this.transform, "bottom/function/Return/PlayMethod", UI_Main.OnClickPlayway);
+	UIHelper.SetButtonEvent(this.transform, "bottom/function/Return/Setting", UI_Main.OnClickSetting);
 	UIHelper.SetButtonEvent(this.transform, "right/rightButton/CreateRoom", UI_Main.OnClickCreateRoom);
 	UIHelper.SetButtonEvent(this.transform, "right/rightButton/JoinRoom", UI_Main.OnClickJoinRoom);
 end
@@ -51,11 +54,25 @@ function UI_Main.OnClickRecord(go)
 end
 
 function UI_Main.OnClickMessage(go)
-	UIManager.OpenWindow("Hall/UI_Share");
+	UIManager.OpenWindow(UIType.UI_SystemEmail);
 end
 
 function UI_Main.OnClickMore(go)
-	UIManager.OpenWindow("Hall/UI_Share");
+	UIHelper.SetActiveState(UI_Main.transform, "bottom/function/More", false);
+	UIHelper.SetActiveState(UI_Main.transform, "bottom/function/Return", true);	
+end
+
+function UI_Main.OnClickReturn(go)
+	UIHelper.SetActiveState(UI_Main.transform, "bottom/function/More", true);
+	UIHelper.SetActiveState(UI_Main.transform, "bottom/function/Return", false);
+end
+
+function UI_Main.OnClickPlayway(go)
+	UIManager.OpenWindow(UIType.UI_Playway);
+end
+
+function UI_Main.OnClickSetting(go)
+	UIManager.OpenWindow(UIType.UI_Setting);
 end
 
 function UI_Main.OnClickCreateRoom(go)

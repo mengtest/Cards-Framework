@@ -37,7 +37,6 @@ public static class DelegateFactory
 		dict.Add(typeof(UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene>), UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene);
 		dict.Add(typeof(UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.Scene>), UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene);
 		dict.Add(typeof(NCSpeedLight.EventHandlerDelegate), NCSpeedLight_EventHandlerDelegate);
-		dict.Add(typeof(NCSpeedLight.LoadAssetCallback), NCSpeedLight_LoadAssetCallback);
 		dict.Add(typeof(NCSpeedLight.Helper.ChildDelegate), NCSpeedLight_Helper_ChildDelegate);
 		dict.Add(typeof(UIEventListener.BoolDelegate), UIEventListener_BoolDelegate);
 		dict.Add(typeof(UIEventListener.FloatDelegate), UIEventListener_FloatDelegate);
@@ -1147,55 +1146,6 @@ public static class DelegateFactory
 		{
 			NCSpeedLight_EventHandlerDelegate_Event target = new NCSpeedLight_EventHandlerDelegate_Event(func, self);
 			NCSpeedLight.EventHandlerDelegate d = target.CallWithSelf;
-			target.method = d.Method;
-			return d;
-		}
-	}
-
-	class NCSpeedLight_LoadAssetCallback_Event : LuaDelegate
-	{
-		public NCSpeedLight_LoadAssetCallback_Event(LuaFunction func) : base(func) { }
-		public NCSpeedLight_LoadAssetCallback_Event(LuaFunction func, LuaTable self) : base(func, self) { }
-
-		public void Call(UnityEngine.Object param0, NCSpeedLight.ResLoadParam param1)
-		{
-			func.BeginPCall();
-			func.Push(param0);
-			func.PushObject(param1);
-			func.PCall();
-			func.EndPCall();
-		}
-
-		public void CallWithSelf(UnityEngine.Object param0, NCSpeedLight.ResLoadParam param1)
-		{
-			func.BeginPCall();
-			func.Push(self);
-			func.Push(param0);
-			func.PushObject(param1);
-			func.PCall();
-			func.EndPCall();
-		}
-	}
-
-	public static Delegate NCSpeedLight_LoadAssetCallback(LuaFunction func, LuaTable self, bool flag)
-	{
-		if (func == null)
-		{
-			NCSpeedLight.LoadAssetCallback fn = delegate(UnityEngine.Object param0, NCSpeedLight.ResLoadParam param1) { };
-			return fn;
-		}
-
-		if(!flag)
-		{
-			NCSpeedLight_LoadAssetCallback_Event target = new NCSpeedLight_LoadAssetCallback_Event(func);
-			NCSpeedLight.LoadAssetCallback d = target.Call;
-			target.method = d.Method;
-			return d;
-		}
-		else
-		{
-			NCSpeedLight_LoadAssetCallback_Event target = new NCSpeedLight_LoadAssetCallback_Event(func, self);
-			NCSpeedLight.LoadAssetCallback d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}

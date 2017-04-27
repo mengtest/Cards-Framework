@@ -18,6 +18,30 @@ namespace NCSpeedLight
             }
         }
 
+        [MenuItem("Assets/Set Assetbundle Tag(s)", false, 0)]
+        public static void SetAssetBundleTag()
+        {
+            UnityEngine.Object[] selected = Selection.objects;
+            for (int i = 0; i < selected.Length; i++)
+            {
+                UnityEngine.Object asset = selected[i];
+                if (asset)
+                {
+                    string assetPath = AssetDatabase.GetAssetPath(asset);
+                    string bundleName = assetPath.Substring("Assets/Resources/".Length);
+                    bundleName = bundleName.Substring(0, bundleName.LastIndexOf("/"));
+                    bundleName = bundleName.Replace("/", "_");
+                    bundleName = bundleName.ToLower();
+                    bundleName = bundleName + Constants.ASSET_BUNDLE_FILE_EXTENSION;
+                    AssetImporter assetImporter = AssetImporter.GetAtPath(assetPath);
+                    if (assetImporter)
+                    {
+                        assetImporter.SetAssetBundleNameAndVariant(bundleName, string.Empty);
+                    }
+                }
+            }
+        }
+
         [MenuItem("Assets/Open Lua Project")]
         public static void OpenLuaProj()
         {

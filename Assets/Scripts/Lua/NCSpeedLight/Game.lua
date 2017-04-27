@@ -14,7 +14,7 @@ require "NCSpeedLight.Core.API.APIDefine"
 require "NCSpeedLight.Utils.Log"
 require "NCSpeedLight.Utils.Utility"
 
-require "NCSpeedLight.3rd.pbc.protobuf"
+require "NCSpeedLight.Third.pbc.protobuf"
 require("NCSpeedLight.Utils.LuaDebug")("localhost", 7003)
 require "NCSpeedLight.Utils.Protocol.GameMessage"
 require "NCSpeedLight.Utils.Protocol.PBMessage"
@@ -25,7 +25,6 @@ require "NCSpeedLight.Core.Event.EvtProcessor"
 require "NCSpeedLight.Core.Network.NetManager"
 require "NCSpeedLight.Core.View.UIManager"
 require "NCSpeedLight.Core.Scene.SceneManager"
-require "NCSpeedLight.Core.Asset.AssetManager"
 require "NCSpeedLight.Core.Action.ActionLine"
 require "NCSpeedLight.Core.Action.AnimationQueue"
 require "NCSpeedLight.Modules.Login.LoginScene"
@@ -62,14 +61,6 @@ end
 function Game.Update()
 	ActionLine.Update();
 	SceneManager.Update();
-	if Game.Platform == UnityEngine.RuntimePlatform.Android then
-		if UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Escape) == true then
-			local option = StandardDialogOption.New("提示", "确定退出游戏吗?", true, function()
-				UnityEngine.Application.Quit();
-			end, nil)
-			UIManager.OpenStandardDialog(option);
-		end
-	end
 end
 
 function Game.LateUpdate()

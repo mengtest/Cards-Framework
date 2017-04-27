@@ -122,7 +122,7 @@ public static class CustomSettings
         #region NCSpeedLight
         _GT(typeof(GlobalEventManager)),
          _GT(typeof(Evt)),
-         _GT(typeof(ResManager)),
+         _GT(typeof(AssetManager)),
 
          //_GT(typeof(AMapAdapter)),
          _GT(typeof(ShareSDKAdapter)),

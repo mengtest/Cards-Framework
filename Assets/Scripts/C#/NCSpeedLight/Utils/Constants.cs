@@ -10,6 +10,7 @@
 //----------------------------------------------------------------*/
 
 using System;
+using System.IO;
 using UnityEngine;
 
 namespace NCSpeedLight
@@ -33,31 +34,122 @@ namespace NCSpeedLight
         //public static string CHANNEL = "papa";
         public static string CHANNEL = "hongzhong";
 
-
+        /// <summary>
+        /// 是否强制更新资源以及脚本文件
+        /// </summary>
+        public static bool FORCE_UPDATE
+        {
+            get
+            {
+                return true;
+            }
+        }
         /// <summary>
         /// 主版本号（应用程序版本号）
         /// </summary>
-        public static string MAJOR_VERSION = "1";
+        public static int MAJOR_VERSION = 1;
 
         /// <summary>
         /// 中版本号（资源版本号）
         /// </summary>
-        public static string MIDDLE_VERSION
+        public static int MIDDLE_VERSION
         {
             get
             {
-                return "0";
+                if (Directory.Exists(CONFIG_PATH) == false)
+                {
+                    Directory.CreateDirectory(CONFIG_PATH);
+                }
+                string filePath = CONFIG_PATH + "v1";
+                if (File.Exists(filePath) == false)
+                {
+                    return 0;
+                }
+                else
+                {
+                    string[] lines = File.ReadAllLines(filePath);
+                    if (lines == null || lines.Length == 0)
+                    {
+                        return 0;
+                    }
+                    else
+                    {
+                        int version = 0;
+                        int.TryParse(lines[0], out version);
+                        return version;
+                    }
+                }
+            }
+            set
+            {
+                if (Directory.Exists(CONFIG_PATH) == false)
+                {
+                    Directory.CreateDirectory(CONFIG_PATH);
+                }
+                string filePath = CONFIG_PATH + "v1";
+                if (File.Exists(filePath) == false)
+                {
+                    File.Delete(filePath);
+                }
+                using (var file = File.Open(filePath, FileMode.Create))
+                {
+                    StreamWriter sw = new StreamWriter(file);
+                    sw.WriteLine(value);
+                    sw.Close();
+                    file.Close();
+                }
             }
         }
 
         /// <summary>
         /// 小版本号（脚本版本号）
         /// </summary>
-        public static string MINIOR_VERSION
+        public static int MINIOR_VERSION
         {
             get
             {
-                return "0";
+                if (Directory.Exists(CONFIG_PATH) == false)
+                {
+                    Directory.CreateDirectory(CONFIG_PATH);
+                }
+                string filePath = CONFIG_PATH + "v2";
+                if (File.Exists(filePath) == false)
+                {
+                    return 0;
+                }
+                else
+                {
+                    string[] lines = File.ReadAllLines(filePath);
+                    if (lines == null || lines.Length == 0)
+                    {
+                        return 0;
+                    }
+                    else
+                    {
+                        int version = 0;
+                        int.TryParse(lines[0], out version);
+                        return version;
+                    }
+                }
+            }
+            set
+            {
+                if (Directory.Exists(CONFIG_PATH) == false)
+                {
+                    Directory.CreateDirectory(CONFIG_PATH);
+                }
+                string filePath = CONFIG_PATH + "v2";
+                if (File.Exists(filePath) == false)
+                {
+                    File.Delete(filePath);
+                }
+                using (var file = File.Open(filePath, FileMode.Create))
+                {
+                    StreamWriter sw = new StreamWriter(file);
+                    sw.WriteLine(value);
+                    sw.Close();
+                    file.Close();
+                }
             }
         }
 
@@ -117,6 +209,14 @@ namespace NCSpeedLight
                 {
                     return "C:/" + GAME_NAME + "/";
                 }
+            }
+        }
+
+        public static string CONFIG_PATH
+        {
+            get
+            {
+                return DATA_PATH + "Config/";
             }
         }
 
@@ -453,6 +553,14 @@ namespace NCSpeedLight
         /// 分享的图片
         /// </summary>
         public static string SHARE_ICON
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// 微信UnionID
+        /// </summary>
+        public static string WX_UNION_ID
         {
             get; set;
         }

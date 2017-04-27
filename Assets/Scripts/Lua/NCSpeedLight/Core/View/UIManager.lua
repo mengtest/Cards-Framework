@@ -141,7 +141,7 @@ function UIManager.CloseWindow(windowName)
 		UIManager.Windows[windowName] = nil;
 	end
 	if SharedVariable.ASSETBUNDLE_MODE then
-		AssetManager.UnloadAssetBundle("UI/" .. windowName);
+		AssetManager.UnloadAsset("UI/" .. windowName);
 	end
 end
 

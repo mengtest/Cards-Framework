@@ -28,6 +28,10 @@ function UI_MaJiang.Awake(go)
 end
 
 function UI_MaJiang.Start()
+	UIHelper.SetButtonEvent(this.transform, "top/topRight/Button (Set)",
+	function()
+		UIManager.OpenWindow(UIType.UI_MJSetting);	
+	end);
 	UIHelper.SetButtonEvent(this.transform, "bottom/right/DissolveRoom", UI_MaJiang.DissolveRoom);
 	UIHelper.SetButtonEvent(this.transform, "bottom/right/Button (Message2)", UI_MaJiang.OnClickTest);
 	UIHelper.SetButtonEvent(this.transform, "center/Ready/Yes", UI_MaJiang.OnClickYes);
@@ -204,7 +208,7 @@ function UI_MaJiang.ShowOperateView(operations)
 	tempDic["DingHu"] = false;
 	local EatNum = 0;
 	local GangNum = 0;
-	for i = 1, # operations do
+	for i = 1, #operations do
 		local tempOperate = operations[i];
 		if tempOperate.m_OperatorType == MaJiangOperatorType.MJOT_CHI then
 			EatNum = EatNum + 1;
@@ -261,7 +265,7 @@ end
 -- 初始化吃的界面
 function UI_MaJiang.InitEatView(operations)
 	local tempList = {};
-	for i = 1, # operations do
+	for i = 1, #operations do
 		local tempData = operations[i];
 		if tempData.m_OperatorType == MaJiangOperatorType.MJOT_CHI then
 			tempData.m_CardNum = MJPlayer.Hero:GetHandCardCount();
@@ -272,7 +276,7 @@ function UI_MaJiang.InitEatView(operations)
 	for	i = 1, 3 do
 		local tempPath = "Eat" .. tostring(i);
 		local tempTarget = tempTrans:Find(tempPath);
-		if # tempList >= i then
+		if #tempList >= i then
 			local operateCom = LuaComponent.Get(tempTarget.gameObject, UI_MJOperate);
 			if operateCom == nil then
 				operateCom = LuaComponent.Add(tempTarget.gameObject, UI_MJOperate);
@@ -287,7 +291,7 @@ end
 
 -- 初始化碰的界面
 function UI_MaJiang.InitPengView(operations)
-	for i = 1, # operations do
+	for i = 1, #operations do
 		local tempData = operations[i];
 		if tempData.m_OperatorType == MaJiangOperatorType.MJOT_PENG then
 			tempData.m_CardNum = MJPlayer.Hero:GetHandCardCount();
@@ -305,7 +309,7 @@ end
 -- 初始化杠的界面
 function UI_MaJiang.InitGangView(operations)
 	local tempList = {};
-	for i = 1, # operations do
+	for i = 1, #operations do
 		local tempData = operations[i];
 		if tempData.m_OperatorType == MaJiangOperatorType.MJOT_GANG or
 		tempData.m_OperatorType == MaJiangOperatorType.MJOT_AN_GANG or
@@ -318,7 +322,7 @@ function UI_MaJiang.InitGangView(operations)
 	for	i = 1, 3 do
 		local tempPath = "Gang" .. tostring(i);
 		local tempTarget = tempTrans:Find(tempPath);
-		if # tempList >= i then
+		if #tempList >= i then
 			local operateCom = LuaComponent.Get(tempTarget.gameObject, UI_MJOperate);
 			if operateCom == nil then
 				operateCom = LuaComponent.Add(tempTarget.gameObject, UI_MJOperate);

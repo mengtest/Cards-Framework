@@ -11,11 +11,11 @@ namespace NCSpeedLight
     {
         private UIProgressBar progressBar;
         private UILabel labelTips;
-        public FileUpdate FileUpdate;
+        public UpdateProcessor FileUpdate;
 
         private void Awake()
         {
-            FileUpdate = new FileUpdate(this);
+            FileUpdate = new UpdateProcessor(this);
             progressBar = UIHelper.GetComponent(transform, "Progress Bar", typeof(UIProgressBar)) as UIProgressBar;
             labelTips = UIHelper.GetComponent(transform, "Tips/Content", typeof(UILabel)) as UILabel;
         }
@@ -79,41 +79,84 @@ namespace NCSpeedLight
                     }
                 }
             }
+
+            // 对比版本号
             SetTips("正在检查更新...");
-            if (Application.isEditor)
+            string[] version = Constants.NEWEST_VERSION.Split('.');
+            if (version.Length < 3)
             {
-                if (Constants.SCRIPT_BUNDLE_MODE)
-                {
-                    yield return StartCoroutine(FileUpdate.UpdateScript());
-                    if (Constants.ASSET_BUNDLE_MODE)
-                    {
-                        yield return StartCoroutine(FileUpdate.UpdateAsset());
-                        yield return StartCoroutine(StartGame());
-                    }
-                    else
-                    {
-                        yield return StartCoroutine(StartGame());
-                    }
-                }
-                else
-                {
-                    if (Constants.ASSET_BUNDLE_MODE)
-                    {
-                        yield return StartCoroutine(FileUpdate.UpdateAsset());
-                        yield return StartCoroutine(StartGame());
-                    }
-                    else
-                    {
-                        yield return StartCoroutine(StartGame());
-                    }
-                }
+                SetTips("Version code error: " + Constants.NEWEST_VERSION);
+                yield break;
+            }
+
+            int majorVersion = 0;
+            int middleVersion = 0;
+            int miniorVersion = 0;
+            int.TryParse(version[0], out majorVersion);
+            int.TryParse(version[1], out middleVersion);
+            int.TryParse(version[2], out miniorVersion);
+            if (majorVersion != Constants.MAJOR_VERSION)
+            {
+                InternalUI.Instance.OpenDialog(true, "版本更新", "发现新版本，请前往应用商店下载安装");
             }
             else
             {
-                yield return StartCoroutine(FileUpdate.UpdateScript());
-                yield return StartCoroutine(FileUpdate.UpdateAsset());
-                yield return StartCoroutine(StartGame());
+                Constants.MIDDLE_VERSION = middleVersion;
+                Constants.MINIOR_VERSION = miniorVersion;
+                if (Constants.FORCE_UPDATE)
+                {
+                    yield return StartCoroutine(FileUpdate.UpdateAsset());
+                    yield return StartCoroutine(FileUpdate.UpdateScript());
+                    yield return StartCoroutine(StartGame());
+                }
+                else
+                {
+                    if (middleVersion != Constants.MIDDLE_VERSION)
+                    {
+                        yield return StartCoroutine(FileUpdate.UpdateAsset());
+                        yield return StartCoroutine(FileUpdate.UpdateScript());
+                    }
+                    else if (miniorVersion != Constants.MINIOR_VERSION)
+                    {
+                        yield return StartCoroutine(FileUpdate.UpdateScript());
+                    }
+                    yield return StartCoroutine(StartGame());
+                }
             }
+            //if (Application.isEditor)
+            //{
+            //    if (Constants.SCRIPT_BUNDLE_MODE)
+            //    {
+            //        yield return StartCoroutine(FileUpdate.UpdateScript());
+            //        if (Constants.ASSET_BUNDLE_MODE)
+            //        {
+            //            yield return StartCoroutine(FileUpdate.UpdateAsset());
+            //            yield return StartCoroutine(StartGame());
+            //        }
+            //        else
+            //        {
+            //            yield return StartCoroutine(StartGame());
+            //        }
+            //    }
+            //    else
+            //    {
+            //        if (Constants.ASSET_BUNDLE_MODE)
+            //        {
+            //            yield return StartCoroutine(FileUpdate.UpdateAsset());
+            //            yield return StartCoroutine(StartGame());
+            //        }
+            //        else
+            //        {
+            //            yield return StartCoroutine(StartGame());
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    yield return StartCoroutine(FileUpdate.UpdateScript());
+            //    yield return StartCoroutine(FileUpdate.UpdateAsset());
+            //    yield return StartCoroutine(StartGame());
+            //}
         }
 
         private bool ParseJson(string json)

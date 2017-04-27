@@ -22,44 +22,47 @@ MJSceneStatus = {
 MJScene =
 {
 	Name = SceneType.MJScene,
+	
 	IsInitialized = false,
+	
 	NeedReconnect = false,
+	
 	RoomMasterID = 0,
+	
 	BankerPosition = 0,
+	
 	DiceNumbers = nil,
+	
 	-- 从第几墩开始取牌
 	GetCardNumber = 0,
+	
 	-- 从谁的面前取牌
 	GetCardRoleID = 0,
+	
 	Players = nil,
+	
 	CurrentOperator = nil,
+	
 	LastOperator = nil,
-	-- 场景内牌的宽度
-	TableCardX = 0.9635041,
-	-- 场景内牌的高度
-	TableCardY = 1.24706018,
-	-- 场景内牌的厚度
-	TableCardZ = 0.636123836,
-	-- 手牌的宽度
-	HandCardX = 0.8029202,
-	-- 手牌的高度
-	HandCardY = 1.03921676,
-	-- 手牌的厚度
-	HandCardZ = 0.5301034,
-	-- 是否开启偷天换日
-	OpenTest = true,
+	
 	-- 副本信息 【PBMessage.GM_BattleFBServerInfo】
 	FBInfo = nil,
+	
 	-- 总回合数
 	TotalRound = 0,
+	
 	-- 当前回合
 	CurrentRound = 0,
+	
 	-- 完成的回合
 	FinishedRound = 0,
+	
 	-- 当前结算信息
 	CurrentResultInfo = nil,
+	
 	-- 总结算信息
 	TotalResultInfo = nil,
+	
 	-- 当前场景的状态
 	Status = MJSceneStatus.Waiting,
 }
@@ -199,7 +202,7 @@ end
 
 function MJScene.HasPlayer(player)
 	if player == nil then return false end;
-	for i = 1, # MJScene.Players do
+	for i = 1, #MJScene.Players do
 		if player == MJScene.Players[i] then
 			return true;
 		end
@@ -213,16 +216,13 @@ function MJScene.AddPlayer(player)
 end
 
 function MJScene.RemovePlayer(player)
-	for i = 1, # MJScene.Players do
+	for i = 1, #MJScene.Players do
 		if player == MJScene.Players[i] then
 			table.remove(MJScene.Players, i);
 			return true;
 		end
 	end
 	return false;
-end
-
-function MJScene.InitPlayerData(data)
 end
 
 -- 设置庄家
@@ -270,7 +270,7 @@ end
 
 -- 获取玩家的个数
 function MJScene.GetPlayerCount()
-	return # MJScene.Players;
+	return #MJScene.Players;
 end
 
 -- 当前是否是我的回合
@@ -325,7 +325,7 @@ function MJScene.RequestReady(status)
 	end
 	local msg = {
 		roleID = var,
-	}
+	};
 	NetManager.SendEventToLogicServer(GameMessage.GM_SEND_READY, PBMessage.GM_LeaveBattle, msg);
 end
 
@@ -403,13 +403,13 @@ function MJScene.ReturnGamePlayerInfo(evt)
 		Log.Error("MJScene.ReturnGamePlayerInfo: parse msg error struct name is " .. PBMessage.GM_BattleEntryInfo);
 		return;
 	end
-	Log.Info("MJScene.ReturnGamePlayerInfo: RoomMasterID is " .. MJScene.RoomMasterID .. ",current player count is " .. # msg.m_Character);
+	Log.Info("MJScene.ReturnGamePlayerInfo: RoomMasterID is " .. MJScene.RoomMasterID .. ",current player count is " .. #msg.m_Character);
 	SharedVariable.FBEntryInfo = msg;
 	MJScene.RoomMasterID = msg.m_RoomMasterID;
 	local hero = MJScene.GetPlayerByID(Player.ID);
 	if hero == nil then
 		-- 先创建自己的数据
-		for i = 1, # SharedVariable.FBEntryInfo.m_Character do
+		for i = 1, #SharedVariable.FBEntryInfo.m_Character do
 			local playerEntry = SharedVariable.FBEntryInfo.m_Character[i];
 			if playerEntry.m_RoleData.m_Roleid == Player.ID then
 				hero = MJPlayer.New();
@@ -431,7 +431,7 @@ function MJScene.ReturnGamePlayerInfo(evt)
 		end
 	end
 	-- 创建其他玩家
-	for i = 1, # SharedVariable.FBEntryInfo.m_Character do
+	for i = 1, #SharedVariable.FBEntryInfo.m_Character do
 		local playerEntry = SharedVariable.FBEntryInfo.m_Character[i];
 		if playerEntry ~= nil and playerEntry.m_RoleData ~= nil then
 			local player = MJScene.GetPlayerByID(playerEntry.m_RoleData.m_Roleid);
@@ -488,16 +488,16 @@ function MJScene.ReturnReconnectInfo(evt)
 	Log.Info("MJScene.ReturnReconnectInfo: 当前出牌人的ID（等到操作时赋值0）：" .. msg.m_sendCardID);
 	Log.Info("MJScene.ReturnReconnectInfo: 房间玩法：" .. msg.m_fbplayway);
 	if msg.m_saizi ~= nil then
-		Log.Info("MJScene.ReturnReconnectInfo: 筛子次数，以及内容：" .. # msg.m_saizi);
+		Log.Info("MJScene.ReturnReconnectInfo: 筛子次数，以及内容：" .. #msg.m_saizi);
 	end
 	if msg.m_HandCard ~= nil then
-		Log.Info("MJScene.ReturnReconnectInfo: 手牌信息：" .. # msg.m_HandCard);
+		Log.Info("MJScene.ReturnReconnectInfo: 手牌信息：" .. #msg.m_HandCard);
 	end
 	if msg.m_AllData ~= nil then
-		Log.Info("MJScene.ReturnReconnectInfo: 其他玩家信息：" .. # msg.m_AllData);
+		Log.Info("MJScene.ReturnReconnectInfo: 其他玩家信息：" .. #msg.m_AllData);
 	end
 	if msg.m_CloseRoomData ~= nil then
-		Log.Info("MJScene.ReturnReconnectInfo: 解散房间信息：" .. # msg.m_CloseRoomData);
+		Log.Info("MJScene.ReturnReconnectInfo: 解散房间信息：" .. #msg.m_CloseRoomData);
 	end
 	if msg.m_huOperatorData ~= nil then
 		Log.Info("MJScene.ReturnReconnectInfo: 存在结算信息");
@@ -519,7 +519,7 @@ function MJScene.ReturnReconnectInfo(evt)
 	-- player 为空，则代表当前场景内没有玩家，这时开始创建玩家
 	if MJScene.GetPlayerCount() == 0 then
 		-- 创建主角
-		for i = 1, # msg.m_AllData do
+		for i = 1, #msg.m_AllData do
 			local data = msg.m_AllData[i];
 			if data.m_roleid == Player.ID then
 				local player = MJPlayer.New();
@@ -541,7 +541,7 @@ function MJScene.ReturnReconnectInfo(evt)
 		end
 		
 		-- 创建其他玩家
-		for i = 1, # msg.m_AllData do
+		for i = 1, #msg.m_AllData do
 			local data = msg.m_AllData[i];
 			local player = MJScene.GetPlayerByID(data.m_roleid);
 			if player == nil then
@@ -563,7 +563,7 @@ function MJScene.ReturnReconnectInfo(evt)
 		end
 	else
 		-- 创建其他玩家
-		for i = 1, # msg.m_AllData do
+		for i = 1, #msg.m_AllData do
 			local data = msg.m_AllData[i];
 			local player = MJScene.GetPlayerByID(data.m_roleid);
 			if player ~= nil then
@@ -627,13 +627,13 @@ function MJScene.ReturnReconnectInfo(evt)
 			-- 先隐藏所有初始抓了的牌
 			local totalInitialCardCount = msg.m_playerCount * MJDefine.XIAN_INITIAL_CARD_COUNT + 1;
 			MJGroupCardQueue.PopFront(totalInitialCardCount);
-			for i = 1, # msg.m_AllData do
+			for i = 1, #msg.m_AllData do
 				local reconnectPlayerData = msg.m_AllData[i];
 				local player = MJScene.GetPlayerByID(reconnectPlayerData.m_roleid);
 				player:SetHandCardCount(reconnectPlayerData.m_handCardNum);
-				local popFrontCount = # reconnectPlayerData.m_OutHandCard;
+				local popFrontCount = #reconnectPlayerData.m_OutHandCard;
 				local popRearCount = 0;
-				for j = 1, # reconnectPlayerData.m_FunHandCardList do
+				for j = 1, #reconnectPlayerData.m_FunHandCardList do
 					local operateData = reconnectPlayerData.m_FunHandCardList[j];
 					if operateData.m_OperatorType == MaJiangOperatorType.MJOT_AN_GANG then
 						popRearCount = popRearCount + 1;
@@ -651,7 +651,7 @@ function MJScene.ReturnReconnectInfo(evt)
 						player:AddOperateTotalCount();
 					end
 				end
-				for j = 1, # reconnectPlayerData.m_OutHandCard do
+				for j = 1, #reconnectPlayerData.m_OutHandCard do
 					local card = reconnectPlayerData.m_OutHandCard[j];
 					local tableCard = MJSceneController.GetOneUnuseCard(card.m_Index, card.m_Type, player.ID);
 					local cardPos = player:GetTableCardPos(player.TableCardCount);
@@ -705,7 +705,7 @@ function MJScene.ReturnPlayerOutCard(evt)
 		Log.Error("MJScene.ReturnPlayerOutCard: can not get player id is " .. msg.m_roleid);
 		return;
 	end
-	Log.Info("MJScene.ReturnPlayerOutCard: operator id is " .. msg.m_roleid .. ",operate type is " .. MaJiangOperatorType.GetString(msg.m_OperatorType) .. ", m_LastCard.m_Index is " .. msg.m_LastCard.m_Index .. " and m_Type is " .. msg.m_LastCard.m_Type .. ", m_HandCard.count is " .. # msg.m_HandCard);
+	Log.Info("MJScene.ReturnPlayerOutCard: operator id is " .. msg.m_roleid .. ",operate type is " .. MaJiangOperatorType.GetString(msg.m_OperatorType) .. ", m_LastCard.m_Index is " .. msg.m_LastCard.m_Index .. " and m_Type is " .. msg.m_LastCard.m_Type .. ", m_HandCard.count is " .. #msg.m_HandCard);
 	if msg.m_OperatorType == MaJiangOperatorType.MJOT_BEGIN then
 		MJScene.LastOperator = MJScene.CurrentOperator;
 		MJScene.CurrentOperator = player;
@@ -751,10 +751,10 @@ function MJScene.ReturnCanOperatorType(evt)
 		return;
 	end
 	Log.Info("MJScene.ReturnCanOperatorType: roleid is " .. msg.m_roleid);
-	for i = 1, # msg.m_Operator do
+	for i = 1, #msg.m_Operator do
 		local data = msg.m_Operator[i];
 		Log.Info("MJScene.ReturnCanOperatorType: operate data,m_OperatorType is " .. MaJiangOperatorType.GetString(data.m_OperatorType) .. ",m_FunID is " .. data.m_FunID .. ",m_OperatorCard is " .. data.m_OperatorCard .. ",m_CardNum is " .. data.m_CardNum);
-		for j = 1, # data.m_HandCard do
+		for j = 1, #data.m_HandCard do
 			local handCard = data.m_HandCard[j];
 			Log.Info("MJScene.ReturnCanOperatorType: operate data: handcard" .. tostring(j) .. ": card id is " .. handCard.m_Index .. ", card type is " .. MaJiangType.ToString(handCard.m_Type));
 		end
