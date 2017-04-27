@@ -63,7 +63,7 @@ end
 function UI_MJResult.DisplayWinOrLose()
 	local myscore;
 	local tempList = MJScene.CurrentResultInfo.m_Data;
-	for i = 1, # tempList do
+	for i = 1, #tempList do
 		local tempData = tempList[i];
 		if tempData.m_roleid == MJPlayer.Hero.ID then
 			myscore = tempData.m_score;
@@ -107,14 +107,14 @@ end
 function UI_MJResult.DisplayJiangMa()
 	local tempCloneTrans = this.transform:Find("Reward/Clone");
 	local tempParent = this.transform:Find("Reward/RewardCard");
-	for i = 1, # MJScene.CurrentResultInfo.m_MaCardType do
+	for i = 1, #MJScene.CurrentResultInfo.m_MaCardType do
 		local tempType = MJScene.CurrentResultInfo.m_MaCardType[i];
 		local tempNewObj = NGUITools.AddChild(tempParent.gameObject, tempCloneTrans.gameObject);
 		tempNewObj.transform.localScale = tempCloneTrans.localScale;
 		UIHelper.SetSpriteName(tempNewObj.transform, "Sprite", MaJiangType.ToString(tempType));
 		tempNewObj:SetActive(true);
 	end
-	for i = 1, # MJScene.CurrentResultInfo.m_MaCardSign do
+	for i = 1, #MJScene.CurrentResultInfo.m_MaCardSign do
 		local tempClone = tempParent.GetChild(MJScene.CurrentResultInfo.m_MaCardSign[i]);
 		UIHelper.SetActiveState(tempClone, "Kuang", true);
 	end
@@ -139,7 +139,7 @@ function UI_MJResult.DisplayHuCards()
 	local tempHuId = MJScene.CurrentResultInfo.m_huRoleid;
 	local tempFpId = MJScene.CurrentResultInfo.m_fpid;
 	local tempList = MJScene.CurrentResultInfo.m_Data;
-	for i = 1, # tempList do
+	for i = 1, #tempList do
 		local tempData = tempList[i];
 		if tempData.m_roleid == tempHuId then
 			local tempHuPlayer = MJScene.GetPlayerByID(tempData.m_roleid);
@@ -152,7 +152,7 @@ function UI_MJResult.DisplayHuCards()
 			end);
 			table.insert(tempCardsType, 1, MJScene.CurrentResultInfo.m_huCard.m_Type);
 			local currentLocalPos = Vector3.New(- 18, 0, 0);
-			for j = 1, # tempCardsType do
+			for j = 1, #tempCardsType do
 				local tempItem = NGUITools.AddChild(tempParent.gameObject, tempCloneTrans.gameObject);
 				tempItem:SetActive(true);
 				tempItem.transform.localScale = tempCloneTrans.localScale;
@@ -167,7 +167,7 @@ end
 -- 展示玩家信息
 function UI_MJResult.DisplayPlayerInfo()
 	local allRoleHandCards = MJScene.CurrentResultInfo.m_Data;
-	for i = 1, # allRoleHandCards do
+	for i = 1, #allRoleHandCards do
 		local card = allRoleHandCards[i];
 		local tempPlayer = MJScene.GetPlayerByID(card.m_roleid);
 		local tempTran = this.transform:Find("Grid/" .. tempPlayer.UIPosition);
@@ -201,18 +201,5 @@ end
 function UI_MJResult.DisplayPlaywayAndRound()
 	local tempRounds = "当前局数: " .. MJScene.CurrentRound .. "/" .. MJScene.TotalRound;
 	UIHelper.SetLabelText(this.transform, "LeftTop/Rounds", tempRounds);
-	-- string tempWay = string.Empty;
-	-- List<MJPlayWay> tempPlayWay=MaJiangPlayWay.GetSingleton ().GetCurrentPlayWay();
-	-- if(tempPlayWay==null)
-	-- {
-	-- 	return;
-	-- }
-	-- for (int i = 0; i < tempPlayWay.Count; i++) 
-	-- {
-	-- 	tempWay += Localization.Get ("MaJiang PlayWay "+(int)tempPlayWay[i])+"·";
-	-- }
-	-- if (string.IsNullOrEmpty(tempWay) == false && tempWay.Length > 1)
-	-- {
-	-- 	Helper.SetLabelText (transform,"LeftTop/Way",tempWay.Substring(0,tempWay.Length-1));
-	-- }
+	UIHelper.SetLabelText(this.transform, "LeftTop/Way", MJScene.GetMJPlayWayStr());
 end 

@@ -284,6 +284,19 @@ function MJScene.IsMyTurn()
 	end
 end
 
+-- 获取当前麻将的玩法
+function MJScene.GetMJPlayWayStr()
+	local playway = "";
+	local playwayType = Utility.SplitString(MJScene.Playway, ",");
+	for i = 1, #playwayType do
+		playway = playway .. MJPlayWayStr[MJPlayWay.ToString(tonumber(playwayType[i]))];
+		if i ~= #playwayType then
+			playway = playway .. " · ";
+		end
+	end
+	return playway;
+end
+
 -- 判断当前的牌是不是精
 function MJScene.CardIsJing(type)
 end

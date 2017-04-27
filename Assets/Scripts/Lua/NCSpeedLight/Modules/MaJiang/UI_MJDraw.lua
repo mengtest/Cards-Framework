@@ -50,7 +50,7 @@ function UI_MJDraw.InitView()
 		UIHelper.SetActiveState(this.transform, "Buttom/OnceAgain", false);
 	end
 	local allRoleHandCards = MJScene.CurrentResultInfo.m_Data;
-	for i = 1, # allRoleHandCards do
+	for i = 1, #allRoleHandCards do
 		local card = allRoleHandCards[i];
 		local tempPlayer = MJScene.GetPlayerByID(card.m_roleid);
 		local tempTran = this.transform:Find("Center/" .. tempPlayer.UIPosition);
@@ -84,18 +84,5 @@ end
 function UI_MJDraw.SetupPlaywayAndRound()
 	local tempRounds = "当前局数: " .. MJScene.CurrentRound .. "/" .. MJScene.TotalRound;
 	UIHelper.SetLabelText(this.transform, "LeftTop/Rounds", tempRounds);
-	-- string tempWay = string.Empty;
-	-- List<MJPlayWay> tempPlayWay=MaJiangPlayWay.GetSingleton ().GetCurrentPlayWay();
-	-- if(tempPlayWay==null)
-	-- {
-	-- 	return;
-	-- }
-	-- for (int i = 0; i < tempPlayWay.Count; i++) 
-	-- {
-	-- 	tempWay += Localization.Get ("MaJiang PlayWay "+(int)tempPlayWay[i])+"·";
-	-- }
-	-- if (string.IsNullOrEmpty(tempWay) == false && tempWay.Length > 1)
-	-- {
-	-- 	Helper.SetLabelText (transform,"LeftTop/Way",tempWay.Substring(0,tempWay.Length-1));
-	-- }
+	UIHelper.SetLabelText(this.transform, "LeftTop/Way", MJScene.GetMJPlayWayStr());
 end 

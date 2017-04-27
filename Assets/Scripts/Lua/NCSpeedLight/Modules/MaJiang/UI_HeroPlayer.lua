@@ -77,6 +77,7 @@ function UI_HeroPlayer:OnDestroy()
 	end
 	self.Player = nil;
 	UI_HeroPlayer.DragingCardObj = nil;
+	UI_HeroPlayer.SelectedCardObj = nil;
 end
 
 function UI_HeroPlayer:Initialize(player)

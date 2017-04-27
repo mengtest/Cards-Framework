@@ -64,10 +64,10 @@ function UI_MJTotalResult.DisplayPlayerInfo()
 			UIHelper.SetTexture(tempTrans, "Role/Sprite (Photo)", tempPlayer.HeadURL);
 		end
 	else
-		for i = 1, # MJScene.TotalResultInfo.m_OneData do
+		for i = 1, #MJScene.TotalResultInfo.m_OneData do
 			local tempResultInfo = MJScene.TotalResultInfo.m_OneData[i].m_ResultInfo;
 			
-			for j = 1, # tempResultInfo do
+			for j = 1, #tempResultInfo do
 				local singleResultInfo = tempResultInfo[j];
 				local tempPlayer = MJScene.GetPlayerByID(singleResultInfo.m_roleid);
 				local tempTrans = parent:FindChild(tempPlayer.UIPosition);
@@ -141,18 +141,5 @@ end
 function UI_MJTotalResult.DisplayPlaywayAndRound()
 	local tempRounds = "已打局数: " .. tostring(MJScene.FinishedRound);
 	UIHelper.SetLabelText(this.transform, "LeftTop/Rounds", tempRounds);
-	-- string tempWay = string.Empty;
-	-- List<MJPlayWay> tempPlayWay=MaJiangPlayWay.GetSingleton ().GetCurrentPlayWay();
-	-- if(tempPlayWay==null)
-	-- {
-	-- 	return;
-	-- }
-	-- for (int i = 0; i < tempPlayWay.Count; i++) 
-	-- {
-	-- 	tempWay += Localization.Get ("MaJiang PlayWay "+(int)tempPlayWay[i])+"·";
-	-- }
-	-- if (string.IsNullOrEmpty(tempWay) == false && tempWay.Length > 1)
-	-- {
-	-- 	Helper.SetLabelText (transform,"LeftTop/Way",tempWay.Substring(0,tempWay.Length-1));
-	-- }
+	UIHelper.SetLabelText(this.transform, "LeftTop/Way", MJScene.GetMJPlayWayStr());
 end 

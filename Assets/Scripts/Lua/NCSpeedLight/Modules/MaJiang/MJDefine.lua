@@ -184,4 +184,28 @@ MJPlayWay =
 			end
 		end
 	end
-}; 
+};
+
+MJPlayWayStr = {
+	-- 红中麻将
+	PW_7DUI = "可胡7对",
+	PW_1MA = "一码全中",
+	PW_2MA = "扎2码",
+	PW_4MA = "扎4码",
+	PW_6MA = "扎6码",
+	
+	-- 新余麻将
+	PW_LONG = "一条龙",
+	PW_16BEI = "16倍",
+	PW_32BEI = "32倍",
+	PW_64BEI = "64倍",
+	PW_NOBEI = "不封顶",
+	
+	-- 南昌麻将
+	PW_WXJ = "无下精",
+	PW_HTSXJ = "上下精",
+	PW_MDL = "埋地雷",
+	
+	PW_TYSG = "同一首歌",
+	PW_HTYX = "回头一笑",
+} 
