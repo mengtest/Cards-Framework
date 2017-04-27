@@ -13,19 +13,25 @@ UI_OtherPlayer = {
 	gameObject = nil,
 	Player = nil,
 }
+
 local this = UI_OtherPlayer;
+
 this.__index = UI_OtherPlayer;
+
 function UI_OtherPlayer.New()
 	local obj = {};
 	setmetatable(obj, this);
 	return obj;
 end
+
 function UI_OtherPlayer:Awake(go)
 	self.gameObject = go;
 	self.transform = go.transform;
 end
+
 function UI_OtherPlayer:Start()
 end
+
 function UI_OtherPlayer:OnDestroy()
 	self.gameObject = nil;
 	self.transform = nil;
@@ -34,11 +40,14 @@ function UI_OtherPlayer:OnDestroy()
 		self.Player = nil;
 	end
 end
+
 function UI_OtherPlayer:Initialize(player)
 	self.Player = player;
 end
+
 function UI_OtherPlayer:Reset()
 end
+
 -- 播放出牌效果
 function UI_OtherPlayer:PlayOutCardAnimation(card)
 	-- local outCardTran = self.transform:Find("OutCard/Card");
@@ -55,7 +64,9 @@ function UI_OtherPlayer:PlayOutCardAnimation(card)
 	-- tweener:ResetToBeginning();
 	-- NCSpeedLight.UIHelper.SetSpriteName(outCardTran, "Sprite", MaJiangType.ToString(card.m_Type));
 	-- outCardTran.gameObject:SetActive(true);
-	local tableCard = MJSceneController.GetOneUnuseCard(card.m_Index, card.m_Type, self.Player.ID);
+	-- local tableCard = MJSceneController.GetOneUnuseCard(card.m_Index, card.m_Type, self.Player.ID);
+	-- local cardPos = self.Player:GetTableCardPos(self.Player.TableCardCount);
+	-- tableCard:Show(cardPos, self.Player.TableCardRotation);
 	local cardPos = self.Player:GetTableCardPos(self.Player.TableCardCount);
-	tableCard:Show(cardPos, self.Player.TableCardRotation);
+	MJSceneController.PutOneCard(card.m_Index, card.m_Type, self.Player.ID, cardPos, self.Player.TableCardRotation);
 end 

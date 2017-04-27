@@ -13,6 +13,7 @@ MJSceneController = {
 	gameObject = nil,
 	MJDeskObj = nil,
 	MJDeskAnimation = nil,
+	ArrowObj = nil,
 	IsSetupDicePanelRotation = false,
 	DeskAnimationTimer = nil,
 	DeskAnimationTime = 1.333,
@@ -36,6 +37,7 @@ function MJSceneController.Awake(go)
 		MJSceneController.gameObject = go;
 		MJSceneController.transform = go.transform;
 		MJSceneController.MJDeskObj = go.transform:Find("majiangzhuo").gameObject;
+		MJSceneController.ArrowObj = go.transform:Find("majiangzhuo/Arrow").gameObject;
 		MJSceneController.MJDeskAnimation = MJSceneController.MJDeskObj:GetComponent(typeof(UnityEngine.Animation));
 	end
 	MJSceneController.CloneTableCards();
@@ -60,13 +62,13 @@ end
 function MJSceneController.Reset()
 	-- 重置所有的桌面牌对象
 	for key, value in pairs(this.AllCards) do
-		for i = 1, # value do
+		for i = 1, #value do
 			local card = value[i];
 			card:Reset();
 		end
 	end
 	if MJSceneController.BackCards ~= nil then
-		for i = 1, # MJSceneController.BackCards do
+		for i = 1, #MJSceneController.BackCards do
 			local obj = MJSceneController.BackCards[i];
 			if obj ~= nil then
 				UnityEngine.GameObject.Destroy(obj);
@@ -76,6 +78,7 @@ function MJSceneController.Reset()
 	MJSceneController.BackCards = {};
 	MJSceneController.DeskAnimationTimer = nil;
 	MJSceneController.DiceAnimationTimer = nil;
+	MJSceneController.HideArrow();
 end
 
 -- 设置牌墩的显示/隐藏
@@ -163,6 +166,15 @@ end
 
 -- 设置玩法
 function MJSceneController.SetupPlayWay()
+	local playway = Utility.SplitString(MJScene.Playway, ",");
+	local count = #playway;
+	if count == 1 then
+		UIHelper.SetActiveState(this.transform, "majiangzhuo/Text/PlayWay/OneText", true);
+		UIHelper.SetActiveState(this.transform, "majiangzhuo/Text/PlayWay/OneText/1/" .. MJPlayWay.ToString(tonumber(playway[1])), true);
+	elseif count == 2 then
+		UIHelper.SetActiveState(this.transform, "majiangzhuo/Text/PlayWay/TwoText", true);
+		UIHelper.SetActiveState(this.transform, "majiangzhuo/Text/PlayWay/TwoText/1/" .. MJPlayWay.ToString(tonumber(playway[1])), true);
+	end
 end
 
 -- 设置骰子面板的朝向
@@ -184,10 +196,17 @@ function MJSceneController.PlayDicePanelGrowEffect(name, status)
 	UIHelper.SetActiveState(this.transform, "majiangzhuo/direction/Flicker/" .. name, status);
 end
 
-function MJSceneController.ShowArrow()
+function MJSceneController.ShowArrow(position)
+	MJSceneController.ArrowObj.transform.position = Vector3(position.x, 4.942248, position.z);
+	if MJSceneController.ArrowObj.activeSelf == false then
+		MJSceneController.ArrowObj:SetActive(true);
+	end
 end
 
 function MJSceneController.HideArrow()
+	if MJSceneController.ArrowObj.activeSelf == true then
+		MJSceneController.ArrowObj:SetActive(false);
+	end
 end
 
 function MJSceneController.PlayOperateEffect(name, operateType)
@@ -263,7 +282,7 @@ end
 -- 获取一张未使用的牌对象
 function MJSceneController.GetOneUnuseCard(ID, type, roleID)
 	local cards = this.AllCards[type];
-	for i = 1, # cards do
+	for i = 1, #cards do
 		local card = cards[i];
 		if card.ID == - 1 then
 			card:SetID(ID);
@@ -275,8 +294,9 @@ end
 
 -- 根据牌的ID获取对象,如果roleID不为空，则更改这张牌的拥有者
 function MJSceneController.GetCardByID(ID, roleID)
+	MJSceneController.HideArrow();
 	for key, value in pairs(this.AllCards) do
-		for i = 1, # value do
+		for i = 1, #value do
 			local card = value[i];
 			if card.ID == ID then
 				if roleID ~= nil then
@@ -290,15 +310,24 @@ end
 
 -- 根据牌的类型和角色的ID获取牌，返回数组
 function MJSceneController.GetCardByRoleIDAndType(type, roleID)
+	MJSceneController.HideArrow();
 	local cards = this.AllCards[type];
 	local outCards = {};
-	for i = 1, # cards do
+	for i = 1, #cards do
 		local card = cards[i];
 		if card.ID ~= - 1 and card.RoleID == roleID then
 			table.insert(outCards, card);
 		end
 	end
 	return outCards;
+end
+
+-- 在桌面上放置一张打出的牌
+function MJSceneController.PutOneCard(cardID, cardType, playerID, position, rotation)
+	local tableCard = MJSceneController.GetOneUnuseCard(cardID, cardType, playerID);
+	tableCard:Show(position, rotation);
+	MJSceneController.ShowArrow(position);
+	
 end
 
 -- 放置一张反面的牌用于显示

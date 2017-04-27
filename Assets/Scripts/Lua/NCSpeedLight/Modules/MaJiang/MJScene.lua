@@ -39,6 +39,8 @@ MJScene =
 	-- 从谁的面前取牌
 	GetCardRoleID = 0,
 	
+	Playway = nil,
+	
 	Players = nil,
 	
 	CurrentOperator = nil,
@@ -454,6 +456,7 @@ function MJScene.ReturnGamePlayerInfo(evt)
 		end
 	end
 	MJScene.SetupMaster();
+	MJSceneController.SetupPlayWay();
 	UIManager.CloseAllWindowsExcept(UIType.UI_MaJiang);
 end
 
@@ -508,6 +511,7 @@ function MJScene.ReturnReconnectInfo(evt)
 	MJScene.DiceNumbers = msg.m_saizi;
 	MJScene.GetCardRoleID = msg.m_getCardId;
 	MJScene.GetCardNumber = msg.m_getCardNum;
+	MJScene.Playway = msg.m_fbplayway;
 	MJScene.CurrentRound = msg.m_leftCount;
 	MJScene.TotalRound = msg.m_totalCount;
 	MJScene.FinishedRound = MJScene.CurrentRound - 1;
@@ -584,6 +588,7 @@ function MJScene.ReturnReconnectInfo(evt)
 	
 	MJScene.SetupBanker();
 	MJScene.SetupMaster();
+	MJSceneController.SetupPlayWay();
 	if msg.m_FreeCard == MJDefine.TOTAL_CARD_COUNT then
 		-- 对局还没开始
 		Log.Info("MJScene.ReturnReconnectInfo: 对局还没开始");
@@ -857,8 +862,11 @@ function MJScene.ReturnRoomMasterDissolve(evt)
 	option.OnClickOK =
 	function()
 		UIManager.CloseWindow(UIType.UI_DissolveRoom);
-		UIManager.OpenWindow(UIType.UI_MJTotalResult);
-		-- SceneManager.GotoScene(SceneType.HallScene);
+		if MJScene.CurrentRound > 1 then
+			UIManager.OpenWindow(UIType.UI_MJTotalResult);
+		else
+			SceneManager.GotoScene(SceneType.HallScene);
+		end
 	end;
 	option.DoubleButton = false;
 	option.Content = "房间已解散,点击确定退出房间";
@@ -903,9 +911,9 @@ function MJScene.ReturnCastDice(evt)
 end
 
 function MJScene.ReturnOperateError(evt)
-	UIManager.OpenTipsDialog("操作失败");
 	local msg = NetManager.DecodeMsg(PBMessage.GM_MJOperatorError, evt);
 	Log.Info("MJScene.ReturnOperateError: result is " .. tostring(msg.m_Result));
+	MJScene.RequestReconnectInfo(); -- 操作失败时刷新桌面的数据
 end
 
 function MJScene.PlayStartGameEffect()

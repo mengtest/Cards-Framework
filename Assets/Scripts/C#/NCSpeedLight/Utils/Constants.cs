@@ -318,7 +318,7 @@ namespace NCSpeedLight
                 }
                 else if (Application.isEditor)
                 {
-                    return true;
+                    return false;
                 }
                 else
                 {
@@ -340,7 +340,7 @@ namespace NCSpeedLight
                 }
                 else if (Application.isEditor)
                 {
-                    return true;
+                    return false;
                 }
                 else
                 {

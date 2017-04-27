@@ -649,6 +649,7 @@ function MJPlayer:MJOT_GetCard(data)
 		if card ~= nil then
 			self:AddHandCard(card);
 		end
+		self.UI:UpdateCards(false, true);
 		self.UI:PlayGetCardAnimation();
 	else
 		self:DisplayHandCard(false, true);
@@ -666,6 +667,7 @@ function MJPlayer:MJOT_BuCard(data)
 		if card ~= nil then
 			self:AddHandCard(card);
 		end
+		self.UI:UpdateCards(false, true);
 		self.UI:PlayGetCardAnimation();
 	end
 	self:DisplayHandCard(false, true);
@@ -676,16 +678,21 @@ function MJPlayer:MJOT_SendCard(data)
 	local card = data.m_HandCard[1];
 	Log.Info("MJPlayer:MJOT_SendCard: " .. self:LogKey() .. ",card id is " .. card.m_Index .. ",type is " .. MaJiangType.ToString(card.m_Type));
 	if self:IsHero() then
-		local cardPosition = self:GetHandCardPositionByID(card.m_Index);
-		local newCardPosition = self:GetHandCardCount();
-		local newCard = self:GetHandCardByPosition(newCardPosition);
-		self:RemoveHandCard(card.m_Index);
-		self:SortHandCard();
-		local newCardTargetPosition = self:GetHandCardIndex(newCard);
+		-- local cardPosition = self:GetHandCardPositionByID(card.m_Index);
+		-- local newCardPosition = self:GetHandCardCount();
+		-- local newCard = self:GetHandCardByPosition(newCardPosition);
+		-- self:RemoveHandCard(card.m_Index);
+		-- self:SortHandCard();
+		-- local newCardTargetPosition = self:GetHandCardIndex(newCard);
+		-- self.UI:PlayOutCardAnimation(card);
+		-- self.UI:PlayInsertCardAnimation(cardPosition, newCardPosition, newCardTargetPosition);
+		-- self:SubHandCardCount();
+		-- self:AddTableCardCount();
 		self.UI:PlayOutCardAnimation(card);
-		self.UI:PlayInsertCardAnimation(cardPosition, newCardPosition, newCardTargetPosition);
+		self:RemoveHandCard(card.m_Index);
 		self:SubHandCardCount();
 		self:AddTableCardCount();
+		self.UI:UpdateCards(true, false);
 	else
 		self.UI:PlayOutCardAnimation(card);
 		self:SubHandCardCount();

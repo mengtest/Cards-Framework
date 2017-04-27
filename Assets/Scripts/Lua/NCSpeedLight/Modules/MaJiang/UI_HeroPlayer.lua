@@ -34,6 +34,38 @@ function UI_HeroPlayer:Start()
 		listener.onDragStart = UI_HeroPlayer.OnStartDragCard;
 		listener.onDrag = UI_HeroPlayer.OnDragCard;
 		listener.onDragEnd = UI_HeroPlayer.OnStopDragCard;
+		listener.onClick = function(go)
+			if go ~= nil then
+				if UI_HeroPlayer.SelectedCardObj == go then
+					if MJScene.IsMyTurn() == false then
+						UIManager.OpenTipsDialog("不是你的回合，无法出牌");
+					else
+						-- 出牌,重置牌的位置以及显示
+						go.transform.localPosition = Vector3(go.transform.localPosition.x, 0, go.transform.localPosition.z);
+						UIHelper.SetActiveState(go.transform, "UpCard", false);
+						UIHelper.SetActiveState(go.transform, false);
+						
+						local cardIndex = tonumber(go.name);
+						local card = self.Player:GetHandCardByPosition(cardIndex);
+						if card == nil then
+							Log.Error("UI_HeroPlayer.OnClickCard: cannot out card caused by nil card instance");
+						else
+							MJScene.RequestMJOperate_OutCard(card);
+						end
+					end
+				else
+					if UI_HeroPlayer.SelectedCardObj ~= nil then
+						UI_HeroPlayer.SelectedCardObj.transform.localPosition = Vector3(UI_HeroPlayer.SelectedCardObj.transform.localPosition.x, 0, UI_HeroPlayer.SelectedCardObj.transform.localPosition.z);
+						UIHelper.SetActiveState(UI_HeroPlayer.SelectedCardObj.transform, "UpCard", false);
+					end
+					
+					UI_HeroPlayer.SelectedCardObj = go;
+					UI_HeroPlayer.SelectedCardObj.transform.localPosition = Vector3(UI_HeroPlayer.SelectedCardObj.transform.localPosition.x, 30, UI_HeroPlayer.SelectedCardObj.transform.localPosition.z);
+					UIHelper.SetActiveState(UI_HeroPlayer.SelectedCardObj.transform, "UpCard", true);
+					UIHelper.SetActiveState(UI_HeroPlayer.SelectedCardObj.transform, true);
+				end
+			end
+		end
 	end
 end
 
@@ -105,25 +137,59 @@ function UI_HeroPlayer.OnStopDragCard(go)
 	end
 end
 
--- 播放出牌效果
-function UI_HeroPlayer:PlayOutCardAnimation(card)
-	local outCardTran = self.transform:Find("OutCard/Card");
-	local tweener = outCardTran:GetComponent(typeof(TweenTransform));
-	local tweenerUtils = outCardTran:GetComponent(typeof(NCSpeedLight.InvisiableOnTweenFinish));
-	tweenerUtils.OnFinish = function()
-		if UI_HeroPlayer.DragingCardObj ~= nil then
-			UnityEngine.GameObject.Destroy(UI_HeroPlayer.DragingCardObj);
+function UI_HeroPlayer:OnClickCard(go)
+	if go ~= nil then
+		if UI_HeroPlayer.SelectedCardObj == go then
+			if MJScene.IsMyTurn() == false then
+				UIManager.OpenTipsDialog("不是你的回合，无法出牌");
+			else
+				-- 出牌,重置牌的位置以及显示
+				go.transform.localPosition = Vector3(go.transform.localPosition.x, 0, go.transform.localPosition.z);
+				UIHelper.SetActiveState(go.transform, "UpCard", false);
+				UIHelper.SetActiveState(go.transform, false);
+				
+				local cardIndex = tonumber(go.name);
+				local card = self.Player:GetHandCardByPosition(cardIndex);
+				if card == nil then
+					Log.Error("UI_HeroPlayer.OnClickCard: cannot out card caused by nil card instance");
+				else
+					MJScene.RequestMJOperate_OutCard(card);
+				end
+			end
+		else
+			if UI_HeroPlayer.SelectedCardObj ~= nil then
+				UI_HeroPlayer.SelectedCardObj.transform.localPosition = Vector3(UI_HeroPlayer.SelectedCardObj.transform.localPosition.x, 0, UI_HeroPlayer.SelectedCardObj.transform.localPosition.z);
+				UIHelper.SetActiveState(UI_HeroPlayer.SelectedCardObj.transform, "UpCard", false);
+			end
+			
+			UI_HeroPlayer.SelectedCardObj = go;
+			UI_HeroPlayer.SelectedCardObj.transform.localPosition = Vector3(UI_HeroPlayer.SelectedCardObj.transform.localPosition.x, 30, UI_HeroPlayer.SelectedCardObj.transform.localPosition.z);
+			UIHelper.SetActiveState(UI_HeroPlayer.SelectedCardObj.transform, "UpCard", true);
+			UIHelper.SetActiveState(UI_HeroPlayer.SelectedCardObj.transform, true);
 		end
 	end
-	tweener.enabled = true;
-	tweener.duration = 0.5;
-	tweener.from = UI_HeroPlayer.DragingCardObj.transform;
-	tweener:ResetToBeginning();
-	NCSpeedLight.UIHelper.SetSpriteName(outCardTran, "Sprite", MaJiangType.ToString(card.m_Type));
-	outCardTran.gameObject:SetActive(true);
-	local tableCard = MJSceneController.GetOneUnuseCard(card.m_Index, card.m_Type, self.Player.ID);
+end
+
+-- 播放出牌效果
+function UI_HeroPlayer:PlayOutCardAnimation(card)
+	-- local outCardTran = self.transform:Find("OutCard/Card");
+	-- local tweener = outCardTran:GetComponent(typeof(TweenTransform));
+	-- local tweenerUtils = outCardTran:GetComponent(typeof(NCSpeedLight.InvisiableOnTweenFinish));
+	-- tweenerUtils.OnFinish = function()
+	-- 	if UI_HeroPlayer.DragingCardObj ~= nil then
+	-- 		UnityEngine.GameObject.Destroy(UI_HeroPlayer.DragingCardObj);
+	-- 	end
+	-- end
+	-- tweener.enabled = true;
+	-- tweener.duration = 0.5;
+	-- tweener.from = UI_HeroPlayer.DragingCardObj.transform;
+	-- tweener:ResetToBeginning();
+	-- NCSpeedLight.UIHelper.SetSpriteName(outCardTran, "Sprite", MaJiangType.ToString(card.m_Type));
+	-- outCardTran.gameObject:SetActive(true);
+	-- local tableCard = MJSceneController.GetOneUnuseCard(card.m_Index, card.m_Type, self.Player.ID);
+	-- tableCard:Show(cardPos, self.Player.TableCardRotation);
 	local cardPos = self.Player:GetTableCardPos(self.Player.TableCardCount);
-	tableCard:Show(cardPos, self.Player.TableCardRotation);
+	MJSceneController.PutOneCard(card.m_Index, card.m_Type, self.Player.ID, cardPos, self.Player.TableCardRotation);
 end
 
 -- 播放插牌动画
@@ -226,7 +292,7 @@ function UI_HeroPlayer:PlayInsertCardAnimation(outCardPosition, newCardPosition,
 			local o2X = o2.localPosition.x;
 			return o1X < o2X;
 		end);
-		for i = 1, # cardObjs do
+		for i = 1, #cardObjs do
 			local cardObj = cardObjs[i];
 			cardObj.name = tostring(i);
 		end
@@ -256,7 +322,7 @@ function UI_HeroPlayer:PlayGetCardAnimation()
 		cardObj:SetActive(true);
 		local leftCardObj = self:GetCardObjByPosition(cardPos - 1);
 	end;
-	local shakeAction = Action.New(0, 0.5);
+	local shakeAction = Action.New(0, 0.3);
 	shakeAction.OnBegin = function()
 		Log.Info("UI_HeroPlayer.PlayGetCardAnimation: shakeAction.OnBegin -- 抖动牌面");
 		local cardPos = self.Player:GetHandCardCount();
@@ -264,9 +330,9 @@ function UI_HeroPlayer:PlayGetCardAnimation()
 		local rotationFrom = UnityEngine.Quaternion.Euler(UnityEngine.Vector3(0, 0, 15));
 		local rotationTo = UnityEngine.Quaternion.Euler(UnityEngine.Vector3(0, 0, 0));
 		cardObj.transform.rotation = rotationFrom;
-		TweenRotation.Begin(cardObj, 0.5, rotationTo);
+		TweenRotation.Begin(cardObj, 0.2, rotationTo);
 	end
-	local downAction = Action.New(0, 0.5);
+	local downAction = Action.New(0, 0.3);
 	downAction.OnBegin = function()
 		Log.Info("UI_HeroPlayer.PlayGetCardAnimation: downAction.OnBegin -- 下落至槽位中");
 		local cardPos = self.Player:GetHandCardCount();
@@ -274,10 +340,10 @@ function UI_HeroPlayer:PlayGetCardAnimation()
 		local positionFrom = UnityEngine.Vector3(cardObj.transform.localPosition.x, 70, cardObj.transform.localPosition.z);
 		local positionTo = cardObj.transform.localPosition;
 		cardObj.transform.localPosition = positionFrom;
-		SpringPosition.Begin(cardObj, positionTo, 8);
+		SpringPosition.Begin(cardObj, positionTo, 40);
 	end
 	actionLine:AddAction(firstAction);
-	actionLine:AddAction(shakeAction);
+	-- actionLine:AddAction(shakeAction);
 	actionLine:AddAction(downAction);
 	self.AnimationQueue:Push(actionLine);
 	self.AnimationQueue:Resume();
@@ -292,3 +358,46 @@ function UI_HeroPlayer:GetCardObjByPosition(pos)
 		return nil;
 	end
 end
+
+-- 刷新牌,sort-是否需要排序,lastMargin-最后一张牌是否需要间距
+-- 麻将的排序逻辑在这里执行
+function UI_HeroPlayer:UpdateCards(sort, lastMargin)
+	if self.Player == nil then
+		return;
+	else
+		if sort then
+			table.sort(self.Player.HandCards, function(o1, o2)
+				return o1.m_Type < o2.m_Type;
+			end);	
+		end
+		local cardGridPanel = self.transform:Find("Cards/CardGrid");
+		local gridCom = cardGridPanel:GetComponent(typeof(UIGrid));
+		local currentPos = self.Player.UICardStartPos - Vector3.New(self.Player.UICardWidth, 0, 0);
+		if self.Player.OperateTotalCount > 0 then
+			currentPos = currentPos + Vector3.New(self.Player.OperateTotalCount * 3 * self.Player.UICardWorldSpaceWidth + self.Player.UICardHeadMargin, 0, 0);
+		end
+		local index = 1;
+		for i = 1, #self.Player.HandCards do
+			local card = self.Player.HandCards[i];
+			local cardObj = cardGridPanel:Find(tostring(i));
+			UIHelper.SetSpriteName(cardObj, "Sprite", MaJiangType.ToString(card.m_Type));
+			local offset = nil;
+			if i == #self.Player.HandCards and lastMargin == true then
+				offset = Vector3.New(self.Player.UICardWidth + self.Player.UICardLastMargin, 0, 0);
+			else
+				offset = Vector3.New(self.Player.UICardWidth, 0, 0);
+			end
+			currentPos = currentPos + offset;
+			cardObj.localPosition = currentPos;
+			cardObj.gameObject:SetActive(true);
+			index = index + 1;
+		end
+		for i = index, 14 do
+			local cardObj = cardGridPanel:Find(tostring(i));
+			local offset = Vector3.New(self.Player.UICardWidth, 0, 0);
+			currentPos = currentPos + offset;
+			cardObj.localPosition = currentPos;
+			cardObj.gameObject:SetActive(false);
+		end
+	end
+end 
