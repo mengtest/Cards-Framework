@@ -23,16 +23,7 @@ end
 
 
 function UI_MobileLogin.OnClickWechat(obj)
-	-- ShareSDKAdapter.AuthWechat(UI_MobileLogin.OnAuthCallback);
-	-- return;
-	UI_MobileLogin.AuthInfo = ShareSDKAdapter.GetWechatAuthInfo();
-	if UI_MobileLogin.AuthInfo == nil then
-		-- 获取不到用户信息，则拉起平台登录界面
-		ShareSDKAdapter.AuthWechat(UI_MobileLogin.OnAuthCallback);
-	else
-		-- 直接请求登录
-		LoginScene.RequestLogin(UI_MobileLogin.AuthInfo.unionID, "AllPlatform");
-	end
+	ShareSDKAdapter.AuthWechat(UI_MobileLogin.OnAuthCallback);
 end
 
 

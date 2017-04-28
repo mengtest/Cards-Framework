@@ -25,6 +25,7 @@ LoginScene =
 	LoginServerPort = nil,
 	LogicServerIP = nil,
 	LoginServerPort = nil,
+	AuthInfo = nil,
 };
 
 function LoginScene.Initialize()
@@ -194,7 +195,13 @@ function LoginScene.OnVerifyVersionReturn(evt)
 	if obj.result == 0 then
 		Log.Info("LoginScene.OnVerifyVersionReturn: sccuss.");
 		if Game.Platform == UnityEngine.RuntimePlatform.Android or Game.Platform == UnityEngine.RuntimePlatform.IPhonePlayer then
-			UIManager.OpenWindow(UIType.UI_MobileLogin);
+			LoginScene.AuthInfo = ShareSDKAdapter.GetWechatAuthInfo();
+			if LoginScene.AuthInfo == nil then
+				UIManager.OpenWindow(UIType.UI_MobileLogin);
+			else
+				-- 本地存在验证信息，则直接登录
+				LoginScene.RequestLogin(LoginScene.AuthInfo.unionID, "AllPlatform");
+			end
 		else
 			UIManager.OpenWindow(UIType.UI_NormalLogin);
 		end
