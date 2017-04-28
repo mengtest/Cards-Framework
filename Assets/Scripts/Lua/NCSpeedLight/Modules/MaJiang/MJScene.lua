@@ -680,9 +680,9 @@ function MJScene.ReturnReconnectInfo(evt)
 				MJGroupCardQueue.PopRear(popRearCount);
 				player:SetupReady(false);
 				if player == MJScene.CurrentOperator then
-					player:DisplayHandCard(true, true);
+					player.UI:UpdateCards(true, true);
 				else
-					player:DisplayHandCard(true, false);
+					player.UI:UpdateCards(true, false);
 				end
 			end
 		end
@@ -918,7 +918,6 @@ function MJScene.ReturnCastDice(evt)
 	UI_MaJiang.SetupCastDice(false);
 	MJSceneController.PlayDiceAnimation(MJScene.DiceNumbers[1], MJScene.DiceNumbers[2], nil);
 	MJSceneController.PlayGroupCardAnimation(function()
-		-- MJScene.PlayStartGameEffect();
 		StartCoroutine(MJScene.PlaySendCardAnimation);
 	end);
 end
@@ -929,23 +928,38 @@ function MJScene.ReturnOperateError(evt)
 	MJScene.RequestReconnectInfo(); -- 操作失败时刷新桌面的数据
 end
 
+-- 播放发牌效果
 function MJScene.PlaySendCardAnimation()
 	MJGroupCardQueue.PopFront(MJScene.GetPlayerCount() * 4);
-	WaitForSeconds(0.2)
-	MJGroupCardQueue.PopFront(MJScene.GetPlayerCount() * 4);
-	WaitForSeconds(0.2)
-	MJGroupCardQueue.PopFront(MJScene.GetPlayerCount() * 4);
-	WaitForSeconds(0.2)
-	MJGroupCardQueue.PopFront(MJScene.GetPlayerCount() + 1);
-	-- 开始游戏
 	for key, value in pairs(MJScene.Players) do
-		value:StartGame();
-		value:DisplayHandCard(true, true);
+		if value:IsBanker() then
+			value:SetHandCardCount(MJDefine.BANKER_INITIAL_CARD_COUNT);
+		else
+			value:SetHandCardCount(MJDefine.XIAN_INITIAL_CARD_COUNT);
+		end
+		value.UI:UpdateCards(false, false, 4);
 	end
-end
-
-function MJScene.PlayStartGameEffect()
+	WaitForSeconds(0.2);
+	
+	MJGroupCardQueue.PopFront(MJScene.GetPlayerCount() * 4);
 	for key, value in pairs(MJScene.Players) do
-		value:DisplayHandCard(true, true);
+		value.UI:UpdateCards(false, false, 8);
+	end
+	WaitForSeconds(0.2);
+	
+	MJGroupCardQueue.PopFront(MJScene.GetPlayerCount() * 4);
+	for key, value in pairs(MJScene.Players) do
+		value.UI:UpdateCards(false, false, 12);
+	end
+	WaitForSeconds(0.2);
+	
+	MJGroupCardQueue.PopFront(MJScene.GetPlayerCount() + 1);
+	for key, value in pairs(MJScene.Players) do
+		if value:IsBanker() then
+			value.UI:UpdateCards(true, true);
+		else
+			value.UI:UpdateCards(true, false);
+		end
+		value:StartGame();
 	end
 end 

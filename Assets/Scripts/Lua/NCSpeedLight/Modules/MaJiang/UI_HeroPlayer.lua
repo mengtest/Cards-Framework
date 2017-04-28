@@ -338,10 +338,10 @@ function UI_HeroPlayer:PlayGetCardAnimation()
 		Log.Info("UI_HeroPlayer.PlayGetCardAnimation: downAction.OnBegin -- 下落至槽位中");
 		local cardPos = self.Player:GetHandCardCount();
 		local cardObj = self:GetCardObjByPosition(cardPos);
-		local positionFrom = UnityEngine.Vector3(cardObj.transform.localPosition.x, 70, cardObj.transform.localPosition.z);
+		local positionFrom = UnityEngine.Vector3(cardObj.transform.localPosition.x, 100, cardObj.transform.localPosition.z);
 		local positionTo = cardObj.transform.localPosition;
 		cardObj.transform.localPosition = positionFrom;
-		SpringPosition.Begin(cardObj, positionTo, 40);
+		SpringPosition.Begin(cardObj, positionTo, 50);
 	end
 	actionLine:AddAction(firstAction);
 	-- actionLine:AddAction(shakeAction);
@@ -360,12 +360,21 @@ function UI_HeroPlayer:GetCardObjByPosition(pos)
 	end
 end
 
--- 刷新牌,sort-是否需要排序,lastMargin-最后一张牌是否需要间距
+-- 刷新牌,sort-是否需要排序,lastMargin-最后一张牌是否需要间距,maxCount-最多显示的牌数
 -- 麻将的排序逻辑在这里执行
-function UI_HeroPlayer:UpdateCards(sort, lastMargin)
+function UI_HeroPlayer:UpdateCards(sort, lastMargin, maxCount)
 	if self.Player == nil then
 		return;
 	else
+		local arrayCount = 0;
+		if maxCount == nil then
+			arrayCount = #self.Player.HandCards;
+		else
+			arrayCount = maxCount > #self.Player.HandCards and self.Player.HandCards or maxCount;
+		end
+		-- local visitArray = {};
+		-- for i = 1, arrayCount do
+		-- end
 		if sort then
 			table.sort(self.Player.HandCards, function(o1, o2)
 				return o1.m_Type < o2.m_Type;
@@ -378,12 +387,12 @@ function UI_HeroPlayer:UpdateCards(sort, lastMargin)
 			currentPos = currentPos + Vector3.New(self.Player.OperateTotalCount * 3 * self.Player.UICardWorldSpaceWidth + self.Player.UICardHeadMargin, 0, 0);
 		end
 		local index = 1;
-		for i = 1, #self.Player.HandCards do
+		for i = 1, arrayCount do
 			local card = self.Player.HandCards[i];
 			local cardObj = cardGridPanel:Find(tostring(i));
 			UIHelper.SetSpriteName(cardObj, "Sprite", MaJiangType.ToString(card.m_Type));
 			local offset = nil;
-			if i == #self.Player.HandCards and lastMargin == true then
+			if i == arrayCount and lastMargin == true then
 				offset = Vector3.New(self.Player.UICardWidth + self.Player.UICardLastMargin, 0, 0);
 			else
 				offset = Vector3.New(self.Player.UICardWidth, 0, 0);
@@ -401,4 +410,4 @@ function UI_HeroPlayer:UpdateCards(sort, lastMargin)
 			cardObj.gameObject:SetActive(false);
 		end
 	end
-end 
+end

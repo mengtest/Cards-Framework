@@ -544,82 +544,11 @@ function MJPlayer:StartGame()
 	Log.Info("MJPlayer:StartGame: " .. self:LogKey());
 	self:SetupReady(false);
 	self:SetupBanker();
-	if self:IsBanker() then
-		self:SetHandCardCount(MJDefine.BANKER_INITIAL_CARD_COUNT);
-		-- MJGroupCardQueue.PopFront(MJDefine.BANKER_INITIAL_CARD_COUNT);
-	else
-		self:SetHandCardCount(MJDefine.XIAN_INITIAL_CARD_COUNT);
-		-- MJGroupCardQueue.PopFront(MJDefine.XIAN_INITIAL_CARD_COUNT);
-	end
-end
-
--- 展示玩家的手牌，sort-是否需要排序，lastMargin-最后一张牌是否需要有间隔
-function MJPlayer:DisplayHandCard(sort, lastMargin)
-	if self:IsHero() then
-		if sort then
-			self:SortHandCard();
-		end
-		local cardGridPanel = self.UITransform:Find("Cards/CardGrid");
-		local gridCom = cardGridPanel:GetComponent(typeof(UIGrid));
-		local currentPos = self.UICardStartPos - Vector3.New(self.UICardWidth, 0, 0);
-		if self.OperateTotalCount > 0 then
-			currentPos = currentPos + Vector3.New(self.OperateTotalCount * 3 * self.UICardWorldSpaceWidth + self.UICardHeadMargin, 0, 0);
-		end
-		local index = 1;
-		for i = 1, #self.HandCards do
-			local card = self.HandCards[i];
-			local cardObj = cardGridPanel:Find(tostring(i));
-			UIHelper.SetSpriteName(cardObj, "Sprite", MaJiangType.ToString(card.m_Type));
-			local offset = nil;
-			if i == #self.HandCards and lastMargin == true then
-				offset = Vector3.New(self.UICardWidth + self.UICardLastMargin, 0, 0);
-			else
-				offset = Vector3.New(self.UICardWidth, 0, 0);
-			end
-			currentPos = currentPos + offset;
-			cardObj.localPosition = currentPos;
-			cardObj.gameObject:SetActive(true);
-			index = index + 1;
-		end
-		for i = index, 14 do
-			local cardObj = cardGridPanel:Find(tostring(i));
-			local offset = Vector3.New(self.UICardWidth, 0, 0);
-			currentPos = currentPos + offset;
-			cardObj.localPosition = currentPos;
-			cardObj.gameObject:SetActive(false);
-		end
-	else
-		local cardGridPanel = MJSceneController.transform:Find("majiangzhuo/backCard/" .. self.UITransform.name);
-		if cardGridPanel.gameObject.activeSelf == false then
-			cardGridPanel.gameObject:SetActive(true);
-		end
-		local currentPos = self.HandCardStartPos - self.HandCardOffset;
-		if self.OperateTotalCount > 0 then
-			local operateCardCurrentPos = self.OperateCardStartPos + self.OperateCardOffset * self.OperateTotalCount * 3;
-			currentPos = operateCardCurrentPos -(self.HandCardOffset / 2); -- 间隔
-		end
-		local index = 1;
-		for i = 1, self:GetHandCardCount() do
-			local cardObj = cardGridPanel:Find(tostring(i));
-			local offset = self.HandCardOffset;
-			if i == self:GetHandCardCount() and lastMargin == true then
-				offset = offset + self.HandCardOffset / 2;
-			end
-			currentPos = currentPos + offset;
-			cardObj.localPosition = currentPos;
-			cardObj.localRotation = Quaternion.Euler(self.HandCardRotation);
-			cardObj.gameObject:SetActive(true);
-			index = index + 1;
-		end
-		for i = index, 14 do
-			local cardObj = cardGridPanel:Find(tostring(i));
-			local offset = self.HandCardOffset;
-			currentPos = currentPos + offset;
-			cardObj.localPosition = currentPos;
-			cardObj.localRotation = Quaternion.Euler(self.HandCardRotation);
-			cardObj.gameObject:SetActive(false);
-		end
-	end
+	-- if self:IsBanker() then
+	-- 	self:SetHandCardCount(MJDefine.BANKER_INITIAL_CARD_COUNT);
+	-- else
+	-- 	self:SetHandCardCount(MJDefine.XIAN_INITIAL_CARD_COUNT);
+	-- end
 end
 
 -- 播放UI框的缩放,以及骰子面板的闪光效果
@@ -649,11 +578,9 @@ function MJPlayer:MJOT_GetCard(data)
 		if card ~= nil then
 			self:AddHandCard(card);
 		end
-		self.UI:UpdateCards(false, true);
 		self.UI:PlayGetCardAnimation();
-	else
-		self:DisplayHandCard(false, true);
 	end
+	self.UI:UpdateCards(false, true);
 end
 
 --补牌
@@ -667,16 +594,17 @@ function MJPlayer:MJOT_BuCard(data)
 		if card ~= nil then
 			self:AddHandCard(card);
 		end
-		self.UI:UpdateCards(false, true);
 		self.UI:PlayGetCardAnimation();
 	end
-	self:DisplayHandCard(false, true);
+	self.UI:UpdateCards(false, true);
 end
 
 --出牌
 function MJPlayer:MJOT_SendCard(data)
 	local card = data.m_HandCard[1];
 	Log.Info("MJPlayer:MJOT_SendCard: " .. self:LogKey() .. ",card id is " .. card.m_Index .. ",type is " .. MaJiangType.ToString(card.m_Type));
+	self.UI:PlayOutCardAnimation(card);
+	self:AddTableCardCount();
 	if self:IsHero() then
 		-- local cardPosition = self:GetHandCardPositionByID(card.m_Index);
 		-- local newCardPosition = self:GetHandCardCount();
@@ -688,17 +616,10 @@ function MJPlayer:MJOT_SendCard(data)
 		-- self.UI:PlayInsertCardAnimation(cardPosition, newCardPosition, newCardTargetPosition);
 		-- self:SubHandCardCount();
 		-- self:AddTableCardCount();
-		self.UI:PlayOutCardAnimation(card);
 		self:RemoveHandCard(card.m_Index);
-		self:SubHandCardCount();
-		self:AddTableCardCount();
-		self.UI:UpdateCards(true, false);
-	else
-		self.UI:PlayOutCardAnimation(card);
-		self:SubHandCardCount();
-		self:DisplayHandCard(true, false);
-		self:AddTableCardCount();
 	end
+	self:SubHandCardCount();
+	self.UI:UpdateCards(true, false);
 end
 
 --摊
@@ -729,7 +650,7 @@ function MJPlayer:MJOT_PENG(data)
 			self:RemoveHandCard(card.m_Index);
 		end
 	end
-	self:DisplayHandCard(true, false);
+	self.UI:UpdateCards(true, false);
 	MJSceneController.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_PENG);
 end
 
@@ -744,7 +665,7 @@ function MJPlayer:MJOT_GANG(data)
 			self:RemoveHandCard(card.m_Index);
 		end
 	end
-	self:DisplayHandCard(true, false);
+	self.UI:UpdateCards(true, false);
 	MJSceneController.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_GANG);
 end
 
@@ -759,7 +680,7 @@ function MJPlayer:MJOT_AN_GANG(data)
 			self:RemoveHandCard(card.m_Index);
 		end
 	end
-	self:DisplayHandCard(true, false);
+	self.UI:UpdateCards(true, false);
 	MJSceneController.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_AN_GANG);
 end
 
@@ -773,7 +694,7 @@ function MJPlayer:MJOT_BuGang(data)
 			self:RemoveHandCard(card.m_Index);
 		end
 	end
-	self:DisplayHandCard(true, false);
+	self.UI:UpdateCards(true, false);
 	MJSceneController.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_BuGang);
 end
 

@@ -69,4 +69,45 @@ function UI_OtherPlayer:PlayOutCardAnimation(card)
 	-- tableCard:Show(cardPos, self.Player.TableCardRotation);
 	local cardPos = self.Player:GetTableCardPos(self.Player.TableCardCount);
 	MJSceneController.PutOneCard(card.m_Index, card.m_Type, self.Player.ID, cardPos, self.Player.TableCardRotation);
+end
+
+-- 刷新牌,sort-是否需要排序,lastMargin-最后一张牌是否需要间距,maxCount-最多显示的牌数
+-- 麻将的排序逻辑在这里执行
+function UI_OtherPlayer:UpdateCards(sort, lastMargin, maxCount)
+	local arrayCount = 0;
+	if maxCount == nil then
+		arrayCount = self.Player:GetHandCardCount();
+	else
+		arrayCount = maxCount > self.Player:GetHandCardCount() and self.Player:GetHandCardCount() or maxCount;
+	end
+	local cardGridPanel = MJSceneController.transform:Find("majiangzhuo/backCard/" .. self.transform.name);
+	if cardGridPanel.gameObject.activeSelf == false then
+		cardGridPanel.gameObject:SetActive(true);
+	end
+	local currentPos = self.Player.HandCardStartPos - self.Player.HandCardOffset;
+	if self.Player.OperateTotalCount > 0 then
+		local operateCardCurrentPos = self.Player.OperateCardStartPos + self.Player.OperateCardOffset * self.Player.OperateTotalCount * 3;
+		currentPos = operateCardCurrentPos -(self.Player.HandCardOffset / 2); -- 间隔
+	end
+	local index = 1;
+	for i = 1, arrayCount do
+		local cardObj = cardGridPanel:Find(tostring(i));
+		local offset = self.Player.HandCardOffset;
+		if i == arrayCount and lastMargin == true then
+			offset = offset + self.Player.HandCardOffset / 2;
+		end
+		currentPos = currentPos + offset;
+		cardObj.localPosition = currentPos;
+		cardObj.localRotation = Quaternion.Euler(self.Player.HandCardRotation);
+		cardObj.gameObject:SetActive(true);
+		index = index + 1;
+	end
+	for i = index, 14 do
+		local cardObj = cardGridPanel:Find(tostring(i));
+		local offset = self.Player.HandCardOffset;
+		currentPos = currentPos + offset;
+		cardObj.localPosition = currentPos;
+		cardObj.localRotation = Quaternion.Euler(self.Player.HandCardRotation);
+		cardObj.gameObject:SetActive(false);
+	end
 end 
