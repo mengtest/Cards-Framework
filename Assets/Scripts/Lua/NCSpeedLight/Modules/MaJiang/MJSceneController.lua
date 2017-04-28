@@ -79,6 +79,7 @@ function MJSceneController.Reset()
 	MJSceneController.DeskAnimationTimer = nil;
 	MJSceneController.DiceAnimationTimer = nil;
 	MJSceneController.HideArrow();
+	MJSceneController.SetGroupCardActive(false);
 end
 
 -- 设置牌墩的显示/隐藏
