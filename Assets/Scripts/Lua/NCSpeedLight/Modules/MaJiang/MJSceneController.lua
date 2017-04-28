@@ -166,14 +166,22 @@ end
 
 -- 设置玩法
 function MJSceneController.SetupPlayWay()
-	local playway = Utility.SplitString(MJScene.Playway, ",");
-	local count = #playway;
-	if count == 1 then
-		UIHelper.SetActiveState(this.transform, "majiangzhuo/Text/PlayWay/OneText", true);
-		UIHelper.SetActiveState(this.transform, "majiangzhuo/Text/PlayWay/OneText/1/" .. MJPlayWay.ToString(tonumber(playway[1])), true);
-	elseif count == 2 then
-		UIHelper.SetActiveState(this.transform, "majiangzhuo/Text/PlayWay/TwoText", true);
-		UIHelper.SetActiveState(this.transform, "majiangzhuo/Text/PlayWay/TwoText/1/" .. MJPlayWay.ToString(tonumber(playway[1])), true);
+	if MJScene.Playway == nil then
+		Log.Error("MJSceneController.SetupPlayWay: error caused by nil MJScene.Playway str.");
+	else
+		local playway = Utility.SplitString(MJScene.Playway, ",");
+		if playway == nil then
+			Log.Error("MJSceneController.SetupPlayWay: error caused by spilt MJScene.Playway str fail.");
+			return;
+		end
+		local count = #playway;
+		if count == 1 then
+			UIHelper.SetActiveState(this.transform, "majiangzhuo/Text/PlayWay/OneText", true);
+			UIHelper.SetActiveState(this.transform, "majiangzhuo/Text/PlayWay/OneText/1/" .. MJPlayWay.ToString(tonumber(playway[1])), true);
+		elseif count == 2 then
+			UIHelper.SetActiveState(this.transform, "majiangzhuo/Text/PlayWay/TwoText", true);
+			UIHelper.SetActiveState(this.transform, "majiangzhuo/Text/PlayWay/TwoText/1/" .. MJPlayWay.ToString(tonumber(playway[1])), true);
+		end
 	end
 end
 

@@ -287,8 +287,17 @@ end
 -- 获取当前麻将的玩法
 function MJScene.GetMJPlayWayStr()
 	local playway = "";
+	if MJScene.Playway == nil then
+		Log.Info("MJScene.GetMJPlayWayStr: error,MJScene.Playway is nil.");
+	end
 	local playwayType = Utility.SplitString(MJScene.Playway, ",");
 	for i = 1, #playwayType do
+		local playwayEnum = MJPlayWay.ToString(tonumber(playwayType[i]));
+		local str = MJPlayWayStr[playwayEnum];
+		if str == nil then
+			Log.Info("MJScene.GetMJPlayWayStr: error,playway str is " .. MJScene.Playway);
+		else
+		end
 		playway = playway .. MJPlayWayStr[MJPlayWay.ToString(tonumber(playwayType[i]))];
 		if i ~= #playwayType then
 			playway = playway .. " · ";
