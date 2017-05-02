@@ -98,6 +98,7 @@ end
 
 function MJScene.OnSceneWasLoaded()
 	Log.Info("MJScene.OnSceneWasLoaded: now bein to open majiang ui and request game fb info or reconnect info.");
+	RongCloudAdapter.Initialize(MJScene.OnReceiveVoiceMsg);
 	UIManager.OpenWindow(UIType.UI_MaJiang);
 	MJScene.RegisterNetEvent();
 	if MJScene.NeedReconnect then
@@ -853,6 +854,17 @@ end
 
 function MJScene.NotifyChat(evt)
 	Log.Info("MJScene.NotifyChat");
+	local msg = NetManager.DecodeMsg(PBMessage.GM_AnswerFaceReturn, evt);
+	if msg == false then
+		Log.Error("MJScene.NotifyChat: parse msg error: " .. PBMessage.GM_AnswerFaceReturn);
+		return;
+	end
+	UI_MaJiang.HandleChat(msg);
+end
+
+function MJScene.OnReceiveVoiceMsg(roleid, uri, duration)
+	Log.Info("MJScene.OnReceiveVoiceMsg: roleid is " .. roleid .. ",uri is " .. uri .. ",duration is " .. duration);
+	UI_MaJiang.HandleVoice(roleid, uri, duration);
 end
 
 function MJScene.NotifyTrust(evt)

@@ -42,7 +42,9 @@ public static class CustomSettings
         _DT(typeof(UIEventListener.VoidDelegate)),
         _DT(typeof(ShareSDKAdapter.AuthCallbackDelegate)),
         _DT(typeof(ShareSDKAdapter.ShareCallbackDelegate)),
-
+        _DT(typeof(RCloud.RCVoiceCaptureCallback.VoiceCaptureFinishedCallback)),
+        _DT(typeof(RCloud.RCVoiceCaptureCallback.VoiceCaptureVolumeCallback)),
+        _DT(typeof(RCloud.RCVoiceCaptureCallback.VoiceCaptureErrorCallback)),
     };
 
     //在这里添加你要导出注册到lua的类型列表
@@ -129,7 +131,8 @@ public static class CustomSettings
          _GT(typeof(ShareSDKAdapter.RetType)),
          _GT(typeof(ShareSDKAdapter.AuthInfo)),
 
-         //_GT(typeof(RongCloudAdapter)),
+         _GT(typeof(RCloud.RCErrorCode)),
+         _GT(typeof(RongCloudAdapter)),
 
          _GT(typeof(AudioManager)),
 
@@ -149,6 +152,8 @@ public static class CustomSettings
 
          _GT(typeof(TipsDialog)),
          _GT(typeof(InvisiableOnTweenFinish)),
+         _GT(typeof(ScheduleHide)),
+         _GT(typeof(Loom)),
 
          _GT(typeof(LuaComponent)),
 

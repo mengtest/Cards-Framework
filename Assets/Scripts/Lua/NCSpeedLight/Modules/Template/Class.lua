@@ -9,7 +9,9 @@
 --
 -----------------------------------------------
 Class = {};
+
 Class.__index = Class;
+
 function Class.New()
 	local o = {};
 	setmetatable(o, Class);

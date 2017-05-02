@@ -19,20 +19,25 @@ UI_MaJiang = {
 	UI_Player2,
 	UI_Player3,
 	CurrentTime = nil,
+	IsOpenChat = false,
+	IsRecording = false, -- 是否正在录音
+	RecordStartPos = Vector3.zero,
+	RecordSuccess = false,
 }
 local this = UI_MaJiang
 
 function UI_MaJiang.Awake(go)
 	this.gameObject = go;
 	this.transform = go.transform;
+	IsOpenChat = false;
+	IsRecording = false;
+	RecordSuccess = false;
 end
 
 function UI_MaJiang.Start()
-	UIHelper.SetButtonEvent(this.transform, "top/topRight/Button (Set)",
-	function()
-		UIManager.OpenWindow(UIType.UI_MJSetting);	
-	end);
+	UIHelper.SetButtonEvent(this.transform, "top/topRight/Button (Set)", UI_MaJiang.OnClickSetting);
 	UIHelper.SetButtonEvent(this.transform, "bottom/right/DissolveRoom", UI_MaJiang.DissolveRoom);
+	UIHelper.SetButtonEvent(this.transform, "bottom/right/Button (Message)", UI_MaJiang.OnClickChat);
 	UIHelper.SetButtonEvent(this.transform, "bottom/right/Button (Message2)", UI_MaJiang.OnClickTest);
 	UIHelper.SetButtonEvent(this.transform, "center/Ready/Yes", UI_MaJiang.OnClickYes);
 	UIHelper.SetButtonEvent(this.transform, "center/Ready/No", UI_MaJiang.OnClickNo);
@@ -41,6 +46,18 @@ function UI_MaJiang.Start()
 	UIHelper.SetButtonEvent(this.transform, "bottom/right/Operate/Hu", UI_MaJiang.OnClickHu);
 	UIHelper.SetButtonEvent(this.transform, "bottom/right/Operate/DingHu", UI_MaJiang.OnClickDingHu);
 	UIHelper.SetButtonEvent(this.transform, "bottom/right/Operate/Pass", UI_MaJiang.OnClickPass);
+	UIHelper.SetButtonEvent(this.transform, "Texture", UI_MaJiang.OnClickOtherArea);
+	
+	-- 录音按钮相关事件监听逻辑
+	local voiceBtnListener = UIHelper.GetComponent(this.transform, "bottom/right/Button (Voice)", typeof(UIEventListener));
+	if voiceBtnListener == nil then
+		voiceBtnListener = UIHelper.AddComponent(this.transform, "bottom/right/Button (Voice)", typeof(UIEventListener));
+	end
+	voiceBtnListener.onPress = UI_MaJiang.OnVoiceBtnPress;
+	voiceBtnListener.onDragStart = UI_MaJiang.OnVoiceBtnDragStart;
+	voiceBtnListener.onDrag = UI_MaJiang.OnVoiceBtnDrag;
+	voiceBtnListener.onDragEnd = UI_MaJiang.OnVoiceBtnDragEnd;
+	
 	UI_MaJiang.SetupCurrentRound();
 	UI_MaJiang.SetupPlayerUIVisiable();
 	UI_MaJiang.SetupReadyAndInvite(true, false, true);
@@ -147,6 +164,10 @@ function UI_MaJiang.SetupRemainCardCount(count)
 	UIHelper.SetLabelText(this.transform, "top/topLeft/RemainCards/Label", tostring(count));
 end
 
+function UI_MaJiang.OnClickSetting(go)
+	UIManager.OpenWindow(UIType.UI_MJSetting);	
+end
+
 function UI_MaJiang.DissolveRoom(go)
 	local option = StandardDialogOption:New();
 	option.OnClickOK =
@@ -157,6 +178,11 @@ function UI_MaJiang.DissolveRoom(go)
 	option.Content = "解散房间不扣除房卡，是否确定解散？";
 	option.Title = "解散房间";
 	UIManager.OpenStandardDialog(option);
+end
+
+function UI_MaJiang.OnClickChat(go)
+	UI_MaJiang.IsOpenChat = not UI_MaJiang.IsOpenChat;
+	UI_MaJiang.SetChatActive(UI_MaJiang.IsOpenChat);
 end
 
 -- 偷天换日
@@ -192,6 +218,83 @@ end
 function UI_MaJiang.OnClickPass(go)
 	UI_MaJiang.HideOperateView();
 	MJScene.RequestMJOperate_Guo();
+end
+
+function UI_MaJiang.OnClickOtherArea(go)
+	if UI_MaJiang.IsOpenChat then
+		UI_MaJiang.IsOpenChat = not UI_MaJiang.IsOpenChat;
+		UI_MaJiang.SetChatActive(UI_MaJiang.IsOpenChat);
+	else
+		if MJPlayer.Hero ~= nil and MJPlayer.Hero.UI ~= nil then
+			MJPlayer.Hero.UI:RecoverSelectedCard();
+		end
+	end
+end
+
+function UI_MaJiang.OnVoiceBtnPress(go, status)
+	-- Log.Info("UI_MaJiang.OnVoiceBtnPress: status is " .. tostring(status));
+	UI_MaJiang.IsRecording = status;
+	UIHelper.SetActiveState(this.transform, "RecordVoice/Record", UI_MaJiang.IsRecording);
+	if UI_MaJiang.IsRecording == true then
+		UI_MaJiang.RecordSuccess = true;
+		RongCloudAdapter.StartRecordVoice(
+		function(isTimeout, voiceUri, duration)
+			Log.Info("UI_MaJiang.OnVoiceBtnPress: 录音成功，文件路径为 " .. voiceUri .. ",长度为 " .. duration);
+			
+			if UI_MaJiang.RecordSuccess then
+				-- 广播给其他人
+				for key, value in pairs(MJScene.Players) do
+					if value:IsHero() == false then
+						RongCloudAdapter.SendVoiceMessage(value.ID, voiceUri, duration);
+					end
+				end
+				-- 同时播放自己的声音，确保在主线程里面调用，否则会闪退
+				Loom.QueueOnMainThread(
+				function()
+					UI_MaJiang.HandleVoice(MJPlayer.Hero.ID, voiceUri, duration);
+				end, 0);
+			end
+		end,
+		nil,
+		function(errorCode)
+			if errorCode == nil then
+				UIManager.OpenTipsDialog("录音失败");
+				Log.Error("UI_MaJiang.OnVoiceBtnPress: 录音失败");
+			else
+				UIManager.OpenTipsDialog("录音失败，错误码：" .. tostring(errorCode));
+				Log.Error("UI_MaJiang.OnVoiceBtnPress: 录音失败，错误码：" .. tostring(errorCode));
+			end
+		end);
+	else
+		UIHelper.SetActiveState(this.transform, "RecordVoice/Record", UI_MaJiang.IsRecording);
+		UIHelper.SetActiveState(this.transform, "RecordVoice/StopRecord", UI_MaJiang.IsRecording);
+		RongCloudAdapter.StopRecordVoice();
+	end
+end
+
+function UI_MaJiang.OnVoiceBtnDragStart(go)
+	-- Log.Info("UI_MaJiang.OnVoiceBtnDragStart");
+	UI_MaJiang.RecordStartPos = UnityEngine.Input.mousePosition;
+end
+
+function UI_MaJiang.OnVoiceBtnDrag(go, deltaPos)
+	-- Log.Info("UI_MaJiang.OnVoiceBtnDrag: deltaPos is " .. tostring(deltaPos));
+	if UnityEngine.Input.mousePosition.y > UI_MaJiang.RecordStartPos.y + 80 then
+		-- 显示取消录音界面;
+		UIHelper.SetActiveState(this.transform, "RecordVoice/Record", false);
+		UIHelper.SetActiveState(this.transform, "RecordVoice/StopRecord", true);
+		UI_MaJiang.RecordSuccess = false;
+	else
+		-- 显示继续录音界面;
+		UIHelper.SetActiveState(this.transform, "RecordVoice/Record", true);
+		UIHelper.SetActiveState(this.transform, "RecordVoice/StopRecord", false);
+		UI_MaJiang.RecordSuccess = true;
+	end
+end
+
+function UI_MaJiang.OnVoiceBtnDragEnd(go)
+	-- Log.Info("UI_MaJiang.OnVoiceBtnDragEnd");
+	UI_MaJiang.RecordStartPos = Vector3.zero;
 end
 
 -- 显示吃碰杠胡界面
@@ -333,4 +436,58 @@ function UI_MaJiang.InitGangView(operations)
 			tempTarget.gameObject:SetActive(false);
 		end
 	end
+end
+
+function UI_MaJiang.HandleChat(msg)
+	local player = MJScene.GetPlayerByID(msg.roleid);
+	if player == nil then return end;
+	local playerUI = player.UI;
+	if playerUI == nil then return end;
+	if msg.faceid == MJChatType.Flower then
+		-- 送花
+	elseif msg.faceid == MJChatType.Face then
+		-- 表情
+		local tempSprite = UIHelper.SetSpriteName(playerUI.transform, "Enter/Center/Chat/Face/Sprite", msg.faceName);
+		local tempSpriteAnimation = UIHelper.GetComponent(playerUI.transform, "Enter/Center/Chat/Face/Sprite", typeof(UISpriteAnimation));
+		tempSpriteAnimation.namePrefix = string.sub(msg.faceName, 1, 3);
+		tempSpriteAnimation.enabled = true;
+		tempSpriteAnimation:ResetToBeginning();
+		tempSpriteAnimation:Play();
+		UIHelper.SetActiveState(playerUI.transform, "Enter/Center/Chat/Face", true);
+	elseif msg.faceid == MJChatType.DefaultText then
+		-- 默认文字
+		local tempLabel = UIHelper.GetComponent(playerUI.transform, "Enter/Center/Chat/Text/Label", typeof(UILabel));
+		tempLabel.text = msg.faceName;
+		local tempSprite = UIHelper.GetComponent(playerUI.transform, "Enter/Center/Chat/Text/Kuang", typeof(UISprite));
+		tempSprite.width = tempLabel.width + 34;
+		UIHelper.SetActiveState(playerUI.transform, "Enter/Center/Chat/Text", true);
+	elseif msg.faceid == MJChatType.CustomText then
+		-- 自定义文字
+		local tempLabel = UIHelper.GetComponent(playerUI.transform, "Enter/Center/Chat/Text/Label", typeof(UILabel));
+		tempLabel.text = msg.faceName;
+		local tempSprite = UIHelper.GetComponent(playerUI.transform, "Enter/Center/Chat/Text/Kuang", typeof(UISprite));
+		tempSprite.width = tempLabel.width + 34;
+		UIHelper.SetActiveState(playerUI.transform, "Enter/Center/Chat/Text", true);
+		UI_MJChat.AddHistory(player.ID, MJChatType.CustomText, nil, nil);
+	end
+end
+
+function UI_MaJiang.HandleVoice(roleid, uri, duration)
+	local player = MJScene.GetPlayerByID(tonumber(roleid));
+	if player == nil then return end;
+	local playerUI = player.UI;
+	if playerUI == nil then return end;
+	if duration <= 0 then return end;
+	Log.Info("UI_MaJiang.HandleVoice: play.");
+	local scheduleHide = UIHelper.GetComponent(playerUI.transform, "Enter/Center/Chat/Voice", typeof(NCSpeedLight.ScheduleHide));
+	scheduleHide.Time = duration;
+	UIHelper.SetActiveState(playerUI.transform, "Enter/Center/Chat/Voice", true);
+	RongCloudAdapter.PlayVoice(uri, 1);
+	UI_MJChat.AddHistory(player.ID, MJChatType.Voice, uri, duration);
+end
+
+-- 设置聊天面板是否显示
+function UI_MaJiang.SetChatActive(status)
+	UI_MaJiang.IsOpenChat = status;
+	UIHelper.SetActiveState(this.transform, "bottom/right/Chat", status);
 end 

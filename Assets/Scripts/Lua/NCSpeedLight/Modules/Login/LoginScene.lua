@@ -194,17 +194,17 @@ function LoginScene.OnVerifyVersionReturn(evt)
 	local obj = NetManager.DecodeMsg(PBMessage.GM_VerifyVersionReturn, evt)
 	if obj.result == 0 then
 		Log.Info("LoginScene.OnVerifyVersionReturn: sccuss.");
-		if Game.Platform == UnityEngine.RuntimePlatform.Android or Game.Platform == UnityEngine.RuntimePlatform.IPhonePlayer then
-			LoginScene.AuthInfo = ShareSDKAdapter.GetWechatAuthInfo();
-			if LoginScene.AuthInfo == nil then
-				UIManager.OpenWindow(UIType.UI_MobileLogin);
-			else
-				-- 本地存在验证信息，则直接登录
-				LoginScene.RequestLogin(LoginScene.AuthInfo.unionID, "AllPlatform");
-			end
-		else
-			UIManager.OpenWindow(UIType.UI_NormalLogin);
-		end
+		-- if Game.Platform == UnityEngine.RuntimePlatform.Android or Game.Platform == UnityEngine.RuntimePlatform.IPhonePlayer then
+		-- 	LoginScene.AuthInfo = ShareSDKAdapter.GetWechatAuthInfo();
+		-- 	if LoginScene.AuthInfo == nil then
+		-- 		UIManager.OpenWindow(UIType.UI_MobileLogin);
+		-- 	else
+		-- 		-- 本地存在验证信息，则直接登录
+		-- 		LoginScene.RequestLogin(LoginScene.AuthInfo.unionID, "AllPlatform");
+		-- 	end
+		-- else
+		UIManager.OpenWindow(UIType.UI_NormalLogin);
+		-- end
 	else
 		Log.Error("LoginScene.OnVerifyVersionReturn: version doesn\'t match,can not enter game,please update.");
 		UIManager.OpenTipsDialog("版本不匹配，无法进入游戏");

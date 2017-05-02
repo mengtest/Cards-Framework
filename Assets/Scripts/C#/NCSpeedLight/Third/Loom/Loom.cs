@@ -62,11 +62,8 @@ public class Loom : MonoBehaviour
     {
         return _mainThreadID == threadID;
     }
-    public static void QueueOnMainThread(Action action)
-    {
-        QueueOnMainThread(action, 0f);
-    }
-    public static void QueueOnMainThread(Action action, float time)
+
+    public static void QueueOnMainThread(Action action, float time = 0f)
     {
         if (time != 0)
         {

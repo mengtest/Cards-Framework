@@ -10,6 +10,7 @@ public static class LuaBinder
 		float t = Time.realtimeSinceStartup;
 		L.BeginModule(null);
 		LuaInterface_DebuggerWrap.Register(L);
+		LoomWrap.Register(L);
 		NGUIToolsWrap.Register(L);
 		UIEventListenerWrap.Register(L);
 		LanguageSelectionWrap.Register(L);
@@ -167,6 +168,7 @@ public static class LuaBinder
 		NCSpeedLight_EvtWrap.Register(L);
 		NCSpeedLight_AssetManagerWrap.Register(L);
 		NCSpeedLight_ShareSDKAdapterWrap.Register(L);
+		NCSpeedLight_RongCloudAdapterWrap.Register(L);
 		NCSpeedLight_AudioManagerWrap.Register(L);
 		NCSpeedLight_LuaManagerWrap.Register(L);
 		NCSpeedLight_LuaBehaviourWrap.Register(L);
@@ -179,6 +181,7 @@ public static class LuaBinder
 		NCSpeedLight_ConstantsWrap.Register(L);
 		NCSpeedLight_TipsDialogWrap.Register(L);
 		NCSpeedLight_InvisiableOnTweenFinishWrap.Register(L);
+		NCSpeedLight_ScheduleHideWrap.Register(L);
 		NCSpeedLight_LuaComponentWrap.Register(L);
 		NCSpeedLight_InternalUIWrap.Register(L);
 		NCSpeedLight_EventManagerWrap.Register(L);
@@ -192,8 +195,19 @@ public static class LuaBinder
 		L.BeginModule("NetConnection");
 		L.RegFunction("StatusDelegate", NCSpeedLight_NetConnection_StatusDelegate);
 		L.EndModule();
+		L.BeginModule("RongCloudAdapter");
+		L.RegFunction("ReceiveVoiceCallbackDelegate", NCSpeedLight_RongCloudAdapter_ReceiveVoiceCallbackDelegate);
+		L.EndModule();
 		L.BeginModule("Helper");
 		L.RegFunction("ChildDelegate", NCSpeedLight_Helper_ChildDelegate);
+		L.EndModule();
+		L.EndModule();
+		L.BeginModule("RCloud");
+		RCloud_RCErrorCodeWrap.Register(L);
+		L.BeginModule("RCVoiceCaptureCallback");
+		L.RegFunction("VoiceCaptureFinishedCallback", RCloud_RCVoiceCaptureCallback_VoiceCaptureFinishedCallback);
+		L.RegFunction("VoiceCaptureVolumeCallback", RCloud_RCVoiceCaptureCallback_VoiceCaptureVolumeCallback);
+		L.RegFunction("VoiceCaptureErrorCallback", RCloud_RCVoiceCaptureCallback_VoiceCaptureErrorCallback);
 		L.EndModule();
 		L.EndModule();
 		L.BeginModule("UIRoot");
@@ -735,6 +749,33 @@ public static class LuaBinder
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int NCSpeedLight_RongCloudAdapter_ReceiveVoiceCallbackDelegate(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.RongCloudAdapter.ReceiveVoiceCallbackDelegate), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.RongCloudAdapter.ReceiveVoiceCallbackDelegate), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int NCSpeedLight_Helper_ChildDelegate(IntPtr L)
 	{
 		try
@@ -751,6 +792,87 @@ public static class LuaBinder
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
 				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.Helper.ChildDelegate), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int RCloud_RCVoiceCaptureCallback_VoiceCaptureFinishedCallback(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(RCloud.RCVoiceCaptureCallback.VoiceCaptureFinishedCallback), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(RCloud.RCVoiceCaptureCallback.VoiceCaptureFinishedCallback), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int RCloud_RCVoiceCaptureCallback_VoiceCaptureVolumeCallback(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(RCloud.RCVoiceCaptureCallback.VoiceCaptureVolumeCallback), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(RCloud.RCVoiceCaptureCallback.VoiceCaptureVolumeCallback), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int RCloud_RCVoiceCaptureCallback_VoiceCaptureErrorCallback(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(RCloud.RCVoiceCaptureCallback.VoiceCaptureErrorCallback), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(RCloud.RCVoiceCaptureCallback.VoiceCaptureErrorCallback), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;

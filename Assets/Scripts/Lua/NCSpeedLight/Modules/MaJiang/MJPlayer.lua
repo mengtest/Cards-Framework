@@ -201,6 +201,9 @@ function MJPlayer:SetData(id, name, headurl, sex, serverposition, isready, total
 	self.TotalScore = totalscore;
 	self.Longitude = longitude;
 	self.Latitude = latitude;
+	if self:IsHero() then
+		RongCloudAdapter.Login(self.ID, self.Name, self.HeadURL);
+	end
 	Log.Info("MJPlayer:SetData: ID is " .. self.ID);
 end
 
@@ -345,6 +348,13 @@ end
 function MJPlayer:LogKey()
 	local str = "【" .. tostring(self.ID) .. "," .. self.UITransform.name .. "】";
 	return str;
+end
+
+-- 获取头像的图片
+function MJPlayer:GetHeadTexture()
+	if self.UI == nil then return nil end;
+	local uiTexture = UIHelper.GetComponent(self.UI.transform, "Enter/Center/Icon/Sprite (Photo)", typeof(UITexture));
+	return uiTexture.mainTexture;
 end
 
 -- data= PBMessage.GMHandCard

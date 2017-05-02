@@ -14,8 +14,8 @@ function UI_CreateRoom.Awake(go)
 end
 
 function UI_CreateRoom.Start()
-	NCSpeedLight.UIHelper.SetButtonEvent(transform, "top/topLeft/BackButton", UI_CreateRoom.OnClickClose);
-	NCSpeedLight.UIHelper.SetButtonEvent(transform, "Center/Button", UI_CreateRoom.OnClickConfirm);
+	UIHelper.SetButtonEvent(transform, "top/topLeft/BackButton", UI_CreateRoom.OnClickClose);
+	UIHelper.SetButtonEvent(transform, "Center/Button", UI_CreateRoom.OnClickConfirm);
 	HallScene.RequestPlayerInFb();
 end
 

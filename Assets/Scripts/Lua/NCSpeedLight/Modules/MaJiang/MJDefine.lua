@@ -208,4 +208,12 @@ MJPlayWayStr = {
 	
 	PW_TYSG = "同一首歌",
 	PW_HTYX = "回头一笑",
-} 
+}
+
+MJChatType = {
+	Face = 1,
+	Flower = 2,
+	DefaultText = 3,
+	CustomText = 4,
+	Voice = 5,
+}

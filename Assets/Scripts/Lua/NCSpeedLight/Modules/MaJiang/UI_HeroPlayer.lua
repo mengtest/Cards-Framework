@@ -36,7 +36,7 @@ function UI_HeroPlayer:Start()
 		listener.onDragEnd = UI_HeroPlayer.OnStopDragCard;
 		listener.onClick = function(go)
 			if go ~= nil then
-				if UI_HeroPlayer.SelectedCardObj == go then
+				if self.SelectedCardObj == go then
 					if MJScene.IsMyTurn() == false then
 						UIManager.OpenTipsDialog("不是你的回合，无法出牌");
 					else
@@ -52,17 +52,19 @@ function UI_HeroPlayer:Start()
 						else
 							MJScene.RequestMJOperate_OutCard(card);
 						end
+						
+						self.SelectedCardObj = nil;
 					end
 				else
-					if UI_HeroPlayer.SelectedCardObj ~= nil then
-						UI_HeroPlayer.SelectedCardObj.transform.localPosition = Vector3(UI_HeroPlayer.SelectedCardObj.transform.localPosition.x, 0, UI_HeroPlayer.SelectedCardObj.transform.localPosition.z);
-						UIHelper.SetActiveState(UI_HeroPlayer.SelectedCardObj.transform, "UpCard", false);
+					if self.SelectedCardObj ~= nil then
+						self.SelectedCardObj.transform.localPosition = Vector3(self.SelectedCardObj.transform.localPosition.x, 0, self.SelectedCardObj.transform.localPosition.z);
+						UIHelper.SetActiveState(self.SelectedCardObj.transform, "UpCard", false);
 					end
 					
-					UI_HeroPlayer.SelectedCardObj = go;
-					UI_HeroPlayer.SelectedCardObj.transform.localPosition = Vector3(UI_HeroPlayer.SelectedCardObj.transform.localPosition.x, 30, UI_HeroPlayer.SelectedCardObj.transform.localPosition.z);
-					UIHelper.SetActiveState(UI_HeroPlayer.SelectedCardObj.transform, "UpCard", true);
-					UIHelper.SetActiveState(UI_HeroPlayer.SelectedCardObj.transform, true);
+					self.SelectedCardObj = go;
+					self.SelectedCardObj.transform.localPosition = Vector3(self.SelectedCardObj.transform.localPosition.x, 30, self.SelectedCardObj.transform.localPosition.z);
+					UIHelper.SetActiveState(self.SelectedCardObj.transform, "UpCard", true);
+					UIHelper.SetActiveState(self.SelectedCardObj.transform, true);
 				end
 			end
 		end
@@ -135,39 +137,6 @@ function UI_HeroPlayer.OnStopDragCard(go)
 		end
 	else
 		UIManager.OpenTipsDialog("不是你的回合，无法出牌");
-	end
-end
-
-function UI_HeroPlayer:OnClickCard(go)
-	if go ~= nil then
-		if UI_HeroPlayer.SelectedCardObj == go then
-			if MJScene.IsMyTurn() == false then
-				UIManager.OpenTipsDialog("不是你的回合，无法出牌");
-			else
-				-- 出牌,重置牌的位置以及显示
-				go.transform.localPosition = Vector3(go.transform.localPosition.x, 0, go.transform.localPosition.z);
-				UIHelper.SetActiveState(go.transform, "UpCard", false);
-				UIHelper.SetActiveState(go.transform, false);
-				
-				local cardIndex = tonumber(go.name);
-				local card = self.Player:GetHandCardByPosition(cardIndex);
-				if card == nil then
-					Log.Error("UI_HeroPlayer.OnClickCard: cannot out card caused by nil card instance");
-				else
-					MJScene.RequestMJOperate_OutCard(card);
-				end
-			end
-		else
-			if UI_HeroPlayer.SelectedCardObj ~= nil then
-				UI_HeroPlayer.SelectedCardObj.transform.localPosition = Vector3(UI_HeroPlayer.SelectedCardObj.transform.localPosition.x, 0, UI_HeroPlayer.SelectedCardObj.transform.localPosition.z);
-				UIHelper.SetActiveState(UI_HeroPlayer.SelectedCardObj.transform, "UpCard", false);
-			end
-			
-			UI_HeroPlayer.SelectedCardObj = go;
-			UI_HeroPlayer.SelectedCardObj.transform.localPosition = Vector3(UI_HeroPlayer.SelectedCardObj.transform.localPosition.x, 30, UI_HeroPlayer.SelectedCardObj.transform.localPosition.z);
-			UIHelper.SetActiveState(UI_HeroPlayer.SelectedCardObj.transform, "UpCard", true);
-			UIHelper.SetActiveState(UI_HeroPlayer.SelectedCardObj.transform, true);
-		end
 	end
 end
 
@@ -411,3 +380,12 @@ function UI_HeroPlayer:UpdateCards(sort, lastMargin, maxCount)
 		end
 	end
 end
+
+-- 重置当前选中的牌
+function UI_HeroPlayer:RecoverSelectedCard()
+	if self.SelectedCardObj ~= nil then
+		self.SelectedCardObj.transform.localPosition = Vector3(self.SelectedCardObj.transform.localPosition.x, 0, self.SelectedCardObj.transform.localPosition.z);
+		UIHelper.SetActiveState(self.SelectedCardObj.transform, "UpCard", false);
+		self.SelectedCardObj = nil;
+	end
+end 

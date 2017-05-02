@@ -9,9 +9,13 @@ using System.Runtime.InteropServices;
 
 namespace NCSpeedLight
 {
-    public class RongCloudAdapter : MonoBehaviour
+    public class RongCloudAdapter : MonoBehaviour, IRCConnectStatusObserver, IRCRecivedMessageObserver
     {
+        public delegate void ReceiveVoiceCallbackDelegate(string roleid, string uri, int duration);
+
         public static RongCloudAdapter Instance;
+
+        public static ReceiveVoiceCallbackDelegate ReceiveVoiceCallback;
 
         public static string APP_KEY = "bmdehs6pbinqs";
 
@@ -24,7 +28,7 @@ namespace NCSpeedLight
         public static int RESPONSE_CODE = 0;
 
 #if UNITY_ANDROID
-        public static AndroidJavaObject SoundUtils;
+        private static AndroidJavaObject SoundUtils;
 #endif
 
         private void Awake()
@@ -43,16 +47,6 @@ namespace NCSpeedLight
             Instance = null;
         }
 
-        private void Start()
-        {
-            if (Application.isEditor == false)
-            {
-#if UNITY_IOS || UNITY_ANDROID
-                RongIMAPI.GetInstance().InitRongCloud(APP_KEY);
-#endif
-            }
-        }
-
         private string GetTimeStamp()
         {
             TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
@@ -67,7 +61,7 @@ namespace NCSpeedLight
             return nonce;
         }
 
-        private string GetHash(String input)
+        private string GetHash(string input)
         {
             //建立SHA1对象
             SHA1 sha = new SHA1CryptoServiceProvider();
@@ -83,6 +77,19 @@ namespace NCSpeedLight
             string hash = BitConverter.ToString(dataHashed).Replace("-", "");
 
             return hash;
+        }
+
+        public static void Initialize(ReceiveVoiceCallbackDelegate onReveiveVoice)
+        {
+            ReceiveVoiceCallback = onReveiveVoice;
+            if (Application.isEditor == false)
+            {
+#if UNITY_IOS || UNITY_ANDROID
+                RongIMAPI.GetInstance().InitRongCloud(APP_KEY);
+                RCConnectionStatusListener.AddObserver(Instance);
+                RCMessageListener.AddObserver(Instance);
+#endif
+            }
         }
 
         public IEnumerator RequestToken(string roleid, string rolename, string headurl)
@@ -148,7 +155,12 @@ namespace NCSpeedLight
         /// <param name="headurl"></param>
         public static void Login(string roleid, string rolename, string headurl)
         {
-            Instance.StartCoroutine(Instance.RequestToken(roleid, rolename, headurl));
+            if (Application.isEditor == false)
+            {
+#if UNITY_IOS || UNITY_ANDROID
+                Instance.StartCoroutine(Instance.RequestToken(roleid, rolename, headurl));
+#endif
+            }
         }
 
         /// <summary>
@@ -181,9 +193,10 @@ namespace NCSpeedLight
         /// </summary>
         /// <param name="targetID"></param>
         /// <param name="content"></param>
-        public static void SendVoiceMessage(string targetID, RCAudioMessageContent content)
+        public static void SendVoiceMessage(string targetID, string uri, int duration)
         {
 #if UNITY_ANDROID || UNITY_IOS
+            RCAudioMessageContent msg = new RCAudioMessageContent(uri, duration);
             RCSendMessageCallback cb = new RCSendMessageCallback();
             cb.onSendSuccessCallback = () =>
             {
@@ -193,7 +206,7 @@ namespace NCSpeedLight
             {
                 Debug.Log("RongCloudAdapter.SendVoiceMessage: send to " + targetID + " fail.");
             };
-            RongIMAPI.GetInstance().SendMessage(ConversationType.ConversationType_PRIVATE, targetID, content, "", "", cb);
+            RongIMAPI.GetInstance().SendMessage(ConversationType.ConversationType_PRIVATE, targetID, msg, "", "", cb);
 #endif
         }
 
@@ -203,7 +216,6 @@ namespace NCSpeedLight
         /// <param name="file"></param>
         /// <param name="volume"></param>
 
-
 #if UNITY_IOS
     [DllImport("__Internal")]
     public static extern int PlayVoice(string file, float volume = 1f);
@@ -211,6 +223,39 @@ namespace NCSpeedLight
         public static void PlayVoice(string file, float volume = 1f)
         {
             SoundUtils.Call("Play", file, volume);
+        }
+
+        public void OnRecivedMessage(RCMessage message)
+        {
+#if UNITY_ANDROID || UNITY_IOS
+            RCDownloadMediaFileCallback callback = new RCDownloadMediaFileCallback
+            {
+                onSuccess = (string localMediaPath) =>
+                {
+                    Debug.Log("RongCloudAdapter.OnRecivedMessage.onSuccess: download media file to " + localMediaPath);
+                    Loom.QueueOnMainThread(() =>
+                    {
+                        RCAudioMessageContent tempMessage = message.content as RCAudioMessageContent;
+                        if (ReceiveVoiceCallback != null)
+                        {
+                            ReceiveVoiceCallback(message.senderUserId, localMediaPath, tempMessage.Duration);
+                        }
+                    });
+                },
+                onFailure = (RCErrorCode error) =>
+                {
+                    Debug.LogError("RongCloudAdapter.OnRecivedMessage.onFailure: download media file error,code is " + error);
+                }
+            };
+            RCAudioMessageContent voiceMsg = message.content as RCAudioMessageContent;
+            RongIMAPI.GetInstance().DownloadMedia(message.m_conversation.Type, message.m_conversation.TargetId,
+                MediaType.MediaType_AUDIO, voiceMsg.VoiceUri, callback);
+#endif
+        }
+
+        public void OnConnectStatusChanged(ConnectionStatus status)
+        {
+            Debug.Log("RongCloudAdapter.OnConnectStatusChanged: status is " + status);
         }
 #else
     public static void PlayVoice(string file, float volume = 1f)

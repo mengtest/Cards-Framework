@@ -26,6 +26,9 @@ public static class DelegateFactory
 		dict.Add(typeof(UIEventListener.VoidDelegate), UIEventListener_VoidDelegate);
 		dict.Add(typeof(NCSpeedLight.ShareSDKAdapter.AuthCallbackDelegate), NCSpeedLight_ShareSDKAdapter_AuthCallbackDelegate);
 		dict.Add(typeof(NCSpeedLight.ShareSDKAdapter.ShareCallbackDelegate), NCSpeedLight_ShareSDKAdapter_ShareCallbackDelegate);
+		dict.Add(typeof(RCloud.RCVoiceCaptureCallback.VoiceCaptureFinishedCallback), RCloud_RCVoiceCaptureCallback_VoiceCaptureFinishedCallback);
+		dict.Add(typeof(RCloud.RCVoiceCaptureCallback.VoiceCaptureVolumeCallback), RCloud_RCVoiceCaptureCallback_VoiceCaptureVolumeCallback);
+		dict.Add(typeof(RCloud.RCVoiceCaptureCallback.VoiceCaptureErrorCallback), RCloud_RCVoiceCaptureCallback_VoiceCaptureErrorCallback);
 		dict.Add(typeof(UnityEngine.Camera.CameraCallback), UnityEngine_Camera_CameraCallback);
 		dict.Add(typeof(UnityEngine.Application.LowMemoryCallback), UnityEngine_Application_LowMemoryCallback);
 		dict.Add(typeof(UnityEngine.Application.AdvertisingIdentifierCallback), UnityEngine_Application_AdvertisingIdentifierCallback);
@@ -37,6 +40,7 @@ public static class DelegateFactory
 		dict.Add(typeof(UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene>), UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene);
 		dict.Add(typeof(UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.Scene>), UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene);
 		dict.Add(typeof(NCSpeedLight.EventHandlerDelegate), NCSpeedLight_EventHandlerDelegate);
+		dict.Add(typeof(NCSpeedLight.RongCloudAdapter.ReceiveVoiceCallbackDelegate), NCSpeedLight_RongCloudAdapter_ReceiveVoiceCallbackDelegate);
 		dict.Add(typeof(NCSpeedLight.Helper.ChildDelegate), NCSpeedLight_Helper_ChildDelegate);
 		dict.Add(typeof(UIEventListener.BoolDelegate), UIEventListener_BoolDelegate);
 		dict.Add(typeof(UIEventListener.FloatDelegate), UIEventListener_FloatDelegate);
@@ -626,6 +630,151 @@ public static class DelegateFactory
 		}
 	}
 
+	class RCloud_RCVoiceCaptureCallback_VoiceCaptureFinishedCallback_Event : LuaDelegate
+	{
+		public RCloud_RCVoiceCaptureCallback_VoiceCaptureFinishedCallback_Event(LuaFunction func) : base(func) { }
+		public RCloud_RCVoiceCaptureCallback_VoiceCaptureFinishedCallback_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(bool param0, string param1, int param2)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.Push(param1);
+			func.Push(param2);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(bool param0, string param1, int param2)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.Push(param1);
+			func.Push(param2);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public static Delegate RCloud_RCVoiceCaptureCallback_VoiceCaptureFinishedCallback(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			RCloud.RCVoiceCaptureCallback.VoiceCaptureFinishedCallback fn = delegate(bool param0, string param1, int param2) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			RCloud_RCVoiceCaptureCallback_VoiceCaptureFinishedCallback_Event target = new RCloud_RCVoiceCaptureCallback_VoiceCaptureFinishedCallback_Event(func);
+			RCloud.RCVoiceCaptureCallback.VoiceCaptureFinishedCallback d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			RCloud_RCVoiceCaptureCallback_VoiceCaptureFinishedCallback_Event target = new RCloud_RCVoiceCaptureCallback_VoiceCaptureFinishedCallback_Event(func, self);
+			RCloud.RCVoiceCaptureCallback.VoiceCaptureFinishedCallback d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	class RCloud_RCVoiceCaptureCallback_VoiceCaptureVolumeCallback_Event : LuaDelegate
+	{
+		public RCloud_RCVoiceCaptureCallback_VoiceCaptureVolumeCallback_Event(LuaFunction func) : base(func) { }
+		public RCloud_RCVoiceCaptureCallback_VoiceCaptureVolumeCallback_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(float param0)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(float param0)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public static Delegate RCloud_RCVoiceCaptureCallback_VoiceCaptureVolumeCallback(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			RCloud.RCVoiceCaptureCallback.VoiceCaptureVolumeCallback fn = delegate(float param0) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			RCloud_RCVoiceCaptureCallback_VoiceCaptureVolumeCallback_Event target = new RCloud_RCVoiceCaptureCallback_VoiceCaptureVolumeCallback_Event(func);
+			RCloud.RCVoiceCaptureCallback.VoiceCaptureVolumeCallback d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			RCloud_RCVoiceCaptureCallback_VoiceCaptureVolumeCallback_Event target = new RCloud_RCVoiceCaptureCallback_VoiceCaptureVolumeCallback_Event(func, self);
+			RCloud.RCVoiceCaptureCallback.VoiceCaptureVolumeCallback d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	class RCloud_RCVoiceCaptureCallback_VoiceCaptureErrorCallback_Event : LuaDelegate
+	{
+		public RCloud_RCVoiceCaptureCallback_VoiceCaptureErrorCallback_Event(LuaFunction func) : base(func) { }
+		public RCloud_RCVoiceCaptureCallback_VoiceCaptureErrorCallback_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(RCloud.RCErrorCode param0)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(RCloud.RCErrorCode param0)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public static Delegate RCloud_RCVoiceCaptureCallback_VoiceCaptureErrorCallback(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			RCloud.RCVoiceCaptureCallback.VoiceCaptureErrorCallback fn = delegate(RCloud.RCErrorCode param0) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			RCloud_RCVoiceCaptureCallback_VoiceCaptureErrorCallback_Event target = new RCloud_RCVoiceCaptureCallback_VoiceCaptureErrorCallback_Event(func);
+			RCloud.RCVoiceCaptureCallback.VoiceCaptureErrorCallback d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			RCloud_RCVoiceCaptureCallback_VoiceCaptureErrorCallback_Event target = new RCloud_RCVoiceCaptureCallback_VoiceCaptureErrorCallback_Event(func, self);
+			RCloud.RCVoiceCaptureCallback.VoiceCaptureErrorCallback d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
 	class UnityEngine_Camera_CameraCallback_Event : LuaDelegate
 	{
 		public UnityEngine_Camera_CameraCallback_Event(LuaFunction func) : base(func) { }
@@ -1146,6 +1295,57 @@ public static class DelegateFactory
 		{
 			NCSpeedLight_EventHandlerDelegate_Event target = new NCSpeedLight_EventHandlerDelegate_Event(func, self);
 			NCSpeedLight.EventHandlerDelegate d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	class NCSpeedLight_RongCloudAdapter_ReceiveVoiceCallbackDelegate_Event : LuaDelegate
+	{
+		public NCSpeedLight_RongCloudAdapter_ReceiveVoiceCallbackDelegate_Event(LuaFunction func) : base(func) { }
+		public NCSpeedLight_RongCloudAdapter_ReceiveVoiceCallbackDelegate_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(string param0, string param1, int param2)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.Push(param1);
+			func.Push(param2);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(string param0, string param1, int param2)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.Push(param1);
+			func.Push(param2);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public static Delegate NCSpeedLight_RongCloudAdapter_ReceiveVoiceCallbackDelegate(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			NCSpeedLight.RongCloudAdapter.ReceiveVoiceCallbackDelegate fn = delegate(string param0, string param1, int param2) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			NCSpeedLight_RongCloudAdapter_ReceiveVoiceCallbackDelegate_Event target = new NCSpeedLight_RongCloudAdapter_ReceiveVoiceCallbackDelegate_Event(func);
+			NCSpeedLight.RongCloudAdapter.ReceiveVoiceCallbackDelegate d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			NCSpeedLight_RongCloudAdapter_ReceiveVoiceCallbackDelegate_Event target = new NCSpeedLight_RongCloudAdapter_ReceiveVoiceCallbackDelegate_Event(func, self);
+			NCSpeedLight.RongCloudAdapter.ReceiveVoiceCallbackDelegate d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}

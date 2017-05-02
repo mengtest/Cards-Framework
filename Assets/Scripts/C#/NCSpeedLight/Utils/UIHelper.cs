@@ -229,6 +229,30 @@ namespace NCSpeedLight
             return transform.GetComponent(type);
         }
 
+
+        public static Object AddComponent(Transform transform, string path, System.Type type)
+        {
+            if (transform == null)
+            {
+                return null;
+            }
+            Transform t = transform.Find(path);
+            if (t == null)
+            {
+                return null;
+            }
+            return t.gameObject.AddComponent(type);
+        }
+
+        public static Object AddComponent(Transform transform, System.Type type)
+        {
+            if (transform == null)
+            {
+                return null;
+            }
+            return transform.gameObject.AddComponent(type);
+        }
+
         /// <summary>
         /// 改变图片的显示状态，Isgray=true,则图片设置为灰色,否则设置成白色
         /// </summary>
