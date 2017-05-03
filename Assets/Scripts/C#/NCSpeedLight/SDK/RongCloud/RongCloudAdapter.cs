@@ -225,6 +225,13 @@ namespace NCSpeedLight
             SoundUtils.Call("Play", file, volume);
         }
 
+#else
+        public static void PlayVoice(string file, float volume = 1f)
+        {
+            Debug.Log("RongCloudAdapter.PlayVoice: not support this platform");
+        }
+#endif
+
         public void OnRecivedMessage(RCMessage message)
         {
 #if UNITY_ANDROID || UNITY_IOS
@@ -257,12 +264,6 @@ namespace NCSpeedLight
         {
             Debug.Log("RongCloudAdapter.OnConnectStatusChanged: status is " + status);
         }
-#else
-    public static void PlayVoice(string file, float volume = 1f)
-    {
-        Debug.Log("RongCloudAdapter.PlayVoice: not support this platform");
-    }
-#endif
     }
 }
 
