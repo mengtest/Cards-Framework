@@ -91,23 +91,23 @@ function UI_MaJiang.InitPlayerUI()
 	
 	UIHelper.SetButtonEvent(UI_MaJiang.UI_Player0, "Enter/Center/Icon/Sprite (Photo)", function()
 		local player = MJScene.GetPlayerByUIPosition(0);
-		UI_MJPlayerInfo.CurrentPlayer = player;
 		UIManager.OpenWindow(UIType.UI_MJPlayerInfo);
+		UI_MJPlayerInfo.CurrentPlayer = player;
 	end);
 	UIHelper.SetButtonEvent(UI_MaJiang.UI_Player1, "Enter/Center/Icon/Sprite (Photo)", function()
 		local player = MJScene.GetPlayerByUIPosition(1);
-		UI_MJPlayerInfo.CurrentPlayer = player;
 		UIManager.OpenWindow(UIType.UI_MJPlayerInfo);
+		UI_MJPlayerInfo.CurrentPlayer = player;
 	end);
 	UIHelper.SetButtonEvent(UI_MaJiang.UI_Player2, "Enter/Center/Icon/Sprite (Photo)", function()
 		local player = MJScene.GetPlayerByUIPosition(2);
-		UI_MJPlayerInfo.CurrentPlayer = player;
 		UIManager.OpenWindow(UIType.UI_MJPlayerInfo);
+		UI_MJPlayerInfo.CurrentPlayer = player;
 	end);
 	UIHelper.SetButtonEvent(UI_MaJiang.UI_Player3, "Enter/Center/Icon/Sprite (Photo)", function()
 		local player = MJScene.GetPlayerByUIPosition(3);
-		UI_MJPlayerInfo.CurrentPlayer = player;
 		UIManager.OpenWindow(UIType.UI_MJPlayerInfo);
+		UI_MJPlayerInfo.CurrentPlayer = player;
 	end);
 end
 

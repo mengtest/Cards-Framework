@@ -265,9 +265,9 @@ end
 
 -- 根据角标的位置获取玩家对象 
 function MJScene.GetPlayerByUIPosition(pos)
-	local str = "UI_Player" .. tostring(pos);
+	local str = "Player" .. tostring(pos);
 	for key, value in pairs(MJScene.Players) do
-		if value ~= nil and value.UI ~= nil and value.UI.name == str then
+		if value ~= nil and value.UI ~= nil and value.UI.transform.name == str then
 			return value;
 		end
 	end
