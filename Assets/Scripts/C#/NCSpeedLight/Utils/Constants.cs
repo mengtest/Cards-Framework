@@ -175,7 +175,7 @@ namespace NCSpeedLight
             {
                 //string url = "http://papamajiangcdn.damaigame.com/json/{0}/{1}/{2}/v{3}/qiumo.db?v={4}";
                 string url = "http://papamajiangcdn.damaigame.com/json/{0}/{1}/{2}/v{3}/qiumo.db?v={4}";
-                url = Helper.StringFormat(url, COMPANY_NAME, PLATFORM_NAME, CHANNEL, VERSION, DateTime.Now.Ticks);
+                url = Helper.StringFormat(url, COMPANY_NAME, "Android", CHANNEL, VERSION, DateTime.Now.Ticks);
                 return url;
             }
         }

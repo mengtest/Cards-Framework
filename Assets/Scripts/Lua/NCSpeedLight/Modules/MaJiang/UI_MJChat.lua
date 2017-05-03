@@ -174,12 +174,9 @@ function UI_MJChat.RefreshHistory()
 end
 
 function UI_MJChat.OnClickHistoryItem(go)
-	Log.Info("UI_MJChat.OnClickHistoryItem: 1111,go is " .. go.name);
 	if go ~= nil and MJScene.ChatHistory ~= nil then
-		Log.Info("UI_MJChat.OnClickHistoryItem: 2222");
 		local itemHistory = MJScene.ChatHistory[tonumber(go.name)];
 		if itemHistory ~= nil then
-			Log.Info("UI_MJChat.OnClickHistoryItem: 3333");
 			itemHistory.IsRead = true;
 			UI_MaJiang.HandleVoice(itemHistory.RoleID, itemHistory.Content, itemHistory.Duration);
 			UI_MJChat.RefreshHistory();
