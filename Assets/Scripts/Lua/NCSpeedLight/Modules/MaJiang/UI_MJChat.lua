@@ -157,7 +157,7 @@ function UI_MJChat.RefreshHistory()
 					bgSprite.width = label.width + 38;
 					bgSprite.height = 60;
 				elseif historyItem.Type == MJChatType.Voice then
-					UIHelper.SetActiveState(itemObj.transform, "Sprite (RedPoint)", not historyItem.IsRead);
+					UIHelper.SetActiveState(itemObj.transform, "Sprite (RedPoint)", false);
 					if historyItem.Duration ~= nil then
 						UIHelper.SetLabelText(itemObj.transform, "Duration", tostring(historyItem.Duration) .. "''");
 					else
@@ -179,7 +179,7 @@ function UI_MJChat.OnClickHistoryItem(go)
 		if itemHistory ~= nil then
 			itemHistory.IsRead = true;
 			UI_MaJiang.HandleVoice(itemHistory.RoleID, itemHistory.Content, itemHistory.Duration);
-			UI_MJChat.RefreshHistory();
+			-- UI_MJChat.RefreshHistory();
 		end
 	end
 end 

@@ -267,7 +267,7 @@ end
 function MJScene.GetPlayerByUIPosition(pos)
 	local str = "UI_Player" .. tostring(pos);
 	for key, value in pairs(MJScene.Players) do
-		if key ~= nil and key.name == str then
+		if value ~= nil and value.UI ~= nil and value.UI.name == str then
 			return value;
 		end
 	end

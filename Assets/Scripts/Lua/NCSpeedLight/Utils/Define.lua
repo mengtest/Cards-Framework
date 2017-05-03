@@ -24,6 +24,7 @@ UIType = {
 	UI_MJTotalResult = "MaJiang/UI_MJTotalResult",
 	UI_MJDraw = "MaJiang/UI_MJDraw",
 	UI_MJSetting = "MaJiang/UI_MJSetting",
+	UI_MJPlayerInfo = "MaJiang/UI_MJPlayerInfo",
 }
 
 SceneType =

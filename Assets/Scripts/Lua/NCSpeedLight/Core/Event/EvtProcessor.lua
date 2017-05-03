@@ -8,7 +8,6 @@
 -- Modify History:
 --
 -----------------------------------------------
-
 EvtProcessor = {
 	Listeners = {},
 };
@@ -31,7 +30,7 @@ function EvtProcessor:Register(id, func)
 		if existIndex ~= - 1 then
 			return
 		end
-		index = # self.Listeners[id] + 1
+		index = #self.Listeners[id] + 1
 	end
 	self.Listeners[id] [index] = func
 end
@@ -62,7 +61,7 @@ function EvtProcessor:EventIndex(id, func)
 	if self.Listeners[id] == nil then
 		return - 1
 	end
-	for i = 1, # self.Listeners[id] do
+	for i = 1, #self.Listeners[id] do
 		if self.Listeners[id] [i] == func then
 			return i
 		end
