@@ -92,8 +92,8 @@ namespace NCSpeedLight
         }
         public void Initialize()
         {
-            mGlobalMsgQueue = new EventHandlerQueue(GlobalEventManager.Instance);
-            mGlobalMsgQueue.Add((int)GlobalEventType.GE_LevelWasLoaded, OnLevelLoaded);
+            //mGlobalMsgQueue = new EventHandlerQueue(GlobalEventManager.Instance);
+            //mGlobalMsgQueue.Add((int)GlobalEventType.GE_LevelWasLoaded, OnLevelLoaded);
             ReadGameSettingConfig();
         }
         #endregion

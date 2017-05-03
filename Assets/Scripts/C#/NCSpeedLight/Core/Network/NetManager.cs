@@ -87,12 +87,12 @@ namespace NCSpeedLight
 
         public static void RegisterEvent(int id, EventHandlerDelegate func)
         {
-            Instance.Bind(id, func);
+            Instance.Register(id, func);
         }
 
         public static void UnregisterEvent(int id, EventHandlerDelegate func)
         {
-            Instance.Unbind(id, func);
+            Instance.Unregister(id, func);
         }
 
         public static void SendEvent(int msgID, byte[] msgBuffer, int playerID, int serverID, int serverType = 1)
@@ -110,7 +110,7 @@ namespace NCSpeedLight
 
         public static void NotifyEvent(Evt evt)
         {
-            Instance.Dispatch(evt);
+            Instance.Notify(evt);
         }
     }
 }

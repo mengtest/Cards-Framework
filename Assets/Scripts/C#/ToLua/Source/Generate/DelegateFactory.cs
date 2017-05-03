@@ -39,8 +39,8 @@ public static class DelegateFactory
 		dict.Add(typeof(UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.LoadSceneMode>), UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_LoadSceneMode);
 		dict.Add(typeof(UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene>), UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene);
 		dict.Add(typeof(UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.Scene>), UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene);
-		dict.Add(typeof(NCSpeedLight.EventHandlerDelegate), NCSpeedLight_EventHandlerDelegate);
 		dict.Add(typeof(NCSpeedLight.RongCloudAdapter.ReceiveVoiceCallbackDelegate), NCSpeedLight_RongCloudAdapter_ReceiveVoiceCallbackDelegate);
+		dict.Add(typeof(NCSpeedLight.EventHandlerDelegate), NCSpeedLight_EventHandlerDelegate);
 		dict.Add(typeof(NCSpeedLight.Helper.ChildDelegate), NCSpeedLight_Helper_ChildDelegate);
 		dict.Add(typeof(UIEventListener.BoolDelegate), UIEventListener_BoolDelegate);
 		dict.Add(typeof(UIEventListener.FloatDelegate), UIEventListener_FloatDelegate);
@@ -1253,53 +1253,6 @@ public static class DelegateFactory
 		}
 	}
 
-	class NCSpeedLight_EventHandlerDelegate_Event : LuaDelegate
-	{
-		public NCSpeedLight_EventHandlerDelegate_Event(LuaFunction func) : base(func) { }
-		public NCSpeedLight_EventHandlerDelegate_Event(LuaFunction func, LuaTable self) : base(func, self) { }
-
-		public void Call(NCSpeedLight.Evt param0)
-		{
-			func.BeginPCall();
-			func.PushObject(param0);
-			func.PCall();
-			func.EndPCall();
-		}
-
-		public void CallWithSelf(NCSpeedLight.Evt param0)
-		{
-			func.BeginPCall();
-			func.Push(self);
-			func.PushObject(param0);
-			func.PCall();
-			func.EndPCall();
-		}
-	}
-
-	public static Delegate NCSpeedLight_EventHandlerDelegate(LuaFunction func, LuaTable self, bool flag)
-	{
-		if (func == null)
-		{
-			NCSpeedLight.EventHandlerDelegate fn = delegate(NCSpeedLight.Evt param0) { };
-			return fn;
-		}
-
-		if(!flag)
-		{
-			NCSpeedLight_EventHandlerDelegate_Event target = new NCSpeedLight_EventHandlerDelegate_Event(func);
-			NCSpeedLight.EventHandlerDelegate d = target.Call;
-			target.method = d.Method;
-			return d;
-		}
-		else
-		{
-			NCSpeedLight_EventHandlerDelegate_Event target = new NCSpeedLight_EventHandlerDelegate_Event(func, self);
-			NCSpeedLight.EventHandlerDelegate d = target.CallWithSelf;
-			target.method = d.Method;
-			return d;
-		}
-	}
-
 	class NCSpeedLight_RongCloudAdapter_ReceiveVoiceCallbackDelegate_Event : LuaDelegate
 	{
 		public NCSpeedLight_RongCloudAdapter_ReceiveVoiceCallbackDelegate_Event(LuaFunction func) : base(func) { }
@@ -1346,6 +1299,53 @@ public static class DelegateFactory
 		{
 			NCSpeedLight_RongCloudAdapter_ReceiveVoiceCallbackDelegate_Event target = new NCSpeedLight_RongCloudAdapter_ReceiveVoiceCallbackDelegate_Event(func, self);
 			NCSpeedLight.RongCloudAdapter.ReceiveVoiceCallbackDelegate d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	class NCSpeedLight_EventHandlerDelegate_Event : LuaDelegate
+	{
+		public NCSpeedLight_EventHandlerDelegate_Event(LuaFunction func) : base(func) { }
+		public NCSpeedLight_EventHandlerDelegate_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(NCSpeedLight.Evt param0)
+		{
+			func.BeginPCall();
+			func.PushObject(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(NCSpeedLight.Evt param0)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.PushObject(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public static Delegate NCSpeedLight_EventHandlerDelegate(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			NCSpeedLight.EventHandlerDelegate fn = delegate(NCSpeedLight.Evt param0) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			NCSpeedLight_EventHandlerDelegate_Event target = new NCSpeedLight_EventHandlerDelegate_Event(func);
+			NCSpeedLight.EventHandlerDelegate d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			NCSpeedLight_EventHandlerDelegate_Event target = new NCSpeedLight_EventHandlerDelegate_Event(func, self);
+			NCSpeedLight.EventHandlerDelegate d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}

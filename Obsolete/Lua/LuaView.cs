@@ -25,7 +25,7 @@ namespace NCSpeedLight
             base.OnDestroy();
             if (NetEventQueue != null)
             {
-                NetEventQueue.RemoveAll();
+                NetEventQueue.Clear();
             }
         }
         public void RegisterNetEvent(int id, EventHandlerDelegate func)

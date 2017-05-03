@@ -1,8 +1,8 @@
 ﻿/*----------------------------------------------------------------
             // Copyright © 2014-2017 NCSpeedLight
             // 
-            // FileName: BuilderEditorUtils.cs
-			// Describle:    
+            // FileName: EditorHelper.cs
+			// Describle:  编辑器工具  
 			// Created By:  Wells Hsu
 			// Date&Time:  10/12 星期三 11:49:46
             // Modify History:
@@ -98,8 +98,6 @@ namespace NCSpeedLight
 
         }
 
-        //public static readonly string ASSERBUNDLE_OUTPUT_DIRECTORY = "AssetBundles";
-
         public static string MetaFileName = "Meta.xml";
 
         public static string NormalizePath(string path)
@@ -160,7 +158,6 @@ namespace NCSpeedLight
                 outfiles.Add(directory);
             }
         }
-
 
         public static Dictionary<string, List<string>> CollectAssetDependency(List<string> sourceAssets)
         {

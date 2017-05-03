@@ -122,7 +122,6 @@ public static class CustomSettings
 
 
         #region NCSpeedLight
-        _GT(typeof(GlobalEventManager)),
          _GT(typeof(Evt)),
          _GT(typeof(AssetManager)),
 
@@ -134,11 +133,8 @@ public static class CustomSettings
          _GT(typeof(RCloud.RCErrorCode)),
          _GT(typeof(RongCloudAdapter)),
 
-         _GT(typeof(AudioManager)),
-
          _GT(typeof(LuaManager)),
          _GT(typeof(LuaBehaviour)),
-         _GT(typeof(LuaView)),
          _GT(typeof(LuaLoader)),
 
 

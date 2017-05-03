@@ -88,7 +88,7 @@ namespace NCSpeedLight
             SpringPosition sp = go.GetComponent<SpringPosition>();
             if (sp != null)
             {
-                GameObject.Destroy(sp);
+                Object.Destroy(sp);
             }
             sp = go.AddComponent<SpringPosition>();
             sp.target = vec3;
@@ -206,7 +206,7 @@ namespace NCSpeedLight
             return null;
         }
 
-        public static UnityEngine.Object GetComponent(Transform transform, string path, System.Type type)
+        public static Object GetComponent(Transform transform, string path, System.Type type)
         {
             if (transform == null)
             {
@@ -220,7 +220,7 @@ namespace NCSpeedLight
             return t.GetComponent(type);
         }
 
-        public static UnityEngine.Object GetComponent(Transform transform, System.Type type)
+        public static Object GetComponent(Transform transform, System.Type type)
         {
             if (transform == null)
             {

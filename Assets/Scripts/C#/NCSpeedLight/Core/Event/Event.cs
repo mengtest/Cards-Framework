@@ -17,25 +17,31 @@ namespace NCSpeedLight
     public class Evt
     {
         public int ID;
+
         public object Param;
+
         [LuaByteBuffer]
         public byte[] LuaParam;
+
         public Evt() { }
+
         public Evt(int id)
         {
-            this.ID = id;
+            ID = id;
         }
+
         public Evt(int id, object param, byte[] luaParam)
         {
-            this.ID = id;
-            this.Param = param;
-            this.LuaParam = luaParam;
+            ID = id;
+            Param = param;
+            LuaParam = luaParam;
         }
     }
 
     public class EventHandlerQueue
     {
         private Dictionary<int, List<EventHandlerDelegate>> m_Handlers;
+
         private EventManager m_Processor;
 
         public EventHandlerQueue(EventManager processor)
@@ -44,7 +50,7 @@ namespace NCSpeedLight
             m_Processor = processor;
         }
 
-        public void Add(int eventID, EventHandlerDelegate handler)
+        public void Add(int id, EventHandlerDelegate handler)
         {
             if (handler == null)
             {
@@ -55,24 +61,24 @@ namespace NCSpeedLight
                 m_Handlers = new Dictionary<int, List<EventHandlerDelegate>>();
             }
             List<EventHandlerDelegate> handlers = null;
-            if (m_Handlers.TryGetValue(eventID, out handlers) == false)
+            if (m_Handlers.TryGetValue(id, out handlers) == false)
             {
                 handlers = new List<EventHandlerDelegate>();
                 handlers.Add(handler);
-                m_Handlers.Add(eventID, handlers);
-                m_Processor.Bind(eventID, handler);
+                m_Handlers.Add(id, handlers);
+                m_Processor.Register(id, handler);
             }
             else
             {
                 if (handlers.Contains(handler) == false)
                 {
                     handlers.Add(handler);
-                    m_Processor.Bind(eventID, handler);
+                    m_Processor.Register(id, handler);
                 }
             }
         }
 
-        public void Remove(int eventID, EventHandlerDelegate handler)
+        public void Remove(int id, EventHandlerDelegate handler)
         {
             if (handler == null)
             {
@@ -83,15 +89,15 @@ namespace NCSpeedLight
                 return;
             }
             List<EventHandlerDelegate> tmpDels = null;
-            if (m_Handlers.TryGetValue(eventID, out tmpDels))
+            if (m_Handlers.TryGetValue(id, out tmpDels))
             {
                 tmpDels.Clear();
-                m_Handlers.Remove(eventID);
-                m_Processor.Unbind(eventID, handler);
+                m_Handlers.Remove(id);
+                m_Processor.Unregister(id, handler);
             }
         }
 
-        public void RemoveAll()
+        public void Clear()
         {
             if (m_Handlers == null || m_Handlers.Count == 0)
             {
@@ -108,7 +114,7 @@ namespace NCSpeedLight
                 }
                 for (int j = 0; j < kvp.Value.Count; j++)
                 {
-                    m_Processor.Unbind(kvp.Key, kvp.Value[j]);
+                    m_Processor.Register(kvp.Key, kvp.Value[j]);
                 }
             }
             m_Handlers.Clear();

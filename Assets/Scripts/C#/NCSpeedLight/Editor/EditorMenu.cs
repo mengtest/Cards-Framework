@@ -5,7 +5,7 @@ using System;
 
 namespace NCSpeedLight
 {
-    public class Tools
+    public class EditorMenu
     {
         [MenuItem("Assets/Start Game", false, 0)]
         public static void StartGame()

@@ -8,7 +8,6 @@
 --          // Modify History:
 --          //
 ----------------------------------------------------------------
-
 SceneManager =
 {
 	IsInitialized = false,
@@ -21,7 +20,6 @@ SceneManager =
 function SceneManager.Initialize()
 	if SceneManager.IsInitialized == false then
 		SceneManager.IsInitialized = true;
-		SceneManager.RegisterScene(DownloadScene);
 		SceneManager.RegisterScene(LoginScene);
 		SceneManager.RegisterScene(HallScene);
 		SceneManager.RegisterScene(MJScene);

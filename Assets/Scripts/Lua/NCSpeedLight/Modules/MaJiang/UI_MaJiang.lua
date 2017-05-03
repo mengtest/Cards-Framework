@@ -468,7 +468,7 @@ function UI_MaJiang.HandleChat(msg)
 		local tempSprite = UIHelper.GetComponent(playerUI.transform, "Enter/Center/Chat/Text/Kuang", typeof(UISprite));
 		tempSprite.width = tempLabel.width + 34;
 		UIHelper.SetActiveState(playerUI.transform, "Enter/Center/Chat/Text", true);
-		UI_MJChat.AddHistory(player.ID, MJChatType.CustomText, nil, nil);
+		UI_MJChat.AddHistory(player.ID, MJChatType.CustomText, msg.faceName, nil);
 	end
 end
 

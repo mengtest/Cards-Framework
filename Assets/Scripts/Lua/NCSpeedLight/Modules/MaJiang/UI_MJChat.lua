@@ -2,7 +2,7 @@ UI_MJChat = {
 	transform = nil,
 	gameObject = nil,
 	DefaultChat = {},
-	MAX_TEXT = 25,
+	MAX_TEXT = 24,
 	History = nil,
 }
 
@@ -136,13 +136,22 @@ function UI_MJChat.AddHistory(roleid, type, content, duration)
 	if item == nil then return end;
 	local itemObj = NGUITools.AddChild(panel.gameObject, item.gameObject);
 	itemObj:SetActive(true);
-	local curIndex = #UI_MJChat;
+	local curIndex = #UI_MJChat.History;
 	curIndex = curIndex + 1;
 	itemObj.name = tostring(curIndex);
 	local uitex = UIHelper.GetComponent(itemObj.transform, "Head/Sprite (Photo)", typeof(UITexture));
 	uitex.mainTexture = player:GetHeadTexture();
 	if type == MJChatType.CustomText then
-		UIHelper.SetLabelText(itemObj.transform, "Label (Time)", content);
+		local label = UIHelper.GetComponent(itemObj.transform, "Label (Time)", typeof(UILabel));
+		label.text = content;
+		local bgSprite = UIHelper.GetComponent(itemObj.transform, "Sprite (bk)", typeof(UISprite));
+		if utf8.len(content) > UI_MJChat.MAX_TEXT / 2 then
+			bgSprite.width =(UI_MJChat.MAX_TEXT / 2 + 2) * 24;
+			bgSprite.height = 60;
+		else
+			bgSprite.width =(utf8.len(content) + 2) * 24;
+			bgSprite.height = 40;
+		end
 	end
 	local uiGrid = UIHelper.GetComponent(panel, typeof(UIGrid));
 	uiGrid:Reposition();

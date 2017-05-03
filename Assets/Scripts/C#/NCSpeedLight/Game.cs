@@ -17,7 +17,8 @@ namespace NCSpeedLight
     public class Game : MonoBehaviour
     {
         public static Game Instance;
-        private bool OK = false;
+        public static EventManager GlobalEventProcessor = new EventManager();
+
         public InternalUI InternalUI;
         public LuaFunction AwakeFunction;
         public LuaFunction UpdateFunction;
@@ -26,6 +27,8 @@ namespace NCSpeedLight
         public LuaFunction OnDestroyFunction;
         public LuaFunction OnApplicationPauseFunction;
         public LuaFunction OnApplicationFocusFunction;
+
+        private bool isLuaOK = false;
 
         private void Awake()
         {
@@ -47,7 +50,7 @@ namespace NCSpeedLight
         {
             InternalUI.CloseDialog();
             InternalUI.CloseUpdate();
-            OK = true;
+            isLuaOK = true;
             LuaManager.DoString("require 'NCSpeedLight.Game'");
             AwakeFunction = LuaManager.LuaState.GetFunction("Game.Awake");
             UpdateFunction = LuaManager.LuaState.GetFunction("Game.Update");
@@ -69,42 +72,42 @@ namespace NCSpeedLight
 
         private void Update()
         {
-            if (OK && UpdateFunction != null)
+            if (isLuaOK && UpdateFunction != null)
             {
                 UpdateFunction.Call();
             }
         }
         private void LateUpdate()
         {
-            if (OK && LateUpdateFunction != null)
+            if (isLuaOK && LateUpdateFunction != null)
             {
                 LateUpdateFunction.Call();
             }
         }
         private void OnGUI()
         {
-            if (OK && OnGUIFunction != null)
+            if (isLuaOK && OnGUIFunction != null)
             {
                 OnGUIFunction.Call();
             }
         }
         private void OnDestroy()
         {
-            if (OK && OnDestroyFunction != null)
+            if (isLuaOK && OnDestroyFunction != null)
             {
                 OnDestroyFunction.Call();
             }
         }
         private void OnApplicationPause(bool status)
         {
-            if (OK && OnApplicationPauseFunction != null)
+            if (isLuaOK && OnApplicationPauseFunction != null)
             {
                 OnApplicationPauseFunction.Call(status);
             }
         }
         private void OnApplicationFocus(bool status)
         {
-            if (OK && OnApplicationFocusFunction != null)
+            if (isLuaOK && OnApplicationFocusFunction != null)
             {
                 OnApplicationFocusFunction.Call(status);
             }

@@ -164,15 +164,12 @@ public static class LuaBinder
 		L.EndModule();
 		L.EndModule();
 		L.BeginModule("NCSpeedLight");
-		NCSpeedLight_GlobalEventManagerWrap.Register(L);
 		NCSpeedLight_EvtWrap.Register(L);
 		NCSpeedLight_AssetManagerWrap.Register(L);
 		NCSpeedLight_ShareSDKAdapterWrap.Register(L);
 		NCSpeedLight_RongCloudAdapterWrap.Register(L);
-		NCSpeedLight_AudioManagerWrap.Register(L);
 		NCSpeedLight_LuaManagerWrap.Register(L);
 		NCSpeedLight_LuaBehaviourWrap.Register(L);
-		NCSpeedLight_LuaViewWrap.Register(L);
 		NCSpeedLight_LuaLoaderWrap.Register(L);
 		NCSpeedLight_NetManagerWrap.Register(L);
 		NCSpeedLight_NetConnectionWrap.Register(L);

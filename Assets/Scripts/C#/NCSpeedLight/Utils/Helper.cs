@@ -665,7 +665,7 @@ namespace NCSpeedLight
             }
             catch (Exception e)
             {
-                Helper.LogError(e.Message);
+                LogError(e.Message);
                 return null;
             }
         }
@@ -677,7 +677,7 @@ namespace NCSpeedLight
         /// <returns></returns>
         public static bool CheckChinese(char c)
         {
-            return ((int)c > 127);
+            return c > 127;
         }
 
         public static string GetFileNameFromPath(string path)
