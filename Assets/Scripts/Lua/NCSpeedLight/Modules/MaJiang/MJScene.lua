@@ -67,6 +67,9 @@ MJScene =
 	
 	-- 当前场景的状态
 	Status = MJSceneStatus.Waiting,
+	
+	-- 聊天的历史记录
+	ChatHistory = nil,
 }
 
 function MJScene.Initialize()
@@ -83,6 +86,7 @@ function MJScene.Begin()
 	UIManager.OpenWindow(UIType.UI_SceneLoad);
 	AssetManager.LoadScene(SceneType.MJScene);
 	MJScene.Players = {};
+	ChatHistory = {};
 end
 
 function MJScene.Update()
@@ -201,6 +205,22 @@ function MJScene.UnRegisterNetEvent()
 	NetManager.UnregisterEvent(GameMessage.GM_MATCH_RATE_RETURN, MJScene.ReturnRoomRate);
 	NetManager.UnregisterEvent(GameMessage.GM_PlayerRollTouZi_Request, MJScene.ReturnCastDice);
 	NetManager.UnregisterEvent(GameMessage.GM_MJOperator_Error, MJScene.ReturnOperateError);
+end
+
+-- 保存聊天记录
+function MJScene.AddChatHistory(roleID, type, content, duration, isRead)
+	if MJScene.ChatHistory == nil then MJScene.ChatHistory = {}; end
+	local item = {};
+	item.RoleID = tonumber(roleID);
+	item.Type = type;
+	item.Content = content;
+	item.Duration = duration;
+	item.IsRead = isRead;
+	item.GO = nil;
+	table.insert(MJScene.ChatHistory, item);
+	if UI_MJChat ~= nil then
+		UI_MJChat.RefreshHistory();
+	end
 end
 
 function MJScene.HasPlayer(player)
@@ -859,11 +879,15 @@ function MJScene.NotifyChat(evt)
 		Log.Error("MJScene.NotifyChat: parse msg error: " .. PBMessage.GM_AnswerFaceReturn);
 		return;
 	end
+	if msg.faceid == MJChatType.CustomText then
+		MJScene.AddChatHistory(msg.roleid, MJChatType.CustomText, msg.faceName, 0, true);
+	end
 	UI_MaJiang.HandleChat(msg);
 end
 
 function MJScene.OnReceiveVoiceMsg(roleid, uri, duration)
 	Log.Info("MJScene.OnReceiveVoiceMsg: roleid is " .. roleid .. ",uri is " .. uri .. ",duration is " .. duration);
+	MJScene.AddChatHistory(roleid, MJChatType.Voice, uri, duration, false);
 	UI_MaJiang.HandleVoice(roleid, uri, duration);
 end
 

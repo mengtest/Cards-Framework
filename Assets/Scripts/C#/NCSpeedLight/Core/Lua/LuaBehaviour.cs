@@ -30,16 +30,19 @@ namespace NCSpeedLight
 
         protected virtual void Awake()
         {
-            string str = string.Empty;
-            if (string.IsNullOrEmpty(Module))
+            if (LuaManager.LuaState.GetTable(Script) == null)
             {
-                str = Script;
+                string str = string.Empty;
+                if (string.IsNullOrEmpty(Module))
+                {
+                    str = Script;
+                }
+                else
+                {
+                    str = Helper.StringFormat("require '{0}.{1}'", Module, Script);
+                }
+                LuaManager.DoString(str);
             }
-            else
-            {
-                str = Helper.StringFormat("require '{0}.{1}'", Module, Script);
-            }
-            LuaManager.DoString(str);
 
             m_AwakeFunction = LuaManager.LuaState.GetFunction(Script + ".Awake", false);
             m_StartFunction = LuaManager.LuaState.GetFunction(Script + ".Start", false);
@@ -98,7 +101,7 @@ namespace NCSpeedLight
 
         protected virtual void OnGUI()
         {
-            if(m_OnGUIFunction != null)
+            if (m_OnGUIFunction != null)
             {
                 m_OnGUIFunction.Call();
             }

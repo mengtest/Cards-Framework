@@ -20,6 +20,10 @@ function UI_MJChat.Start()
 	UI_MJChat.InitFaceChat();
 end
 
+function UI_MJChat.OnEnable()
+	UI_MJChat.RefreshHistory();
+end
+
 function UI_MJChat.OnDestroy()
 	this.transform = nil;
 	this.gameObject = nil;
@@ -115,53 +119,70 @@ function UI_MJChat.OnClickSendText(go)
 	NetManager.SendEventToLogicServer(GameMessage.GM_ANSWER_FACE_REQUEST, PBMessage.GM_AnswerFaceReturn, msg);
 end
 
-function UI_MJChat.AddHistory(roleid, type, content, duration)
+-- 更新聊天历史列表显示
+function UI_MJChat.RefreshHistory()
+	if this.transform == nil then return end;
+	if MJScene.ChatHistory == nil then return end;
 	local panel = this.transform:Find("History/Panel/UIGrid");
-	local player = MJScene.GetPlayerByID(tonumber(roleid));
-	if player == nil then return end;
-	local item = nil;
-	if type == MJChatType.CustomText then
-		if player:IsHero() then
-			item = panel:Find("RightT");
-		else
-			item = panel:Find("LeftT");
-		end
-	elseif type == MJChatType.Voice then
-		if player:IsHero() then
-			item = panel:Find("RightV");
-		else
-			item = panel:Find("LeftV");
-		end
-	end
-	if item == nil then return end;
-	local itemObj = NGUITools.AddChild(panel.gameObject, item.gameObject);
-	itemObj:SetActive(true);
-	local curIndex = #UI_MJChat.History;
-	curIndex = curIndex + 1;
-	itemObj.name = tostring(curIndex);
-	local uitex = UIHelper.GetComponent(itemObj.transform, "Head/Sprite (Photo)", typeof(UITexture));
-	uitex.mainTexture = player:GetHeadTexture();
-	if type == MJChatType.CustomText then
-		local label = UIHelper.GetComponent(itemObj.transform, "Label (Time)", typeof(UILabel));
-		label.text = content;
-		local bgSprite = UIHelper.GetComponent(itemObj.transform, "Sprite (bk)", typeof(UISprite));
-		if utf8.len(content) > UI_MJChat.MAX_TEXT / 2 then
-			bgSprite.width =(UI_MJChat.MAX_TEXT / 2 + 2) * 24;
-			bgSprite.height = 60;
-		else
-			bgSprite.width =(utf8.len(content) + 2) * 24;
-			bgSprite.height = 40;
+	if panel == nil then return end;
+	for i = 1, #MJScene.ChatHistory do
+		local historyItem = MJScene.ChatHistory[i];
+		if historyItem.GO == nil then
+			local player = MJScene.GetPlayerByID(tonumber(historyItem.RoleID));
+			if player ~= nil then
+				-- 获取显示模板
+				local item = nil;
+				if historyItem.Type == MJChatType.CustomText then
+					if player:IsHero() then
+						item = panel:Find("RightT");
+					else
+						item = panel:Find("LeftT");
+					end
+				elseif historyItem.Type == MJChatType.Voice then
+					if player:IsHero() then
+						item = panel:Find("RightV");
+					else
+						item = panel:Find("LeftV");
+					end
+				end
+				local itemObj = NGUITools.AddChild(panel.gameObject, item.gameObject);
+				itemObj:SetActive(true);
+				itemObj.name = tostring(i);
+				local uitex = UIHelper.GetComponent(itemObj.transform, "Head/Sprite (Photo)", typeof(UITexture));
+				uitex.mainTexture = player:GetHeadTexture();
+				if historyItem.Type == MJChatType.CustomText then
+					local label = UIHelper.GetComponent(itemObj.transform, "Label (Time)", typeof(UILabel));
+					label.text = historyItem.Content;
+					local bgSprite = UIHelper.GetComponent(itemObj.transform, "Sprite (bk)", typeof(UISprite));
+					bgSprite.width = label.width + 38;
+					bgSprite.height = 60;
+				elseif historyItem.Type == MJChatType.Voice then
+					UIHelper.SetActiveState(itemObj.transform, "Sprite (RedPoint)", not historyItem.IsRead);
+					if historyItem.Duration ~= nil then
+						UIHelper.SetLabelText(itemObj.transform, "Duration", tostring(historyItem.Duration) .. "''");
+					else
+						UIHelper.SetLabelText(itemObj.transform, "Duration", "0''");
+					end
+					UIHelper.SetButtonEvent(itemObj.transform, UI_MJChat.OnClickHistoryItem);
+				end
+				historyItem.GO = itemObj;
+			end
 		end
 	end
 	local uiGrid = UIHelper.GetComponent(panel, typeof(UIGrid));
 	uiGrid:Reposition();
-	
-	local record = {};
-	record.roleid = roleid;
-	record.type = type;
-	record.content = content;
-	record.duration = duration;
-	
-	table.insert(UI_MJChat.History, record);
-	
+end
+
+function UI_MJChat.OnClickHistoryItem(go)
+	Log.Info("UI_MJChat.OnClickHistoryItem: 1111,go is " .. go.name);
+	if go ~= nil and MJScene.ChatHistory ~= nil then
+		Log.Info("UI_MJChat.OnClickHistoryItem: 2222");
+		local itemHistory = MJScene.ChatHistory[tonumber(go.name)];
+		if itemHistory ~= nil then
+			Log.Info("UI_MJChat.OnClickHistoryItem: 3333");
+			itemHistory.IsRead = true;
+			UI_MaJiang.HandleVoice(itemHistory.RoleID, itemHistory.Content, itemHistory.Duration);
+			UI_MJChat.RefreshHistory();
+		end
+	end
 end 

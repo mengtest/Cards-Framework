@@ -239,6 +239,10 @@ function UI_MaJiang.OnVoiceBtnPress(go, status)
 		UI_MaJiang.RecordSuccess = true;
 		RongCloudAdapter.StartRecordVoice(
 		function(isTimeout, voiceUri, duration)
+			if duration <= 0 then
+				UIManager.OpenTipsDialog("录音时间小于1s，无法发送");
+				return;		
+			end
 			Log.Info("UI_MaJiang.OnVoiceBtnPress: 录音成功，文件路径为 " .. voiceUri .. ",长度为 " .. duration);
 			
 			if UI_MaJiang.RecordSuccess then
@@ -249,6 +253,7 @@ function UI_MaJiang.OnVoiceBtnPress(go, status)
 					end
 				end
 				-- 同时播放自己的声音，确保在主线程里面调用，否则会闪退
+				MJScene.AddChatHistory(MJPlayer.Hero.ID, MJChatType.Voice, voiceUri, duration);
 				Loom.QueueOnMainThread(
 				function()
 					UI_MaJiang.HandleVoice(MJPlayer.Hero.ID, voiceUri, duration);
@@ -468,7 +473,6 @@ function UI_MaJiang.HandleChat(msg)
 		local tempSprite = UIHelper.GetComponent(playerUI.transform, "Enter/Center/Chat/Text/Kuang", typeof(UISprite));
 		tempSprite.width = tempLabel.width + 34;
 		UIHelper.SetActiveState(playerUI.transform, "Enter/Center/Chat/Text", true);
-		UI_MJChat.AddHistory(player.ID, MJChatType.CustomText, msg.faceName, nil);
 	end
 end
 
@@ -483,7 +487,6 @@ function UI_MaJiang.HandleVoice(roleid, uri, duration)
 	scheduleHide.Time = duration;
 	UIHelper.SetActiveState(playerUI.transform, "Enter/Center/Chat/Voice", true);
 	RongCloudAdapter.PlayVoice(uri, 1);
-	UI_MJChat.AddHistory(player.ID, MJChatType.Voice, uri, duration);
 end
 
 -- 设置聊天面板是否显示
