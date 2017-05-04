@@ -60,6 +60,9 @@ MJPlayer = {
 	-- 纬度
 	Latitude = nil,
 	
+	-- 地理位置
+	Address = nil,
+	
 	-- 手牌
 	HandCards = nil,
 	
@@ -190,8 +193,8 @@ function MJPlayer:NotifyEvent(id, param)
 	self.EvtProcessor:Notify(id, param);
 end
 
--- 设置玩家的数据 id/name/headurl/sex/serverposition/isready/totalscore/longitude/latitude
-function MJPlayer:SetData(id, name, headurl, sex, serverposition, isready, totalscore, longitude, latitude)
+-- 设置玩家的数据 id/name/headurl/sex/serverposition/isready/totalscore/longitude/latitude/address
+function MJPlayer:SetData(id, name, headurl, sex, serverposition, isready, totalscore, longitude, latitude, address)
 	self.ID = id;
 	self.Name = name;
 	self.HeadURL = headurl;
@@ -201,6 +204,7 @@ function MJPlayer:SetData(id, name, headurl, sex, serverposition, isready, total
 	self.TotalScore = totalscore;
 	self.Longitude = longitude;
 	self.Latitude = latitude;
+	self.Address = address;
 	if self:IsHero() then
 		RongCloudAdapter.Login(self.ID, self.Name, self.HeadURL);
 	end

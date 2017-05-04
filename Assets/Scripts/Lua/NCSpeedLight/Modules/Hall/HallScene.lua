@@ -25,6 +25,9 @@ function HallScene.Begin()
 	AssetManager.LoadScene(SceneType.HallScene);
 	UIManager.OpenWindow('Hall/UI_Main');
 	HallScene.RequestPlayerInFb();
+	if SceneManager.LastScene == MJScene then
+		Player.RefreshAddress();
+	end
 end
 
 function HallScene.Update()
@@ -101,7 +104,7 @@ function HallScene.RequestLoginFb()
 	local msg = {
 		m_FBID = SharedVariable.FBInfo.m_FBID,
 		m_RoleID = Player.FullInfo.id,
-		m_reallyPos = "(105,555)",
+		m_reallyPos = Player.Address,
 	};
 	NetManager.SendEventToLogicServer(GameMessage.GM_LOGINFB_REQUEST, PBMessage.GM_LoginFBServer, msg);
 end

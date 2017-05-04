@@ -42,10 +42,11 @@ function Player.RefreshAddress()
 end
 
 function Player.OnGetLocation(address)
-	if address == nil then
-		Log.Error("Player.OnGetLocation: address is nil.");
+	if address == nil or string.len(address) == 0 then
+		Log.Error("Player.OnGetLocation: address is nil,未获取到有效地址信息.");
+		Player.Address = "未获取到有效地址信息";
 	else
 		Log.Info("Player.OnGetLocation: address is " .. address);
+		Player.Address = address;
 	end
-	Player.Address = address;
 end

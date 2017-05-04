@@ -467,7 +467,8 @@ function MJScene.ReturnGamePlayerInfo(evt)
 				playerEntry.m_isReady,
 				playerEntry.m_totalScore,
 				playerEntry.m_Longitude,
-				playerEntry.m_Latitude);
+				playerEntry.m_Latitude,
+				playerEntry.m_reallyPos);
 				hero:SetUI();
 				hero:SetCardDisplayParam();
 				MJScene.AddPlayer(hero);
@@ -490,7 +491,8 @@ function MJScene.ReturnGamePlayerInfo(evt)
 				playerEntry.m_isReady,
 				playerEntry.m_totalScore,
 				playerEntry.m_Longitude,
-				playerEntry.m_Latitude);
+				playerEntry.m_Latitude,
+				playerEntry.m_reallyPos);
 				player:SetUI();
 				player:SetCardDisplayParam();
 				MJScene.AddPlayer(player);
@@ -579,7 +581,8 @@ function MJScene.ReturnReconnectInfo(evt)
 				data.m_IsReady,
 				data.m_TotalScore,
 				data.m_Longitude,
-				data.m_Latitude);
+				data.m_Latitude,
+				data.m_reallyPos);
 				player:SetUI(true);
 				player:SetCardDisplayParam();
 				MJScene.AddPlayer(player);
@@ -601,7 +604,8 @@ function MJScene.ReturnReconnectInfo(evt)
 				data.m_IsReady,
 				data.m_TotalScore,
 				data.m_Longitude,
-				data.m_Latitude);
+				data.m_Latitude,
+				data.m_reallyPos);
 				player:SetUI();
 				player:SetCardDisplayParam();
 				MJScene.AddPlayer(player);
@@ -622,7 +626,8 @@ function MJScene.ReturnReconnectInfo(evt)
 				data.m_IsReady,
 				data.m_TotalScore,
 				data.m_Longitude,
-				data.m_Latitude);
+				data.m_Latitude,
+				data.m_reallyPos);
 				player:SetUI();
 				player:SetCardDisplayParam();
 			end

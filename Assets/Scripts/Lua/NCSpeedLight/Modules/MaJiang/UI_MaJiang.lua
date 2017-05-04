@@ -10,6 +10,7 @@
 -----------------------------------------------
 require "NCSpeedLight.Modules.MaJiang.UI_HeroPlayer"
 require "NCSpeedLight.Modules.MaJiang.UI_OtherPlayer"
+require "NCSpeedLight.Modules.MaJiang.UI_MJInteraction"
 
 UI_MaJiang = {
 	transform,
@@ -470,8 +471,18 @@ function UI_MaJiang.HandleChat(msg)
 	if player == nil then return end;
 	local playerUI = player.UI;
 	if playerUI == nil then return end;
-	if msg.faceid == MJChatType.Flower then
-		-- 送花
+	if msg.faceid == MJChatType.Interaction then
+		-- 送花等交互行为
+		local receivePlayer = MJScene.GetPlayerByID(msg.receiveid);
+		if receivePlayer == nil then return end;
+		local oriObj = this.transform:Find("Interaction");
+		local interactionObj = NGUITools.AddChild(this.transform.gameObject, oriObj.gameObject);
+		local com = LuaComponent.Add(interactionObj, UI_MJInteraction);
+		local startPos = player.UI.transform:Find("Enter/Center").position;
+		local targetPos = receivePlayer.UI.transform:Find("Enter/Center").position;
+		startPos = this.transform:InverseTransformPoint(startPos);
+		targetPos = this.transform:InverseTransformPoint(targetPos);
+		com:Play(startPos, targetPos, msg.faceName);
 	elseif msg.faceid == MJChatType.Face then
 		-- 表情
 		local tempSprite = UIHelper.SetSpriteName(playerUI.transform, "Enter/Center/Chat/Face/Sprite", msg.faceName);

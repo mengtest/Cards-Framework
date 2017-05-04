@@ -212,7 +212,7 @@ MJPlayWayStr = {
 
 MJChatType = {
 	Face = 1,
-	Flower = 2,
+	Interaction = 2,
 	DefaultText = 3,
 	CustomText = 4,
 	Voice = 5,
