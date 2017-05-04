@@ -1,44 +1,28 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.guangsu.tmgp.papaMajiang">
-
-	<!-- 高德地图 Begin -->
-	<!-- Normal Permissions 不需要运行时注册 -->
-	<!--获取运营商信息，用于支持提供运营商信息相关的接口-->
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	<!--用于访问wifi网络信息，wifi信息会用于进行网络定位-->
-	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-	<!--这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
-	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-	<uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
-
-	<!-- 请求网络 -->
-	<uses-permission android:name="android.permission.INTERNET" />
-
-	<!-- 不是SDK需要的权限，是示例中的后台唤醒定位需要的权限 -->
-	<uses-permission android:name="android.permission.WAKE_LOCK" />
-
-	<!-- 需要运行时注册的权限 -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="preferExternal" package="com.guangsu.tmgp.papaMajiang"  >
+	<application >
+		<service android:name="com.amap.api.location.APSService"></service>
+		<meta-data android:name="com.amap.api.v2.apikey" android:value="7ccf99522684134cd3572fe6065930d3"></meta-data>
+	</application>
+	<uses-feature android:glEsVersion="0x20000"/>
+	<uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
+	<uses-feature android:name="android.hardware.touchscreen.multitouch" android:required="false"/>
+	<uses-feature android:name="android.hardware.touchscreen.multitouch.distinct" android:required="false"/>
 	<!--用于进行网络定位-->
-	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
 	<!--用于访问GPS定位-->
-	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-	<!--用于提高GPS定位速度-->
-	<uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-	<!--写入扩展存储，向扩展卡写入数据，用于写入缓存定位数据-->
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-	<!--读取缓存数据-->
-	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+	<!--获取运营商信息，用于支持提供运营商信息相关的接口-->
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+	<!--用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+	<!--这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+	<!--用于访问网络，网络定位需要上网-->
+	<uses-permission android:name="android.permission.INTERNET"></uses-permission>
 	<!--用于读取手机当前的状态-->
-	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
-	<!-- 更改设置 -->
-	<uses-permission android:name="android.permission.WRITE_SETTINGS" />
-
-	<!-- 3.2.0版本增加 -->
-	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-	<!-- 3.2.0版本增加-->
-	<uses-permission android:name="android.permission.BLUETOOTH" />
-	<!-- 高德地图 End -->
-
+	<uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+	<!--写入扩展存储，向扩展卡写入数据，用于写入缓存定位数据-->
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
 </manifest>
+

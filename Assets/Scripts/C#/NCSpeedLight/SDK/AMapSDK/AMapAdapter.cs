@@ -33,18 +33,21 @@ namespace NCSpeedLight
 
         public static void GetLocation(Callback callback)
         {
-            if (listeners.Contains(callback) == false)
+            if (Application.isEditor == false)
             {
-                listeners.Add(callback);
-            }
-            Helper.Log("AMapAdapter.GetLocation");
+                if (listeners.Contains(callback) == false)
+                {
+                    listeners.Add(callback);
+                }
+                Helper.Log("AMapAdapter.GetLocation");
 #if UNITY_ANDROID
-            StopLocation();
-            AndroidLocationListener listener = new AndroidLocationListener();
-            androidInstance.Call("StartLocation", listener);
+                StopLocation();
+                AndroidLocationListener listener = new AndroidLocationListener();
+                androidInstance.Call("StartLocation", listener);
 #elif UNITY_IOS
-            LocRequest();
+                LocRequest();
 #endif
+            }
         }
 
         public static void StopLocation()
