@@ -45,6 +45,7 @@ public static class CustomSettings
         _DT(typeof(RCloud.RCVoiceCaptureCallback.VoiceCaptureFinishedCallback)),
         _DT(typeof(RCloud.RCVoiceCaptureCallback.VoiceCaptureVolumeCallback)),
         _DT(typeof(RCloud.RCVoiceCaptureCallback.VoiceCaptureErrorCallback)),
+        _DT(typeof(AMapAdapter.Callback)),
     };
 
     //在这里添加你要导出注册到lua的类型列表
@@ -120,18 +121,20 @@ public static class CustomSettings
 
         _GT(typeof(UnityEngine.SceneManagement.SceneManager)),
 
+#region SDK 
+        _GT(typeof(ShareSDKAdapter)),
+        _GT(typeof(ShareSDKAdapter.RetType)),
+        _GT(typeof(ShareSDKAdapter.AuthInfo)),
+        _GT(typeof(RCloud.RCErrorCode)),
+        _GT(typeof(RongCloudAdapter)),
+        _GT(typeof(AMapAdapter)),
+#endregion
 
-        #region NCSpeedLight
-         _GT(typeof(Evt)),
+#region NCSpeedLight
+        _GT(typeof(Evt)),
          _GT(typeof(AssetManager)),
 
-         //_GT(typeof(AMapAdapter)),
-         _GT(typeof(ShareSDKAdapter)),
-         _GT(typeof(ShareSDKAdapter.RetType)),
-         _GT(typeof(ShareSDKAdapter.AuthInfo)),
 
-         _GT(typeof(RCloud.RCErrorCode)),
-         _GT(typeof(RongCloudAdapter)),
 
          _GT(typeof(LuaManager)),
          _GT(typeof(LuaBehaviour)),

@@ -8,76 +8,99 @@ namespace NCSpeedLight
     public class AMapAdapter : MonoBehaviour
     {
         public delegate void Callback(string address);
-
-        public static List<Callback> Listeners = new List<Callback>();
+        private static List<Callback> listeners = new List<Callback>();
 
 #if UNITY_ANDROID
-        public static AndroidJavaClass AndroidContextClass;
-        public static AndroidJavaObject AndroidContext;
-        public static AndroidJavaObject AndroidInstance;
-#elif UNITY_IOS
+        private static AndroidJavaClass androidContextClass;
+        private static AndroidJavaObject androidContext;
+        private static AndroidJavaObject androidInstance;
 #endif
 
         void Awake()
         {
             if (Application.isEditor == false)
             {
-                Debug.Log("AMapAdapter.Awake: unity construct");
+                Helper.Log("AMapAdapter.Awake: unity construct");
 #if UNITY_ANDROID
-                AndroidContextClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-                AndroidContext = AndroidContextClass.GetStatic<AndroidJavaObject>("currentActivity");
-                AndroidInstance = new AndroidJavaObject("com.hsu.location.LocationUtils", AndroidContext);
+                androidContextClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+                androidContext = androidContextClass.GetStatic<AndroidJavaObject>("currentActivity");
+                androidInstance = new AndroidJavaObject("com.hsu.location.LocationUtils", androidContext);
 #elif UNITY_IOS
-		        LocInitialize();
+                LocInitialize();
 #endif
             }
         }
 
         public static void GetLocation(Callback callback)
         {
-            if (Listeners.Contains(callback) == false)
+            if (listeners.Contains(callback) == false)
             {
-                Listeners.Add(callback);
+                listeners.Add(callback);
             }
+            Helper.Log("AMapAdapter.GetLocation");
 #if UNITY_ANDROID
+            StopLocation();
             AndroidLocationListener listener = new AndroidLocationListener();
-            AMapAdapter.AndroidInstance.Call("StopLocation");
-            AndroidInstance.Call("StartLocation", listener);
+            androidInstance.Call("StartLocation", listener);
 #elif UNITY_IOS
-		LocRequest();
+            LocRequest();
 #endif
+        }
+
+        public static void StopLocation()
+        {
+            Helper.Log("AMapAdapter.StopLocation");
+            if (Application.isEditor == false)
+            {
+#if UNITY_ANDROID
+                androidInstance.Call("StopLocation");
+#endif
+            }
+        }
+
+        [LuaInterface.NoToLua]
+        public static void NotifyListener(string address)
+        {
+            Helper.Log("AMapAdapter.NotifyListener");
+            for (int i = 0; i < listeners.Count; i++)
+            {
+                Callback func = listeners[i];
+                if (func != null)
+                {
+                    func(address);
+                }
+            }
+            listeners.Clear();
         }
 
 #if UNITY_IOS
-    [DllImport("__Internal")]
-    public static extern void LocInitialize();
-    [DllImport("__Internal")]
-    public static extern void LocRequest();
-    public void OnIOSGetLocationCallback(string address)
-    {
-        Debug.Log("OnIOSGetLocationCallback: address is " + address);
-        for (int i = 0; i < Listeners.Count; i++)
+        [DllImport("__Internal")]
+        [LuaInterface.NoToLua]
+        public static extern void LocInitialize();
+
+        [DllImport("__Internal")]
+        [LuaInterface.NoToLua]
+        public static extern void LocRequest();
+
+        [LuaInterface.NoToLua]
+        public void OnIOSGetLocationCallback(string address)
         {
-            Callback func = Listeners[i];
-            if (func != null)
-            {
-                func(address);
-            }
+            Helper.Log("AMapAdapter.OnIOSGetLocationCallback: address is " + address);
+            NotifyListener(address);
         }
-        Listeners.Clear();
-    }
 #endif
     }
 
 
 #if UNITY_ANDROID
+
     public class AndroidLocationListener : AndroidJavaProxy
     {
         public AndroidLocationListener() : base("com.amap.api.location.AMapLocationListener") { }
 
         private void onLocationChanged(AndroidJavaObject location)
         {
-            AMapAdapter.AndroidInstance.Call("StopLocation");
+            AMapAdapter.StopLocation();
 
             Location loc = new Location();
             loc.Accuracy = location.Call<float>("getAccuracy");
@@ -107,45 +130,37 @@ namespace NCSpeedLight
             loc.StreetNum = location.Call<string>("getStreetNum");
             loc.Time = DateTime.Now;
 
-            Debug.LogError("AMapAdapter.onLocationChanged: error code is " + loc.ErrorCode);
-            Debug.LogError("AMapAdapter.onLocationChanged: error info is " + loc.ErrorInfo);
-            Debug.Log("AMapAdapter.onLocationChanged: Accuracy is " + loc.Accuracy);
-            Debug.Log("AMapAdapter.onLocationChanged: AdCode is " + loc.AdCode);
-            Debug.Log("AMapAdapter.onLocationChanged: Address is " + loc.Address);
-            Debug.Log("AMapAdapter.onLocationChanged: Altitude is " + loc.Altitude);
-            Debug.Log("AMapAdapter.onLocationChanged: AoiName is " + loc.AoiName);
-            Debug.Log("AMapAdapter.onLocationChanged: Bearing is " + loc.Bearing);
-            Debug.Log("AMapAdapter.onLocationChanged: BuildingId is " + loc.BuildingId);
-            Debug.Log("AMapAdapter.onLocationChanged: City is " + loc.City);
-            Debug.Log("AMapAdapter.onLocationChanged: CityCode is " + loc.CityCode);
-            Debug.Log("AMapAdapter.onLocationChanged: Country is " + loc.Country);
-            Debug.Log("AMapAdapter.onLocationChanged: Floor is " + loc.Floor);
-            Debug.Log("AMapAdapter.onLocationChanged: GpsAccuracyStatus is " + loc.GpsAccuracyStatus);
-            Debug.Log("AMapAdapter.onLocationChanged: Latitude is " + loc.Latitude);
-            Debug.Log("AMapAdapter.onLocationChanged: LocationDetail is " + loc.LocationDetail);
-            Debug.Log("AMapAdapter.onLocationChanged: LocationType is " + loc.LocationType);
-            Debug.Log("AMapAdapter.onLocationChanged: Longitude is " + loc.Longitude);
-            Debug.Log("AMapAdapter.onLocationChanged: PoiName is " + loc.PoiName);
-            Debug.Log("AMapAdapter.onLocationChanged: Province is " + loc.Province);
-            Debug.Log("AMapAdapter.onLocationChanged: Satellites is " + loc.Satellites);
-            Debug.Log("AMapAdapter.onLocationChanged: Speed is " + loc.Speed);
-            Debug.Log("AMapAdapter.onLocationChanged: Street is " + loc.Street);
-            Debug.Log("AMapAdapter.onLocationChanged: StreetNum is " + loc.StreetNum);
-            Debug.Log("AMapAdapter.onLocationChanged: Time is " + loc.Time);
+            Helper.LogError("AMapAdapter.onLocationChanged: error code is " + loc.ErrorCode);
+            Helper.LogError("AMapAdapter.onLocationChanged: error info is " + loc.ErrorInfo);
+            //Helper.Log("AMapAdapter.onLocationChanged: Accuracy is " + loc.Accuracy);
+            //Helper.Log("AMapAdapter.onLocationChanged: AdCode is " + loc.AdCode);
+            //Helper.Log("AMapAdapter.onLocationChanged: Address is " + loc.Address);
+            //Helper.Log("AMapAdapter.onLocationChanged: Altitude is " + loc.Altitude);
+            //Helper.Log("AMapAdapter.onLocationChanged: AoiName is " + loc.AoiName);
+            //Helper.Log("AMapAdapter.onLocationChanged: Bearing is " + loc.Bearing);
+            //Helper.Log("AMapAdapter.onLocationChanged: BuildingId is " + loc.BuildingId);
+            //Helper.Log("AMapAdapter.onLocationChanged: City is " + loc.City);
+            //Helper.Log("AMapAdapter.onLocationChanged: CityCode is " + loc.CityCode);
+            //Helper.Log("AMapAdapter.onLocationChanged: Country is " + loc.Country);
+            //Helper.Log("AMapAdapter.onLocationChanged: Floor is " + loc.Floor);
+            //Helper.Log("AMapAdapter.onLocationChanged: GpsAccuracyStatus is " + loc.GpsAccuracyStatus);
+            //Helper.Log("AMapAdapter.onLocationChanged: Latitude is " + loc.Latitude);
+            //Helper.Log("AMapAdapter.onLocationChanged: LocationDetail is " + loc.LocationDetail);
+            //Helper.Log("AMapAdapter.onLocationChanged: LocationType is " + loc.LocationType);
+            //Helper.Log("AMapAdapter.onLocationChanged: Longitude is " + loc.Longitude);
+            //Helper.Log("AMapAdapter.onLocationChanged: PoiName is " + loc.PoiName);
+            //Helper.Log("AMapAdapter.onLocationChanged: Province is " + loc.Province);
+            //Helper.Log("AMapAdapter.onLocationChanged: Satellites is " + loc.Satellites);
+            //Helper.Log("AMapAdapter.onLocationChanged: Speed is " + loc.Speed);
+            //Helper.Log("AMapAdapter.onLocationChanged: Street is " + loc.Street);
+            //Helper.Log("AMapAdapter.onLocationChanged: StreetNum is " + loc.StreetNum);
+            //Helper.Log("AMapAdapter.onLocationChanged: Time is " + loc.Time);
 
             string address = loc.City + loc.District + loc.Street + loc.StreetNum;
-            for (int i = 0; i < AMapAdapter.Listeners.Count; i++)
-            {
-                AMapAdapter.Callback func = AMapAdapter.Listeners[i];
-                if (func != null)
-                {
-                    func(address);
-                }
-            }
-            AMapAdapter.Listeners.Clear();
+            Helper.Log("AMapAdapter.OnAndroidGetLocationCallback: address is " + address);
+            AMapAdapter.NotifyListener(address);
         }
     }
-#endif
 
     public class Location
     {
@@ -258,6 +273,9 @@ namespace NCSpeedLight
         /// </summary>
         public int GpsAccuracyStatus;
     }
+
+#endif
+
 }
 
 

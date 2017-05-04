@@ -19,7 +19,7 @@ function UI_MJPlayerInfo.Start()
 		local headTex = UIHelper.GetComponent(this.transform, "Parent/head", typeof(UITexture));
 		headTex.mainTexture = UI_MJPlayerInfo.CurrentPlayer:GetHeadTexture();
 		UIHelper.SetLabelText(this.transform, "Parent/name", UI_MJPlayerInfo.CurrentPlayer.Name);
-		UIHelper.SetLabelText(this.transform, "Parent/ID", tostring(UI_MJPlayerInfo.CurrentPlayer.ID));
+		UIHelper.SetLabelText(this.transform, "Parent/ID", "ID: " .. tostring(UI_MJPlayerInfo.CurrentPlayer.ID));
 	end
 end
 

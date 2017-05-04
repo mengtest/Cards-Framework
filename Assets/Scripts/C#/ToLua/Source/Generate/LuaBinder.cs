@@ -164,10 +164,11 @@ public static class LuaBinder
 		L.EndModule();
 		L.EndModule();
 		L.BeginModule("NCSpeedLight");
-		NCSpeedLight_EvtWrap.Register(L);
-		NCSpeedLight_AssetManagerWrap.Register(L);
 		NCSpeedLight_ShareSDKAdapterWrap.Register(L);
 		NCSpeedLight_RongCloudAdapterWrap.Register(L);
+		NCSpeedLight_AMapAdapterWrap.Register(L);
+		NCSpeedLight_EvtWrap.Register(L);
+		NCSpeedLight_AssetManagerWrap.Register(L);
 		NCSpeedLight_LuaManagerWrap.Register(L);
 		NCSpeedLight_LuaBehaviourWrap.Register(L);
 		NCSpeedLight_LuaLoaderWrap.Register(L);
@@ -191,6 +192,9 @@ public static class LuaBinder
 		L.EndModule();
 		L.BeginModule("NetConnection");
 		L.RegFunction("StatusDelegate", NCSpeedLight_NetConnection_StatusDelegate);
+		L.EndModule();
+		L.BeginModule("AMapAdapter");
+		L.RegFunction("Callback", NCSpeedLight_AMapAdapter_Callback);
 		L.EndModule();
 		L.BeginModule("RongCloudAdapter");
 		L.RegFunction("ReceiveVoiceCallbackDelegate", NCSpeedLight_RongCloudAdapter_ReceiveVoiceCallbackDelegate);
@@ -735,6 +739,33 @@ public static class LuaBinder
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
 				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.NetConnection.StatusDelegate), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int NCSpeedLight_AMapAdapter_Callback(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.AMapAdapter.Callback), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.AMapAdapter.Callback), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;

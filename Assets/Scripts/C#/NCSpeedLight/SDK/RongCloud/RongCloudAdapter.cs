@@ -57,7 +57,7 @@ namespace NCSpeedLight
         {
             System.Random rd = new System.Random();
             int rd_i = rd.Next();
-            String nonce = Convert.ToString(rd_i);
+            string nonce = Convert.ToString(rd_i);
             return nonce;
         }
 
@@ -92,6 +92,7 @@ namespace NCSpeedLight
             }
         }
 
+        [LuaInterface.NoToLua]
         public IEnumerator RequestToken(string roleid, string rolename, string headurl)
         {
             string url = "http://api.cn.ronghub.com/user/getToken.json";
@@ -114,13 +115,13 @@ namespace NCSpeedLight
             header.Add("Signature", signature);
             header.Add("Content-Type", "application/x-www-form-urlencoded");
 
-            Debug.Log("RongCloudAdapter.RequestToken: url is " + url);
+            Helper.Log("RongCloudAdapter.RequestToken: url is " + url);
             using (WWW www = new WWW(url, form.data, header))
             {
                 yield return www;
                 if (string.IsNullOrEmpty(www.error) == false)
                 {
-                    Debug.LogError("RongCloudAdapter.RequestToken: error is " + www.error);
+                    Helper.LogError("RongCloudAdapter.RequestToken: error is " + www.error);
                     yield break;
                 }
                 try
@@ -132,13 +133,13 @@ namespace NCSpeedLight
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError("RongCloudAdapter.RequestToken: json Parse error,str is " + www.text);
-                    Debug.LogError("RongCloudAdapter.RequestToken: json Parse error,exception is " + e.Message);
+                    Helper.LogError("RongCloudAdapter.RequestToken: json Parse error,str is " + www.text);
+                    Helper.LogError("RongCloudAdapter.RequestToken: json Parse error,exception is " + e.Message);
                     yield break;
                 }
-                Debug.Log("RongCloudAdapter.RequestToken: response code is " + RESPONSE_CODE);
-                Debug.Log("RongCloudAdapter.RequestToken: token is " + TOKEN);
-                Debug.Log("RongCloudAdapter.RequestToken: userid is " + USER_ID);
+                Helper.Log("RongCloudAdapter.RequestToken: response code is " + RESPONSE_CODE);
+                Helper.Log("RongCloudAdapter.RequestToken: token is " + TOKEN);
+                Helper.Log("RongCloudAdapter.RequestToken: userid is " + USER_ID);
 
 #if UNITY_ANDROID || UNITY_IOS
                 // 连接至融云服务器
@@ -200,11 +201,11 @@ namespace NCSpeedLight
             RCSendMessageCallback cb = new RCSendMessageCallback();
             cb.onSendSuccessCallback = () =>
             {
-                Debug.Log("RongCloudAdapter.SendVoiceMessage: send to " + targetID + " success.");
+                Helper.Log("RongCloudAdapter.SendVoiceMessage: send to " + targetID + " success.");
             };
             cb.onSendFailureCallback = (RCErrorCode code) =>
             {
-                Debug.Log("RongCloudAdapter.SendVoiceMessage: send to " + targetID + " fail.");
+                Helper.Log("RongCloudAdapter.SendVoiceMessage: send to " + targetID + " fail.");
             };
             RongIMAPI.GetInstance().SendMessage(ConversationType.ConversationType_PRIVATE, targetID, msg, "", "", cb);
 #endif
@@ -217,8 +218,8 @@ namespace NCSpeedLight
         /// <param name="volume"></param>
 
 #if UNITY_IOS
-    [DllImport("__Internal")]
-    public static extern int PlayVoice(string file, float volume = 1f);
+        [DllImport("__Internal")]
+        public static extern void PlayVoice(string file, float volume = 1f);
 #elif UNITY_ANDROID
         public static void PlayVoice(string file, float volume = 1f)
         {
@@ -228,10 +229,10 @@ namespace NCSpeedLight
 #else
         public static void PlayVoice(string file, float volume = 1f)
         {
-            Debug.Log("RongCloudAdapter.PlayVoice: not support this platform");
+            Helper.Log("RongCloudAdapter.PlayVoice: not support this platform");
         }
 #endif
-
+        [LuaInterface.NoToLua]
         public void OnRecivedMessage(RCMessage message)
         {
 #if UNITY_ANDROID || UNITY_IOS
@@ -239,7 +240,7 @@ namespace NCSpeedLight
             {
                 onSuccess = (string localMediaPath) =>
                 {
-                    Debug.Log("RongCloudAdapter.OnRecivedMessage.onSuccess: download media file to " + localMediaPath);
+                    Helper.Log("RongCloudAdapter.OnRecivedMessage.onSuccess: download media file to " + localMediaPath);
                     Loom.QueueOnMainThread(() =>
                     {
                         RCAudioMessageContent tempMessage = message.content as RCAudioMessageContent;
@@ -251,7 +252,7 @@ namespace NCSpeedLight
                 },
                 onFailure = (RCErrorCode error) =>
                 {
-                    Debug.LogError("RongCloudAdapter.OnRecivedMessage.onFailure: download media file error,code is " + error);
+                    Helper.LogError("RongCloudAdapter.OnRecivedMessage.onFailure: download media file error,code is " + error);
                 }
             };
             RCAudioMessageContent voiceMsg = message.content as RCAudioMessageContent;
@@ -260,9 +261,10 @@ namespace NCSpeedLight
 #endif
         }
 
+        [LuaInterface.NoToLua]
         public void OnConnectStatusChanged(ConnectionStatus status)
         {
-            Debug.Log("RongCloudAdapter.OnConnectStatusChanged: status is " + status);
+            Helper.Log("RongCloudAdapter.OnConnectStatusChanged: status is " + status);
         }
     }
 }

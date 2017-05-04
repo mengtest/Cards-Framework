@@ -29,6 +29,7 @@ public static class DelegateFactory
 		dict.Add(typeof(RCloud.RCVoiceCaptureCallback.VoiceCaptureFinishedCallback), RCloud_RCVoiceCaptureCallback_VoiceCaptureFinishedCallback);
 		dict.Add(typeof(RCloud.RCVoiceCaptureCallback.VoiceCaptureVolumeCallback), RCloud_RCVoiceCaptureCallback_VoiceCaptureVolumeCallback);
 		dict.Add(typeof(RCloud.RCVoiceCaptureCallback.VoiceCaptureErrorCallback), RCloud_RCVoiceCaptureCallback_VoiceCaptureErrorCallback);
+		dict.Add(typeof(NCSpeedLight.AMapAdapter.Callback), NCSpeedLight_AMapAdapter_Callback);
 		dict.Add(typeof(UnityEngine.Camera.CameraCallback), UnityEngine_Camera_CameraCallback);
 		dict.Add(typeof(UnityEngine.Application.LowMemoryCallback), UnityEngine_Application_LowMemoryCallback);
 		dict.Add(typeof(UnityEngine.Application.AdvertisingIdentifierCallback), UnityEngine_Application_AdvertisingIdentifierCallback);
@@ -770,6 +771,53 @@ public static class DelegateFactory
 		{
 			RCloud_RCVoiceCaptureCallback_VoiceCaptureErrorCallback_Event target = new RCloud_RCVoiceCaptureCallback_VoiceCaptureErrorCallback_Event(func, self);
 			RCloud.RCVoiceCaptureCallback.VoiceCaptureErrorCallback d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	class NCSpeedLight_AMapAdapter_Callback_Event : LuaDelegate
+	{
+		public NCSpeedLight_AMapAdapter_Callback_Event(LuaFunction func) : base(func) { }
+		public NCSpeedLight_AMapAdapter_Callback_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(string param0)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(string param0)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public static Delegate NCSpeedLight_AMapAdapter_Callback(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			NCSpeedLight.AMapAdapter.Callback fn = delegate(string param0) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			NCSpeedLight_AMapAdapter_Callback_Event target = new NCSpeedLight_AMapAdapter_Callback_Event(func);
+			NCSpeedLight.AMapAdapter.Callback d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			NCSpeedLight_AMapAdapter_Callback_Event target = new NCSpeedLight_AMapAdapter_Callback_Event(func, self);
+			NCSpeedLight.AMapAdapter.Callback d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}

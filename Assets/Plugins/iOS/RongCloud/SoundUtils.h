@@ -5,12 +5,12 @@ static AVAudioPlayer*  g_Audioplayer=nil;
 #if defined(__cplusplus)
 extern "C"
 {
-    int PlayVoice(char* uri,float volume = 1)
+    void PlayVoice(char* uri,float volume = 1)
     {
         if(uri==nil)
         {
             NSLog(@"PlayVoice: uri is nil");
-            return -1;
+            return;
         }
         
         NSLog(@"PlayVoice: uri is: %s",uri);
@@ -21,7 +21,7 @@ extern "C"
         if(url==nil)
         {
             NSLog(@"PlayVoice: url is nil.");
-            return -2;
+            return;
         }
         else
         {
@@ -56,7 +56,7 @@ extern "C"
             if(b)
             {
                 NSLog(@"PlayVoice: success.");
-                return 0;
+                return;
             }
             else
             {
@@ -67,7 +67,7 @@ extern "C"
         {
             NSLog(@"PlayVoice: AVAudioPlayer instance is nil.");
         }
-        return -1;
+        return;
     }
 }
 #endif

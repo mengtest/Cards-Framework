@@ -8,14 +8,11 @@ public class NCSpeedLight_RongCloudAdapterWrap
 	{
 		L.BeginClass(typeof(NCSpeedLight.RongCloudAdapter), typeof(UnityEngine.MonoBehaviour));
 		L.RegFunction("Initialize", Initialize);
-		L.RegFunction("RequestToken", RequestToken);
 		L.RegFunction("Login", Login);
 		L.RegFunction("StartRecordVoice", StartRecordVoice);
 		L.RegFunction("StopRecordVoice", StopRecordVoice);
 		L.RegFunction("SendVoiceMessage", SendVoiceMessage);
 		L.RegFunction("PlayVoice", PlayVoice);
-		L.RegFunction("OnRecivedMessage", OnRecivedMessage);
-		L.RegFunction("OnConnectStatusChanged", OnConnectStatusChanged);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("Instance", get_Instance, set_Instance);
@@ -50,26 +47,6 @@ public class NCSpeedLight_RongCloudAdapterWrap
 
 			NCSpeedLight.RongCloudAdapter.Initialize(arg0);
 			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int RequestToken(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 4);
-			NCSpeedLight.RongCloudAdapter obj = (NCSpeedLight.RongCloudAdapter)ToLua.CheckObject(L, 1, typeof(NCSpeedLight.RongCloudAdapter));
-			string arg0 = ToLua.CheckString(L, 2);
-			string arg1 = ToLua.CheckString(L, 3);
-			string arg2 = ToLua.CheckString(L, 4);
-			System.Collections.IEnumerator o = obj.RequestToken(arg0, arg1, arg2);
-			ToLua.Push(L, o);
-			return 1;
 		}
 		catch(Exception e)
 		{
@@ -191,40 +168,6 @@ public class NCSpeedLight_RongCloudAdapterWrap
 			string arg0 = ToLua.CheckString(L, 1);
 			float arg1 = (float)LuaDLL.luaL_checknumber(L, 2);
 			NCSpeedLight.RongCloudAdapter.PlayVoice(arg0, arg1);
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int OnRecivedMessage(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 2);
-			NCSpeedLight.RongCloudAdapter obj = (NCSpeedLight.RongCloudAdapter)ToLua.CheckObject(L, 1, typeof(NCSpeedLight.RongCloudAdapter));
-			RCloud.RCMessage arg0 = (RCloud.RCMessage)ToLua.CheckObject(L, 2, typeof(RCloud.RCMessage));
-			obj.OnRecivedMessage(arg0);
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int OnConnectStatusChanged(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 2);
-			NCSpeedLight.RongCloudAdapter obj = (NCSpeedLight.RongCloudAdapter)ToLua.CheckObject(L, 1, typeof(NCSpeedLight.RongCloudAdapter));
-			RCloud.ConnectionStatus arg0 = (RCloud.ConnectionStatus)ToLua.CheckObject(L, 2, typeof(RCloud.ConnectionStatus));
-			obj.OnConnectStatusChanged(arg0);
 			return 0;
 		}
 		catch(Exception e)
