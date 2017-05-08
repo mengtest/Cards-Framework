@@ -12,6 +12,8 @@ HallScene =
 {
 	Name = SceneType.HallScene,
 	IsInitialized = false,
+	Announcement = nil,
+	PlaybackData = nil,
 }
 function HallScene.Initialize()
 	if HallScene.IsInitialized == false then
@@ -23,8 +25,9 @@ function HallScene.Begin()
 	NCSpeedLight.InternalUI.Instance:CloseBG();
 	UIManager.CloseAllWindows();
 	AssetManager.LoadScene(SceneType.HallScene);
-	UIManager.OpenWindow('Hall/UI_Main');
+	UIManager.OpenWindow(UIType.UI_Hall);
 	HallScene.RequestPlayerInFb();
+	HallScene.RequestAnnouncement();
 	if SceneManager.LastScene == MJScene then
 		Player.RefreshAddress();
 	end
@@ -62,6 +65,8 @@ function HallScene.RegisterNetEvent()
 	NetManager.RegisterEvent(GameMessage.GM_NOTIFY_CHANGE_LONG64, HallScene.NotifyChangeSomething);
 	NetManager.RegisterEvent(GameMessage.GM_NOTIFY_CHANGE_int32, HallScene.NotifyChangeSomethingInt32);
 	NetManager.RegisterEvent(GameMessage.GM_KICKOFF_PLAYER, HallScene.NotifyRe_Register);
+	NetManager.RegisterEvent(GameMessage.GM_GET_CHAT_RETURN, HallScene.OnReceiveAnnouncement); -- 接收到公告信息
+	NetManager.RegisterEvent(GameMessage.GM_PLAYER_PLAYBACK_RETURN, HallScene.OnRecvPlayback); -- 回放信息
 end
 
 function HallScene.UnRegisterNetEvent()
@@ -74,6 +79,8 @@ function HallScene.UnRegisterNetEvent()
 	NetManager.UnregisterEvent(GameMessage.GM_NOTIFY_CHANGE_LONG64, HallScene.NotifyChangeSomething);
 	NetManager.UnregisterEvent(GameMessage.GM_NOTIFY_CHANGE_int32, HallScene.NotifyChangeSomethingInt32);
 	NetManager.UnregisterEvent(GameMessage.GM_KICKOFF_PLAYER, HallScene.NotifyRe_Register);
+	NetManager.UnregisterEvent(GameMessage.GM_GET_CHAT_RETURN, HallScene.OnReceiveAnnouncement); -- 接收到公告信息
+	NetManager.UnregisterEvent(GameMessage.GM_PLAYER_PLAYBACK_RETURN, HallScene.OnRecvPlayback); -- 回放信息
 end
 
 -- 判断当前玩家是否在副本内
@@ -83,6 +90,15 @@ function HallScene.RequestPlayerInFb()
 	};
 	Log.Info("HallScene.RequestPlayerInFb: request is " .. msg.request);
 	NetManager.SendEventToLogicServer(GameMessage.GM_PLAYERISINBATTLE_REQUEST, PBMessage.GM_Request, msg);
+end
+
+-- 请求获取公告信息
+function HallScene.RequestAnnouncement()
+	local msg = {
+		request = Player.ID;
+	};
+	Log.Info("HallScene.RequestAnnouncement: request is " .. msg.request);
+	NetManager.SendEventToLogicServer(GameMessage.GMCOMMAND_GETONLINE_RETURN, PBMessage.GM_Request, msg);
 end
 
 function HallScene.RequestCreateRoom()
@@ -118,6 +134,10 @@ function HallScene.RequestJoinRoom(roomID)
 		m_FBID = roomID,
 	};
 	NetManager.SendEventToLogicServer(GameMessage.GM_MAJIANG_JOIN_VIPROOM, PBMessage.GM_AskFriend, msg);
+end
+
+-- 请求排行榜数据
+function HallScene.RequestRank()
 end
 
 function HallScene.ReceiveInvitePlayMaJiang(evt)
@@ -211,4 +231,33 @@ end
 
 function HallScene.NotifyRe_Register(evt)
 	Log.Info("HallScene.NotifyRe_Register");
+end
+
+function HallScene.OnReceiveAnnouncement(evt)
+	local msg = NetManager.DecodeMsg(PBMessage.GM_GetChatInfo, evt);
+	if msg == false then
+		Log.Error("HallScene.OnReceiveAnnouncement: parse msg error," .. PBMessage.GM_GetChatInfo);
+		return;
+	end;
+	Log.Info("HallScene.OnReceiveAnnouncement: word is " .. msg.word .. ",repeat " .. tostring(msg.repeatTimes));
+	HallScene.Announcement = {};
+	HallScene.Announcement.Content = msg.word;
+	HallScene.Announcement.RepeatTimes = msg.repeatTimes;
+	UI_Hall.RefreshAnnouncement();
+end
+
+function HallScene.OnRecvPlayback(evt)
+	local msg = NetManager.DecodeMsg(PBMessage.GM_PlayBack, evt);
+	if msg == false then
+		Log.Error("HallScene.OnRecvPlayback: parse msg error," .. PBMessage.GM_PlayBack);
+		return;
+	end;
+	Log.Info("HallScene.OnRecvPlayback:");
+	if msg.m_Result == 1 then
+		UIManager.OpenTipsDialog("无此回放");
+	else
+		HallScene.PlaybackData = msg;
+		MJScene.IsPlayback = true;
+		SceneManager.GotoScene(SceneType.MJScene);
+	end
 end

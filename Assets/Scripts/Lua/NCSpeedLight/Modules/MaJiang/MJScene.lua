@@ -8,6 +8,7 @@
 -- Modify History:
 --
 -----------------------------------------------
+require("NCSpeedLight.Modules.MaJiang.MJPlayback")
 MJSceneStatus = {
 	-- 等待其他玩家
 	Waiting = 0,
@@ -26,6 +27,8 @@ MJScene =
 	IsInitialized = false,
 	
 	NeedReconnect = false,
+	
+	IsPlayback = false, -- 是否是回放
 	
 	RoomMasterID = 0,
 	
@@ -81,8 +84,10 @@ function MJScene.Begin()
 	Log.Info("MJScene.Begin");
 	MJScene.CurrentRound = 0;
 	MJScene.FinishedRound = 0;
-	MJScene.FBInfo = SharedVariable.FBInfo;
-	MJScene.TotalRound = MJScene.FBInfo.m_gameCount;
+	if MJScene.IsPlayback == false then
+		MJScene.FBInfo = SharedVariable.FBInfo;
+		MJScene.TotalRound = MJScene.FBInfo.m_gameCount;
+	end
 	UIManager.OpenWindow(UIType.UI_SceneLoad);
 	AssetManager.LoadScene(SceneType.MJScene);
 	MJScene.Players = {};
@@ -97,6 +102,8 @@ function MJScene.End()
 	MJScene.Players = nil;
 	MJScene.CurrentOperator = nil;
 	MJScene.LastOperator = nil;
+	MJScene.NeedReconnect = false;
+	MJScene.IsPlayback = false;
 	Log.Info("MJScene.End");
 end
 
@@ -105,10 +112,14 @@ function MJScene.OnSceneWasLoaded()
 	RongCloudAdapter.Initialize(MJScene.OnReceiveVoiceMsg);
 	UIManager.OpenWindow(UIType.UI_MaJiang);
 	MJScene.RegisterNetEvent();
-	if MJScene.NeedReconnect then
-		MJScene.RequestReconnectInfo();
+	if MJScene.IsPlayback == false then
+		if MJScene.NeedReconnect then
+			MJScene.RequestReconnectInfo();
+		else
+			MJScene.RequestAllPlayerInfo();
+		end
 	else
-		MJScene.RequestAllPlayerInfo();
+		MJPlayback.Start();
 	end
 end
 

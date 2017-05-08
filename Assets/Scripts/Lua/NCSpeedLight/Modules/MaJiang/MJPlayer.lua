@@ -592,7 +592,9 @@ function MJPlayer:MJOT_GetCard(data)
 		if card ~= nil then
 			self:AddHandCard(card);
 		end
-		self.UI:PlayGetCardAnimation();
+		if MJScene.IsPlayback == false then
+			self.UI:PlayGetCardAnimation();
+		end
 	end
 	self.UI:UpdateCards(false, true);
 end
@@ -608,7 +610,9 @@ function MJPlayer:MJOT_BuCard(data)
 		if card ~= nil then
 			self:AddHandCard(card);
 		end
-		self.UI:PlayGetCardAnimation();
+		if MJScene.IsPlayback == false then
+			self.UI:PlayGetCardAnimation();
+		end
 	end
 	self.UI:UpdateCards(false, true);
 end

@@ -38,6 +38,9 @@ function Utility.SplitString(str, delimiter)
 	return result
 end
 
+function Utility.FormatTimeStamp(format, timestamp)
+	return os.date(format, timestamp);
+end
 
 function Utility.RemoveFromTableByKey(tb, obj)
 	if tb == nil or obj == nil then return end;
@@ -69,4 +72,4 @@ function Utility.RemoveFromTableByValue(tb, obj)
 	if needRemove then
 		table.remove(tb, index);
 	end
-end
+end 

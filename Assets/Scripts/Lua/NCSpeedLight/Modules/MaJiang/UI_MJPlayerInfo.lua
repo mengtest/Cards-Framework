@@ -2,7 +2,7 @@ UI_MJPlayerInfo = {
 	transform = nil,
 	gameObject = nil,
 	CurrentPlayer = nil,
-	InteractionMinInterval = 1, -- 送花的最小间隔时间
+	InteractionMinInterval = 0.3, -- 送花的最小间隔时间
 	LastInteractionTime = - 1,
 }
 
@@ -69,6 +69,6 @@ function UI_MJPlayerInfo.OnClickFace(go)
 		NetManager.SendEventToLogicServer(GameMessage.GM_ANSWER_FACE_REQUEST, PBMessage.GM_AnswerFaceReturn, msg);
 		this.LastInteractionTime = Time.GetTimestamp();
 	else
-		UIManager.OpenTipsDialog("操作过于频繁，请稍候再发");
+		-- UIManager.OpenTipsDialog("操作过于频繁，请稍候再发");
 	end
 end 

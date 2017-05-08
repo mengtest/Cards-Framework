@@ -15,4 +15,5 @@ LuaManager = NCSpeedLight.LuaManager;
 ShareSDKAdapter = NCSpeedLight.ShareSDKAdapter;
 RongCloudAdapter = NCSpeedLight.RongCloudAdapter;
 AssetManager = NCSpeedLight.AssetManager;
-AMapAdapter = NCSpeedLight.AMapAdapter; 
+AMapAdapter = NCSpeedLight.AMapAdapter;
+Evt = NCSpeedLight.Evt; 

@@ -1,11 +1,14 @@
 UIType = {
+	-- Dialog
+	UI_Progress = "Dialog/UI_Progress",
+	
 	-- 登录场景
 	UI_NormalLogin = "Login/UI_NormalLogin",
 	UI_MobileLogin = "Login/UI_MobileLogin",
 	UI_Register = "Login/UI_Register",
 	
 	-- 大厅
-	UI_Main = "Hall/UI_Main",
+	UI_Hall = "Hall/UI_Hall",
 	UI_Setting = "Hall/UI_Setting",
 	UI_Playway = "Hall/UI_Playway",
 	UI_Share = "Hall/UI_Share",
@@ -13,8 +16,8 @@ UIType = {
 	UI_CreateRoom = "Hall/UI_CreateRoom",
 	UI_JoinRoom = "Hall/UI_JoinRoom",
 	UI_SceneLoad = "Dialog/UI_SceneLoad",
-	UI_Progress = "Dialog/UI_Progress",
 	UI_SystemEmail = "Hall/UI_SystemEmail",
+	UI_GetRoomCardHint = "Hall/UI_GetRoomCardHint",
 	
 	-- 麻将
 	UI_MaJiang = "MaJiang/UI_MaJiang",

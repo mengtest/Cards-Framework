@@ -74,6 +74,10 @@ function NetManager.SendEventToLogicServer(id, structName, msg)
 	end
 end
 
+function NetManager.NotifyEvent(evt)
+	return NCSpeedLight.NetManager.NotifyEvent(evt);
+end
+
 function NetManager.SendEvent(id, buffer, playerID, serverID, serverType)
 	return NCSpeedLight.NetManager.SendEvent(id, buffer, playerID, serverID, serverType);
 end
@@ -87,7 +91,7 @@ function NetManager.UnregisterEvent(id, func)
 end
 
 function NetManager.DecodeMsg(structName, evt)
-	obj = SharedVariable.ProtobufProcessor.decode(structName, evt.LuaParam);
+	local obj = SharedVariable.ProtobufProcessor.decode(structName, evt.LuaParam);
 	return obj;
 end
 
@@ -97,17 +101,17 @@ function NetManager.EncodeMsg(structName, msg)
 end
 
 function NetManager.DecodeJson(bytes)
-	str = tolua.tolstring(bytes);
-	obj = SharedVariable.JsonProcessor.decode(str);
+	local str = tolua.tolstring(bytes);
+	local obj = SharedVariable.JsonProcessor.decode(str);
 	return obj;
 end
 
 function NetManager.DecodePB(structName, buffer)
-	obj = SharedVariable.ProtobufProcessor.decode(structName, buffer);
+	local obj = SharedVariable.ProtobufProcessor.decode(structName, buffer);
 	return obj;
 end
 
 function NetManager.EncodePB(structName, msg)
-	buffer = SharedVariable.ProtobufProcessor.encode(structName, msg);
+	local buffer = SharedVariable.ProtobufProcessor.encode(structName, msg);
 	return buffer;
 end

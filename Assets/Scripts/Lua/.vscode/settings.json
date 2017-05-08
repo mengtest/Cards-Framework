@@ -7,5 +7,6 @@
         "**/.hg": true,
         "**/.DS_Store": true,
         "**/.meta": true
-    }
+    },
+    "editor.snippetSuggestions": "top"
 }
