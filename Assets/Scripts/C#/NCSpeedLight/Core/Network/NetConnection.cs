@@ -180,7 +180,7 @@ namespace NCSpeedLight
             {
                 Socket.EndConnect(result);
                 Callback(CallbackType.OnConnected);
-                StartReceivePacketHeader();
+                StartReceivePacket();
             }
             catch (Exception e)
             {
@@ -194,7 +194,7 @@ namespace NCSpeedLight
             {
                 Socket.EndConnect(result);
                 Callback(CallbackType.OnReconnected);
-                StartReceivePacketHeader();
+                StartReceivePacket();
             }
             catch
             {
@@ -202,44 +202,45 @@ namespace NCSpeedLight
             }
         }
 
-        private void StartReceivePacketHeader()
+        private void StartReceivePacket()
         {
-            Socket.BeginReceive(Header, 0, Header.Length, SocketFlags.None, new AsyncCallback(ReceivePacketHeaderCallback), this);
+            Socket.BeginReceive(Header, 0, Header.Length, SocketFlags.None, new AsyncCallback(ReceivePacketCallback), this);
         }
 
-        private void StartReceivePacketBody(NetPacket packet)
+        private void StartReceivePacketBody(NetPacket packet, int offset, int size)
         {
-            Socket.BeginReceive(packet.GetBody(), 0, packet.GetBodySize(), SocketFlags.None, new AsyncCallback(ReceivePacketBodyCallback), packet);
+            Socket.BeginReceive(packet.GetBody(), offset, size, SocketFlags.None, new AsyncCallback(ReceivePacketBodyCallback), packet);
         }
 
-        private void ReceivePacketHeaderCallback(IAsyncResult result)
+        private void ReceivePacketCallback(IAsyncResult result)
         {
             try
             {
                 int bytesRead = Socket.EndReceive(result);
-                if (bytesRead > 0)
+                if (bytesRead == NetPacket.PACK_HEAD_SIZE)
                 {
-                    int msgID = BitConverter.ToInt32(Header, NetPacket.PACK_MESSAGEID_OFFSET);
-                    int bufferSize = BitConverter.ToInt32(Header, NetPacket.PACK_LENGTH_OFFSET);
-                    int bodySize = bufferSize - NetPacket.PACK_HEAD_SIZE;
-                    NetPacket packet = new NetPacket(msgID, bodySize);
+                    int id = BitConverter.ToInt32(Header, NetPacket.PACK_MESSAGEID_OFFSET);
+                    int packetSize = BitConverter.ToInt32(Header, NetPacket.PACK_LENGTH_OFFSET);
+                    int bodySize = packetSize - NetPacket.PACK_HEAD_SIZE;
+                    NetPacket packet = new NetPacket(id, bodySize);
                     packet.SetHeader(Header);
-                    if (bodySize <= 0)
+                    if (bodySize > 0)
                     {
-                        Loom.QueueOnMainThread(() =>
+                        bytesRead = Socket.Receive(packet.GetBody(), 0, packet.GetBodySize(), SocketFlags.None);
+                        while (bytesRead != packet.GetBodySize())
                         {
-                            NetManager.NotifyEvent(new Evt() { ID = packet.GetMessageID(), LuaParam = packet.GetBody() });
-                        });
-                        StartReceivePacketHeader();
+                            bytesRead += Socket.Receive(packet.GetBody(), bytesRead, packet.GetBodySize() - bytesRead, SocketFlags.None);
+                        }
                     }
-                    else
+                    StartReceivePacket();
+                    Loom.QueueOnMainThread(() =>
                     {
-                        StartReceivePacketBody(packet);
-                    }
+                        NetManager.NotifyEvent(new Evt() { ID = packet.GetMessageID(), LuaParam = packet.GetBody() });
+                    });
                 }
                 else
                 {
-                    string err = "bytes read count is zero";
+                    string err = "packet header read error,size is " + bytesRead;
                     ErrorrOccurred(err);
                 }
             }
@@ -253,19 +254,20 @@ namespace NCSpeedLight
         {
             try
             {
+                NetPacket packet = result.AsyncState as NetPacket;
                 int bytesRead = Socket.EndReceive(result);
-                if (bytesRead > 0)
+                if (bytesRead == packet.GetBodySize())
                 {
-                    NetPacket packet = result.AsyncState as NetPacket;
+                    StartReceivePacket();
                     Loom.QueueOnMainThread(() =>
                     {
                         NetManager.NotifyEvent(new Evt() { ID = packet.GetMessageID(), LuaParam = packet.GetBody() });
                     });
-                    StartReceivePacketHeader();
                 }
                 else
                 {
-                    string err = "bytes read count is zero";
+                    string err = "bytes read(" + bytesRead + ") does not equal body size(" + packet.GetBodySize() + ")";
+                    Helper.LogError("NetConnection.ReceivePacketBodyCallback: error: " + err);
                     ErrorrOccurred(err);
                 }
             }

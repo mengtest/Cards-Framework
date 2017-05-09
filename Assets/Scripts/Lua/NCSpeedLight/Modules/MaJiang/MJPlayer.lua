@@ -586,7 +586,7 @@ function MJPlayer:MJOT_GetCard(data)
 	Log.Info("MJPlayer:MJOT_GetCard: " .. self:LogKey());
 	MJGroupCardQueue.PopFront();
 	self:AddHandCardCount();
-	if self:IsHero() then
+	if self:IsHero() or MJScene.IsPlayback then
 		local card = data.m_HandCard[1];
 		Log.Info("MJPlayer:MJOT_GetCard: hero get one card, card id is " .. card.m_Index .. ",type is " .. MaJiangType.ToString(card.m_Type));
 		if card ~= nil then
@@ -604,7 +604,7 @@ function MJPlayer:MJOT_BuCard(data)
 	Log.Info("MJPlayer:MJOT_BuCard: " .. self:LogKey());
 	MJGroupCardQueue.PopRear();
 	self:AddHandCardCount();
-	if self == MJPlayer.Hero then
+	if self == MJPlayer.Hero or MJScene.IsPlayback then
 		local card = data.m_HandCard[1];
 		Log.Info("MJPlayer:MJOT_BuCard: hero get one card, card id is " .. card.m_Index .. ",type is " .. MaJiangType.ToString(card.m_Type));
 		if card ~= nil then
@@ -621,9 +621,7 @@ end
 function MJPlayer:MJOT_SendCard(data)
 	local card = data.m_HandCard[1];
 	Log.Info("MJPlayer:MJOT_SendCard: " .. self:LogKey() .. ",card id is " .. card.m_Index .. ",type is " .. MaJiangType.ToString(card.m_Type));
-	self.UI:PlayOutCardAnimation(card);
-	self:AddTableCardCount();
-	if self:IsHero() then
+	if self:IsHero() or MJScene.IsPlayback then
 		-- local cardPosition = self:GetHandCardPositionByID(card.m_Index);
 		-- local newCardPosition = self:GetHandCardCount();
 		-- local newCard = self:GetHandCardByPosition(newCardPosition);
@@ -638,6 +636,8 @@ function MJPlayer:MJOT_SendCard(data)
 	end
 	self:SubHandCardCount();
 	self.UI:UpdateCards(true, false);
+	self.UI:PlayOutCardAnimation(card);
+	self:AddTableCardCount();
 end
 
 --摊
@@ -659,60 +659,60 @@ end
 
 --碰
 function MJPlayer:MJOT_PENG(data)
-	self:PutPengCard(data);
-	self:AddOperateTotalCount();
-	self:SubHandCardCount(2);
-	if self:IsHero() then
+	if self:IsHero() or MJScene.IsPlayback then
 		for i = 1, #data.m_HandCard do
 			local card = data.m_HandCard[i];
 			self:RemoveHandCard(card.m_Index);
 		end
 	end
 	self.UI:UpdateCards(true, false);
+	self:PutPengCard(data);
+	self:AddOperateTotalCount();
+	self:SubHandCardCount(2);
 	MJSceneController.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_PENG);
 end
 
 --杠
 function MJPlayer:MJOT_GANG(data)
-	self:PutGangCard(data);
-	self:AddOperateTotalCount();
-	self:SubHandCardCount(3);
-	if self:IsHero() then
+	if self:IsHero() or MJScene.IsPlayback then
 		for i = 1, #data.m_HandCard do
 			local card = data.m_HandCard[i];
 			self:RemoveHandCard(card.m_Index);
 		end
 	end
 	self.UI:UpdateCards(true, false);
+	self:PutGangCard(data);
+	self:AddOperateTotalCount();
+	self:SubHandCardCount(3);
 	MJSceneController.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_GANG);
 end
 
 --暗杠
 function MJPlayer:MJOT_AN_GANG(data)
-	self:PutAnGangCard(data);
-	self:AddOperateTotalCount();
-	self:SubHandCardCount(4);
-	if self:IsHero() then
+	if self:IsHero() or MJScene.IsPlayback then
 		for i = 1, #data.m_HandCard do
 			local card = data.m_HandCard[i];
 			self:RemoveHandCard(card.m_Index);
 		end
 	end
 	self.UI:UpdateCards(true, false);
+	self:PutAnGangCard(data);
+	self:AddOperateTotalCount();
+	self:SubHandCardCount(4);
 	MJSceneController.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_AN_GANG);
 end
 
 --补杠
 function MJPlayer:MJOT_BuGang(data)
-	self:PutBuGangCard(data);
-	self:SubHandCardCount(1);
-	if self:IsHero() then
+	if self:IsHero() or MJScene.IsPlayback then
 		for i = 1, #data.m_HandCard do
 			local card = data.m_HandCard[i];
 			self:RemoveHandCard(card.m_Index);
 		end
 	end
 	self.UI:UpdateCards(true, false);
+	self:PutBuGangCard(data);
+	self:SubHandCardCount(1);
 	MJSceneController.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_BuGang);
 end
 

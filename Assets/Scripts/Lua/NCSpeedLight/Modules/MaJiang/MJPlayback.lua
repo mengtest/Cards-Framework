@@ -13,6 +13,6 @@ function MJPlayback.DispatchMsg()
 		evt.ID = msgID;
 		evt.LuaParam = msgBuffer;
 		NetManager.NotifyEvent(evt);
-		coroutine.wait(0.2);
+		coroutine.wait(0.05);
 	end
 end 

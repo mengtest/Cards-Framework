@@ -30,6 +30,7 @@ MJScene =
 	
 	IsPlayback = false, -- 是否是回放
 	
+	-- 房主ID
 	RoomMasterID = 0,
 	
 	BankerPosition = 0,
@@ -73,6 +74,12 @@ MJScene =
 	
 	-- 聊天的历史记录
 	ChatHistory = nil,
+	
+	-- 麻将类型
+	Type = nil,
+	
+	-- 房间号
+	RoomNumber = nil,
 }
 
 function MJScene.Initialize()
@@ -737,24 +744,50 @@ function MJScene.ReturnReconnectInfo(evt)
 end
 
 function MJScene.ReturnHandCardInfo(evt)
-	Log.Info("MJScene.ReturnHandCardInfo: 收到自己的手牌信息");
-	local msg = NetManager.DecodeMsg(PBMessage.GMHandCard, evt);
-	if msg == false then
-		Log.Error("MJScene.ReturnHandCardInfo: parse msg error," .. PBMessage.GMHandCard);
-		return;
-	end
-	MJPlayer.Hero:SetHandCards(msg.m_HandCard);
-	MJScene.BankerPosition = msg.m_bankerPos;
-	MJScene.DiceNumbers = msg.m_saizi;
-	MJScene.GetCardNumber = msg.m_getCardNum;
-	MJScene.GetCardRoleID = msg.m_getCardId;
-	Log.Info("MJScene.ReturnHandCardInfo: 庄家的位置：" .. tostring(MJScene.BankerPosition));
-	-- 设置庄家
-	MJScene.SetupBanker();
-	-- 设置骰子面板的朝向
-	MJSceneController.SetupDicePanelDirection();
-	if MJPlayer.Hero:IsBanker() then
-		UI_MaJiang.SetupCastDice(true);
+	Log.Info("MJScene.ReturnHandCardInfo");
+	if MJScene.IsPlayback then
+		local msg = NetManager.DecodeMsg(PBMessage.GMHandCard_PlayerBack, evt);
+		if msg == false then
+			Log.Error("MJScene.ReturnHandCardInfo: parse msg error," .. PBMessage.GMHandCard_PlayerBack);
+			return;
+		end
+		MJScene.BankerPosition = msg.m_bankerPos;
+		MJScene.DiceNumbers = msg.m_saizi;
+		MJScene.Playway = msg.m_fbplayway;
+		MJScene.TotalRound = msg.m_totalCount;
+		MJScene.CurrentRound = msg.m_leftCount;
+		MJScene.Type = msg.m_fbtypeid;
+		MJScene.RoomNumber = msg.m_roomid;
+		Log.Info("MJScene.ReturnHandCardInfo: 庄家的位置：" .. tostring(MJScene.BankerPosition));
+		-- 设置庄家
+		MJScene.SetupBanker();
+		-- 设置骰子面板的朝向
+		MJSceneController.SetupDicePanelDirection();
+		for i = 1, #msg.m_handCardData do
+			local handCardInfo = msg.m_handCardData[i];
+			local player = MJScene.GetPlayerByID(handCardInfo.m_roleid);
+			player:SetHandCards(handCardInfo.m_HandCard);
+		end
+		MJScene.StartPlayback();
+	else
+		local msg = NetManager.DecodeMsg(PBMessage.GMHandCard, evt);
+		if msg == false then
+			Log.Error("MJScene.ReturnHandCardInfo: parse msg error," .. PBMessage.GMHandCard);
+			return;
+		end
+		MJPlayer.Hero:SetHandCards(msg.m_HandCard);
+		MJScene.BankerPosition = msg.m_bankerPos;
+		MJScene.DiceNumbers = msg.m_saizi;
+		MJScene.GetCardNumber = msg.m_getCardNum;
+		MJScene.GetCardRoleID = msg.m_getCardId;
+		Log.Info("MJScene.ReturnHandCardInfo: 庄家的位置：" .. tostring(MJScene.BankerPosition));
+		-- 设置庄家
+		MJScene.SetupBanker();
+		-- 设置骰子面板的朝向
+		MJSceneController.SetupDicePanelDirection();
+		if MJPlayer.Hero:IsBanker() then
+			UI_MaJiang.SetupCastDice(true);
+		end
 	end
 end
 
@@ -1019,6 +1052,20 @@ function MJScene.PlaySendCardAnimation()
 		if value:IsBanker() then
 			value.UI:UpdateCards(true, true);
 		else
+			value.UI:UpdateCards(true, false);
+		end
+		value:StartGame();
+	end
+end
+
+function MJScene.StartPlayback()
+	UI_MaJiang.SetupReadyAndInvite(false, false, false);
+	for key, value in pairs(MJScene.Players) do
+		if value:IsBanker() then
+			value:SetHandCardCount(MJDefine.BANKER_INITIAL_CARD_COUNT);
+			value.UI:UpdateCards(true, true);
+		else
+			value:SetHandCardCount(MJDefine.XIAN_INITIAL_CARD_COUNT);
 			value.UI:UpdateCards(true, false);
 		end
 		value:StartGame();

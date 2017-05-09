@@ -12,6 +12,7 @@ UI_OtherPlayer = {
 	transform = nil,
 	gameObject = nil,
 	Player = nil,
+	Cards = nil,
 }
 
 local this = UI_OtherPlayer;
@@ -74,40 +75,58 @@ end
 -- 刷新牌,sort-是否需要排序,lastMargin-最后一张牌是否需要间距,maxCount-最多显示的牌数
 -- 麻将的排序逻辑在这里执行
 function UI_OtherPlayer:UpdateCards(sort, lastMargin, maxCount)
-	local arrayCount = 0;
-	if maxCount == nil then
-		arrayCount = self.Player:GetHandCardCount();
-	else
-		arrayCount = maxCount > self.Player:GetHandCardCount() and self.Player:GetHandCardCount() or maxCount;
-	end
-	local cardGridPanel = MJSceneController.transform:Find("majiangzhuo/backCard/" .. self.transform.name);
-	if cardGridPanel.gameObject.activeSelf == false then
-		cardGridPanel.gameObject:SetActive(true);
-	end
-	local currentPos = self.Player.HandCardStartPos - self.Player.HandCardOffset;
-	if self.Player.OperateTotalCount > 0 then
-		local operateCardCurrentPos = self.Player.OperateCardStartPos + self.Player.OperateCardOffset * self.Player.OperateTotalCount * 3;
-		currentPos = operateCardCurrentPos -(self.Player.HandCardOffset / 2); -- 间隔
-	end
-	local index = 1;
-	for i = 1, arrayCount do
-		local cardObj = cardGridPanel:Find(tostring(i));
-		local offset = self.Player.HandCardOffset;
-		if i == arrayCount and lastMargin == true then
-			offset = offset + self.Player.HandCardOffset / 2;
+	if MJScene.IsPlayback == false then
+		local arrayCount = 0;
+		if maxCount == nil then
+			arrayCount = self.Player:GetHandCardCount();
+		else
+			arrayCount = maxCount > self.Player:GetHandCardCount() and self.Player:GetHandCardCount() or maxCount;
 		end
-		currentPos = currentPos + offset;
-		cardObj.localPosition = currentPos;
-		cardObj.localRotation = Quaternion.Euler(self.Player.HandCardRotation);
-		cardObj.gameObject:SetActive(true);
-		index = index + 1;
-	end
-	for i = index, 14 do
-		local cardObj = cardGridPanel:Find(tostring(i));
-		local offset = self.Player.HandCardOffset;
-		currentPos = currentPos + offset;
-		cardObj.localPosition = currentPos;
-		cardObj.localRotation = Quaternion.Euler(self.Player.HandCardRotation);
-		cardObj.gameObject:SetActive(false);
+		local cardGridPanel = MJSceneController.transform:Find("majiangzhuo/backCard/" .. self.transform.name);
+		if cardGridPanel.gameObject.activeSelf == false then
+			cardGridPanel.gameObject:SetActive(true);
+		end
+		local currentPos = self.Player.HandCardStartPos - self.Player.HandCardOffset;
+		if self.Player.OperateTotalCount > 0 then
+			local operateCardCurrentPos = self.Player.OperateCardStartPos + self.Player.OperateCardOffset * self.Player.OperateTotalCount * 3;
+			currentPos = operateCardCurrentPos -(self.Player.HandCardOffset / 2); -- 间隔
+		end
+		local index = 1;
+		for i = 1, arrayCount do
+			local cardObj = cardGridPanel:Find(tostring(i));
+			local offset = self.Player.HandCardOffset;
+			if i == arrayCount and lastMargin == true then
+				offset = offset + self.Player.HandCardOffset / 2;
+			end
+			currentPos = currentPos + offset;
+			cardObj.localPosition = currentPos;
+			cardObj.localRotation = Quaternion.Euler(self.Player.HandCardRotation);
+			cardObj.gameObject:SetActive(true);
+			index = index + 1;
+		end
+		for i = index, 14 do
+			local cardObj = cardGridPanel:Find(tostring(i));
+			local offset = self.Player.HandCardOffset;
+			currentPos = currentPos + offset;
+			cardObj.localPosition = currentPos;
+			cardObj.localRotation = Quaternion.Euler(self.Player.HandCardRotation);
+			cardObj.gameObject:SetActive(false);
+		end
+	else
+		if self.Cards ~= nil then
+			for i = 1, #self.Cards do
+				local card = self.Cards[i];
+				card:Reset();
+			end
+		end
+		self.Cards = {};
+		for i = 1, #self.Player.HandCards do
+			local handCard = self.Player.HandCards[i];
+			local card = MJSceneController.GetOneUnuseCard(handCard.m_Index, handCard.m_Type, self.Player.ID);
+			local factor = self.Player:GetOperateTotalCount() * 3 + i;
+			local cardPos = self.Player.OperateCardStartPos + Vector3.New(self.Player.OperateCardOffset.x * factor, self.Player.OperateCardOffset.y * factor, self.Player.OperateCardOffset.z * factor);
+			card:Show(cardPos, self.Player.TableCardRotation);
+			table.insert(self.Cards, card);
+		end
 	end
 end 

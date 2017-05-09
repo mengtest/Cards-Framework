@@ -333,10 +333,10 @@ end
 
 -- 在桌面上放置一张打出的牌
 function MJSceneController.PutOneCard(cardID, cardType, playerID, position, rotation)
+	Log.Info("card type is " .. cardType);
 	local tableCard = MJSceneController.GetOneUnuseCard(cardID, cardType, playerID);
 	tableCard:Show(position, rotation);
 	MJSceneController.ShowArrow(position);
-	
 end
 
 -- 放置一张反面的牌用于显示

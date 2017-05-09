@@ -430,7 +430,7 @@ namespace NCSpeedLight
         {
             get
             {
-                return "http://192.168.1.146:9555/" + PLATFORM_NAME + "/Assets/";
+                return "http://192.168.1.155:9555/" + PLATFORM_NAME + "/Assets/";
             }
         }
 
@@ -441,7 +441,7 @@ namespace NCSpeedLight
         {
             get
             {
-                return "http://192.168.1.146:9555/" + PLATFORM_NAME + "/Scripts/";
+                return "http://192.168.1.155:9555/" + PLATFORM_NAME + "/Scripts/";
             }
         }
 

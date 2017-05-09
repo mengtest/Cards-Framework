@@ -14,6 +14,7 @@ HallScene =
 	IsInitialized = false,
 	Announcement = nil,
 	PlaybackData = nil,
+	CurrentFBID = 0,
 }
 function HallScene.Initialize()
 	if HallScene.IsInitialized == false then
