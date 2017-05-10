@@ -75,7 +75,11 @@ end
 
 function UI_MaJiang.Reset()
 	UI_MaJiang.SetupCurrentRound();
-	UI_MaJiang.SetupReadyAndInvite(true, false, true);
+	if MJScene.IsPlayback then
+		UI_MaJiang.SetupReadyAndInvite(false, false, false);
+	else
+		UI_MaJiang.SetupReadyAndInvite(true, false, true);
+	end
 end
 
 -- 初始化玩家的UI
@@ -115,7 +119,7 @@ end
 -- 获取玩家的UI
 function UI_MaJiang.GetPlayerUI(serverPos)
 	local heroPos = MJPlayer.Hero.ServerPosition;
-	if SharedVariable.FBInfo.m_FBTypeID == MJRoomType.R_1 then -- 二人场
+	if HallScene.CurrentFBType == MJRoomType.R_1 then -- 二人场
 		if heroPos == serverPos then
 			local uiCom = LuaComponent.Get(UI_MaJiang.UI_Player0.gameObject, UI_HeroPlayer);
 			return {uiCom, UI_MaJiang.UI_Player0, 0};
@@ -123,7 +127,7 @@ function UI_MaJiang.GetPlayerUI(serverPos)
 			local uiCom = LuaComponent.Get(UI_MaJiang.UI_Player2.gameObject, UI_OtherPlayer);
 			return {uiCom, UI_MaJiang.UI_Player2, 2};
 		end
-	elseif SharedVariable.FBInfo.m_FBTypeID == MJRoomType.R_2 then -- 四人场
+	elseif HallScene.CurrentFBType == MJRoomType.R_2 then -- 四人场
 		if heroPos == serverPos then
 			local uiCom = LuaComponent.Get(UI_MaJiang.UI_Player0.gameObject, UI_HeroPlayer);
 			return {uiCom, UI_MaJiang.UI_Player0, 0};
@@ -152,7 +156,7 @@ end
 
 -- 设置player ui显示
 function UI_MaJiang.SetupPlayerUIVisiable()
-	if SharedVariable.FBInfo.m_FBTypeID == MJRoomType.R_1 then
+	if HallScene.CurrentFBType == MJRoomType.R_1 then
 		UIHelper.SetActiveState(this.transform, "Player1", false);
 		UIHelper.SetActiveState(this.transform, "Player3", false);
 	end
@@ -185,6 +189,11 @@ end
 function UI_MaJiang.SetupRemainCardCount(count)
 	UIHelper.SetActiveState(this.transform, "top/topLeft/RemainCards", true);
 	UIHelper.SetLabelText(this.transform, "top/topLeft/RemainCards/Label", tostring(count));
+end
+
+-- 设置回放控制面板
+function UI_MaJiang.SetupPlaybackControl(status)
+	UIHelper.SetActiveState(this.transform, "center/ContrlPanel", status);
 end
 
 function UI_MaJiang.OnClickSetting(go)

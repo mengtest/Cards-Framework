@@ -43,7 +43,7 @@ function UI_DissolveRoom.OnClickAgree(go)
 	local msg = {};
 	msg.m_Resutl = 0;
 	msg.m_RoleID = Player.ID;
-	msg.m_FBID = SharedVariable.FBInfo.m_FBID;
+	msg.m_FBID = HallScene.CurrentFBID;
 	NetManager.SendEventToLogicServer(GameMessage.GM_CHOOSE_IS_CLOSEROOM, PBMessage.GM_SendReady, msg);
 end
 
@@ -51,6 +51,6 @@ function UI_DissolveRoom.OnClickCancel(go)
 	local msg = {};
 	msg.m_Resutl = 1;
 	msg.m_RoleID = Player.ID;
-	msg.m_FBID = SharedVariable.FBInfo.m_FBID;
+	msg.m_FBID = HallScene.CurrentFBID;
 	NetManager.SendEventToLogicServer(GameMessage.GM_CHOOSE_IS_CLOSEROOM, PBMessage.GM_SendReady, msg);
 end 

@@ -225,7 +225,7 @@ function MJPlayer:SetUI()
 	-- 定位玩家的东南西北位置
 	self.Position = self.ServerPosition;
 	if self:IsHero() == false then
-		local isTwoPlayers = SharedVariable.FBInfo.m_FBTypeID == MJRoomType.R_1;
+		local isTwoPlayers = HallScene.CurrentFBType == MJRoomType.R_1;
 		if isTwoPlayers then
 			if MJPlayer.Hero.Position == 0 then
 				self.Position = 2;
@@ -249,7 +249,7 @@ end
 
 -- 设置该玩家牌展示的相关参数
 function MJPlayer:SetCardDisplayParam()
-	local isTwoPlayers = SharedVariable.FBInfo.m_FBTypeID == MJRoomType.R_1;
+	local isTwoPlayers = HallScene.CurrentFBType == MJRoomType.R_1;
 	if self.UIPosition == 0 then
 		-- 手牌
 		self.HandCardRotation = Vector3.New(- 18, 90, 0);

@@ -11,11 +11,22 @@
 HallScene =
 {
 	Name = SceneType.HallScene,
+	
 	IsInitialized = false,
+	
 	Announcement = nil,
-	PlaybackData = nil,
-	CurrentFBID = 0,
+	
+	CurrentFBPlaybackData = nil, -- 麻将回放数据
+	
+	CurrentFBID = 0, -- 麻将的ID
+	
+	CurrentFBType = 0, -- 副本类型
+	
+	CurrentFBPlayway = nil, -- 副本玩法
+	
+	CurrentFBInfo = nil, -- 副本信息 【PBMessage.GM_BattleFBServerInfo】
 }
+
 function HallScene.Initialize()
 	if HallScene.IsInitialized == false then
 	end
@@ -119,8 +130,8 @@ end
 
 function HallScene.RequestLoginFb()
 	local msg = {
-		m_FBID = SharedVariable.FBInfo.m_FBID,
-		m_RoleID = Player.FullInfo.id,
+		m_FBID = HallScene.CurrentFBID,
+		m_RoleID = Player.ID,
 		m_reallyPos = Player.Address,
 	};
 	NetManager.SendEventToLogicServer(GameMessage.GM_LOGINFB_REQUEST, PBMessage.GM_LoginFBServer, msg);
@@ -129,7 +140,7 @@ end
 function HallScene.RequestJoinRoom(roomID)
 	local msg =
 	{
-		m_Beinvited = Player.FullInfo.id;
+		m_Beinvited = Player.ID;
 		m_Roleid = 1,   -- 服务器不需要知道邀请者的角色id, 随便设置1个值;
 		m_Name = "",
 		m_FBID = roomID,
@@ -168,7 +179,10 @@ function HallScene.ReturnPlayerInFb(evt)
 	if msg.m_Result == 0 then
 		Log.Info("HallScene.ReturnPlayerInFb: 玩家在副本中");
 		-- 房间已存在，提示是否进入
-		SharedVariable.FBInfo = msg;
+		HallScene.CurrentFBInfo = msg;
+		HallScene.CurrentFBID = msg.m_FBID;
+		HallScene.CurrentFBType = msg.m_FBTypeID;
+		HallScene.CurrentFBPlayway = msg.m_playWay;
 		local option = StandardDialogOption.New("提示", "当前房间未解散，是否进入？", true,
 		function()
 			MJScene.SetNeedReconnect(true);
@@ -190,8 +204,10 @@ function HallScene.ReceiveFbInfo(evt)
 	else -- required int32 m_Result=1;			//0 成功,1副本不存在,2 你已经在副本了,3副本已满，4副本人数已满
 		if msg.m_Result == 0 then
 			Log.Info("HallScene.ReceiveFbInfo：成功进入房间");
-			SharedVariable.FBInfo = msg;
-			MJScene.Playway = msg.m_playWay;
+			HallScene.CurrentFBInfo = msg;
+			HallScene.CurrentFBID = msg.m_FBID;
+			HallScene.CurrentFBType = msg.m_FBTypeID;
+			HallScene.CurrentFBPlayway = msg.m_playWay;
 			HallScene.RequestLoginFb();
 		elseif msg.m_Result == 1 then
 			UIManager.OpenTipsDialog("房间不存在");
@@ -216,7 +232,7 @@ function HallScene.ReceiveRespondLoginBattle(evt)
 		return;
 	end;
 	if msg.result == 0 then
-		Log.Info("HallScene.ReceiveRespondLoginBattle: FBID is " .. SharedVariable.FBInfo.m_FBID);
+		Log.Info("HallScene.ReceiveRespondLoginBattle: FBID is " .. HallScene.CurrentFBID);
 		MJScene.SetNeedReconnect(false);
 		SceneManager.GotoScene(SceneType.MJScene);
 	end
@@ -241,10 +257,12 @@ function HallScene.OnReceiveAnnouncement(evt)
 		return;
 	end;
 	Log.Info("HallScene.OnReceiveAnnouncement: word is " .. msg.word .. ",repeat " .. tostring(msg.repeatTimes));
-	HallScene.Announcement = {};
-	HallScene.Announcement.Content = msg.word;
-	HallScene.Announcement.RepeatTimes = msg.repeatTimes;
-	UI_Hall.RefreshAnnouncement();
+	if msg.channel == 6 then
+		HallScene.Announcement = {};
+		HallScene.Announcement.Content = msg.word;
+		HallScene.Announcement.RepeatTimes = msg.repeatTimes;
+		UI_Hall.RefreshAnnouncement();
+	end
 end
 
 function HallScene.OnRecvPlayback(evt)

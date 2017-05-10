@@ -120,6 +120,11 @@ function UI_OtherPlayer:UpdateCards(sort, lastMargin, maxCount)
 			end
 		end
 		self.Cards = {};
+		if sort then
+			table.sort(self.Player.HandCards, function(o1, o2)
+				return o1.m_Type < o2.m_Type;
+			end);	
+		end
 		for i = 1, #self.Player.HandCards do
 			local handCard = self.Player.HandCards[i];
 			local card = MJSceneController.GetOneUnuseCard(handCard.m_Index, handCard.m_Type, self.Player.ID);

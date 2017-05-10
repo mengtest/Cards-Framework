@@ -8,7 +8,7 @@
 -- Modify History:
 --
 -----------------------------------------------
-require("NCSpeedLight.Modules.MaJiang.MJPlayback")
+require("NCSpeedLight.Modules.MaJiang.UI_MJPlayback")
 MJSceneStatus = {
 	-- 等待其他玩家
 	Waiting = 0,
@@ -51,9 +51,6 @@ MJScene =
 	
 	LastOperator = nil,
 	
-	-- 副本信息 【PBMessage.GM_BattleFBServerInfo】
-	FBInfo = nil,
-	
 	-- 总回合数
 	TotalRound = 0,
 	
@@ -92,8 +89,7 @@ function MJScene.Begin()
 	MJScene.CurrentRound = 0;
 	MJScene.FinishedRound = 0;
 	if MJScene.IsPlayback == false then
-		MJScene.FBInfo = SharedVariable.FBInfo;
-		MJScene.TotalRound = MJScene.FBInfo.m_gameCount;
+		MJScene.TotalRound = HallScene.CurrentFBInfo.m_gameCount;
 	end
 	UIManager.OpenWindow(UIType.UI_SceneLoad);
 	AssetManager.LoadScene(SceneType.MJScene);
@@ -126,7 +122,7 @@ function MJScene.OnSceneWasLoaded()
 			MJScene.RequestAllPlayerInfo();
 		end
 	else
-		MJPlayback.Start();
+		UI_MJPlayback.Play();
 	end
 end
 
@@ -353,7 +349,7 @@ function MJScene.RequestCloseRoom()
 	local msg =
 	{
 		m_RoleID = Player.ID,
-		m_FBID = SharedVariable.FBInfo.m_FBID,
+		m_FBID = HallScene.CurrentFBID,
 	};
 	NetManager.SendEventToLogicServer(GameMessage.GM_MASTERCLOSEROOM_REQUEST, PBMessage.GM_LoginFBServer, msg);
 end
@@ -363,8 +359,8 @@ function MJScene.RequestAllPlayerInfo()
 	Log.Info("MJScene.RequestAllPlayerInfo");
 	local msg =
 	{
-		m_FBID = SharedVariable.FBInfo.m_FBID,
-		m_RoleID = Player.FullInfo.id,
+		m_FBID = HallScene.CurrentFBID,
+		m_RoleID = Player.ID,
 	};
 	NetManager.SendEventToLogicServer(GameMessage.GM_ALL_CHARACTERINFO, PBMessage.GM_LoginFBServer, msg);
 end
@@ -374,7 +370,7 @@ function MJScene.RequestReconnectInfo()
 	Log.Info("MJScene.RequestReconnectInfo:");
 	local msg = {};
 	msg.m_RoleID = Player.ID;
-	msg.m_FBID = SharedVariable.FBInfo.m_FBID;
+	msg.m_FBID = HallScene.CurrentFBID;
 	NetManager.SendEventToLogicServer(GameMessage.GM_PLAYERJOINBATTLEAGAIN_REQUEST, PBMessage.GM_LoginFBServer, msg);
 end
 
@@ -761,6 +757,8 @@ function MJScene.ReturnHandCardInfo(evt)
 		Log.Info("MJScene.ReturnHandCardInfo: 庄家的位置：" .. tostring(MJScene.BankerPosition));
 		-- 设置庄家
 		MJScene.SetupBanker();
+		-- 打开回放控制面板
+		UI_MaJiang.SetupPlaybackControl(true);
 		-- 设置骰子面板的朝向
 		MJSceneController.SetupDicePanelDirection();
 		for i = 1, #msg.m_handCardData do

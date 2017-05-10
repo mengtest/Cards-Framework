@@ -146,22 +146,20 @@ end
 
 -- 设置房间号
 function MJSceneController.SetupRoomNumber()
-	if SharedVariable.FBInfo ~= nil then
-		local roomNumberTransform = MJSceneController.transform:Find("majiangzhuo/Text/RoomNumber");
-		local roomNumberStr = tostring(SharedVariable.FBInfo.m_FBID);
-		Log.Info("MJSceneController.SetupRoomNumber: room number is " .. roomNumberStr);
-		local strLength = string.len(roomNumberStr);
-		if strLength == 0 then return end;
-		for i = 1, strLength do
-			local singleNumber = string.sub(roomNumberStr, i, i);
-			local numberObj = roomNumberTransform:Find("Numbers/" .. singleNumber);
-			numberObj = UnityEngine.GameObject.Instantiate(numberObj.gameObject).transform;
-			local slotObj = roomNumberTransform:Find("Slot" .. i);
-			numberObj:SetParent(slotObj);
-			numberObj.localPosition = UnityEngine.Vector3.zero;
-			numberObj.localRotation = UnityEngine.Quaternion.identity;
-			numberObj.gameObject:SetActive(true);
-		end
+	local roomNumberTransform = MJSceneController.transform:Find("majiangzhuo/Text/RoomNumber");
+	local roomNumberStr = tostring(HallScene.CurrentFBID);
+	Log.Info("MJSceneController.SetupRoomNumber: room number is " .. roomNumberStr);
+	local strLength = string.len(roomNumberStr);
+	if strLength == 0 then return end;
+	for i = 1, strLength do
+		local singleNumber = string.sub(roomNumberStr, i, i);
+		local numberObj = roomNumberTransform:Find("Numbers/" .. singleNumber);
+		numberObj = UnityEngine.GameObject.Instantiate(numberObj.gameObject).transform;
+		local slotObj = roomNumberTransform:Find("Slot" .. i);
+		numberObj:SetParent(slotObj);
+		numberObj.localPosition = UnityEngine.Vector3.zero;
+		numberObj.localRotation = UnityEngine.Quaternion.identity;
+		numberObj.gameObject:SetActive(true);
 	end
 end
 

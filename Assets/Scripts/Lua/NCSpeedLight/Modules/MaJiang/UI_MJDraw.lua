@@ -42,12 +42,22 @@ function UI_MJDraw.InitBtnEvent()
 	end);
 	UIHelper.SetButtonEvent(this.transform, "Buttom/ReturnDeskBtn", function(obj)
 	end);
+	UIHelper.SetButtonEvent(this.transform, "Buttom/Replay", function(obj)
+		UIManager.CloseWindow(UIType.UI_MJDraw);
+		UI_MJPlayback.Replay();
+	end);
 end
 
 function UI_MJDraw.InitView()
-	if MJScene.CurrentRound >= MJScene.TotalRound then
-		UIHelper.SetActiveState(this.transform, "Buttom/LookTotalResult", true);
+	if MJScene.IsPlayback then
+		UIHelper.SetActiveState(this.transform, "Buttom/LookTotalResult", false);
 		UIHelper.SetActiveState(this.transform, "Buttom/OnceAgain", false);
+		UIHelper.SetActiveState(this.transform, "Buttom/Replay", true);
+	else
+		if MJScene.CurrentRound >= MJScene.TotalRound then
+			UIHelper.SetActiveState(this.transform, "Buttom/LookTotalResult", true);
+			UIHelper.SetActiveState(this.transform, "Buttom/OnceAgain", false);
+		end
 	end
 	local allRoleHandCards = MJScene.CurrentResultInfo.m_Data;
 	for i = 1, #allRoleHandCards do

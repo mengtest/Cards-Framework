@@ -83,7 +83,6 @@ function UI_Record.DisplayListView()
 		local rate = itemData.rate;
 		local roleid = itemData.roleid;
 		local name = itemData.name;
-		Log.Info("UI_Record.OnRecvData: begintime is " .. begintime);
 		local itemObj = NGUITools.AddChild(panel.gameObject, oriItem.gameObject);
 		itemObj:SetActive(true);
 		itemObj.name = tostring(i);

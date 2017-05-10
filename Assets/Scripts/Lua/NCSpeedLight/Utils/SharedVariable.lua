@@ -17,7 +17,6 @@ SharedVariable =
 		AreaID = - 1,
 		FullInfo = nil,
 	},
-	FBInfo = nil,
 	FBEntryInfo = nil,
 	DeskOffset = 0,
 	-- IP = "192.168.1.177",
