@@ -61,7 +61,11 @@ function UI_MaJiang.Start()
 	
 	UI_MaJiang.SetupCurrentRound();
 	UI_MaJiang.SetupPlayerUIVisiable();
-	UI_MaJiang.SetupReadyAndInvite(true, false, true);
+	if HallScene.CurrentFBPlaybackMode then
+		UI_MaJiang.SetupReadyAndInvite(false, false, false);
+	else
+		UI_MaJiang.SetupReadyAndInvite(true, false, true);
+	end
 	UI_MaJiang.InitPlayerUI();
 end
 
@@ -75,7 +79,7 @@ end
 
 function UI_MaJiang.Reset()
 	UI_MaJiang.SetupCurrentRound();
-	if MJScene.IsPlayback then
+	if HallScene.CurrentFBPlaybackMode then
 		UI_MaJiang.SetupReadyAndInvite(false, false, false);
 	else
 		UI_MaJiang.SetupReadyAndInvite(true, false, true);
@@ -94,26 +98,28 @@ function UI_MaJiang.InitPlayerUI()
 	LuaComponent.Add(UI_MaJiang.UI_Player2.gameObject, UI_OtherPlayer);
 	LuaComponent.Add(UI_MaJiang.UI_Player3.gameObject, UI_OtherPlayer);
 	
-	UIHelper.SetButtonEvent(UI_MaJiang.UI_Player0, "Enter/Center/Icon/Sprite (Photo)", function()
-		local player = MJScene.GetPlayerByUIPosition(0);
-		UIManager.OpenWindow(UIType.UI_MJPlayerInfo);
-		UI_MJPlayerInfo.CurrentPlayer = player;
-	end);
-	UIHelper.SetButtonEvent(UI_MaJiang.UI_Player1, "Enter/Center/Icon/Sprite (Photo)", function()
-		local player = MJScene.GetPlayerByUIPosition(1);
-		UIManager.OpenWindow(UIType.UI_MJPlayerInfo);
-		UI_MJPlayerInfo.CurrentPlayer = player;
-	end);
-	UIHelper.SetButtonEvent(UI_MaJiang.UI_Player2, "Enter/Center/Icon/Sprite (Photo)", function()
-		local player = MJScene.GetPlayerByUIPosition(2);
-		UIManager.OpenWindow(UIType.UI_MJPlayerInfo);
-		UI_MJPlayerInfo.CurrentPlayer = player;
-	end);
-	UIHelper.SetButtonEvent(UI_MaJiang.UI_Player3, "Enter/Center/Icon/Sprite (Photo)", function()
-		local player = MJScene.GetPlayerByUIPosition(3);
-		UIManager.OpenWindow(UIType.UI_MJPlayerInfo);
-		UI_MJPlayerInfo.CurrentPlayer = player;
-	end);
+	if not HallScene.CurrentFBPlaybackMode then
+		UIHelper.SetButtonEvent(UI_MaJiang.UI_Player0, "Enter/Center/Icon/Sprite (Photo)", function()
+			local player = MJScene.GetPlayerByUIPosition(0);
+			UIManager.OpenWindow(UIType.UI_MJPlayerInfo);
+			UI_MJPlayerInfo.CurrentPlayer = player;
+		end);
+		UIHelper.SetButtonEvent(UI_MaJiang.UI_Player1, "Enter/Center/Icon/Sprite (Photo)", function()
+			local player = MJScene.GetPlayerByUIPosition(1);
+			UIManager.OpenWindow(UIType.UI_MJPlayerInfo);
+			UI_MJPlayerInfo.CurrentPlayer = player;
+		end);
+		UIHelper.SetButtonEvent(UI_MaJiang.UI_Player2, "Enter/Center/Icon/Sprite (Photo)", function()
+			local player = MJScene.GetPlayerByUIPosition(2);
+			UIManager.OpenWindow(UIType.UI_MJPlayerInfo);
+			UI_MJPlayerInfo.CurrentPlayer = player;
+		end);
+		UIHelper.SetButtonEvent(UI_MaJiang.UI_Player3, "Enter/Center/Icon/Sprite (Photo)", function()
+			local player = MJScene.GetPlayerByUIPosition(3);
+			UIManager.OpenWindow(UIType.UI_MJPlayerInfo);
+			UI_MJPlayerInfo.CurrentPlayer = player;
+		end);
+	end
 end
 
 -- 获取玩家的UI
@@ -182,7 +188,7 @@ function UI_MaJiang.SetupCurrentRound()
 	UIHelper.SetActiveState(this.transform, "top/topLeft/RemainTime/Label (Tips)", true);
 	UIHelper.SetActiveState(this.transform, "top/topLeft/RemainTime/Label", true);
 	UIHelper.SetLabelText(this.transform, "top/topLeft/RemainTime/Label (Tips)", "当前局数");
-	UIHelper.SetLabelText(this.transform, "top/topLeft/RemainTime/Label", MJScene.CurrentRound .. "/" .. MJScene.TotalRound);
+	UIHelper.SetLabelText(this.transform, "top/topLeft/RemainTime/Label", HallScene.CurrentFBRound .. "/" .. HallScene.CurrentFBTotalRound);
 end
 
 -- 设置剩余的牌的个数
@@ -194,6 +200,13 @@ end
 -- 设置回放控制面板
 function UI_MaJiang.SetupPlaybackControl(status)
 	UIHelper.SetActiveState(this.transform, "center/ContrlPanel", status);
+end
+
+-- 回放模式
+function UI_MaJiang.OnPlaybackMode()
+	UIHelper.SetActiveState(this.transform, "center/ContrlPanel", true);
+	UIHelper.SetActiveState(this.transform, "top/topRight", false);
+	UIHelper.SetActiveState(this.transform, "bottom", false);
 end
 
 function UI_MaJiang.OnClickSetting(go)

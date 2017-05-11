@@ -213,7 +213,7 @@ end
 
 function MJPlayer:SetUI()
 	Log.Info("MJPlayer:SetUI: begin,self " .. tostring(self));
-	if self.ID == MJScene.RoomMasterID then
+	if self.ID == HallScene.CurrentFBMasterID then
 		MJPlayer.RoomMaster = self;
 	end
 	-- 获取玩家的UI位置
@@ -586,13 +586,13 @@ function MJPlayer:MJOT_GetCard(data)
 	Log.Info("MJPlayer:MJOT_GetCard: " .. self:LogKey());
 	MJGroupCardQueue.PopFront();
 	self:AddHandCardCount();
-	if self:IsHero() or MJScene.IsPlayback then
+	if self:IsHero() or HallScene.CurrentFBPlaybackMode then
 		local card = data.m_HandCard[1];
 		Log.Info("MJPlayer:MJOT_GetCard: hero get one card, card id is " .. card.m_Index .. ",type is " .. MaJiangType.ToString(card.m_Type));
 		if card ~= nil then
 			self:AddHandCard(card);
 		end
-		if MJScene.IsPlayback == false then
+		if HallScene.CurrentFBPlaybackMode == false then
 			self.UI:PlayGetCardAnimation();
 		end
 	end
@@ -604,13 +604,13 @@ function MJPlayer:MJOT_BuCard(data)
 	Log.Info("MJPlayer:MJOT_BuCard: " .. self:LogKey());
 	MJGroupCardQueue.PopRear();
 	self:AddHandCardCount();
-	if self == MJPlayer.Hero or MJScene.IsPlayback then
+	if self == MJPlayer.Hero or HallScene.CurrentFBPlaybackMode then
 		local card = data.m_HandCard[1];
 		Log.Info("MJPlayer:MJOT_BuCard: hero get one card, card id is " .. card.m_Index .. ",type is " .. MaJiangType.ToString(card.m_Type));
 		if card ~= nil then
 			self:AddHandCard(card);
 		end
-		if MJScene.IsPlayback == false then
+		if HallScene.CurrentFBPlaybackMode == false then
 			self.UI:PlayGetCardAnimation();
 		end
 	end
@@ -621,7 +621,7 @@ end
 function MJPlayer:MJOT_SendCard(data)
 	local card = data.m_HandCard[1];
 	Log.Info("MJPlayer:MJOT_SendCard: " .. self:LogKey() .. ",card id is " .. card.m_Index .. ",type is " .. MaJiangType.ToString(card.m_Type));
-	if self:IsHero() or MJScene.IsPlayback then
+	if self:IsHero() or HallScene.CurrentFBPlaybackMode then
 		-- local cardPosition = self:GetHandCardPositionByID(card.m_Index);
 		-- local newCardPosition = self:GetHandCardCount();
 		-- local newCard = self:GetHandCardByPosition(newCardPosition);
@@ -659,7 +659,7 @@ end
 
 --碰
 function MJPlayer:MJOT_PENG(data)
-	if self:IsHero() or MJScene.IsPlayback then
+	if self:IsHero() or HallScene.CurrentFBPlaybackMode then
 		for i = 1, #data.m_HandCard do
 			local card = data.m_HandCard[i];
 			self:RemoveHandCard(card.m_Index);
@@ -674,7 +674,7 @@ end
 
 --杠
 function MJPlayer:MJOT_GANG(data)
-	if self:IsHero() or MJScene.IsPlayback then
+	if self:IsHero() or HallScene.CurrentFBPlaybackMode then
 		for i = 1, #data.m_HandCard do
 			local card = data.m_HandCard[i];
 			self:RemoveHandCard(card.m_Index);
@@ -689,7 +689,7 @@ end
 
 --暗杠
 function MJPlayer:MJOT_AN_GANG(data)
-	if self:IsHero() or MJScene.IsPlayback then
+	if self:IsHero() or HallScene.CurrentFBPlaybackMode then
 		for i = 1, #data.m_HandCard do
 			local card = data.m_HandCard[i];
 			self:RemoveHandCard(card.m_Index);
@@ -704,7 +704,7 @@ end
 
 --补杠
 function MJPlayer:MJOT_BuGang(data)
-	if self:IsHero() or MJScene.IsPlayback then
+	if self:IsHero() or HallScene.CurrentFBPlaybackMode then
 		for i = 1, #data.m_HandCard do
 			local card = data.m_HandCard[i];
 			self:RemoveHandCard(card.m_Index);

@@ -165,12 +165,12 @@ end
 
 -- 设置玩法
 function MJSceneController.SetupPlayWay()
-	if MJScene.Playway == nil then
-		Log.Error("MJSceneController.SetupPlayWay: error caused by nil MJScene.Playway str.");
+	if HallScene.CurrentFBPlayway == nil then
+		Log.Error("MJSceneController.SetupPlayWay: error caused by nil HallScene.CurrentFBPlayway str.");
 	else
-		local playway = Utility.SplitString(MJScene.Playway, ",");
+		local playway = Utility.SplitString(HallScene.CurrentFBPlayway, ",");
 		if playway == nil then
-			Log.Error("MJSceneController.SetupPlayWay: error caused by spilt MJScene.Playway str fail.");
+			Log.Error("MJSceneController.SetupPlayWay: error caused by spilt HallScene.CurrentFBPlayway str fail.");
 			return;
 		end
 		local count = #playway;

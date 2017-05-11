@@ -14,9 +14,10 @@ HallScene =
 	
 	IsInitialized = false,
 	
-	Announcement = nil,
+	Announcement = nil, -- 公告信息
 	
-	CurrentFBPlaybackData = nil, -- 麻将回放数据
+	-- region 副本信息 
+	CurrentFBNeedReconnect = false, -- 当前副本是否需要重连
 	
 	CurrentFBID = 0, -- 麻将的ID
 	
@@ -24,7 +25,23 @@ HallScene =
 	
 	CurrentFBPlayway = nil, -- 副本玩法
 	
+	CurrentFBMasterID = 0, -- 副本房主ID
+	
+	CurrentFBPlayerCount = 0, -- 副本人数
+	
+	CurrentFBRound = 0, -- 副本的当前回合
+	
+	CurrentFBTotalRound = 0,-- 副本总的回合数
+	
+	CurrentFBFinishedRound = 0, -- 副本已完成的回合数
+	
 	CurrentFBInfo = nil, -- 副本信息 【PBMessage.GM_BattleFBServerInfo】
+	
+	CurrentFBPlaybackMode = false, -- 副本回放模式
+	
+	CurrentFBPlaybackData = nil, -- 麻将回放数据
+	
+-- endregion
 }
 
 function HallScene.Initialize()
@@ -185,7 +202,7 @@ function HallScene.ReturnPlayerInFb(evt)
 		HallScene.CurrentFBPlayway = msg.m_playWay;
 		local option = StandardDialogOption.New("提示", "当前房间未解散，是否进入？", true,
 		function()
-			MJScene.SetNeedReconnect(true);
+			HallScene.CurrentFBNeedReconnect = true;
 			SceneManager.GotoScene(SceneType.MJScene);
 		end,
 		function()
@@ -233,7 +250,7 @@ function HallScene.ReceiveRespondLoginBattle(evt)
 	end;
 	if msg.result == 0 then
 		Log.Info("HallScene.ReceiveRespondLoginBattle: FBID is " .. HallScene.CurrentFBID);
-		MJScene.SetNeedReconnect(false);
+		HallScene.CurrentFBNeedReconnect = false;
 		SceneManager.GotoScene(SceneType.MJScene);
 	end
 end
@@ -276,7 +293,7 @@ function HallScene.OnRecvPlayback(evt)
 		UIManager.OpenTipsDialog("无此回放");
 	else
 		HallScene.PlaybackData = msg;
-		MJScene.IsPlayback = true;
+		HallScene.CurrentFBPlaybackMode = true;
 		SceneManager.GotoScene(SceneType.MJScene);
 	end
 end

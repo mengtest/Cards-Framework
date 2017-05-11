@@ -4,6 +4,7 @@ UI_MJPlayback = {
 	LastSpeed = 1,
 	Speed = 1,
 	IsPlaying = true,
+	CoFunc = nil,
 }
 
 local this = UI_MJPlayback;
@@ -26,7 +27,7 @@ end
 function UI_MJPlayback.OnDestroy()
 	this.transform = nil;
 	this.gameObject = nil;
-	coroutine.stop(UI_MJPlayback.DispatchMsg);
+	coroutine.stop(UI_MJPlayback.CoFunc);
 	UI_MJPlayback.ChangePlaySpeed(1);
 end
 
@@ -64,6 +65,10 @@ function UI_MJPlayback.OnClickPause(go)
 end
 
 function UI_MJPlayback.OnClickReplay(go)
+	UIHelper.SetActiveState(this.transform, "Toggle (Play)", false);
+	UIHelper.SetActiveState(this.transform, "Toggle (Pause)", true);
+	UIHelper.SetActiveState(this.transform, "Toggle (RePlay)", false);
+	UI_MJPlayback.Replay();
 end
 
 function UI_MJPlayback.OnClickBack(go)
@@ -81,7 +86,13 @@ function UI_MJPlayback.Play()
 	UIHelper.SetActiveState(this.transform, "Toggle (P2)", false);
 	UIHelper.SetActiveState(this.transform, "Toggle (P4)", false);
 	UI_MJPlayback.ChangePlaySpeed(1);
-	coroutine.start(UI_MJPlayback.DispatchMsg);
+	UI_MJPlayback.CoFunc = coroutine.start(UI_MJPlayback.DispatchMsg);
+end
+
+function UI_MJPlayback.WaitReplay()
+	UIHelper.SetActiveState(this.transform, "Toggle (Play)", false);
+	UIHelper.SetActiveState(this.transform, "Toggle (Pause)", false);
+	UIHelper.SetActiveState(this.transform, "Toggle (RePlay)", true);
 end
 
 function UI_MJPlayback.Replay()
@@ -90,19 +101,21 @@ function UI_MJPlayback.Replay()
 	UIHelper.SetActiveState(this.transform, "Toggle (P2)", false);
 	UIHelper.SetActiveState(this.transform, "Toggle (P4)", false);
 	UI_MJPlayback.ChangePlaySpeed(1);
-	coroutine.start(UI_MJPlayback.DispatchMsg);
+	UI_MJPlayback.CoFunc = coroutine.start(UI_MJPlayback.DispatchMsg);
 end
 
 function UI_MJPlayback.DispatchMsg()
-	coroutine.wait(0.5);
+	coroutine.wait(1);
+	local evt = Evt.New();
 	for i = 1, #HallScene.PlaybackData.m_MessageID do
 		local msgID = HallScene.PlaybackData.m_MessageID[i];
 		local msgBuffer = HallScene.PlaybackData.m_ByteData[i];
-		local evt = Evt.New();
 		evt.ID = msgID;
 		evt.LuaParam = msgBuffer;
 		NetManager.NotifyEvent(evt);
-		coroutine.wait(1);
+		if i > 2 then
+			coroutine.wait(1);
+		end
 	end
 	UI_MJPlayback.ChangePlaySpeed(1);
 end 

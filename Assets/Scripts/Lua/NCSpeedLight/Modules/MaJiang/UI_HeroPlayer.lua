@@ -332,7 +332,7 @@ end
 -- 刷新牌,sort-是否需要排序,lastMargin-最后一张牌是否需要间距,maxCount-最多显示的牌数
 -- 麻将的排序逻辑在这里执行
 function UI_HeroPlayer:UpdateCards(sort, lastMargin, maxCount)
-	if MJScene.IsPlayback == false then
+	if HallScene.CurrentFBPlaybackMode == false then
 		if self.Player == nil then
 			return;
 		else

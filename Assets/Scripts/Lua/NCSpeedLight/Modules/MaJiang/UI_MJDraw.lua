@@ -41,6 +41,11 @@ function UI_MJDraw.InitBtnEvent()
 		UIManager.OpenWindow(UIType.UI_MJTotalResult);
 	end);
 	UIHelper.SetButtonEvent(this.transform, "Buttom/ReturnDeskBtn", function(obj)
+		-- 查看牌局
+		UIManager.CloseWindow(UIType.UI_MJDraw);
+		if HallScene.CurrentFBPlaybackMode then
+			UI_MJPlayback.WaitReplay();
+		end
 	end);
 	UIHelper.SetButtonEvent(this.transform, "Buttom/Replay", function(obj)
 		UIManager.CloseWindow(UIType.UI_MJDraw);
@@ -49,12 +54,12 @@ function UI_MJDraw.InitBtnEvent()
 end
 
 function UI_MJDraw.InitView()
-	if MJScene.IsPlayback then
+	if HallScene.CurrentFBPlaybackMode then
 		UIHelper.SetActiveState(this.transform, "Buttom/LookTotalResult", false);
 		UIHelper.SetActiveState(this.transform, "Buttom/OnceAgain", false);
 		UIHelper.SetActiveState(this.transform, "Buttom/Replay", true);
 	else
-		if MJScene.CurrentRound >= MJScene.TotalRound then
+		if HallScene.CurrentFBRound >= HallScene.CurrentFBTotalRound then
 			UIHelper.SetActiveState(this.transform, "Buttom/LookTotalResult", true);
 			UIHelper.SetActiveState(this.transform, "Buttom/OnceAgain", false);
 		end
@@ -92,7 +97,7 @@ end
 
 -- 设置玩法和局数
 function UI_MJDraw.SetupPlaywayAndRound()
-	local tempRounds = "当前局数: " .. MJScene.CurrentRound .. "/" .. MJScene.TotalRound;
+	local tempRounds = "当前局数: " .. HallScene.CurrentFBRound .. "/" .. HallScene.CurrentFBTotalRound;
 	UIHelper.SetLabelText(this.transform, "LeftTop/Rounds", tempRounds);
 	UIHelper.SetLabelText(this.transform, "LeftTop/Way", MJScene.GetMJPlayWayStr());
 end 

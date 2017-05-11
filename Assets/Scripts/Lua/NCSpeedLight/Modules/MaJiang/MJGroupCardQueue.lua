@@ -62,6 +62,7 @@ end
 
 -- 弹出对列前部的牌
 function MJGroupCardQueue.PopFront(count)
+	if HallScene.CurrentFBPlaybackMode then return end;
 	if #MJGroupCardQueue.Cards == 0 then
 		Log.Error("MJGroupCardQueue.PopFront: can not pop a card caused by nil cards queue.");
 		return;
@@ -77,6 +78,7 @@ end
 
 -- 弹出队列后部的牌
 function MJGroupCardQueue.PopRear(count)
+	if HallScene.CurrentFBPlaybackMode then return end;
 	if #MJGroupCardQueue.Cards == 0 then
 		Log.Error("MJGroupCardQueue.PopRear: can not pop a card caused by nil cards queue.");
 		return;

@@ -139,7 +139,7 @@ end
 
 -- 显示玩法和局数
 function UI_MJTotalResult.DisplayPlaywayAndRound()
-	local tempRounds = "已打局数: " .. tostring(MJScene.FinishedRound);
+	local tempRounds = "已打局数: " .. tostring(HallScene.CurrentFBFinishedRound);
 	UIHelper.SetLabelText(this.transform, "LeftTop/Rounds", tempRounds);
 	UIHelper.SetLabelText(this.transform, "LeftTop/Way", MJScene.GetMJPlayWayStr());
 end 

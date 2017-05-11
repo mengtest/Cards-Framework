@@ -26,15 +26,6 @@ MJScene =
 	
 	IsInitialized = false,
 	
-	NeedReconnect = false,
-	
-	IsPlayback = false, -- 是否是回放
-	
-	-- 房主ID
-	RoomMasterID = 0,
-	
-	BankerPosition = 0,
-	
 	DiceNumbers = nil,
 	
 	-- 从第几墩开始取牌
@@ -43,22 +34,11 @@ MJScene =
 	-- 从谁的面前取牌
 	GetCardRoleID = 0,
 	
-	Playway = nil,
-	
 	Players = nil,
 	
 	CurrentOperator = nil,
 	
 	LastOperator = nil,
-	
-	-- 总回合数
-	TotalRound = 0,
-	
-	-- 当前回合
-	CurrentRound = 0,
-	
-	-- 完成的回合
-	FinishedRound = 0,
 	
 	-- 当前结算信息
 	CurrentResultInfo = nil,
@@ -71,12 +51,6 @@ MJScene =
 	
 	-- 聊天的历史记录
 	ChatHistory = nil,
-	
-	-- 麻将类型
-	Type = nil,
-	
-	-- 房间号
-	RoomNumber = nil,
 }
 
 function MJScene.Initialize()
@@ -86,10 +60,10 @@ end
 
 function MJScene.Begin()
 	Log.Info("MJScene.Begin");
-	MJScene.CurrentRound = 0;
-	MJScene.FinishedRound = 0;
-	if MJScene.IsPlayback == false then
-		MJScene.TotalRound = HallScene.CurrentFBInfo.m_gameCount;
+	HallScene.CurrentFBRound = 0;
+	HallScene.CurrentFBFinishedRound = 0;
+	if HallScene.CurrentFBPlaybackMode == false then
+		HallScene.CurrentFBTotalRound = HallScene.CurrentFBInfo.m_gameCount;
 	end
 	UIManager.OpenWindow(UIType.UI_SceneLoad);
 	AssetManager.LoadScene(SceneType.MJScene);
@@ -105,8 +79,8 @@ function MJScene.End()
 	MJScene.Players = nil;
 	MJScene.CurrentOperator = nil;
 	MJScene.LastOperator = nil;
-	MJScene.NeedReconnect = false;
-	MJScene.IsPlayback = false;
+	HallScene.CurrentFBNeedReconnect = false;
+	HallScene.CurrentFBPlaybackMode = false;
 	Log.Info("MJScene.End");
 end
 
@@ -115,13 +89,14 @@ function MJScene.OnSceneWasLoaded()
 	RongCloudAdapter.Initialize(MJScene.OnReceiveVoiceMsg);
 	UIManager.OpenWindow(UIType.UI_MaJiang);
 	MJScene.RegisterNetEvent();
-	if MJScene.IsPlayback == false then
-		if MJScene.NeedReconnect then
+	if HallScene.CurrentFBPlaybackMode == false then
+		if HallScene.CurrentFBNeedReconnect then
 			MJScene.RequestReconnectInfo();
 		else
 			MJScene.RequestAllPlayerInfo();
 		end
 	else
+		UI_MaJiang.OnPlaybackMode();
 		UI_MJPlayback.Play();
 	end
 end
@@ -165,12 +140,6 @@ function MJScene.Reset()
 	for key, value in pairs(MJScene.Players) do
 		value:Reset();
 	end
-end
-
--- 设置是否需要断线重连
-function MJScene.SetNeedReconnect(var)
-	Log.Info("MJScene.SetNeedReconnect: " .. tostring(var));
-	MJScene.NeedReconnect = var;
 end
 
 function MJScene.RegisterNetEvent()
@@ -265,7 +234,7 @@ end
 -- 设置庄家
 function MJScene.SetupBanker()
 	for key, value in pairs(MJScene.Players) do
-		if value.ServerPosition == MJScene.BankerPosition then
+		if value.ServerPosition == HallScene.CurrentFBBankerPosition then
 			MJPlayer.Banker = value;
 		end
 	end
@@ -273,7 +242,7 @@ end
 
 -- 设置房主
 function MJScene.SetupMaster()
-	local player = MJScene.GetPlayerByID(MJScene.RoomMasterID);
+	local player = MJScene.GetPlayerByID(HallScene.CurrentFBMasterID);
 	MJPlayer.RoomMaster = player;
 end
 
@@ -322,15 +291,15 @@ end
 -- 获取当前麻将的玩法
 function MJScene.GetMJPlayWayStr()
 	local playway = "";
-	if MJScene.Playway == nil then
-		Log.Info("MJScene.GetMJPlayWayStr: error,MJScene.Playway is nil.");
+	if HallScene.CurrentFBPlayway == nil then
+		Log.Info("MJScene.GetMJPlayWayStr: error,HallScene.CurrentFBPlayway is nil.");
 	end
-	local playwayType = Utility.SplitString(MJScene.Playway, ",");
+	local playwayType = Utility.SplitString(HallScene.CurrentFBPlayway, ",");
 	for i = 1, #playwayType do
 		local playwayEnum = MJPlayWay.ToString(tonumber(playwayType[i]));
 		local str = MJPlayWayStr[playwayEnum];
 		if str == nil then
-			Log.Info("MJScene.GetMJPlayWayStr: error,playway str is " .. MJScene.Playway);
+			Log.Info("MJScene.GetMJPlayWayStr: error,playway str is " .. HallScene.CurrentFBPlayway);
 		else
 		end
 		playway = playway .. MJPlayWayStr[MJPlayWay.ToString(tonumber(playwayType[i]))];
@@ -462,14 +431,13 @@ function MJScene.ReturnGamePlayerInfo(evt)
 		Log.Error("MJScene.ReturnGamePlayerInfo: parse msg error struct name is " .. PBMessage.GM_BattleEntryInfo);
 		return;
 	end
-	Log.Info("MJScene.ReturnGamePlayerInfo: RoomMasterID is " .. MJScene.RoomMasterID .. ",current player count is " .. #msg.m_Character);
-	SharedVariable.FBEntryInfo = msg;
-	MJScene.RoomMasterID = msg.m_RoomMasterID;
+	Log.Info("MJScene.ReturnGamePlayerInfo: RoomMasterID is " .. HallScene.CurrentFBMasterID .. ",current player count is " .. #msg.m_Character);
+	HallScene.CurrentFBMasterID = msg.m_RoomMasterID;
 	local hero = MJScene.GetPlayerByID(Player.ID);
 	if hero == nil then
 		-- 先创建自己的数据
-		for i = 1, #SharedVariable.FBEntryInfo.m_Character do
-			local playerEntry = SharedVariable.FBEntryInfo.m_Character[i];
+		for i = 1, #msg.m_Character do
+			local playerEntry = msg.m_Character[i];
 			if playerEntry.m_RoleData.m_Roleid == Player.ID then
 				hero = MJPlayer.New();
 				MJPlayer.Hero = hero;
@@ -483,16 +451,20 @@ function MJScene.ReturnGamePlayerInfo(evt)
 				playerEntry.m_Longitude,
 				playerEntry.m_Latitude,
 				playerEntry.m_reallyPos);
-				hero:SetUI();
-				hero:SetCardDisplayParam();
+				
+				if HallScene.CurrentFBPlaybackMode == false then
+					hero:SetUI();
+					hero:SetCardDisplayParam();
+				end
+				
 				MJScene.AddPlayer(hero);
 				Log.Info("MJScene.ReturnGamePlayerInfo: Create hero id is " .. hero.ID .. ",server position is " .. hero.ServerPosition);
 			end
 		end
 	end
 	-- 创建其他玩家
-	for i = 1, #SharedVariable.FBEntryInfo.m_Character do
-		local playerEntry = SharedVariable.FBEntryInfo.m_Character[i];
+	for i = 1, #msg.m_Character do
+		local playerEntry = msg.m_Character[i];
 		if playerEntry ~= nil and playerEntry.m_RoleData ~= nil then
 			local player = MJScene.GetPlayerByID(playerEntry.m_RoleData.m_Roleid);
 			if player == nil then
@@ -507,8 +479,12 @@ function MJScene.ReturnGamePlayerInfo(evt)
 				playerEntry.m_Longitude,
 				playerEntry.m_Latitude,
 				playerEntry.m_reallyPos);
-				player:SetUI();
-				player:SetCardDisplayParam();
+				
+				if HallScene.CurrentFBPlaybackMode == false then
+					player:SetUI();
+					player:SetCardDisplayParam();
+				end
+				
 				MJScene.AddPlayer(player);
 				Log.Info("MJScene.ReturnGamePlayerInfo: Create a player id is " .. player.ID .. ",server position is " .. player.ServerPosition);
 			end
@@ -565,17 +541,17 @@ function MJScene.ReturnReconnectInfo(evt)
 		Log.Info("MJScene.ReturnReconnectInfo: 存在结算信息");
 	end
 	
-	MJScene.BankerPosition = msg.m_bankerPos;
-	MJScene.RoomMasterID = msg.m_RoomMasterID;
+	HallScene.CurrentFBBankerPosition = msg.m_bankerPos;
+	HallScene.CurrentFBMasterID = msg.m_RoomMasterID;
 	MJScene.DiceNumbers = msg.m_saizi;
 	MJScene.GetCardRoleID = msg.m_getCardId;
 	MJScene.GetCardNumber = msg.m_getCardNum;
-	MJScene.Playway = msg.m_fbplayway;
-	MJScene.CurrentRound = msg.m_leftCount;
-	MJScene.TotalRound = msg.m_totalCount;
-	MJScene.FinishedRound = MJScene.CurrentRound - 1;
-	if MJScene.FinishedRound < 0 then
-		MJScene.FinishedRound = 0;
+	HallScene.CurrentFBPlayway = msg.m_fbplayway;
+	HallScene.CurrentFBRound = msg.m_leftCount;
+	HallScene.CurrentFBTotalRound = msg.m_totalCount;
+	HallScene.CurrentFBFinishedRound = HallScene.CurrentFBRound - 1;
+	if HallScene.CurrentFBFinishedRound < 0 then
+		HallScene.CurrentFBFinishedRound = 0;
 	end
 	
 	
@@ -683,7 +659,7 @@ function MJScene.ReturnReconnectInfo(evt)
 				MJScene.CurrentOperator:PlayUIScaleAndDicePanelGrow(true);
 			end
 			-- 设置当前回合的显示
-			MJScene.CurrentRound = MJScene.CurrentRound + 1;
+			HallScene.CurrentFBRound = HallScene.CurrentFBRound + 1;
 			UI_MaJiang.SetupCurrentRound();
 			-- 直接显示牌墩，不播放动画
 			MJSceneController.SetGroupCardActive(true);
@@ -740,33 +716,62 @@ function MJScene.ReturnReconnectInfo(evt)
 end
 
 function MJScene.ReturnHandCardInfo(evt)
-	Log.Info("MJScene.ReturnHandCardInfo");
-	if MJScene.IsPlayback then
+	Log.Info("MJScene.ReturnHandCardInfo: playback mode " .. tostring(HallScene.CurrentFBPlaybackMode));
+	if HallScene.CurrentFBPlaybackMode then
 		local msg = NetManager.DecodeMsg(PBMessage.GMHandCard_PlayerBack, evt);
 		if msg == false then
 			Log.Error("MJScene.ReturnHandCardInfo: parse msg error," .. PBMessage.GMHandCard_PlayerBack);
 			return;
 		end
-		MJScene.BankerPosition = msg.m_bankerPos;
-		MJScene.DiceNumbers = msg.m_saizi;
-		MJScene.Playway = msg.m_fbplayway;
-		MJScene.TotalRound = msg.m_totalCount;
-		MJScene.CurrentRound = msg.m_leftCount;
-		MJScene.Type = msg.m_fbtypeid;
-		MJScene.RoomNumber = msg.m_roomid;
-		Log.Info("MJScene.ReturnHandCardInfo: 庄家的位置：" .. tostring(MJScene.BankerPosition));
-		-- 设置庄家
-		MJScene.SetupBanker();
-		-- 打开回放控制面板
-		UI_MaJiang.SetupPlaybackControl(true);
-		-- 设置骰子面板的朝向
-		MJSceneController.SetupDicePanelDirection();
+		HallScene.CurrentFBBankerPosition = msg.m_bankerPos;
+		HallScene.CurrentFBPlayway = msg.m_fbplayway;
+		HallScene.CurrentFBTotalRound = msg.m_totalCount;
+		HallScene.CurrentFBRound = msg.m_leftCount;
+		HallScene.CurrentFBType = msg.m_fbtypeid;
+		HallScene.CurrentFBID = msg.m_roomid;
+		HallScene.CurrentFBPlayway = msg.m_fbplayway;
+		Log.Info("MJScene.ReturnHandCardInfo: 庄家的位置：" .. tostring(HallScene.CurrentFBBankerPosition));
+		
 		for i = 1, #msg.m_handCardData do
 			local handCardInfo = msg.m_handCardData[i];
 			local player = MJScene.GetPlayerByID(handCardInfo.m_roleid);
+			player:SetUI(true);
+			player:SetCardDisplayParam();
 			player:SetHandCards(handCardInfo.m_HandCard);
 		end
-		MJScene.StartPlayback();
+		
+		-- 设置庄家
+		MJScene.SetupBanker();
+		
+		-- 打开回放控制面板
+		UI_MaJiang.SetupPlaybackControl(true);
+		
+		-- 设置角色角标显示
+		UI_MaJiang.SetupPlayerUIVisiable();		
+		
+		-- 设置回合
+		UI_MaJiang.SetupCurrentRound();
+		
+		-- 设置骰子面板的朝向
+		MJSceneController.SetupDicePanelDirection();
+		
+		-- 设置房间号
+		MJSceneController.SetupRoomNumber();
+		
+		-- 设置玩法
+		MJSceneController.SetupPlayWay();
+		
+		-- 开始回放
+		for key, value in pairs(MJScene.Players) do
+			if value:IsBanker() then
+				value:SetHandCardCount(MJDefine.BANKER_INITIAL_CARD_COUNT);
+				value.UI:UpdateCards(true, true);
+			else
+				value:SetHandCardCount(MJDefine.XIAN_INITIAL_CARD_COUNT);
+				value.UI:UpdateCards(true, false);
+			end
+			value:StartGame();
+		end
 	else
 		local msg = NetManager.DecodeMsg(PBMessage.GMHandCard, evt);
 		if msg == false then
@@ -774,11 +779,11 @@ function MJScene.ReturnHandCardInfo(evt)
 			return;
 		end
 		MJPlayer.Hero:SetHandCards(msg.m_HandCard);
-		MJScene.BankerPosition = msg.m_bankerPos;
+		HallScene.CurrentFBBankerPosition = msg.m_bankerPos;
 		MJScene.DiceNumbers = msg.m_saizi;
 		MJScene.GetCardNumber = msg.m_getCardNum;
 		MJScene.GetCardRoleID = msg.m_getCardId;
-		Log.Info("MJScene.ReturnHandCardInfo: 庄家的位置：" .. tostring(MJScene.BankerPosition));
+		Log.Info("MJScene.ReturnHandCardInfo: 庄家的位置：" .. tostring(HallScene.CurrentFBBankerPosition));
 		-- 设置庄家
 		MJScene.SetupBanker();
 		-- 设置骰子面板的朝向
@@ -875,9 +880,9 @@ function MJScene.NotifyOneReady(evt)
 end
 
 function MJScene.ReturnAllReady(evt)
-	MJScene.CurrentRound = MJScene.CurrentRound + 1;
+	HallScene.CurrentFBRound = HallScene.CurrentFBRound + 1;
 	UI_MaJiang.SetupCurrentRound();
-	Log.Info("MJScene.ReturnAllReady: 所有玩家就绪,第【" .. tostring(MJScene.CurrentRound) .. "】回合开始");
+	Log.Info("MJScene.ReturnAllReady: 所有玩家就绪,第【" .. tostring(HallScene.CurrentFBRound) .. "】回合开始");
 	local msg = NetManager.DecodeMsg(PBMessage.GM_NotifyBattleEndTime, evt);
 	for key, value in pairs(MJScene.Players) do
 		value:SetupReady(false);
@@ -893,7 +898,7 @@ function MJScene.ReturnPlayerHu(evt)
 		return;
 	end
 	Log.Info("MJScene.ReturnPlayerHu: hu role id is " .. msg.m_huRoleid);
-	MJScene.FinishedRound = MJScene.FinishedRound + 1;
+	HallScene.CurrentFBFinishedRound = HallScene.CurrentFBFinishedRound + 1;
 	MJScene.CurrentResultInfo = msg;
 	if msg.m_huRoleid == 0 then
 		UIManager.OpenWindow(UIType.UI_MJDraw);
@@ -967,7 +972,7 @@ function MJScene.ReturnRoomMasterDissolve(evt)
 	option.OnClickOK =
 	function()
 		UIManager.CloseWindow(UIType.UI_DissolveRoom);
-		if MJScene.CurrentRound > 1 then
+		if HallScene.CurrentFBRound > 1 then
 			UIManager.OpenWindow(UIType.UI_MJTotalResult);
 		else
 			SceneManager.GotoScene(SceneType.HallScene);
@@ -1057,15 +1062,5 @@ function MJScene.PlaySendCardAnimation()
 end
 
 function MJScene.StartPlayback()
-	UI_MaJiang.SetupReadyAndInvite(false, false, false);
-	for key, value in pairs(MJScene.Players) do
-		if value:IsBanker() then
-			value:SetHandCardCount(MJDefine.BANKER_INITIAL_CARD_COUNT);
-			value.UI:UpdateCards(true, true);
-		else
-			value:SetHandCardCount(MJDefine.XIAN_INITIAL_CARD_COUNT);
-			value.UI:UpdateCards(true, false);
-		end
-		value:StartGame();
-	end
+	
 end 
