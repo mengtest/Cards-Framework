@@ -267,7 +267,7 @@ function MJPlayer:SetCardDisplayParam()
 		self.TableCardHorizontalOffset = Vector3.New(MJDefine.TableCardX, 0, 0);
 		self.TableCardVerticalOffset = Vector3.New(0, 0, - MJDefine.TableCardY);
 		-- 操作的牌
-		self.OperateCardStartPos = self.HandCardStartPos - self.HandCardOffset * 3;
+		self.OperateCardStartPos = self.HandCardStartPos - self.HandCardOffset * 3.5;
 		self.OperateCardOffset = Vector3.New(MJDefine.TableCardX, 0, 0);
 		self.OperateCardRotation = Vector3.New(90, 0, 0);
 		self.UICardStartPos = Vector3.New(- 468, 0, 0);
@@ -287,7 +287,7 @@ function MJPlayer:SetCardDisplayParam()
 		self.TableCardHorizontalOffset = Vector3.New(0, 0, MJDefine.TableCardX);
 		self.TableCardVerticalOffset = Vector3.New(MJDefine.TableCardY, 0, 0);
 		-- 操作的牌
-		self.OperateCardStartPos = self.HandCardStartPos - self.HandCardOffset * 3;
+		self.OperateCardStartPos = self.HandCardStartPos - self.HandCardOffset * 3.5;
 		self.OperateCardOffset = Vector3.New(0, 0, MJDefine.TableCardX);
 		self.OperateCardRotation = Vector3.New(90, - 90, 0);
 	elseif self.UIPosition == 2 then
@@ -307,7 +307,7 @@ function MJPlayer:SetCardDisplayParam()
 		self.TableCardHorizontalOffset = Vector3.New(- MJDefine.TableCardX, 0, 0);
 		self.TableCardVerticalOffset = Vector3.New(0, 0, MJDefine.TableCardY);
 		-- 操作的牌
-		self.OperateCardStartPos = self.HandCardStartPos - self.HandCardOffset * 3;
+		self.OperateCardStartPos = self.HandCardStartPos - self.HandCardOffset * 3.5;
 		self.OperateCardOffset = Vector3.New(- MJDefine.TableCardX, 0, 0);
 		self.OperateCardRotation = Vector3.New(90, 180, 0);
 	elseif self.UIPosition == 3 then
@@ -321,7 +321,7 @@ function MJPlayer:SetCardDisplayParam()
 		self.TableCardHorizontalOffset = Vector3.New(0, 0, - MJDefine.TableCardX);
 		self.TableCardVerticalOffset = Vector3.New(- MJDefine.TableCardY, 0, 0);
 		-- 操作的牌
-		self.OperateCardStartPos = self.HandCardStartPos - self.HandCardOffset * 3;
+		self.OperateCardStartPos = self.HandCardStartPos - self.HandCardOffset * 3.5;
 		self.OperateCardOffset = Vector3.New(0, 0, - MJDefine.TableCardX);
 		self.OperateCardRotation = Vector3.New(90, 90, 0);
 	else

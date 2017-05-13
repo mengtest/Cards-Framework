@@ -146,6 +146,10 @@ end
 
 -- 设置房间号
 function MJSceneController.SetupRoomNumber()
+	if HallScene.CurrentFBID == nil or HallScene.CurrentFBID == 0 then
+		Log.Error("MJSceneController.SetupRoomNumber: room number is nil or zero.");
+		return;
+	end
 	local roomNumberTransform = MJSceneController.transform:Find("majiangzhuo/Text/RoomNumber");
 	local roomNumberStr = tostring(HallScene.CurrentFBID);
 	Log.Info("MJSceneController.SetupRoomNumber: room number is " .. roomNumberStr);

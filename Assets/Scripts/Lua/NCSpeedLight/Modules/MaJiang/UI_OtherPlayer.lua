@@ -128,9 +128,18 @@ function UI_OtherPlayer:UpdateCards(sort, lastMargin, maxCount)
 		for i = 1, #self.Player.HandCards do
 			local handCard = self.Player.HandCards[i];
 			local card = MJSceneController.GetOneUnuseCard(handCard.m_Index, handCard.m_Type, self.Player.ID);
-			local factor = self.Player:GetOperateTotalCount() * 3 + i;
-			local cardPos = self.Player.OperateCardStartPos + Vector3.New(self.Player.OperateCardOffset.x * factor, self.Player.OperateCardOffset.y * factor, self.Player.OperateCardOffset.z * factor);
-			card:Show(cardPos, self.Player.TableCardRotation);
+			local startPos = nil;
+			local factor = 0;
+			local operateCount = self.Player:GetOperateTotalCount();
+			if operateCount ~= 0 then
+				startPos = self.Player.OperateCardStartPos;
+				factor = operateCount * 3 + i;
+			else
+				startPos = self.Player.HandCardStartPos;
+				factor = i - 1;
+			end
+			local cardPos = startPos + self.Player.OperateCardOffset * factor;
+			card:Show(cardPos, self.Player.OperateCardRotation);
 			table.insert(self.Cards, card);
 		end
 	end
