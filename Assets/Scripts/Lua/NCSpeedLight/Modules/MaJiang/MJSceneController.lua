@@ -46,7 +46,9 @@ function MJSceneController.Awake(go)
 end
 
 function MJSceneController.Start()
-	MJSceneController.SetupRoomNumber();
+	if HallScene.CurrentFBPlaybackMode == false then
+		MJSceneController.SetupRoomNumber();
+	end
 end
 
 function MJSceneController.OnDestroy()

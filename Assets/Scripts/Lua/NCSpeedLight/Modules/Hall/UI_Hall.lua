@@ -60,7 +60,7 @@ function UI_Hall.OnClickReturn(go)
 end
 
 function UI_Hall.OnClickPlayway(go)
-	UIManager.OpenWindow(UIType.UI_Playway);
+	UIManager.OpenWindow(UIType.UI_HZRule);
 end
 
 function UI_Hall.OnClickSetting(go)

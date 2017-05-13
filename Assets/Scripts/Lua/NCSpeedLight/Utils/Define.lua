@@ -10,7 +10,7 @@ UIType = {
 	-- 大厅
 	UI_Hall = "Hall/UI_Hall",
 	UI_Setting = "Hall/UI_Setting",
-	UI_Playway = "Hall/UI_Playway",
+	UI_HZRule = "Hall/UI_HZRule",
 	UI_Share = "Hall/UI_Share",
 	UI_Record = "Hall/UI_Record",
 	UI_CreateRoom = "Hall/UI_CreateRoom",

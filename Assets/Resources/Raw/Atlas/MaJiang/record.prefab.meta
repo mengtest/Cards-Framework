@@ -1,8 +1,9 @@
 fileFormatVersion: 2
-guid: b07788c7d184edd40b2c92eda81f266b
-timeCreated: 1486691138
+guid: 28019a7b9704b374e98eace5532d7018
+timeCreated: 1487062296
 licenseType: Pro
-TextScriptImporter:
+NativeFormatImporter:
+  mainObjectFileID: -1
   userData: 
   assetBundleName: raw_atlas_majiang.asset
   assetBundleVariant: 

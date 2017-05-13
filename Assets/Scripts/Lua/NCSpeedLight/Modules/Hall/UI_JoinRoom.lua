@@ -9,23 +9,23 @@ this = UI_JoinRoom;
 function UI_JoinRoom.Awake(go)
 	UI_JoinRoom.gameObject = go;
 	UI_JoinRoom.transform = go.transform;
-	UI_JoinRoom.LB_Number = go.transform:Find("Mrin/number"):GetComponent(typeof(UILabel));
+	UI_JoinRoom.LB_Number = go.transform:Find("number"):GetComponent(typeof(UILabel));
 end
 
 function UI_JoinRoom.Start()
-	NCSpeedLight.UIHelper.SetButtonEvent(UI_JoinRoom.transform, "Mrin/Button", UI_JoinRoom.OnClickClose);
-	NCSpeedLight.UIHelper.SetButtonEvent(UI_JoinRoom.transform, "Mrin/Figure/0", UI_JoinRoom.OnClickDialPanelNumber);
-	NCSpeedLight.UIHelper.SetButtonEvent(UI_JoinRoom.transform, "Mrin/Figure/1", UI_JoinRoom.OnClickDialPanelNumber);
-	NCSpeedLight.UIHelper.SetButtonEvent(UI_JoinRoom.transform, "Mrin/Figure/2", UI_JoinRoom.OnClickDialPanelNumber);
-	NCSpeedLight.UIHelper.SetButtonEvent(UI_JoinRoom.transform, "Mrin/Figure/3", UI_JoinRoom.OnClickDialPanelNumber);
-	NCSpeedLight.UIHelper.SetButtonEvent(UI_JoinRoom.transform, "Mrin/Figure/4", UI_JoinRoom.OnClickDialPanelNumber);
-	NCSpeedLight.UIHelper.SetButtonEvent(UI_JoinRoom.transform, "Mrin/Figure/5", UI_JoinRoom.OnClickDialPanelNumber);
-	NCSpeedLight.UIHelper.SetButtonEvent(UI_JoinRoom.transform, "Mrin/Figure/6", UI_JoinRoom.OnClickDialPanelNumber);
-	NCSpeedLight.UIHelper.SetButtonEvent(UI_JoinRoom.transform, "Mrin/Figure/7", UI_JoinRoom.OnClickDialPanelNumber);
-	NCSpeedLight.UIHelper.SetButtonEvent(UI_JoinRoom.transform, "Mrin/Figure/8", UI_JoinRoom.OnClickDialPanelNumber);
-	NCSpeedLight.UIHelper.SetButtonEvent(UI_JoinRoom.transform, "Mrin/Figure/9", UI_JoinRoom.OnClickDialPanelNumber);
-	NCSpeedLight.UIHelper.SetButtonEvent(UI_JoinRoom.transform, "Mrin/Figure/anew", UI_JoinRoom.OnClickDialPanelReinput);
-	NCSpeedLight.UIHelper.SetButtonEvent(UI_JoinRoom.transform, "Mrin/Figure/delete", UI_JoinRoom.OnClickDialPanelDelete);
+	NCSpeedLight.UIHelper.SetButtonEvent(UI_JoinRoom.transform, "Button", UI_JoinRoom.OnClickClose);
+	NCSpeedLight.UIHelper.SetButtonEvent(UI_JoinRoom.transform, "Figure/0", UI_JoinRoom.OnClickDialPanelNumber);
+	NCSpeedLight.UIHelper.SetButtonEvent(UI_JoinRoom.transform, "Figure/1", UI_JoinRoom.OnClickDialPanelNumber);
+	NCSpeedLight.UIHelper.SetButtonEvent(UI_JoinRoom.transform, "Figure/2", UI_JoinRoom.OnClickDialPanelNumber);
+	NCSpeedLight.UIHelper.SetButtonEvent(UI_JoinRoom.transform, "Figure/3", UI_JoinRoom.OnClickDialPanelNumber);
+	NCSpeedLight.UIHelper.SetButtonEvent(UI_JoinRoom.transform, "Figure/4", UI_JoinRoom.OnClickDialPanelNumber);
+	NCSpeedLight.UIHelper.SetButtonEvent(UI_JoinRoom.transform, "Figure/5", UI_JoinRoom.OnClickDialPanelNumber);
+	NCSpeedLight.UIHelper.SetButtonEvent(UI_JoinRoom.transform, "Figure/6", UI_JoinRoom.OnClickDialPanelNumber);
+	NCSpeedLight.UIHelper.SetButtonEvent(UI_JoinRoom.transform, "Figure/7", UI_JoinRoom.OnClickDialPanelNumber);
+	NCSpeedLight.UIHelper.SetButtonEvent(UI_JoinRoom.transform, "Figure/8", UI_JoinRoom.OnClickDialPanelNumber);
+	NCSpeedLight.UIHelper.SetButtonEvent(UI_JoinRoom.transform, "Figure/9", UI_JoinRoom.OnClickDialPanelNumber);
+	NCSpeedLight.UIHelper.SetButtonEvent(UI_JoinRoom.transform, "Figure/anew", UI_JoinRoom.OnClickDialPanelReinput);
+	NCSpeedLight.UIHelper.SetButtonEvent(UI_JoinRoom.transform, "Figure/delete", UI_JoinRoom.OnClickDialPanelDelete);
 end
 
 function UI_JoinRoom.OnDestroy()
@@ -68,4 +68,4 @@ function UI_JoinRoom.OnClickDialPanelDelete(go)
 	else
 		UI_JoinRoom.LB_Number.text = UI_JoinRoom.RoomNumber;
 	end
-end
+end 
