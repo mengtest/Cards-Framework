@@ -178,6 +178,10 @@ namespace NCSpeedLight
                     switch (kvp.Key)
                     {
                         case "xmlurl":
+                            Constants.REMOTE_ASSET_BUNDLE_PATH = "http://192.168.1.155:9555/" + Constants.PLATFORM_NAME + "/Assets/";
+                            Constants.REMOTE_SCRIPT_BUNDLE_PATH = "http://192.168.1.155:9555/" + Constants.PLATFORM_NAME + "/Scripts/";
+                            //Constants.REMOTE_ASSET_BUNDLE_PATH = kvp.Value + "/" + Constants.PLATFORM_NAME + "/Assets/";
+                            //Constants.REMOTE_SCRIPT_BUNDLE_PATH = kvp.Value + "/" + Constants.PLATFORM_NAME + "/Scripts/";
                             break;
                         case "noticeurl":
                             break;

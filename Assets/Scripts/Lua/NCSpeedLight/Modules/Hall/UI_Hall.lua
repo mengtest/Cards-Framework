@@ -30,8 +30,8 @@ function UI_Hall.InitBtnEvt()
 end
 
 function UI_Hall.InitSelfInfo()
-	UIHelper.SetLabelText(this.transform, "left/RoleInfo/Info/Label (Name)", Player.FullInfo.nickName);
-	UIHelper.SetLabelText(this.transform, "left/RoleInfo/Info/Label (ID)", "ID:" .. tostring(Player.ID));
+	UIHelper.SetLabelText(this.transform, "left/RoleInfo/Info/Label (Name)", Player.Name);
+	UIHelper.SetLabelText(this.transform, "left/RoleInfo/Info/Label (ID)", "ID:" .. Player.DisplayID);
 	UIHelper.SetLabelText(this.transform, "left/RoleInfo/Info/Label (IP)", Player.FullInfo.name);
 	UIHelper.SetTexture(this.transform, "left/RoleInfo/Info/Sprite (Photo)", Player.FullInfo.headPhotoUrl);
 	UIHelper.SetLabelText(this.transform, "left/RoleInfo/Card/Label (Card)", Player.FullInfo.roomcard);

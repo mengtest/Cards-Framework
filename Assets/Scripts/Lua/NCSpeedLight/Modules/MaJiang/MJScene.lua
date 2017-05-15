@@ -60,8 +60,8 @@ end
 
 function MJScene.Begin()
 	Log.Info("MJScene.Begin");
-	HallScene.CurrentFBRound = 0;
-	HallScene.CurrentFBFinishedRound = 0;
+	-- HallScene.CurrentFBRound = 0;
+	-- HallScene.CurrentFBFinishedRound = 0;
 	if HallScene.CurrentFBPlaybackMode == false then
 		HallScene.CurrentFBTotalRound = HallScene.CurrentFBInfo.m_gameCount;
 	end
@@ -441,8 +441,12 @@ function MJScene.ReturnGamePlayerInfo(evt)
 			if playerEntry.m_RoleData.m_Roleid == Player.ID then
 				hero = MJPlayer.New();
 				MJPlayer.Hero = hero;
+				local name = playerEntry.m_RoleData.m_NickName;
+				if string.len(name) == 0 then
+					name = playerEntry.m_RoleData.m_Name;
+				end
 				hero:SetData(playerEntry.m_RoleData.m_Roleid,
-				playerEntry.m_RoleData.m_NickName,
+				name,
 				playerEntry.m_RoleData.m_HeadPhotoUrl,
 				playerEntry.m_RoleData.m_Sex,
 				playerEntry.m_RoleData.m_Postion,
@@ -469,8 +473,12 @@ function MJScene.ReturnGamePlayerInfo(evt)
 			local player = MJScene.GetPlayerByID(playerEntry.m_RoleData.m_Roleid);
 			if player == nil then
 				player = MJPlayer.New();
+				local name = playerEntry.m_RoleData.m_NickName;
+				if string.len(name) == 0 then
+					name = playerEntry.m_RoleData.m_Name;
+				end
 				player:SetData(playerEntry.m_RoleData.m_Roleid,
-				playerEntry.m_RoleData.m_NickName,
+				name,
 				playerEntry.m_RoleData.m_HeadPhotoUrl,
 				playerEntry.m_RoleData.m_Sex,
 				playerEntry.m_RoleData.m_Postion,
@@ -563,8 +571,12 @@ function MJScene.ReturnReconnectInfo(evt)
 			if data.m_roleid == Player.ID then
 				local player = MJPlayer.New();
 				MJPlayer.Hero = player;
+				local name = data.m_NickName;
+				if string.len(name) == 0 then
+					name = data.m_Name;
+				end
 				player:SetData(data.m_roleid,
-				data.m_NickName,
+				name,
 				data.m_HeadPhotoUrl,
 				data.m_Sex,
 				data.m_Postion,
@@ -586,8 +598,12 @@ function MJScene.ReturnReconnectInfo(evt)
 			local player = MJScene.GetPlayerByID(data.m_roleid);
 			if player == nil then
 				player = MJPlayer.New();
+				local name = data.m_NickName;
+				if string.len(name) == 0 then
+					name = data.m_Name;
+				end
 				player:SetData(data.m_roleid,
-				data.m_NickName,
+				name,
 				data.m_HeadPhotoUrl,
 				data.m_Sex,
 				data.m_Postion,
@@ -608,8 +624,12 @@ function MJScene.ReturnReconnectInfo(evt)
 			local data = msg.m_AllData[i];
 			local player = MJScene.GetPlayerByID(data.m_roleid);
 			if player ~= nil then
+				local name = data.m_NickName;
+				if string.len(name) == 0 then
+					name = data.m_Name;
+				end
 				player:SetData(data.m_roleid,
-				data.m_NickName,
+				name,
 				data.m_HeadPhotoUrl,
 				data.m_Sex,
 				data.m_Postion,

@@ -428,10 +428,7 @@ namespace NCSpeedLight
         /// </summary>
         public static string REMOTE_ASSET_BUNDLE_PATH
         {
-            get
-            {
-                return "http://192.168.1.155:9555/" + PLATFORM_NAME + "/Assets/";
-            }
+            get; set;
         }
 
         /// <summary>
@@ -443,6 +440,7 @@ namespace NCSpeedLight
             {
                 return "http://192.168.1.155:9555/" + PLATFORM_NAME + "/Scripts/";
             }
+            set { }
         }
 
         /// <summary>

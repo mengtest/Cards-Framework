@@ -13,6 +13,8 @@ Player =
 	EvtProcessor = EvtProcessor.New();
 	FullInfo = nil;
 	ID = 0,
+	DisplayID = nil,
+	Name = nil,
 	Address = nil,
 };
 
@@ -21,6 +23,11 @@ function Player.SetFullInfo(data)
 	Log.Info("Player.SetFullInfo: id is " .. tostring(data.id));
 	Player.FullInfo = data;
 	Player.ID = data.id;
+	Player.Name = Player.FullInfo.nickName;
+	if string.len(Player.Name) == 0 then
+		Player.Name = Player.FullInfo.name;
+	end
+	Player.DisplayID = Player.FullInfo.name;
 	Player.RefreshAddress();
 end
 
