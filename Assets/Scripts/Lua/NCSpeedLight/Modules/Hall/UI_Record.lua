@@ -26,7 +26,7 @@ function UI_Record.OnClickClose(go)
 	if this.IsOpenDetailView then
 		UI_Record.SetDetailViewState(false);
 	else
-		UIManager.CloseWindow(UIType.UI_Record);
+		UIManager.CloseWindow(UIName.UI_Record);
 	end
 end
 
@@ -95,7 +95,7 @@ function UI_Record.DisplayListView()
 			UIHelper.SetButtonEvent(item, UI_Record.OnClickItem);
 			UIHelper.SetLabelText(item, "LB_Index", tostring(i));
 			UIHelper.SetLabelText(item, "LB_RoomNumber", "[AD2630FF]" .. roleid .. "[-][1C1110FF]号房间[-]");
-			UIHelper.SetLabelText(item, "LB_Time", Utility.FormatTimeStamp("%Y-%m-%d %H:%M", begintime));
+			UIHelper.SetLabelText(item, "LB_Time", Utility.FormatTimeStamp("%Y-%m-%d %H:%M:%S", begintime));
 			
 			-- 设置名称	
 			local totalScoreInfo = {};

@@ -24,10 +24,10 @@ end
 
 function UI_MJTest.Start()
 	UIHelper.SetButtonEvent(this.transform, "Button", function(obj)
-		UIManager.CloseWindow(UIType.UI_MJTest);
+		UIManager.CloseWindow(UIName.UI_MJTest);
 	end);
 	UIHelper.SetButtonEvent(this.transform, "BG", function(obj)
-		UIManager.CloseWindow(UIType.UI_MJTest);
+		UIManager.CloseWindow(UIName.UI_MJTest);
 	end);
 	UI_MJTest.CloneCard(MaJiangType.MJ_1_WAN, "一万");
 	UI_MJTest.CloneCard(MaJiangType.MJ_2_WAN, "二万");
@@ -94,5 +94,5 @@ function UI_MJTest.ClickCard(varObj)
 	};
 	Log.Info("UI_MJTest.ClickCard: tou tian huan ri type is " .. MaJiangType.ToString(tempType));
 	NetManager.SendEventToLogicServer(GameMessage.GM_PlayerNeedCardRequest, PBMessage.GM_PlayerHandCard, msg);
-	UIManager.CloseWindow(UIType.UI_MJTest);
+	UIManager.CloseWindow(UIName.UI_MJTest);
 end 

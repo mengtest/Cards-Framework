@@ -2,7 +2,7 @@
 -- Copyright © 2014-2017 NCSpeedLight
 --
 -- FileName: NetManager.lua
--- Describle:  网络收发报管理
+-- Describle:  网络收发包管理
 -- Created By:  Wells Hsu
 -- Date&Time:  2017/2/28 19:11:09
 -- Modify History:

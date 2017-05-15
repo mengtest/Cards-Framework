@@ -20,7 +20,6 @@ public class NCSpeedLight_LuaComponentWrap
 		L.RegVar("OnEnableFunction", get_OnEnableFunction, set_OnEnableFunction);
 		L.RegVar("OnDisableFunction", get_OnDisableFunction, set_OnDisableFunction);
 		L.RegVar("UpdateFunction", get_UpdateFunction, set_UpdateFunction);
-		L.RegVar("OnGUIFunction", get_OnGUIFunction, set_OnGUIFunction);
 		L.RegVar("LateUpdateFunction", get_LateUpdateFunction, set_LateUpdateFunction);
 		L.RegVar("OnDestroyFunction", get_OnDestroyFunction, set_OnDestroyFunction);
 		L.RegVar("OnApplicationPauseFunction", get_OnApplicationPauseFunction, set_OnApplicationPauseFunction);
@@ -247,25 +246,6 @@ public class NCSpeedLight_LuaComponentWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_OnGUIFunction(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			NCSpeedLight.LuaComponent obj = (NCSpeedLight.LuaComponent)o;
-			LuaInterface.LuaFunction ret = obj.OnGUIFunction;
-			ToLua.Push(L, ret);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnGUIFunction on a nil value" : e.Message);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_LateUpdateFunction(IntPtr L)
 	{
 		object o = null;
@@ -452,25 +432,6 @@ public class NCSpeedLight_LuaComponentWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index UpdateFunction on a nil value" : e.Message);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_OnGUIFunction(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			NCSpeedLight.LuaComponent obj = (NCSpeedLight.LuaComponent)o;
-			LuaFunction arg0 = ToLua.CheckLuaFunction(L, 2);
-			obj.OnGUIFunction = arg0;
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnGUIFunction on a nil value" : e.Message);
 		}
 	}
 

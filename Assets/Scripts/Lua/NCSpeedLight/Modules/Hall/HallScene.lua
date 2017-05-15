@@ -10,7 +10,7 @@
 -----------------------------------------------
 HallScene =
 {
-	Name = SceneType.HallScene,
+	Name = SceneName.HallScene,
 	
 	IsInitialized = false,
 	
@@ -41,6 +41,10 @@ HallScene =
 	
 	CurrentFBPlaybackData = nil, -- 麻将回放数据
 	
+	CurrentFBStatus = FBStatus.Waitting, -- 副本状态
+	
+	CurrentFBCloseTime = 300, -- 副本被解散的倒计时
+	
 -- endregion
 }
 
@@ -50,12 +54,15 @@ function HallScene.Initialize()
 end
 
 function HallScene.Begin()
+	HallScene.CurrentFBCloseTime = 300;
 	HallScene.RegisterNetEvent();
 	NCSpeedLight.InternalUI.Instance:CloseBG();
 	UIManager.CloseAllWindows();
-	AssetManager.LoadScene(SceneType.HallScene);
-	UIManager.OpenWindow(UIType.UI_Hall);
-	HallScene.RequestPlayerInFb();
+	AssetManager.LoadScene(SceneName.HallScene);
+	UIManager.OpenWindow(UIName.UI_Hall);
+	if SceneManager.LastScene == LoginScene then
+		HallScene.RequestPlayerInFb();
+	end
 	HallScene.RequestAnnouncement();
 	if SceneManager.LastScene == MJScene then
 		Player.RefreshAddress();
@@ -110,6 +117,11 @@ function HallScene.UnRegisterNetEvent()
 	NetManager.UnregisterEvent(GameMessage.GM_KICKOFF_PLAYER, HallScene.NotifyRe_Register);
 	NetManager.UnregisterEvent(GameMessage.GM_GET_CHAT_RETURN, HallScene.OnReceiveAnnouncement); -- 接收到公告信息
 	NetManager.UnregisterEvent(GameMessage.GM_PLAYER_PLAYBACK_RETURN, HallScene.OnRecvPlayback); -- 回放信息
+end
+
+function HallScene.SwitchFBStatus(status)
+	Log.Info("HallScene.SwitchFBStatus: status is " .. FBStatus.ToString(status));
+	HallScene.CurrentFBStatus = status;
 end
 
 -- 判断当前玩家是否在副本内
@@ -200,14 +212,14 @@ function HallScene.ReturnPlayerInFb(evt)
 		HallScene.CurrentFBID = msg.m_FBID;
 		HallScene.CurrentFBType = msg.m_FBTypeID;
 		HallScene.CurrentFBPlayway = msg.m_playWay;
-		local option = StandardDialogOption.New("提示", "当前房间未解散，是否进入？", true,
+		local option = ConfirmDialogOption.New("提示", "当前房间未解散，是否进入？", true,
 		function()
 			HallScene.CurrentFBNeedReconnect = true;
-			SceneManager.GotoScene(SceneType.MJScene);
+			SceneManager.Goto(SceneName.MJScene);
 		end,
 		function()
 		end);
-		UIManager.OpenStandardDialog(option);
+		UIManager.OpenConfirmDialog(option);
 	else
 		Log.Info("HallScene.ReturnPlayerInFb: 玩家不在副本中");
 	end
@@ -251,7 +263,7 @@ function HallScene.ReceiveRespondLoginBattle(evt)
 	if msg.result == 0 then
 		Log.Info("HallScene.ReceiveRespondLoginBattle: FBID is " .. HallScene.CurrentFBID);
 		HallScene.CurrentFBNeedReconnect = false;
-		SceneManager.GotoScene(SceneType.MJScene);
+		SceneManager.Goto(SceneName.MJScene);
 	end
 end
 
@@ -294,6 +306,6 @@ function HallScene.OnRecvPlayback(evt)
 	else
 		HallScene.PlaybackData = msg;
 		HallScene.CurrentFBPlaybackMode = true;
-		SceneManager.GotoScene(SceneType.MJScene);
+		SceneManager.Goto(SceneName.MJScene);
 	end
 end

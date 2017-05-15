@@ -37,7 +37,7 @@ end
 function UI_MJTotalResult.InitBtnEvent()
 	-- 返回
 	UIHelper.SetButtonEvent(this.transform, "Button/Back", function(obj)
-		SceneManager.GotoScene(SceneType.HallScene);
+		SceneManager.Goto(SceneName.HallScene);
 	end);
 	-- 分享
 	UIHelper.SetButtonEvent(this.transform, "Button/Share", function(obj)

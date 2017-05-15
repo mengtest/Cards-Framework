@@ -22,5 +22,5 @@ function UI_Share.Start()
 end
 
 function UI_Share.OnClickClose(go)
-	UIManager.CloseWindow(UIType.UI_Share);
+	UIManager.CloseWindow(UIName.UI_Share);
 end 

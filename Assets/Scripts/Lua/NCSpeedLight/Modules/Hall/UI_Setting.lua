@@ -12,7 +12,7 @@ end
 
 function UI_Setting.Start()
 	UIHelper.SetButtonEvent(this.transform, "Bg/Close", function()
-		UIManager.CloseWindow(UIType.UI_Setting);
+		UIManager.CloseWindow(UIName.UI_Setting);
 	end);
 end
 

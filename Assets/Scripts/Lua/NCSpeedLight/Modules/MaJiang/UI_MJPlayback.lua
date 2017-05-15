@@ -72,7 +72,7 @@ function UI_MJPlayback.OnClickReplay(go)
 end
 
 function UI_MJPlayback.OnClickBack(go)
-	SceneManager.GotoScene(SceneType.HallScene);
+	SceneManager.Goto(SceneName.HallScene);
 end
 
 function UI_MJPlayback.ChangePlaySpeed(speed)

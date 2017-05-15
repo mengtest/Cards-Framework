@@ -36,7 +36,7 @@ function UI_JoinRoom.OnDestroy()
 end
 
 function UI_JoinRoom.OnClickClose(go)
-	UIManager.CloseWindow(UIType.UI_JoinRoom);
+	UIManager.CloseWindow(UIName.UI_JoinRoom);
 end
 
 function UI_JoinRoom.OnClickDialPanelNumber(go)

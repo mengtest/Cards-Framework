@@ -8,8 +8,8 @@
 -- Modify History:
 --
 -----------------------------------------------
-require "NCSpeedLight.Modules.MaJiang.UI_HeroPlayer"
-require "NCSpeedLight.Modules.MaJiang.UI_OtherPlayer"
+require "NCSpeedLight.Modules.MaJiang.UI_MJHeroCtrl"
+require "NCSpeedLight.Modules.MaJiang.UI_MJPlayer"
 require "NCSpeedLight.Modules.MaJiang.UI_MJInteraction"
 
 UI_MaJiang = {
@@ -25,6 +25,7 @@ UI_MaJiang = {
 	RecordStartPos = Vector3.zero,
 	RecordSuccess = false,
 }
+
 local this = UI_MaJiang
 
 function UI_MaJiang.Awake(go)
@@ -84,6 +85,7 @@ function UI_MaJiang.Reset()
 	else
 		UI_MaJiang.SetupReadyAndInvite(true, false, true);
 	end
+	UI_MJHeroCtrl.Reset();
 end
 
 -- 初始化玩家的UI
@@ -93,30 +95,30 @@ function UI_MaJiang.InitPlayerUI()
 	UI_MaJiang.UI_Player2 = this.transform:Find("Player2");
 	UI_MaJiang.UI_Player3 = this.transform:Find("Player3");
 	
-	LuaComponent.Add(UI_MaJiang.UI_Player0.gameObject, UI_HeroPlayer);
-	LuaComponent.Add(UI_MaJiang.UI_Player1.gameObject, UI_OtherPlayer);
-	LuaComponent.Add(UI_MaJiang.UI_Player2.gameObject, UI_OtherPlayer);
-	LuaComponent.Add(UI_MaJiang.UI_Player3.gameObject, UI_OtherPlayer);
+	LuaComponent.Add(UI_MaJiang.UI_Player0.gameObject, UI_MJPlayer);
+	LuaComponent.Add(UI_MaJiang.UI_Player1.gameObject, UI_MJPlayer);
+	LuaComponent.Add(UI_MaJiang.UI_Player2.gameObject, UI_MJPlayer);
+	LuaComponent.Add(UI_MaJiang.UI_Player3.gameObject, UI_MJPlayer);
 	
 	if not HallScene.CurrentFBPlaybackMode then
 		UIHelper.SetButtonEvent(UI_MaJiang.UI_Player0, "Enter/Center/Icon/Sprite (Photo)", function()
 			local player = MJScene.GetPlayerByUIPosition(0);
-			UIManager.OpenWindow(UIType.UI_MJPlayerInfo);
+			UIManager.OpenWindow(UIName.UI_MJPlayerInfo);
 			UI_MJPlayerInfo.CurrentPlayer = player;
 		end);
 		UIHelper.SetButtonEvent(UI_MaJiang.UI_Player1, "Enter/Center/Icon/Sprite (Photo)", function()
 			local player = MJScene.GetPlayerByUIPosition(1);
-			UIManager.OpenWindow(UIType.UI_MJPlayerInfo);
+			UIManager.OpenWindow(UIName.UI_MJPlayerInfo);
 			UI_MJPlayerInfo.CurrentPlayer = player;
 		end);
 		UIHelper.SetButtonEvent(UI_MaJiang.UI_Player2, "Enter/Center/Icon/Sprite (Photo)", function()
 			local player = MJScene.GetPlayerByUIPosition(2);
-			UIManager.OpenWindow(UIType.UI_MJPlayerInfo);
+			UIManager.OpenWindow(UIName.UI_MJPlayerInfo);
 			UI_MJPlayerInfo.CurrentPlayer = player;
 		end);
 		UIHelper.SetButtonEvent(UI_MaJiang.UI_Player3, "Enter/Center/Icon/Sprite (Photo)", function()
 			local player = MJScene.GetPlayerByUIPosition(3);
-			UIManager.OpenWindow(UIType.UI_MJPlayerInfo);
+			UIManager.OpenWindow(UIName.UI_MJPlayerInfo);
 			UI_MJPlayerInfo.CurrentPlayer = player;
 		end);
 	end
@@ -127,15 +129,15 @@ function UI_MaJiang.GetPlayerUI(serverPos)
 	local heroPos = MJPlayer.Hero.ServerPosition;
 	if HallScene.CurrentFBType == MJRoomType.R_1 then -- 二人场
 		if heroPos == serverPos then
-			local uiCom = LuaComponent.Get(UI_MaJiang.UI_Player0.gameObject, UI_HeroPlayer);
+			local uiCom = LuaComponent.Get(UI_MaJiang.UI_Player0.gameObject, UI_MJPlayer);
 			return {uiCom, UI_MaJiang.UI_Player0, 0};
 		else
-			local uiCom = LuaComponent.Get(UI_MaJiang.UI_Player2.gameObject, UI_OtherPlayer);
+			local uiCom = LuaComponent.Get(UI_MaJiang.UI_Player2.gameObject, UI_MJPlayer);
 			return {uiCom, UI_MaJiang.UI_Player2, 2};
 		end
 	elseif HallScene.CurrentFBType == MJRoomType.R_2 then -- 四人场
 		if heroPos == serverPos then
-			local uiCom = LuaComponent.Get(UI_MaJiang.UI_Player0.gameObject, UI_HeroPlayer);
+			local uiCom = LuaComponent.Get(UI_MaJiang.UI_Player0.gameObject, UI_MJPlayer);
 			return {uiCom, UI_MaJiang.UI_Player0, 0};
 		else
 			local offset = 4 - heroPos;
@@ -210,19 +212,30 @@ function UI_MaJiang.OnPlaybackMode()
 end
 
 function UI_MaJiang.OnClickSetting(go)
-	UIManager.OpenWindow(UIType.UI_MJSetting);	
+	UIManager.OpenWindow(UIName.UI_MJSetting);	
 end
 
 function UI_MaJiang.DissolveRoom(go)
-	local option = StandardDialogOption:New();
-	option.OnClickOK =
-	function()
-		MJScene.RequestCloseRoom();
-	end;
-	option.DoubleButton = true;
-	option.Content = "解散房间不扣除房卡，是否确定解散？";
-	option.Title = "解散房间";
-	UIManager.OpenStandardDialog(option);
+	local option = ConfirmDialogOption.New();
+	if MJPlayer.Hero:IsRoomMaster() then
+		option.OnClickOK =
+		function()
+			MJScene.RequestCloseRoom();
+		end;
+		option.DoubleButton = true;
+		option.Content = "解散房间不扣除房卡，是否确定解散？";
+		option.Title = "解散房间";
+	else
+		option.OnClickOK =
+		function()
+			SceneManager.Goto(SceneName.HallScene);
+		end;
+		option.DoubleButton = true;
+		option.Content = "确定退出吗？";
+		option.Title = "返回大厅";
+	end
+	UIManager.OpenConfirmDialog(option);
+	
 end
 
 function UI_MaJiang.OnClickChat(go)
@@ -232,7 +245,7 @@ end
 
 -- 偷天换日
 function UI_MaJiang.OnClickTest(go)
-	UIManager.OpenWindow(UIType.UI_MJTest);
+	UIManager.OpenWindow(UIName.UI_MJTest);
 end
 
 function UI_MaJiang.OnClickYes(go)
@@ -270,9 +283,7 @@ function UI_MaJiang.OnClickOtherArea(go)
 		UI_MaJiang.IsOpenChat = not UI_MaJiang.IsOpenChat;
 		UI_MaJiang.SetChatActive(UI_MaJiang.IsOpenChat);
 	else
-		if MJPlayer.Hero ~= nil and MJPlayer.Hero.UI ~= nil then
-			MJPlayer.Hero.UI:RecoverSelectedCard();
-		end
+		UI_MJHeroCtrl.RecoverSelectedCard();
 	end
 end
 

@@ -24,7 +24,7 @@ namespace NCSpeedLight
         private LuaFunction m_OnEnableFunction;
         private LuaFunction m_OnDisableFunction;
         private LuaFunction m_UpdateFunction;
-        private LuaFunction m_OnGUIFunction;
+        //private LuaFunction m_OnGUIFunction;
         private LuaFunction m_LateUpdateFunction;
         private LuaFunction m_OnDestroyFunction;
 
@@ -49,7 +49,7 @@ namespace NCSpeedLight
             m_OnEnableFunction = LuaManager.LuaState.GetFunction(Script + ".OnEnable", false);
             m_OnDisableFunction = LuaManager.LuaState.GetFunction(Script + ".OnDisable", false);
             m_UpdateFunction = LuaManager.LuaState.GetFunction(Script + ".Update", false);
-            m_OnGUIFunction = LuaManager.LuaState.GetFunction(Script + ".OnGUI", false);
+            //m_OnGUIFunction = LuaManager.LuaState.GetFunction(Script + ".OnGUI", false);
             m_LateUpdateFunction = LuaManager.LuaState.GetFunction(Script + ".LateUpdate", false);
             m_OnDestroyFunction = LuaManager.LuaState.GetFunction(Script + ".OnDestroy", false);
 
@@ -99,13 +99,13 @@ namespace NCSpeedLight
             }
         }
 
-        protected virtual void OnGUI()
-        {
-            if (m_OnGUIFunction != null)
-            {
-                m_OnGUIFunction.Call();
-            }
-        }
+        //protected virtual void OnGUI()
+        //{
+        //    if (m_OnGUIFunction != null)
+        //    {
+        //        m_OnGUIFunction.Call();
+        //    }
+        //}
 
         protected virtual void OnDestroy()
         {

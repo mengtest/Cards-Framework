@@ -12,7 +12,7 @@ end
 
 function UI_SystemEmail.Start()
 	UIHelper.SetButtonEvent(this.transform, "Bg/Close", function()
-		UIManager.CloseWindow(UIType.UI_SystemEmail);
+		UIManager.CloseWindow(UIName.UI_SystemEmail);
 	end);
 end
 

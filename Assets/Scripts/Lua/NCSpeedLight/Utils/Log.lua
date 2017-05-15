@@ -31,6 +31,7 @@ end
 
 -- 记录错误信息
 function Log.Error(obj)
+	-- return;
 	local time = os.date("%H:%M:%S");
 	local str = "[Log.Error][" .. time .. "-" .. Time.frameCount .. "] " .. tostring(obj);
 	print(str);
@@ -39,6 +40,7 @@ end
 
 -- 记录日志
 function Log.Info(obj)
+	-- return;
 	local time = os.date("%H:%M:%S");
 	local str = "[Log.Info][" .. time .. "-" .. Time.frameCount .. "] " .. tostring(obj);
 	print(str);
@@ -57,7 +59,7 @@ end
 function Log.Format(...)
 	local args = {...};
 	local str = "";
-	for i = 1, # args do
+	for i = 1, #args do
 		if args[i] ~= nil then
 			str = str .. tostring(args[i]);
 		else
@@ -79,7 +81,7 @@ function Log.Close()
 	end
 	local file = CSFile.Open(Log.FilePath, CSFileMode.Create);
 	local sw = CSStreamWriter.New(file);
-	for i = 1, # Log.Buffer do
+	for i = 1, #Log.Buffer do
 		sw:WriteLine(Log.Buffer[i]);
 	end
 	sw:Close();

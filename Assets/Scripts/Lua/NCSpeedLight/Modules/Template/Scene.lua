@@ -12,12 +12,12 @@ function Scene:New()
 	setmetatable(o, self)
 	self.__index = self
 	self.Instance = o;
-	self.Instance.Name = SceneType.Scene;
+	self.Instance.Name = SceneName.Scene;
 	return o;
 end
 
 function Scene.Begin()
-	AssetManager.LoadScene(SceneType.Scene);
+	AssetManager.LoadScene(SceneName.Scene);
 end
 
 function Scene.Update()

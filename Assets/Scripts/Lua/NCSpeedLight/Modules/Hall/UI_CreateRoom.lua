@@ -23,7 +23,7 @@ function UI_CreateRoom.OnDestroy()
 end
 
 function UI_CreateRoom.OnClickClose(go)
-	UIManager.CloseWindow(UIType.UI_CreateRoom);
+	UIManager.CloseWindow(UIName.UI_CreateRoom);
 end
 
 function UI_CreateRoom.OnClickConfirm(go)

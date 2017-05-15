@@ -34,21 +34,21 @@ end
 function UI_MJDraw.InitBtnEvent()
 	UIHelper.SetButtonEvent(this.transform, "Buttom/OnceAgain", function(obj)
 		MJScene.OnceAgain();
-		UIManager.CloseAllWindowsExcept(UIType.UI_MaJiang);
+		UIManager.CloseAllWindowsExcept(UIName.UI_MaJiang);
 	end);
 	UIHelper.SetButtonEvent(this.transform, "Buttom/LookTotalResult", function(obj)
-		UIManager.CloseAllWindowsExcept(UIType.UI_MaJiang);
-		UIManager.OpenWindow(UIType.UI_MJTotalResult);
+		UIManager.CloseAllWindowsExcept(UIName.UI_MaJiang);
+		UIManager.OpenWindow(UIName.UI_MJTotalResult);
 	end);
 	UIHelper.SetButtonEvent(this.transform, "Buttom/ReturnDeskBtn", function(obj)
 		-- 查看牌局
-		UIManager.CloseWindow(UIType.UI_MJDraw);
+		UIManager.CloseWindow(UIName.UI_MJDraw);
 		if HallScene.CurrentFBPlaybackMode then
 			UI_MJPlayback.WaitReplay();
 		end
 	end);
 	UIHelper.SetButtonEvent(this.transform, "Buttom/Replay", function(obj)
-		UIManager.CloseWindow(UIType.UI_MJDraw);
+		UIManager.CloseWindow(UIName.UI_MJDraw);
 		UI_MJPlayback.Replay();
 	end);
 end

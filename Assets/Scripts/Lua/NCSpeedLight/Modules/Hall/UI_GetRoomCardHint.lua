@@ -21,7 +21,7 @@ function UI_GetRoomCardHint.OnDestroy()
 end
 
 function UI_GetRoomCardHint.OnClickClose()
-	UIManager.CloseWindow(UIType.UI_GetRoomCardHint);
+	UIManager.CloseWindow(UIName.UI_GetRoomCardHint);
 end
 
 function UI_GetRoomCardHint.OnClickCopy()

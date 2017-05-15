@@ -22,7 +22,7 @@ namespace NCSpeedLight
         public LuaFunction OnEnableFunction;
         public LuaFunction OnDisableFunction;
         public LuaFunction UpdateFunction;
-        public LuaFunction OnGUIFunction;
+        //public LuaFunction OnGUIFunction;
         public LuaFunction LateUpdateFunction;
         public LuaFunction OnDestroyFunction;
         public LuaFunction OnApplicationPauseFunction;
@@ -47,10 +47,10 @@ namespace NCSpeedLight
         {
             if (LateUpdateFunction != null) { LateUpdateFunction.Call(Table); }
         }
-        protected virtual void OnGUI()
-        {
-            if (OnGUIFunction != null) { OnGUIFunction.Call(Table); }
-        }
+        //protected virtual void OnGUI()
+        //{
+        //    if (OnGUIFunction != null) { OnGUIFunction.Call(Table); }
+        //}
         protected virtual void OnDestroy()
         {
             if (OnDestroyFunction != null) { OnDestroyFunction.Call(Table); }
@@ -70,7 +70,7 @@ namespace NCSpeedLight
             com.OnEnableFunction = com.Table.GetLuaFunction("OnEnable");
             com.OnDisableFunction = com.Table.GetLuaFunction("OnDisable");
             com.UpdateFunction = com.Table.GetLuaFunction("Update");
-            com.OnGUIFunction = com.Table.GetLuaFunction("OnGUI");
+            //com.OnGUIFunction = com.Table.GetLuaFunction("OnGUI");
             com.LateUpdateFunction = com.Table.GetLuaFunction("LateUpdate");
             com.OnDestroyFunction = com.Table.GetLuaFunction("OnDestroy");
             com.OnApplicationPauseFunction = com.Table.GetLuaFunction("OnApplicationPause");

@@ -16,7 +16,7 @@ LoginScene =
 		LatestArea,
 		RoleID,
 	},
-	Name = SceneType.LoginScene,
+	Name = SceneName.LoginScene,
 	LoginRecord = nil,
 	IsInitialized = false,
 	ReconnectToLoginServerTimer = nil,
@@ -39,7 +39,7 @@ end
 
 function LoginScene.Begin()
 	NCSpeedLight.InternalUI.Instance:OpenBG();
-	AssetManager.LoadScene(SceneType.LoginScene);
+	AssetManager.LoadScene(SceneName.LoginScene);
 	NetManager.RegisterEvent(GameMessage.GM_VERSION_RETURN, LoginScene.OnVerifyVersionReturn);
 	NetManager.RegisterEvent(GameMessage.GM_ACCOUNT_VERIFY_RETURN, LoginScene.OnLoginReturn);
 	NetManager.RegisterEvent(GameMessage.GM_ACCOUNT_CREATE_RETURN, LoginScene.OnRegisterReturn);
@@ -197,13 +197,13 @@ function LoginScene.OnVerifyVersionReturn(evt)
 		-- if Game.Platform == UnityEngine.RuntimePlatform.Android or Game.Platform == UnityEngine.RuntimePlatform.IPhonePlayer then
 		-- 	LoginScene.AuthInfo = ShareSDKAdapter.GetWechatAuthInfo();
 		-- 	if LoginScene.AuthInfo == nil then
-		-- 		UIManager.OpenWindow(UIType.UI_MobileLogin);
+		-- 		UIManager.OpenWindow(UIName.UI_MobileLogin);
 		-- 	else
 		-- 		-- 本地存在验证信息，则直接登录
 		-- 		LoginScene.RequestLogin(LoginScene.AuthInfo.unionID, "AllPlatform");
 		-- 	end
 		-- else
-		UIManager.OpenWindow(UIType.UI_NormalLogin);
+		UIManager.OpenWindow(UIName.UI_NormalLogin);
 		-- end
 	else
 		Log.Error("LoginScene.OnVerifyVersionReturn: version doesn\'t match,can not enter game,please update.");
@@ -230,7 +230,7 @@ function LoginScene.RequestLogin(account, password)
 	}
 	Log.Info("LoginScene.RequestLogin: platform is " .. msg.platform .. ",account is " .. msg.m_AccountName);
 	NetManager.SendEventToLoginServer(GameMessage.GM_ACCOUNT_VERIFY, PBMessage.GM_AccountRequest, msg);
-	UIManager.OpenWindow(UIType.UI_SceneLoad);
+	UIManager.OpenWindow(UIName.UI_SceneLoad);
 end
 
 function LoginScene.OnLoginReturn(evt)
@@ -248,25 +248,25 @@ function LoginScene.OnLoginReturn(evt)
 		-- 请求选区
 		LoginScene.RequestChooseArea();
 	elseif obj.m_Result == 1 then
-		UIManager.CloseWindow(UIType.UI_SceneLoad);
+		UIManager.CloseWindow(UIName.UI_SceneLoad);
 		UIManager.OpenTipsDialog("账号密码错误");
 	elseif obj.m_Result == 2 then
-		UIManager.CloseWindow(UIType.UI_SceneLoad);
+		UIManager.CloseWindow(UIName.UI_SceneLoad);
 		UIManager.OpenTipsDialog("验证错误");
 	elseif obj.m_Result == 3 then
-		UIManager.CloseWindow(UIType.UI_SceneLoad);
+		UIManager.CloseWindow(UIName.UI_SceneLoad);
 		UIManager.OpenTipsDialog("此账号已暂时冻结");
 	elseif obj.m_Result == 4 then
-		UIManager.CloseWindow(UIType.UI_SceneLoad);
+		UIManager.CloseWindow(UIName.UI_SceneLoad);
 		UIManager.OpenTipsDialog("账号长度不符合");
 	elseif obj.m_Result == 5 then
-		UIManager.CloseWindow(UIType.UI_SceneLoad);
+		UIManager.CloseWindow(UIName.UI_SceneLoad);
 		UIManager.OpenTipsDialog("密码长度不符合");
 	elseif obj.m_Result == 6 then
-		UIManager.CloseWindow(UIType.UI_SceneLoad);
+		UIManager.CloseWindow(UIName.UI_SceneLoad);
 		UIManager.OpenTipsDialog("此账号已永久冻结");
 	else
-		UIManager.CloseWindow(UIType.UI_SceneLoad);
+		UIManager.CloseWindow(UIName.UI_SceneLoad);
 	end
 end
 
@@ -294,14 +294,14 @@ function LoginScene.OnRegisterReturn(evt)
 		UIManager.OpenTipsDialog("创建成功")
 		-- 保存账号信息至本地
 		LoginScene.AddLoginRecord(LoginScene.currentAccount, LoginScene.currentPassword);
-		UIManager.CloseWindow(UIType.UI_Register);
-		UIManager.OpenWindow(UIType.UI_NormalLogin);
+		UIManager.CloseWindow(UIName.UI_Register);
+		UIManager.OpenWindow(UIName.UI_NormalLogin);
 	elseif obj.m_Result == 1 then
 		UIManager.OpenTipsDialog("存在账号")
 		-- 保存账号信息至本地
 		LoginScene.AddLoginRecord(LoginScene.currentAccount, LoginScene.currentPassword);
-		UIManager.CloseWindow(UIType.UI_Register);
-		UIManager.OpenWindow(UIType.UI_NormalLogin);
+		UIManager.CloseWindow(UIName.UI_Register);
+		UIManager.OpenWindow(UIName.UI_NormalLogin);
 	elseif obj.m_Result == 2 then
 		UIManager.OpenTipsDialog("账号长度不符合");
 	elseif obj.m_Result == 3 then
@@ -324,7 +324,7 @@ end
 function LoginScene.OnChoseAreaReturn(evt)
 	local obj = NetManager.DecodeMsg(PBMessage.GM_ChooseAreaReturn, evt);
 	if obj.m_Result == 0 then
-		UIManager.CloseWindow(UIType.UI_MobileLogin);
+		UIManager.CloseWindow(UIName.UI_MobileLogin);
 		Log.Info("LoginScene.OnChoseAreaReturn：选区成功,开始连接逻辑服务器");
 		Log.Info("LoginScene.OnChoseAreaReturn: logic server ip is " .. obj.m_ServerIP);
 		Log.Info("LoginScene.OnChoseAreaReturn: logic server port is " .. obj.m_PortNumber);
@@ -333,7 +333,7 @@ function LoginScene.OnChoseAreaReturn(evt)
 		NetManager.ConnectTo(ServerType.Logic, LoginScene.LogicServerIP, LoginScene.LoginServerPort, LoginScene.OnConnectLogicServer, LoginScene.OnDisconnectLogicServer, LoginScene.OnReconnectLogicServer, LoginScene.OnLogicServerErrorOccupied);
 	else
 		Log.Info("LoginScene.OnChoseAreaReturn：选区失败");
-		UIManager.CloseWindow(UIType.UI_SceneLoad);
+		UIManager.CloseWindow(UIName.UI_SceneLoad);
 		UIManager.OpenTipsDialog("选区失败");
 	end
 end
@@ -427,15 +427,15 @@ function LoginScene.OnRoleLoginReturn(evt)
 			SharedVariable.SelfInfo.ID = msg.id;
 			SharedVariable.SelfInfo.AccountID = msg.accountid;
 			Player.SetFullInfo(msg);
-			SceneManager.GotoScene(SceneType.HallScene);
+			SceneManager.Goto(SceneName.HallScene);
 			-- HallScene.RequestPlayerInFb();
 		else
 			Log.Info("LoginScene.OnRoleLoginReturn: role login error caused by \' msg.id<=0\' ");
-			UIManager.CloseWindow(UIType.UI_SceneLoad);
+			UIManager.CloseWindow(UIName.UI_SceneLoad);
 		end
 	else
 		Log.Info("LoginScene.OnRoleLoginReturn: role login error caused by nil msg.");
-		UIManager.CloseWindow(UIType.UI_SceneLoad);
+		UIManager.CloseWindow(UIName.UI_SceneLoad);
 	end
 end
 
@@ -456,11 +456,11 @@ function LoginScene.OnCreateRoleReturn(evt)
 		if obj.m_Result == 0 then
 			LoginScene.RequestRoleLogin();
 		else
-			UIManager.CloseWindow(UIType.UI_SceneLoad);
+			UIManager.CloseWindow(UIName.UI_SceneLoad);
 			Log.Info("LoginScene.OnCreateRoleReturn: role create error , m_Result = " .. obj.m_Result);
 		end
 	else
-		UIManager.CloseWindow(UIType.UI_SceneLoad);
+		UIManager.CloseWindow(UIName.UI_SceneLoad);
 		Log.Info("LoginScene.OnCreateRoleReturn: role create error caused by nil msg.");
 	end
 end 

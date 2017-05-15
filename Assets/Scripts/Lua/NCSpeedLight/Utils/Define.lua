@@ -1,4 +1,4 @@
-UIType = {
+UIName = {
 	-- Dialog
 	UI_Progress = "Dialog/UI_Progress",
 	
@@ -21,7 +21,7 @@ UIType = {
 	
 	-- 麻将
 	UI_MaJiang = "MaJiang/UI_MaJiang",
-	UI_DissolveRoom = "MaJiang/UI_DissolveRoom",
+	UI_MJRequestDissolve = "MaJiang/UI_MJRequestDissolve",
 	UI_MJTest = "MaJiang/UI_MJTest",
 	UI_MJResult = "MaJiang/UI_MJResult",
 	UI_MJTotalResult = "MaJiang/UI_MJTotalResult",
@@ -30,9 +30,40 @@ UIType = {
 	UI_MJPlayerInfo = "MaJiang/UI_MJPlayerInfo",
 }
 
-SceneType =
+SceneName =
 {
 	LoginScene = "LoginScene",
 	HallScene = "HallScene",
 	MJScene = "MJScene",
+}
+
+FBStatus = {
+	
+	-- 等待其他玩家准备
+	WaitingPlayer = 0,
+	
+	-- 等待投掷骰子
+	WaitingCastDice = 1,
+	
+	-- 游戏中
+	Playing = 2,
+	
+	-- 回合结束
+	FinishedRound = 3,
+	
+	ToString = function(index)
+		for key, value in pairs(FBStatus) do
+			if value == index then
+				return key;
+			end
+		end
+	end,
+	
+	ToInt = function(name)
+		for key, value in pairs(FBStatus) do
+			if key == name then
+				return value;
+			end
+		end
+	end
 } 

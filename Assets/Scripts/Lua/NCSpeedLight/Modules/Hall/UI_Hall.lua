@@ -38,15 +38,15 @@ function UI_Hall.InitSelfInfo()
 end
 
 function UI_Hall.OnClickShare(go)
-	UIManager.OpenWindow(UIType.UI_Share);
+	UIManager.OpenWindow(UIName.UI_Share);
 end
 
 function UI_Hall.OnClickRecord(go)
-	UIManager.OpenWindow(UIType.UI_Record);
+	UIManager.OpenWindow(UIName.UI_Record);
 end
 
 function UI_Hall.OnClickMessage(go)
-	UIManager.OpenWindow(UIType.UI_SystemEmail);
+	UIManager.OpenWindow(UIName.UI_SystemEmail);
 end
 
 function UI_Hall.OnClickMore(go)
@@ -60,23 +60,23 @@ function UI_Hall.OnClickReturn(go)
 end
 
 function UI_Hall.OnClickPlayway(go)
-	UIManager.OpenWindow(UIType.UI_HZRule);
+	UIManager.OpenWindow(UIName.UI_HZRule);
 end
 
 function UI_Hall.OnClickSetting(go)
-	UIManager.OpenWindow(UIType.UI_Setting);
+	UIManager.OpenWindow(UIName.UI_Setting);
 end
 
 function UI_Hall.OnClickCreateRoom(go)
-	UIManager.OpenWindow(UIType.UI_CreateRoom);
+	UIManager.OpenWindow(UIName.UI_CreateRoom);
 end
 
 function UI_Hall.OnClickJoinRoom(go)
-	UIManager.OpenWindow(UIType.UI_JoinRoom);
+	UIManager.OpenWindow(UIName.UI_JoinRoom);
 end
 
 function UI_Hall.OnClickAddCard(go)
-	UIManager.OpenWindow(UIType.UI_GetRoomCardHint);
+	UIManager.OpenWindow(UIName.UI_GetRoomCardHint);
 end
 
 function UI_Hall.RefreshAnnouncement()

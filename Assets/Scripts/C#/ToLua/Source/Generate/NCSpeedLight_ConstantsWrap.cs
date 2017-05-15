@@ -37,8 +37,8 @@ public class NCSpeedLight_ConstantsWrap
 		L.RegVar("ASSET_BUNDLE_MODE", get_ASSET_BUNDLE_MODE, null);
 		L.RegVar("LOCAL_ASSET_BUNDLE_PATH", get_LOCAL_ASSET_BUNDLE_PATH, null);
 		L.RegVar("LOCAL_SCRIPT_BUNDLE_PATH", get_LOCAL_SCRIPT_BUNDLE_PATH, null);
-		L.RegVar("REMOTE_ASSET_BUNDLE_PATH", get_REMOTE_ASSET_BUNDLE_PATH, null);
-		L.RegVar("REMOTE_SCRIPT_BUNDLE_PATH", get_REMOTE_SCRIPT_BUNDLE_PATH, null);
+		L.RegVar("REMOTE_ASSET_BUNDLE_PATH", get_REMOTE_ASSET_BUNDLE_PATH, set_REMOTE_ASSET_BUNDLE_PATH);
+		L.RegVar("REMOTE_SCRIPT_BUNDLE_PATH", get_REMOTE_SCRIPT_BUNDLE_PATH, set_REMOTE_SCRIPT_BUNDLE_PATH);
 		L.RegVar("ACCOUNT_SERVER_IP", get_ACCOUNT_SERVER_IP, set_ACCOUNT_SERVER_IP);
 		L.RegVar("ACCOUNT_SERVER_PORT", get_ACCOUNT_SERVER_PORT, set_ACCOUNT_SERVER_PORT);
 		L.RegVar("NEWEST_VERSION", get_NEWEST_VERSION, set_NEWEST_VERSION);
@@ -932,6 +932,36 @@ public class NCSpeedLight_ConstantsWrap
 		{
 			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
 			NCSpeedLight.Constants.MINIOR_VERSION = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_REMOTE_ASSET_BUNDLE_PATH(IntPtr L)
+	{
+		try
+		{
+			string arg0 = ToLua.CheckString(L, 2);
+			NCSpeedLight.Constants.REMOTE_ASSET_BUNDLE_PATH = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_REMOTE_SCRIPT_BUNDLE_PATH(IntPtr L)
+	{
+		try
+		{
+			string arg0 = ToLua.CheckString(L, 2);
+			NCSpeedLight.Constants.REMOTE_SCRIPT_BUNDLE_PATH = arg0;
 			return 0;
 		}
 		catch(Exception e)

@@ -8,7 +8,7 @@
 -- Modify History:
 --
 -----------------------------------------------
-StandardDialogOption =
+ConfirmDialogOption =
 {
 	Title = "提示",
 	TitleFontSize = 35,
@@ -20,10 +20,10 @@ StandardDialogOption =
 	OnClickOK = nil,
 	OnClickCancel = nil,
 }
-StandardDialogOption.__index = StandardDialogOption;
-function StandardDialogOption.New(title, content, doubleButton, onClickOK, onClickCancel)
+ConfirmDialogOption.__index = ConfirmDialogOption;
+function ConfirmDialogOption.New(title, content, doubleButton, onClickOK, onClickCancel)
 	local obj = {};
-	setmetatable(obj, StandardDialogOption);
+	setmetatable(obj, ConfirmDialogOption);
 	obj.Title = title;
 	obj.Content = content;
 	obj.DoubleButton = doubleButton;
@@ -168,18 +168,18 @@ function UIManager.CloseAllWindowsExcept(...)
 	end
 end
 
-function UIManager.OpenStandardDialog(option)
+function UIManager.OpenConfirmDialog(option)
 	if option == nil then
-		Log.Error('Can not open standardDialog,please input option.');
+		Log.Error('Can not open ConfirmDialog,please input option.');
 		return;
 	end
-	if UIManager.StandardDialog == nil then
-		local assetPath = "Bundle/Prefab/UI/Dialog/StandardDialog";
+	if UIManager.ConfirmDialog == nil then
+		local assetPath = "Bundle/Prefab/UI/Dialog/UI_Confirm";
 		local go = AssetManager.LoadAsset(assetPath, typeof(UnityEngine.GameObject));
 		go = UIManager.SetupDialog(go);
-		UIManager.StandardDialog = go;
+		UIManager.ConfirmDialog = go;
 	end
-	local dialog = UIManager.StandardDialog;
+	local dialog = UIManager.ConfirmDialog;
 	if dialog ~= nil then
 		local titleSprite = dialog.transform:Find("BG/Title"):GetComponent(typeof(UISprite));
 		local contentLabel = dialog.transform:Find("Label_Content"):GetComponent(typeof(UILabel));
@@ -204,14 +204,14 @@ function UIManager.OpenStandardDialog(option)
 			NCSpeedLight.UIHelper.SetActiveState(dialog.transform, "SingleBtn", false);
 			NCSpeedLight.UIHelper.SetButtonEvent(dialog.transform, "DoubleBtn/OK",
 			function(go)
-				UIManager.CloseStandardDialog();
+				UIManager.CloseConfirmDialog();
 				if option.OnClickOK ~= nil then
 					option.OnClickOK(nil);
 				end
 			end);
 			NCSpeedLight.UIHelper.SetButtonEvent(dialog.transform, "DoubleBtn/Cancel",
 			function(go)
-				UIManager.CloseStandardDialog();
+				UIManager.CloseConfirmDialog();
 				if option.OnClickCancel ~= nil then
 					option.OnClickCancel(nil);
 				end
@@ -221,7 +221,7 @@ function UIManager.OpenStandardDialog(option)
 			NCSpeedLight.UIHelper.SetActiveState(dialog.transform, "SingleBtn", true);
 			NCSpeedLight.UIHelper.SetButtonEvent(dialog.transform, "SingleBtn/OK",
 			function(go)
-				UIManager.CloseStandardDialog();
+				UIManager.CloseConfirmDialog();
 				if option.OnClickOK ~= nil then
 					option.OnClickOK(nil);
 				end
@@ -231,9 +231,9 @@ function UIManager.OpenStandardDialog(option)
 	end
 end
 
-function UIManager.CloseStandardDialog()
-	if UIManager.StandardDialog ~= nil then
-		UIManager.StandardDialog:SetActive(false);
+function UIManager.CloseConfirmDialog()
+	if UIManager.ConfirmDialog ~= nil then
+		UIManager.ConfirmDialog:SetActive(false);
 	end
 end
 
@@ -243,7 +243,7 @@ function UIManager.OpenProgressDialog(option)
 		return;
 	end
 	if UIManager.ProgressDialog == nil then
-		local assetPath = "Bundle/Prefab/UI/Dialog/ProgressDialog";
+		local assetPath = "Bundle/Prefab/UI/Dialog/UI_Progress";
 		local go = AssetManager.LoadAsset(assetPath, typeof(UnityEngine.GameObject));
 		go = UIManager.SetupDialog(go);
 		UIManager.ProgressDialog = go;
@@ -296,7 +296,7 @@ function UIManager.CloseProgressDialog()
 end
 
 function UIManager.OpenTipsDialog(content)
-	local assetPath = "Bundle/Prefab/UI/Dialog/TipsDialog";
+	local assetPath = "Bundle/Prefab/UI/Dialog/UI_Tips";
 	local go = AssetManager.LoadAsset(assetPath, typeof(UnityEngine.GameObject));
 	go = UIManager.SetupDialog(go);
 	if go ~= nil then

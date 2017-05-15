@@ -9,20 +9,10 @@
 --
 -----------------------------------------------
 require("NCSpeedLight.Modules.MaJiang.UI_MJPlayback")
-MJSceneStatus = {
-	-- 等待其他玩家
-	Waiting = 0,
-	-- 所有玩家就绪
-	AllReady = 1,
-	-- 游戏中
-	Game = 2,
-	-- 计算
-	Result = 3,
-}
 
 MJScene =
 {
-	Name = SceneType.MJScene,
+	Name = SceneName.MJScene,
 	
 	IsInitialized = false,
 	
@@ -46,9 +36,6 @@ MJScene =
 	-- 总结算信息
 	TotalResultInfo = nil,
 	
-	-- 当前场景的状态
-	Status = MJSceneStatus.Waiting,
-	
 	-- 聊天的历史记录
 	ChatHistory = nil,
 }
@@ -60,13 +47,12 @@ end
 
 function MJScene.Begin()
 	Log.Info("MJScene.Begin");
-	-- HallScene.CurrentFBRound = 0;
-	-- HallScene.CurrentFBFinishedRound = 0;
+	HallScene.SwitchFBStatus(FBStatus.WaitingPlayer);
 	if HallScene.CurrentFBPlaybackMode == false then
 		HallScene.CurrentFBTotalRound = HallScene.CurrentFBInfo.m_gameCount;
 	end
-	UIManager.OpenWindow(UIType.UI_SceneLoad);
-	AssetManager.LoadScene(SceneType.MJScene);
+	UIManager.OpenWindow(UIName.UI_SceneLoad);
+	AssetManager.LoadScene(SceneName.MJScene);
 	MJScene.Players = {};
 	ChatHistory = {};
 end
@@ -81,13 +67,17 @@ function MJScene.End()
 	MJScene.LastOperator = nil;
 	HallScene.CurrentFBNeedReconnect = false;
 	HallScene.CurrentFBPlaybackMode = false;
+	HallScene.CurrentFBRound = 0;
+	HallScene.CurrentFBFinishedRound = 0;
 	Log.Info("MJScene.End");
 end
 
 function MJScene.OnSceneWasLoaded()
 	Log.Info("MJScene.OnSceneWasLoaded: now bein to open majiang ui and request game fb info or reconnect info.");
-	RongCloudAdapter.Initialize(MJScene.OnReceiveVoiceMsg);
-	UIManager.OpenWindow(UIType.UI_MaJiang);
+	if HallScene.CurrentFBPlaybackMode == false then
+		RongCloudAdapter.Initialize(MJScene.OnReceiveVoiceMsg);
+	end
+	UIManager.OpenWindow(UIName.UI_MaJiang);
 	MJScene.RegisterNetEvent();
 	if HallScene.CurrentFBPlaybackMode == false then
 		if HallScene.CurrentFBNeedReconnect then
@@ -441,12 +431,13 @@ function MJScene.ReturnGamePlayerInfo(evt)
 			if playerEntry.m_RoleData.m_Roleid == Player.ID then
 				hero = MJPlayer.New();
 				MJPlayer.Hero = hero;
-				local name = playerEntry.m_RoleData.m_NickName;
-				if string.len(name) == 0 then
-					name = playerEntry.m_RoleData.m_Name;
+				local nickName = playerEntry.m_RoleData.m_NickName;
+				if string.len(nickName) == 0 then
+					nickName = playerEntry.m_RoleData.m_Name;
 				end
 				hero:SetData(playerEntry.m_RoleData.m_Roleid,
-				name,
+				playerEntry.m_RoleData.m_Name,
+				nickName,
 				playerEntry.m_RoleData.m_HeadPhotoUrl,
 				playerEntry.m_RoleData.m_Sex,
 				playerEntry.m_RoleData.m_Postion,
@@ -458,7 +449,6 @@ function MJScene.ReturnGamePlayerInfo(evt)
 				
 				if HallScene.CurrentFBPlaybackMode == false then
 					hero:SetUI();
-					hero:SetCardDisplayParam();
 				end
 				
 				MJScene.AddPlayer(hero);
@@ -473,12 +463,13 @@ function MJScene.ReturnGamePlayerInfo(evt)
 			local player = MJScene.GetPlayerByID(playerEntry.m_RoleData.m_Roleid);
 			if player == nil then
 				player = MJPlayer.New();
-				local name = playerEntry.m_RoleData.m_NickName;
-				if string.len(name) == 0 then
-					name = playerEntry.m_RoleData.m_Name;
+				local nickName = playerEntry.m_RoleData.m_NickName;
+				if string.len(nickName) == 0 then
+					nickName = playerEntry.m_RoleData.m_Name;
 				end
 				player:SetData(playerEntry.m_RoleData.m_Roleid,
-				name,
+				playerEntry.m_RoleData.m_Name,
+				nickName,
 				playerEntry.m_RoleData.m_HeadPhotoUrl,
 				playerEntry.m_RoleData.m_Sex,
 				playerEntry.m_RoleData.m_Postion,
@@ -490,7 +481,6 @@ function MJScene.ReturnGamePlayerInfo(evt)
 				
 				if HallScene.CurrentFBPlaybackMode == false then
 					player:SetUI();
-					player:SetCardDisplayParam();
 				end
 				
 				MJScene.AddPlayer(player);
@@ -500,7 +490,7 @@ function MJScene.ReturnGamePlayerInfo(evt)
 	end
 	MJScene.SetupMaster();
 	MJSceneController.SetupPlayWay();
-	UIManager.CloseAllWindowsExcept(UIType.UI_MaJiang);
+	UIManager.CloseAllWindowsExcept(UIName.UI_MaJiang);
 end
 
 -- 收到断线重连信息
@@ -549,9 +539,9 @@ function MJScene.ReturnReconnectInfo(evt)
 		Log.Info("MJScene.ReturnReconnectInfo: 存在结算信息");
 	end
 	
-	HallScene.CurrentFBBankerPosition = msg.m_bankerPos;
-	HallScene.CurrentFBMasterID = msg.m_RoomMasterID;
-	MJScene.DiceNumbers = msg.m_saizi;
+	HallScene.CurrentFBBankerPosition = msg.m_bankerPos; -- 庄家的位置
+	HallScene.CurrentFBMasterID = msg.m_RoomMasterID; -- 房主的位置
+	MJScene.DiceNumbers = msg.m_saizi; -- 骰子的点数
 	MJScene.GetCardRoleID = msg.m_getCardId;
 	MJScene.GetCardNumber = msg.m_getCardNum;
 	HallScene.CurrentFBPlayway = msg.m_fbplayway;
@@ -561,7 +551,7 @@ function MJScene.ReturnReconnectInfo(evt)
 	if HallScene.CurrentFBFinishedRound < 0 then
 		HallScene.CurrentFBFinishedRound = 0;
 	end
-	
+	HallScene.CurrentFBCloseTime = msg.m_closeRoomLeftTime;
 	
 	-- player 为空，则代表当前场景内没有玩家，这时开始创建玩家
 	if MJScene.GetPlayerCount() == 0 then
@@ -571,12 +561,13 @@ function MJScene.ReturnReconnectInfo(evt)
 			if data.m_roleid == Player.ID then
 				local player = MJPlayer.New();
 				MJPlayer.Hero = player;
-				local name = data.m_NickName;
-				if string.len(name) == 0 then
-					name = data.m_Name;
+				local nickName = data.m_NickName;
+				if string.len(nickName) == 0 then
+					nickName = data.m_Name;
 				end
 				player:SetData(data.m_roleid,
-				name,
+				data.m_Name,
+				nickName,
 				data.m_HeadPhotoUrl,
 				data.m_Sex,
 				data.m_Postion,
@@ -586,7 +577,6 @@ function MJScene.ReturnReconnectInfo(evt)
 				data.m_Latitude,
 				data.m_reallyPos);
 				player:SetUI(true);
-				player:SetCardDisplayParam();
 				MJScene.AddPlayer(player);
 				Log.Info("MJScene.ReturnReconnectInfo: Create hero id is " .. player.ID .. ",server position is " .. player.ServerPosition);
 			end
@@ -598,12 +588,13 @@ function MJScene.ReturnReconnectInfo(evt)
 			local player = MJScene.GetPlayerByID(data.m_roleid);
 			if player == nil then
 				player = MJPlayer.New();
-				local name = data.m_NickName;
-				if string.len(name) == 0 then
-					name = data.m_Name;
+				local nickName = data.m_NickName;
+				if string.len(nickName) == 0 then
+					nickName = data.m_Name;
 				end
 				player:SetData(data.m_roleid,
-				name,
+				data.m_Name,
+				nickName,
 				data.m_HeadPhotoUrl,
 				data.m_Sex,
 				data.m_Postion,
@@ -613,7 +604,6 @@ function MJScene.ReturnReconnectInfo(evt)
 				data.m_Latitude,
 				data.m_reallyPos);
 				player:SetUI();
-				player:SetCardDisplayParam();
 				MJScene.AddPlayer(player);
 				Log.Info("MJScene.ReturnReconnectInfo: Create player id is " .. player.ID .. ",server position is " .. player.ServerPosition);
 			end
@@ -624,12 +614,13 @@ function MJScene.ReturnReconnectInfo(evt)
 			local data = msg.m_AllData[i];
 			local player = MJScene.GetPlayerByID(data.m_roleid);
 			if player ~= nil then
-				local name = data.m_NickName;
-				if string.len(name) == 0 then
-					name = data.m_Name;
+				local nickName = data.m_NickName;
+				if string.len(nickName) == 0 then
+					nickName = data.m_Name;
 				end
 				player:SetData(data.m_roleid,
-				name,
+				data.m_Name,
+				nickName,
 				data.m_HeadPhotoUrl,
 				data.m_Sex,
 				data.m_Postion,
@@ -639,18 +630,23 @@ function MJScene.ReturnReconnectInfo(evt)
 				data.m_Latitude,
 				data.m_reallyPos);
 				player:SetUI();
-				player:SetCardDisplayParam();
 			end
 		end
 	end
 	
+	-- 设置庄家
 	MJScene.SetupBanker();
+	
+	-- 设置房主
 	MJScene.SetupMaster();
+	
+	-- 设置玩法
 	MJSceneController.SetupPlayWay();
+	
 	if msg.m_FreeCard == MJDefine.TOTAL_CARD_COUNT then
 		-- 对局还没开始
 		Log.Info("MJScene.ReturnReconnectInfo: 对局还没开始");
-		MJScene.Status = MJSceneStatus.Waiting;
+		HallScene.SwitchFBStatus(FBStatus.WaitingPlayer);
 	else
 		MJPlayer.Hero:SetHandCards(msg.m_HandCard);
 		-- 设置庄家
@@ -658,6 +654,7 @@ function MJScene.ReturnReconnectInfo(evt)
 		UI_MaJiang.SetupReadyAndInvite(false, false, false);
 		MJSceneController.SetupDicePanelDirection();
 		if msg.m_rollCount < MJDefine.MAX_CAST_DICE_NUMBER then
+			HallScene.SwitchFBStatus(FBStatus.WaitingCastDice);
 			-- 已经收到手牌信息了,但还没骰子骰子
 			Log.Info("MJScene.ReturnReconnectInfo: 已经收到手牌信息了,掷骰子的次数还没达到最大值，当前次数：" .. tostring(msg.m_rollCount) .. ",最大值：" .. tostring(MJDefine.MAX_CAST_DICE_NUMBER));
 			for key, value in pairs(MJScene.Players) do
@@ -669,6 +666,7 @@ function MJScene.ReturnReconnectInfo(evt)
 			-- 隐藏
 			MJSceneController.SetGroupCardActive(false);
 		else
+			HallScene.SwitchFBStatus(FBStatus.Playing);
 			-- 已经收到手牌信息了,正在对局中
 			Log.Info("MJScene.ReturnReconnectInfo: 已经收到手牌信息了,正在对局中");
 			-- 设置当前玩家以及上一个玩家
@@ -679,7 +677,7 @@ function MJScene.ReturnReconnectInfo(evt)
 				MJScene.CurrentOperator:PlayUIScaleAndDicePanelGrow(true);
 			end
 			-- 设置当前回合的显示
-			HallScene.CurrentFBRound = HallScene.CurrentFBRound + 1;
+			-- HallScene.CurrentFBRound = HallScene.CurrentFBRound + 1;
 			UI_MaJiang.SetupCurrentRound();
 			-- 直接显示牌墩，不播放动画
 			MJSceneController.SetGroupCardActive(true);
@@ -700,25 +698,25 @@ function MJScene.ReturnReconnectInfo(evt)
 					local operateData = reconnectPlayerData.m_FunHandCardList[j];
 					if operateData.m_OperatorType == MaJiangOperatorType.MJOT_AN_GANG then
 						popRearCount = popRearCount + 1;
-						player:PutAnGangCardWhenReconnect(operateData);
+						player.UI:PutAnGangCardWhenReconnect(operateData);
 						player:AddOperateTotalCount();
 					elseif operateData.m_OperatorType == MaJiangOperatorType.MJOT_GANG then
 						popRearCount = popRearCount + 1;
-						player:PutGangCardWhenReconnect(operateData);
+						player.UI:PutGangCardWhenReconnect(operateData);
 						player:AddOperateTotalCount();
 					elseif operateData.m_OperatorType == MaJiangOperatorType.MJOT_BuGang then
 						popRearCount = popRearCount + 1;
-						player:PutBuGangCardWhenReconnect(operateData);
+						player.UI:PutBuGangCardWhenReconnect(operateData);
 					elseif operateData.m_OperatorType == MaJiangOperatorType.MJOT_PENG then
-						player:PutPengCardWhenReconnect(operateData);
+						player.UI:PutPengCardWhenReconnect(operateData);
 						player:AddOperateTotalCount();
 					end
 				end
 				for j = 1, #reconnectPlayerData.m_OutHandCard do
 					local card = reconnectPlayerData.m_OutHandCard[j];
 					local tableCard = MJSceneController.GetOneUnuseCard(card.m_Index, card.m_Type, player.ID);
-					local cardPos = player:GetTableCardPos(player.TableCardCount);
-					tableCard:Show(cardPos, player.TableCardRotation);
+					local cardPos = player.UI:GetTableCardPos(player.TableCardCount);
+					tableCard:Show(cardPos, player.UI.TableCardRotation);
 					player:AddTableCardCount();
 				end
 				MJGroupCardQueue.PopFront(popFrontCount);
@@ -732,7 +730,30 @@ function MJScene.ReturnReconnectInfo(evt)
 			end
 		end
 	end
-	UIManager.CloseAllWindowsExcept(UIType.UI_MaJiang);
+	UIManager.CloseAllWindowsExcept(UIName.UI_MaJiang);
+	
+	if #msg.m_CloseRoomData > 0 then
+		Log.Info("MJScene.ReturnReconnectInfo: 存在" .. tostring(#msg.m_CloseRoomData) .. "条解散房间信息。");
+		UIManager.OpenWindow(UIName.UI_MJRequestDissolve);
+		UI_MJRequestDissolve.OnReconnect(msg.m_CloseRoomData);
+	else
+		Log.Info("MJScene.ReturnReconnectInfo: 不存在解散房间信息。");
+	end
+	
+	if msg.m_huOperatorData.m_huRoleid ~= - 1 then
+		Log.Info("MJScene.ReturnReconnectInfo: 存在结算信息");
+		HallScene.SwitchFBStatus(FBStatus.FinishedRound);
+		HallScene.CurrentFBFinishedRound = HallScene.CurrentFBFinishedRound + 1;
+		MJScene.CurrentResultInfo = msg.m_huOperatorData;
+		if	MJScene.CurrentResultInfo.m_huRoleid == 0 then
+			UIManager.OpenWindow(UIName.UI_MJDraw);
+		else
+			UIManager.OpenWindow(UIName.UI_MJResult);
+		end
+	else
+		Log.Info("MJScene.ReturnReconnectInfo: 不存在结算信息");
+	end
+	
 end
 
 function MJScene.ReturnHandCardInfo(evt)
@@ -756,7 +777,6 @@ function MJScene.ReturnHandCardInfo(evt)
 			local handCardInfo = msg.m_handCardData[i];
 			local player = MJScene.GetPlayerByID(handCardInfo.m_roleid);
 			player:SetUI(true);
-			player:SetCardDisplayParam();
 			player:SetHandCards(handCardInfo.m_HandCard);
 		end
 		
@@ -900,6 +920,7 @@ function MJScene.NotifyOneReady(evt)
 end
 
 function MJScene.ReturnAllReady(evt)
+	HallScene.SwitchFBStatus(FBStatus.WaitingCastDice);
 	HallScene.CurrentFBRound = HallScene.CurrentFBRound + 1;
 	UI_MaJiang.SetupCurrentRound();
 	Log.Info("MJScene.ReturnAllReady: 所有玩家就绪,第【" .. tostring(HallScene.CurrentFBRound) .. "】回合开始");
@@ -917,14 +938,14 @@ function MJScene.ReturnPlayerHu(evt)
 		Log.Error("MJScene.ReturnPlayerHu: parse msg error," .. PBMessage.GM_HUOperator);
 		return;
 	end
+	HallScene.SwitchFBStatus(FBStatus.FinishedRound);
 	Log.Info("MJScene.ReturnPlayerHu: hu role id is " .. msg.m_huRoleid);
 	HallScene.CurrentFBFinishedRound = HallScene.CurrentFBFinishedRound + 1;
 	MJScene.CurrentResultInfo = msg;
 	if msg.m_huRoleid == 0 then
-		UIManager.OpenWindow(UIType.UI_MJDraw);
+		UIManager.OpenWindow(UIName.UI_MJDraw);
 	else
-		UIManager.OpenWindow(UIType.UI_MJResult);
-		-- if msg.
+		UIManager.OpenWindow(UIName.UI_MJResult);
 	end
 end
 
@@ -978,8 +999,8 @@ function MJScene.NotifyDissolveRoom(evt)
 		end
 		return;
 	end
-	UIManager.OpenWindow(UIType.UI_DissolveRoom);
-	UI_DissolveRoom.DissolveID = msg.m_Result;
+	UIManager.OpenWindow(UIName.UI_MJRequestDissolve);
+	UI_MJRequestDissolve.DissolveID = msg.m_Result;
 end
 
 function MJScene.ChooseDissolveRoom(evt)
@@ -987,21 +1008,43 @@ function MJScene.ChooseDissolveRoom(evt)
 end
 
 function MJScene.ReturnRoomMasterDissolve(evt)
-	Log.Info("MJScene.ReturnRoomMasterDissolve");
-	local option = StandardDialogOption:New();
-	option.OnClickOK =
-	function()
-		UIManager.CloseWindow(UIType.UI_DissolveRoom);
-		if HallScene.CurrentFBRound > 1 then
-			UIManager.OpenWindow(UIType.UI_MJTotalResult);
-		else
-			SceneManager.GotoScene(SceneType.HallScene);
+	local msg = NetManager.DecodeMsg(PBMessage.GM_Request, evt);
+	if msg == false then
+		Log.Error("MJScene.ReturnRoomMasterDissolve: parse msg error: " .. PBMessage.GM_Result);
+		return;
+	end
+	Log.Info("MJScene.ReturnRoomMasterDissolve: msg.request is " .. tostring(msg.request));
+	if msg.request == 0 then
+		local option = ConfirmDialogOption:New();
+		option.OnClickOK =
+		function()
+			UIManager.CloseWindow(UIName.UI_MJRequestDissolve);
+			if HallScene.CurrentFBRound > 1 then
+				UIManager.OpenWindow(UIName.UI_MJTotalResult);
+			else
+				SceneManager.Goto(SceneName.HallScene);
+			end
+		end;
+		option.DoubleButton = false;
+		option.Content = "房间已解散,点击确定退出房间";
+		option.Title = "提  示";
+		UIManager.OpenConfirmDialog(option);
+	elseif msg.request == 3 then
+		UIManager.CloseAllWindowsExcept(UIName.UI_MaJiang);
+		local option = ConfirmDialogOption:New();
+		option.DoubleButton = false;
+		option.Content = "房间已解散,点击确定退出房间";
+		option.Title = "提  示";
+		local content = "[9F2D38]因玩家";
+		for key, value in pairs(UI_MJRequestDissolve.Status) do
+			if value == 1 then
+				content = content .. "【" .. key.Name .. "】";
+			end
 		end
-	end;
-	option.DoubleButton = false;
-	option.Content = "房间已解散,点击确定退出房间";
-	option.Title = "提  示";
-	UIManager.OpenStandardDialog(option);
+		content = content .. "不同意，解散失败[-]";
+		option.Content = content;
+		UIManager.OpenConfirmDialog(option);
+	end
 end
 
 function MJScene.ReturnShowLastResult(evt)
@@ -1025,7 +1068,7 @@ function MJScene.ReturnCastDice(evt)
 		return;
 	end
 	Log.Info("MJScene.ReturnCastDice: dice number is : " .. msg.m_pos);
-	
+	HallScene.SwitchFBStatus(FBStatus.Playing);
 	
 	-- 设置墩牌
 	local fromPlayer = MJScene.GetPlayerByID(MJScene.GetCardRoleID);

@@ -142,7 +142,6 @@ namespace NCSpeedLight
             if (sprite != null)
             {
                 sprite.spriteName = spriteName;
-                sprite.MakePixelPerfect();
                 return sprite;
             }
             return null;

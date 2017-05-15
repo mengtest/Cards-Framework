@@ -61,10 +61,10 @@ function SceneManager.RegisterScene(scene)
 	scene.Initialize();
 end
 
-function SceneManager.GotoScene(name)
+function SceneManager.Goto(name)
 	local scene = SceneManager.Scenes[name];
 	if scene == nil then
-		Log.Error("SceneManager.GotoScene: can not GotoScene caused by nil scene,name is " .. name);
+		Log.Error("SceneManager.Goto: can not go to scene caused by nil scene,name is " .. name);
 		return;
 	end
 	if scene == SceneManager.NextScene then
@@ -77,6 +77,6 @@ function SceneManager.GotoScene(name)
 		SceneManager.LastScene = SceneManager.CurrentScene;
 		SceneManager.NextScene = scene;
 	else
-		Log.Error("SceneManager.GotoScene: can not go to same scene,name is " .. name);
+		Log.Error("SceneManager.Goto: can not go to same scene,name is " .. name);
 	end
 end

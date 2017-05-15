@@ -84,13 +84,13 @@ namespace NCSpeedLight
                 LateUpdateFunction.Call();
             }
         }
-        private void OnGUI()
-        {
-            if (isLuaOK && OnGUIFunction != null)
-            {
-                OnGUIFunction.Call();
-            }
-        }
+        //private void OnGUI()
+        //{
+        //    if (isLuaOK && OnGUIFunction != null)
+        //    {
+        //        OnGUIFunction.Call();
+        //    }
+        //}
         private void OnDestroy()
         {
             if (isLuaOK && OnDestroyFunction != null)

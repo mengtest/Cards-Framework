@@ -51,8 +51,8 @@ function UI_Register.OnDestroy()
 end
 
 function UI_Register.onClickBack(go)
-	UIManager.CloseWindow(UIType.UI_Register);
-	UIManager.OpenWindow(UIType.UI_NormalLogin);
+	UIManager.CloseWindow(UIName.UI_Register);
+	UIManager.OpenWindow(UIName.UI_NormalLogin);
 end
 
 function UI_Register.onClickSubmit(go)

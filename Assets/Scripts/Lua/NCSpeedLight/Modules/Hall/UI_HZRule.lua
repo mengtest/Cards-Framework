@@ -12,7 +12,7 @@ end
 
 function UI_HZRule.Start()
 	UIHelper.SetButtonEvent(this.transform, "Close", function()
-		UIManager.CloseWindow(UIType.UI_HZRule);
+		UIManager.CloseWindow(UIName.UI_HZRule);
 	end);
 end
 

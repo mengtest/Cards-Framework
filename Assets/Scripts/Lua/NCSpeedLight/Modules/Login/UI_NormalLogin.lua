@@ -70,8 +70,8 @@ function onClickLogin(go)
 end
 
 function onClickRegister(go)
-	UIManager.CloseWindow(UIType.UI_NormalLogin);
-	UIManager.OpenWindow(UIType.UI_Register);
+	UIManager.CloseWindow(UIName.UI_NormalLogin);
+	UIManager.OpenWindow(UIName.UI_Register);
 end
 
 function onClickArrow(go)
