@@ -35,7 +35,7 @@ require "NCSpeedLight.Modules.MaJiang.MJPlayer"
 require "NCSpeedLight.Modules.MaJiang.MJTableCard"
 require "NCSpeedLight.Modules.MaJiang.MJPaidunCtrl"
 require "NCSpeedLight.Modules.MaJiang.UI_MJOperate"
-require "NCSpeedLight.Modules.MaJiang.MJSceneController"
+require "NCSpeedLight.Modules.MaJiang.MJDeskCtrl"
 require "NCSpeedLight.Modules.MaJiang.MJDefine"
 
 Game =

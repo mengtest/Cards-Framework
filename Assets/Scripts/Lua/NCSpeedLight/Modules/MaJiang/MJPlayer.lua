@@ -191,7 +191,7 @@ end
 -- 重置
 function MJPlayer:Reset()
 	if self:IsHero() == false then
-		local handCardTrans = MJSceneController.transform:Find("majiangzhuo/backCard/" .. self.UITransform.name);
+		local handCardTrans = MJDeskCtrl.transform:Find("backCard/" .. self.UITransform.name);
 		if handCardTrans ~= nil then
 			handCardTrans.gameObject:SetActive(false);
 		end
@@ -480,7 +480,7 @@ function MJPlayer:MJOT_CHI(data)
 	self.ChiCount = self.ChiCount + 1;
 	self.PutChiCard(data);
 	self:AddOperateTotalCount();
-	MJSceneController.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_CHI);
+	MJDeskCtrl.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_CHI);
 end
 
 --勺
@@ -500,7 +500,7 @@ function MJPlayer:MJOT_PENG(data)
 	self:AddOperateTotalCount();
 	self.UI:UpdateCards(true, false);
 	self:SubHandCardCount(2);
-	MJSceneController.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_PENG);
+	MJDeskCtrl.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_PENG);
 end
 
 --杠
@@ -516,7 +516,7 @@ function MJPlayer:MJOT_GANG(data)
 	self:AddOperateTotalCount();
 	self.UI:UpdateCards(true, false);
 	self:SubHandCardCount(3);
-	MJSceneController.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_GANG);
+	MJDeskCtrl.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_GANG);
 end
 
 --暗杠
@@ -532,7 +532,7 @@ function MJPlayer:MJOT_AN_GANG(data)
 	self:AddOperateTotalCount();
 	self.UI:UpdateCards(true, false);
 	self:SubHandCardCount(4);
-	MJSceneController.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_AN_GANG);
+	MJDeskCtrl.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_AN_GANG);
 end
 
 --补杠
@@ -546,7 +546,7 @@ function MJPlayer:MJOT_BuGang(data)
 	self.UI:UpdateCards(true, false);
 	self.UI:PutBuGangCard(data);
 	self:SubHandCardCount(1);
-	MJSceneController.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_BuGang);
+	MJDeskCtrl.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_BuGang);
 end
 
 --过
@@ -555,7 +555,7 @@ end
 
 --胡
 function MJPlayer:MJOT_HU(data)
-	MJSceneController.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_HU);
+	MJDeskCtrl.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_HU);
 end
 
 --定胡

@@ -32,7 +32,7 @@ function MJPaidunCtrl.Initialize(groupNum, index)
 	local tempCards = {};
 	for i = 0, 3 do
 		local tempName = MJPaidunNameEnum.ToString(i);
-		local trans = MJSceneController.transform:Find("majiangzhuo/" .. tempName);
+		local trans = MJDeskCtrl.transform:Find(tempName);
 		for j = 0, trans.childCount - 1 do
 			local trans = trans:GetChild(j);
 			trans.gameObject:SetActive(true);
