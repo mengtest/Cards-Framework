@@ -33,7 +33,7 @@ require "NCSpeedLight.Modules.Hall.HallScene"
 require "NCSpeedLight.Modules.MaJiang.MJScene"
 require "NCSpeedLight.Modules.MaJiang.MJPlayer"
 require "NCSpeedLight.Modules.MaJiang.MJTableCard"
-require "NCSpeedLight.Modules.MaJiang.MJGroupCardQueue"
+require "NCSpeedLight.Modules.MaJiang.MJPaidunCtrl"
 require "NCSpeedLight.Modules.MaJiang.UI_MJOperate"
 require "NCSpeedLight.Modules.MaJiang.MJSceneController"
 require "NCSpeedLight.Modules.MaJiang.MJDefine"
@@ -73,8 +73,8 @@ end
 -- if UnityEngine.GUI.Button(UnityEngine.Rect(10, 50, 150, 30), "TestReconnect.SendMsg") then
 -- 	TestReconnect.SendMsg();
 -- end
--- if UnityEngine.GUI.Button(UnityEngine.Rect(10, 90, 150, 30), "MJGroupCardQueue.PopRear") then
--- 	MJGroupCardQueue.PopRear();
+-- if UnityEngine.GUI.Button(UnityEngine.Rect(10, 90, 150, 30), "MJPaidunCtrl.InactiveRear") then
+-- 	MJPaidunCtrl.InactiveRear();
 -- end
 -- if UnityEngine.GUI.Button(UnityEngine.Rect(10, 10, 150, 30), "Open MJ Draw") then
 -- 	UIManager.OpenWindow(UIName.UI_MJDraw);

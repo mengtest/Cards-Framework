@@ -20,6 +20,8 @@ UI_MaJiang = {
 	UI_Player2,
 	UI_Player3,
 	CurrentTime = nil,
+	OperateTime = 15, -- 操作的倒计时
+	OperateCountdownFunc = nil,
 	IsOpenChat = false,
 	IsRecording = false, -- 是否正在录音
 	RecordStartPos = Vector3.zero,
@@ -559,4 +561,32 @@ end
 function UI_MaJiang.SetChatActive(status)
 	UI_MaJiang.IsOpenChat = status;
 	UIHelper.SetActiveState(this.transform, "bottom/right/Chat", status);
+end
+
+-- 启动操作倒计时
+function UI_MaJiang.StartOperateCountdown()
+	UIHelper.SetActiveState(this.transform, "center/Time", true);
+	UIHelper.SetActiveState(this.transform, "center/OperatorPrompt", false);
+	coroutine.stop(UI_MaJiang.OperateCountdownFunc);
+	UI_MaJiang.OperateCountdownFunc = coroutine.start(function()
+		for i = 1, UI_MaJiang.OperateTime do
+			local time = UI_MaJiang.OperateTime - i;
+			local timeStr = tostring(time);
+			local timeStr1 = "0";
+			local timeStr2 = "0";
+			if time >= 10 then
+				timeStr1 = string.sub(timeStr, 1, 1);
+				timeStr2 = string.sub(timeStr, 2, 2);
+			else
+				timeStr1 = "0";
+				timeStr2 = string.sub(timeStr, 1, 1);
+			end
+			UIHelper.SetSpriteName(this.transform, "center/Time/1", timeStr1);
+			UIHelper.SetSpriteName(this.transform, "center/Time/2", timeStr2);
+			coroutine.wait(1);
+		end
+		if MJPlayer.IsHero(MJScene.CurrentOperator) then
+			UIHelper.SetActiveState(this.transform, "center/OperatorPrompt", true);
+		end
+	end);
 end 

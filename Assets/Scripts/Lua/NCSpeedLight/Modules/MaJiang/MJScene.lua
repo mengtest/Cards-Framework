@@ -223,10 +223,12 @@ end
 
 -- 设置庄家
 function MJScene.SetupBanker()
-	for key, value in pairs(MJScene.Players) do
-		if value.ServerPosition == HallScene.CurrentFBBankerPosition then
-			MJPlayer.Banker = value;
+	for i = 1, #MJScene.Players do
+		local player = MJScene.Players[i];
+		if player.ServerPosition == HallScene.CurrentFBBankerPosition then
+			MJPlayer.Banker = player;
 		end
+		UI_MJPlayer.SetBanker(player.UI);
 	end
 end
 
@@ -279,17 +281,17 @@ function MJScene.IsMyTurn()
 end
 
 -- 获取当前麻将的玩法
-function MJScene.GetMJPlayWayStr()
+function MJScene.GetMJPlaywayStr()
 	local playway = "";
 	if HallScene.CurrentFBPlayway == nil then
-		Log.Info("MJScene.GetMJPlayWayStr: error,HallScene.CurrentFBPlayway is nil.");
+		Log.Info("MJScene.GetMJPlaywayStr: error,HallScene.CurrentFBPlayway is nil.");
 	end
 	local playwayType = Utility.SplitString(HallScene.CurrentFBPlayway, ",");
 	for i = 1, #playwayType do
 		local playwayEnum = MJPlayWay.ToString(tonumber(playwayType[i]));
 		local str = MJPlayWayStr[playwayEnum];
 		if str == nil then
-			Log.Info("MJScene.GetMJPlayWayStr: error,playway str is " .. HallScene.CurrentFBPlayway);
+			Log.Info("MJScene.GetMJPlaywayStr: error,playway str is " .. HallScene.CurrentFBPlayway);
 		else
 		end
 		playway = playway .. MJPlayWayStr[MJPlayWay.ToString(tonumber(playwayType[i]))];
@@ -634,9 +636,6 @@ function MJScene.ReturnReconnectInfo(evt)
 		end
 	end
 	
-	-- 设置庄家
-	MJScene.SetupBanker();
-	
 	-- 设置房主
 	MJScene.SetupMaster();
 	
@@ -648,10 +647,18 @@ function MJScene.ReturnReconnectInfo(evt)
 		Log.Info("MJScene.ReturnReconnectInfo: 对局还没开始");
 		HallScene.SwitchFBStatus(FBStatus.WaitingPlayer);
 	else
+		-- 设置自己的手牌信息
 		MJPlayer.Hero:SetHandCards(msg.m_HandCard);
 		-- 设置庄家
 		MJScene.SetupBanker();
+		-- 隐藏准备等按钮
 		UI_MaJiang.SetupReadyAndInvite(false, false, false);
+		-- 计算玩家的本地位置
+		for i = 1, #MJScene.Players do
+			local player = MJScene.Players[i];
+			MJPlayer.ComputeClientPosition(player);
+		end
+		-- 设置骰子面板的朝向
 		MJSceneController.SetupDicePanelDirection();
 		if msg.m_rollCount < MJDefine.MAX_CAST_DICE_NUMBER then
 			HallScene.SwitchFBStatus(FBStatus.WaitingCastDice);
@@ -674,7 +681,8 @@ function MJScene.ReturnReconnectInfo(evt)
 			if msg.m_sendCardID ~= 0 then
 				-- 有可能是等待玩家吃碰杠操作
 				MJScene.CurrentOperator = MJScene.GetPlayerByID(msg.m_sendCardID);
-				MJScene.CurrentOperator:PlayUIScaleAndDicePanelGrow(true);
+				UI_MJPlayer.PlayUIScaleAndDicePanelGrow(MJScene.CurrentOperator.UI, true);
+				UI_MaJiang.StartOperateCountdown();
 			end
 			-- 设置当前回合的显示
 			-- HallScene.CurrentFBRound = HallScene.CurrentFBRound + 1;
@@ -683,11 +691,11 @@ function MJScene.ReturnReconnectInfo(evt)
 			MJSceneController.SetGroupCardActive(true);
 			-- 设置牌墩
 			local fromPlayer = MJScene.GetPlayerByID(MJScene.GetCardRoleID);
-			Log.Info("MJScene.ReturnReconnectInfo: 从" .. fromPlayer:LogKey() .. "的第【" .. tostring(MJScene.GetCardNumber) .. "】墩开始抓牌");
-			MJGroupCardQueue.PushAll(fromPlayer.UIPosition, MJScene.GetCardNumber);
+			Log.Info("MJScene.ReturnReconnectInfo: 从" .. fromPlayer:LogTag() .. "的第【" .. tostring(MJScene.GetCardNumber) .. "】墩开始抓牌");
+			MJPaidunCtrl.Initialize(fromPlayer.UIPosition, MJScene.GetCardNumber);
 			-- 先隐藏所有初始抓了的牌
 			local totalInitialCardCount = msg.m_playerCount * MJDefine.XIAN_INITIAL_CARD_COUNT + 1;
-			MJGroupCardQueue.PopFront(totalInitialCardCount);
+			MJPaidunCtrl.InactiveFront(totalInitialCardCount);
 			for i = 1, #msg.m_AllData do
 				local reconnectPlayerData = msg.m_AllData[i];
 				local player = MJScene.GetPlayerByID(reconnectPlayerData.m_roleid);
@@ -719,8 +727,8 @@ function MJScene.ReturnReconnectInfo(evt)
 					tableCard:Show(cardPos, player.UI.TableCardRotation);
 					player:AddTableCardCount();
 				end
-				MJGroupCardQueue.PopFront(popFrontCount);
-				MJGroupCardQueue.PopRear(popRearCount);
+				MJPaidunCtrl.InactiveFront(popFrontCount);
+				MJPaidunCtrl.InactiveRear(popRearCount);
 				player:SetupReady(false);
 				if player == MJScene.CurrentOperator then
 					player.UI:UpdateCards(true, true);
@@ -759,6 +767,7 @@ end
 function MJScene.ReturnHandCardInfo(evt)
 	Log.Info("MJScene.ReturnHandCardInfo: playback mode " .. tostring(HallScene.CurrentFBPlaybackMode));
 	if HallScene.CurrentFBPlaybackMode then
+		-- 回放模式
 		local msg = NetManager.DecodeMsg(PBMessage.GMHandCard_PlayerBack, evt);
 		if msg == false then
 			Log.Error("MJScene.ReturnHandCardInfo: parse msg error," .. PBMessage.GMHandCard_PlayerBack);
@@ -813,6 +822,7 @@ function MJScene.ReturnHandCardInfo(evt)
 			value:StartGame();
 		end
 	else
+		-- 正常游戏模式
 		local msg = NetManager.DecodeMsg(PBMessage.GMHandCard, evt);
 		if msg == false then
 			Log.Error("MJScene.ReturnHandCardInfo: parse msg error," .. PBMessage.GMHandCard);
@@ -826,6 +836,11 @@ function MJScene.ReturnHandCardInfo(evt)
 		Log.Info("MJScene.ReturnHandCardInfo: 庄家的位置：" .. tostring(HallScene.CurrentFBBankerPosition));
 		-- 设置庄家
 		MJScene.SetupBanker();
+		-- 计算每个玩家的本地位置
+		for i = 1, #MJScene.Players do
+			local player = MJScene.Players[i];
+			MJPlayer.ComputeClientPosition(player);
+		end
 		-- 设置骰子面板的朝向
 		MJSceneController.SetupDicePanelDirection();
 		if MJPlayer.Hero:IsBanker() then
@@ -850,10 +865,12 @@ function MJScene.ReturnPlayerOutCard(evt)
 		MJScene.LastOperator = MJScene.CurrentOperator;
 		MJScene.CurrentOperator = player;
 		if MJScene.LastOperator ~= nil then
-			MJScene.LastOperator:PlayUIScaleAndDicePanelGrow(false);
+			UI_MJPlayer.PlayUIScaleAndDicePanelGrow(MJScene.LastOperator.UI, false);
 		end
-		MJScene.CurrentOperator:PlayUIScaleAndDicePanelGrow(true);
-		player:MJOT_BEGIN(msg);
+		UI_MJPlayer.PlayUIScaleAndDicePanelGrow(MJScene.CurrentOperator.UI, true);
+		
+		UI_MaJiang.StartOperateCountdown();
+		MJPlayer.MJOT_BEGIN(player, msg);
 	elseif msg.m_OperatorType == MaJiangOperatorType.MJOT_GetCard then
 		player:MJOT_GetCard(msg);
 	elseif msg.m_OperatorType == MaJiangOperatorType.MJOT_BuCard then
@@ -1072,8 +1089,8 @@ function MJScene.ReturnCastDice(evt)
 	
 	-- 设置墩牌
 	local fromPlayer = MJScene.GetPlayerByID(MJScene.GetCardRoleID);
-	Log.Info("MJScene.ReturnCastDice: 从" .. fromPlayer:LogKey() .. "的第【" .. tostring(MJScene.GetCardNumber) .. "】墩开始抓牌");
-	MJGroupCardQueue.PushAll(fromPlayer.UIPosition, MJScene.GetCardNumber);
+	Log.Info("MJScene.ReturnCastDice: 从" .. fromPlayer:LogTag() .. "的第【" .. tostring(MJScene.GetCardNumber) .. "】墩开始抓牌");
+	MJPaidunCtrl.Initialize(fromPlayer.UIPosition, MJScene.GetCardNumber);
 	
 	UI_MaJiang.SetupCastDice(false);
 	MJSceneController.PlayDiceAnimation(MJScene.DiceNumbers[1], MJScene.DiceNumbers[2], nil);
@@ -1090,7 +1107,7 @@ end
 
 -- 播放发牌效果
 function MJScene.PlaySendCardAnimation()
-	MJGroupCardQueue.PopFront(MJScene.GetPlayerCount() * 4);
+	MJPaidunCtrl.InactiveFront(MJScene.GetPlayerCount() * 4);
 	for key, value in pairs(MJScene.Players) do
 		if value:IsBanker() then
 			value:SetHandCardCount(MJDefine.BANKER_INITIAL_CARD_COUNT);
@@ -1101,19 +1118,19 @@ function MJScene.PlaySendCardAnimation()
 	end
 	WaitForSeconds(0.2);
 	
-	MJGroupCardQueue.PopFront(MJScene.GetPlayerCount() * 4);
+	MJPaidunCtrl.InactiveFront(MJScene.GetPlayerCount() * 4);
 	for key, value in pairs(MJScene.Players) do
 		value.UI:UpdateCards(false, false, 8);
 	end
 	WaitForSeconds(0.2);
 	
-	MJGroupCardQueue.PopFront(MJScene.GetPlayerCount() * 4);
+	MJPaidunCtrl.InactiveFront(MJScene.GetPlayerCount() * 4);
 	for key, value in pairs(MJScene.Players) do
 		value.UI:UpdateCards(false, false, 12);
 	end
 	WaitForSeconds(0.2);
 	
-	MJGroupCardQueue.PopFront(MJScene.GetPlayerCount() + 1);
+	MJPaidunCtrl.InactiveFront(MJScene.GetPlayerCount() + 1);
 	for key, value in pairs(MJScene.Players) do
 		if value:IsBanker() then
 			value.UI:UpdateCards(true, true);

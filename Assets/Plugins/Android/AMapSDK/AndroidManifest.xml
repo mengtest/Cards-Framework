@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="preferExternal" package="com.guangsu.tmgp.papaMajiang"  >
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="preferExternal" package="com.ncspeedlight.tmgp.hongzhongMajiang"  >
 	<application >
 		<service android:name="com.amap.api.location.APSService"></service>
-		<meta-data android:name="com.amap.api.v2.apikey" android:value="7ccf99522684134cd3572fe6065930d3"></meta-data>
+		<meta-data android:name="com.amap.api.v2.apikey" android:value="a1e77f815b544cbbae915698dbf333a1"></meta-data>
 	</application>
 	<uses-feature android:glEsVersion="0x20000"/>
 	<uses-feature android:name="android.hardware.touchscreen" android:required="false"/>

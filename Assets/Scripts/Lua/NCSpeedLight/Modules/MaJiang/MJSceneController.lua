@@ -195,8 +195,8 @@ function MJSceneController.SetupDicePanelDirection()
 	if MJPlayer.Hero == nil then
 		Log.Error("MJSceneController.SetupDicePanelDirection: error caused by nil MJPlayer.Hero instance.");
 	else
-		Log.Info("MJSceneController.SetupDicePanelDirection: hero position is " .. MJPlayer.Hero.Position);
-		local y =(MJPlayer.Hero.Position + 1) * 90;
+		Log.Info("MJSceneController.SetupDicePanelDirection: hero position is " .. MJPlayer.Hero.ClientPosition);
+		local y =(MJPlayer.Hero.ClientPosition + 1) * 90;
 		local panel = MJSceneController.transform:Find("majiangzhuo/direction");
 		local eulerAngles = UnityEngine.Vector3(0, y, 0);
 		local rotation = UnityEngine.Quaternion.Euler(eulerAngles)

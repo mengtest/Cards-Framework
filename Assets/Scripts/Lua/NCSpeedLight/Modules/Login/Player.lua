@@ -1,13 +1,3 @@
------------------------------------------------
--- Copyright © 2014-2017 NCSpeedLight
---
--- FileName: Player.lua
--- Describle:  大厅玩家，单例
--- Created By:  Wells Hsu
--- Date&Time:  2017/2/28 19:11:09
--- Modify History:
---
------------------------------------------------
 Player =
 {
 	EvtProcessor = EvtProcessor.New();

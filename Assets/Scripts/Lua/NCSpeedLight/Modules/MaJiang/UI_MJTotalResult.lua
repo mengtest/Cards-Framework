@@ -24,9 +24,10 @@ end
 function UI_MJTotalResult.Start()
 	UI_MJTotalResult.TotalScores = {};
 	UI_MJTotalResult.InitBtnEvent();
-	UI_MJTotalResult.DisplayPlaywayAndRound();
-	UI_MJTotalResult.DisplayPlayerInfo();
-	UI_MJTotalResult.DisplayWinner();
+	UI_MJTotalResult.SetPlayway();
+	UI_MJTotalResult.SetRound();
+	UI_MJTotalResult.SetPlayerInfo();
+	UI_MJTotalResult.SetGreatWinner();
 end
 
 function UI_MJTotalResult.OnDestroy()
@@ -44,7 +45,7 @@ function UI_MJTotalResult.InitBtnEvent()
 	end);
 end
 
-function UI_MJTotalResult.DisplayPlayerInfo()
+function UI_MJTotalResult.SetPlayerInfo()
 	local parent = UIHelper.GetComponent(this.transform, "Grid", typeof(UnityEngine.Transform));
 	if MJScene.TotalResultInfo == nil or MJScene.TotalResultInfo.m_count == 0 then
 		-- 一局也没打
@@ -120,8 +121,8 @@ function UI_MJTotalResult.DisplayPlayerInfo()
 	tempGrid.enabled = true;
 end
 
--- 设置大赢家的显示
-function UI_MJTotalResult.DisplayWinner()
+-- 设置大赢家
+function UI_MJTotalResult.SetGreatWinner()
 	local winner;
 	local maxScore = - 9999999;
 	for key, value in pairs(UI_MJTotalResult.TotalScores) do
@@ -138,8 +139,11 @@ function UI_MJTotalResult.DisplayWinner()
 end
 
 -- 显示玩法和局数
-function UI_MJTotalResult.DisplayPlaywayAndRound()
-	local tempRounds = "已打局数: " .. tostring(HallScene.CurrentFBFinishedRound);
-	UIHelper.SetLabelText(this.transform, "LeftTop/Rounds", tempRounds);
-	UIHelper.SetLabelText(this.transform, "LeftTop/Way", MJScene.GetMJPlayWayStr());
+function UI_MJTotalResult.SetPlayway()
+	UIHelper.SetLabelText(this.transform, "LeftTop/Way", MJScene.GetMJPlaywayStr());
+end
+
+function UI_MJTotalResult.SetRound()
+	local finishedRoundStr = "已打局数: " .. tostring(HallScene.CurrentFBFinishedRound);
+	UIHelper.SetLabelText(this.transform, "LeftTop/Rounds", finishedRoundStr);
 end 

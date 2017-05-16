@@ -46,10 +46,7 @@ end
 function UI_MJPlayer:OnDestroy()
 	self.gameObject = nil;
 	self.transform = nil;
-	if self.Player ~= nil then
-		self.Player:OnUIDestroy();
-		self.Player = nil;
-	end
+	self.Player = nil;
 end
 
 function UI_MJPlayer:Initialize(player)
@@ -81,7 +78,7 @@ function UI_MJPlayer:SetCardDisplayParam()
 		self.OperateCardOffset = Vector3.New(MJDefine.TableCardX, 0, 0);
 		self.OperateCardRotation = Vector3.New(90, 0, 0);
 		self.UICardStartPos = Vector3.New(- 468, 0, 0);
-		self.UICardWidth = 72;
+		self.UICardWidth = 82;
 		self.UICardLastMargin = 18;
 		self.UICardHeadMargin = 36;
 		self.UICardWorldSpaceWidth = 52;
@@ -139,6 +136,7 @@ function UI_MJPlayer:SetCardDisplayParam()
 end
 
 function UI_MJPlayer:Reset()
+	self:PlayUIScaleAndDicePanelGrow(false);
 end
 
 -- 出牌效果
@@ -301,7 +299,7 @@ end
 
 -- 放置杠的牌
 function UI_MJPlayer:PutGangCard(data)
-	Log.Info("UI_MJPlayer:PutGangCard: " .. self.Player:LogKey());
+	Log.Info("UI_MJPlayer:PutGangCard: " .. self.Player:LogTag());
 	local card1 = MJSceneController.GetCardByID(data.m_LastCard.m_Index, self.Player.ID);
 	local player = MJScene.GetPlayerByID(card1.LastRoleID);
 	player:SubTableCardCount();
@@ -321,7 +319,7 @@ end
 
 -- 放置暗杠的牌
 function UI_MJPlayer:PutAnGangCard(data)
-	Log.Info("UI_MJPlayer:PutAnGangCard: " .. self.Player:LogKey());
+	Log.Info("UI_MJPlayer:PutAnGangCard: " .. self.Player:LogTag());
 	local factor = self.Player:GetOperateTotalCount() * 3;
 	local card1Pos = self.OperateCardStartPos + Vector3.New(self.OperateCardOffset.x * factor, self.OperateCardOffset.y * factor, self.OperateCardOffset.z * factor);
 	local card2Pos = card1Pos + self.OperateCardOffset;
@@ -345,7 +343,7 @@ end
 
 -- 放置补杠的牌
 function UI_MJPlayer:PutBuGangCard(data)
-	Log.Info("UI_MJPlayer:PutBuGangCard: " .. self.Player:LogKey());
+	Log.Info("UI_MJPlayer:PutBuGangCard: " .. self.Player:LogTag());
 	local card1 = MJSceneController.GetOneUnuseCard(data.m_LastCard.m_Index, data.m_LastCard.m_Type, self.Player.ID);
 	table.sort(data.m_HandCard, function(o1, o2)
 		return o1.m_Index < o2.m_Index;
@@ -362,7 +360,7 @@ end
 
 -- 放置碰的牌
 function UI_MJPlayer:PutPengCard(data)
-	Log.Info("UI_MJPlayer:PutPengCard: " .. self.Player:LogKey());
+	Log.Info("UI_MJPlayer:PutPengCard: " .. self.Player:LogTag());
 	local card1 = MJSceneController.GetCardByID(data.m_LastCard.m_Index, self.Player.ID);
 	local player = MJScene.GetPlayerByID(card1.LastRoleID);
 	player:SubTableCardCount();
@@ -384,7 +382,7 @@ end
 
 -- 断线重连时，放置杠的牌
 function UI_MJPlayer:PutGangCardWhenReconnect(data)
-	Log.Info("UI_MJPlayer:PutGangCardWhenReconnect: " .. self.Player:LogKey());
+	Log.Info("UI_MJPlayer:PutGangCardWhenReconnect: " .. self.Player:LogTag());
 	local card1 = MJSceneController.GetOneUnuseCard(data.m_FunHandCard[1].m_Index, data.m_FunHandCard[1].m_Type, self.Player.ID);
 	local card2 = MJSceneController.GetOneUnuseCard(data.m_FunHandCard[2].m_Index, data.m_FunHandCard[2].m_Type, self.Player.ID);
 	local card3 = MJSceneController.GetOneUnuseCard(data.m_FunHandCard[3].m_Index, data.m_FunHandCard[3].m_Type, self.Player.ID);
@@ -402,7 +400,7 @@ end
 
 -- 断线重连时，放置暗杠的牌
 function UI_MJPlayer:PutAnGangCardWhenReconnect(data)
-	Log.Info("UI_MJPlayer:PutAnGangCardWhenReconnect: " .. self.Player:LogKey());
+	Log.Info("UI_MJPlayer:PutAnGangCardWhenReconnect: " .. self.Player:LogTag());
 	local factor = self.Player:GetOperateTotalCount() * 3;
 	local card1Pos = self.OperateCardStartPos + Vector3.New(self.OperateCardOffset.x * factor, self.OperateCardOffset.y * factor, self.OperateCardOffset.z * factor);
 	local card2Pos = card1Pos + self.OperateCardOffset;
@@ -426,7 +424,7 @@ end
 
 -- 断线重连时，放置补杠的牌
 function UI_MJPlayer:PutBuGangCardWhenReconnect(data)
-	Log.Info("UI_MJPlayer:PutBuGangCardWhenReconnect: " .. self.Player:LogKey());
+	Log.Info("UI_MJPlayer:PutBuGangCardWhenReconnect: " .. self.Player:LogTag());
 	-- local card1Data = data.m_FunHandCard[1];
 	-- local card2Data = data.m_FunHandCard[2];
 	local card1 = MJSceneController.GetOneUnuseCard(data.m_FunHandCard[1].m_Index, data.m_FunHandCard[1].m_Type, self.Player.ID);
@@ -442,7 +440,7 @@ end
 
 -- 断线重连时，放置碰的牌
 function UI_MJPlayer:PutPengCardWhenReconnect(data)
-	Log.Info("UI_MJPlayer:PutPengCardWhenReconnect: " .. self.Player:LogKey());
+	Log.Info("UI_MJPlayer:PutPengCardWhenReconnect: " .. self.Player:LogTag());
 	local card1 = MJSceneController.GetOneUnuseCard(data.m_FunHandCard[1].m_Index, data.m_FunHandCard[1].m_Type, self.Player.ID);
 	local card2 = MJSceneController.GetOneUnuseCard(data.m_FunHandCard[2].m_Index, data.m_FunHandCard[2].m_Type, self.Player.ID);
 	local card3 = MJSceneController.GetOneUnuseCard(data.m_FunHandCard[3].m_Index, data.m_FunHandCard[3].m_Type, self.Player.ID);
@@ -485,4 +483,16 @@ function UI_MJPlayer:GetTableCardPos(varIndex)
 	tempPos = tempPos + Vector3.New(self.TableCardVerticalOffset.x * tempLine, self.TableCardVerticalOffset.y * tempLine, self.TableCardVerticalOffset.z * tempLine);
 	tempPos = tempPos + Vector3.New(self.TableCardHorizontalOffset.x * tempNum, self.TableCardHorizontalOffset.y * tempNum, self.TableCardHorizontalOffset.z * tempNum);
 	return tempPos;
+end
+
+-- 播放UI框的缩放,以及骰子面板的闪光效果
+function UI_MJPlayer:PlayUIScaleAndDicePanelGrow(status)
+	local scaleAnimation = self.transform:Find("Enter/Center"):GetComponent(typeof(TweenScale));
+	local name = MJPlayerSeatEnum.ToString(self.Player.ClientPosition);
+	MJSceneController.PlayDicePanelGrowEffect(name, status);
+	scaleAnimation.enabled = status;
+end
+
+function UI_MJPlayer:SetBanker()
+	UIHelper.SetActiveState(self.transform, "Enter/Center/Banker", MJPlayer.IsBanker(self.Player));
 end 

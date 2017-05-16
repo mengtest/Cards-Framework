@@ -22,12 +22,13 @@ end
 
 function UI_MJResult.Start()
 	UI_MJResult.InitBtnEvent();
-	UI_MJResult.DisplayWinOrLose();
-	UI_MJResult.DisplayJiangMa();
-	UI_MJResult.DisplayHuType();
-	UI_MJResult.DisplayHuCards();
-	UI_MJResult.DisplayPlayerInfo();
-	UI_MJResult.DisplayPlaywayAndRound();
+	UI_MJResult.SetWinOrLose();
+	UI_MJResult.SetJiangMa();
+	UI_MJResult.SetHuType();
+	UI_MJResult.SetHuCards();
+	UI_MJResult.SetPlayerInfo();
+	UI_MJResult.SetPlayway();
+	UI_MJResult.SetRound();
 end
 
 function UI_MJResult.OnDestroy()
@@ -81,7 +82,7 @@ function UI_MJResult.InitBtnEvent()
 end
 
 -- 设置赢或输或平局
-function UI_MJResult.DisplayWinOrLose()
+function UI_MJResult.SetWinOrLose()
 	local myscore;
 	local tempList = MJScene.CurrentResultInfo.m_Data;
 	for i = 1, #tempList do
@@ -125,7 +126,7 @@ function UI_MJResult.DisplayWinOrLose()
 end
 
 -- 设置奖码
-function UI_MJResult.DisplayJiangMa()
+function UI_MJResult.SetJiangMa()
 	local tempCloneTrans = this.transform:Find("Reward/Clone");
 	local tempParent = this.transform:Find("Reward/RewardCard");
 	for i = 1, #MJScene.CurrentResultInfo.m_MaCardType do
@@ -145,7 +146,7 @@ function UI_MJResult.DisplayJiangMa()
 end
 
 -- 展示胡的类型
-function UI_MJResult.DisplayHuType()
+function UI_MJResult.SetHuType()
 	--  只有自摸和抢杠 1.自摸
 	if MJScene.CurrentResultInfo.m_huType == 1 then
 		UIHelper.SetSpriteName(this.transform, "Card/Type", "js14");
@@ -156,7 +157,7 @@ function UI_MJResult.DisplayHuType()
 end
 
 -- 展示胡了的牌
-function UI_MJResult.DisplayHuCards()
+function UI_MJResult.SetHuCards()
 	local tempHuId = MJScene.CurrentResultInfo.m_huRoleid;
 	local tempFpId = MJScene.CurrentResultInfo.m_fpid;
 	local tempList = MJScene.CurrentResultInfo.m_Data;
@@ -186,7 +187,7 @@ function UI_MJResult.DisplayHuCards()
 end
 
 -- 展示玩家信息
-function UI_MJResult.DisplayPlayerInfo()
+function UI_MJResult.SetPlayerInfo()
 	local allRoleHandCards = MJScene.CurrentResultInfo.m_Data;
 	for i = 1, #allRoleHandCards do
 		local card = allRoleHandCards[i];
@@ -218,9 +219,11 @@ function UI_MJResult.DisplayPlayerInfo()
 	tempParentGrid:Reposition();
 end
 
--- 设置当前玩法和当前的回合
-function UI_MJResult.DisplayPlaywayAndRound()
-	local tempRounds = "当前局数: " .. HallScene.CurrentFBFinishedRound .. "/" .. HallScene.CurrentFBTotalRound;
-	UIHelper.SetLabelText(this.transform, "LeftTop/Rounds", tempRounds);
-	UIHelper.SetLabelText(this.transform, "LeftTop/Way", MJScene.GetMJPlayWayStr());
+function UI_MJResult.SetPlayway()
+	UIHelper.SetLabelText(this.transform, "LeftTop/Way", MJScene.GetMJPlaywayStr());
+end
+
+function UI_MJResult.SetRound()
+	local str = "当前局数: " .. HallScene.CurrentFBFinishedRound .. "/" .. HallScene.CurrentFBTotalRound;
+	UIHelper.SetLabelText(this.transform, "LeftTop/Rounds", str);
 end 

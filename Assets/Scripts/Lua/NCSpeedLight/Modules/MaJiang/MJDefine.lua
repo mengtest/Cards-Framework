@@ -1,4 +1,3 @@
-
 MJDefine = {
 	TOTAL_CARD_COUNT = 112, -- 牌的总数
 	BANKER_INITIAL_CARD_COUNT = 14, -- 庄家牌的初始数量
@@ -217,3 +216,21 @@ MJChatType = {
 	CustomText = 4,
 	Voice = 5,
 }
+
+MJPlayerSeatEnum = {
+	-- 东
+	EAST = 0,
+	-- 南
+	SOUTH = 1,
+	-- 西
+	WEST = 2,
+	-- 北
+	NORTH = 3,
+	ToString = function(index)
+		for key, value in pairs(MJPlayerSeatEnum) do
+			if value == index then
+				return tostring(key);
+			end
+		end
+	end
+} 

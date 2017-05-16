@@ -22,8 +22,9 @@ end
 
 function UI_MJDraw.Start()
 	UI_MJDraw.InitBtnEvent();
-	UI_MJDraw.InitView();
-	UI_MJDraw.SetupPlaywayAndRound();
+	UI_MJDraw.SetPlayerInfo();
+	UI_MJDraw.SetPlayway();
+	UI_MJDraw.SetRound();
 end
 
 function UI_MJDraw.OnDestroy()
@@ -53,7 +54,7 @@ function UI_MJDraw.InitBtnEvent()
 	end);
 end
 
-function UI_MJDraw.InitView()
+function UI_MJDraw.SetPlayerInfo()
 	if HallScene.CurrentFBPlaybackMode then
 		UIHelper.SetActiveState(this.transform, "Buttom/LookTotalResult", false);
 		UIHelper.SetActiveState(this.transform, "Buttom/OnceAgain", false);
@@ -96,8 +97,11 @@ function UI_MJDraw.InitView()
 end
 
 -- 设置玩法和局数
-function UI_MJDraw.SetupPlaywayAndRound()
-	local tempRounds = "当前局数: " .. HallScene.CurrentFBRound .. "/" .. HallScene.CurrentFBTotalRound;
-	UIHelper.SetLabelText(this.transform, "LeftTop/Rounds", tempRounds);
-	UIHelper.SetLabelText(this.transform, "LeftTop/Way", MJScene.GetMJPlayWayStr());
+function UI_MJDraw.SetPlayway()
+	UIHelper.SetLabelText(this.transform, "LeftTop/Way", MJScene.GetMJPlaywayStr());
+end
+
+function UI_MJDraw.SetRound()
+	local str = "当前局数: " .. HallScene.CurrentFBRound .. "/" .. HallScene.CurrentFBTotalRound;
+	UIHelper.SetLabelText(this.transform, "LeftTop/Rounds", str);
 end 

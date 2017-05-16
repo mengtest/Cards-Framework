@@ -32,7 +32,7 @@ function UI_MJHeroCtrl.Start()
 			if go ~= nil then
 				if this.SelectedCardObj == go then
 					if MJScene.IsMyTurn() == false then
-						UIManager.OpenTipsDialog("不是你的回合，无法出牌");
+						-- UIManager.OpenTipsDialog("不是你的回合，无法出牌");
 					else
 						-- 出牌,重置牌的位置以及显示
 						go.transform.localPosition = Vector3(go.transform.localPosition.x, 0, go.transform.localPosition.z);
@@ -68,9 +68,6 @@ end
 function UI_MJHeroCtrl.OnDestroy()
 	this.gameObject = nil;
 	this.transform = nil;
-	if this.Player ~= nil then
-		this.Player:OnUIDestroy();
-	end
 	this.Player = nil;
 	UI_MJHeroCtrl.DragingCardObj = nil;
 	UI_MJHeroCtrl.SelectedCardObj = nil;
@@ -124,7 +121,7 @@ function UI_MJHeroCtrl.OnStopDragCard(go)
 			MJScene.RequestMJOperate_OutCard(card);
 		end
 	else
-		UIManager.OpenTipsDialog("不是你的回合，无法出牌");
+		-- UIManager.OpenTipsDialog("不是你的回合，无法出牌");
 	end
 end
 

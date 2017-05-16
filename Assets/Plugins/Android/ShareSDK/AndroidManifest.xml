@@ -1,4 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.guangsu.tmgp.papaMajiang">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.ncspeedlight.tmgp.hongzhongMajiang">
 	
 	<uses-permission android:name="android.permission.GET_TASKS" />
 	<uses-permission android:name="android.permission.INTERNET" />
