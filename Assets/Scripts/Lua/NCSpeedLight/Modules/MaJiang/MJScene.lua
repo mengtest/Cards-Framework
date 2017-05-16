@@ -491,7 +491,7 @@ function MJScene.ReturnGamePlayerInfo(evt)
 		end
 	end
 	MJScene.SetupMaster();
-	MJSceneController.SetupPlayWay();
+	MJSceneController.SetPlayway();
 	UIManager.CloseAllWindowsExcept(UIName.UI_MaJiang);
 end
 
@@ -640,7 +640,7 @@ function MJScene.ReturnReconnectInfo(evt)
 	MJScene.SetupMaster();
 	
 	-- 设置玩法
-	MJSceneController.SetupPlayWay();
+	MJSceneController.SetPlayway();
 	
 	if msg.m_FreeCard == MJDefine.TOTAL_CARD_COUNT then
 		-- 对局还没开始
@@ -659,7 +659,7 @@ function MJScene.ReturnReconnectInfo(evt)
 			MJPlayer.ComputeClientPosition(player);
 		end
 		-- 设置骰子面板的朝向
-		MJSceneController.SetupDicePanelDirection();
+		MJSceneController.SetDicePanelDirection();
 		if msg.m_rollCount < MJDefine.MAX_CAST_DICE_NUMBER then
 			HallScene.SwitchFBStatus(FBStatus.WaitingCastDice);
 			-- 已经收到手牌信息了,但还没骰子骰子
@@ -671,7 +671,7 @@ function MJScene.ReturnReconnectInfo(evt)
 				UI_MaJiang.SetupCastDice(true);
 			end
 			-- 隐藏
-			MJSceneController.SetGroupCardActive(false);
+			MJSceneController.SetPaidunActive(false);
 		else
 			HallScene.SwitchFBStatus(FBStatus.Playing);
 			-- 已经收到手牌信息了,正在对局中
@@ -688,7 +688,7 @@ function MJScene.ReturnReconnectInfo(evt)
 			-- HallScene.CurrentFBRound = HallScene.CurrentFBRound + 1;
 			UI_MaJiang.SetupCurrentRound();
 			-- 直接显示牌墩，不播放动画
-			MJSceneController.SetGroupCardActive(true);
+			MJSceneController.SetPaidunActive(true);
 			-- 设置牌墩
 			local fromPlayer = MJScene.GetPlayerByID(MJScene.GetCardRoleID);
 			Log.Info("MJScene.ReturnReconnectInfo: 从" .. fromPlayer:LogTag() .. "的第【" .. tostring(MJScene.GetCardNumber) .. "】墩开始抓牌");
@@ -802,13 +802,13 @@ function MJScene.ReturnHandCardInfo(evt)
 		UI_MaJiang.SetupCurrentRound();
 		
 		-- 设置骰子面板的朝向
-		MJSceneController.SetupDicePanelDirection();
+		MJSceneController.SetDicePanelDirection();
 		
 		-- 设置房间号
-		MJSceneController.SetupRoomNumber();
+		MJSceneController.SetRoomNumber();
 		
 		-- 设置玩法
-		MJSceneController.SetupPlayWay();
+		MJSceneController.SetPlayway();
 		
 		-- 开始回放
 		for key, value in pairs(MJScene.Players) do
@@ -842,7 +842,7 @@ function MJScene.ReturnHandCardInfo(evt)
 			MJPlayer.ComputeClientPosition(player);
 		end
 		-- 设置骰子面板的朝向
-		MJSceneController.SetupDicePanelDirection();
+		MJSceneController.SetDicePanelDirection();
 		if MJPlayer.Hero:IsBanker() then
 			UI_MaJiang.SetupCastDice(true);
 		end
@@ -1094,7 +1094,7 @@ function MJScene.ReturnCastDice(evt)
 	
 	UI_MaJiang.SetupCastDice(false);
 	MJSceneController.PlayDiceAnimation(MJScene.DiceNumbers[1], MJScene.DiceNumbers[2], nil);
-	MJSceneController.PlayGroupCardAnimation(function()
+	MJSceneController.PlayPaidunAnimation(function()
 		StartCoroutine(MJScene.PlaySendCardAnimation);
 	end);
 end

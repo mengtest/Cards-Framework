@@ -47,7 +47,7 @@ end
 
 function MJSceneController.Start()
 	if HallScene.CurrentFBPlaybackMode == false then
-		MJSceneController.SetupRoomNumber();
+		MJSceneController.SetRoomNumber();
 	end
 end
 
@@ -81,11 +81,11 @@ function MJSceneController.Reset()
 	MJSceneController.DeskAnimationTimer = nil;
 	MJSceneController.DiceAnimationTimer = nil;
 	MJSceneController.HideArrow();
-	MJSceneController.SetGroupCardActive(false);
+	MJSceneController.SetPaidunActive(false);
 end
 
 -- 设置牌墩的显示/隐藏
-function MJSceneController.SetGroupCardActive(status)
+function MJSceneController.SetPaidunActive(status)
 	if status == true then
 		if	MJSceneController.GroupCardActive == false then
 			MJSceneController.GroupCardActive = true;
@@ -99,8 +99,8 @@ function MJSceneController.SetGroupCardActive(status)
 	end
 end
 
-function MJSceneController.PlayGroupCardAnimation(onFinishCallback)
-	Log.Info("MJSceneController.PlayGroupCardAnimation");
+function MJSceneController.PlayPaidunAnimation(onFinishCallback)
+	Log.Info("MJSceneController.PlayPaidunAnimation");
 	MJSceneController.GroupCardActive = true;
 	if MJSceneController.MJDeskAnimation ~= nil then
 		MJSceneController.MJDeskAnimation:Play();
@@ -109,7 +109,7 @@ function MJSceneController.PlayGroupCardAnimation(onFinishCallback)
 		else
 			MJSceneController.DeskAnimationTimer = Timer.New(
 			function()
-				Log.Info("MJSceneController.PlayGroupCardAnimation: finish.");
+				Log.Info("MJSceneController.PlayPaidunAnimation: finish.");
 				if onFinishCallback ~= nil then
 					onFinishCallback();
 				end
@@ -147,14 +147,14 @@ function MJSceneController.PlayDiceAnimation(number1, number2, onFinishCallback)
 end
 
 -- 设置房间号
-function MJSceneController.SetupRoomNumber()
+function MJSceneController.SetRoomNumber()
 	if HallScene.CurrentFBID == nil or HallScene.CurrentFBID == 0 then
-		Log.Error("MJSceneController.SetupRoomNumber: room number is nil or zero.");
+		Log.Error("MJSceneController.SetRoomNumber: room number is nil or zero.");
 		return;
 	end
 	local roomNumberTransform = MJSceneController.transform:Find("majiangzhuo/Text/RoomNumber");
 	local roomNumberStr = tostring(HallScene.CurrentFBID);
-	Log.Info("MJSceneController.SetupRoomNumber: room number is " .. roomNumberStr);
+	Log.Info("MJSceneController.SetRoomNumber: room number is " .. roomNumberStr);
 	local strLength = string.len(roomNumberStr);
 	if strLength == 0 then return end;
 	for i = 1, strLength do
@@ -170,32 +170,33 @@ function MJSceneController.SetupRoomNumber()
 end
 
 -- 设置玩法
-function MJSceneController.SetupPlayWay()
+function MJSceneController.SetPlayway()
 	if HallScene.CurrentFBPlayway == nil then
-		Log.Error("MJSceneController.SetupPlayWay: error caused by nil HallScene.CurrentFBPlayway str.");
+		Log.Error("MJSceneController.SetPlayway: error caused by nil HallScene.CurrentFBPlayway str.");
 	else
+		Log.Info("MJSceneController.SetPlayway: current playway is " .. HallScene.CurrentFBPlayway);
 		local playway = Utility.SplitString(HallScene.CurrentFBPlayway, ",");
 		if playway == nil then
-			Log.Error("MJSceneController.SetupPlayWay: error caused by spilt HallScene.CurrentFBPlayway str fail.");
+			Log.Error("MJSceneController.SetPlayway: error caused by spilt HallScene.CurrentFBPlayway str fail.");
 			return;
 		end
 		local count = #playway;
 		if count == 1 then
-			UIHelper.SetActiveState(this.transform, "majiangzhuo/Text/PlayWay/OneText", true);
-			UIHelper.SetActiveState(this.transform, "majiangzhuo/Text/PlayWay/OneText/1/" .. MJPlayWay.ToString(tonumber(playway[1])), true);
+			UIHelper.SetActiveState(this.transform, "majiangzhuo/Text/Playway/OneText", true);
+			UIHelper.SetActiveState(this.transform, "majiangzhuo/Text/Playway/OneText/1/" .. MJPlayWay.ToString(tonumber(playway[1])), true);
 		elseif count == 2 then
-			UIHelper.SetActiveState(this.transform, "majiangzhuo/Text/PlayWay/TwoText", true);
-			UIHelper.SetActiveState(this.transform, "majiangzhuo/Text/PlayWay/TwoText/1/" .. MJPlayWay.ToString(tonumber(playway[1])), true);
+			UIHelper.SetActiveState(this.transform, "majiangzhuo/Text/Playway/TwoText", true);
+			UIHelper.SetActiveState(this.transform, "majiangzhuo/Text/Playway/TwoText/1/" .. MJPlayWay.ToString(tonumber(playway[1])), true);
 		end
 	end
 end
 
 -- 设置骰子面板的朝向
-function MJSceneController.SetupDicePanelDirection()
+function MJSceneController.SetDicePanelDirection()
 	if MJPlayer.Hero == nil then
-		Log.Error("MJSceneController.SetupDicePanelDirection: error caused by nil MJPlayer.Hero instance.");
+		Log.Error("MJSceneController.SetDicePanelDirection: error caused by nil MJPlayer.Hero instance.");
 	else
-		Log.Info("MJSceneController.SetupDicePanelDirection: hero position is " .. MJPlayer.Hero.ClientPosition);
+		Log.Info("MJSceneController.SetDicePanelDirection: hero client position is " .. MJPlayer.Hero.ClientPosition);
 		local y =(MJPlayer.Hero.ClientPosition + 1) * 90;
 		local panel = MJSceneController.transform:Find("majiangzhuo/direction");
 		local eulerAngles = UnityEngine.Vector3(0, y, 0);
