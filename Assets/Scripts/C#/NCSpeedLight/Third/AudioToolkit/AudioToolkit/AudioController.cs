@@ -120,7 +120,7 @@ public class AudioController : MonoBehaviour, ISingletonMonoBehaviour // can not
         UnitySingleton<AudioController>._myType = type;
     }
 #else
-[AddComponentMenu( "ClockStone/Audio/AudioController" )]
+[AddComponentMenu("ClockStone/Audio/AudioController")]
 public class AudioController : SingletonMonoBehaviour<AudioController>
 {
 #endif
@@ -140,9 +140,9 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     {
         set
         {
-            if ( value != _audioDisabled )
+            if (value != _audioDisabled)
             {
-                if ( value == true )
+                if (value == true)
                 {
                     // changed in v3.6 - allows to disable Audio without stopping all current audios
 
@@ -189,7 +189,7 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     public float Volume
     {
         get { return _volume; }
-        set { if ( value != _volume ) { _volume = value; _ApplyVolumeChange(); } }
+        set { if (value != _volume) { _volume = value; _ApplyVolumeChange(); } }
     }
 
     /// <summary>
@@ -263,14 +263,14 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
         get { return _musicEnabled; }
         set
         {
-            if ( _musicEnabled == value ) return;
+            if (_musicEnabled == value) return;
             _musicEnabled = value;
 
-            if ( _currentMusic )
+            if (_currentMusic)
             {
-                if ( value )
+                if (value)
                 {
-                    if ( _currentMusic.IsPaused() )
+                    if (_currentMusic.IsPaused())
                     {
                         _currentMusic.Play();
                     }
@@ -320,7 +320,7 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     {
         get
         {
-            if ( specifyCrossFadeInAndOutSeperately )
+            if (specifyCrossFadeInAndOutSeperately)
             {
                 return _musicCrossFadeTime_In;
             }
@@ -341,7 +341,7 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     {
         get
         {
-            if ( specifyCrossFadeInAndOutSeperately )
+            if (specifyCrossFadeInAndOutSeperately)
             {
                 return _musicCrossFadeTime_Out;
             }
@@ -371,12 +371,12 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// <summary>
     /// Specify your audio categories here using the Unity inspector.
     /// </summary>
-    public AudioCategory[ ] AudioCategories;
+    public AudioCategory[] AudioCategories;
 
     /// <summary>
     /// allows to specify a list of audioID that will be played as music one after the other
     /// </summary>
-    public string[ ] musicPlaylist;
+    public string[] musicPlaylist;
 
     /// <summary>
     /// specifies if the music playlist will get looped
@@ -449,10 +449,10 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// in front of the current audio listener which is usually on the main camera. Note that the audio object will not
     /// be parented - so you will hear when the audio listener moves.
     /// </remarks>
-    static public AudioObject PlayMusic( string audioID, float volume, float delay, float startTime = 0 )
+    static public AudioObject PlayMusic(string audioID, float volume, float delay, float startTime = 0)
     {
         _isPlaylistPlaying = false;
-        return Instance._PlayMusic( audioID, volume, delay, startTime );
+        return Instance._PlayMusic(audioID, volume, delay, startTime);
     }
 
     /// <summary>
@@ -466,9 +466,9 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// Returns the reference of the AudioObject that is used to play the audio item, or <c>null</c> if the audioID does not exist. 
     /// Warning: Use <see cref="PoolableReference{T}"/> to store an AudioObject reference if you have pooling enabled.
     /// </returns>
-    static public AudioObject PlayMusic( string audioID )
+    static public AudioObject PlayMusic(string audioID)
     {
-        return AudioController.PlayMusic( audioID, 1, 0, 0 );
+        return AudioController.PlayMusic(audioID, 1, 0, 0);
     }
 
     /// <summary>
@@ -483,9 +483,9 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// Returns the reference of the AudioObject that is used to play the audio item, or <c>null</c> if the audioID does not exist. 
     /// Warning: Use <see cref="PoolableReference{T}"/> to store an AudioObject reference if you have pooling enabled.
     /// </returns>
-    static public AudioObject PlayMusic( string audioID, float volume )
+    static public AudioObject PlayMusic(string audioID, float volume)
     {
-        return AudioController.PlayMusic( audioID, volume, 0, 0 );
+        return AudioController.PlayMusic(audioID, volume, 0, 0);
     }
 
     /// <summary>
@@ -505,10 +505,10 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// PlayMusic makes sure that only one music track is played at a time. If music cross fading is enabled in the AudioController
     /// fading is performed automatically.
     /// </remarks>
-    static public AudioObject PlayMusic( string audioID, Vector3 worldPosition, Transform parentObj = null, float volume = 1, float delay = 0, float startTime = 0 )
+    static public AudioObject PlayMusic(string audioID, Vector3 worldPosition, Transform parentObj = null, float volume = 1, float delay = 0, float startTime = 0)
     {
         _isPlaylistPlaying = false;
-        return Instance._PlayMusic( audioID, worldPosition, parentObj, volume, delay, startTime );
+        return Instance._PlayMusic(audioID, worldPosition, parentObj, volume, delay, startTime);
     }
 
     /// <summary>
@@ -527,10 +527,10 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// PlayMusic makes sure that only one music track is played at a time. If music cross fading is enabled in the AudioController
     /// fading is performed automatically.
     /// </remarks>
-    static public AudioObject PlayMusic( string audioID, Transform parentObj, float volume = 1, float delay = 0, float startTime = 0 )
+    static public AudioObject PlayMusic(string audioID, Transform parentObj, float volume = 1, float delay = 0, float startTime = 0)
     {
         _isPlaylistPlaying = false;
-        return Instance._PlayMusic( audioID, parentObj.position, parentObj, volume, delay, startTime );
+        return Instance._PlayMusic(audioID, parentObj.position, parentObj, volume, delay, startTime);
     }
 
     /// <summary>
@@ -541,7 +541,7 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// </returns>
     static public bool StopMusic()
     {
-        return Instance._StopMusic( 0 );
+        return Instance._StopMusic(0);
     }
 
     /// <summary>
@@ -551,9 +551,9 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// <returns>
     /// <c>true</c> if any music was stopped, otherwise <c>false</c>
     /// </returns>
-    static public bool StopMusic( float fadeOut )
+    static public bool StopMusic(float fadeOut)
     {
-        return Instance._StopMusic( fadeOut );
+        return Instance._StopMusic(fadeOut);
     }
 
     /// <summary>
@@ -563,9 +563,9 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// <returns>
     /// <c>true</c> if any music was paused, otherwise <c>false</c>
     /// </returns>
-    static public bool PauseMusic( float fadeOut = 0 )
+    static public bool PauseMusic(float fadeOut = 0)
     {
-        return Instance._PauseMusic( fadeOut );
+        return Instance._PauseMusic(fadeOut);
     }
 
     /// <summary>
@@ -576,7 +576,7 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// </returns>
     static public bool IsMusicPaused()
     {
-        if ( _currentMusic != null )
+        if (_currentMusic != null)
         {
             return _currentMusic.IsPaused();
         }
@@ -590,16 +590,16 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// <returns>
     /// <c>true</c> if any music was unpaused, otherwise <c>false</c>
     /// </returns>
-    static public bool UnpauseMusic( float fadeIn = 0 )  // un-pauses music
+    static public bool UnpauseMusic(float fadeIn = 0)  // un-pauses music
     {
-        if ( !Instance._musicEnabled )
+        if (!Instance._musicEnabled)
         {
             return false;
         }
 
-        if ( _currentMusic != null && _currentMusic.IsPaused() )
+        if (_currentMusic != null && _currentMusic.IsPaused())
         {
-            _currentMusic.Unpause( fadeIn );
+            _currentMusic.Unpause(fadeIn);
             return true;
         }
         return false;
@@ -612,9 +612,9 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// <returns>
     /// The number of music tracks on the playlist.
     /// </returns>
-    static public int EnqueueMusic( string audioID )
+    static public int EnqueueMusic(string audioID)
     {
-        return Instance._EnqueueMusic( audioID );
+        return Instance._EnqueueMusic(audioID);
     }
 
     /// <summary>
@@ -623,13 +623,13 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// <returns>
     /// The playlist array
     /// </returns>
-    static public string[ ] GetMusicPlaylist()
+    static public string[] GetMusicPlaylist()
     {
-        string[ ] playlistCopy = new string[ Instance.musicPlaylist != null ? Instance.musicPlaylist.Length : 0 ];
+        string[] playlistCopy = new string[Instance.musicPlaylist != null ? Instance.musicPlaylist.Length : 0];
 
-        if ( playlistCopy.Length > 0 )
+        if (playlistCopy.Length > 0)
         {
-            Array.Copy( Instance.musicPlaylist, playlistCopy, playlistCopy.Length );
+            Array.Copy(Instance.musicPlaylist, playlistCopy, playlistCopy.Length);
         }
         return playlistCopy;
     }
@@ -638,14 +638,14 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// Sets the current playlist to the specified audioID array
     /// </summary>
     /// <param name="playlist">The new playlist array</param>
-    static public void SetMusicPlaylist( string[ ] playlist )
+    static public void SetMusicPlaylist(string[] playlist)
     {
 
-        string[ ] playlistCopy = new string[ playlist != null ? playlist.Length : 0 ];
+        string[] playlistCopy = new string[playlist != null ? playlist.Length : 0];
 
-        if ( playlistCopy.Length > 0 )
+        if (playlistCopy.Length > 0)
         {
-            Array.Copy( playlist, playlistCopy, playlistCopy.Length );
+            Array.Copy(playlist, playlistCopy, playlistCopy.Length);
         }
         Instance.musicPlaylist = playlistCopy;
     }
@@ -672,9 +672,9 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// </returns>
     static public AudioObject PlayNextMusicOnPlaylist()
     {
-        if ( IsPlaylistPlaying() )
+        if (IsPlaylistPlaying())
         {
-            return Instance._PlayNextMusicOnPlaylist( 0 );
+            return Instance._PlayNextMusicOnPlaylist(0);
         }
         else
             return null;
@@ -691,9 +691,9 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// </returns>
     static public AudioObject PlayPreviousMusicOnPlaylist()
     {
-        if ( IsPlaylistPlaying() )
+        if (IsPlaylistPlaying())
         {
-            return Instance._PlayPreviousMusicOnPlaylist( 0 );
+            return Instance._PlayPreviousMusicOnPlaylist(0);
         }
         else
             return null;
@@ -707,9 +707,9 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// </returns>
     static public bool IsPlaylistPlaying()
     {
-        if ( _isPlaylistPlaying )
+        if (_isPlaylistPlaying)
         {
-            if ( !_currentMusic )
+            if (!_currentMusic)
             {
                 _isPlaylistPlaying = false;
                 return false;
@@ -740,17 +740,17 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// in front of the current audio listener which is usually on the main camera. Note that the audio object will not
     /// be parented - so you will hear when the audio listener moves.
     /// </remarks>
-    static public AudioObject Play( string audioID )
+    static public AudioObject Play(string audioID)
     {
         AudioListener al = GetCurrentAudioListener();
 
-        if ( al == null )
+        if (al == null)
         {
-            Debug.LogWarning( "No AudioListener found in the scene" );
+            Debug.LogWarning("No AudioListener found in the scene");
             return null;
         }
 
-        return Play( audioID, al.transform.position + al.transform.forward, null, 1, 0, 0 );
+        return Play(audioID, al.transform.position + al.transform.forward, null, 1, 0, 0);
     }
 
     /// <summary>
@@ -769,17 +769,17 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// in front of the current audio listener which is usually on the main camera. Note that the audio object will not
     /// be parented - so you will hear when the audio listener moves.
     /// </remarks>
-    static public AudioObject Play( string audioID, float volume, float delay = 0, float startTime = 0 )
+    static public AudioObject Play(string audioID, float volume, float delay = 0, float startTime = 0)
     {
         AudioListener al = GetCurrentAudioListener();
 
-        if ( al == null )
+        if (al == null)
         {
-            Debug.LogWarning( "No AudioListener found in the scene" );
+            Debug.LogWarning("No AudioListener found in the scene");
             return null;
         }
 
-        return Play( audioID, al.transform.position + al.transform.forward, null, volume, delay, startTime );
+        return Play(audioID, al.transform.position + al.transform.forward, null, volume, delay, startTime);
     }
 
     /// <summary>
@@ -795,9 +795,9 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// As the audio object will get attached to the transform, it is important to destroy the parent object using the
     /// <see cref="ObjectPoolController.Destroy"/> function, even if the parent object is not poolable itself
     /// </remarks>
-    static public AudioObject Play( string audioID, Transform parentObj )
+    static public AudioObject Play(string audioID, Transform parentObj)
     {
-        return Play( audioID, parentObj.position, parentObj, 1, 0, 0 );
+        return Play(audioID, parentObj.position, parentObj, 1, 0, 0);
     }
 
     /// <summary>
@@ -816,9 +816,9 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// As the audio object will get attached to the transform, it is important to destroy the parent object using the
     /// <see cref="ObjectPoolController.Destroy"/> function, even if the parent object is not poolable itself
     /// </remarks>
-    static public AudioObject Play( string audioID, Transform parentObj, float volume, float delay = 0, float startTime = 0 )
+    static public AudioObject Play(string audioID, Transform parentObj, float volume, float delay = 0, float startTime = 0)
     {
-        return Play( audioID, parentObj.position, parentObj, volume, delay, startTime );
+        return Play(audioID, parentObj.position, parentObj, volume, delay, startTime);
     }
 
     /// <summary>
@@ -835,10 +835,10 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// As the audio object will get attached to the transform, it is important to destroy the parent object using the
     /// <see cref="ObjectPoolController.Destroy"/> function, even if the parent object is not poolable itself
     /// </remarks>
-    static public AudioObject Play( string audioID, Vector3 worldPosition, Transform parentObj = null )
+    static public AudioObject Play(string audioID, Vector3 worldPosition, Transform parentObj = null)
     {
         //Debug.Log( "Play: '" + audioID + "'" );
-        return Instance._PlayAsSound( audioID, 1, worldPosition, parentObj, 0, 0, false );
+        return Instance._PlayAsSound(audioID, 1, worldPosition, parentObj, 0, 0, false);
     }
 
     /// <summary>
@@ -858,10 +858,10 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// As the audio object will get attached to the transform, it is important to destroy the parent object using the
     /// <see cref="ObjectPoolController.Destroy"/> function, even if the parent object is not poolable itself
     /// </remarks>
-    static public AudioObject Play( string audioID, Vector3 worldPosition, Transform parentObj, float volume, float delay = 0, float startTime = 0 )
+    static public AudioObject Play(string audioID, Vector3 worldPosition, Transform parentObj, float volume, float delay = 0, float startTime = 0)
     {
         //Debug.Log( "Play: '" + audioID + "'" );
-        return Instance._PlayAsSound( audioID, volume, worldPosition, parentObj, delay, startTime, false );
+        return Instance._PlayAsSound(audioID, volume, worldPosition, parentObj, delay, startTime, false);
     }
 
     /// <summary>
@@ -877,9 +877,9 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// <returns>
     /// Returns the reference of the AudioObject that is used to play the audio item, or <c>null</c> if the audioID does not exist.
     /// </returns>
-    static public AudioObject PlayScheduled( string audioID, double dspTime, Vector3 worldPosition, Transform parentObj = null, float volume = 1.0f, float startTime = 0 )
+    static public AudioObject PlayScheduled(string audioID, double dspTime, Vector3 worldPosition, Transform parentObj = null, float volume = 1.0f, float startTime = 0)
     {
-        return AudioController.Instance._PlayAsSound( audioID, volume, worldPosition, parentObj, 0, startTime, false, dspTime );
+        return AudioController.Instance._PlayAsSound(audioID, volume, worldPosition, parentObj, 0, startTime, false, dspTime);
     }
 
     /// <summary>
@@ -898,21 +898,21 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// Uses the PlayScheduled function only available in Unity v4.1 or newer that allows to stitch two audios together at DSP level precision without a gap. 
     /// Can not be used to chain more then one audio.
     /// </remarks>
-    static public AudioObject PlayAfter( string audioID, AudioObject playingAudio, double deltaDspTime = 0, float volume = 1.0f, float startTime = 0 )
+    static public AudioObject PlayAfter(string audioID, AudioObject playingAudio, double deltaDspTime = 0, float volume = 1.0f, float startTime = 0)
     {
 #if UNITY_AUDIO_FEATURES_4_1
         double dspTime;
 
         dspTime = AudioSettings.dspTime;
 
-        if ( playingAudio.IsPlaying() )
+        if (playingAudio.IsPlaying())
         {
             dspTime += playingAudio.timeUntilEnd;
         }
 
         dspTime += deltaDspTime;
 
-        return AudioController.PlayScheduled( audioID, dspTime, playingAudio.transform.position, playingAudio.transform.parent, volume, startTime );
+        return AudioController.PlayScheduled(audioID, dspTime, playingAudio.transform.position, playingAudio.transform.parent, volume, startTime);
 #else
         Debug.LogError( "PlayAfter is only supported in Unity v4.1 or newer" );
         return null;
@@ -925,13 +925,13 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// <param name="audioID">The audio ID.</param>
     /// <param name="fadeOutLength">The fade out time. If a negative value is specified, the subitem's <see cref="AudioSubItem.FadeOut"/> value is taken.</param>
     /// <returns>Return <c>true</c> if any audio was stopped.</returns>
-    static public bool Stop( string audioID, float fadeOutLength )
+    static public bool Stop(string audioID, float fadeOutLength)
     {
-        AudioItem sndItem = Instance._GetAudioItem( audioID );
+        AudioItem sndItem = Instance._GetAudioItem(audioID);
 
-        if ( sndItem == null )
+        if (sndItem == null)
         {
-            Debug.LogWarning( "Audio item with name '" + audioID + "' does not exist" );
+            Debug.LogWarning("Audio item with name '" + audioID + "' does not exist");
             return false;
         }
 
@@ -940,18 +940,18 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
         //    return Stop( sndItem.PlayInstead, fadeOutLength );
         //}
 
-        List<AudioObject> audioObjs = GetPlayingAudioObjects( audioID );
+        List<AudioObject> audioObjs = GetPlayingAudioObjects(audioID);
 
-        for ( int index = 0; index < audioObjs.Count; index++ )
+        for (int index = 0; index < audioObjs.Count; index++)
         {
-            AudioObject audioObj = audioObjs[ index ];
-            if ( fadeOutLength < 0 )
+            AudioObject audioObj = audioObjs[index];
+            if (fadeOutLength < 0)
             {
                 audioObj.Stop();
             }
             else
             {
-                audioObj.Stop( fadeOutLength );
+                audioObj.Stop(fadeOutLength);
             }
         }
         return audioObjs.Count > 0;
@@ -962,27 +962,27 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// </summary>
     /// <param name="audioID">The audio ID.</param>
     /// <returns>Return <c>true</c> if any audio was stopped.</returns>
-    static public bool Stop( string audioID )
+    static public bool Stop(string audioID)
     {
-        return AudioController.Stop( audioID, -1 );
+        return AudioController.Stop(audioID, -1);
     }
 
     /// <summary>
     /// Fades out all playing audio items (including the music).
     /// </summary>
     /// <param name="fadeOutLength">The fade out time. If a negative value is specified, the subitem's <see cref="AudioSubItem.FadeOut"/> value is taken.</param>
-    static public void StopAll( float fadeOutLength )
+    static public void StopAll(float fadeOutLength)
     {
-        Instance._StopMusic( fadeOutLength );
+        Instance._StopMusic(fadeOutLength);
 
         List<AudioObject> objs = GetPlayingAudioObjects();
 
-        for ( int index = 0; index < objs.Count; index++ )
+        for (int index = 0; index < objs.Count; index++)
         {
-            AudioObject o = objs[ index ];
-            if ( o != null )
+            AudioObject o = objs[index];
+            if (o != null)
             {
-                o.Stop( fadeOutLength );
+                o.Stop(fadeOutLength);
             }
         }
     }
@@ -992,25 +992,25 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// </summary>
     static public void StopAll()
     {
-        AudioController.StopAll( -1 );
+        AudioController.StopAll(-1);
     }
 
     /// <summary>
     /// Pauses all playing audio items (including the music).
     /// </summary>
     /// <param name="fadeOutLength">The fade-out time [Default=0]</param>
-    static public void PauseAll( float fadeOutLength = 0 )
+    static public void PauseAll(float fadeOutLength = 0)
     {
-        Instance._PauseMusic( fadeOutLength );
+        Instance._PauseMusic(fadeOutLength);
 
         List<AudioObject> objs = GetPlayingAudioObjects();
 
-        for ( int index = 0; index < objs.Count; index++ )
+        for (int index = 0; index < objs.Count; index++)
         {
-            AudioObject o = objs[ index ];
-            if ( o != null )
+            AudioObject o = objs[index];
+            if (o != null)
             {
-                o.Pause( fadeOutLength );
+                o.Pause(fadeOutLength);
             }
         }
     }
@@ -1019,26 +1019,26 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// Un-pauses all playing audio items (including the music).
     /// </summary>
     /// <param name="fadeInLength">The fade-in time [Default=0]</param>
-    static public void UnpauseAll( float fadeInLength = 0 )
+    static public void UnpauseAll(float fadeInLength = 0)
     {
-        AudioController.UnpauseMusic( fadeInLength );
+        AudioController.UnpauseMusic(fadeInLength);
 
-        List<AudioObject> objs = GetPlayingAudioObjects( true );
+        List<AudioObject> objs = GetPlayingAudioObjects(true);
 
         var ac = Instance;
 
-        for ( int index = 0; index < objs.Count; index++ )
+        for (int index = 0; index < objs.Count; index++)
         {
-            AudioObject o = objs[ index ];
-            if ( o != null )
+            AudioObject o = objs[index];
+            if (o != null)
             {
-                if ( o.IsPaused() )
+                if (o.IsPaused())
                 {
-                    if ( !ac.musicEnabled && _currentMusic == o )
+                    if (!ac.musicEnabled && _currentMusic == o)
                     {
                         continue; // do not unpause music if music is disabled
                     }
-                    o.Unpause( fadeInLength );
+                    o.Unpause(fadeInLength);
                 }
             }
         }
@@ -1049,16 +1049,16 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// </summary>
     /// <param name="categoryName">Name of category.</param>
     /// <param name="fadeOutLength">The fade-out time [Default=0]</param>
-    static public void PauseCategory( string categoryName, float fadeOutLength = 0 )
+    static public void PauseCategory(string categoryName, float fadeOutLength = 0)
     {
-        if ( _currentMusic != null && _currentMusic.category.Name == categoryName ) AudioController.PauseMusic( fadeOutLength );
+        if (_currentMusic != null && _currentMusic.category.Name == categoryName) AudioController.PauseMusic(fadeOutLength);
 
-        List<AudioObject> objs = GetPlayingAudioObjectsInCategory( categoryName );
+        List<AudioObject> objs = GetPlayingAudioObjectsInCategory(categoryName);
 
-        for ( int index = 0; index < objs.Count; index++ )
+        for (int index = 0; index < objs.Count; index++)
         {
-            AudioObject o = objs[ index ];
-            o.Pause( fadeOutLength );
+            AudioObject o = objs[index];
+            o.Pause(fadeOutLength);
         }
     }
 
@@ -1067,18 +1067,18 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// </summary>
     /// <param name="categoryName">Name of category.</param>
     /// <param name="fadeInLength">The fade-in time [Default=0]</param>
-    static public void UnpauseCategory( string categoryName, float fadeInLength = 0 )
+    static public void UnpauseCategory(string categoryName, float fadeInLength = 0)
     {
-        if ( _currentMusic != null && _currentMusic.category.Name == categoryName ) AudioController.UnpauseMusic( fadeInLength );
+        if (_currentMusic != null && _currentMusic.category.Name == categoryName) AudioController.UnpauseMusic(fadeInLength);
 
-        List<AudioObject> objs = GetPlayingAudioObjectsInCategory( categoryName, true );
+        List<AudioObject> objs = GetPlayingAudioObjectsInCategory(categoryName, true);
 
-        for ( int index = 0; index < objs.Count; index++ )
+        for (int index = 0; index < objs.Count; index++)
         {
-            AudioObject o = objs[ index ];
-            if ( o.IsPaused() )
+            AudioObject o = objs[index];
+            if (o.IsPaused())
             {
-                o.Unpause( fadeInLength );
+                o.Unpause(fadeInLength);
             }
         }
     }
@@ -1088,16 +1088,16 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// </summary>
     /// <param name="categoryName">Name of category.</param>
     /// <param name="fadeOutLength">The fade-out time [Default=0]</param>
-    static public void StopCategory( string categoryName, float fadeOutLength = 0 )
+    static public void StopCategory(string categoryName, float fadeOutLength = 0)
     {
-        if ( _currentMusic != null && _currentMusic.category.Name == categoryName ) AudioController.StopMusic( fadeOutLength );
+        if (_currentMusic != null && _currentMusic.category.Name == categoryName) AudioController.StopMusic(fadeOutLength);
 
-        List<AudioObject> objs = GetPlayingAudioObjectsInCategory( categoryName );
+        List<AudioObject> objs = GetPlayingAudioObjectsInCategory(categoryName);
 
-        for ( int index = 0; index < objs.Count; index++ )
+        for (int index = 0; index < objs.Count; index++)
         {
-            AudioObject o = objs[ index ];
-            o.Stop( fadeOutLength );
+            AudioObject o = objs[index];
+            o.Stop(fadeOutLength);
         }
     }
 
@@ -1108,9 +1108,9 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// <returns>
     ///   <c>true</c> if the specified audio ID is playing; otherwise, <c>false</c>.
     /// </returns>
-    static public bool IsPlaying( string audioID )
+    static public bool IsPlaying(string audioID)
     {
-        return GetPlayingAudioObjects( audioID ).Count > 0;
+        return GetPlayingAudioObjects(audioID).Count > 0;
     }
 
     /// <summary>
@@ -1121,19 +1121,19 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// <returns>
     /// Array of all playing audio objects with the specified <c>audioID</c>.
     /// </returns>
-    static public List<AudioObject> GetPlayingAudioObjects( string audioID, bool includePausedAudio = false )
+    static public List<AudioObject> GetPlayingAudioObjects(string audioID, bool includePausedAudio = false)
     {
-        List<AudioObject> objs = GetPlayingAudioObjects( includePausedAudio );
-        var matchesList = new List<AudioObject>( objs.Count );
+        List<AudioObject> objs = GetPlayingAudioObjects(includePausedAudio);
+        var matchesList = new List<AudioObject>(objs.Count);
 
-        for ( int index = 0; index < objs.Count; index++ )
+        for (int index = 0; index < objs.Count; index++)
         {
-            AudioObject o = objs[ index ];
-            if ( o != null )
+            AudioObject o = objs[index];
+            if (o != null)
             {
-                if ( o.audioID == audioID )
+                if (o.audioID == audioID)
                 {
-                    matchesList.Add( o );
+                    matchesList.Add(o);
                 }
             }
         }
@@ -1148,19 +1148,19 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// <returns>
     /// Array of all playing audio objects belonging to the specified category or one of its child categories.
     /// </returns>
-    static public List<AudioObject> GetPlayingAudioObjectsInCategory( string categoryName, bool includePausedAudio = false )
+    static public List<AudioObject> GetPlayingAudioObjectsInCategory(string categoryName, bool includePausedAudio = false)
     {
-        List<AudioObject> objs = GetPlayingAudioObjects( includePausedAudio );
-        var matchesList = new List<AudioObject>( objs.Count );
+        List<AudioObject> objs = GetPlayingAudioObjects(includePausedAudio);
+        var matchesList = new List<AudioObject>(objs.Count);
 
-        for ( int index = 0; index < objs.Count; index++ )
+        for (int index = 0; index < objs.Count; index++)
         {
-            AudioObject o = objs[ index ];
-            if ( o != null )
+            AudioObject o = objs[index];
+            if (o != null)
             {
-                if ( o.DoesBelongToCategory( categoryName ) )
+                if (o.DoesBelongToCategory(categoryName))
                 {
-                    matchesList.Add( o );
+                    matchesList.Add(o);
                 }
             }
         }
@@ -1174,17 +1174,17 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// <returns>
     /// Array of all playing audio objects.
     /// </returns>
-    static public List<AudioObject> GetPlayingAudioObjects( bool includePausedAudio = false )
+    static public List<AudioObject> GetPlayingAudioObjects(bool includePausedAudio = false)
     {
-        object[ ] objs = RegisteredComponentController.GetAllOfType( typeof( AudioObject ) );  // Flash compatible version
-        var matchesList = new List<AudioObject>( objs.Length );
+        object[] objs = RegisteredComponentController.GetAllOfType(typeof(AudioObject));  // Flash compatible version
+        var matchesList = new List<AudioObject>(objs.Length);
 
-        for ( int i = 0; i < objs.Length; i++ )
+        for (int i = 0; i < objs.Length; i++)
         {
-            var o = (AudioObject) objs[ i ];
-            if ( o.IsPlaying() || ( includePausedAudio && o.IsPaused() ) )
+            var o = (AudioObject)objs[i];
+            if (o.IsPlaying() || (includePausedAudio && o.IsPaused()))
             {
-                matchesList.Add( o );
+                matchesList.Add(o);
             }
         }
 
@@ -1199,18 +1199,18 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// <returns>
     /// Number of all playing audio objects with the specified <c>audioID</c>.
     /// </returns>
-    static public int GetPlayingAudioObjectsCount( string audioID, bool includePausedAudio = false )
+    static public int GetPlayingAudioObjectsCount(string audioID, bool includePausedAudio = false)
     {
-        List<AudioObject> objs = GetPlayingAudioObjects( includePausedAudio );
+        List<AudioObject> objs = GetPlayingAudioObjects(includePausedAudio);
 
         int count = 0;
 
-        for ( int index = 0; index < objs.Count; index++ )
+        for (int index = 0; index < objs.Count; index++)
         {
-            AudioObject o = objs[ index ];
-            if ( o != null )
+            AudioObject o = objs[index];
+            if (o != null)
             {
-                if ( o.audioID == audioID )
+                if (o.audioID == audioID)
                 {
                     count++;
                 }
@@ -1224,7 +1224,7 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// Enables the music.
     /// </summary>
     /// <param name="b">if set to <c>true</c> [b].</param>
-    static public void EnableMusic( bool b )
+    static public void EnableMusic(bool b)
     {
         AudioController.Instance.musicEnabled = b;
     }
@@ -1236,7 +1236,7 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// 'Sound' means all audio except music.
     /// </remarks>
     /// <param name="b">if set to <c>true</c> [b].</param>
-    static public void MuteSound( bool b )
+    static public void MuteSound(bool b)
     {
         AudioController.Instance.soundMuted = b;
     }
@@ -1275,14 +1275,14 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     static public AudioListener GetCurrentAudioListener()
     {
         AudioController MyInstance = Instance;
-        if ( MyInstance._currentAudioListener != null && MyInstance._currentAudioListener.gameObject == null ) // TODO: check if this is necessary and if it really works if object was destroyed
+        if (MyInstance._currentAudioListener != null && MyInstance._currentAudioListener.gameObject == null) // TODO: check if this is necessary and if it really works if object was destroyed
         {
             MyInstance._currentAudioListener = null;
         }
 
-        if ( MyInstance._currentAudioListener == null )
+        if (MyInstance._currentAudioListener == null)
         {
-            MyInstance._currentAudioListener = (AudioListener) FindObjectOfType( typeof( AudioListener ) );
+            MyInstance._currentAudioListener = (AudioListener)FindObjectOfType(typeof(AudioListener));
         }
 
         return MyInstance._currentAudioListener;
@@ -1306,25 +1306,25 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// </summary>
     /// <param name="name">The category's name.</param>
     /// <returns>The category or <c>null</c> if no category with the specified name exists</returns>
-    static public AudioCategory GetCategory( string name )
+    static public AudioCategory GetCategory(string name)
     {
         var primaryInstance = Instance;
 
-        AudioCategory cat = primaryInstance._GetCategory( name );
+        AudioCategory cat = primaryInstance._GetCategory(name);
 
-        if ( cat != null )
+        if (cat != null)
         {
             return cat;
         }
 
-        if ( primaryInstance._additionalAudioControllers != null )
+        if (primaryInstance._additionalAudioControllers != null)
         {
-            for ( int index = 0; index < primaryInstance._additionalAudioControllers.Count; index++ )
+            for (int index = 0; index < primaryInstance._additionalAudioControllers.Count; index++)
             {
-                var ac = primaryInstance._additionalAudioControllers[ index ];
-                cat = ac._GetCategory( name );
+                var ac = primaryInstance._additionalAudioControllers[index];
+                cat = ac._GetCategory(name);
 
-                if ( cat != null )
+                if (cat != null)
                 {
                     return cat;
                 }
@@ -1338,27 +1338,27 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// </summary>
     /// <param name="name">The category name.</param>
     /// <param name="volume">The volume (between 0 and 1).</param>
-    static public void SetCategoryVolume( string name, float volume )
+    static public void SetCategoryVolume(string name, float volume)
     {
         bool found = false;
         var primaryInstance = Instance;
 
-        AudioCategory cat = primaryInstance._GetCategory( name );
+        AudioCategory cat = primaryInstance._GetCategory(name);
 
-        if ( cat != null )
+        if (cat != null)
         {
             cat.Volume = volume;
             found = true;
         }
 
-        if ( primaryInstance._additionalAudioControllers != null )
+        if (primaryInstance._additionalAudioControllers != null)
         {
-            for ( int index = 0; index < primaryInstance._additionalAudioControllers.Count; index++ )
+            for (int index = 0; index < primaryInstance._additionalAudioControllers.Count; index++)
             {
-                var ac = primaryInstance._additionalAudioControllers[ index ];
-                cat = ac._GetCategory( name );
+                var ac = primaryInstance._additionalAudioControllers[index];
+                cat = ac._GetCategory(name);
 
-                if ( cat != null )
+                if (cat != null)
                 {
                     cat.Volume = volume;
                     found = true;
@@ -1366,9 +1366,9 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
             }
         }
 
-        if ( !found )
+        if (!found)
         {
-            Debug.LogWarning( "No audio category with name " + name );
+            Debug.LogWarning("No audio category with name " + name);
         }
     }
 
@@ -1377,16 +1377,16 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// </summary>
     /// <param name="name">The category name.</param>
     /// <returns>The volume of the specified category</returns>
-    static public float GetCategoryVolume( string name )
+    static public float GetCategoryVolume(string name)
     {
-        AudioCategory category = GetCategory( name );
-        if ( category != null )
+        AudioCategory category = GetCategory(name);
+        if (category != null)
         {
             return category.Volume;
         }
         else
         {
-            Debug.LogWarning( "No audio category with name " + name );
+            Debug.LogWarning("No audio category with name " + name);
             return 0;
         }
     }
@@ -1398,16 +1398,16 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// <remarks>
     /// Volume change is also applied to all additional AudioControllers.
     /// </remarks>
-    static public void SetGlobalVolume( float volume )
+    static public void SetGlobalVolume(float volume)
     {
         var primaryInstance = Instance;
         primaryInstance.Volume = volume;
 
-        if ( primaryInstance._additionalAudioControllers != null )
+        if (primaryInstance._additionalAudioControllers != null)
         {
-            for ( int index = 0; index < primaryInstance._additionalAudioControllers.Count; index++ )
+            for (int index = 0; index < primaryInstance._additionalAudioControllers.Count; index++)
             {
-                var ac = primaryInstance._additionalAudioControllers[ index ];
+                var ac = primaryInstance._additionalAudioControllers[index];
                 ac.Volume = volume;
             }
         }
@@ -1431,23 +1431,23 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// <returns>
     /// Reference to the new category.
     /// </returns>
-    static public AudioCategory NewCategory( string categoryName )
+    static public AudioCategory NewCategory(string categoryName)
     {
         // can not use ArrayHelper at this point because of buggy Flash compiler :(
 
         int oldCategoryCount = Instance.AudioCategories != null ? Instance.AudioCategories.Length : 0;
         var oldArray = Instance.AudioCategories;
-        Instance.AudioCategories = new AudioCategory[ oldCategoryCount + 1 ];
+        Instance.AudioCategories = new AudioCategory[oldCategoryCount + 1];
 
-        if ( oldCategoryCount > 0 )
+        if (oldCategoryCount > 0)
         {
-            oldArray.CopyTo( Instance.AudioCategories, 0 );
+            oldArray.CopyTo(Instance.AudioCategories, 0);
         }
 
-        var newCategory = new AudioCategory( Instance );
+        var newCategory = new AudioCategory(Instance);
         newCategory.Name = categoryName;
 
-        Instance.AudioCategories[ oldCategoryCount ] = newCategory;
+        Instance.AudioCategories[oldCategoryCount] = newCategory;
         Instance._InvalidateCategories();
         return newCategory;
     }
@@ -1457,44 +1457,44 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// Removes an audio category.
     /// </summary>
     /// <param name="categoryName">Name of the category to remove.</param>
-    static public void RemoveCategory( string categoryName )
+    static public void RemoveCategory(string categoryName)
     {
         int i, index = -1;
         int oldCategoryCount;
 
-        if ( Instance.AudioCategories != null )
+        if (Instance.AudioCategories != null)
         {
             oldCategoryCount = Instance.AudioCategories.Length;
         }
         else
             oldCategoryCount = 0;
 
-        for ( i = 0; i < oldCategoryCount; i++ )
+        for (i = 0; i < oldCategoryCount; i++)
         {
-            if ( Instance.AudioCategories[ i ].Name == categoryName )
+            if (Instance.AudioCategories[i].Name == categoryName)
             {
                 index = i;
                 break;
             }
         }
 
-        if ( index == -1 )
+        if (index == -1)
         {
-            Debug.LogError( "AudioCategory does not exist: " + categoryName );
+            Debug.LogError("AudioCategory does not exist: " + categoryName);
             return;
         }
 
         //ArrayHelper.DeleteArrayElement( ref Instance.AudioCategories, index ); // can not use ArrayHelper because of buggy Flash compiler :(
         {
-            var newArray = new AudioCategory[ Instance.AudioCategories.Length - 1 ];
+            var newArray = new AudioCategory[Instance.AudioCategories.Length - 1];
 
-            for ( i = 0; i < index; i++ )
+            for (i = 0; i < index; i++)
             {
-                newArray[ i ] = Instance.AudioCategories[ i ];
+                newArray[i] = Instance.AudioCategories[i];
             }
-            for ( i = index + 1; i < Instance.AudioCategories.Length; i++ )
+            for (i = index + 1; i < Instance.AudioCategories.Length; i++)
             {
-                newArray[ i - 1 ] = Instance.AudioCategories[ i ];
+                newArray[i - 1] = Instance.AudioCategories[i];
             }
             Instance.AudioCategories = newArray;
         }
@@ -1527,20 +1527,20 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// </example>
     /// <seealso cref="AudioController.NewCategory(string)"/>
     /// <seealso cref="AudioController.GetCategory(string)"/>
-    static public void AddToCategory( AudioCategory category, AudioItem audioItem )
+    static public void AddToCategory(AudioCategory category, AudioItem audioItem)
     {
         // can not use here because of Flash compuler bug: ArrayHelper.AddArrayElement( ref category.AudioItems, audioItem );
 
         int oldCount = category.AudioItems != null ? category.AudioItems.Length : 0;
         var oldArray = category.AudioItems;
-        category.AudioItems = new AudioItem[ oldCount + 1 ];
+        category.AudioItems = new AudioItem[oldCount + 1];
 
-        if ( oldCount > 0 )
+        if (oldCount > 0)
         {
-            oldArray.CopyTo( category.AudioItems, 0 );
+            oldArray.CopyTo(category.AudioItems, 0);
         }
 
-        category.AudioItems[ oldCount ] = audioItem;
+        category.AudioItems[oldCount] = audioItem;
         Instance._InvalidateCategories();
     }
 
@@ -1554,17 +1554,17 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// <returns>The <see cref="AudioItem"/> created with the specified <c>audioID</c></returns>
     /// <seealso cref="AudioController.NewCategory(string)"/>
     /// <seealso cref="AudioController.GetCategory(string)"/>
-    static public AudioItem AddToCategory( AudioCategory category, AudioClip audioClip, string audioID )
+    static public AudioItem AddToCategory(AudioCategory category, AudioClip audioClip, string audioID)
     {
         var audioItem = new AudioItem();
         audioItem.Name = audioID;
-        audioItem.subItems = new AudioSubItem[ 1 ];
+        audioItem.subItems = new AudioSubItem[1];
 
         var audioSubItem = new AudioSubItem();
         audioSubItem.Clip = audioClip;
-        audioItem.subItems[ 0 ] = audioSubItem;
+        audioItem.subItems[0] = audioSubItem;
 
-        AddToCategory( category, audioItem );
+        AddToCategory(category, audioItem);
         return audioItem;
     }
 
@@ -1573,35 +1573,35 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// </summary>
     /// <param name="audioID">Name of the audio item to remove.</param>
     /// <returns><c>true</c> if the audio item was found and successfully removed, otherwise <c>false</c></returns>
-    static public bool RemoveAudioItem( string audioID )
+    static public bool RemoveAudioItem(string audioID)
     {
-        var audioItem = Instance._GetAudioItem( audioID );
+        var audioItem = Instance._GetAudioItem(audioID);
 
-        if ( audioItem != null )
+        if (audioItem != null)
         {
-            int index = audioItem.category._GetIndexOf( audioItem );
-            if ( index < 0 ) return false; // should never be the case!
+            int index = audioItem.category._GetIndexOf(audioItem);
+            if (index < 0) return false; // should never be the case!
 
             var array = audioItem.category.AudioItems;
 
             //ArrayHelper.DeleteArrayElement( audioItem.category, index ); // Flash export does not currently work!! 
             {
-                var newArray = new AudioItem[ array.Length - 1 ];
+                var newArray = new AudioItem[array.Length - 1];
                 int i;
-                for ( i = 0; i < index; i++ )
+                for (i = 0; i < index; i++)
                 {
-                    newArray[ i ] = array[ i ];
+                    newArray[i] = array[i];
                 }
-                for ( i = index + 1; i < array.Length; i++ )
+                for (i = index + 1; i < array.Length; i++)
                 {
-                    newArray[ i - 1 ] = array[ i ];
+                    newArray[i - 1] = array[i];
                 }
                 audioItem.category.AudioItems = newArray;
             }
 
-            if ( Instance._categoriesValidated )
+            if (Instance._categoriesValidated)
             {
-                Instance._audioItems.Remove( audioID );
+                Instance._audioItems.Remove(audioID);
             }
             return true;
         }
@@ -1614,9 +1614,9 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// </summary>
     /// <param name="audioID">The audioID</param>
     /// <returns><c>true</c> if the <c>audioID</c> is valid</returns>
-    static public bool IsValidAudioID( string audioID )
+    static public bool IsValidAudioID(string audioID)
     {
-        return Instance._GetAudioItem( audioID ) != null;
+        return Instance._GetAudioItem(audioID) != null;
     }
 
     /// <summary>
@@ -1624,9 +1624,9 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// </summary>
     /// <param name="audioID">The <c>audioID</c></param>
     /// <returns>The <see cref="AudioItem"/> if <c>audioID</c> is valid, else <c>null</c> </returns>
-    static public AudioItem GetAudioItem( string audioID )
+    static public AudioItem GetAudioItem(string audioID)
     {
-        return Instance._GetAudioItem( audioID );
+        return Instance._GetAudioItem(audioID);
     }
 
     /// <summary>
@@ -1637,12 +1637,12 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// Use this method on a game object BEFORE destryoing it if you want to keep any audios playing 
     /// parented to this object.
     /// </remarks>
-    static public void DetachAllAudios( GameObject gameObjectWithAudios )
+    static public void DetachAllAudios(GameObject gameObjectWithAudios)
     {
-        var audioObjs = gameObjectWithAudios.GetComponentsInChildren<AudioObject>( true );
-        for ( int index = 0; index < audioObjs.Length; index++ )
+        var audioObjs = gameObjectWithAudios.GetComponentsInChildren<AudioObject>(true);
+        for (int index = 0; index < audioObjs.Length; index++)
         {
-            var a = audioObjs[ index ];
+            var a = audioObjs[index];
             a.transform.parent = null;
         }
     }
@@ -1652,12 +1652,12 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// </summary>
     /// <param name="audioID">The <c>audioID</c></param>
     /// <returns>The max distance applied to the AudioSource</returns>
-    static public float GetAudioItemMaxDistance( string audioID )
+    static public float GetAudioItemMaxDistance(string audioID)
     {
-        var audioItem = AudioController.GetAudioItem( audioID );
+        var audioItem = AudioController.GetAudioItem(audioID);
 
-        if ( audioItem.overrideAudioSourceSettings ) return audioItem.audioSource_MaxDistance;
-        else if ( audioItem.category.AudioObjectPrefab != null )
+        if (audioItem.overrideAudioSourceSettings) return audioItem.audioSource_MaxDistance;
+        else if (audioItem.category.AudioObjectPrefab != null)
         {
             return audioItem.category.AudioObjectPrefab.GetComponent<AudioSource>().maxDistance;
         }
@@ -1676,9 +1676,9 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
 
     public void UnloadAllAudioClips()
     {
-        for ( int index = 0; index < AudioCategories.Length; index++ )
+        for (int index = 0; index < AudioCategories.Length; index++)
         {
-            var c = AudioCategories[ index ];
+            var c = AudioCategories[index];
             c.UnloadAllAudioClips();
         }
     }
@@ -1695,7 +1695,7 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     {
         set
         {
-            _currentMusicReference.Set( value, true );
+            _currentMusicReference.Set(value, true);
         }
         get
         {
@@ -1728,25 +1728,25 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
 
     private void _ApplyVolumeChange()
     {
-        List<AudioObject> objs = GetPlayingAudioObjects( true );
+        List<AudioObject> objs = GetPlayingAudioObjects(true);
 
-        for ( int index = 0; index < objs.Count; index++ )
+        for (int index = 0; index < objs.Count; index++)
         {
-            AudioObject o = objs[ index ];
-            if ( o != null )
+            AudioObject o = objs[index];
+            if (o != null)
             {
                 o._ApplyVolumeBoth();
             }
         }
     }
 
-    internal AudioItem _GetAudioItem( string audioID )
+    internal AudioItem _GetAudioItem(string audioID)
     {
         AudioItem sndItem;
 
         _ValidateCategories();
 
-        if ( _audioItems.TryGetValue( audioID, out sndItem ) )
+        if (_audioItems.TryGetValue(audioID, out sndItem))
         {
             return sndItem;
         }
@@ -1754,86 +1754,86 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
         return null;
     }
 
-    protected AudioObject _PlayMusic( string audioID, float volume, float delay, float startTime )
+    protected AudioObject _PlayMusic(string audioID, float volume, float delay, float startTime)
     {
         AudioListener al = GetCurrentAudioListener();
-        if ( al == null )
+        if (al == null)
         {
-            Debug.LogWarning( "No AudioListener found in the scene" );
+            Debug.LogWarning("No AudioListener found in the scene");
             return null;
         }
-        return _PlayMusic( audioID, al.transform.position + al.transform.forward, null, volume, delay, startTime );
+        return _PlayMusic(audioID, al.transform.position + al.transform.forward, null, volume, delay, startTime);
     }
 
-    protected bool _StopMusic( float fadeOutLength )
+    protected bool _StopMusic(float fadeOutLength)
     {
-        if ( _currentMusic != null )
+        if (_currentMusic != null)
         {
-            _currentMusic.Stop( fadeOutLength );
+            _currentMusic.Stop(fadeOutLength);
             _currentMusic = null;
             return true;
         }
         return false;
     }
 
-    protected bool _PauseMusic( float fadeOut )
+    protected bool _PauseMusic(float fadeOut)
     {
-        if ( _currentMusic != null )
+        if (_currentMusic != null)
         {
-            _currentMusic.Pause( fadeOut );
+            _currentMusic.Pause(fadeOut);
             return true;
         }
         return false;
     }
 
-    protected AudioObject _PlayMusic( string audioID, Vector3 position, Transform parentObj, float volume, float delay, float startTime )
+    protected AudioObject _PlayMusic(string audioID, Vector3 position, Transform parentObj, float volume, float delay, float startTime)
     {
-        if ( !IsMusicEnabled() ) return null;
+        if (!IsMusicEnabled()) return null;
 
         bool doFadeIn;
 
-        if ( _currentMusic != null && _currentMusic.IsPlaying() )
+        if (_currentMusic != null && _currentMusic.IsPlaying())
         {
             doFadeIn = true;
-            _currentMusic.Stop( musicCrossFadeTime_Out );
+            _currentMusic.Stop(musicCrossFadeTime_Out);
         }
         else
             doFadeIn = false;
 
         //Debug.Log( "PlayMusic " + audioID );
 
-        _currentMusic = _PlayAsMusic( audioID, volume, position, parentObj, delay, startTime, false );
+        _currentMusic = _PlayAsMusic(audioID, volume, position, parentObj, delay, startTime, false);
 
-        if ( _currentMusic )
+        if (_currentMusic)
         {
-            if ( doFadeIn && musicCrossFadeTime_In > 0 )
+            if (doFadeIn && musicCrossFadeTime_In > 0)
             {
-                _currentMusic.FadeIn( musicCrossFadeTime_In );
+                _currentMusic.FadeIn(musicCrossFadeTime_In);
             }
         }
 
         return _currentMusic;
     }
 
-    protected int _EnqueueMusic( string audioID )
+    protected int _EnqueueMusic(string audioID)
     {
         int newLength;
 
-        if ( musicPlaylist == null )
+        if (musicPlaylist == null)
         {
             newLength = 1;
         }
         else
             newLength = musicPlaylist.Length + 1;
 
-        string[ ] newPlayList = new string[ newLength ];
+        string[] newPlayList = new string[newLength];
 
-        if ( musicPlaylist != null )
+        if (musicPlaylist != null)
         {
-            musicPlaylist.CopyTo( newPlayList, 0 );
+            musicPlaylist.CopyTo(newPlayList, 0);
         }
 
-        newPlayList[ newLength - 1 ] = audioID;
+        newPlayList[newLength - 1] = audioID;
         musicPlaylist = newPlayList;
 
         return newLength;
@@ -1842,21 +1842,21 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     protected AudioObject _PlayMusicPlaylist()
     {
         _ResetLastPlayedList();
-        return _PlayNextMusicOnPlaylist( 0 );
+        return _PlayNextMusicOnPlaylist(0);
     }
 
-    private AudioObject _PlayMusicTrackWithID( int nextTrack, float delay, bool addToPlayedList )
+    private AudioObject _PlayMusicTrackWithID(int nextTrack, float delay, bool addToPlayedList)
     {
-        if ( nextTrack < 0 )
+        if (nextTrack < 0)
         {
             return null;
         }
-        _playlistPlayed.Add( nextTrack );
+        _playlistPlayed.Add(nextTrack);
         _isPlaylistPlaying = true;
         //Debug.Log( "nextTrack: " + nextTrack );
-        AudioObject audioObj = _PlayMusic( musicPlaylist[ nextTrack ], 1, delay, 0 );
+        AudioObject audioObj = _PlayMusic(musicPlaylist[nextTrack], 1, delay, 0);
 
-        if ( audioObj != null )
+        if (audioObj != null)
         {
             audioObj._isCurrentPlaylistTrack = true;
             audioObj.primaryAudioSource.loop = false;
@@ -1864,16 +1864,16 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
         return audioObj;
     }
 
-    internal AudioObject _PlayNextMusicOnPlaylist( float delay )
+    internal AudioObject _PlayNextMusicOnPlaylist(float delay)
     {
         int nextTrack = _GetNextMusicTrack();
-        return _PlayMusicTrackWithID( nextTrack, delay, true );
+        return _PlayMusicTrackWithID(nextTrack, delay, true);
     }
 
-    internal AudioObject _PlayPreviousMusicOnPlaylist( float delay )
+    internal AudioObject _PlayPreviousMusicOnPlaylist(float delay)
     {
         int nextTrack = _GetPreviousMusicTrack();
-        return _PlayMusicTrackWithID( nextTrack, delay, false );
+        return _PlayMusicTrackWithID(nextTrack, delay, false);
     }
 
     private void _ResetLastPlayedList()
@@ -1883,10 +1883,10 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
 
     protected int _GetNextMusicTrack()
     {
-        if ( musicPlaylist == null || musicPlaylist.Length == 0 ) return -1;
-        if ( musicPlaylist.Length == 1 ) return 0;
+        if (musicPlaylist == null || musicPlaylist.Length == 0) return -1;
+        if (musicPlaylist.Length == 1) return 0;
 
-        if ( shufflePlaylist )
+        if (shufflePlaylist)
         {
             return _GetNextMusicTrackShuffled();
         }
@@ -1899,10 +1899,10 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
 
     protected int _GetPreviousMusicTrack()
     {
-        if ( musicPlaylist == null || musicPlaylist.Length == 0 ) return -1;
-        if ( musicPlaylist.Length == 1 ) return 0;
+        if (musicPlaylist == null || musicPlaylist.Length == 0) return -1;
+        if (musicPlaylist.Length == 1) return 0;
 
-        if ( shufflePlaylist )
+        if (shufflePlaylist)
         {
             return _GetPreviousMusicTrackShuffled();
         }
@@ -1915,9 +1915,9 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
 
     private int _GetPreviousMusicTrackShuffled()
     {
-        if ( _playlistPlayed.Count >= 2 )
+        if (_playlistPlayed.Count >= 2)
         {
-            int id = _playlistPlayed[ _playlistPlayed.Count - 2 ];
+            int id = _playlistPlayed[_playlistPlayed.Count - 2];
 
             _RemoveLastPlayedOnList();
             _RemoveLastPlayedOnList();
@@ -1930,7 +1930,7 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
 
     private void _RemoveLastPlayedOnList()
     {
-        _playlistPlayed.RemoveAt( _playlistPlayed.Count - 1 );
+        _playlistPlayed.RemoveAt(_playlistPlayed.Count - 1);
     }
 
     private int _GetNextMusicTrackShuffled()
@@ -1941,15 +1941,15 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
 
         int randomElementCount;
 
-        if ( loopPlaylist )
+        if (loopPlaylist)
         {
-            randomElementCount = Mathf.Clamp( musicPlaylist.Length / 4, 2, 10 );
+            randomElementCount = Mathf.Clamp(musicPlaylist.Length / 4, 2, 10);
 
-            if ( disallowTracksCount > musicPlaylist.Length - randomElementCount )
+            if (disallowTracksCount > musicPlaylist.Length - randomElementCount)
             {
                 disallowTracksCount = musicPlaylist.Length - randomElementCount;
 
-                if ( disallowTracksCount < 1 ) // the same track must never be played twice in a row
+                if (disallowTracksCount < 1) // the same track must never be played twice in a row
                 {
                     disallowTracksCount = 1; // musicPlaylist.Length is always >= 2 
                 }
@@ -1958,42 +1958,42 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
         else
         {
             // do not play the same song twice
-            if ( disallowTracksCount >= musicPlaylist.Length )
+            if (disallowTracksCount >= musicPlaylist.Length)
             {
                 return -1; // stop playing as soon as all tracks have been played 
             }
         }
 
 
-        for ( int i = 0; i < disallowTracksCount; i++ )
+        for (int i = 0; i < disallowTracksCount; i++)
         {
-            playedTracksHashed.Add( _playlistPlayed[ _playlistPlayed.Count - 1 - i ] );
+            playedTracksHashed.Add(_playlistPlayed[_playlistPlayed.Count - 1 - i]);
         }
 
         var possibleTrackIDs = new List<int>();
 
-        for ( int i = 0; i < musicPlaylist.Length; i++ )
+        for (int i = 0; i < musicPlaylist.Length; i++)
         {
-            if ( !playedTracksHashed.Contains( i ) )
+            if (!playedTracksHashed.Contains(i))
             {
-                possibleTrackIDs.Add( i );
+                possibleTrackIDs.Add(i);
             }
         }
 
-        return possibleTrackIDs[ UnityEngine.Random.Range( 0, possibleTrackIDs.Count ) ];
+        return possibleTrackIDs[UnityEngine.Random.Range(0, possibleTrackIDs.Count)];
     }
 
     private int _GetNextMusicTrackInOrder()
     {
-        if ( _playlistPlayed.Count == 0 )
+        if (_playlistPlayed.Count == 0)
         {
             return 0;
         }
-        int next = _playlistPlayed[ _playlistPlayed.Count - 1 ] + 1;
+        int next = _playlistPlayed[_playlistPlayed.Count - 1] + 1;
 
-        if ( next >= musicPlaylist.Length ) // reached the end of the playlist
+        if (next >= musicPlaylist.Length) // reached the end of the playlist
         {
-            if ( loopPlaylist )
+            if (loopPlaylist)
             {
                 next = 0;
             }
@@ -2005,9 +2005,9 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
 
     private int _GetPreviousMusicTrackInOrder()
     {
-        if ( _playlistPlayed.Count < 2 )
+        if (_playlistPlayed.Count < 2)
         {
-            if ( loopPlaylist )
+            if (loopPlaylist)
             {
                 return musicPlaylist.Length - 1;
             }
@@ -2015,14 +2015,14 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
                 return -1;
         }
 
-        int next = _playlistPlayed[ _playlistPlayed.Count - 1 ] - 1;
+        int next = _playlistPlayed[_playlistPlayed.Count - 1] - 1;
 
         _RemoveLastPlayedOnList();
         _RemoveLastPlayedOnList();
 
-        if ( next < 0 ) // reached the end of the playlist
+        if (next < 0) // reached the end of the playlist
         {
-            if ( loopPlaylist )
+            if (loopPlaylist)
             {
                 next = musicPlaylist.Length - 1;
             }
@@ -2032,41 +2032,41 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
         return next;
     }
 
-    protected AudioObject _PlayAsSound( string audioID, float volume, Vector3 worldPosition, Transform parentObj, float delay, float startTime, bool playWithoutAudioObject, double dspTime = 0, AudioObject useExistingAudioObject = null )
+    protected AudioObject _PlayAsSound(string audioID, float volume, Vector3 worldPosition, Transform parentObj, float delay, float startTime, bool playWithoutAudioObject, double dspTime = 0, AudioObject useExistingAudioObject = null)
     {
-        return _PlayEx( audioID, volume, worldPosition, parentObj, delay, startTime, playWithoutAudioObject, dspTime, useExistingAudioObject, false );
+        return _PlayEx(audioID, volume, worldPosition, parentObj, delay, startTime, playWithoutAudioObject, dspTime, useExistingAudioObject, false);
     }
 
-    protected AudioObject _PlayAsMusic( string audioID, float volume, Vector3 worldPosition, Transform parentObj, float delay, float startTime, bool playWithoutAudioObject, double dspTime = 0, AudioObject useExistingAudioObject = null )
+    protected AudioObject _PlayAsMusic(string audioID, float volume, Vector3 worldPosition, Transform parentObj, float delay, float startTime, bool playWithoutAudioObject, double dspTime = 0, AudioObject useExistingAudioObject = null)
     {
-        return _PlayEx( audioID, volume, worldPosition, parentObj, delay, startTime, playWithoutAudioObject, dspTime, useExistingAudioObject, true );
+        return _PlayEx(audioID, volume, worldPosition, parentObj, delay, startTime, playWithoutAudioObject, dspTime, useExistingAudioObject, true);
     }
 
-    protected AudioObject _PlayEx( string audioID, float volume, Vector3 worldPosition, Transform parentObj, float delay, float startTime, bool playWithoutAudioObject, double dspTime = 0, AudioObject useExistingAudioObject = null, bool playAsMusic = false )
+    protected AudioObject _PlayEx(string audioID, float volume, Vector3 worldPosition, Transform parentObj, float delay, float startTime, bool playWithoutAudioObject, double dspTime = 0, AudioObject useExistingAudioObject = null, bool playAsMusic = false)
     {
         //Debug.Log( "AudioController Play: " + audioID );
 
-        if ( _audioDisabled ) return null;
+        if (_audioDisabled) return null;
 
-        AudioItem sndItem = _GetAudioItem( audioID );
-        if ( sndItem == null )
+        AudioItem sndItem = _GetAudioItem(audioID);
+        if (sndItem == null)
         {
-            Debug.LogWarning( "Audio item with name '" + audioID + "' does not exist" );
+            Debug.LogWarning("Audio item with name '" + audioID + "' does not exist");
             return null;
         }
 
 
-        if ( sndItem._lastPlayedTime > 0 && dspTime == 0 )
+        if (sndItem._lastPlayedTime > 0 && dspTime == 0)
         {
             double deltaT = AudioController.systemTime - sndItem._lastPlayedTime;
 
-            if ( deltaT < sndItem.MinTimeBetweenPlayCalls )
+            if (deltaT < sndItem.MinTimeBetweenPlayCalls)
             {
 
 #if UNITY_EDITOR && !AUDIO_TOOLKIT_DEMO
                 var logData = new AudioLog.LogData_SkippedPlay();
                 logData.audioID = audioID;
-                if ( sndItem != null && sndItem.category != null )
+                if (sndItem != null && sndItem.category != null)
                 {
                     logData.category = sndItem.category.Name;
                 }
@@ -2076,57 +2076,57 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
                 logData.startTime = startTime;
                 logData.volume = volume;
 
-                logData.reasonForSkip = string.Format( "{0:0.00}", deltaT ) + " < MinTimeBetweenPlay";
+                logData.reasonForSkip = string.Format("{0:0.00}", deltaT) + " < MinTimeBetweenPlay";
 
 #if UNITY_AUDIO_FEATURES_4_1
-                if ( dspTime > 0 )
+                if (dspTime > 0)
                 {
-                    logData.scheduledDspTime = Time.time + (float) ( dspTime - AudioSettings.dspTime );
+                    logData.scheduledDspTime = Time.time + (float)(dspTime - AudioSettings.dspTime);
                 }
 #endif
 
-                AudioLog.Log( logData );
+                AudioLog.Log(logData);
 #endif
 
                 return null;
             }
         }
 
-        if ( sndItem.MaxInstanceCount > 0 )
+        if (sndItem.MaxInstanceCount > 0)
         {
-            var playingAudios = GetPlayingAudioObjects( audioID );  // TODO: check performance of GetPlayingAudioObjects
+            var playingAudios = GetPlayingAudioObjects(audioID);  // TODO: check performance of GetPlayingAudioObjects
 
             bool isExceeding = playingAudios.Count >= sndItem.MaxInstanceCount;
 
-            if ( isExceeding )
+            if (isExceeding)
             {
                 bool isExceedingByMoreThanOne = playingAudios.Count > sndItem.MaxInstanceCount;
 
                 // search oldest audio and stop it.
                 AudioObject oldestAudio = null;
 
-                for ( int i = 0; i < playingAudios.Count; i++ )
+                for (int i = 0; i < playingAudios.Count; i++)
                 {
-                    if ( !isExceedingByMoreThanOne )
+                    if (!isExceedingByMoreThanOne)
                     {
-                        if ( playingAudios[ i ].isFadingOut ) continue;
+                        if (playingAudios[i].isFadingOut) continue;
                     }
-                    if ( oldestAudio == null || playingAudios[ i ].startedPlayingAtTime < oldestAudio.startedPlayingAtTime )
+                    if (oldestAudio == null || playingAudios[i].startedPlayingAtTime < oldestAudio.startedPlayingAtTime)
                     {
-                        oldestAudio = playingAudios[ i ];
+                        oldestAudio = playingAudios[i];
                     }
                 }
                 //oldestAudio.DestroyAudioObject(); // produces cracking noise
 
-                if ( oldestAudio != null )
+                if (oldestAudio != null)
                 {
-                    oldestAudio.Stop( isExceedingByMoreThanOne ? 0 : 0.2f );
+                    oldestAudio.Stop(isExceedingByMoreThanOne ? 0 : 0.2f);
                 }
 
             }
         }
 
-        return PlayAudioItem( sndItem, volume, worldPosition, parentObj, delay, startTime, playWithoutAudioObject, useExistingAudioObject, dspTime, playAsMusic );
+        return PlayAudioItem(sndItem, volume, worldPosition, parentObj, delay, startTime, playWithoutAudioObject, useExistingAudioObject, dspTime, playAsMusic);
     }
 
     /// <summary>
@@ -2151,7 +2151,7 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// <returns>
     /// The created <see cref="AudioObject"/> or <c>null</c>
     /// </returns>
-    public AudioObject PlayAudioItem( AudioItem sndItem, float volume, Vector3 worldPosition, Transform parentObj = null, float delay = 0, float startTime = 0, bool playWithoutAudioObject = false, AudioObject useExistingAudioObj = null, double dspTime = 0, bool playAsMusic = false )
+    public AudioObject PlayAudioItem(AudioItem sndItem, float volume, Vector3 worldPosition, Transform parentObj = null, float delay = 0, float startTime = 0, bool playWithoutAudioObject = false, AudioObject useExistingAudioObj = null, double dspTime = 0, bool playAsMusic = false)
     {
         AudioObject audioObj = null;
 
@@ -2159,33 +2159,33 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
 
         sndItem._lastPlayedTime = AudioController.systemTime;
 
-        AudioSubItem[ ] sndSubItems = _ChooseSubItems( sndItem, useExistingAudioObj );
+        AudioSubItem[] sndSubItems = _ChooseSubItems(sndItem, useExistingAudioObj);
 
-        if ( sndSubItems == null || sndSubItems.Length == 0 )
+        if (sndSubItems == null || sndSubItems.Length == 0)
         {
             return null;
         }
 
-        for ( int index = 0; index < sndSubItems.Length; index++ )
+        for (int index = 0; index < sndSubItems.Length; index++)
         {
-            var sndSubItem = sndSubItems[ index ];
-            if ( sndSubItem != null )
+            var sndSubItem = sndSubItems[index];
+            if (sndSubItem != null)
             {
-                var audioObjRet = PlayAudioSubItem( sndSubItem, volume, worldPosition, parentObj, delay, startTime, playWithoutAudioObject, useExistingAudioObj, dspTime, playAsMusic );
+                var audioObjRet = PlayAudioSubItem(sndSubItem, volume, worldPosition, parentObj, delay, startTime, playWithoutAudioObject, useExistingAudioObj, dspTime, playAsMusic);
 
-                if ( audioObjRet )
+                if (audioObjRet)
                 {
                     audioObj = audioObjRet;
                     audioObj.audioID = sndItem.Name;
 
-                    if ( sndItem.overrideAudioSourceSettings )
+                    if (sndItem.overrideAudioSourceSettings)
                     {
                         audioObjRet._audioSource_MinDistance_Saved = audioObjRet.primaryAudioSource.minDistance;
                         audioObjRet._audioSource_MaxDistance_Saved = audioObjRet.primaryAudioSource.maxDistance;
                         audioObjRet.primaryAudioSource.minDistance = sndItem.audioSource_MinDistance;
                         audioObjRet.primaryAudioSource.maxDistance = sndItem.audioSource_MaxDistance;
 
-                        if ( audioObjRet.secondaryAudioSource != null )
+                        if (audioObjRet.secondaryAudioSource != null)
                         {
                             audioObjRet.secondaryAudioSource.minDistance = sndItem.audioSource_MinDistance;
                             audioObjRet.secondaryAudioSource.maxDistance = sndItem.audioSource_MaxDistance;
@@ -2198,12 +2198,12 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
         return audioObj;
     }
 
-    internal AudioCategory _GetCategory( string name )
+    internal AudioCategory _GetCategory(string name)
     {
-        for ( int index = 0; index < AudioCategories.Length; index++ )
+        for (int index = 0; index < AudioCategories.Length; index++)
         {
-            AudioCategory cat = AudioCategories[ index ];
-            if ( cat.Name == name )
+            AudioCategory cat = AudioCategories[index];
+            if (cat.Name == name)
             {
                 return cat;
             }
@@ -2216,7 +2216,7 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
 
     void Update()
     {
-        if ( !_isAdditionalAudioController )
+        if (!_isAdditionalAudioController)
         {
             _UpdateSystemTime();
         }
@@ -2226,10 +2226,10 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     {
         double newSystemTime = SystemTime.timeSinceLaunch;
 
-        if ( _lastSystemTime >= 0 )
+        if (_lastSystemTime >= 0)
         {
             _systemDeltaTime = newSystemTime - _lastSystemTime;
-            if ( _systemDeltaTime <= Time.maximumDeltaTime + 0.01f )
+            if (_systemDeltaTime <= Time.maximumDeltaTime + 0.01f)
             {
                 _systemTime += _systemDeltaTime;
             }
@@ -2278,7 +2278,7 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
         base.Awake();
         // all initialisation must be done in AwakeSingleton()
 
-        if ( !isAdditionalAudioController )
+        if (!isAdditionalAudioController)
         {
             AwakeSingleton(); // AwakeSingleton only gets called by UnitySingleton if this is the main singleton object
         }
@@ -2286,9 +2286,9 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
 
     void OnEnable()
     {
-        if ( isAdditionalAudioController )
+        if (isAdditionalAudioController)
         {
-            AudioController.Instance._RegisterAdditionalAudioController( this );
+            AudioController.Instance._RegisterAdditionalAudioController(this);
         }
         else
         {
@@ -2309,7 +2309,7 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
 
     protected override void OnDestroy()
     {
-        if ( UnloadAudioClipsOnDestroy )
+        if (UnloadAudioClipsOnDestroy)
         {
             UnloadAllAudioClips();
         }
@@ -2318,9 +2318,9 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
 
     void OnDisable()
     {
-        if ( isAdditionalAudioController && AudioController.DoesInstanceExist() )
+        if (isAdditionalAudioController && AudioController.DoesInstanceExist())
         {
-            AudioController.Instance._UnregisterAdditionalAudioController( this );
+            AudioController.Instance._UnregisterAdditionalAudioController(this);
         }
     }
 #endif
@@ -2329,22 +2329,22 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     {
         _UpdateSystemTime();
 
-        if ( Persistent )
+        if (Persistent)
         {
-            DontDestroyOnLoad( gameObject );
+            DontDestroyOnLoad(gameObject);
         }
 
-        if ( AudioObjectPrefab == null )
+        if (AudioObjectPrefab == null)
         {
-            Debug.LogError( "No AudioObject prefab specified in AudioController." );
+            Debug.LogError("No AudioObject prefab specified in AudioController.");
         }
         else
         {
-            _ValidateAudioObjectPrefab( AudioObjectPrefab );
+            _ValidateAudioObjectPrefab(AudioObjectPrefab);
         }
         _ValidateCategories();
 
-        if ( _playlistPlayed == null )
+        if (_playlistPlayed == null)
         {
             _playlistPlayed = new List<int>();
             _isPlaylistPlaying = false;
@@ -2353,7 +2353,7 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
 
     protected void _ValidateCategories()
     {
-        if ( !_categoriesValidated )
+        if (!_categoriesValidated)
         {
             InitializeAudioItems();
 
@@ -2374,80 +2374,80 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// </remarks>
     public void InitializeAudioItems()
     {
-        if ( isAdditionalAudioController )
+        if (isAdditionalAudioController)
         {
             return;
         }
 
         _audioItems = new Dictionary<string, AudioItem>();
 
-        _InitializeAudioItems( this );
-        if ( _additionalAudioControllers != null )
+        _InitializeAudioItems(this);
+        if (_additionalAudioControllers != null)
         {
-            for ( int index = 0; index < _additionalAudioControllers.Count; index++ )
+            for (int index = 0; index < _additionalAudioControllers.Count; index++)
             {
-                var ac = _additionalAudioControllers[ index ];
-                if ( ac != null )
+                var ac = _additionalAudioControllers[index];
+                if (ac != null)
                 {
-                    _InitializeAudioItems( ac );
+                    _InitializeAudioItems(ac);
                 }
             }
         }
     }
 
-    private void _InitializeAudioItems( AudioController audioController )
+    private void _InitializeAudioItems(AudioController audioController)
     {
-        for ( int index = 0; index < audioController.AudioCategories.Length; index++ )
+        for (int index = 0; index < audioController.AudioCategories.Length; index++)
         {
-            AudioCategory category = audioController.AudioCategories[ index ];
+            AudioCategory category = audioController.AudioCategories[index];
             category.audioController = audioController;
-            category._AnalyseAudioItems( _audioItems );
+            category._AnalyseAudioItems(_audioItems);
 
-            if ( category.AudioObjectPrefab )
+            if (category.AudioObjectPrefab)
             {
-                _ValidateAudioObjectPrefab( category.AudioObjectPrefab );
+                _ValidateAudioObjectPrefab(category.AudioObjectPrefab);
             }
         }
     }
 
     private List<AudioController> _additionalAudioControllers;
 
-    private void _RegisterAdditionalAudioController( AudioController ac )
+    private void _RegisterAdditionalAudioController(AudioController ac)
     {
-        if ( _additionalAudioControllers == null )
+        if (_additionalAudioControllers == null)
         {
             _additionalAudioControllers = new List<AudioController>();
         }
 
-        _additionalAudioControllers.Add( ac );
+        _additionalAudioControllers.Add(ac);
 
         _InvalidateCategories();
-        _SyncCategoryVolumes( ac, this );
+        _SyncCategoryVolumes(ac, this);
     }
 
-    private void _SyncCategoryVolumes( AudioController toSync, AudioController syncWith )
+    private void _SyncCategoryVolumes(AudioController toSync, AudioController syncWith)
     {
-        for ( int i=0; i<toSync.AudioCategories.Length; i++ )
+        for (int i = 0; i < toSync.AudioCategories.Length; i++)
         {
-            var catDest = toSync.AudioCategories[ i ];
-            var catSource = syncWith._GetCategory( catDest.Name );
-            if ( catSource != null )
+            var catDest = toSync.AudioCategories[i];
+            var catSource = syncWith._GetCategory(catDest.Name);
+            if (catSource != null)
             {
                 catDest.Volume = catSource.Volume;
             }
         }
     }
 
-    private void _UnregisterAdditionalAudioController( AudioController ac )
+    private void _UnregisterAdditionalAudioController(AudioController ac)
     {
-        if ( _additionalAudioControllers != null )
+        if (_additionalAudioControllers != null)
         {
             int i;
-            for ( i = 0; i < _additionalAudioControllers.Count; i++ )
+            for (i = 0; i < _additionalAudioControllers.Count; i++)
             {
-                if ( _additionalAudioControllers[ i ] == ac )
+                if (_additionalAudioControllers[i] == ac)
                 {
-                    _additionalAudioControllers.RemoveAt( i );
+                    _additionalAudioControllers.RemoveAt(i);
                     _InvalidateCategories();
                     return;
                 }
@@ -2456,102 +2456,102 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
         }
         else
         {
-            Debug.LogWarning( "_UnregisterAdditionalAudioController: AudioController " + ac.name + " not found" );
+            Debug.LogWarning("_UnregisterAdditionalAudioController: AudioController " + ac.name + " not found");
         }
 
     }
 
-    protected static AudioSubItem[ ] _ChooseSubItems( AudioItem audioItem, AudioObject useExistingAudioObj )
+    protected static AudioSubItem[] _ChooseSubItems(AudioItem audioItem, AudioObject useExistingAudioObj)
     {
-        return _ChooseSubItems( audioItem, audioItem.SubItemPickMode, useExistingAudioObj );
+        return _ChooseSubItems(audioItem, audioItem.SubItemPickMode, useExistingAudioObj);
     }
 
-    internal static AudioSubItem _ChooseSingleSubItem( AudioItem audioItem, AudioPickSubItemMode pickMode, AudioObject useExistingAudioObj )
+    internal static AudioSubItem _ChooseSingleSubItem(AudioItem audioItem, AudioPickSubItemMode pickMode, AudioObject useExistingAudioObj)
     {
-        return _ChooseSubItems( audioItem, pickMode, useExistingAudioObj )[ 0 ];
+        return _ChooseSubItems(audioItem, pickMode, useExistingAudioObj)[0];
     }
 
-    protected static AudioSubItem[ ] _ChooseSubItems( AudioItem audioItem, AudioPickSubItemMode pickMode, AudioObject useExistingAudioObj )
+    protected static AudioSubItem[] _ChooseSubItems(AudioItem audioItem, AudioPickSubItemMode pickMode, AudioObject useExistingAudioObj)
     {
-        if ( audioItem.subItems == null ) return null;
+        if (audioItem.subItems == null) return null;
         int arraySize = audioItem.subItems.Length;
-        if ( arraySize == 0 ) return null;
+        if (arraySize == 0) return null;
 
         int chosen = 0;
-        AudioSubItem[ ] chosenItems;
+        AudioSubItem[] chosenItems;
 
         int lastChosen;
 
-        bool useLastChosenOfExistingAudioObj = !object.ReferenceEquals( useExistingAudioObj, null );
+        bool useLastChosenOfExistingAudioObj = !object.ReferenceEquals(useExistingAudioObj, null);
 
-        if ( useLastChosenOfExistingAudioObj ) // don't use Unity's operator here, because it will be called by GaplessAudioClipTransistion
+        if (useLastChosenOfExistingAudioObj) // don't use Unity's operator here, because it will be called by GaplessAudioClipTransistion
         {
             lastChosen = useExistingAudioObj._lastChosenSubItemIndex;
         }
         else
             lastChosen = audioItem._lastChosen;
 
-        if ( arraySize > 1 )
+        if (arraySize > 1)
         {
-            switch ( pickMode )
+            switch (pickMode)
             {
-            case AudioPickSubItemMode.Disabled:
-                return null;
+                case AudioPickSubItemMode.Disabled:
+                    return null;
 
-            case AudioPickSubItemMode.StartLoopSequenceWithFirst:
-                if ( useLastChosenOfExistingAudioObj )
-                {
-                    chosen = ( lastChosen + 1 ) % arraySize;
-                }
-                else
-                {
-                    chosen = 0;
-                }
-                break;
+                case AudioPickSubItemMode.StartLoopSequenceWithFirst:
+                    if (useLastChosenOfExistingAudioObj)
+                    {
+                        chosen = (lastChosen + 1) % arraySize;
+                    }
+                    else
+                    {
+                        chosen = 0;
+                    }
+                    break;
 
-            case AudioPickSubItemMode.Sequence:
-                chosen = ( lastChosen + 1 ) % arraySize;
-                break;
+                case AudioPickSubItemMode.Sequence:
+                    chosen = (lastChosen + 1) % arraySize;
+                    break;
 
-            case AudioPickSubItemMode.SequenceWithRandomStart:
-                if ( lastChosen == -1 )
-                {
-                    chosen = UnityEngine.Random.Range( 0, arraySize );
-                }
-                else
-                    chosen = ( lastChosen + 1 ) % arraySize;
-                break;
+                case AudioPickSubItemMode.SequenceWithRandomStart:
+                    if (lastChosen == -1)
+                    {
+                        chosen = UnityEngine.Random.Range(0, arraySize);
+                    }
+                    else
+                        chosen = (lastChosen + 1) % arraySize;
+                    break;
 
-            case AudioPickSubItemMode.Random:
-                chosen = _ChooseRandomSubitem( audioItem, true, lastChosen );
-                break;
+                case AudioPickSubItemMode.Random:
+                    chosen = _ChooseRandomSubitem(audioItem, true, lastChosen);
+                    break;
 
-            case AudioPickSubItemMode.RandomNotSameTwice:
-                chosen = _ChooseRandomSubitem( audioItem, false, lastChosen );
-                break;
+                case AudioPickSubItemMode.RandomNotSameTwice:
+                    chosen = _ChooseRandomSubitem(audioItem, false, lastChosen);
+                    break;
 
-            case AudioPickSubItemMode.AllSimultaneously:
-                chosenItems = new AudioSubItem[ arraySize ];
-                for ( int i = 0; i < arraySize; i++ )  // Array.Copy( audioItem.subItems, chosenItems, arraySize );  not working on Flash export
-                {
-                    chosenItems[ i ] = audioItem.subItems[ i ];
-                }
+                case AudioPickSubItemMode.AllSimultaneously:
+                    chosenItems = new AudioSubItem[arraySize];
+                    for (int i = 0; i < arraySize; i++)  // Array.Copy( audioItem.subItems, chosenItems, arraySize );  not working on Flash export
+                    {
+                        chosenItems[i] = audioItem.subItems[i];
+                    }
 
-                return chosenItems;
+                    return chosenItems;
 
-            case AudioPickSubItemMode.TwoSimultaneously:
-                chosenItems = new AudioSubItem[ 2 ];
-                chosenItems[ 0 ] = _ChooseSingleSubItem( audioItem, AudioPickSubItemMode.RandomNotSameTwice, useExistingAudioObj );
-                chosenItems[ 1 ] = _ChooseSingleSubItem( audioItem, AudioPickSubItemMode.RandomNotSameTwice, useExistingAudioObj );
-                return chosenItems;
+                case AudioPickSubItemMode.TwoSimultaneously:
+                    chosenItems = new AudioSubItem[2];
+                    chosenItems[0] = _ChooseSingleSubItem(audioItem, AudioPickSubItemMode.RandomNotSameTwice, useExistingAudioObj);
+                    chosenItems[1] = _ChooseSingleSubItem(audioItem, AudioPickSubItemMode.RandomNotSameTwice, useExistingAudioObj);
+                    return chosenItems;
 
-            case AudioPickSubItemMode.RandomNotSameTwiceOddsEvens:
-                chosen = _ChooseRandomSubitem( audioItem, false, lastChosen, true );
-                break;
+                case AudioPickSubItemMode.RandomNotSameTwiceOddsEvens:
+                    chosen = _ChooseRandomSubitem(audioItem, false, lastChosen, true);
+                    break;
             }
         }
 
-        if ( useLastChosenOfExistingAudioObj )
+        if (useLastChosenOfExistingAudioObj)
         {
             useExistingAudioObj._lastChosenSubItemIndex = chosen;
         }
@@ -2559,12 +2559,12 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
             audioItem._lastChosen = chosen;
 
         //Debug.Log( "chose:" + chosen );
-        chosenItems = new AudioSubItem[ 1 ];
-        chosenItems[ 0 ] = audioItem.subItems[ chosen ];
+        chosenItems = new AudioSubItem[1];
+        chosenItems[0] = audioItem.subItems[chosen];
         return chosenItems;
     }
 
-    private static int _ChooseRandomSubitem( AudioItem audioItem, bool allowSameElementTwiceInRow, int lastChosen, bool switchOddsEvens = false )
+    private static int _ChooseRandomSubitem(AudioItem audioItem, bool allowSameElementTwiceInRow, int lastChosen, bool switchOddsEvens = false)
     {
         int arraySize = audioItem.subItems.Length; // is >= 2 at this point 
         int chosen = 0;
@@ -2572,15 +2572,15 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
         float probRange;
         float lastProb = 0;
 
-        if ( !allowSameElementTwiceInRow )
+        if (!allowSameElementTwiceInRow)
         {
             // find out probability of last chosen sub item
-            if ( lastChosen >= 0 )
+            if (lastChosen >= 0)
             {
-                lastProb = audioItem.subItems[ lastChosen ]._SummedProbability;
-                if ( lastChosen >= 1 )
+                lastProb = audioItem.subItems[lastChosen]._SummedProbability;
+                if (lastChosen >= 1)
                 {
-                    lastProb -= audioItem.subItems[ lastChosen - 1 ]._SummedProbability;
+                    lastProb -= audioItem.subItems[lastChosen - 1]._SummedProbability;
                 }
             }
             else
@@ -2591,46 +2591,46 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
         else
             probRange = 1.0f;
 
-        float rnd = UnityEngine.Random.Range( 0, probRange );
+        float rnd = UnityEngine.Random.Range(0, probRange);
 
         int i;
-        for ( i = 0; i < arraySize - 1; i++ )
+        for (i = 0; i < arraySize - 1; i++)
         {
             float prob;
 
-            prob = audioItem.subItems[ i ]._SummedProbability;
+            prob = audioItem.subItems[i]._SummedProbability;
 
-            if ( switchOddsEvens )
+            if (switchOddsEvens)
             {
-                if ( isOdd( i ) == isOdd( lastChosen ) )
+                if (isOdd(i) == isOdd(lastChosen))
                 {
                     continue;
                 }
             }
 
-            if ( !allowSameElementTwiceInRow )
+            if (!allowSameElementTwiceInRow)
             {
-                if ( i == lastChosen )
+                if (i == lastChosen)
                 {
-                    if ( prob != 1.0f || !audioItem.subItems[ i ].DisableOtherSubitems ) // DisableOtherSubitems allows the same be played twice in a row 
+                    if (prob != 1.0f || !audioItem.subItems[i].DisableOtherSubitems) // DisableOtherSubitems allows the same be played twice in a row 
                     {
                         continue; // do not play same audio twice
                     }
                 }
 
-                if ( i > lastChosen )
+                if (i > lastChosen)
                 {
                     prob -= lastProb;
                 }
             }
 
-            if ( prob > rnd )
+            if (prob > rnd)
             {
                 chosen = i;
                 break;
             }
         }
-        if ( i == arraySize - 1 )
+        if (i == arraySize - 1)
         {
             chosen = arraySize - 1;
         }
@@ -2638,7 +2638,7 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
         return chosen;
     }
 
-    static bool isOdd( int i )
+    static bool isOdd(int i)
     {
         return i % 2 != 0;
     }
@@ -2665,27 +2665,27 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
     /// <returns>
     /// The created <see cref="AudioObject"/> or <c>null</c>
     /// </returns>
-    public AudioObject PlayAudioSubItem( AudioSubItem subItem, float volume, Vector3 worldPosition, Transform parentObj, float delay, float startTime, bool playWithoutAudioObject, AudioObject useExistingAudioObj, double dspTime = 0, bool playAsMusic = false )
+    public AudioObject PlayAudioSubItem(AudioSubItem subItem, float volume, Vector3 worldPosition, Transform parentObj, float delay, float startTime, bool playWithoutAudioObject, AudioObject useExistingAudioObj, double dspTime = 0, bool playAsMusic = false)
     {
         _ValidateCategories();
 
         var audioItem = subItem.item;
 
-        switch ( subItem.SubItemType )
+        switch (subItem.SubItemType)
         {
-        case AudioSubItemType.Item:
-            if ( subItem.ItemModeAudioID.Length == 0 )
-            {
-                Debug.LogWarning( "No item specified in audio sub-item with ITEM mode (audio item: '" + audioItem.Name + "')" );
-                return null;
-            }
-            return _PlayAsSound( subItem.ItemModeAudioID, volume, worldPosition, parentObj, delay, startTime, playWithoutAudioObject, dspTime, useExistingAudioObj );
+            case AudioSubItemType.Item:
+                if (subItem.ItemModeAudioID.Length == 0)
+                {
+                    Debug.LogWarning("No item specified in audio sub-item with ITEM mode (audio item: '" + audioItem.Name + "')");
+                    return null;
+                }
+                return _PlayAsSound(subItem.ItemModeAudioID, volume, worldPosition, parentObj, delay, startTime, playWithoutAudioObject, dspTime, useExistingAudioObj);
 
-        case AudioSubItemType.Clip:
-            break;
+            case AudioSubItemType.Clip:
+                break;
         }
 
-        if ( subItem.Clip == null )
+        if (subItem.Clip == null)
         {
             return null;
         }
@@ -2696,18 +2696,18 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
 
         float volumeWithoutCategory = subItem.Volume * audioItem.Volume * volume;
 
-        if ( subItem.RandomVolume != 0 || audioItem.loopSequenceRandomVolume != 0 )
+        if (subItem.RandomVolume != 0 || audioItem.loopSequenceRandomVolume != 0)
         {
             float randomVolume = subItem.RandomVolume + audioItem.loopSequenceRandomVolume;
-            volumeWithoutCategory += UnityEngine.Random.Range( -randomVolume, randomVolume );
-            volumeWithoutCategory = Mathf.Clamp01( volumeWithoutCategory );
+            volumeWithoutCategory += UnityEngine.Random.Range(-randomVolume, randomVolume);
+            volumeWithoutCategory = Mathf.Clamp01(volumeWithoutCategory);
         }
 
         float volumeWithCategory = volumeWithoutCategory * audioCategory.VolumeTotal;
 
-        var subItemAudioController = _GetAudioController( subItem );
+        var subItemAudioController = _GetAudioController(subItem);
 
-        if ( !subItemAudioController.PlayWithZeroVolume && ( volumeWithCategory <= 0 || Volume <= 0 ) )
+        if (!subItemAudioController.PlayWithZeroVolume && (volumeWithCategory <= 0 || Volume <= 0))
         {
             return null;
         }
@@ -2718,13 +2718,13 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
 
         GameObject audioPrefab;
 
-        if ( audioCategory.AudioObjectPrefab != null )
+        if (audioCategory.AudioObjectPrefab != null)
         {
             audioPrefab = audioCategory.AudioObjectPrefab;
         }
         else
         {
-            if ( subItemAudioController.AudioObjectPrefab != null )
+            if (subItemAudioController.AudioObjectPrefab != null)
             {
                 audioPrefab = subItemAudioController.AudioObjectPrefab;
             }
@@ -2732,9 +2732,9 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
                 audioPrefab = AudioObjectPrefab;
         }
 
-        if ( playWithoutAudioObject )
+        if (playWithoutAudioObject)
         {
-            audioPrefab.GetComponent<AudioSource>().PlayOneShot( subItem.Clip, AudioObject.TransformVolume( volumeWithCategory ) ); // unfortunately produces warning message, but works (tested only with Unity 3.5)
+            audioPrefab.GetComponent<AudioSource>().PlayOneShot(subItem.Clip, AudioObject.TransformVolume(volumeWithCategory)); // unfortunately produces warning message, but works (tested only with Unity 3.5)
 
             //AudioSource.PlayClipAtPoint( subItem.Clip, Vector3.zero, AudioObject.TransformVolume( volumeWithCategory ) );
             return null;
@@ -2742,21 +2742,21 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
 
         AudioObject sndObj;
 
-        if ( useExistingAudioObj == null )
+        if (useExistingAudioObj == null)
         {
-            if ( audioItem.DestroyOnLoad )
+            if (audioItem.DestroyOnLoad)
             {
 #if AUDIO_TOOLKIT_DEMO
                 audioObjInstance = (GameObject) GameObject.Instantiate( audioPrefab, worldPosition, Quaternion.identity );
 
 #else
-                if ( subItemAudioController.UsePooledAudioObjects )
+                if (subItemAudioController.UsePooledAudioObjects)
                 {
-                    audioObjInstance = (GameObject) ObjectPoolController.Instantiate( audioPrefab, worldPosition, Quaternion.identity );
+                    audioObjInstance = (GameObject)ObjectPoolController.Instantiate(audioPrefab, worldPosition, Quaternion.identity);
                 }
                 else
                 {
-                    audioObjInstance = (GameObject) ObjectPoolController.InstantiateWithoutPool( audioPrefab, worldPosition, Quaternion.identity );
+                    audioObjInstance = (GameObject)ObjectPoolController.InstantiateWithoutPool(audioPrefab, worldPosition, Quaternion.identity);
                 }
 #endif
             }
@@ -2765,13 +2765,17 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
 #if AUDIO_TOOLKIT_DEMO
                 audioObjInstance = (GameObject) GameObject.Instantiate( audioPrefab, worldPosition, Quaternion.identity );
 #else
-                audioObjInstance = (GameObject) ObjectPoolController.InstantiateWithoutPool( audioPrefab, worldPosition, Quaternion.identity );
+                audioObjInstance = (GameObject)ObjectPoolController.InstantiateWithoutPool(audioPrefab, worldPosition, Quaternion.identity);
 #endif
-                DontDestroyOnLoad( audioObjInstance );
+                DontDestroyOnLoad(audioObjInstance);
             }
-            if ( parentObj )
+            if (parentObj)
             {
                 audioObjInstance.transform.parent = parentObj;
+            }
+            else
+            {
+                audioObjInstance.transform.parent = NCSpeedLight.AudioManager.GO.transform;
             }
 
             sndObj = audioObjInstance.gameObject.GetComponent<AudioObject>();
@@ -2784,7 +2788,7 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
 
         sndObj.subItem = subItem;
 
-        if ( object.ReferenceEquals( useExistingAudioObj, null ) )
+        if (object.ReferenceEquals(useExistingAudioObj, null))
         {
             sndObj._lastChosenSubItemIndex = audioItem._lastChosen;
         }
@@ -2792,7 +2796,7 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
         sndObj.primaryAudioSource.clip = subItem.Clip;
         audioObjInstance.name = "AudioObject:" + sndObj.primaryAudioSource.clip.name;
 
-        sndObj.primaryAudioSource.pitch = AudioObject.TransformPitch( subItem.PitchShift );
+        sndObj.primaryAudioSource.pitch = AudioObject.TransformPitch(subItem.PitchShift);
 #if UNITY_5_OR_NEWER
         sndObj.primaryAudioSource.panStereo = subItem.Pan2D;
         sndObj.primaryAudioSource.spatialBlend = audioItem.spatialBlend;
@@ -2800,14 +2804,14 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
         sndObj.primaryAudioSource.pan = subItem.Pan2D;
 #endif
 
-        if ( subItem.RandomStartPosition )
+        if (subItem.RandomStartPosition)
         {
-            startTime = UnityEngine.Random.Range( 0, sndObj.clipLength );
+            startTime = UnityEngine.Random.Range(0, sndObj.clipLength);
         }
 
         sndObj.primaryAudioSource.time = startTime + subItem.ClipStartTime;
 
-        sndObj.primaryAudioSource.loop = ( audioItem.Loop == AudioItem.LoopMode.LoopSubitem || audioItem.Loop == (AudioItem.LoopMode) 3 ); // 3... deprecated gapless loop mode
+        sndObj.primaryAudioSource.loop = (audioItem.Loop == AudioItem.LoopMode.LoopSubitem || audioItem.Loop == (AudioItem.LoopMode)3); // 3... deprecated gapless loop mode
 
         sndObj._volumeExcludingCategory = volumeWithoutCategory;
         sndObj._volumeFromScriptCall = volume;
@@ -2816,28 +2820,28 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
 
         sndObj._ApplyVolumePrimary();
 
-        if ( subItem.RandomPitch != 0 || audioItem.loopSequenceRandomPitch != 0 )
+        if (subItem.RandomPitch != 0 || audioItem.loopSequenceRandomPitch != 0)
         {
             float randomPitch = subItem.RandomPitch + audioItem.loopSequenceRandomPitch;
-            sndObj.primaryAudioSource.pitch *= AudioObject.TransformPitch( UnityEngine.Random.Range( -randomPitch, randomPitch ) );
+            sndObj.primaryAudioSource.pitch *= AudioObject.TransformPitch(UnityEngine.Random.Range(-randomPitch, randomPitch));
         }
 
-        if ( subItem.RandomDelay > 0 )
+        if (subItem.RandomDelay > 0)
         {
-            delay += UnityEngine.Random.Range( 0, subItem.RandomDelay );
+            delay += UnityEngine.Random.Range(0, subItem.RandomDelay);
         }
 
-        if ( dspTime > 0 )
+        if (dspTime > 0)
         {
-            sndObj.PlayScheduled( dspTime + delay + subItem.Delay + audioItem.Delay );
+            sndObj.PlayScheduled(dspTime + delay + subItem.Delay + audioItem.Delay);
 
         }
         else
-            sndObj.Play( delay + subItem.Delay + audioItem.Delay );
+            sndObj.Play(delay + subItem.Delay + audioItem.Delay);
 
-        if ( subItem.FadeIn > 0 )
+        if (subItem.FadeIn > 0)
         {
-            sndObj.FadeIn( subItem.FadeIn );
+            sndObj.FadeIn(subItem.FadeIn);
         }
 
 #if UNITY_EDITOR && !AUDIO_TOOLKIT_DEMO
@@ -2853,35 +2857,35 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
         logData.pitch = sndObj.primaryAudioSource.pitch;
 
 #if UNITY_AUDIO_FEATURES_4_1
-        if ( dspTime > 0 )
+        if (dspTime > 0)
         {
-            logData.scheduledDspTime = Time.time + (float) ( dspTime - AudioSettings.dspTime );
+            logData.scheduledDspTime = Time.time + (float)(dspTime - AudioSettings.dspTime);
         }
 #endif
 
-        AudioLog.Log( logData );
+        AudioLog.Log(logData);
 #endif
 
         return sndObj;
     }
 
-    private AudioController _GetAudioController( AudioSubItem subItem )
+    private AudioController _GetAudioController(AudioSubItem subItem)
     {
-        if ( subItem.item != null && subItem.item.category != null )
+        if (subItem.item != null && subItem.item.category != null)
         {
             return subItem.item.category.audioController;
         }
         return this;
     }
 
-    internal void _NotifyPlaylistTrackCompleteleyPlayed( AudioObject audioObject )
+    internal void _NotifyPlaylistTrackCompleteleyPlayed(AudioObject audioObject)
     {
         audioObject._isCurrentPlaylistTrack = false;
-        if ( IsPlaylistPlaying() )
+        if (IsPlaylistPlaying())
         {
-            if ( _currentMusic == audioObject )
+            if (_currentMusic == audioObject)
             {
-                if ( _PlayNextMusicOnPlaylist( delayBetweenPlaylistTracks ) == null )
+                if (_PlayNextMusicOnPlaylist(delayBetweenPlaylistTracks) == null)
                 {
                     _isPlaylistPlaying = false;
                 }
@@ -2889,27 +2893,27 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
         }
     }
 
-    private void _ValidateAudioObjectPrefab( GameObject audioPrefab )
+    private void _ValidateAudioObjectPrefab(GameObject audioPrefab)
     {
-        if ( UsePooledAudioObjects )
+        if (UsePooledAudioObjects)
         {
 #if AUDIO_TOOLKIT_DEMO
         Debug.LogWarning( "Poolable Audio objects not supported by the Audio Toolkit Demo version" );
 #else
-            if ( audioPrefab.GetComponent<PoolableObject>() == null )
+            if (audioPrefab.GetComponent<PoolableObject>() == null)
             {
-                Debug.LogWarning( "AudioObject prefab does not have the PoolableObject component. Pooling will not work." );
+                Debug.LogWarning("AudioObject prefab does not have the PoolableObject component. Pooling will not work.");
             }
             else
             {
-                ObjectPoolController.Preload( audioPrefab );
+                ObjectPoolController.Preload(audioPrefab);
             }
 #endif
         }
 
-        if ( audioPrefab.GetComponent<AudioObject>() == null )
+        if (audioPrefab.GetComponent<AudioObject>() == null)
         {
-            Debug.LogError( "AudioObject prefab must have the AudioObject script component!" );
+            Debug.LogError("AudioObject prefab must have the AudioObject script component!");
         }
     }
 
@@ -2918,7 +2922,7 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
 
     public AudioController()
     {
-        AudioController.SetSingletonType( typeof( AudioController ) );
+        AudioController.SetSingletonType(typeof(AudioController));
     }
 }
 

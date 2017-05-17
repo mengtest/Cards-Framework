@@ -67,4 +67,10 @@ FBStatus = {
 			end
 		end
 	end
+}
+
+BGMusic =
+{
+	Hall = "MainBgMusic",
+	MaJiang = "MaJiangBgMusic",	
 } 

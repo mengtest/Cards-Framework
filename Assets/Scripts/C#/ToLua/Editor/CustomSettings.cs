@@ -134,7 +134,7 @@ public static class CustomSettings
         _GT(typeof(Evt)),
          _GT(typeof(AssetManager)),
 
-
+         _GT(typeof(AudioManager)),
 
          _GT(typeof(LuaManager)),
          _GT(typeof(LuaBehaviour)),

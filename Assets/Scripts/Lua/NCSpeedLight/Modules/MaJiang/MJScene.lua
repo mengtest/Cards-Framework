@@ -73,6 +73,7 @@ function MJScene.End()
 end
 
 function MJScene.OnSceneWasLoaded()
+	AudioManager.PlayMusic({BGMusic.MaJiang}, false);
 	Log.Info("MJScene.OnSceneWasLoaded: now bein to open majiang ui and request game fb info or reconnect info.");
 	if HallScene.CurrentFBPlaybackMode == false then
 		RongCloudAdapter.Initialize(MJScene.OnReceiveVoiceMsg);

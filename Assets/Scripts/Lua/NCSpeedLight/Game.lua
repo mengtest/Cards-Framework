@@ -54,6 +54,7 @@ function Game.Awake(go)
 	AssetManager.Initialize();
 	UIManager.Initialize();
 	NetManager.Initialize();
+	AudioManager.Initialize();
 	SceneManager.Initialize();
 	SceneManager.Goto(SceneName.LoginScene);
 end

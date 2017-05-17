@@ -16,4 +16,5 @@ ShareSDKAdapter = NCSpeedLight.ShareSDKAdapter;
 RongCloudAdapter = NCSpeedLight.RongCloudAdapter;
 AssetManager = NCSpeedLight.AssetManager;
 AMapAdapter = NCSpeedLight.AMapAdapter;
-Evt = NCSpeedLight.Evt; 
+Evt = NCSpeedLight.Evt;
+AudioManager = NCSpeedLight.AudioManager; 

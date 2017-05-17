@@ -1,0 +1,7 @@
+message CFG_SoundVolume{
+	required float Sound = 1;
+	required float Music = 2;
+}
+
+
+ 

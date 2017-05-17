@@ -694,6 +694,11 @@ m_objectId ("=
 password (	"4
 CFG_LoginRecord!
 	loginInfo (2.CFG_LoginInfo
+F
+CFG_SoundVolume.txt"/
+CFG_SoundVolume
+Sound (
+Music (
 ¿
 challenge.txt"¦
 GM_Challenge_Open_Return

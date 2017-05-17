@@ -77,7 +77,7 @@ using System.Reflection;
 /// </list>
 /// </remarks>
 /// <seealso cref="ObjectPoolController"/>
-[AddComponentMenu( "ClockStone/PoolableObject" )]
+[AddComponentMenu("ClockStone/PoolableObject")]
 public class PoolableObject : MonoBehaviour
 {
     /// <summary>
@@ -130,9 +130,9 @@ public class PoolableObject : MonoBehaviour
     protected void Awake()
     {
         //Debug.Log( string.Format( "Awake: {0} Pool:{1}", name, _myPool != null ) );
-        if ( _myPool == null && !ObjectPoolController._isDuringInstantiate )
+        if (_myPool == null && !ObjectPoolController._isDuringInstantiate)
         {
-            Debug.LogWarning( "Poolable object " + name + " was instantiated without ObjectPoolController" );
+            Debug.LogWarning("Poolable object " + name + " was instantiated without ObjectPoolController");
         }
     }
 #endif
@@ -143,72 +143,72 @@ public class PoolableObject : MonoBehaviour
     }
 
 #if !REDUCED_REFLECTION
-    private static void _InvokeMethodByName( MonoBehaviour behaviour, string methodName )
+    private static void _InvokeMethodByName(MonoBehaviour behaviour, string methodName)
     {
         // Get the Type for the class
         Type calledType = behaviour.GetType();
 
-        var methodInfo = calledType.GetMethod( methodName,
-                        BindingFlags.Instance | BindingFlags.NonPublic );
+        var methodInfo = calledType.GetMethod(methodName,
+                        BindingFlags.Instance | BindingFlags.NonPublic);
 
-        if ( methodInfo != null )
+        if (methodInfo != null)
         {
-            methodInfo.Invoke( behaviour, null );
+            methodInfo.Invoke(behaviour, null);
         }
     }
 #endif
 
     // broadcasts also to inactive game objects, does not broadcast to poolable child objects
-    static private void _BroadcastMessageToGameObject( GameObject go, string message )
+    static private void _BroadcastMessageToGameObject(GameObject go, string message)
     {
 #if !REDUCED_REFLECTION
-        var components = go.GetComponents( typeof( MonoBehaviour ) );
+        var components = go.GetComponents(typeof(MonoBehaviour));
 
-        foreach ( var c in components )
+        foreach (var c in components)
         {
-            _InvokeMethodByName( ( MonoBehaviour ) c, message );
+            _InvokeMethodByName((MonoBehaviour)c, message);
         }
 
-        if ( go.transform.childCount > 0 )
+        if (go.transform.childCount > 0)
         {
-            _BroadcastMessageToAllChildren( go, message );
+            _BroadcastMessageToAllChildren(go, message);
         }
 #else
         go.BroadcastMessage( message, SendMessageOptions.DontRequireReceiver ); // workaround for Flash - does not work for OnPoolableInstanceDestroy!!
 #endif
     }
 
-    private static void _BroadcastMessageToAllChildren( GameObject go, string message )
+    private static void _BroadcastMessageToAllChildren(GameObject go, string message)
     {
-        Transform[] children = new Transform[ go.transform.childCount ]; // save child array, as it may change
+        Transform[] children = new Transform[go.transform.childCount]; // save child array, as it may change
 
-        for ( int i = 0; i < go.transform.childCount; i++ )
-            children[ i ] = go.transform.GetChild( i );
+        for (int i = 0; i < go.transform.childCount; i++)
+            children[i] = go.transform.GetChild(i);
 
         //now recursively do the same for all children
-        for ( int i = 0; i < children.Length; i++ )
+        for (int i = 0; i < children.Length; i++)
         {
-            if ( children[ i ].GetComponent<PoolableObject>() == null ) // if child object is PoolableObject then don't broadcast
+            if (children[i].GetComponent<PoolableObject>() == null) // if child object is PoolableObject then don't broadcast
             {
-                PoolableObject._BroadcastMessageToGameObject( children[ i ].gameObject, message );
+                PoolableObject._BroadcastMessageToGameObject(children[i].gameObject, message);
             }
         }
     }
     protected void OnDestroy()
     {
-        if ( !_destroyMessageFromPoolController && _myPool != null )
+        if (!_destroyMessageFromPoolController && _myPool != null)
         {
             // Poolable object was destroyed by using the default Unity Destroy() function -> Use ObjectPoolController.Destroy() instead
             // This can also happen if objects are automatically deleted by Unity e.g. due to level change or if an object is parented to an object that gets destroyed
 
-            _myPool.Remove( this );
+            _myPool.Remove(this);
             //Debug.LogError( "Destroy S/N:" + _serialNumber );
         }
 
-        if ( !_destroyMessageFromPoolController )
+        if (!_destroyMessageFromPoolController)
         {
             // can't use Unity's BroadcastMessage because it doesn't send to object that are just being destroyed
-            _BroadcastMessageToGameObject( gameObject, "OnPoolableInstanceDestroy" );
+            _BroadcastMessageToGameObject(gameObject, "OnPoolableInstanceDestroy");
         }
 
         _destroyMessageFromPoolController = false;
@@ -244,7 +244,7 @@ public class PoolableObject : MonoBehaviour
     /// </returns>
     public int DeactivateAllPoolableObjectsOfMyKind()
     {
-        if ( _myPool != null )
+        if (_myPool != null)
         {
             return _myPool._SetAllAvailable();
         }
@@ -271,11 +271,11 @@ public class PoolableObject : MonoBehaviour
     /// <returns>
     /// The array of poolable objects.
     /// </returns>
-    public PoolableObject[] GetAllPoolableObjectsOfMyKind( bool includeInactiveObjects )
+    public PoolableObject[] GetAllPoolableObjectsOfMyKind(bool includeInactiveObjects)
     {
-        if ( _myPool != null )
+        if (_myPool != null)
         {
-            return _myPool._GetAllObjects( includeInactiveObjects );
+            return _myPool._GetAllObjects(includeInactiveObjects);
         }
         return null;
     }
@@ -343,24 +343,24 @@ static public class ObjectPoolController
     /// whenever you may possibly make your prefab poolable in the future.
     /// </remarks>
     /// <seealso cref="Destroy(GameObject)"/>
-    static public GameObject Instantiate( GameObject prefab )
+    static public GameObject Instantiate(GameObject prefab)
     {
         PoolableObject prefabPool = prefab.GetComponent<PoolableObject>();
-        if ( prefabPool == null )
+        if (prefabPool == null)
         {
             //Debug.LogWarning( "Object " + prefab.name + " not poolable " );
-            return ( GameObject ) GameObject.Instantiate( prefab ); // prefab not pooled, instantiate normally
+            return (GameObject)GameObject.Instantiate(prefab); // prefab not pooled, instantiate normally
         }
 
-        GameObject go = _GetPool( prefabPool ).GetPooledInstance( null, null );
+        GameObject go = _GetPool(prefabPool).GetPooledInstance(null, null);
 
-        if ( go )
+        if (go)
         {
             return go;
         }
         else // pool is full
         {
-            return InstantiateWithoutPool( prefab );
+            return InstantiateWithoutPool(prefab);
         }
     }
 
@@ -379,26 +379,26 @@ static public class ObjectPoolController
     /// whenever you may possibly make your prefab poolable in the future.
     /// </remarks>
     /// <seealso cref="Destroy(GameObject)"/>
-    static public GameObject Instantiate( GameObject prefab, Vector3 position, Quaternion quaternion )
+    static public GameObject Instantiate(GameObject prefab, Vector3 position, Quaternion quaternion)
     {
         PoolableObject prefabPool = prefab.GetComponent<PoolableObject>();
-        if ( prefabPool == null )
+        if (prefabPool == null)
         {
             // no warning displayed by design because this allows to decide later if the object will be poolable or not
             // Debug.LogWarning( "Object " + prefab.name + " not poolable "); 
-            return ( GameObject ) GameObject.Instantiate( prefab, position, quaternion ); // prefab not pooled, instantiate normally
+            return (GameObject)GameObject.Instantiate(prefab, position, quaternion); // prefab not pooled, instantiate normally
         }
 
-        GameObject go = _GetPool( prefabPool ).GetPooledInstance( position, quaternion );
+        GameObject go = _GetPool(prefabPool).GetPooledInstance(position, quaternion);
 
-        if ( go )
+        if (go)
         {
             return go;
         }
         else // pool is full
         {
             //Debug.LogWarning( "Pool Full" );
-            return InstantiateWithoutPool( prefab, position, quaternion );
+            return InstantiateWithoutPool(prefab, position, quaternion);
         }
     }
 
@@ -414,9 +414,9 @@ static public class ObjectPoolController
     /// If the prefab is poolable, the <see cref="PoolableObject"/> component will be removed.
     /// This way no warning is generated that a poolable object was created without pooling.
     /// </remarks>
-    static public GameObject InstantiateWithoutPool( GameObject prefab )
+    static public GameObject InstantiateWithoutPool(GameObject prefab)
     {
-        return InstantiateWithoutPool( prefab, new Vector3( 0, 0, 0 ), Quaternion.identity );
+        return InstantiateWithoutPool(prefab, new Vector3(0, 0, 0), Quaternion.identity);
     }
 
     /// <summary>
@@ -433,23 +433,23 @@ static public class ObjectPoolController
     /// If the prefab is poolable, the <see cref="PoolableObject"/> component will be removed.
     /// This way no warning is generated that a poolable object was created without pooling.
     /// </remarks>
-    static public GameObject InstantiateWithoutPool( GameObject prefab, Vector3 position, Quaternion quaternion )
+    static public GameObject InstantiateWithoutPool(GameObject prefab, Vector3 position, Quaternion quaternion)
     {
         GameObject go;
         _isDuringInstantiate = true;
-        go = ( GameObject ) GameObject.Instantiate( prefab, position, quaternion ); // prefab not pooled, instantiate normally
+        go = (GameObject)GameObject.Instantiate(prefab, position, quaternion); // prefab not pooled, instantiate normally
         _isDuringInstantiate = false;
 
         PoolableObject pool = go.GetComponent<PoolableObject>();
-        if ( pool )
+        if (pool)
         {
-            if ( pool.doNotDestroyOnLoad )
+            if (pool.doNotDestroyOnLoad)
             {
-                GameObject.DontDestroyOnLoad( go );
+                GameObject.DontDestroyOnLoad(go);
             }
 
             pool._createdWithPoolController = true; // so no warning is displayed if object gets ObjectPoolCOntroller.Destroy()-ed before the component actually gets removed
-            Component.Destroy( pool );
+            Component.Destroy(pool);
         }
 
         return go;
@@ -467,27 +467,27 @@ static public class ObjectPoolController
     /// moved to the pool.
     /// </remarks>
     /// <seealso cref="Instantiate(GameObject)"/>
-    static public void Destroy( GameObject obj ) // destroys poolable and none-poolable objects. Destroys poolable children correctly
+    static public void Destroy(GameObject obj) // destroys poolable and none-poolable objects. Destroys poolable children correctly
     {
 
         PoolableObject poolObj = obj.GetComponent<PoolableObject>();
-        if ( poolObj == null )
+        if (poolObj == null)
         {
-            _DetachChildrenAndDestroy( obj.transform ); // child objects may be poolable
-            GameObject.Destroy( obj ); // prefab not pooled, destroy normally
+            _DetachChildrenAndDestroy(obj.transform); // child objects may be poolable
+            GameObject.Destroy(obj); // prefab not pooled, destroy normally
             return;
         }
-        if ( poolObj._myPool != null )
+        if (poolObj._myPool != null)
         {
-            poolObj._myPool._SetAvailable( poolObj, true );
+            poolObj._myPool._SetAvailable(poolObj, true);
         }
         else
         {
-            if ( !poolObj._createdWithPoolController )
+            if (!poolObj._createdWithPoolController)
             {
-                Debug.LogWarning( "Poolable object " + obj.name + " not created with ObjectPoolController" );
+                Debug.LogWarning("Poolable object " + obj.name + " not created with ObjectPoolController");
             }
-            GameObject.Destroy( obj ); // prefab not pooled, destroy normally
+            GameObject.Destroy(obj); // prefab not pooled, destroy normally
         }
 
     }
@@ -502,19 +502,19 @@ static public class ObjectPoolController
     /// If the pool already contains at least <see cref="PoolableObject.preloadCount"/> objects, the function does nothing. 
     /// </remarks>
     /// <seealso cref="PoolableObject.preloadCount"/>
-    static public void Preload( GameObject prefab ) // adds as many instances to the prefab pool as specified in the PoolableObject
+    static public void Preload(GameObject prefab) // adds as many instances to the prefab pool as specified in the PoolableObject
     {
         PoolableObject poolObj = prefab.GetComponent<PoolableObject>();
-        if ( poolObj == null )
+        if (poolObj == null)
         {
-            Debug.LogWarning( "Can not preload because prefab '" + prefab.name + "' is not poolable" );
+            Debug.LogWarning("Can not preload because prefab '" + prefab.name + "' is not poolable");
             return;
         }
 
-        var pool = _GetPool( poolObj ); // _preloadDone is set by _GetPool
+        var pool = _GetPool(poolObj); // _preloadDone is set by _GetPool
 
         int delta = poolObj.preloadCount - pool.GetObjectCount();
-        if ( delta <= 0 )
+        if (delta <= 0)
         {
             return;
         }
@@ -523,7 +523,7 @@ static public class ObjectPoolController
 
         try
         {
-            for ( int i = 0; i < delta; i++ )
+            for (int i = 0; i < delta; i++)
             {
                 pool.PreloadInstance();
             }
@@ -561,67 +561,68 @@ static public class ObjectPoolController
 
         private void _ValidatePoolParentDummy()
         {
-            if ( !_poolParentDummy )
+            if (!_poolParentDummy)
             {
-                var poolParentDummyGameObject = new GameObject( "POOL:" + _prefabPoolObj.name );
+                var poolParentDummyGameObject = new GameObject("POOL:" + _prefabPoolObj.name);
+                poolParentDummyGameObject.transform.SetParent(NCSpeedLight.AudioManager.GO.transform);
                 _poolParentDummy = poolParentDummyGameObject.transform;
-                _SetActive( poolParentDummyGameObject, false );
-                if ( _prefabPoolObj.doNotDestroyOnLoad )
+                _SetActive(poolParentDummyGameObject, false);
+                if (_prefabPoolObj.doNotDestroyOnLoad)
                 {
-                    GameObject.DontDestroyOnLoad( poolParentDummyGameObject );
+                    GameObject.DontDestroyOnLoad(poolParentDummyGameObject);
                 }
             }
         }
 
-        public ObjectPool( GameObject prefab )
+        public ObjectPool(GameObject prefab)
         {
             _prefabPoolObj = prefab.GetComponent<PoolableObject>();
         }
 
         private void _ValidatePooledObjectDataContainer()
         {
-            if ( _pool == null )
+            if (_pool == null)
             {
                 _pool = new HashSet_Flash<PoolableObject>();
                 _ValidatePoolParentDummy();
             }
         }
 
-        internal void Remove( PoolableObject poolObj )
+        internal void Remove(PoolableObject poolObj)
         {
-            _pool.Remove( poolObj );
+            _pool.Remove(poolObj);
         }
 
         internal int GetObjectCount()
         {
-            if ( _pool == null ) return 0;
+            if (_pool == null) return 0;
             return _pool.Count;
         }
 
-        internal GameObject GetPooledInstance( Vector3? position, Quaternion? rotation )
+        internal GameObject GetPooledInstance(Vector3? position, Quaternion? rotation)
         {
             _ValidatePooledObjectDataContainer();
 
             Transform prefabTransform = _prefabPoolObj.transform;
             Transform objTransform;
 
-            foreach ( PoolableObject o in _pool )
+            foreach (PoolableObject o in _pool)
             {
-                if ( o != null && o._isAvailableForPooling )
+                if (o != null && o._isAvailableForPooling)
                 {
                     objTransform = o.transform;
-                    objTransform.position = ( position != null ) ? ( Vector3 ) position : prefabTransform.position;
-                    objTransform.rotation = ( rotation != null ) ? ( Quaternion ) rotation : prefabTransform.rotation;
+                    objTransform.position = (position != null) ? (Vector3)position : prefabTransform.position;
+                    objTransform.rotation = (rotation != null) ? (Quaternion)rotation : prefabTransform.rotation;
                     objTransform.localScale = prefabTransform.localScale;
                     o._usageCount++;
-                    _SetAvailable( o, false );
+                    _SetAvailable(o, false);
                     return o.gameObject;
                 }
             }
 
-            if ( _pool.Count < _prefabPoolObj.maxPoolSize ) // add new element to pool 
+            if (_pool.Count < _prefabPoolObj.maxPoolSize) // add new element to pool 
             {
-                return _NewPooledInstance( position, rotation ).gameObject;
+                return _NewPooledInstance(position, rotation).gameObject;
             }
 
             // pool is full
@@ -632,28 +633,28 @@ static public class ObjectPoolController
         {
             _ValidatePooledObjectDataContainer();
 
-            PoolableObject poolObj = _NewPooledInstance( null, null );
+            PoolableObject poolObj = _NewPooledInstance(null, null);
 
             poolObj._wasPreloaded = true;
 
-            _SetAvailable( poolObj, true );
+            _SetAvailable(poolObj, true);
 
             return poolObj;
         }
 
-        private PoolableObject _NewPooledInstance( Vector3? position, Quaternion? rotation )
+        private PoolableObject _NewPooledInstance(Vector3? position, Quaternion? rotation)
         {
             GameObject go;
 
             _isDuringInstantiate = true;
 
-            if ( position != null && rotation != null )
+            if (position != null && rotation != null)
             {
-                go = ( GameObject ) GameObject.Instantiate( _prefabPoolObj.gameObject, ( Vector3 ) position, ( Quaternion ) rotation );
+                go = (GameObject)GameObject.Instantiate(_prefabPoolObj.gameObject, (Vector3)position, (Quaternion)rotation);
             }
             else
             {
-                go = ( GameObject ) GameObject.Instantiate( _prefabPoolObj.gameObject );
+                go = (GameObject)GameObject.Instantiate(_prefabPoolObj.gameObject);
             }
 
             _isDuringInstantiate = false;
@@ -665,14 +666,14 @@ static public class ObjectPoolController
             poolObj._serialNumber = ++_globalSerialNumber;
             poolObj._usageCount++;
 
-            if ( poolObj.doNotDestroyOnLoad )
+            if (poolObj.doNotDestroyOnLoad)
             {
-                GameObject.DontDestroyOnLoad( go );
+                GameObject.DontDestroyOnLoad(go);
             }
 
-            _pool.Add( poolObj );
+            _pool.Add(poolObj);
 
-            go.BroadcastMessage( "OnPoolableInstanceAwake", SendMessageOptions.DontRequireReceiver );
+            go.BroadcastMessage("OnPoolableInstanceAwake", SendMessageOptions.DontRequireReceiver);
             return poolObj;
 
         }
@@ -683,27 +684,27 @@ static public class ObjectPoolController
         internal int _SetAllAvailable()
         {
             int count = 0;
-            foreach ( PoolableObject o in _pool )
+            foreach (PoolableObject o in _pool)
             {
-                if ( o != null && !o._isAvailableForPooling )
+                if (o != null && !o._isAvailableForPooling)
                 {
-                    _SetAvailable( o, true );
+                    _SetAvailable(o, true);
                     count++;
                 }
             }
             return count;
         }
 
-        internal PoolableObject[] _GetAllObjects( bool includeInactiveObjects )
+        internal PoolableObject[] _GetAllObjects(bool includeInactiveObjects)
         {
             var list = new List<PoolableObject>();
-            foreach ( PoolableObject o in _pool )
+            foreach (PoolableObject o in _pool)
             {
-                if ( o != null )
+                if (o != null)
                 {
-                    if ( includeInactiveObjects || !o._isAvailableForPooling )
+                    if (includeInactiveObjects || !o._isAvailableForPooling)
                     {
-                        list.Add( o );
+                        list.Add(o);
                     }
                 }
             }
@@ -711,22 +712,22 @@ static public class ObjectPoolController
             return list.ToArray();
         }
 
-        internal void _SetAvailable( PoolableObject poolObj, bool b )
+        internal void _SetAvailable(PoolableObject poolObj, bool b)
         {
             poolObj._isAvailableForPooling = b;
 
             var objTransform = poolObj.transform;
 
-            if ( b )
+            if (b)
             {
-                if ( poolObj.sendAwakeStartOnDestroyMessage )
+                if (poolObj.sendAwakeStartOnDestroyMessage)
                 {
                     poolObj._destroyMessageFromPoolController = true;
                 }
 
                 objTransform.parent = null; // object could still be parented, so detach
 
-                _RecursivelySetInactiveAndSendMessages( poolObj.gameObject, poolObj, false );
+                _RecursivelySetInactiveAndSendMessages(poolObj.gameObject, poolObj, false);
 
                 objTransform.parent = poolObj._myPool.poolParentDummy; // attach to dummy Parent
 
@@ -736,13 +737,13 @@ static public class ObjectPoolController
             else
             {
                 objTransform.parent = null; // detach from poolParentDummy
-                _SetActiveAndSendMessages( poolObj.gameObject, poolObj );
+                _SetActiveAndSendMessages(poolObj.gameObject, poolObj);
 
                 //poolObj.gameObject.name = poolObj._myPool._prefabPoolObj.name;
             }
         }
 
-        private void _SetActive( GameObject obj, bool active )
+        private void _SetActive(GameObject obj, bool active)
         {
 #if UNITY_3_x
             if ( active )
@@ -751,11 +752,11 @@ static public class ObjectPoolController
             } else 
                 obj.active = false;
 #else
-            obj.SetActive( active );
+            obj.SetActive(active);
 #endif
         }
 
-        private bool _GetActive( GameObject obj )
+        private bool _GetActive(GameObject obj)
         {
 #if UNITY_3_x
             return obj.active;            
@@ -764,114 +765,114 @@ static public class ObjectPoolController
 #endif
         }
 
-        private void _SetActiveAndSendMessages( GameObject obj, PoolableObject parentPoolObj )
+        private void _SetActiveAndSendMessages(GameObject obj, PoolableObject parentPoolObj)
         {
-            _SetActive( obj, true );
+            _SetActive(obj, true);
 
-            if ( parentPoolObj.sendAwakeStartOnDestroyMessage )
+            if (parentPoolObj.sendAwakeStartOnDestroyMessage)
             {
-                obj.BroadcastMessage( "Awake", null, SendMessageOptions.DontRequireReceiver );
+                obj.BroadcastMessage("Awake", null, SendMessageOptions.DontRequireReceiver);
 
-                if ( _GetActive( obj )
+                if (_GetActive(obj)
                     && // Awake could deactivate object
-                        parentPoolObj._wasStartCalledByUnity ) // for preloaded objects Unity will call Start
+                        parentPoolObj._wasStartCalledByUnity) // for preloaded objects Unity will call Start
                 {
-                    obj.BroadcastMessage( "Start", null, SendMessageOptions.DontRequireReceiver );
+                    obj.BroadcastMessage("Start", null, SendMessageOptions.DontRequireReceiver);
                 }
             }
 
-            if ( parentPoolObj.sendPoolableActivateDeactivateMessages )
+            if (parentPoolObj.sendPoolableActivateDeactivateMessages)
             {
-                obj.BroadcastMessage( "OnPoolableObjectActivated", null, SendMessageOptions.DontRequireReceiver );
+                obj.BroadcastMessage("OnPoolableObjectActivated", null, SendMessageOptions.DontRequireReceiver);
             }
         }
 
-        private void _RecursivelySetInactiveAndSendMessages( GameObject obj, PoolableObject parentPoolObj, bool recursiveCall )
+        private void _RecursivelySetInactiveAndSendMessages(GameObject obj, PoolableObject parentPoolObj, bool recursiveCall)
         {
             // Create a local copy of all of the children before we potentially modify it
             // by removing a child PoolableObject by making a call to _SetAvailable()
 
             var objTransform = obj.transform;
-            Transform[ ] children = new Transform[ objTransform.childCount ];
+            Transform[] children = new Transform[objTransform.childCount];
 
-            for ( int i = 0; i < objTransform.childCount; i++ )
-                children[ i ] = objTransform.GetChild( i );
+            for (int i = 0; i < objTransform.childCount; i++)
+                children[i] = objTransform.GetChild(i);
 
             //now recursively do the same for all children
-            for ( int i = 0; i < children.Length; i++ )
+            for (int i = 0; i < children.Length; i++)
             {
-                Transform child = children[ i ];
+                Transform child = children[i];
 
                 var poolableChild = child.gameObject.GetComponent<PoolableObject>();
 
-                if ( poolableChild && poolableChild._myPool != null ) //if child is poolable itself it has to be detached and moved to the pool
+                if (poolableChild && poolableChild._myPool != null) //if child is poolable itself it has to be detached and moved to the pool
                 {
-                    _SetAvailable( poolableChild, true );
+                    _SetAvailable(poolableChild, true);
                 }
                 else
                 {
-                    _RecursivelySetInactiveAndSendMessages( child.gameObject, parentPoolObj, true );
+                    _RecursivelySetInactiveAndSendMessages(child.gameObject, parentPoolObj, true);
                 }
             }
 
-            if ( parentPoolObj.sendAwakeStartOnDestroyMessage )
+            if (parentPoolObj.sendAwakeStartOnDestroyMessage)
             {
-                obj.SendMessage( "OnDestroy", null, SendMessageOptions.DontRequireReceiver );
+                obj.SendMessage("OnDestroy", null, SendMessageOptions.DontRequireReceiver);
             }
 
-            if ( parentPoolObj.sendPoolableActivateDeactivateMessages )
+            if (parentPoolObj.sendPoolableActivateDeactivateMessages)
             {
-                obj.SendMessage( "OnPoolableObjectDeactivated", null, SendMessageOptions.DontRequireReceiver );
+                obj.SendMessage("OnPoolableObjectDeactivated", null, SendMessageOptions.DontRequireReceiver);
             }
 
 #if UNITY_3_x
 #else
-            if ( !recursiveCall )
+            if (!recursiveCall)
 #endif
             {
-                _SetActive( obj, false );
+                _SetActive(obj, false);
             }
         }
     }
 
     static private Dictionary<GameObject, ObjectPool> _pools = new Dictionary<GameObject, ObjectPool>();
 
-    static internal ObjectPool _GetPool( PoolableObject prefabPoolComponent )
+    static internal ObjectPool _GetPool(PoolableObject prefabPoolComponent)
     {
         ObjectPool pool;
 
         GameObject prefab = prefabPoolComponent.gameObject;
 
-        if ( !_pools.TryGetValue( prefab, out pool ) )
+        if (!_pools.TryGetValue(prefab, out pool))
         {
-            pool = new ObjectPool( prefab );
-            _pools.Add( prefab, pool );
+            pool = new ObjectPool(prefab);
+            _pools.Add(prefab, pool);
         }
 
         return pool;
     }
 
-    static private void _DetachChildrenAndDestroy( Transform transform )
+    static private void _DetachChildrenAndDestroy(Transform transform)
     {
         int childCount = transform.childCount;
 
-        Transform[ ] children = new Transform[ childCount ];
+        Transform[] children = new Transform[childCount];
 
         var myTransform = transform; // cache for performance reasons
 
         int i;
-        for ( i = 0; i < childCount; i++ )
+        for (i = 0; i < childCount; i++)
         {
-            children[ i ] = myTransform.GetChild( i );
+            children[i] = myTransform.GetChild(i);
         }
         myTransform.DetachChildren();
 
-        for ( i = 0; i < childCount; i++ )
+        for (i = 0; i < childCount; i++)
         {
-            GameObject obj = children[ i ].gameObject;
-            if ( obj )
+            GameObject obj = children[i].gameObject;
+            if (obj)
             {
-                ObjectPoolController.Destroy( obj );
+                ObjectPoolController.Destroy(obj);
             }
         }
 
@@ -920,10 +921,10 @@ public class PoolableReference<T> where T : Component
 #if REDUCED_REFLECTION
     public PoolableReference( Component componentOfPoolableObject )
 #else
-    public PoolableReference( T componentOfPoolableObject )
+    public PoolableReference(T componentOfPoolableObject)
 #endif
     {
-        Set( componentOfPoolableObject, false );
+        Set(componentOfPoolableObject, false);
     }
 
     /// <summary>
@@ -931,7 +932,7 @@ public class PoolableReference<T> where T : Component
     /// a given <see cref="PoolableReference&lt;T&gt;"/>.
     /// </summary>
     /// <param name="poolableReference">The poolable reference.</param>
-    public PoolableReference( PoolableReference<T> poolableReference )
+    public PoolableReference(PoolableReference<T> poolableReference)
     {
         _objComponent = poolableReference._objComponent;
         _pooledObj = poolableReference._pooledObj;
@@ -957,26 +958,26 @@ public class PoolableReference<T> where T : Component
     /// </returns>
     public T Get()
     {
-        if ( !_objComponent ) return null;
+        if (!_objComponent) return null;
 
-        if ( _pooledObj ) // could be set to a none-poolable object
+        if (_pooledObj) // could be set to a none-poolable object
         {
-            if ( _pooledObj._usageCount != _initialUsageCount || _pooledObj._isAvailableForPooling )
+            if (_pooledObj._usageCount != _initialUsageCount || _pooledObj._isAvailableForPooling)
             {
                 _objComponent = null;
                 _pooledObj = null;
                 return null;
             }
         }
-        return ( T ) _objComponent;
+        return (T)_objComponent;
     }
 
 #if REDUCED_REFLECTION
     public void Set( Component componentOfPoolableObject, bool allowNonePoolable )
 #else
-    public void Set( T componentOfPoolableObject )
+    public void Set(T componentOfPoolableObject)
     {
-        Set( componentOfPoolableObject, false );
+        Set(componentOfPoolableObject, false);
     }
 
     /// <summary>
@@ -984,25 +985,25 @@ public class PoolableReference<T> where T : Component
     /// </summary>
     /// <param name="componentOfPoolableObject">The component of the poolable object.</param>
     /// <param name="allowNonePoolable">If set to false an error is output if the object does not have the <see cref="PoolableObject"/> component.</param>
-    public void Set( T componentOfPoolableObject, bool allowNonePoolable )
+    public void Set(T componentOfPoolableObject, bool allowNonePoolable)
 #endif
     {
-        if ( !componentOfPoolableObject )
+        if (!componentOfPoolableObject)
         {
             Reset();
             return;
         }
-        _objComponent = ( T ) componentOfPoolableObject;
+        _objComponent = (T)componentOfPoolableObject;
         _pooledObj = _objComponent.GetComponent<PoolableObject>();
-        if ( !_pooledObj )
+        if (!_pooledObj)
         {
-            if ( allowNonePoolable )
+            if (allowNonePoolable)
             {
                 _initialUsageCount = 0;
             }
             else
             {
-                Debug.LogError( "Object for PoolableReference must be poolable" );
+                Debug.LogError("Object for PoolableReference must be poolable");
                 return;
             }
         }

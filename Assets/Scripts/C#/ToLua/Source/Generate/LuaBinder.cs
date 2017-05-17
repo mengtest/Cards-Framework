@@ -169,6 +169,7 @@ public static class LuaBinder
 		NCSpeedLight_AMapAdapterWrap.Register(L);
 		NCSpeedLight_EvtWrap.Register(L);
 		NCSpeedLight_AssetManagerWrap.Register(L);
+		NCSpeedLight_AudioManagerWrap.Register(L);
 		NCSpeedLight_LuaManagerWrap.Register(L);
 		NCSpeedLight_LuaBehaviourWrap.Register(L);
 		NCSpeedLight_LuaLoaderWrap.Register(L);

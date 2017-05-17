@@ -854,4 +854,5 @@ PBMessage =
 	GM_Rotate_record_return = "GM_Rotate_record_return",
 	CFG_LoginInfo = "CFG_LoginInfo",
 	CFG_LoginRecord = "CFG_LoginRecord",
+	CFG_SoundVolume = "CFG_SoundVolume",
 }
