@@ -10,13 +10,15 @@
 -----------------------------------------------
 LoginScene =
 {
+	Name = SceneName.LoginScene,
+	
 	Token = {
 		AccountID,
 		AccountToken,
 		LatestArea,
 		RoleID,
 	},
-	Name = SceneName.LoginScene,
+	
 	LoginRecord = nil,
 	IsInitialized = false,
 	ReconnectToLoginServerTimer = nil,
@@ -26,12 +28,17 @@ LoginScene =
 	LogicServerIP = nil,
 	LoginServerPort = nil,
 	AuthInfo = nil,
+	
+	MusicVolume = 1, -- 音乐音量
+	
+	SoundVolume = 1, -- 音效音量
 };
 
 function LoginScene.Initialize()
 	if LoginScene.IsInitialized == false then
 		LoginScene.IsInitialized = true;
 		LoginScene.OpenLoginRecord();
+		LoginScene.OpenSoundVolumeConfig();
 		NetManager.RegisterEvent(GameMessage.GM_RESTORE_CONNECT_FROM_OFFLINEHANG_FAILED, LoginScene.OnReturnReconnectToLogicServerFail);
 		NetManager.RegisterEvent(GameMessage.GM_RESTORE_CONNECT_FROM_OFFLINEHANG_OK, LoginScene.OnReturnReconnectToLogicServerSuccess);
 	end
@@ -76,6 +83,45 @@ function LoginScene.OnReconnectToLogicServer()
 end
 
 function LoginScene.OnDisconnectFromLogicServer()
+end
+
+function LoginScene.OpenSoundVolumeConfig()
+	local path = Constants.DATA_PATH .. "Config/SoundVolume.bytes";
+	local buffer = Utility.OpenFile(path);
+	if buffer == nil then
+		LoginScene.SoundVolume = 1;
+		LoginScene.MusicVolume = 1;
+		Log.Error("LoginScene.OpenSoundVolumeConfig: Can not open sound volume config,is this file exists?  " .. path);
+	else
+		local config = NetManager.DecodePB(PBMessage.CFG_SoundVolume, buffer);
+		if config == false then
+			LoginScene.SoundVolume = 1;
+			LoginScene.MusicVolume = 1;
+			Log.Error("LoginScene.OpenSoundVolumeConfig: decode sound volume bytes error.");
+		else
+			LoginScene.SoundVolume = config.Sound;
+			LoginScene.MusicVolume = config.Music;
+			Log.Info("LoginScene.OpenSoundVolumeConfig: sound volume is " .. LoginScene.SoundVolume .. " and music volume is " .. LoginScene.MusicVolume);
+		end
+	end
+	AudioManager.SetCategoryVolume("BGMusic", LoginScene.MusicVolume);
+	AudioManager.SetCategoryVolume("Interaction", LoginScene.SoundVolume);
+	AudioManager.SetCategoryVolume("MaJiangCardFYNan_103104", LoginScene.SoundVolume);
+	AudioManager.SetCategoryVolume("MaJiangCardFYNv_101102", LoginScene.SoundVolume);
+	AudioManager.SetCategoryVolume("MaJiangCardPTNan_103104", LoginScene.SoundVolume);
+	AudioManager.SetCategoryVolume("MaJiangCardPTNv_101102", LoginScene.SoundVolume);
+	AudioManager.SetCategoryVolume("MaJiangSound", LoginScene.SoundVolume);
+	AudioManager.SetCategoryVolume("UIMusic", LoginScene.SoundVolume);
+end
+
+function LoginScene.SaveSoundVolumeConfig()
+	local path = Constants.DATA_PATH .. "Config/SoundVolume.bytes";
+	local obj = {};
+	obj.Sound = LoginScene.SoundVolume;
+	obj.Music = LoginScene.MusicVolume;
+	local buffer = NetManager.EncodePB(PBMessage.CFG_SoundVolume, obj);
+	Utility.SaveFile(path, buffer);
+	Log.Info("LoginScene.SaveSoundVolumeConfig: save success @ " .. path);
 end
 
 function LoginScene.OpenLoginRecord()

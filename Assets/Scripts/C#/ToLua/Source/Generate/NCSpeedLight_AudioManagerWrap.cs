@@ -17,6 +17,7 @@ public class NCSpeedLight_AudioManagerWrap
 		L.RegFunction("PauseAll", PauseAll);
 		L.RegFunction("UnPauseAll", UnPauseAll);
 		L.RegFunction("SetCategoryVolume", SetCategoryVolume);
+		L.RegFunction("IsPlaylistPlaying", IsPlaylistPlaying);
 		L.RegFunction("New", _CreateNCSpeedLight_AudioManager);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("GO", get_GO, set_GO);
@@ -203,6 +204,22 @@ public class NCSpeedLight_AudioManagerWrap
 			float arg1 = (float)LuaDLL.luaL_checknumber(L, 2);
 			NCSpeedLight.AudioManager.SetCategoryVolume(arg0, arg1);
 			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int IsPlaylistPlaying(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 0);
+			bool o = NCSpeedLight.AudioManager.IsPlaylistPlaying();
+			LuaDLL.lua_pushboolean(L, o);
+			return 1;
 		}
 		catch(Exception e)
 		{

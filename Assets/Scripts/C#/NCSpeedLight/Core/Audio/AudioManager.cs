@@ -138,5 +138,9 @@ namespace NCSpeedLight
             AudioController.SetCategoryVolume(category, volume);
         }
 
+        public static bool IsPlaylistPlaying()
+        {
+            return AudioController.IsPlaylistPlaying();
+        }
     }
 }
