@@ -668,27 +668,37 @@ function MJScene.ReturnReconnectInfo(evt)
 				value:SetupReady(false);
 			end
 			if MJPlayer.Hero:IsBanker() then
-				UI_MaJiang.SetupCastDice(true);
+				UI_MaJiang.SetCastDice(true);
+				UI_MJPlayer.PlayUIScaleAndDicePanelGrow(MJPlayer.Hero.UI, true);
 			end
+			
 			-- 隐藏
 			MJDeskCtrl.SetPaidunActive(false);
+			
+			UI_MaJiang.StartOperateCountdown();
 		else
 			HallScene.SwitchFBStatus(FBStatus.Playing);
+			
 			-- 已经收到手牌信息了,正在对局中
 			Log.Info("MJScene.ReturnReconnectInfo: 已经收到手牌信息了,正在对局中");
+			
 			-- 设置当前玩家以及上一个玩家
 			MJScene.LastOperator = MJScene.GetPlayerByID(msg.m_lastOutCardRoleId);
+			
 			if msg.m_sendCardID ~= 0 then
 				-- 有可能是等待玩家吃碰杠操作
 				MJScene.CurrentOperator = MJScene.GetPlayerByID(msg.m_sendCardID);
 				UI_MJPlayer.PlayUIScaleAndDicePanelGrow(MJScene.CurrentOperator.UI, true);
 				UI_MaJiang.StartOperateCountdown();
 			end
+			
 			-- 设置当前回合的显示
 			-- HallScene.CurrentFBRound = HallScene.CurrentFBRound + 1;
 			UI_MaJiang.SetupCurrentRound();
+			
 			-- 直接显示牌墩，不播放动画
 			MJDeskCtrl.SetPaidunActive(true);
+			
 			-- 设置牌墩
 			local fromPlayer = MJScene.GetPlayerByID(MJScene.GetCardRoleID);
 			Log.Info("MJScene.ReturnReconnectInfo: 从" .. fromPlayer:LogTag() .. "的第【" .. tostring(MJScene.GetCardNumber) .. "】墩开始抓牌");
@@ -738,6 +748,7 @@ function MJScene.ReturnReconnectInfo(evt)
 			end
 		end
 	end
+	
 	UIManager.CloseAllWindowsExcept(UIName.UI_MaJiang);
 	
 	if #msg.m_CloseRoomData > 0 then
@@ -844,7 +855,8 @@ function MJScene.ReturnHandCardInfo(evt)
 		-- 设置骰子面板的朝向
 		MJDeskCtrl.SetDicePanelDirection();
 		if MJPlayer.Hero:IsBanker() then
-			UI_MaJiang.SetupCastDice(true);
+			UI_MaJiang.SetCastDice(true);
+			UI_MJPlayer.PlayUIScaleAndDicePanelGrow(MJPlayer.Hero.UI, true);
 		end
 	end
 end
@@ -946,7 +958,9 @@ function MJScene.ReturnAllReady(evt)
 		value:SetupReady(false);
 	end
 	UI_MaJiang.SetupReadyAndInvite(false, false, false);
-	UIManager.OpenTipsDialog("对局开始");
+	UIManager.OpenWindow(UIName.UI_MJStart);
+	UI_MaJiang.StartOperateCountdown();
+	-- UIManager.OpenTipsDialog("对局开始");
 end
 
 function MJScene.ReturnPlayerHu(evt)
@@ -1092,7 +1106,7 @@ function MJScene.ReturnCastDice(evt)
 	Log.Info("MJScene.ReturnCastDice: 从" .. fromPlayer:LogTag() .. "的第【" .. tostring(MJScene.GetCardNumber) .. "】墩开始抓牌");
 	MJPaidunCtrl.Initialize(fromPlayer.UIPosition, MJScene.GetCardNumber);
 	
-	UI_MaJiang.SetupCastDice(false);
+	UI_MaJiang.SetCastDice(false);
 	MJDeskCtrl.PlayDiceAnimation(MJScene.DiceNumbers[1], MJScene.DiceNumbers[2], nil);
 	MJDeskCtrl.PlayPaidunAnimation(function()
 		StartCoroutine(MJScene.PlaySendCardAnimation);

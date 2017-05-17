@@ -72,12 +72,21 @@ function UI_MaJiang.Start()
 	UI_MaJiang.InitPlayerUI();
 end
 
-function UI_MaJiang.Update()
-	-- UI_MaJiang.CurrentTime = os.date("%H:%M");
-	-- UIHelper.SetLabelText(this.transform, "top/topLeft/CurrentLatency/Label", tostring(UI_MaJiang.CurrentTime));
-end
-
 function UI_MaJiang.OnDestroy()
+	UI_MaJiang.transform = nil;
+	UI_MaJiang.gameObject = nil;
+	UI_MaJiang.UI_Player0 = nil;
+	UI_MaJiang.UI_Player1 = nil;
+	UI_MaJiang.UI_Player2 = nil;
+	UI_MaJiang.UI_Player3 = nil;
+	UI_MaJiang.CurrentTime = nil;
+	UI_MaJiang.OperateTime = 15;
+	coroutine.stop(UI_MaJiang.OperateCountdownCo);
+	UI_MaJiang.OperateCountdownCo = nil;
+	UI_MaJiang.IsOpenChat = false;
+	UI_MaJiang.IsRecording = false;
+	UI_MaJiang.RecordStartPos = Vector3.zero;
+	UI_MaJiang.RecordSuccess = false;
 end
 
 function UI_MaJiang.Reset()
@@ -87,6 +96,7 @@ function UI_MaJiang.Reset()
 	else
 		UI_MaJiang.SetupReadyAndInvite(true, false, true);
 	end
+	UIHelper.SetActiveState(this.transform, "center/Time", false);
 	UI_MJHeroCtrl.Reset();
 end
 
@@ -181,8 +191,8 @@ function UI_MaJiang.SetupReadyAndInvite(ready, unready, invite)
 end
 
 -- 设置掷骰子
-function UI_MaJiang.SetupCastDice(status)
-	Log.Info("UI_MaJiang.SetupCastDice: status is " .. tostring(status));
+function UI_MaJiang.SetCastDice(status)
+	Log.Info("UI_MaJiang.SetCastDice: status is " .. tostring(status));
 	UIHelper.SetActiveState(this.transform, "center/CastDice/Button", status);
 end
 
@@ -567,8 +577,8 @@ end
 function UI_MaJiang.StartOperateCountdown()
 	UIHelper.SetActiveState(this.transform, "center/Time", true);
 	UIHelper.SetActiveState(this.transform, "center/OperatorPrompt", false);
-	coroutine.stop(UI_MaJiang.OperateCountdownFunc);
-	UI_MaJiang.OperateCountdownFunc = coroutine.start(function()
+	coroutine.stop(UI_MaJiang.OperateCountdownCo);
+	UI_MaJiang.OperateCountdownCo = coroutine.start(function()
 		for i = 1, UI_MaJiang.OperateTime do
 			local time = UI_MaJiang.OperateTime - i;
 			local timeStr = tostring(time);

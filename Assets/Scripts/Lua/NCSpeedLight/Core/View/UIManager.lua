@@ -114,7 +114,7 @@ end
 
 -- 屏幕分辨率
 function UIManager.ScreenResolution()
-	return UIManager.UIRoot.pixelSizeAdjustment * NGUITools.screenSize;
+	return NGUITools.screenSize * UIManager.UIRoot.pixelSizeAdjustment;
 end
 
 -- 打开窗口
