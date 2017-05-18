@@ -182,10 +182,10 @@ function MJDeskCtrl.SetPlayway()
 		local count = #playway;
 		if count == 1 then
 			UIHelper.SetActiveState(this.transform, "Text/Playway/OneText", true);
-			UIHelper.SetActiveState(this.transform, "Text/Playway/OneText/1/" .. MJPlayWay.ToString(tonumber(playway[1])), true);
+			UIHelper.SetActiveState(this.transform, "Text/Playway/OneText/1/" .. MJPlayway.ToString(tonumber(playway[1])), true);
 		elseif count == 2 then
 			UIHelper.SetActiveState(this.transform, "Text/Playway/TwoText", true);
-			UIHelper.SetActiveState(this.transform, "Text/Playway/TwoText/1/" .. MJPlayWay.ToString(tonumber(playway[1])), true);
+			UIHelper.SetActiveState(this.transform, "Text/Playway/TwoText/1/" .. MJPlayway.ToString(tonumber(playway[1])), true);
 		end
 	end
 end

@@ -91,17 +91,17 @@ function LoginScene.OpenSoundVolumeConfig()
 	if buffer == nil then
 		LoginScene.SoundVolume = 1;
 		LoginScene.MusicVolume = 1;
-		Log.Error("LoginScene.OpenSoundVolumeConfig: Can not open sound volume config,is this file exists?  " .. path);
+		Log.Error("OpenSoundVolumeConfig: Can not open sound volume config,is this file exists @ " .. path);
 	else
 		local config = NetManager.DecodePB(PBMessage.CFG_SoundVolume, buffer);
 		if config == false then
 			LoginScene.SoundVolume = 1;
 			LoginScene.MusicVolume = 1;
-			Log.Error("LoginScene.OpenSoundVolumeConfig: decode sound volume bytes error.");
+			Log.Error("OpenSoundVolumeConfig: decode sound volume bytes error.");
 		else
 			LoginScene.SoundVolume = config.Sound;
 			LoginScene.MusicVolume = config.Music;
-			Log.Info("LoginScene.OpenSoundVolumeConfig: sound volume is " .. LoginScene.SoundVolume .. " and music volume is " .. LoginScene.MusicVolume);
+			Log.Info("OpenSoundVolumeConfig: sound volume is " .. LoginScene.SoundVolume .. " and music volume is " .. LoginScene.MusicVolume);
 		end
 	end
 	AudioManager.SetCategoryVolume("BGMusic", LoginScene.MusicVolume);
@@ -121,22 +121,22 @@ function LoginScene.SaveSoundVolumeConfig()
 	obj.Music = LoginScene.MusicVolume;
 	local buffer = NetManager.EncodePB(PBMessage.CFG_SoundVolume, obj);
 	Utility.SaveFile(path, buffer);
-	Log.Info("LoginScene.SaveSoundVolumeConfig: save success @ " .. path);
+	Log.Info("SaveSoundVolumeConfig: save success @ " .. path);
 end
 
 function LoginScene.OpenLoginRecord()
 	local path = Constants.DATA_PATH .. "Config/LoginRecord.bytes";
 	local buffer = Utility.OpenFile(path);
 	if buffer == nil then
-		Log.Error("LoginScene.OpenLoginRecord: Can not open login record file,is this file exists?  " .. path);
+		Log.Error("OpenLoginRecord: Can not open login record file,is this file exists @ " .. path);
 	else
 		local record = NetManager.DecodePB(PBMessage.CFG_LoginRecord, buffer);
 		if record == false then
-			Log.Error("LoginScene.OpenLoginRecord: decode login record error");
+			Log.Error("OpenLoginRecord: decode login record error");
 		else
 			LoginScene.LoginRecord = record;
 			for i = 1, #record.loginInfo do
-				Log.Info("LoginScene.OpenLoginRecord: recorded account: " .. record.loginInfo[i].account .. ",password: " .. record.loginInfo[i].password);
+				Log.Info("OpenLoginRecord: recorded account: " .. record.loginInfo[i].account .. ",password: " .. record.loginInfo[i].password);
 			end
 		end
 	end
@@ -214,22 +214,22 @@ function LoginScene.ConnnectLoginServer()
 		UIManager.OpenTipsDialog("请求超时，请检查设备的网络状况");
 	end;
 	-- UIManager.OpenProgressDialog(option);
-	Log.Info("LoginScene.ConnnectLoginServer: login server ip is " .. Constants.ACCOUNT_SERVER_IP);
-	Log.Info("LoginScene.ConnnectLoginServer: login server port is " .. Constants.ACCOUNT_SERVER_PORT);
+	Log.Info("ConnnectLoginServer: login server ip is " .. Constants.ACCOUNT_SERVER_IP);
+	Log.Info("ConnnectLoginServer: login server port is " .. Constants.ACCOUNT_SERVER_PORT);
 	NetManager.ConnectTo(ServerType.Login, Constants.ACCOUNT_SERVER_IP, Constants.ACCOUNT_SERVER_PORT,
 	function(connection)
-		Log.Info("LoginScene.ConnnectLoginServer: 连接至登录服务器");
+		Log.Info("ConnnectLoginServer: 连接至登录服务器");
 		UIManager.CloseProgressDialog();
 		LoginScene.RequestVerifyVersion();
 	end,
 	function(connection)
-		Log.Info("LoginScene.ConnnectLoginServer: 断开与登录服务器的连接");
+		Log.Info("ConnnectLoginServer: 断开与登录服务器的连接");
 	end,
 	nil);
 end
 
 function LoginScene.RequestVerifyVersion()
-	Log.Info("LoginScene.RequestVerifyVersion: Send verify version msg,current version is " .. Constants.VERSION);
+	Log.Info("RequestVerifyVersion: Send verify version msg,current version is " .. Constants.VERSION);
 	local msg = {
 		version = Constants.VERSION;
 	}
@@ -239,7 +239,7 @@ end
 function LoginScene.OnVerifyVersionReturn(evt)
 	local obj = NetManager.DecodeMsg(PBMessage.GM_VerifyVersionReturn, evt)
 	if obj.result == 0 then
-		Log.Info("LoginScene.OnVerifyVersionReturn: sccuss.");
+		Log.Info("OnVerifyVersionReturn: sccuss.");
 		-- if Game.Platform == UnityEngine.RuntimePlatform.Android or Game.Platform == UnityEngine.RuntimePlatform.IPhonePlayer then
 		-- 	LoginScene.AuthInfo = ShareSDKAdapter.GetWechatAuthInfo();
 		-- 	if LoginScene.AuthInfo == nil then
@@ -252,7 +252,7 @@ function LoginScene.OnVerifyVersionReturn(evt)
 		UIManager.OpenWindow(UIName.UI_NormalLogin);
 		-- end
 	else
-		Log.Error("LoginScene.OnVerifyVersionReturn: version does not match,can not enter game,please update.");
+		Log.Error("OnVerifyVersionReturn: version does not match,can not enter game,please update.");
 		UIManager.OpenTipsDialog("版本不匹配，无法进入游戏");
 	end
 end
@@ -274,7 +274,7 @@ function LoginScene.RequestLogin(account, password)
 		macAddress = "4D6MDJJ",
 		deviceUUID = "547SFHBSDFHESYHTRY",
 	}
-	Log.Info("LoginScene.RequestLogin: platform is " .. msg.platform .. ",account is " .. msg.m_AccountName);
+	Log.Info("RequestLogin: platform is " .. msg.platform .. ",account is " .. msg.m_AccountName);
 	NetManager.SendEventToLoginServer(GameMessage.GM_ACCOUNT_VERIFY, PBMessage.GM_AccountRequest, msg);
 	UIManager.OpenWindow(UIName.UI_SceneLoad);
 end
@@ -283,7 +283,7 @@ function LoginScene.OnLoginReturn(evt)
 	UIManager.CloseProgressDialog();
 	local obj = NetManager.DecodeMsg(PBMessage.GM_AccountReturn, evt)
 	if obj.m_Result == 0 then
-		Log.Info("LoginScene.OnLoginReturn: 账号验证成功");
+		Log.Info("OnLoginReturn: 账号验证成功");
 		-- 记录至内存中
 		LoginScene.Token = {};
 		LoginScene.Token.AccountID = obj.m_AccountID;
@@ -371,21 +371,21 @@ function LoginScene.OnChoseAreaReturn(evt)
 	local obj = NetManager.DecodeMsg(PBMessage.GM_ChooseAreaReturn, evt);
 	if obj.m_Result == 0 then
 		UIManager.CloseWindow(UIName.UI_MobileLogin);
-		Log.Info("LoginScene.OnChoseAreaReturn：选区成功,开始连接逻辑服务器");
-		Log.Info("LoginScene.OnChoseAreaReturn: logic server ip is " .. obj.m_ServerIP);
-		Log.Info("LoginScene.OnChoseAreaReturn: logic server port is " .. obj.m_PortNumber);
+		Log.Info("OnChoseAreaReturn：选区成功,开始连接逻辑服务器");
+		Log.Info("OnChoseAreaReturn: logic server ip is " .. obj.m_ServerIP);
+		Log.Info("OnChoseAreaReturn: logic server port is " .. obj.m_PortNumber);
 		LoginScene.LogicServerIP = obj.m_ServerIP;
 		LoginScene.LoginServerPort = obj.m_PortNumber;
 		NetManager.ConnectTo(ServerType.Logic, LoginScene.LogicServerIP, LoginScene.LoginServerPort, LoginScene.OnConnectLogicServer, LoginScene.OnDisconnectLogicServer, LoginScene.OnReconnectLogicServer, LoginScene.OnLogicServerErrorOccupied);
 	else
-		Log.Info("LoginScene.OnChoseAreaReturn：选区失败");
+		Log.Info("OnChoseAreaReturn：选区失败");
 		UIManager.CloseWindow(UIName.UI_SceneLoad);
 		UIManager.OpenTipsDialog("选区失败");
 	end
 end
 
 function LoginScene.OnConnectLogicServer(connection)
-	Log.Info("LoginScene.OnConnectLogicServer: 成功连接至逻辑服务器");
+	Log.Info("OnConnectLogicServer: 成功连接至逻辑服务器");
 	UIManager.CloseProgressDialog();
 	LoginScene.RequestAccountRoles();
 	if SceneManager.CurrentScene ~= nil then
@@ -394,7 +394,7 @@ function LoginScene.OnConnectLogicServer(connection)
 end
 
 function LoginScene.OnDisconnectLogicServer(connection)
-	Log.Info("LoginScene.OnDisconnectLogicServer");
+	Log.Info("OnDisconnectLogicServer");
 	if SceneManager.CurrentScene ~= nil then
 		SceneManager.CurrentScene.OnDisconnectFromLogicServer();
 	end
@@ -402,22 +402,22 @@ end
 
 function LoginScene.OnReconnectLogicServer(connection)
 	UIManager.CloseProgressDialog();
-	Log.Info("LoginScene.OnReconnectLogicServer: 成功重连至逻辑服务器,耗时：" .. tostring(Time.realtimeSinceStartup - LoginScene.DisconnectTimeStamp) .. "s");
+	Log.Info("OnReconnectLogicServer: 成功重连至逻辑服务器,耗时：" .. tostring(Time.realtimeSinceStartup - LoginScene.DisconnectTimeStamp) .. "s");
 	LoginScene.RequestReconnectToLogicServer();
 end
 
 function LoginScene.OnLogicServerErrorOccupied(connection, error)
-	Log.Error("LoginScene.OnLogicServerErrorOccupied: error message: " .. error);
+	Log.Error("OnLogicServerErrorOccupied: error message: " .. error);
 	LoginScene.DisconnectTimeStamp = Time.realtimeSinceStartup;
 	local option = ProgressDialogOption.New();
 	option.Content = "网络异常，重新连接中...";
 	UIManager.OpenProgressDialog(option);
 	connection:Reconnect();
-	Log.Info("LoginScene.OnLogicServerErrorOccupied: 逻辑服务器异常,启动重连,时间戳：" .. tostring(LoginScene.DisconnectTimeStamp));
+	Log.Info("OnLogicServerErrorOccupied: 逻辑服务器异常,启动重连,时间戳：" .. tostring(LoginScene.DisconnectTimeStamp));
 end
 
 function LoginScene.RequestReconnectToLogicServer()
-	Log.Info("LoginScene.RequestReconnectToLogicServer");
+	Log.Info("RequestReconnectToLogicServer");
 	local msg = {};
 	msg.m_AccountID = LoginScene.Token.AccountID;
 	msg.m_RoleID = LoginScene.Token.RoleID;
@@ -426,14 +426,14 @@ function LoginScene.RequestReconnectToLogicServer()
 end
 
 function LoginScene.OnReturnReconnectToLogicServerSuccess(evt)
-	Log.Info("LoginScene.OnReturnReconnectToLogicServerSuccess");
+	Log.Info("OnReturnReconnectToLogicServerSuccess");
 	if SceneManager.CurrentScene ~= nil then
 		SceneManager.CurrentScene.OnReconnectToLogicServer();
 	end
 end
 
 function LoginScene.OnReturnReconnectToLogicServerFail(evt)
-	Log.Info("LoginScene.OnReturnReconnectToLogicServerFail");
+	Log.Info("OnReturnReconnectToLogicServerFail");
 end
 
 function LoginScene.RequestAccountRoles()
@@ -468,7 +468,7 @@ function LoginScene.OnRoleLoginReturn(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GM_FullRoleInfo, evt);
 	if msg ~= nil then
 		if msg.id > 0 then
-			Log.Info("LoginScene.OnRoleLoginReturn: role id is " .. msg.id .. ',name is ' .. msg.name);
+			Log.Info("OnRoleLoginReturn: role id is " .. msg.id .. ',name is ' .. msg.name);
 			SharedVariable.SelfInfo.FullInfo = msg;
 			SharedVariable.SelfInfo.ID = msg.id;
 			SharedVariable.SelfInfo.AccountID = msg.accountid;
@@ -476,11 +476,11 @@ function LoginScene.OnRoleLoginReturn(evt)
 			SceneManager.Goto(SceneName.HallScene);
 			-- HallScene.RequestPlayerInFb();
 		else
-			Log.Info("LoginScene.OnRoleLoginReturn: role login error caused by \' msg.id<=0\' ");
+			Log.Info("OnRoleLoginReturn: role login error caused by \' msg.id<=0\' ");
 			UIManager.CloseWindow(UIName.UI_SceneLoad);
 		end
 	else
-		Log.Info("LoginScene.OnRoleLoginReturn: role login error caused by nil msg.");
+		Log.Info("OnRoleLoginReturn: role login error caused by nil msg.");
 		UIManager.CloseWindow(UIName.UI_SceneLoad);
 	end
 end
@@ -503,10 +503,10 @@ function LoginScene.OnCreateRoleReturn(evt)
 			LoginScene.RequestRoleLogin();
 		else
 			UIManager.CloseWindow(UIName.UI_SceneLoad);
-			Log.Info("LoginScene.OnCreateRoleReturn: role create error , m_Result = " .. obj.m_Result);
+			Log.Info("OnCreateRoleReturn: role create error , m_Result = " .. obj.m_Result);
 		end
 	else
 		UIManager.CloseWindow(UIName.UI_SceneLoad);
-		Log.Info("LoginScene.OnCreateRoleReturn: role create error caused by nil msg.");
+		Log.Info("OnCreateRoleReturn: role create error caused by nil msg.");
 	end
 end 

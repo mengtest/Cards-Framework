@@ -34,9 +34,9 @@ function UI_CreateRoom.OnClickConfirm(go)
 	UI_CreateRoom.Round = tonumber(roundBtn.name);
 	UI_CreateRoom.PlayerNum = tonumber(playerBtn.name);
 	if playway2Btn == nil then
-		UI_CreateRoom.Playway = MJPlayWay.ToInt(playway1Btn.name);
+		UI_CreateRoom.Playway = MJPlayway.ToInt(playway1Btn.name);
 	else
-		UI_CreateRoom.Playway = MJPlayWay.ToInt(playway1Btn.name) .. "," .. MJPlayWay.ToInt(playway2Btn.name);
+		UI_CreateRoom.Playway = MJPlayway.ToInt(playway1Btn.name) .. "," .. MJPlayway.ToInt(playway2Btn.name);
 	end
 	HallScene.RequestCreateRoom();
 end 

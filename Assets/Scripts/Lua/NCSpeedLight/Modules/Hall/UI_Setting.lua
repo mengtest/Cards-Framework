@@ -50,7 +50,7 @@ function UI_Setting.OnMusicSliderDrag(go, delta)
 	end
 	AudioManager.SetCategoryVolume("BGMusic", LoginScene.MusicVolume);
 	if AudioManager.IsPlaylistPlaying() == false then
-		AudioManager.PlayMusic(BGMusic.Hall, false);
+		AudioManager.PlayMusic({BGMusic.Hall}, true);
 	end
 end
 
@@ -64,7 +64,7 @@ function UI_Setting.OnMusicSliderClick(go, delta)
 	end
 	AudioManager.SetCategoryVolume("BGMusic", LoginScene.MusicVolume);
 	if AudioManager.IsPlaylistPlaying() == false then
-		AudioManager.PlayMusic(BGMusic.Hall, false);
+		AudioManager.PlayMusic({BGMusic.Hall}, true);
 	end
 end
 

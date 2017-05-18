@@ -452,22 +452,13 @@ function MJPlayer:MJOT_SendCard(data)
 	local card = data.m_HandCard[1];
 	Log.Info("MJPlayer:MJOT_SendCard: " .. self:LogTag() .. ",card id is " .. card.m_Index .. ",type is " .. MaJiangType.ToString(card.m_Type));
 	if self:IsHero() or HallScene.CurrentFBPlaybackMode then
-		-- local cardPosition = self:GetHandCardPositionByID(card.m_Index);
-		-- local newCardPosition = self:GetHandCardCount();
-		-- local newCard = self:GetHandCardByPosition(newCardPosition);
-		-- self:RemoveHandCard(card.m_Index);
-		-- self:SortHandCard();
-		-- local newCardTargetPosition = self:GetHandCardIndex(newCard);
-		-- self.UI:PlayOutCardAnimation(card);
-		-- self.UI:PlayInsertCardAnimation(cardPosition, newCardPosition, newCardTargetPosition);
-		-- self:SubHandCardCount();
-		-- self:AddTableCardCount();
 		self:RemoveHandCard(card.m_Index);
 	end
 	self:SubHandCardCount();
 	self.UI:UpdateCards(true, false);
 	self.UI:OutCard(card);
 	self:AddTableCardCount();
+	self:PlaySound(MaJiangType.ToString(card.m_Type));
 end
 
 --摊
@@ -481,6 +472,7 @@ function MJPlayer:MJOT_CHI(data)
 	self.PutChiCard(data);
 	self:AddOperateTotalCount();
 	MJDeskCtrl.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_CHI);
+	self:PlaySound("chi");
 end
 
 --勺
@@ -501,6 +493,7 @@ function MJPlayer:MJOT_PENG(data)
 	self.UI:UpdateCards(true, false);
 	self:SubHandCardCount(2);
 	MJDeskCtrl.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_PENG);
+	self:PlaySound("peng");
 end
 
 --杠
@@ -517,6 +510,7 @@ function MJPlayer:MJOT_GANG(data)
 	self.UI:UpdateCards(true, false);
 	self:SubHandCardCount(3);
 	MJDeskCtrl.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_GANG);
+	self:PlaySound("gang");
 end
 
 --暗杠
@@ -533,6 +527,7 @@ function MJPlayer:MJOT_AN_GANG(data)
 	self.UI:UpdateCards(true, false);
 	self:SubHandCardCount(4);
 	MJDeskCtrl.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_AN_GANG);
+	self:PlaySound("gang");
 end
 
 --补杠
@@ -547,6 +542,7 @@ function MJPlayer:MJOT_BuGang(data)
 	self.UI:PutBuGangCard(data);
 	self:SubHandCardCount(1);
 	MJDeskCtrl.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_BuGang);
+	self:PlaySound("gang");
 end
 
 --过
@@ -556,8 +552,31 @@ end
 --胡
 function MJPlayer:MJOT_HU(data)
 	MJDeskCtrl.PlayOperateEffect(self.UITransform.name, MaJiangOperatorType.MJOT_HU);
+	self:PlaySound("hu");
 end
 
 --定胡
 function MJPlayer:MJOT_DingHU(data)
+end
+
+-- 播放角色语音
+function MJPlayer:PlaySound(prefix)
+	local sound = prefix;
+	if LoginScene.SoundMode == 0 then
+		if self.Sex == 1 then
+			sound = sound .. "_PTNv_101102";
+		else
+			sound = sound .. "_PTNan_103104";
+		end
+		Log.Info("MJPlayer:PlaySound: " .. self:LogTag() .. ",sound name is " .. sound);
+		AudioManager.PlaySound(sound);
+	else
+		if self.Sex == 1 then
+			sound = sound .. "_FYNv_101102";
+		else
+			sound = sound .. "_FYNan_103104";
+		end
+		Log.Info("MJPlayer:PlaySound: " .. self:LogTag() .. ",sound name is " .. sound);
+		AudioManager.PlaySound(sound);
+	end
 end

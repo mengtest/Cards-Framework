@@ -106,9 +106,9 @@ function UIManager.Initialize()
 		UIManager.Camera = cameraGO:GetComponent(typeof(UnityEngine.Camera));
 		UIManager.WindowRoot = UnityEngine.GameObject.Find("Game/UIManager/Window");
 		UIManager.DialogRoot = UnityEngine.GameObject.Find("Game/UIManager/Dialog");
-		Log.Info("UIManager.Initialize: success.");
+		Log.Info("Initialize: success.");
 	else
-		Log.Warning("UIManager.Initialize: UIManager has already been initialized.");
+		Log.Warning("Initialize: UIManager has already been initialized.");
 	end
 end
 
@@ -119,7 +119,7 @@ end
 
 -- 打开窗口
 function UIManager.OpenWindow(windowName)
-	Log.Info("UIManager.OpenWindow: " .. windowName);
+	Log.Info("OpenWindow: " .. windowName);
 	local window = UIManager.Windows[windowName];
 	if window ~= nil then
 		return window;

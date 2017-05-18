@@ -2,6 +2,7 @@
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using System;
+using UnityEditorInternal;
 
 namespace NCSpeedLight
 {
@@ -40,14 +41,6 @@ namespace NCSpeedLight
                     }
                 }
             }
-        }
-
-        [MenuItem("Assets/Open Lua Project")]
-        public static void OpenLuaProj()
-        {
-            string vsCode = Environment.GetEnvironmentVariable("VSCODE");
-            string cmd = vsCode + " " + '"' + Application.dataPath + "/Lua/.vscode/launch.json" + '"';
-            System.Diagnostics.Process.Start(vsCode);
         }
     }
 }

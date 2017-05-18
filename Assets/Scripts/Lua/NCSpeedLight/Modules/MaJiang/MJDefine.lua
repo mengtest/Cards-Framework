@@ -142,7 +142,7 @@ MaJiangOperatorType =
 };
 
 -- 麻将内玩法
-MJPlayWay =
+MJPlayway =
 {
 	PW_Begin = 0,
 	-- 红中麻将
@@ -170,14 +170,14 @@ MJPlayWay =
 	PW_End = 16,
 	
 	ToInt = function(name)
-		for key, value in pairs(MJPlayWay) do
+		for key, value in pairs(MJPlayway) do
 			if key == name then
 				return value;
 			end
 		end
 	end,
 	ToString = function(index)
-		for key, value in pairs(MJPlayWay) do
+		for key, value in pairs(MJPlayway) do
 			if value == index then
 				return tostring(key);
 			end
@@ -185,7 +185,7 @@ MJPlayWay =
 	end
 };
 
-MJPlayWayStr = {
+MJPlaywayStr = {
 	-- 红中麻将
 	PW_7DUI = "可胡7对",
 	PW_1MA = "一码全中",

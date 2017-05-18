@@ -27,15 +27,21 @@ end
 
 -- 字符串分割
 function Utility.SplitString(str, delimiter)
-	if str == nil or str == '' or delimiter == nil then
-		return nil
+	if str == nil or string.len(str) == 0 or delimiter == nil then
+		return nil;
 	end
-	
-	local result = {}
+	local result = {};
 	for match in(str .. delimiter):gmatch("(.-)" .. delimiter) do
-		table.insert(result, match)
+		if string.len(match) > 0 then
+			table.insert(result, match);
+		end
 	end
-	return result
+	return result;
+end
+
+-- 字符串替换
+function Utility.ReplaceString(str, from, to)
+	return string.gsub(str, from, to);
 end
 
 function Utility.FormatTimeStamp(format, timestamp)

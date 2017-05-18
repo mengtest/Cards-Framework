@@ -281,7 +281,7 @@ function MJScene.IsMyTurn()
 	end
 end
 
--- 获取当前麻将的玩法
+-- 获取当前麻将的玩法,用于展示
 function MJScene.GetMJPlaywayStr()
 	local playway = "";
 	if HallScene.CurrentFBPlayway == nil then
@@ -289,15 +289,15 @@ function MJScene.GetMJPlaywayStr()
 	end
 	local playwayType = Utility.SplitString(HallScene.CurrentFBPlayway, ",");
 	for i = 1, #playwayType do
-		local playwayEnum = MJPlayWay.ToString(tonumber(playwayType[i]));
-		local str = MJPlayWayStr[playwayEnum];
+		local playwayEnum = MJPlayway.ToString(tonumber(playwayType[i]));
+		local str = MJPlaywayStr[playwayEnum];
 		if str == nil then
 			Log.Info("MJScene.GetMJPlaywayStr: error,playway str is " .. HallScene.CurrentFBPlayway);
 		else
-		end
-		playway = playway .. MJPlayWayStr[MJPlayWay.ToString(tonumber(playwayType[i]))];
-		if i ~= #playwayType then
-			playway = playway .. " · ";
+			playway = playway .. str;
+			if i ~= #playwayType then
+				playway = playway .. " · ";
+			end
 		end
 	end
 	return playway;
@@ -791,7 +791,6 @@ function MJScene.ReturnHandCardInfo(evt)
 		HallScene.CurrentFBRound = msg.m_leftCount;
 		HallScene.CurrentFBType = msg.m_fbtypeid;
 		HallScene.CurrentFBID = msg.m_roomid;
-		HallScene.CurrentFBPlayway = msg.m_fbplayway;
 		Log.Info("MJScene.ReturnHandCardInfo: 庄家的位置：" .. tostring(HallScene.CurrentFBBankerPosition));
 		
 		for i = 1, #msg.m_handCardData do
