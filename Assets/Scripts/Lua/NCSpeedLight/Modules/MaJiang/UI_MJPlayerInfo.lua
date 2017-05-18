@@ -2,7 +2,7 @@ UI_MJPlayerInfo = {
 	transform = nil,
 	gameObject = nil,
 	CurrentPlayer = nil,
-	InteractionMinInterval = 0.3, -- 送花的最小间隔时间
+	InteractionMinInterval = 0, -- 送花的最小间隔时间
 	LastInteractionTime = - 1,
 }
 
@@ -50,25 +50,25 @@ end
 
 function UI_MJPlayerInfo.OnClickFace(go)
 	if go == nil then return end;
-	if this.LastInteractionTime == - 1 or(Time.GetTimestamp() - this.LastInteractionTime) > this.InteractionMinInterval then
-		local msg = {};
-		msg.faceid = MJChatType.Interaction;
-		msg.roleid = MJPlayer.Hero.ID;
-		msg.receiveid = UI_MJPlayerInfo.CurrentPlayer.ID;
-		if go.name == "Beer" then
-			msg.faceName = "cheers1";
-		elseif go.name == "Bomb" then
-			msg.faceName = "bomb1";
-		elseif go.name == "Slipper" then
-			msg.faceName = "shoe1";
-		elseif go.name == "Egg" then
-			msg.faceName = "egg1";
-		elseif go.name == "Flower" then
-			msg.faceName = "flower1";
-		end
-		NetManager.SendEventToLogicServer(GameMessage.GM_ANSWER_FACE_REQUEST, PBMessage.GM_AnswerFaceReturn, msg);
-		this.LastInteractionTime = Time.GetTimestamp();
-	else
-		-- UIManager.OpenTipsDialog("操作过于频繁，请稍候再发");
+	-- if this.LastInteractionTime == - 1 or(Time.GetTimestamp() - this.LastInteractionTime) > this.InteractionMinInterval then
+	local msg = {};
+	msg.faceid = MJChatType.Interaction;
+	msg.roleid = MJPlayer.Hero.ID;
+	msg.receiveid = UI_MJPlayerInfo.CurrentPlayer.ID;
+	if go.name == "Beer" then
+		msg.faceName = "cheers1";
+	elseif go.name == "Bomb" then
+		msg.faceName = "bomb1";
+	elseif go.name == "Slipper" then
+		msg.faceName = "shoe1";
+	elseif go.name == "Egg" then
+		msg.faceName = "egg1";
+	elseif go.name == "Flower" then
+		msg.faceName = "flower1";
 	end
+	NetManager.SendEventToLogicServer(GameMessage.GM_ANSWER_FACE_REQUEST, PBMessage.GM_AnswerFaceReturn, msg);
+	this.LastInteractionTime = Time.GetTimestamp();
+	-- else
+	-- UIManager.OpenTipsDialog("操作过于频繁，请稍候再发");
+	-- end
 end 

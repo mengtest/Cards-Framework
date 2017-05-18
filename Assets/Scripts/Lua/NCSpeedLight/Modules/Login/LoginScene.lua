@@ -32,6 +32,8 @@ LoginScene =
 	MusicVolume = 1, -- 音乐音量
 	
 	SoundVolume = 1, -- 音效音量
+	
+	SoundMode = 0 -- 语音版本 0-普通话，2-方言
 };
 
 function LoginScene.Initialize()

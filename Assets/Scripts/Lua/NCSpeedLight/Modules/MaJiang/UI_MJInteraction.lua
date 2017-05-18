@@ -31,11 +31,12 @@ function UI_MJInteraction:Play(startPos, targetPos, spriteName)
 	local namePrefix = string.sub(spriteName, 1, strLength - 1);
 	local spriteAnimation = UIHelper.GetComponent(self.transform, "Item", typeof(UISpriteAnimation));
 	spriteAnimation.namePrefix = namePrefix;
-	coroutine.start(self.PlayAnimation, self, spriteAnimation, spriteName);
+	coroutine.start(self.PlayAnimation, self, spriteAnimation, spriteName, namePrefix);
 end
 
-function UI_MJInteraction:PlayAnimation(spriteAnimation, spriteName)
+function UI_MJInteraction:PlayAnimation(spriteAnimation, spriteName, namePrefix)
 	coroutine.wait(0.7);
+	AudioManager.PlaySound(namePrefix);
 	spriteAnimation.enabled = true;
 	if spriteName == "egg1" then
 		coroutine.wait(1.4);

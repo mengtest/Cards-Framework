@@ -527,7 +527,7 @@ function UI_MaJiang.HandleChat(msg)
 		local targetPos = receivePlayer.UI.transform:Find("Enter/Center").position;
 		startPos = this.transform:InverseTransformPoint(startPos);
 		targetPos = this.transform:InverseTransformPoint(targetPos);
-		com:Play(startPos, targetPos, msg.faceName);
+		UI_MJInteraction.Play(com, startPos, targetPos, msg.faceName);
 	elseif msg.faceid == MJChatType.Face then
 		-- 表情
 		local tempSprite = UIHelper.SetSpriteName(playerUI.transform, "Enter/Center/Chat/Face/Sprite", msg.faceName);
@@ -539,11 +539,14 @@ function UI_MaJiang.HandleChat(msg)
 		UIHelper.SetActiveState(playerUI.transform, "Enter/Center/Chat/Face", true);
 	elseif msg.faceid == MJChatType.DefaultText then
 		-- 默认文字
+		local strs = Utility.SplitString(msg.faceName, ".");
 		local tempLabel = UIHelper.GetComponent(playerUI.transform, "Enter/Center/Chat/Text/Label", typeof(UILabel));
-		tempLabel.text = msg.faceName;
+		tempLabel.text = strs[2];
 		local tempSprite = UIHelper.GetComponent(playerUI.transform, "Enter/Center/Chat/Text/Kuang", typeof(UISprite));
 		tempSprite.width = tempLabel.width + 34;
 		UIHelper.SetActiveState(playerUI.transform, "Enter/Center/Chat/Text", true);
+		local sound = UI_MJChat.GetDefaultTextSound(strs[1], player);
+		AudioManager.PlaySound(sound);
 	elseif msg.faceid == MJChatType.CustomText then
 		-- 自定义文字
 		local tempLabel = UIHelper.GetComponent(playerUI.transform, "Enter/Center/Chat/Text/Label", typeof(UILabel));
@@ -593,10 +596,20 @@ function UI_MaJiang.StartOperateCountdown()
 			end
 			UIHelper.SetSpriteName(this.transform, "center/Time/1", timeStr1);
 			UIHelper.SetSpriteName(this.transform, "center/Time/2", timeStr2);
+			if time == 1 then
+				if MJPlayer.IsHero(MJScene.CurrentOperator) then
+					AudioManager.PlaySound("MJ_TimeOne");
+				end
+			elseif time == 2 then
+				if MJPlayer.IsHero(MJScene.CurrentOperator) then
+					AudioManager.PlaySound("MJ_TimeTwo");
+				end
+			end
 			coroutine.wait(1);
 		end
 		if MJPlayer.IsHero(MJScene.CurrentOperator) then
 			UIHelper.SetActiveState(this.transform, "center/OperatorPrompt", true);
+			AudioManager.PlaySound("MJ_TimeZero");
 		end
 	end);
 end 

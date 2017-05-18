@@ -48,15 +48,15 @@ end
 function UI_MJStart.PlayAnimation()
 	coroutine.start(
 	function()
+		AudioManager.PlaySound("MJ_start");
 		coroutine.wait(0.05);
-		-- AdapterForAudioToolKit.Instance.Play("MJ_start");
 		UIHelper.SetActiveState(this.transform, "Widget/BG", true);
 		coroutine.wait(0.18);
 		local effect = this.transform:Find("Effect");
 		if effect ~= nil then
 			effect.gameObject:SetActive(true);
 		end
-		coroutine.wait(1.2);
+		coroutine.wait(1.4);
 		UIManager.CloseWindow(UIName.UI_MJStart);
 	end);
 end 

@@ -1,9 +1,19 @@
 UI_MJChat = {
 	transform = nil,
 	gameObject = nil,
-	DefaultChat = {},
 	MAX_TEXT = 24,
 	History = nil,
+	DefaultChat =
+	{
+		"快点出牌，时间不等人！",
+		"一路屁胡，走向胜利~",
+		"上碰下自摸，大家小心咯~",
+		"好汉不胡头三把！",
+		"天胡不算胡，后胡金满赚！",
+		"呀，打错了~",
+		"卡卡卡，卡的人火大哦！",
+		"很高兴可以和大家一起搓麻将啊~"
+	},
 }
 
 local this = UI_MJChat;
@@ -29,23 +39,35 @@ function UI_MJChat.OnDestroy()
 	this.gameObject = nil;
 end
 
+function UI_MJChat.GetDefaultTextSound(index, player)
+	if player == nil then
+		Log.Error("GetDefaultTextSound: error caused by nil player instance.");
+		return nil;
+	else
+		local sound = "MaJiangSound";
+		-- if LoginScene.SoundMode == 0 then
+		-- 	if player.Sex == 1 then
+		-- 		sound = sound .. "_PTNv_" .. index;
+		-- 	else
+		-- 		sound = sound .. "_PTNan_" .. index;
+		-- 	end
+		-- else
+		if player.Sex == 1 then
+			sound = sound .. "_FYNv_" .. index;
+		else
+			sound = sound .. "_FYNan_" .. index;
+		end
+		-- end
+		Log.Info("GetDefaultTextSound:  sound name is " .. sound);
+		return sound;
+	end
+end
+
 function UI_MJChat.InitBtnEvent()
 	UIHelper.SetButtonEvent(this.transform, "Text/SendBtn", UI_MJChat.OnClickSendText);
 end
 
 function UI_MJChat.InitDefaultChat()
-	UI_MJChat.DefaultChat = {};
-	table.insert(UI_MJChat.DefaultChat, "快点出牌，时间不等人！");
-	table.insert(UI_MJChat.DefaultChat, "一路屁胡，走向胜利~");
-	table.insert(UI_MJChat.DefaultChat, "上碰下自摸，大家小心咯~");
-	table.insert(UI_MJChat.DefaultChat, "好汉不胡头三把！");
-	table.insert(UI_MJChat.DefaultChat, "天胡不算胡，后胡金满赚！");
-	table.insert(UI_MJChat.DefaultChat, "呀，打错了~");
-	table.insert(UI_MJChat.DefaultChat, "卡卡卡，卡的人火大哦！");
-	table.insert(UI_MJChat.DefaultChat, "很高兴可以和大家一起搓麻将啊~");
-	table.insert(UI_MJChat.DefaultChat, "我这里顺风顺水，想不胡都可以！");
-	table.insert(UI_MJChat.DefaultChat, "要什么来什么！");
-	
 	local tempClone = this.transform:Find("Text/Clone");
 	if tempClone == nil then return end;
 	local tempCloneObj = tempClone.gameObject;
@@ -80,7 +102,7 @@ function UI_MJChat.OnClickDefaultChat(go)
 	local msg = {};
 	msg.faceid = MJChatType.DefaultText;
 	msg.roleid = MJPlayer.Hero.ID;
-	msg.faceName = content;
+	msg.faceName = go.name .. "." .. content;
 	NetManager.SendEventToLogicServer(GameMessage.GM_ANSWER_FACE_REQUEST, PBMessage.GM_AnswerFaceReturn, msg);
 end
 
@@ -107,6 +129,7 @@ end
 function UI_MJChat.OnClickSendText(go)
 	local label = UIHelper.GetComponent(this.transform, "Text/Shuru/Text", typeof(UILabel));
 	if label == nil then return end;
+	if utf8.len(label.text) == 0 then return end;
 	if utf8.len(label.text) > UI_MJChat.MAX_TEXT then
 		UIManager.OpenTipsDialog("消息不能超过" .. UI_MJChat.MAX_TEXT .. "个字");
 		return;

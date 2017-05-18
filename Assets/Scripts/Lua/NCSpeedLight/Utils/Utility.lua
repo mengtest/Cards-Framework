@@ -26,14 +26,25 @@ function Utility.SaveFile(path, buffer)
 end
 
 -- 字符串分割
-function Utility.SplitString(str, delimiter)
-	if str == nil or string.len(str) == 0 or delimiter == nil then
+function Utility.SplitString(oriStr, delimiter)
+	if oriStr == nil or string.len(oriStr) == 0 or delimiter == nil then
 		return nil;
 	end
 	local result = {};
-	for match in(str .. delimiter):gmatch("(.-)" .. delimiter) do
-		if string.len(match) > 0 then
-			table.insert(result, match);
+	local lastPos = 1;
+	for i in utf8.byte_indices(oriStr) do			
+		local next = utf8.next(oriStr, i)
+		local right = next and next - 1;
+		local str = string.sub(oriStr, i, right);
+		if str == delimiter then
+			if i ~= lastPos and i ~= utf8.len(oriStr) then
+				str = string.sub(oriStr, lastPos, i - 1);
+				table.insert(result, str);
+			end
+			lastPos = i + 1;
+		elseif right == nil then
+			str = string.sub(oriStr, lastPos, right);
+			table.insert(result, str);
 		end
 	end
 	return result;
