@@ -121,7 +121,7 @@ function HallScene.UnRegisterNetEvent()
 end
 
 function HallScene.SwitchFBStatus(status)
-	Log.Info("HallScene.SwitchFBStatus: status is " .. FBStatus.ToString(status));
+	Log.Info("SwitchFBStatus: status is " .. FBStatus.ToString(status));
 	HallScene.CurrentFBStatus = status;
 end
 
@@ -130,7 +130,7 @@ function HallScene.RequestPlayerInFb()
 	local msg = {
 		request = Player.ID;
 	};
-	Log.Info("HallScene.RequestPlayerInFb: request is " .. msg.request);
+	Log.Info("RequestPlayerInFb: request is " .. msg.request);
 	NetManager.SendEventToLogicServer(GameMessage.GM_PLAYERISINBATTLE_REQUEST, PBMessage.GM_Request, msg);
 end
 
@@ -139,12 +139,12 @@ function HallScene.RequestAnnouncement()
 	local msg = {
 		request = Player.ID;
 	};
-	Log.Info("HallScene.RequestAnnouncement: request is " .. msg.request);
+	Log.Info("RequestAnnouncement: request is " .. msg.request);
 	NetManager.SendEventToLogicServer(GameMessage.GMCOMMAND_GETONLINE_RETURN, PBMessage.GM_Request, msg);
 end
 
 function HallScene.RequestCreateRoom()
-	Log.Info("HallScene.RequestCreateRoom");
+	Log.Info("RequestCreateRoom");
 	local msg = {};
 	msg.m_roleid = Player.ID;
 	if UI_CreateRoom.PlayerNum == 2 then
@@ -183,11 +183,11 @@ function HallScene.RequestRank()
 end
 
 function HallScene.ReceiveInvitePlayMaJiang(evt)
-	Log.Info("HallScene.ReceiveInvitePlayMaJiang");
+	Log.Info("ReceiveInvitePlayMaJiang");
 end
 
 function HallScene.ReturnEnterMaJiangResult(evt)
-	Log.Info("HallScene.ReturnEnterMaJiangResult");
+	Log.Info("ReturnEnterMaJiangResult");
 	local msg = NetManager.DecodeMsg(PBMessage.GM_Result, evt);
 	if msg == nil then
 		return
@@ -197,7 +197,7 @@ function HallScene.ReturnEnterMaJiangResult(evt)
 end
 
 function HallScene.ReturnRoomRecord(evt)
-	Log.Info("HallScene.ReturnRoomRecord");
+	Log.Info("ReturnRoomRecord");
 end
 
 function HallScene.ReturnPlayerInFb(evt)
@@ -205,9 +205,9 @@ function HallScene.ReturnPlayerInFb(evt)
 	if msg == false then
 		return;
 	end
-	Log.Info("HallScene.ReturnPlayerInFb: msg.m_Result is " .. msg.m_Result);
+	Log.Info("ReturnPlayerInFb: msg.m_Result is " .. msg.m_Result);
 	if msg.m_Result == 0 then
-		Log.Info("HallScene.ReturnPlayerInFb: 玩家在副本中");
+		Log.Info("ReturnPlayerInFb: 玩家在副本中");
 		-- 房间已存在，提示是否进入
 		HallScene.CurrentFBInfo = msg;
 		HallScene.CurrentFBID = msg.m_FBID;
@@ -222,18 +222,18 @@ function HallScene.ReturnPlayerInFb(evt)
 		end);
 		UIManager.OpenConfirmDialog(option);
 	else
-		Log.Info("HallScene.ReturnPlayerInFb: 玩家不在副本中");
+		Log.Info("ReturnPlayerInFb: 玩家不在副本中");
 	end
 end
 
 function HallScene.ReceiveFbInfo(evt)
-	Log.Info("HallScene.ReceiveFbInfo");
+	Log.Info("ReceiveFbInfo");
 	local msg = NetManager.DecodeMsg(PBMessage.GM_BattleFBServerInfo, evt);
 	if msg == false then
-		Log.Error("HallScene.ReceiveFbInfo parse msg error.");
+		Log.Error("ReceiveFbInfo parse msg error.");
 	else -- required int32 m_Result=1;			//0 成功,1副本不存在,2 你已经在副本了,3副本已满，4副本人数已满
 		if msg.m_Result == 0 then
-			Log.Info("HallScene.ReceiveFbInfo：成功进入房间");
+			Log.Info("ReceiveFbInfo：成功进入房间");
 			HallScene.CurrentFBInfo = msg;
 			HallScene.CurrentFBID = msg.m_FBID;
 			HallScene.CurrentFBType = msg.m_FBTypeID;
@@ -241,16 +241,16 @@ function HallScene.ReceiveFbInfo(evt)
 			HallScene.RequestLoginFb();
 		elseif msg.m_Result == 1 then
 			UIManager.OpenTipsDialog("房间不存在");
-			Log.Info("HallScene.ReceiveFbInfo：房间不存在");
+			Log.Info("ReceiveFbInfo：房间不存在");
 		elseif msg.m_Result == 2 then
 			UIManager.OpenTipsDialog("你已经在其他的房间内");
-			Log.Info("HallScene.ReceiveFbInfo：你已经在其他的房间内");
+			Log.Info("ReceiveFbInfo：你已经在其他的房间内");
 		elseif msg.m_Result == 3 then
 			UIManager.OpenTipsDialog("房间已满");
-			Log.Info("HallScene.ReceiveFbInfo：房间已满");
+			Log.Info("ReceiveFbInfo：房间已满");
 		elseif msg.m_Result == 4 then
 			UIManager.OpenTipsDialog("房间人数已满");
-			Log.Info("HallScene.ReceiveFbInfo：房间人数已满");
+			Log.Info("ReceiveFbInfo：房间人数已满");
 		end
 	end
 end
@@ -258,35 +258,35 @@ end
 function HallScene.ReceiveRespondLoginBattle(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GM_LoginFBServerResult, evt);
 	if msg == false then
-		Log.Error("HallScene.ReceiveRespondLoginBattle: parse msg error," .. PBMessage.GM_LoginFBServerResult);
+		Log.Error("ReceiveRespondLoginBattle: parse msg error," .. PBMessage.GM_LoginFBServerResult);
 		return;
 	end;
 	if msg.result == 0 then
-		Log.Info("HallScene.ReceiveRespondLoginBattle: FBID is " .. HallScene.CurrentFBID);
+		Log.Info("ReceiveRespondLoginBattle: FBID is " .. HallScene.CurrentFBID);
 		HallScene.CurrentFBNeedReconnect = false;
 		SceneManager.Goto(SceneName.MJScene);
 	end
 end
 
 function HallScene.NotifyChangeSomething(evt)
-	Log.Info("HallScene.NotifyChangeSomething");
+	Log.Info("NotifyChangeSomething");
 end
 
 function HallScene.NotifyChangeSomethingInt32(evt)
-	Log.Info("HallScene.NotifyChangeSomethingInt32");
+	Log.Info("NotifyChangeSomethingInt32");
 end
 
 function HallScene.NotifyRe_Register(evt)
-	Log.Info("HallScene.NotifyRe_Register");
+	Log.Info("NotifyRe_Register");
 end
 
 function HallScene.OnReceiveAnnouncement(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GM_GetChatInfo, evt);
 	if msg == false then
-		Log.Error("HallScene.OnReceiveAnnouncement: parse msg error," .. PBMessage.GM_GetChatInfo);
+		Log.Error("OnReceiveAnnouncement: parse msg error," .. PBMessage.GM_GetChatInfo);
 		return;
 	end;
-	Log.Info("HallScene.OnReceiveAnnouncement: word is " .. msg.word .. ",repeat " .. tostring(msg.repeatTimes));
+	Log.Info("OnReceiveAnnouncement: word is " .. msg.word .. ",repeat " .. tostring(msg.repeatTimes));
 	if msg.channel == 6 then
 		HallScene.Announcement = {};
 		HallScene.Announcement.Content = msg.word;
@@ -298,10 +298,10 @@ end
 function HallScene.OnRecvPlayback(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GM_PlayBack, evt);
 	if msg == false then
-		Log.Error("HallScene.OnRecvPlayback: parse msg error," .. PBMessage.GM_PlayBack);
+		Log.Error("OnRecvPlayback: parse msg error," .. PBMessage.GM_PlayBack);
 		return;
 	end;
-	Log.Info("HallScene.OnRecvPlayback:");
+	Log.Info("OnRecvPlayback:");
 	if msg.m_Result == 1 then
 		UIManager.OpenTipsDialog("无此回放");
 	else

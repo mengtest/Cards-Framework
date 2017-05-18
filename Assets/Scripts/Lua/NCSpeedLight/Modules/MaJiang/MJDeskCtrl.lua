@@ -97,7 +97,7 @@ function MJDeskCtrl.SetPaidunActive(status)
 end
 
 function MJDeskCtrl.PlayPaidunAnimation(onFinishCallback)
-	Log.Info("MJDeskCtrl.PlayPaidunAnimation");
+	Log.Info("PlayPaidunAnimation");
 	MJDeskCtrl.GroupCardActive = true;
 	if MJDeskCtrl.MJPaidunAnimation ~= nil then
 		MJDeskCtrl.MJPaidunAnimation:Play();
@@ -106,7 +106,7 @@ function MJDeskCtrl.PlayPaidunAnimation(onFinishCallback)
 		else
 			MJDeskCtrl.DeskAnimationTimer = Timer.New(
 			function()
-				Log.Info("MJDeskCtrl.PlayPaidunAnimation: finish.");
+				Log.Info("PlayPaidunAnimation: finish.");
 				if onFinishCallback ~= nil then
 					onFinishCallback();
 				end
@@ -124,7 +124,7 @@ function MJDeskCtrl.PlayDiceAnimation(number1, number2, onFinishCallback)
 		number1 = number;
 	end
 	local path = "touzi/" .. tostring(number1) .. "." .. tostring(number2);
-	Log.Info("MJDeskCtrl.PlayDiceAnimation: diceobj root path is " .. path);
+	Log.Info("PlayDiceAnimation: diceobj root path is " .. path);
 	local diceObj = MJDeskCtrl.transform:Find(path);
 	diceObj.gameObject:SetActive(true);
 	if MJDeskCtrl.DiceAnimationTimer ~= nil then
@@ -132,7 +132,7 @@ function MJDeskCtrl.PlayDiceAnimation(number1, number2, onFinishCallback)
 	else
 		MJDeskCtrl.DiceAnimationTimer = Timer.New(
 		function()
-			Log.Info("MJDeskCtrl.PlayDiceAnimation: finish.");
+			Log.Info("PlayDiceAnimation: finish.");
 			diceObj.gameObject:SetActive(false);
 			if onFinishCallback ~= nil then
 				onFinishCallback();
@@ -146,12 +146,12 @@ end
 -- 设置房间号
 function MJDeskCtrl.SetRoomNumber()
 	if HallScene.CurrentFBID == nil or HallScene.CurrentFBID == 0 then
-		Log.Error("MJDeskCtrl.SetRoomNumber: room number is nil or zero.");
+		Log.Error("SetRoomNumber: room number is nil or zero.");
 		return;
 	end
 	local roomNumberTransform = MJDeskCtrl.transform:Find("Text/RoomNumber");
 	local roomNumberStr = tostring(HallScene.CurrentFBID);
-	Log.Info("MJDeskCtrl.SetRoomNumber: room number is " .. roomNumberStr);
+	Log.Info("SetRoomNumber: room number is " .. roomNumberStr);
 	local strLength = string.len(roomNumberStr);
 	if strLength == 0 then return end;
 	for i = 1, strLength do
@@ -169,12 +169,12 @@ end
 -- 设置玩法
 function MJDeskCtrl.SetPlayway()
 	if HallScene.CurrentFBPlayway == nil then
-		Log.Error("MJDeskCtrl.SetPlayway: error caused by nil HallScene.CurrentFBPlayway str.");
+		Log.Error("SetPlayway: error caused by nil HallScene.CurrentFBPlayway str.");
 	else
-		Log.Info("MJDeskCtrl.SetPlayway: current playway is " .. HallScene.CurrentFBPlayway);
+		Log.Info("SetPlayway: current playway is " .. HallScene.CurrentFBPlayway);
 		local playway = Utility.SplitString(HallScene.CurrentFBPlayway, ",");
 		if playway == nil then
-			Log.Error("MJDeskCtrl.SetPlayway: error caused by spilt HallScene.CurrentFBPlayway str fail.");
+			Log.Error("SetPlayway: error caused by spilt HallScene.CurrentFBPlayway str fail.");
 			return;
 		end
 		UIHelper.SetActiveState(this.transform, "Text/Playway/OneText", true);
@@ -193,9 +193,9 @@ end
 -- 设置骰子面板的朝向
 function MJDeskCtrl.SetDicePanelDirection()
 	if MJPlayer.Hero == nil then
-		Log.Error("MJDeskCtrl.SetDicePanelDirection: error caused by nil MJPlayer.Hero instance.");
+		Log.Error("SetDicePanelDirection: error caused by nil MJPlayer.Hero instance.");
 	else
-		Log.Info("MJDeskCtrl.SetDicePanelDirection: hero client position is " .. MJPlayer.Hero.ClientPosition);
+		Log.Info("SetDicePanelDirection: hero client position is " .. MJPlayer.Hero.ClientPosition);
 		local y =(MJPlayer.Hero.ClientPosition + 1) * 90;
 		local panel = MJDeskCtrl.transform:Find("direction");
 		local eulerAngles = UnityEngine.Vector3(0, y, 0);

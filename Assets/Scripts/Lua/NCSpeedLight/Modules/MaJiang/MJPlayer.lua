@@ -146,11 +146,11 @@ function MJPlayer:SetData(id, displayID, name, headurl, sex, serverposition, isr
 	if self:IsHero() then
 		RongCloudAdapter.Login(self.ID, self.Name, self.HeadURL);
 	end
-	Log.Info("MJPlayer:SetData: ID is " .. self.ID);
+	Log.Info("SetData: ID is " .. self.ID);
 end
 
 function MJPlayer:SetUI()
-	Log.Info("MJPlayer:SetUI: begin,self " .. tostring(self));
+	Log.Info("SetUI: begin,self " .. tostring(self));
 	if self.ID == HallScene.CurrentFBMasterID then
 		MJPlayer.RoomMaster = self;
 	end
@@ -165,10 +165,10 @@ function MJPlayer:SetUI()
 	end
 	self.UI:Initialize(self);
 	self:SetupUI();
-	Log.Info("MJPlayer:SetUI: ID is " .. self.ID);
-	Log.Info("MJPlayer:SetUI: UI is " .. self.UITransform.name);
-	Log.Info("MJPlayer:SetUI: ServerPosition is " .. self.ServerPosition);
-	Log.Info("MJPlayer:SetUI: UIPosition is " .. self.UIPosition);
+	Log.Info("SetUI: ID is " .. self.ID);
+	Log.Info("SetUI: UI is " .. self.UITransform.name);
+	Log.Info("SetUI: ServerPosition is " .. self.ServerPosition);
+	Log.Info("SetUI: UIPosition is " .. self.UIPosition);
 end
 
 -- 计算客户端的位置
@@ -185,7 +185,7 @@ function MJPlayer:ComputeClientPosition()
 			self.ClientPosition = 1;
 		end
 	end
-	Log.Info("MJPlayer:ComputeClientPosition:" .. self:LogTag() .. self.ClientPosition);
+	Log.Info("ComputeClientPosition:" .. self:LogTag() .. self.ClientPosition);
 end
 
 -- 重置
@@ -285,14 +285,14 @@ end
 -- 当前玩家桌面上牌的数量 +1
 function MJPlayer:AddTableCardCount()
 	self.TableCardCount = self.TableCardCount + 1;
-	Log.Info("MJPlayer:AddTableCardCount: " .. self:LogTag() .. ",tablecard count is " .. tostring(self.TableCardCount));
+	Log.Info("AddTableCardCount: " .. self:LogTag() .. ",tablecard count is " .. tostring(self.TableCardCount));
 	return self.TableCardCount;
 end
 
 -- 当前玩家桌面上牌的数量 -1
 function MJPlayer:SubTableCardCount()
 	self.TableCardCount = self.TableCardCount - 1;
-	Log.Info("MJPlayer:SubTableCardCount: " .. self:LogTag() .. ",tablecard count is " .. tostring(self.TableCardCount));
+	Log.Info("SubTableCardCount: " .. self:LogTag() .. ",tablecard count is " .. tostring(self.TableCardCount));
 	return self.TableCardCount;
 end
 
@@ -319,7 +319,7 @@ function MJPlayer:AddHandCardCount(val)
 	else
 		self.HandCardCount = self.HandCardCount + 1;
 	end
-	Log.Info("MJPlayer:AddHandCardCount: " .. self:LogTag() .. ",handcard count is " .. tostring(self.HandCardCount));
+	Log.Info("AddHandCardCount: " .. self:LogTag() .. ",handcard count is " .. tostring(self.HandCardCount));
 	return self.HandCardCount;
 end
 
@@ -330,7 +330,7 @@ function MJPlayer:SubHandCardCount(val)
 	else
 		self.HandCardCount = self.HandCardCount - 1;
 	end
-	Log.Info("MJPlayer:SubHandCardCount: " .. self:LogTag() .. ",handcard count is " .. tostring(self.HandCardCount));
+	Log.Info("SubHandCardCount: " .. self:LogTag() .. ",handcard count is " .. tostring(self.HandCardCount));
 	return self.HandCardCount;
 end
 
@@ -341,7 +341,7 @@ function MJPlayer:AddOperateTotalCount(val)
 	else
 		self.OperateTotalCount = self.OperateTotalCount + 1;
 	end
-	Log.Info("MJPlayer:AddOperateTotalCount: " .. self:LogTag() .. ",operate total count is " .. tostring(self.OperateTotalCount));
+	Log.Info("AddOperateTotalCount: " .. self:LogTag() .. ",operate total count is " .. tostring(self.OperateTotalCount));
 	return self.OperateTotalCount;
 end
 
@@ -352,7 +352,7 @@ function MJPlayer:SubOperateTotalCount(val)
 	else
 		self.OperateTotalCount = self.OperateTotalCount - 1;
 	end
-	Log.Info("MJPlayer:SubOperateTotalCount:  " .. self:LogTag() .. ",operate total count is " .. tostring(self.OperateTotalCount));
+	Log.Info("SubOperateTotalCount:  " .. self:LogTag() .. ",operate total count is " .. tostring(self.OperateTotalCount));
 	return self.OperateTotalCount;
 end
 
@@ -391,7 +391,7 @@ end
 
 -- 设置Ready标识
 function MJPlayer:SetupReady(status)
-	Log.Info("MJPlayer:SetupReady: " .. self:LogTag() .. "status is " .. tostring(status));
+	Log.Info("SetupReady: " .. self:LogTag() .. "status is " .. tostring(status));
 	UIHelper.SetActiveState(self.UITransform, "Enter/Center/Label (Prepare)", status);
 end
 
@@ -403,22 +403,22 @@ function MJPlayer:SetupEnterAndLeave(...)
 end
 
 function MJPlayer:StartGame()
-	Log.Info("MJPlayer:StartGame: " .. self:LogTag());
+	Log.Info("StartGame: " .. self:LogTag());
 	self:SetupReady(false);
 end
 
 -- 自己的回合
 function MJPlayer:MJOT_BEGIN(data)
-	Log.Info("MJPlayer:MJOT_BEGIN: " .. self:LogTag());
+	Log.Info("MJOT_BEGIN: " .. self:LogTag());
 end
 --抓牌
 function MJPlayer:MJOT_GetCard(data)
-	Log.Info("MJPlayer:MJOT_GetCard: " .. self:LogTag());
+	Log.Info("MJOT_GetCard: " .. self:LogTag());
 	MJPaidunCtrl.InactiveFront();
 	self:AddHandCardCount();
 	if self:IsHero() or HallScene.CurrentFBPlaybackMode then
 		local card = data.m_HandCard[1];
-		Log.Info("MJPlayer:MJOT_GetCard: hero get one card, card id is " .. card.m_Index .. ",type is " .. MaJiangType.ToString(card.m_Type));
+		Log.Info("MJOT_GetCard: hero get one card, card id is " .. card.m_Index .. ",type is " .. MaJiangType.ToString(card.m_Type));
 		if card ~= nil then
 			self:AddHandCard(card);
 		end
@@ -431,12 +431,12 @@ end
 
 --补牌
 function MJPlayer:MJOT_BuCard(data)
-	Log.Info("MJPlayer:MJOT_BuCard: " .. self:LogTag());
+	Log.Info("MJOT_BuCard: " .. self:LogTag());
 	MJPaidunCtrl.InactiveRear();
 	self:AddHandCardCount();
 	if self == MJPlayer.Hero or HallScene.CurrentFBPlaybackMode then
 		local card = data.m_HandCard[1];
-		Log.Info("MJPlayer:MJOT_BuCard: hero get one card, card id is " .. card.m_Index .. ",type is " .. MaJiangType.ToString(card.m_Type));
+		Log.Info("MJOT_BuCard: hero get one card, card id is " .. card.m_Index .. ",type is " .. MaJiangType.ToString(card.m_Type));
 		if card ~= nil then
 			self:AddHandCard(card);
 		end
@@ -450,7 +450,7 @@ end
 --出牌
 function MJPlayer:MJOT_SendCard(data)
 	local card = data.m_HandCard[1];
-	Log.Info("MJPlayer:MJOT_SendCard: " .. self:LogTag() .. ",card id is " .. card.m_Index .. ",type is " .. MaJiangType.ToString(card.m_Type));
+	Log.Info("MJOT_SendCard: " .. self:LogTag() .. ",card id is " .. card.m_Index .. ",type is " .. MaJiangType.ToString(card.m_Type));
 	if self:IsHero() or HallScene.CurrentFBPlaybackMode then
 		self:RemoveHandCard(card.m_Index);
 	end
@@ -568,7 +568,7 @@ function MJPlayer:PlaySound(prefix)
 		else
 			sound = sound .. "_PTNan_103104";
 		end
-		Log.Info("MJPlayer:PlaySound: " .. self:LogTag() .. ",sound name is " .. sound);
+		Log.Info("PlaySound: " .. self:LogTag() .. ",sound name is " .. sound);
 		AudioManager.PlaySound(sound);
 	else
 		if self.Sex == 1 then
@@ -576,7 +576,7 @@ function MJPlayer:PlaySound(prefix)
 		else
 			sound = sound .. "_FYNan_103104";
 		end
-		Log.Info("MJPlayer:PlaySound: " .. self:LogTag() .. ",sound name is " .. sound);
+		Log.Info("PlaySound: " .. self:LogTag() .. ",sound name is " .. sound);
 		AudioManager.PlaySound(sound);
 	end
 end

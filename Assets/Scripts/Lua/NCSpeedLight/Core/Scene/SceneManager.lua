@@ -23,9 +23,9 @@ function SceneManager.Initialize()
 		SceneManager.RegisterScene(LoginScene);
 		SceneManager.RegisterScene(HallScene);
 		SceneManager.RegisterScene(MJScene);
-		Log.Info("SceneManager.Initialize：success.");
+		Log.Info("Initialize：success.");
 	else
-		Log.Warning("SceneManager.Initialize：SceneManager has already been initialized.")
+		Log.Warning("Initialize：SceneManager has already been initialized.")
 	end
 end
 
@@ -46,15 +46,15 @@ end
 
 function SceneManager.RegisterScene(scene)
 	if scene == nil then
-		Log.Error("SceneManager.RegisterScene: can not register scene caused by nil scene.")
+		Log.Error("RegisterScene: can not register scene caused by nil scene.")
 		return;
 	end
 	if scene.Name == nil then
-		Log.Error("SceneManager.RegisterScene: can not register scene caused by nil scene.name.")
+		Log.Error("RegisterScene: can not register scene caused by nil scene.name.")
 		return;
 	end
 	if SceneManager.Scenes[scene.Name] ~= nil then
-		Log.Error("SceneManager.RegisterScene: can not register scene caused by same scene exists named " .. tostring(scene.Name));
+		Log.Error("RegisterScene: can not register scene caused by same scene exists named " .. tostring(scene.Name));
 		return;
 	end
 	SceneManager.Scenes[scene.Name] = scene;
@@ -64,7 +64,7 @@ end
 function SceneManager.Goto(name)
 	local scene = SceneManager.Scenes[name];
 	if scene == nil then
-		Log.Error("SceneManager.Goto: can not go to scene caused by nil scene,name is " .. name);
+		Log.Error("Goto: can not go to scene caused by nil scene,name is " .. name);
 		return;
 	end
 	if scene == SceneManager.NextScene then
@@ -77,6 +77,6 @@ function SceneManager.Goto(name)
 		SceneManager.LastScene = SceneManager.CurrentScene;
 		SceneManager.NextScene = scene;
 	else
-		Log.Error("SceneManager.Goto: can not go to same scene,name is " .. name);
+		Log.Error("Goto: can not go to same scene,name is " .. name);
 	end
 end

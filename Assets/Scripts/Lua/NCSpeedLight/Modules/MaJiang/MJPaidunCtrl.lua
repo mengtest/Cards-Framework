@@ -64,7 +64,7 @@ end
 function MJPaidunCtrl.InactiveFront(count)
 	if HallScene.CurrentFBPlaybackMode then return end;
 	if #MJPaidunCtrl.Cards == 0 then
-		Log.Error("MJPaidunCtrl.InactiveFront: can not pop a card caused by nil cards queue.");
+		Log.Error("InactiveFront: can not pop a card caused by nil cards queue.");
 		return;
 	end
 	if count == nil then
@@ -80,7 +80,7 @@ end
 function MJPaidunCtrl.InactiveRear(count)
 	if HallScene.CurrentFBPlaybackMode then return end;
 	if #MJPaidunCtrl.Cards == 0 then
-		Log.Error("MJPaidunCtrl.InactiveRear: can not pop a card caused by nil cards queue.");
+		Log.Error("InactiveRear: can not pop a card caused by nil cards queue.");
 		return;
 	end
 	if count == nil then

@@ -160,7 +160,7 @@ function UI_MJPlayer:GetCard()
 		end;
 		local downAction = Action.New(0, 0.3);
 		downAction.OnBegin = function()
-			Log.Info("UI_MJPlayer.GetCard: downAction.OnBegin");
+			Log.Info("GetCard: downAction.OnBegin");
 			local cardPos = self.Player:GetHandCardCount();
 			local cardObj = UI_MJHeroCtrl.GetCardObjByPosition(cardPos);
 			local positionFrom = UnityEngine.Vector3(cardObj.transform.localPosition.x, 100, cardObj.transform.localPosition.z);

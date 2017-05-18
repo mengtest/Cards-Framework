@@ -46,7 +46,7 @@ function MJScene.Initialize()
 end
 
 function MJScene.Begin()
-	Log.Info("MJScene.Begin");
+	Log.Info("Begin");
 	HallScene.SwitchFBStatus(FBStatus.WaitingPlayer);
 	if HallScene.CurrentFBPlaybackMode == false then
 		HallScene.CurrentFBTotalRound = HallScene.CurrentFBInfo.m_gameCount;
@@ -69,12 +69,12 @@ function MJScene.End()
 	HallScene.CurrentFBPlaybackMode = false;
 	HallScene.CurrentFBRound = 0;
 	HallScene.CurrentFBFinishedRound = 0;
-	Log.Info("MJScene.End");
+	Log.Info("End");
 end
 
 function MJScene.OnSceneWasLoaded()
 	AudioManager.PlayMusic({BGMusic.MaJiang}, false);
-	Log.Info("MJScene.OnSceneWasLoaded: now bein to open majiang ui and request game fb info or reconnect info.");
+	Log.Info("OnSceneWasLoaded: now bein to open majiang ui and request game fb info or reconnect info.");
 	if HallScene.CurrentFBPlaybackMode == false then
 		RongCloudAdapter.Initialize(MJScene.OnReceiveVoiceMsg);
 	end
@@ -94,9 +94,9 @@ end
 
 function MJScene.OnApplicationPause(status)
 	if status then
-		Log.Info("MJScene.OnApplicationPause: 游戏进程暂停");
+		Log.Info("OnApplicationPause: 游戏进程暂停");
 	else
-		Log.Info("MJScene.OnApplicationPause: 游戏进程恢复，开始请求重连数据");
+		Log.Info("OnApplicationPause: 游戏进程恢复，开始请求重连数据");
 		MJScene.RequestReconnectInfo();
 	end
 end
@@ -108,24 +108,24 @@ function MJScene.OnConnectToLogicServer()
 end
 
 function MJScene.OnReconnectToLogicServer()
-	Log.Info("MJScene.OnReconnectToLogicServer");
+	Log.Info("OnReconnectToLogicServer");
 	MJScene.RequestReconnectInfo();
 end
 
 function MJScene.OnDisconnectFromLogicServer()
-	Log.Info("MJScene.OnDisconnectFromLogicServer");
+	Log.Info("OnDisconnectFromLogicServer");
 end
 
 -- 继续游戏
 function MJScene.OnceAgain()
-	Log.Info("MJScene.OnceAgain: 继续游戏");
+	Log.Info("OnceAgain: 继续游戏");
 	MJScene.Reset();
 	MJScene.RequestReady(1);
 end
 
 -- 重置场景
 function MJScene.Reset()
-	Log.Info("MJScene.Reset()");
+	Log.Info("Reset()");
 	MJDeskCtrl.Reset();
 	UI_MaJiang.Reset();
 	for key, value in pairs(MJScene.Players) do
@@ -134,7 +134,7 @@ function MJScene.Reset()
 end
 
 function MJScene.RegisterNetEvent()
-	Log.Info("MJScene.RegisterNetEvent");
+	Log.Info("RegisterNetEvent");
 	-- 新玩家进入;
 	NetManager.RegisterEvent(GameMessage.GM_BATTLE_NEW_CHARACTER, MJScene.ReturnGamePlayerInfo);
 	NetManager.RegisterEvent(GameMessage.GM_PLAYERJOINBATTLEAGAIN_RETRUN, MJScene.ReturnReconnectInfo);
@@ -161,7 +161,7 @@ function MJScene.RegisterNetEvent()
 end
 
 function MJScene.UnRegisterNetEvent()
-	Log.Info("MJScene.UnRegisterNetEvent");
+	Log.Info("UnRegisterNetEvent");
 	NetManager.UnregisterEvent(GameMessage.GM_BATTLE_NEW_CHARACTER, MJScene.ReturnGamePlayerInfo);
 	NetManager.UnregisterEvent(GameMessage.GM_HANDCARD_INFO, MJScene.ReturnHandCardInfo);
 	NetManager.UnregisterEvent(GameMessage.GM_NOTIFY_PLAYER_OPERATOR, MJScene.ReturnPlayerOutCard);
@@ -285,14 +285,14 @@ end
 function MJScene.GetMJPlaywayStr()
 	local playway = "";
 	if HallScene.CurrentFBPlayway == nil then
-		Log.Info("MJScene.GetMJPlaywayStr: error,HallScene.CurrentFBPlayway is nil.");
+		Log.Info("GetMJPlaywayStr: error,HallScene.CurrentFBPlayway is nil.");
 	end
 	local playwayType = Utility.SplitString(HallScene.CurrentFBPlayway, ",");
 	for i = 1, #playwayType do
 		local playwayEnum = MJPlayway.ToString(tonumber(playwayType[i]));
 		local str = MJPlaywayStr[playwayEnum];
 		if str == nil then
-			Log.Info("MJScene.GetMJPlaywayStr: error,playway str is " .. HallScene.CurrentFBPlayway);
+			Log.Info("GetMJPlaywayStr: error,playway str is " .. HallScene.CurrentFBPlayway);
 		else
 			playway = playway .. str;
 			if i ~= #playwayType then
@@ -318,7 +318,7 @@ end
 
 -- 请求玩家位置，庄家是谁
 function MJScene.RequestAllPlayerInfo()
-	Log.Info("MJScene.RequestAllPlayerInfo");
+	Log.Info("RequestAllPlayerInfo");
 	local msg =
 	{
 		m_FBID = HallScene.CurrentFBID,
@@ -329,7 +329,7 @@ end
 
 -- 请求断线重连信息
 function MJScene.RequestReconnectInfo()
-	Log.Info("MJScene.RequestReconnectInfo:");
+	Log.Info("RequestReconnectInfo:");
 	local msg = {};
 	msg.m_RoleID = Player.ID;
 	msg.m_FBID = HallScene.CurrentFBID;
@@ -356,17 +356,17 @@ function MJScene.RequestCastDice()
 		m_roleid = MJPlayer.Hero.ID,
 		m_pos = MJPlayer.Hero.ServerPosition,
 	};
-	Log.Info("MJScene.RequestCastDic: roleid is " .. MJPlayer.Hero.ID .. ",pos is " .. MJPlayer.Hero.ServerPosition);
+	Log.Info("RequestCastDic: roleid is " .. MJPlayer.Hero.ID .. ",pos is " .. MJPlayer.Hero.ServerPosition);
 	NetManager.SendEventToLogicServer(GameMessage.GM_PlayerRollTouZi_Request, PBMessage.GM_PlayerRollRequest, msg);
 end
 
 function MJScene.ReceiveCloseRoom(evt)
-	Log.Info("MJScene.ReceiveCloseRoom");
+	Log.Info("ReceiveCloseRoom");
 end
 
 -- 请求麻将过
 function MJScene.RequestMJOperate_Guo()
-	Log.Info("MJScene.RequestMJOperate_Guo: current cards count is " .. MJPlayer.Hero:GetHandCardCount());
+	Log.Info("RequestMJOperate_Guo: current cards count is " .. MJPlayer.Hero:GetHandCardCount());
 	local msg = {};
 	msg.m_OperatorType = MaJiangOperatorType.MJOT_GUO;
 	msg.m_CardNum = MJPlayer.Hero:GetHandCardCount();
@@ -375,7 +375,7 @@ end
 
 -- 请求麻将胡
 function MJScene.RequestMJOperate_Hu()
-	Log.Info("MJScene.RequestMJOperate_Hu: current cards count is " .. MJPlayer.Hero:GetHandCardCount());
+	Log.Info("RequestMJOperate_Hu: current cards count is " .. MJPlayer.Hero:GetHandCardCount());
 	local msg = {};
 	msg.m_OperatorType = MaJiangOperatorType.MJOT_HU;
 	msg.m_CardNum = MJPlayer.Hero:GetHandCardCount();
@@ -384,7 +384,7 @@ end
 
 -- 请求麻将定胡
 function MJScene.RequestMJOperate_DingHu()
-	Log.Info("MJScene.RequestMJOperate_DingHu");
+	Log.Info("RequestMJOperate_DingHu");
 	local msg = {};
 	msg.m_OperatorType = MaJiangOperatorType.MJOT_DingHU;
 	NetManager.SendEventToLogicServer(GameMessage.GM_CLIENT_REQUEST_OPERATOR, PBMessage.GM_OperatorData, msg);
@@ -392,7 +392,7 @@ end
 
 -- 请求麻将过
 function MJScene.RequestMJOperate_Pass()
-	Log.Info("MJScene.RequestMJOperate_Pass: current cards count is " .. MJPlayer.Hero:GetHandCardCount());
+	Log.Info("RequestMJOperate_Pass: current cards count is " .. MJPlayer.Hero:GetHandCardCount());
 	local msg = {};
 	msg.m_OperatorType = MaJiangOperatorType.MJOT_GUO;
 	msg.m_CardNum = MJPlayer.Hero:GetHandCardCount();
@@ -401,7 +401,7 @@ end
 
 -- 请求麻将出牌
 function MJScene.RequestMJOperate_OutCard(card)
-	Log.Info("MJScene.RequestMJOperate_OutCard: current cards count is " .. MJPlayer.Hero:GetHandCardCount() .. ",card index is " .. card.m_Index .. ",type is " .. MaJiangType.ToString(card.m_Type));
+	Log.Info("RequestMJOperate_OutCard: current cards count is " .. MJPlayer.Hero:GetHandCardCount() .. ",card index is " .. card.m_Index .. ",type is " .. MaJiangType.ToString(card.m_Type));
 	local msg = {};
 	msg.m_OperatorType = MaJiangOperatorType.MJOT_SendCard;
 	msg.m_CardNum = MJPlayer.Hero:GetHandCardCount();
@@ -413,7 +413,7 @@ end
 
 -- 请求麻将操作
 function MJScene.RequestMJOperate(msg)
-	Log.Info("MJScene.RequestMJOperate: operate type is " .. MaJiangOperatorType.GetString(msg.m_OperatorType));
+	Log.Info("RequestMJOperate: operate type is " .. MaJiangOperatorType.GetString(msg.m_OperatorType));
 	NetManager.SendEventToLogicServer(GameMessage.GM_CLIENT_REQUEST_OPERATOR, PBMessage.GM_OperatorData, msg);
 end
 
@@ -421,10 +421,10 @@ end
 function MJScene.ReturnGamePlayerInfo(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GM_BattleEntryInfo, evt);
 	if msg == false then
-		Log.Error("MJScene.ReturnGamePlayerInfo: parse msg error struct name is " .. PBMessage.GM_BattleEntryInfo);
+		Log.Error("ReturnGamePlayerInfo: parse msg error struct name is " .. PBMessage.GM_BattleEntryInfo);
 		return;
 	end
-	Log.Info("MJScene.ReturnGamePlayerInfo: RoomMasterID is " .. HallScene.CurrentFBMasterID .. ",current player count is " .. #msg.m_Character);
+	Log.Info("ReturnGamePlayerInfo: RoomMasterID is " .. HallScene.CurrentFBMasterID .. ",current player count is " .. #msg.m_Character);
 	HallScene.CurrentFBMasterID = msg.m_RoomMasterID;
 	local hero = MJScene.GetPlayerByID(Player.ID);
 	if hero == nil then
@@ -455,7 +455,7 @@ function MJScene.ReturnGamePlayerInfo(evt)
 				end
 				
 				MJScene.AddPlayer(hero);
-				Log.Info("MJScene.ReturnGamePlayerInfo: Create hero id is " .. hero.ID .. ",server position is " .. hero.ServerPosition);
+				Log.Info("ReturnGamePlayerInfo: Create hero id is " .. hero.ID .. ",server position is " .. hero.ServerPosition);
 			end
 		end
 	end
@@ -487,7 +487,7 @@ function MJScene.ReturnGamePlayerInfo(evt)
 				end
 				
 				MJScene.AddPlayer(player);
-				Log.Info("MJScene.ReturnGamePlayerInfo: Create a player id is " .. player.ID .. ",server position is " .. player.ServerPosition);
+				Log.Info("ReturnGamePlayerInfo: Create a player id is " .. player.ID .. ",server position is " .. player.ServerPosition);
 			end
 		end
 	end
@@ -500,46 +500,46 @@ end
 function MJScene.ReturnReconnectInfo(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GM_ReconnectMJData, evt);
 	if msg == false then
-		Log.Error("MJScene.ReturnReconnectInfo: parse msg error," .. PBMessage.GM_ReconnectMJData);
+		Log.Error("ReturnReconnectInfo: parse msg error," .. PBMessage.GM_ReconnectMJData);
 		return;
 	end
 	MJScene.Reset();
-	Log.Info("MJScene.ReturnReconnectInfo: 收到重连信息");
+	Log.Info("ReturnReconnectInfo: 收到重连信息");
 	local msg = NetManager.DecodeMsg(PBMessage.GM_ReconnectMJData, evt);
 	if msg == false then
-		Log.Error("MJScene.ReturnReconnectInfo: parse msg error," .. PBMessage.GM_ReconnectMJData);
+		Log.Error("ReturnReconnectInfo: parse msg error," .. PBMessage.GM_ReconnectMJData);
 		return;
 	end
-	Log.Info("MJScene.ReturnReconnectInfo: 庄家的位置：" .. msg.m_bankerPos);
-	Log.Info("MJScene.ReturnReconnectInfo: 房主的ID：" .. msg.m_RoomMasterID);
-	Log.Info("MJScene.ReturnReconnectInfo: 剩余牌数：" .. msg.m_FreeCard);
-	Log.Info("MJScene.ReturnReconnectInfo: 剩余局数：" .. msg.m_leftCount);
-	Log.Info("MJScene.ReturnReconnectInfo: 总局数：" .. msg.m_totalCount);
-	Log.Info("MJScene.ReturnReconnectInfo: 当前骰子转的次数：" .. msg.m_rollCount);
-	Log.Info("MJScene.ReturnReconnectInfo: 麻将的人数：" .. msg.m_playerCount);
-	Log.Info("MJScene.ReturnReconnectInfo: 打出最后一张牌的角色id：" .. msg.m_lastOutCardRoleId);
-	Log.Info("MJScene.ReturnReconnectInfo: 解散房间剩余的时间：" .. msg.m_closeRoomLeftTime);
+	Log.Info("ReturnReconnectInfo: 庄家的位置：" .. msg.m_bankerPos);
+	Log.Info("ReturnReconnectInfo: 房主的ID：" .. msg.m_RoomMasterID);
+	Log.Info("ReturnReconnectInfo: 剩余牌数：" .. msg.m_FreeCard);
+	Log.Info("ReturnReconnectInfo: 剩余局数：" .. msg.m_leftCount);
+	Log.Info("ReturnReconnectInfo: 总局数：" .. msg.m_totalCount);
+	Log.Info("ReturnReconnectInfo: 当前骰子转的次数：" .. msg.m_rollCount);
+	Log.Info("ReturnReconnectInfo: 麻将的人数：" .. msg.m_playerCount);
+	Log.Info("ReturnReconnectInfo: 打出最后一张牌的角色id：" .. msg.m_lastOutCardRoleId);
+	Log.Info("ReturnReconnectInfo: 解散房间剩余的时间：" .. msg.m_closeRoomLeftTime);
 	if msg.m_huLastCard ~= nil then
-		Log.Info("MJScene.ReturnReconnectInfo: 最后被胡的那张牌：" .. msg.m_huLastCard);
+		Log.Info("ReturnReconnectInfo: 最后被胡的那张牌：" .. msg.m_huLastCard);
 	end
-	Log.Info("MJScene.ReturnReconnectInfo: 从谁面前取牌：" .. msg.m_getCardId);
-	Log.Info("MJScene.ReturnReconnectInfo: 从第几墩取牌：" .. msg.m_getCardNum);
-	Log.Info("MJScene.ReturnReconnectInfo: 当前出牌人的ID（等到操作时赋值0）：" .. msg.m_sendCardID);
-	Log.Info("MJScene.ReturnReconnectInfo: 房间玩法：" .. msg.m_fbplayway);
+	Log.Info("ReturnReconnectInfo: 从谁面前取牌：" .. msg.m_getCardId);
+	Log.Info("ReturnReconnectInfo: 从第几墩取牌：" .. msg.m_getCardNum);
+	Log.Info("ReturnReconnectInfo: 当前出牌人的ID（等到操作时赋值0）：" .. msg.m_sendCardID);
+	Log.Info("ReturnReconnectInfo: 房间玩法：" .. msg.m_fbplayway);
 	if msg.m_saizi ~= nil then
-		Log.Info("MJScene.ReturnReconnectInfo: 筛子次数，以及内容：" .. #msg.m_saizi);
+		Log.Info("ReturnReconnectInfo: 筛子次数，以及内容：" .. #msg.m_saizi);
 	end
 	if msg.m_HandCard ~= nil then
-		Log.Info("MJScene.ReturnReconnectInfo: 手牌信息：" .. #msg.m_HandCard);
+		Log.Info("ReturnReconnectInfo: 手牌信息：" .. #msg.m_HandCard);
 	end
 	if msg.m_AllData ~= nil then
-		Log.Info("MJScene.ReturnReconnectInfo: 其他玩家信息：" .. #msg.m_AllData);
+		Log.Info("ReturnReconnectInfo: 其他玩家信息：" .. #msg.m_AllData);
 	end
 	if msg.m_CloseRoomData ~= nil then
-		Log.Info("MJScene.ReturnReconnectInfo: 解散房间信息：" .. #msg.m_CloseRoomData);
+		Log.Info("ReturnReconnectInfo: 解散房间信息：" .. #msg.m_CloseRoomData);
 	end
 	if msg.m_huOperatorData ~= nil then
-		Log.Info("MJScene.ReturnReconnectInfo: 存在结算信息");
+		Log.Info("ReturnReconnectInfo: 存在结算信息");
 	end
 	
 	HallScene.CurrentFBBankerPosition = msg.m_bankerPos; -- 庄家的位置
@@ -581,7 +581,7 @@ function MJScene.ReturnReconnectInfo(evt)
 				data.m_reallyPos);
 				player:SetUI(true);
 				MJScene.AddPlayer(player);
-				Log.Info("MJScene.ReturnReconnectInfo: Create hero id is " .. player.ID .. ",server position is " .. player.ServerPosition);
+				Log.Info("ReturnReconnectInfo: Create hero id is " .. player.ID .. ",server position is " .. player.ServerPosition);
 			end
 		end
 		
@@ -608,7 +608,7 @@ function MJScene.ReturnReconnectInfo(evt)
 				data.m_reallyPos);
 				player:SetUI();
 				MJScene.AddPlayer(player);
-				Log.Info("MJScene.ReturnReconnectInfo: Create player id is " .. player.ID .. ",server position is " .. player.ServerPosition);
+				Log.Info("ReturnReconnectInfo: Create player id is " .. player.ID .. ",server position is " .. player.ServerPosition);
 			end
 		end
 	else
@@ -645,7 +645,7 @@ function MJScene.ReturnReconnectInfo(evt)
 	
 	if msg.m_FreeCard == MJDefine.TOTAL_CARD_COUNT then
 		-- 对局还没开始
-		Log.Info("MJScene.ReturnReconnectInfo: 对局还没开始");
+		Log.Info("ReturnReconnectInfo: 对局还没开始");
 		HallScene.SwitchFBStatus(FBStatus.WaitingPlayer);
 	else
 		-- 设置自己的手牌信息
@@ -664,7 +664,7 @@ function MJScene.ReturnReconnectInfo(evt)
 		if msg.m_rollCount < MJDefine.MAX_CAST_DICE_NUMBER then
 			HallScene.SwitchFBStatus(FBStatus.WaitingCastDice);
 			-- 已经收到手牌信息了,但还没骰子骰子
-			Log.Info("MJScene.ReturnReconnectInfo: 已经收到手牌信息了,掷骰子的次数还没达到最大值，当前次数：" .. tostring(msg.m_rollCount) .. ",最大值：" .. tostring(MJDefine.MAX_CAST_DICE_NUMBER));
+			Log.Info("ReturnReconnectInfo: 已经收到手牌信息了,掷骰子的次数还没达到最大值，当前次数：" .. tostring(msg.m_rollCount) .. ",最大值：" .. tostring(MJDefine.MAX_CAST_DICE_NUMBER));
 			for key, value in pairs(MJScene.Players) do
 				value:SetupReady(false);
 			end
@@ -681,7 +681,7 @@ function MJScene.ReturnReconnectInfo(evt)
 			HallScene.SwitchFBStatus(FBStatus.Playing);
 			
 			-- 已经收到手牌信息了,正在对局中
-			Log.Info("MJScene.ReturnReconnectInfo: 已经收到手牌信息了,正在对局中");
+			Log.Info("ReturnReconnectInfo: 已经收到手牌信息了,正在对局中");
 			
 			-- 设置当前玩家以及上一个玩家
 			MJScene.LastOperator = MJScene.GetPlayerByID(msg.m_lastOutCardRoleId);
@@ -702,7 +702,7 @@ function MJScene.ReturnReconnectInfo(evt)
 			
 			-- 设置牌墩
 			local fromPlayer = MJScene.GetPlayerByID(MJScene.GetCardRoleID);
-			Log.Info("MJScene.ReturnReconnectInfo: 从" .. fromPlayer:LogTag() .. "的第【" .. tostring(MJScene.GetCardNumber) .. "】墩开始抓牌");
+			Log.Info("ReturnReconnectInfo: 从" .. fromPlayer:LogTag() .. "的第【" .. tostring(MJScene.GetCardNumber) .. "】墩开始抓牌");
 			MJPaidunCtrl.Initialize(fromPlayer.UIPosition, MJScene.GetCardNumber);
 			-- 先隐藏所有初始抓了的牌
 			local totalInitialCardCount = msg.m_playerCount * MJDefine.XIAN_INITIAL_CARD_COUNT + 1;
@@ -753,15 +753,15 @@ function MJScene.ReturnReconnectInfo(evt)
 	UIManager.CloseAllWindowsExcept(UIName.UI_MaJiang);
 	
 	if #msg.m_CloseRoomData > 0 then
-		Log.Info("MJScene.ReturnReconnectInfo: 存在" .. tostring(#msg.m_CloseRoomData) .. "条解散房间信息。");
+		Log.Info("ReturnReconnectInfo: 存在" .. tostring(#msg.m_CloseRoomData) .. "条解散房间信息。");
 		UIManager.OpenWindow(UIName.UI_MJRequestDissolve);
 		UI_MJRequestDissolve.OnReconnect(msg.m_CloseRoomData);
 	else
-		Log.Info("MJScene.ReturnReconnectInfo: 不存在解散房间信息。");
+		Log.Info("ReturnReconnectInfo: 不存在解散房间信息。");
 	end
 	
 	if msg.m_huOperatorData.m_huRoleid ~= - 1 then
-		Log.Info("MJScene.ReturnReconnectInfo: 存在结算信息");
+		Log.Info("ReturnReconnectInfo: 存在结算信息");
 		HallScene.SwitchFBStatus(FBStatus.FinishedRound);
 		HallScene.CurrentFBFinishedRound = HallScene.CurrentFBFinishedRound + 1;
 		MJScene.CurrentResultInfo = msg.m_huOperatorData;
@@ -771,18 +771,18 @@ function MJScene.ReturnReconnectInfo(evt)
 			UIManager.OpenWindow(UIName.UI_MJResult);
 		end
 	else
-		Log.Info("MJScene.ReturnReconnectInfo: 不存在结算信息");
+		Log.Info("ReturnReconnectInfo: 不存在结算信息");
 	end
 	
 end
 
 function MJScene.ReturnHandCardInfo(evt)
-	Log.Info("MJScene.ReturnHandCardInfo: playback mode " .. tostring(HallScene.CurrentFBPlaybackMode));
+	Log.Info("ReturnHandCardInfo: playback mode " .. tostring(HallScene.CurrentFBPlaybackMode));
 	if HallScene.CurrentFBPlaybackMode then
 		-- 回放模式
 		local msg = NetManager.DecodeMsg(PBMessage.GMHandCard_PlayerBack, evt);
 		if msg == false then
-			Log.Error("MJScene.ReturnHandCardInfo: parse msg error," .. PBMessage.GMHandCard_PlayerBack);
+			Log.Error("ReturnHandCardInfo: parse msg error," .. PBMessage.GMHandCard_PlayerBack);
 			return;
 		end
 		HallScene.CurrentFBBankerPosition = msg.m_bankerPos;
@@ -791,7 +791,7 @@ function MJScene.ReturnHandCardInfo(evt)
 		HallScene.CurrentFBRound = msg.m_leftCount;
 		HallScene.CurrentFBType = msg.m_fbtypeid;
 		HallScene.CurrentFBID = msg.m_roomid;
-		Log.Info("MJScene.ReturnHandCardInfo: 庄家的位置：" .. tostring(HallScene.CurrentFBBankerPosition));
+		Log.Info("ReturnHandCardInfo: 庄家的位置：" .. tostring(HallScene.CurrentFBBankerPosition));
 		
 		for i = 1, #msg.m_handCardData do
 			local handCardInfo = msg.m_handCardData[i];
@@ -836,7 +836,7 @@ function MJScene.ReturnHandCardInfo(evt)
 		-- 正常游戏模式
 		local msg = NetManager.DecodeMsg(PBMessage.GMHandCard, evt);
 		if msg == false then
-			Log.Error("MJScene.ReturnHandCardInfo: parse msg error," .. PBMessage.GMHandCard);
+			Log.Error("ReturnHandCardInfo: parse msg error," .. PBMessage.GMHandCard);
 			return;
 		end
 		MJPlayer.Hero:SetHandCards(msg.m_HandCard);
@@ -844,7 +844,7 @@ function MJScene.ReturnHandCardInfo(evt)
 		MJScene.DiceNumbers = msg.m_saizi;
 		MJScene.GetCardNumber = msg.m_getCardNum;
 		MJScene.GetCardRoleID = msg.m_getCardId;
-		Log.Info("MJScene.ReturnHandCardInfo: 庄家的位置：" .. tostring(HallScene.CurrentFBBankerPosition));
+		Log.Info("ReturnHandCardInfo: 庄家的位置：" .. tostring(HallScene.CurrentFBBankerPosition));
 		-- 设置庄家
 		MJScene.SetupBanker();
 		-- 计算每个玩家的本地位置
@@ -864,15 +864,15 @@ end
 function MJScene.ReturnPlayerOutCard(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GM_MJOperator, evt);
 	if msg == false then
-		Log.Error("MJScene.ReturnPlayerOutCard: parse msg error," .. PBMessage.GM_MJOperator);
+		Log.Error("ReturnPlayerOutCard: parse msg error," .. PBMessage.GM_MJOperator);
 		return;
 	end
 	local player = MJScene.GetPlayerByID(msg.m_roleid);
 	if player == nil then
-		Log.Error("MJScene.ReturnPlayerOutCard: can not get player id is " .. msg.m_roleid);
+		Log.Error("ReturnPlayerOutCard: can not get player id is " .. msg.m_roleid);
 		return;
 	end
-	Log.Info("MJScene.ReturnPlayerOutCard: operator id is " .. msg.m_roleid .. ",operate type is " .. MaJiangOperatorType.GetString(msg.m_OperatorType) .. ", m_LastCard.m_Index is " .. msg.m_LastCard.m_Index .. " and m_Type is " .. msg.m_LastCard.m_Type .. ", m_HandCard.count is " .. #msg.m_HandCard);
+	Log.Info("ReturnPlayerOutCard: operator id is " .. msg.m_roleid .. ",operate type is " .. MaJiangOperatorType.GetString(msg.m_OperatorType) .. ", m_LastCard.m_Index is " .. msg.m_LastCard.m_Index .. " and m_Type is " .. msg.m_LastCard.m_Type .. ", m_HandCard.count is " .. #msg.m_HandCard);
 	if msg.m_OperatorType == MaJiangOperatorType.MJOT_BEGIN then
 		MJScene.LastOperator = MJScene.CurrentOperator;
 		MJScene.CurrentOperator = player;
@@ -913,19 +913,19 @@ function MJScene.ReturnPlayerOutCard(evt)
 end
 
 function MJScene.ReturnCanOperatorType(evt)
-	Log.Info("MJScene.ReturnCanOperatorType");
+	Log.Info("ReturnCanOperatorType");
 	local msg = NetManager.DecodeMsg(PBMessage.GM_MJCanOperator, evt);
 	if msg == false then
-		Log.Error("MJScene.ReturnCanOperatorType: parse msg error," .. PBMessage.GM_MJCanOperator);
+		Log.Error("ReturnCanOperatorType: parse msg error," .. PBMessage.GM_MJCanOperator);
 		return;
 	end
-	Log.Info("MJScene.ReturnCanOperatorType: roleid is " .. msg.m_roleid);
+	Log.Info("ReturnCanOperatorType: roleid is " .. msg.m_roleid);
 	for i = 1, #msg.m_Operator do
 		local data = msg.m_Operator[i];
-		Log.Info("MJScene.ReturnCanOperatorType: operate data,m_OperatorType is " .. MaJiangOperatorType.GetString(data.m_OperatorType) .. ",m_FunID is " .. data.m_FunID .. ",m_OperatorCard is " .. data.m_OperatorCard .. ",m_CardNum is " .. data.m_CardNum);
+		Log.Info("ReturnCanOperatorType: operate data,m_OperatorType is " .. MaJiangOperatorType.GetString(data.m_OperatorType) .. ",m_FunID is " .. data.m_FunID .. ",m_OperatorCard is " .. data.m_OperatorCard .. ",m_CardNum is " .. data.m_CardNum);
 		for j = 1, #data.m_HandCard do
 			local handCard = data.m_HandCard[j];
-			Log.Info("MJScene.ReturnCanOperatorType: operate data: handcard" .. tostring(j) .. ": card id is " .. handCard.m_Index .. ", card type is " .. MaJiangType.ToString(handCard.m_Type));
+			Log.Info("ReturnCanOperatorType: operate data: handcard" .. tostring(j) .. ": card id is " .. handCard.m_Index .. ", card type is " .. MaJiangType.ToString(handCard.m_Type));
 		end
 	end
 	UI_MaJiang.ShowOperateView(msg.m_Operator);
@@ -934,11 +934,11 @@ end
 function MJScene.NotifyOneReady(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GM_Result, evt);
 	if msg == false then
-		Log.Error("MJScene.NotifyOneReady: parse msg error," .. PBMessage.GM_Result);
+		Log.Error("NotifyOneReady: parse msg error," .. PBMessage.GM_Result);
 		return;
 	end
 	local player = MJScene.GetPlayerByID(msg.m_Result);
-	Log.Info("MJScene.NotifyOneReady: player is " .. player.UITransform.name);
+	Log.Info("NotifyOneReady: player is " .. player.UITransform.name);
 	if player ~= nil then
 		local status = msg.m_productid == 1;
 		player:SetupReady(status);
@@ -952,7 +952,7 @@ function MJScene.ReturnAllReady(evt)
 	HallScene.SwitchFBStatus(FBStatus.WaitingCastDice);
 	HallScene.CurrentFBRound = HallScene.CurrentFBRound + 1;
 	UI_MaJiang.SetupCurrentRound();
-	Log.Info("MJScene.ReturnAllReady: 所有玩家就绪,第【" .. tostring(HallScene.CurrentFBRound) .. "】回合开始");
+	Log.Info("ReturnAllReady: 所有玩家就绪,第【" .. tostring(HallScene.CurrentFBRound) .. "】回合开始");
 	local msg = NetManager.DecodeMsg(PBMessage.GM_NotifyBattleEndTime, evt);
 	for key, value in pairs(MJScene.Players) do
 		value:SetupReady(false);
@@ -966,11 +966,11 @@ end
 function MJScene.ReturnPlayerHu(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GM_HUOperator, evt);
 	if msg == false then
-		Log.Error("MJScene.ReturnPlayerHu: parse msg error," .. PBMessage.GM_HUOperator);
+		Log.Error("ReturnPlayerHu: parse msg error," .. PBMessage.GM_HUOperator);
 		return;
 	end
 	HallScene.SwitchFBStatus(FBStatus.FinishedRound);
-	Log.Info("MJScene.ReturnPlayerHu: hu role id is " .. msg.m_huRoleid);
+	Log.Info("ReturnPlayerHu: hu role id is " .. msg.m_huRoleid);
 	HallScene.CurrentFBFinishedRound = HallScene.CurrentFBFinishedRound + 1;
 	MJScene.CurrentResultInfo = msg;
 	if msg.m_huRoleid == 0 then
@@ -983,10 +983,10 @@ end
 function MJScene.NotifyPlayerLeave(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GM_LeaveBattle, evt);
 	if msg == false then
-		Log.Error("MJScene.NotifyPlayerLeave: parse msg error: " .. PBMessage.GM_LeaveBattle);
+		Log.Error("NotifyPlayerLeave: parse msg error: " .. PBMessage.GM_LeaveBattle);
 		return;
 	end
-	Log.Info("MJScene.NotifyPlayerLeave: id is " .. tostring(msg.roleID));
+	Log.Info("NotifyPlayerLeave: id is " .. tostring(msg.roleID));
 	local player = MJScene.GetPlayerByID(msg.roleID);
 	if player ~= nil then
 		local str = "玩家 " .. player.Name .. " 离开房间";
@@ -997,10 +997,10 @@ function MJScene.NotifyPlayerLeave(evt)
 end
 
 function MJScene.NotifyChat(evt)
-	Log.Info("MJScene.NotifyChat");
+	Log.Info("NotifyChat");
 	local msg = NetManager.DecodeMsg(PBMessage.GM_AnswerFaceReturn, evt);
 	if msg == false then
-		Log.Error("MJScene.NotifyChat: parse msg error: " .. PBMessage.GM_AnswerFaceReturn);
+		Log.Error("NotifyChat: parse msg error: " .. PBMessage.GM_AnswerFaceReturn);
 		return;
 	end
 	if msg.faceid == MJChatType.CustomText then
@@ -1010,22 +1010,22 @@ function MJScene.NotifyChat(evt)
 end
 
 function MJScene.OnReceiveVoiceMsg(roleid, uri, duration)
-	Log.Info("MJScene.OnReceiveVoiceMsg: roleid is " .. roleid .. ",uri is " .. uri .. ",duration is " .. duration);
+	Log.Info("OnReceiveVoiceMsg: roleid is " .. roleid .. ",uri is " .. uri .. ",duration is " .. duration);
 	MJScene.AddChatHistory(roleid, MJChatType.Voice, uri, duration, false);
 	UI_MaJiang.HandleVoice(roleid, uri, duration);
 end
 
 function MJScene.NotifyTrust(evt)
-	Log.Info("MJScene.NotifyTrust");
+	Log.Info("NotifyTrust");
 end
 
 -- 有玩家发起解散房间
 function MJScene.NotifyDissolveRoom(evt)
-	Log.Info("MJScene.NotifyDissolveRoom");
+	Log.Info("NotifyDissolveRoom");
 	local msg = NetManager.DecodeMsg(PBMessage.GM_Result, evt);
 	if msg == false then
 		if msg == false then
-			Log.Error("MJScene.NotifyDissolveRoom: parse msg error: " .. PBMessage.GM_Result);
+			Log.Error("NotifyDissolveRoom: parse msg error: " .. PBMessage.GM_Result);
 			return;
 		end
 		return;
@@ -1035,16 +1035,16 @@ function MJScene.NotifyDissolveRoom(evt)
 end
 
 function MJScene.ChooseDissolveRoom(evt)
-	Log.Info("MJScene.ChooseDissolveRoom");
+	Log.Info("ChooseDissolveRoom");
 end
 
 function MJScene.ReturnRoomMasterDissolve(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GM_Request, evt);
 	if msg == false then
-		Log.Error("MJScene.ReturnRoomMasterDissolve: parse msg error: " .. PBMessage.GM_Result);
+		Log.Error("ReturnRoomMasterDissolve: parse msg error: " .. PBMessage.GM_Result);
 		return;
 	end
-	Log.Info("MJScene.ReturnRoomMasterDissolve: msg.request is " .. tostring(msg.request));
+	Log.Info("ReturnRoomMasterDissolve: msg.request is " .. tostring(msg.request));
 	if msg.request == 0 then
 		local option = ConfirmDialogOption:New();
 		option.OnClickOK =
@@ -1081,29 +1081,29 @@ end
 function MJScene.ReturnShowLastResult(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GM_MJCardRoomResult, evt);
 	if msg == false then
-		Log.Error("MJScene.ReturnShowLastResult: parse msg error: " .. PBMessage.GM_MJCardRoomResult);
+		Log.Error("ReturnShowLastResult: parse msg error: " .. PBMessage.GM_MJCardRoomResult);
 		return;
 	end
 	MJScene.TotalResultInfo = msg;
-	Log.Info("MJScene.ReturnShowLastResult: m_count is " .. msg.m_count);
+	Log.Info("ReturnShowLastResult: m_count is " .. msg.m_count);
 end
 
 function MJScene.ReturnRoomRate(evt)
-	Log.Info("MJScene.ReturnRoomRate");
+	Log.Info("ReturnRoomRate");
 end
 
 function MJScene.ReturnCastDice(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GM_PlayerRollRequest, evt);
 	if msg == false then
-		Log.Error("MJScene.ReturnCastDice: parse msg error: " .. PBMessage.GM_PlayerRollRequest);
+		Log.Error("ReturnCastDice: parse msg error: " .. PBMessage.GM_PlayerRollRequest);
 		return;
 	end
-	Log.Info("MJScene.ReturnCastDice: dice number is : " .. msg.m_pos);
+	Log.Info("ReturnCastDice: dice number is : " .. msg.m_pos);
 	HallScene.SwitchFBStatus(FBStatus.Playing);
 	
 	-- 设置墩牌
 	local fromPlayer = MJScene.GetPlayerByID(MJScene.GetCardRoleID);
-	Log.Info("MJScene.ReturnCastDice: 从" .. fromPlayer:LogTag() .. "的第【" .. tostring(MJScene.GetCardNumber) .. "】墩开始抓牌");
+	Log.Info("ReturnCastDice: 从" .. fromPlayer:LogTag() .. "的第【" .. tostring(MJScene.GetCardNumber) .. "】墩开始抓牌");
 	MJPaidunCtrl.Initialize(fromPlayer.UIPosition, MJScene.GetCardNumber);
 	
 	UI_MaJiang.SetCastDice(false);
@@ -1115,7 +1115,7 @@ end
 
 function MJScene.ReturnOperateError(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GM_MJOperatorError, evt);
-	Log.Info("MJScene.ReturnOperateError: result is " .. tostring(msg.m_Result));
+	Log.Info("ReturnOperateError: result is " .. tostring(msg.m_Result));
 	MJScene.RequestReconnectInfo(); -- 操作失败时刷新桌面的数据
 end
 

@@ -48,7 +48,7 @@ end
 
 -- 启动倒计时
 function UI_MJRequestDissolve.StartCountdown()
-	Log.Info("UI_MJRequestDissolve.StartCountdown: HallScene.CurrentFBCloseTime is " .. tostring(HallScene.CurrentFBCloseTime));
+	Log.Info("StartCountdown: HallScene.CurrentFBCloseTime is " .. tostring(HallScene.CurrentFBCloseTime));
 	for i = 1, HallScene.CurrentFBCloseTime do
 		local time = HallScene.CurrentFBCloseTime - i;
 		local timeStr = tostring(time);

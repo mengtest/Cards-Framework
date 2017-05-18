@@ -56,6 +56,33 @@ public class EditorLuaHelper : Editor
                     return OpenFileAtLineExternal(filePath, lineNumber);
                 }
             }
+            else if (logStr.StartsWith("LuaException"))
+            {
+                //LuaException: [string "NCSpeedLight/Game"]:61: attempt to concatenate local 'a' (a nil value)
+                logStr = logStr.Replace("LuaException: [string ", "");
+                logStr = logStr.Replace("]", "");
+                logStr = logStr.Replace('"', ' ');
+                logStr = logStr.Replace(" ", "");
+                string[] strs = logStr.Split(':');
+                string fileName = strs[0] + ".lua";
+                int lineNumber = 0;
+                int.TryParse(strs[1], out lineNumber);
+                string luaProjRootPath = EditorUserSettings.GetConfigValue(LUA_PROJ_ROOT_KEY);
+                if (string.IsNullOrEmpty(luaProjRootPath))
+                {
+                    SetLuaProjRoot();
+                }
+                luaProjRootPath = EditorUserSettings.GetConfigValue(LUA_PROJ_ROOT_KEY);
+                if (string.IsNullOrEmpty(luaProjRootPath))
+                {
+                    return false;
+                }
+                else
+                {
+                    string filePath = luaProjRootPath + "/" + fileName;
+                    return OpenFileAtLineExternal(filePath, lineNumber);
+                }
+            }
         }
         return false;
     }

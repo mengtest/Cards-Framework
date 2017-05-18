@@ -15,7 +15,7 @@ ServerType = {Login = 0, Logic = 1};
 local this = NetManager;
 
 function NetManager.Initialize()
-	Log.Info("NetManager.Initialize");
+	Log.Info("Initialize");
 	NCSpeedLight.NetManager.Initialize();
 	NetManager.InitPBMessage();
 end
@@ -25,10 +25,10 @@ function NetManager.InitPBMessage()
 	local path = Constants.LOCAL_SCRIPT_BUNDLE_PATH .. "PBMessage.pb";
 	local buffer = Utility.OpenFile(path);
 	if buffer == nil then
-		Log.Error("NetManager.InitPBMessage: open pb file error.");
+		Log.Error("InitPBMessage: open pb file error.");
 	else
 		SharedVariable.ProtobufProcessor.register(buffer);
-		Log.Info("NetManager.InitPBMessage: success.");
+		Log.Info("InitPBMessage: success.");
 	end
 end
 
@@ -52,7 +52,7 @@ end
 function NetManager.SendEventToLoginServer(id, structName, msg)
 	local buffer = SharedVariable.ProtobufProcessor.encode(structName, msg);
 	if buffer == false then
-		Log.Error("NetManager.SendEventToLoginServer error.");
+		Log.Error("SendEventToLoginServer error.");
 		return false;
 	else
 		return NetManager.SendEvent(id, buffer, 0, 1, ServerType.Login);
@@ -63,7 +63,7 @@ end
 function NetManager.SendEventToLogicServer(id, structName, msg)
 	local buffer = SharedVariable.ProtobufProcessor.encode(structName, msg);
 	if buffer == false then
-		Log.Error("NetManager.SendEventToLogicServer error.");
+		Log.Error("SendEventToLogicServer error.");
 		return false;
 	else
 		local roleID = 0;

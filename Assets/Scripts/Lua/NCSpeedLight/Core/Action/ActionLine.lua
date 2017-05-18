@@ -99,7 +99,7 @@ function ActionLine.New(playmode, autoDestroy)
 	return obj;
 end
 function ActionLine.Update()
-	for i = 1, # lines do
+	for i = 1, #lines do
 		local line = lines[i];
 		if line ~= nil and line.Status == ActionLineStatus.Playing then
 			local deltaTime = Time.deltaTime;
@@ -107,7 +107,7 @@ function ActionLine.Update()
 			if line.PlayMode == ActionLinePlayMode.Parallel then
 				-- Parallel mode 
 				local index = 1;
-				while index <= # line.ProcessingActions do
+				while index <= #line.ProcessingActions do
 					local action = line.ProcessingActions[index];
 					ActionLine.InvokeActionMethod(action, "Update", line);
 					if line.Elapse >= action.EndTime then
@@ -119,7 +119,7 @@ function ActionLine.Update()
 					end
 				end
 				index = 1;
-				while index <= # line.WaitingActions do
+				while index <= #line.WaitingActions do
 					local action = line.WaitingActions[index];
 					if line.Elapse >= action.BeginTime then
 						action.Status = ActionStatus.Playing;
@@ -130,7 +130,7 @@ function ActionLine.Update()
 						index = index + 1;
 					end
 				end
-				if # line.WaitingActions == 0 and # line.ProcessingActions == 0 then
+				if #line.WaitingActions == 0 and #line.ProcessingActions == 0 then
 					line:InternalStop();
 				end
 			else
@@ -154,7 +154,7 @@ function ActionLine.InvokeActionMethod(action, methodName, line)
 end
 function ActionLine:AddAction(action)
 	if action == nil then
-		Log.Error("ActionLine:AddAction: can not add action to line caused bu nil action instance.");
+		Log.Error("AddAction: can not add action to line caused bu nil action instance.");
 		return
 	end
 	local hasBeginTime = false;
@@ -179,26 +179,26 @@ function ActionLine:AddAction(action)
 			end
 		end
 	else
-		Log.Error("ActionLine:AddAction: can not add action caused bu nil metatable of table.");
+		Log.Error("AddAction: can not add action caused bu nil metatable of table.");
 	end
 	if self.PlayMode == ActionLinePlayMode.Parallel then
 		if hasBeginTime and hasEndTime and hasBeginFunc and hasEndFunc then
 			table.insert(self.Actions, action);
 		else
-			Log.Error("ActionLine:AddAction: can not add action caused bu nil field(s), hasBeginTime:" .. tostring(hasBeginTime) .. " , hasEndTime:" .. tostring(hasEndTime) .. " , hasBeginFunc:" .. tostring(hasBeginFunc) .. " , hasEndFunc:" .. tostring(hasEndFunc));
+			Log.Error("AddAction: can not add action caused bu nil field(s), hasBeginTime:" .. tostring(hasBeginTime) .. " , hasEndTime:" .. tostring(hasEndTime) .. " , hasBeginFunc:" .. tostring(hasBeginFunc) .. " , hasEndFunc:" .. tostring(hasEndFunc));
 		end
 	else
 		if hasBeginFunc and hasEndFunc then
 			table.insert(self.Actions, action);
 		else
-			Log.Error("ActionLine:AddAction: can not add action caused bu nil field(s), hasBeginFunc:" .. tostring(hasBeginFunc) .. " , hasEndFunc:" .. tostring(hasEndFunc));
+			Log.Error("AddAction: can not add action caused bu nil field(s), hasBeginFunc:" .. tostring(hasBeginFunc) .. " , hasEndFunc:" .. tostring(hasEndFunc));
 		end
 	end
 end
 function ActionLine:RemoveAction(action)
 	local needRemove = false;
 	local index = 1;
-	for i = 1, # self.Actions do
+	for i = 1, #self.Actions do
 		if self.Actions[i] == action then
 			needRemove = true;
 			index = i;
@@ -215,7 +215,7 @@ function ActionLine:Start()
 	if self.PlayMode == ActionLinePlayMode.Parallel then
 		self.WaitingActions = {};
 		self.ProcessingActions = {};
-		for i = 1, # self.Actions do
+		for i = 1, #self.Actions do
 			local action = self.Actions[i];
 			action.Status = ActionStatus.Action;
 			table.insert(self.WaitingActions, action);
@@ -231,7 +231,7 @@ function ActionLine:Stop()
 	if self.PlayMode == ActionLinePlayMode.Parallel then
 		if self.Status == ActionLineStatus.Playing then
 			local index = 1;
-			while index <= # self.ProcessingActions do
+			while index <= #self.ProcessingActions do
 				local action = self.ProcessingActions[index];
 				action.Status = ActionStatus.Inaction;
 				ActionLine.InvokeActionMethod(action, "End", self);
@@ -255,7 +255,7 @@ end
 function ActionLine:Destroy()
 	local needRemove = false;
 	local index = 1;
-	for i = 1, # lines do
+	for i = 1, #lines do
 		if lines[i] == self then
 			needRemove = true;
 			index = i;
@@ -277,10 +277,10 @@ function ActionLine:Next()
 		ActionLine.InvokeActionMethod(self.CurrentAction, "Begin", self);
 	else
 		local index = 1;
-		while index <= # self.Actions do
+		while index <= #self.Actions do
 			local action = self.Actions[index];
 			if action == self.CurrentAction then
-				if index ~= # self.Actions then
+				if index ~= #self.Actions then
 					local nextActionIndex = index + 1;
 					local nextAction = self.Actions[nextActionIndex];
 					ActionLine.InvokeActionMethod(self.CurrentAction, "End", self);

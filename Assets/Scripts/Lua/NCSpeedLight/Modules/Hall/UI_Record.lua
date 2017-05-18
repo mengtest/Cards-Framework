@@ -48,10 +48,10 @@ end
 function UI_Record.OnRecvData(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GM_Room_record_return, evt);
 	if msg == false then
-		Log.Error("UI_Record.OnRecvData: parse msg error,struct is " .. PBMessage.GM_Room_record_return);
+		Log.Error("OnRecvData: parse msg error,struct is " .. PBMessage.GM_Room_record_return);
 		return;
 	end
-	Log.Info("UI_Record.OnRecvData");
+	Log.Info("OnRecvData");
 	this.FullData = msg;
 	UI_Record.DisplayListView();
 end

@@ -42,7 +42,7 @@ function UI_MJHeroCtrl.Start()
 						local cardIndex = tonumber(go.name);
 						local card = this.Player:GetHandCardByPosition(cardIndex);
 						if card == nil then
-							Log.Error("UI_MJHeroCtrl.OnClickCard: cannot out card caused by nil card instance");
+							Log.Error("OnClickCard: cannot out card caused by nil card instance");
 						else
 							MJScene.RequestMJOperate_OutCard(card);
 						end
@@ -116,7 +116,7 @@ function UI_MJHeroCtrl.OnStopDragCard(go)
 		local cardIndex = tonumber(go.name);
 		local card = MJPlayer.Hero:GetHandCardByPosition(cardIndex);
 		if card == nil then
-			Log.Error("UI_MJHeroCtrl.OnStopDragCard: cannot out card caused by nil card instance");
+			Log.Error("OnStopDragCard: cannot out card caused by nil card instance");
 		else
 			MJScene.RequestMJOperate_OutCard(card);
 		end

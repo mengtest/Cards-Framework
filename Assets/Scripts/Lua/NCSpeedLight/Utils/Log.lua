@@ -26,7 +26,7 @@ function Log.Initialize()
 		CSDirectory.CreateDirectory(logDirectory);
 	end
 	Log.FilePath = Constants.DATA_PATH .. "Log/" .. fileName;
-	Log.Info("Log.Initialize: log file path is " .. Log.FilePath);
+	Log.Info("Initialize: log file path is " .. Log.FilePath);
 end
 
 -- 记录错误信息

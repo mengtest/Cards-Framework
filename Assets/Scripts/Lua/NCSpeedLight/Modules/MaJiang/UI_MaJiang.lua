@@ -184,7 +184,7 @@ end
 
 -- 设置准备和邀请按钮的显示状态 , ready/unready/invite
 function UI_MaJiang.SetupReadyAndInvite(ready, unready, invite)
-	Log.Info("UI_MaJiang.SetupReadyAndInvite: " .. tostring(ready) .. "," .. tostring(unready) .. "," .. tostring(invite));
+	Log.Info("SetupReadyAndInvite: " .. tostring(ready) .. "," .. tostring(unready) .. "," .. tostring(invite));
 	UIHelper.SetActiveState(this.transform, "center/Ready/Yes", ready);
 	UIHelper.SetActiveState(this.transform, "center/Ready/No", unready);
 	UIHelper.SetActiveState(this.transform, "center/Ready/Invite", invite);
@@ -192,7 +192,7 @@ end
 
 -- 设置掷骰子
 function UI_MaJiang.SetCastDice(status)
-	Log.Info("UI_MaJiang.SetCastDice: status is " .. tostring(status));
+	Log.Info("SetCastDice: status is " .. tostring(status));
 	UIHelper.SetActiveState(this.transform, "center/CastDice/Button", status);
 end
 
@@ -300,7 +300,7 @@ function UI_MaJiang.OnClickOtherArea(go)
 end
 
 function UI_MaJiang.OnVoiceBtnPress(go, status)
-	-- Log.Info("UI_MaJiang.OnVoiceBtnPress: status is " .. tostring(status));
+	-- Log.Info("OnVoiceBtnPress: status is " .. tostring(status));
 	UI_MaJiang.IsRecording = status;
 	UIHelper.SetActiveState(this.transform, "RecordVoice/Record", UI_MaJiang.IsRecording);
 	if UI_MaJiang.IsRecording == true then
@@ -311,7 +311,7 @@ function UI_MaJiang.OnVoiceBtnPress(go, status)
 				UIManager.OpenTipsDialog("录音时间小于1s，无法发送");
 				return;		
 			end
-			Log.Info("UI_MaJiang.OnVoiceBtnPress: 录音成功，文件路径为 " .. voiceUri .. ",长度为 " .. duration);
+			Log.Info("OnVoiceBtnPress: 录音成功，文件路径为 " .. voiceUri .. ",长度为 " .. duration);
 			
 			if UI_MaJiang.RecordSuccess then
 				-- 广播给其他人
@@ -332,10 +332,10 @@ function UI_MaJiang.OnVoiceBtnPress(go, status)
 		function(errorCode)
 			if errorCode == nil then
 				UIManager.OpenTipsDialog("录音失败");
-				Log.Error("UI_MaJiang.OnVoiceBtnPress: 录音失败");
+				Log.Error("OnVoiceBtnPress: 录音失败");
 			else
 				UIManager.OpenTipsDialog("录音失败，错误码：" .. tostring(errorCode));
-				Log.Error("UI_MaJiang.OnVoiceBtnPress: 录音失败，错误码：" .. tostring(errorCode));
+				Log.Error("OnVoiceBtnPress: 录音失败，错误码：" .. tostring(errorCode));
 			end
 		end);
 	else
@@ -346,12 +346,12 @@ function UI_MaJiang.OnVoiceBtnPress(go, status)
 end
 
 function UI_MaJiang.OnVoiceBtnDragStart(go)
-	-- Log.Info("UI_MaJiang.OnVoiceBtnDragStart");
+	-- Log.Info("OnVoiceBtnDragStart");
 	UI_MaJiang.RecordStartPos = UnityEngine.Input.mousePosition;
 end
 
 function UI_MaJiang.OnVoiceBtnDrag(go, deltaPos)
-	-- Log.Info("UI_MaJiang.OnVoiceBtnDrag: deltaPos is " .. tostring(deltaPos));
+	-- Log.Info("OnVoiceBtnDrag: deltaPos is " .. tostring(deltaPos));
 	if UnityEngine.Input.mousePosition.y > UI_MaJiang.RecordStartPos.y + 80 then
 		-- 显示取消录音界面;
 		UIHelper.SetActiveState(this.transform, "RecordVoice/Record", false);
@@ -366,7 +366,7 @@ function UI_MaJiang.OnVoiceBtnDrag(go, deltaPos)
 end
 
 function UI_MaJiang.OnVoiceBtnDragEnd(go)
-	-- Log.Info("UI_MaJiang.OnVoiceBtnDragEnd");
+	-- Log.Info("OnVoiceBtnDragEnd");
 	UI_MaJiang.RecordStartPos = Vector3.zero;
 end
 
@@ -560,7 +560,7 @@ function UI_MaJiang.HandleVoice(roleid, uri, duration)
 	local playerUI = player.UI;
 	if playerUI == nil then return end;
 	if duration <= 0 then return end;
-	Log.Info("UI_MaJiang.HandleVoice: play.");
+	Log.Info("HandleVoice: play.");
 	local scheduleHide = UIHelper.GetComponent(playerUI.transform, "Enter/Center/Chat/Voice", typeof(NCSpeedLight.ScheduleHide));
 	scheduleHide.Time = duration;
 	UIHelper.SetActiveState(playerUI.transform, "Enter/Center/Chat/Voice", true);

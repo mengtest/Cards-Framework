@@ -10,7 +10,7 @@ Player =
 
 -- 设置当前玩家的完整信息
 function Player.SetFullInfo(data)
-	Log.Info("Player.SetFullInfo: id is " .. tostring(data.id));
+	Log.Info("SetFullInfo: id is " .. tostring(data.id));
 	Player.FullInfo = data;
 	Player.ID = data.id;
 	Player.Name = Player.FullInfo.nickName;
@@ -40,10 +40,10 @@ end
 
 function Player.OnGetLocation(address)
 	if address == nil or string.len(address) == 0 then
-		Log.Error("Player.OnGetLocation: address is nil,未获取到有效地址信息.");
+		Log.Error("OnGetLocation: address is nil,未获取到有效地址信息.");
 		Player.Address = "未获取到有效地址信息";
 	else
-		Log.Info("Player.OnGetLocation: address is " .. address);
+		Log.Info("OnGetLocation: address is " .. address);
 		Player.Address = address;
 	end
 end

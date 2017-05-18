@@ -134,7 +134,7 @@ function UIManager.OpenWindow(windowName)
 end
 
 function UIManager.CloseWindow(windowName)
-	Log.Info("UIManager.CloseWindow: " .. windowName);
+	Log.Info("CloseWindow: " .. windowName);
 	local window = UIManager.Windows[windowName];
 	if window ~= nil then
 		UnityEngine.GameObject.Destroy(window);
