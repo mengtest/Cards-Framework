@@ -136,7 +136,7 @@ namespace NCSpeedLight
                 string[] files = Directory.GetFiles(directory);
                 for (int i = 0; i < files.Length; i++)
                 {
-                    string file = EditorHelper.NormalizePath(files[i]);
+                    string file = NormalizePath(files[i]);
                     if (file.EndsWith(".meta") || file.EndsWith(".cs") || file.EndsWith(".js"))
                     {
                         continue;
