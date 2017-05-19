@@ -6,6 +6,9 @@ using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using UnityEditor.Callbacks;
+using UnityEditor.ProjectWindowCallback;
+using System.Text;
+using System;
 
 namespace NCSpeedLight
 {
@@ -15,6 +18,8 @@ namespace NCSpeedLight
 
         public const string LUA_PROJ_ROOT_KEY = "LuaProjRootPath";
 
+        public const string LUA_TEMPLATE_ROOT_KEY = "LuaTemplate";
+
         [OnOpenAsset(2)]
         public static bool OnOpenAsset(int instanceID, int line)
         {
@@ -22,7 +27,14 @@ namespace NCSpeedLight
             string logStr = GetLogText();
             if (string.IsNullOrEmpty(assetPath) == false && assetPath.EndsWith(".lua"))
             {
-                return OpenFileAtLineExternal(assetPath, 0);
+                if (assetPath.Contains("Assets/Scripts/Lua") == false)
+                {
+                    if (EditorUtility.DisplayDialog("Error", "This file " + assetPath + " is not at lua project work space,can not open.", "OK"))
+                    {
+                        return true;
+                    }
+                }
+                return OpenLuaScriptAtLine(assetPath, 0);
             }
             else if (string.IsNullOrEmpty(logStr) == false)
             {
@@ -55,7 +67,7 @@ namespace NCSpeedLight
                     else
                     {
                         string filePath = luaProjRootPath + "/" + fileName;
-                        return OpenFileAtLineExternal(filePath, lineNumber);
+                        return OpenLuaScriptAtLine(filePath, lineNumber);
                     }
                 }
                 else if (logStr.StartsWith("LuaException"))
@@ -82,7 +94,7 @@ namespace NCSpeedLight
                     else
                     {
                         string filePath = luaProjRootPath + "/" + fileName;
-                        return OpenFileAtLineExternal(filePath, lineNumber);
+                        return OpenLuaScriptAtLine(filePath, lineNumber);
                     }
                 }
             }
@@ -90,8 +102,9 @@ namespace NCSpeedLight
         }
 
 
-        public static bool OpenFileAtLineExternal(string filePath, int line)
+        public static bool OpenLuaScriptAtLine(string filePath, int line)
         {
+            if (File.Exists(filePath) == false) return false;
             string idePath = EditorUserSettings.GetConfigValue(LUA_IDE_PATH_KEY);
             if (string.IsNullOrEmpty(idePath) || !File.Exists(idePath))
             {
@@ -198,7 +211,7 @@ namespace NCSpeedLight
             return null;
         }
 
-        [MenuItem("Framework/Set Lua IDE")]
+        [MenuItem("Framework/Lua/Set IDE")]
         public static void SetLuaIDE()
         {
             string path = EditorUserSettings.GetConfigValue(LUA_IDE_PATH_KEY);
@@ -210,7 +223,7 @@ namespace NCSpeedLight
             }
         }
 
-        [MenuItem("Framework/Set Lua Project Root")]
+        [MenuItem("Framework/Lua/Set Project Root")]
         public static void SetLuaProjRoot()
         {
             string path = EditorUserSettings.GetConfigValue(LUA_PROJ_ROOT_KEY);
@@ -222,8 +235,20 @@ namespace NCSpeedLight
             }
         }
 
+        [MenuItem("Framework/Lua/Set Template Root")]
+        public static void SetLuaTemplateRoot()
+        {
+            string path = EditorUserSettings.GetConfigValue(LUA_TEMPLATE_ROOT_KEY);
+            path = EditorUtility.OpenFolderPanel("Select lua template file path", path, "");
+            if (string.IsNullOrEmpty(path) == false)
+            {
+                EditorUserSettings.SetConfigValue(LUA_TEMPLATE_ROOT_KEY, path);
+                Debug.Log("SetLuaTemplateRoot: " + path);
+            }
+        }
+
         [MenuItem("Assets/Open Lua Project")]
-        [MenuItem("Framework/Open Lua Project")]
+        [MenuItem("Framework/Lua/Open Project")]
         public static void OpenLuaProj()
         {
             string idePath = EditorUserSettings.GetConfigValue(LUA_IDE_PATH_KEY);
@@ -252,6 +277,132 @@ namespace NCSpeedLight
             proc.StartInfo.FileName = idePath;
             proc.StartInfo.Arguments = string.Format("--new-window {0}", luaProjRootPath);
             proc.Start();
+        }
+
+
+        [MenuItem("Assets/Create/Lua Class", false, 1)]
+        public static void CreatLuaClass()
+        {
+            string root = EditorUserSettings.GetConfigValue(LUA_TEMPLATE_ROOT_KEY);
+            if (string.IsNullOrEmpty(root))
+            {
+                SetLuaTemplateRoot();
+            }
+            root = EditorUserSettings.GetConfigValue(LUA_TEMPLATE_ROOT_KEY);
+            if (string.IsNullOrEmpty(root))
+            {
+                Debug.LogError("Can not create lua class,please set up lua template file path.");
+                return;
+            }
+            string path = root + "/Class.lua";
+            ProjectWindowUtil.StartNameEditingIfProjectWindowExists(0, CreateInstance<CreateLuaProcessor>(), GetSelectedPathOrFallback() + "/NewLuaClass.lua", null, path);
+        }
+
+        [MenuItem("Assets/Create/Lua Behaviour", false, 2)]
+        public static void CreateLuaBehaviour()
+        {
+            string root = EditorUserSettings.GetConfigValue(LUA_TEMPLATE_ROOT_KEY);
+            if (string.IsNullOrEmpty(root))
+            {
+                SetLuaTemplateRoot();
+            }
+            root = EditorUserSettings.GetConfigValue(LUA_TEMPLATE_ROOT_KEY);
+            if (string.IsNullOrEmpty(root))
+            {
+                Debug.LogError("Can not create lua behaviour,please set up lua template file path.");
+                return;
+            }
+            string path = root + "/Behaviour.lua";
+            ProjectWindowUtil.StartNameEditingIfProjectWindowExists(0, CreateInstance<CreateLuaProcessor>(), GetSelectedPathOrFallback() + "/NewLuaBehaviour.lua", null, path);
+        }
+
+        [MenuItem("Assets/Create/Lua Component", false, 3)]
+        public static void CreateLuaComponent()
+        {
+            string root = EditorUserSettings.GetConfigValue(LUA_TEMPLATE_ROOT_KEY);
+            if (string.IsNullOrEmpty(root))
+            {
+                SetLuaTemplateRoot();
+            }
+            root = EditorUserSettings.GetConfigValue(LUA_TEMPLATE_ROOT_KEY);
+            if (string.IsNullOrEmpty(root))
+            {
+                Debug.LogError("Can not create lua component,please set up lua template file path.");
+                return;
+            }
+            string path = root + "/Component.lua";
+            ProjectWindowUtil.StartNameEditingIfProjectWindowExists(0, CreateInstance<CreateLuaProcessor>(), GetSelectedPathOrFallback() + "/NewLuaComponent.lua", null, path);
+        }
+
+        [MenuItem("Assets/Create/Lua Blank", false, 4)]
+        public static void CreateLuaBlank()
+        {
+            string root = EditorUserSettings.GetConfigValue(LUA_TEMPLATE_ROOT_KEY);
+            if (string.IsNullOrEmpty(root))
+            {
+                SetLuaTemplateRoot();
+            }
+            root = EditorUserSettings.GetConfigValue(LUA_TEMPLATE_ROOT_KEY);
+            if (string.IsNullOrEmpty(root))
+            {
+                Debug.LogError("Can not create lua blank,please set up lua template file path.");
+                return;
+            }
+            string path = root + "/Blank.lua";
+            ProjectWindowUtil.StartNameEditingIfProjectWindowExists(0, CreateInstance<CreateLuaProcessor>(), GetSelectedPathOrFallback() + "/NewLuaBlank.lua", null, path);
+        }
+
+        public static string GetSelectedPathOrFallback()
+        {
+            string path = "Assets";
+            foreach (UnityEngine.Object obj in Selection.GetFiltered(typeof(UnityEngine.Object), SelectionMode.Assets))
+            {
+                path = AssetDatabase.GetAssetPath(obj);
+                if (!string.IsNullOrEmpty(path) && File.Exists(path))
+                {
+                    path = Path.GetDirectoryName(path);
+                    break;
+                }
+            }
+            return path;
+        }
+    }
+
+    public class CreateLuaProcessor : EndNameEditAction
+    {
+        public override void Action(int instanceId, string pathName, string resourceFile)
+        {
+            UnityEngine.Object o = CreateScriptAssetFromTemplate(pathName, resourceFile);
+            ProjectWindowUtil.ShowCreatedAsset(o);
+        }
+
+        internal static UnityEngine.Object CreateScriptAssetFromTemplate(string pathName, string resourceFile)
+        {
+            string fullPath = Path.GetFullPath(pathName);
+            StreamReader streamReader = new StreamReader(resourceFile);
+            string text = streamReader.ReadToEnd();
+            streamReader.Close();
+
+            // Replace #NAME#
+            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(pathName);
+            text = Regex.Replace(text, "#NAME#", fileNameWithoutExtension);
+
+            // Replace #DATETIME#
+            string dataTime = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+            text = Regex.Replace(text, "#DATETIME#", dataTime);
+
+            // Replace #USER# Environment.UserName
+            text = Regex.Replace(text, "#USER#", Environment.UserName);
+
+            bool encoderShouldEmitUTF8Identifier = true;
+            bool throwOnInvalidBytes = false;
+            UTF8Encoding encoding = new UTF8Encoding(encoderShouldEmitUTF8Identifier, throwOnInvalidBytes);
+            bool append = false;
+            StreamWriter streamWriter = new StreamWriter(fullPath, append, encoding);
+            streamWriter.Write(text);
+            streamWriter.Close();
+            AssetDatabase.ImportAsset(pathName);
+            return AssetDatabase.LoadAssetAtPath(pathName, typeof(UnityEngine.Object));
         }
     }
 
@@ -328,7 +479,7 @@ namespace NCSpeedLight
             {
                 string path = m_LuaScripts[m_SelectedScript];
                 path = m_CustomScriptRoot + path;
-                EditorLuaHelper.OpenFileAtLineExternal(path, 1);
+                EditorLuaHelper.OpenLuaScriptAtLine(path, 1);
             }
             GUILayout.EndHorizontal();
             if (m_SelectedScript == -1)

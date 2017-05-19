@@ -8,6 +8,7 @@ namespace NCSpeedLight
 {
     public class EditorMenu
     {
+        [MenuItem("Framework/Start Game", false, 0)]
         [MenuItem("Assets/Start Game", false, 0)]
         public static void StartGame()
         {

@@ -8,13 +8,9 @@
 -- Modify History:
 --
 -----------------------------------------------
-#NAME# = {};
+#NAME# = {
+	transform = nil,
+	gameObject = nil,
+};
 
-#NAME#.__index = #NAME#;
-
--- Constructor
-function #NAME#.New()
-	local o = {};
-	setmetatable(o, #NAME#);
-	return o;
-end 
+local this = #NAME#;
