@@ -13,6 +13,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
@@ -47,7 +48,7 @@ namespace NCSpeedLight
         {
             if (Directory.Exists(Constants.LUA_SCRIPT_WORKSPACE) == false)
             {
-                Debug.LogError("Directory doesn't exist: " + Constants.LUA_SCRIPT_WORKSPACE);
+                Helper.LogError("Directory doesn't exist: " + Constants.LUA_SCRIPT_WORKSPACE);
                 return false;
             }
             if (Directory.Exists(Constants.BUILD_SCRIPT_BUNDLE_PATH) == false)
@@ -75,7 +76,14 @@ namespace NCSpeedLight
                 {
                     string file = files[i];
                     if (string.IsNullOrEmpty(file)) continue;
-                    File.Copy(file, file + ".bytes", true);
+                    if (Constants.SCRIPT_BYTE_CODE_MODE)
+                    {
+                        EncodeLuaFile(file, file + ".bytes");
+                    }
+                    else
+                    {
+                        File.Copy(file, file + ".bytes", true);
+                    }
                 }
             }
             AssetDatabase.Refresh();
@@ -252,6 +260,46 @@ namespace NCSpeedLight
                 return null;
             }
             return paths[paths.Length - 1];
+        }
+
+        public static void EncodeLuaFile(string srcFile, string outFile)
+        {
+            if (!srcFile.ToLower().EndsWith(".lua"))
+            {
+                File.Copy(srcFile, outFile, true);
+                return;
+            }
+            bool isWin = true;
+            string luaexe = string.Empty;
+            string args = string.Empty;
+            string exedir = string.Empty;
+            string currDir = Directory.GetCurrentDirectory();
+            if (Application.platform == RuntimePlatform.WindowsEditor)
+            {
+                isWin = true;
+                luaexe = "luajit.exe";
+                args = "-b " + srcFile + " " + outFile;
+                exedir = Application.dataPath.Replace("Assets", "") + "/LuaEncoder/luajit/";
+            }
+            else if (Application.platform == RuntimePlatform.OSXEditor)
+            {
+                isWin = false;
+                luaexe = "./luac";
+                args = "-o " + outFile + " " + srcFile;
+                exedir = Application.dataPath.Replace("Assets", "") + "/LuaEncoder/luavm/";
+            }
+            Directory.SetCurrentDirectory(exedir);
+            ProcessStartInfo info = new ProcessStartInfo();
+            info.FileName = luaexe;
+            info.Arguments = args;
+            info.WindowStyle = ProcessWindowStyle.Hidden;
+            info.UseShellExecute = isWin;
+            info.ErrorDialog = true;
+            Helper.Log(info.FileName + " " + info.Arguments);
+
+            Process pro = Process.Start(info);
+            pro.WaitForExit();
+            Directory.SetCurrentDirectory(currDir);
         }
     }
 }

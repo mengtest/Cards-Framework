@@ -61,6 +61,8 @@ public class NCSpeedLight_HelperWrap
 		L.RegFunction("OpenFile", OpenFile);
 		L.RegFunction("SaveFile", SaveFile);
 		L.RegFunction("LoadAssetFromBundle", LoadAssetFromBundle);
+		L.RegFunction("EncryptString", EncryptString);
+		L.RegFunction("DecryptString", DecryptString);
 		L.RegFunction("New", _CreateNCSpeedLight_Helper);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegFunction("ChildDelegate", NCSpeedLight_Helper_ChildDelegate);
@@ -1177,6 +1179,42 @@ public class NCSpeedLight_HelperWrap
 			UnityEngine.AssetBundle arg2 = (UnityEngine.AssetBundle)ToLua.CheckUnityObject(L, 3, typeof(UnityEngine.AssetBundle));
 			UnityEngine.Object o = NCSpeedLight.Helper.LoadAssetFromBundle(arg0, arg1, arg2);
 			ToLua.Push(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int EncryptString(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			string arg0 = ToLua.CheckString(L, 1);
+			string arg1 = ToLua.CheckString(L, 2);
+			string o = NCSpeedLight.Helper.EncryptString(arg0, arg1);
+			LuaDLL.lua_pushstring(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int DecryptString(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			string arg0 = ToLua.CheckString(L, 1);
+			string arg1 = ToLua.CheckString(L, 2);
+			string o = NCSpeedLight.Helper.DecryptString(arg0, arg1);
+			LuaDLL.lua_pushstring(L, o);
 			return 1;
 		}
 		catch(Exception e)

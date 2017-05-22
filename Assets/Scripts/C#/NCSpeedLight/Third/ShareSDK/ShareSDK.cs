@@ -33,41 +33,45 @@ namespace cn.sharesdk.unity3d
 
         void Awake()
         {
-            print("ShareSDK Awake");
-            Type type = devInfo.GetType();
-            Hashtable platformConfigs = new Hashtable();
-            FieldInfo[] devInfoFields = type.GetFields();
-            foreach (FieldInfo devInfoField in devInfoFields)
+            if (Application.isMobilePlatform)
             {
-                DevInfo info = (DevInfo)devInfoField.GetValue(devInfo);
-                int platformId = (int)info.GetType().GetField("type").GetValue(info);
-                FieldInfo[] fields = info.GetType().GetFields();
-                Hashtable table = new Hashtable();
-                foreach (FieldInfo field in fields)
+                print("ShareSDK Awake");
+                devInfo = new DevInfoSet();
+                Type type = typeof(DevInfoSet);
+                Hashtable platformConfigs = new Hashtable();
+                FieldInfo[] devInfoFields = type.GetFields();
+                foreach (FieldInfo devInfoField in devInfoFields)
                 {
-                    if ("type".EndsWith(field.Name))
+                    DevInfo info = (DevInfo)devInfoField.GetValue(devInfo);
+                    int platformId = (int)info.GetType().GetField("type").GetValue(info);
+                    FieldInfo[] fields = info.GetType().GetFields();
+                    Hashtable table = new Hashtable();
+                    foreach (FieldInfo field in fields)
                     {
-                        continue;
+                        if ("type".EndsWith(field.Name))
+                        {
+                            continue;
+                        }
+                        else if ("Enable".EndsWith(field.Name) || "ShareByAppClient".EndsWith(field.Name) || "BypassApproval".EndsWith(field.Name))
+                        {
+                            table.Add(field.Name, Convert.ToString(field.GetValue(info)).ToLower());
+                        }
+                        else
+                        {
+                            table.Add(field.Name, Convert.ToString(field.GetValue(info)));
+                        }
                     }
-                    else if ("Enable".EndsWith(field.Name) || "ShareByAppClient".EndsWith(field.Name) || "BypassApproval".EndsWith(field.Name))
-                    {
-                        table.Add(field.Name, Convert.ToString(field.GetValue(info)).ToLower());
-                    }
-                    else
-                    {
-                        table.Add(field.Name, Convert.ToString(field.GetValue(info)));
-                    }
+                    platformConfigs.Add(platformId, table);
                 }
-                platformConfigs.Add(platformId, table);
-            }
 
 #if UNITY_ANDROID
             shareSDKUtils = new AndroidImpl(gameObject);
 #elif UNITY_IPHONE
-			shareSDKUtils = new iOSImpl(gameObject);
+                shareSDKUtils = new iOSImpl(gameObject);
 #endif
-            shareSDKUtils.InitSDK(appKey);
-            shareSDKUtils.SetPlatformConfig(platformConfigs);
+                shareSDKUtils.InitSDK(appKey);
+                shareSDKUtils.SetPlatformConfig(platformConfigs);
+            }
         }
 
         /// <summary>

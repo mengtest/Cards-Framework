@@ -36,7 +36,7 @@ namespace NCSpeedLight
 
         void Start()
         {
-            ssdk = GetComponent<ShareSDK>();
+            ssdk = gameObject.AddComponent<ShareSDK>();
             ssdk.authHandler = (int reqID, ResponseState state, PlatformType type, Hashtable result) =>
             {
                 Helper.Log("ShareSDKAdapter.authHandler: auth callback,platform is " + type + " res state is " + state);

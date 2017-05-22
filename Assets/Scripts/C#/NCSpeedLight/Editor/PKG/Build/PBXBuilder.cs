@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#if UNITY_IOS
+using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using System.IO;
@@ -209,3 +210,4 @@ namespace NCSpeedLight
         }
     }
 }
+#endif

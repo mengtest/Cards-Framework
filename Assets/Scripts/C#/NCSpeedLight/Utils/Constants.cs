@@ -301,9 +301,9 @@ namespace NCSpeedLight
         }
 
         /// <summary>
-        /// 是否加密lua
+        /// 脚本加密模式
         /// </summary>
-        public static bool ENCRYPT_LUA = true;
+        public static bool SCRIPT_BYTE_CODE_MODE = true;
 
         /// <summary>
         /// 是否启用ScriptBundle模式
@@ -340,7 +340,7 @@ namespace NCSpeedLight
                 }
                 else if (Application.isEditor)
                 {
-                    return true;
+                    return false;
                 }
                 else
                 {

@@ -1212,18 +1212,17 @@ namespace NCSpeedLight
             return null;
         }
 
-        private static byte[] Keys = { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
+        private static byte[] RGBIV = { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
 
         public static string EncryptString(string encryptString, string key)
         {
             try
             {
-                byte[] rgbKey = Encoding.UTF8.GetBytes(key.Substring(0, 8));
-                byte[] rgbIV = Keys;
+                byte[] rgbKey = Encoding.UTF8.GetBytes(key);
                 byte[] inputByteArray = Encoding.UTF8.GetBytes(encryptString);
                 DESCryptoServiceProvider dcsp = new DESCryptoServiceProvider();
                 MemoryStream ms = new MemoryStream();
-                CryptoStream cs = new CryptoStream(ms, dcsp.CreateEncryptor(rgbKey, rgbIV), CryptoStreamMode.Write);
+                CryptoStream cs = new CryptoStream(ms, dcsp.CreateEncryptor(rgbKey, RGBIV), CryptoStreamMode.Write);
                 cs.Write(inputByteArray, 0, inputByteArray.Length);
                 cs.FlushFinalBlock();
                 cs.Close();
@@ -1240,11 +1239,10 @@ namespace NCSpeedLight
             try
             {
                 byte[] rgbKey = Encoding.UTF8.GetBytes(key);
-                byte[] rgbIV = Keys;
                 byte[] inputByteArray = Convert.FromBase64String(decryptString);
                 DESCryptoServiceProvider dcsp = new DESCryptoServiceProvider();
                 MemoryStream ms = new MemoryStream();
-                CryptoStream cs = new CryptoStream(ms, dcsp.CreateDecryptor(rgbKey, rgbIV), CryptoStreamMode.Write);
+                CryptoStream cs = new CryptoStream(ms, dcsp.CreateDecryptor(rgbKey, RGBIV), CryptoStreamMode.Write);
                 cs.Write(inputByteArray, 0, inputByteArray.Length);
                 cs.FlushFinalBlock();
                 cs.Close();
@@ -1255,5 +1253,6 @@ namespace NCSpeedLight
                 return decryptString;
             }
         }
+
     }
 }
