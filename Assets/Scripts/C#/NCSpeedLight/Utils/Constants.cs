@@ -12,9 +12,32 @@
 using System;
 using System.IO;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace NCSpeedLight
 {
+    public class ProjPreferences : ScriptableObject
+    {
+
+        public static string FILE_PATH = "Assets/ProjectPref.asset";
+
+        public bool AssetBundleMode;
+        public bool ScriptBundleMode;
+        public bool ScriptByteCode;
+
+        public bool CheckUpdate;
+
+        public bool ConnectInterLoginServer;
+        public string InterLoginServerHost = string.Empty;
+        public int InterLoginServerPort;
+
+        public bool ConnectInterAssetServer;
+        public string InterAssetServerHost = string.Empty;
+        public int InterAssetServerPort;
+    }
+
     public static class Constants
     {
         /// <summary>
@@ -44,6 +67,18 @@ namespace NCSpeedLight
                 return true;
             }
         }
+
+        /// <summary>
+        /// 是否检查更新
+        /// </summary>
+        public static bool CHECK_UPDATE
+        {
+            get
+            {
+                return true;
+            }
+        }
+
         /// <summary>
         /// 主版本号（应用程序版本号）
         /// </summary>
@@ -303,7 +338,34 @@ namespace NCSpeedLight
         /// <summary>
         /// 脚本加密模式
         /// </summary>
-        public static bool SCRIPT_BYTE_CODE_MODE = true;
+        public static bool SCRIPT_BYTE_CODE_MODE
+        {
+            get
+            {
+                if (Application.isMobilePlatform || Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.OSXPlayer)
+                {
+                    return true;
+                }
+                else if (Application.isEditor)
+                {
+#if UNITY_EDITOR
+                    ProjPreferences pref = AssetDatabase.LoadAssetAtPath<ProjPreferences>(ProjPreferences.FILE_PATH);
+                    if (pref)
+                    {
+                        return pref.ScriptByteCode;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+#endif
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
 
         /// <summary>
         /// 是否启用ScriptBundle模式
@@ -318,7 +380,17 @@ namespace NCSpeedLight
                 }
                 else if (Application.isEditor)
                 {
-                    return false;
+#if UNITY_EDITOR
+                    ProjPreferences pref = AssetDatabase.LoadAssetAtPath<ProjPreferences>(ProjPreferences.FILE_PATH);
+                    if (pref)
+                    {
+                        return pref.ScriptBundleMode;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+#endif
                 }
                 else
                 {
@@ -340,7 +412,17 @@ namespace NCSpeedLight
                 }
                 else if (Application.isEditor)
                 {
-                    return false;
+#if UNITY_EDITOR
+                    ProjPreferences pref = AssetDatabase.LoadAssetAtPath<ProjPreferences>(ProjPreferences.FILE_PATH);
+                    if (pref)
+                    {
+                        return pref.AssetBundleMode;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+#endif
                 }
                 else
                 {

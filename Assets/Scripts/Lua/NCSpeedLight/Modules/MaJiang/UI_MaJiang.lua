@@ -269,6 +269,8 @@ function UI_MaJiang.OnClickNo(go)
 end
 
 function UI_MaJiang.OnClickInvite(go)
+	local shareText = "[" .. Player.Name .. "]" .. "邀你加入:" .. HallScene.CurrentFBTotalRound .. "局," .. HallScene.CurrentFBPlayerCount .. "人场," .. MJScene.GetMJPlaywayStr(HallScene.CurrentFBPlayway);
+	ShareSDKAdapter.InviteWechatFriend(nil, HallScene.CurrentFBID, shareText);
 end
 
 function UI_MaJiang.OnClickCastDice(go)

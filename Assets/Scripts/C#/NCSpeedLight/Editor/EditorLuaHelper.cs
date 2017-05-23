@@ -14,11 +14,9 @@ namespace NCSpeedLight
 {
     public class EditorLuaHelper : Editor
     {
-        public const string LUA_IDE_PATH_KEY = "LuaIDE";
+        public static string LUA_PROJ_ROOT = Application.dataPath + "/Scripts/Lua/";
 
-        public const string LUA_PROJ_ROOT_KEY = "LuaProjRootPath";
-
-        public const string LUA_TEMPLATE_ROOT_KEY = "LuaTemplate";
+        public static string LUA_TEMPLATE_ROOT = Application.dataPath + "/Scripts/Lua/NCSpeedLight/Modules/Template/";
 
         [OnOpenAsset(2)]
         public static bool OnOpenAsset(int instanceID, int line)
@@ -54,21 +52,8 @@ namespace NCSpeedLight
                     fileName = strs[0];
                     int lineNumber = 0;
                     int.TryParse(strs[1], out lineNumber);
-                    string luaProjRootPath = EditorUserSettings.GetConfigValue(LUA_PROJ_ROOT_KEY);
-                    if (string.IsNullOrEmpty(luaProjRootPath))
-                    {
-                        SetLuaProjRoot();
-                    }
-                    luaProjRootPath = EditorUserSettings.GetConfigValue(LUA_PROJ_ROOT_KEY);
-                    if (string.IsNullOrEmpty(luaProjRootPath))
-                    {
-                        return false;
-                    }
-                    else
-                    {
-                        string filePath = luaProjRootPath + "/" + fileName;
-                        return OpenLuaScriptAtLine(filePath, lineNumber);
-                    }
+                    string filePath = LUA_PROJ_ROOT + fileName;
+                    return OpenLuaScriptAtLine(filePath, lineNumber);
                 }
                 else if (logStr.StartsWith("LuaException"))
                 {
@@ -81,38 +66,25 @@ namespace NCSpeedLight
                     string fileName = strs[0] + ".lua";
                     int lineNumber = 0;
                     int.TryParse(strs[1], out lineNumber);
-                    string luaProjRootPath = EditorUserSettings.GetConfigValue(LUA_PROJ_ROOT_KEY);
-                    if (string.IsNullOrEmpty(luaProjRootPath))
-                    {
-                        SetLuaProjRoot();
-                    }
-                    luaProjRootPath = EditorUserSettings.GetConfigValue(LUA_PROJ_ROOT_KEY);
-                    if (string.IsNullOrEmpty(luaProjRootPath))
-                    {
-                        return false;
-                    }
-                    else
-                    {
-                        string filePath = luaProjRootPath + "/" + fileName;
-                        return OpenLuaScriptAtLine(filePath, lineNumber);
-                    }
+                    string filePath = LUA_PROJ_ROOT + fileName;
+                    return OpenLuaScriptAtLine(filePath, lineNumber);
                 }
             }
             return false;
         }
 
+        public static string GetLuaIDEPath()
+        {
+            return Environment.GetEnvironmentVariable("VSCODE");
+        }
 
         public static bool OpenLuaScriptAtLine(string filePath, int line)
         {
             if (File.Exists(filePath) == false) return false;
-            string idePath = EditorUserSettings.GetConfigValue(LUA_IDE_PATH_KEY);
+            string idePath = GetLuaIDEPath();
             if (string.IsNullOrEmpty(idePath) || !File.Exists(idePath))
             {
-                SetLuaIDE();
-            }
-            idePath = EditorUserSettings.GetConfigValue(LUA_IDE_PATH_KEY);
-            if (string.IsNullOrEmpty(idePath) || !File.Exists(idePath))
-            {
+                EditorUtility.DisplayDialog("Error", "Please set system env variable named 'VSCODE'", "OK");
                 return false;
             }
             else
@@ -211,144 +183,51 @@ namespace NCSpeedLight
             return null;
         }
 
-        [MenuItem("Framework/Lua/Set IDE")]
-        public static void SetLuaIDE()
-        {
-            string path = EditorUserSettings.GetConfigValue(LUA_IDE_PATH_KEY);
-            path = EditorUtility.OpenFilePanel("Select lua ide path", path, "exe");
-            if (string.IsNullOrEmpty(path) == false)
-            {
-                EditorUserSettings.SetConfigValue(LUA_IDE_PATH_KEY, path);
-                Debug.Log("SetLuaIDE: " + path);
-            }
-        }
-
-        [MenuItem("Framework/Lua/Set Project Root")]
-        public static void SetLuaProjRoot()
-        {
-            string path = EditorUserSettings.GetConfigValue(LUA_PROJ_ROOT_KEY);
-            path = EditorUtility.OpenFolderPanel("Select lua project path", path, "");
-            if (string.IsNullOrEmpty(path) == false)
-            {
-                EditorUserSettings.SetConfigValue(LUA_PROJ_ROOT_KEY, path);
-                Debug.Log("SetLuaProjRoot: " + path);
-            }
-        }
-
-        [MenuItem("Framework/Lua/Set Template Root")]
-        public static void SetLuaTemplateRoot()
-        {
-            string path = EditorUserSettings.GetConfigValue(LUA_TEMPLATE_ROOT_KEY);
-            path = EditorUtility.OpenFolderPanel("Select lua template file path", path, "");
-            if (string.IsNullOrEmpty(path) == false)
-            {
-                EditorUserSettings.SetConfigValue(LUA_TEMPLATE_ROOT_KEY, path);
-                Debug.Log("SetLuaTemplateRoot: " + path);
-            }
-        }
 
         [MenuItem("Assets/Open Lua Project")]
-        [MenuItem("Framework/Lua/Open Project")]
         public static void OpenLuaProj()
         {
-            string idePath = EditorUserSettings.GetConfigValue(LUA_IDE_PATH_KEY);
+            string idePath = GetLuaIDEPath();
             if (string.IsNullOrEmpty(idePath) || !File.Exists(idePath))
             {
-                SetLuaIDE();
-            }
-            if (string.IsNullOrEmpty(idePath) || !File.Exists(idePath))
-            {
+                EditorUtility.DisplayDialog("Error", "Please set system env variable named 'VSCODE'", "OK");
                 return;
             }
-            idePath = EditorUserSettings.GetConfigValue(LUA_IDE_PATH_KEY);
-
-            string luaProjRootPath = EditorUserSettings.GetConfigValue(LUA_IDE_PATH_KEY);
-            if (string.IsNullOrEmpty(luaProjRootPath))
+            else
             {
-                SetLuaProjRoot();
+                System.Diagnostics.Process proc = new System.Diagnostics.Process();
+                proc.StartInfo.FileName = idePath;
+                proc.StartInfo.Arguments = string.Format("--new-window {0}", LUA_PROJ_ROOT);
+                proc.Start();
             }
-            luaProjRootPath = EditorUserSettings.GetConfigValue(LUA_PROJ_ROOT_KEY);
-            if (string.IsNullOrEmpty(luaProjRootPath))
-            {
-                return;
-            }
-
-            System.Diagnostics.Process proc = new System.Diagnostics.Process();
-            proc.StartInfo.FileName = idePath;
-            proc.StartInfo.Arguments = string.Format("--new-window {0}", luaProjRootPath);
-            proc.Start();
         }
 
 
         [MenuItem("Assets/Create/Lua Class", false, 1)]
         public static void CreatLuaClass()
         {
-            string root = EditorUserSettings.GetConfigValue(LUA_TEMPLATE_ROOT_KEY);
-            if (string.IsNullOrEmpty(root))
-            {
-                SetLuaTemplateRoot();
-            }
-            root = EditorUserSettings.GetConfigValue(LUA_TEMPLATE_ROOT_KEY);
-            if (string.IsNullOrEmpty(root))
-            {
-                Debug.LogError("Can not create lua class,please set up lua template file path.");
-                return;
-            }
-            string path = root + "/Class.lua";
+            string path = LUA_TEMPLATE_ROOT + "Class.lua";
             ProjectWindowUtil.StartNameEditingIfProjectWindowExists(0, CreateInstance<CreateLuaProcessor>(), GetSelectedPathOrFallback() + "/NewLuaClass.lua", null, path);
         }
 
         [MenuItem("Assets/Create/Lua Behaviour", false, 2)]
         public static void CreateLuaBehaviour()
         {
-            string root = EditorUserSettings.GetConfigValue(LUA_TEMPLATE_ROOT_KEY);
-            if (string.IsNullOrEmpty(root))
-            {
-                SetLuaTemplateRoot();
-            }
-            root = EditorUserSettings.GetConfigValue(LUA_TEMPLATE_ROOT_KEY);
-            if (string.IsNullOrEmpty(root))
-            {
-                Debug.LogError("Can not create lua behaviour,please set up lua template file path.");
-                return;
-            }
-            string path = root + "/Behaviour.lua";
+            string path = LUA_TEMPLATE_ROOT + "Behaviour.lua";
             ProjectWindowUtil.StartNameEditingIfProjectWindowExists(0, CreateInstance<CreateLuaProcessor>(), GetSelectedPathOrFallback() + "/NewLuaBehaviour.lua", null, path);
         }
 
         [MenuItem("Assets/Create/Lua Component", false, 3)]
         public static void CreateLuaComponent()
         {
-            string root = EditorUserSettings.GetConfigValue(LUA_TEMPLATE_ROOT_KEY);
-            if (string.IsNullOrEmpty(root))
-            {
-                SetLuaTemplateRoot();
-            }
-            root = EditorUserSettings.GetConfigValue(LUA_TEMPLATE_ROOT_KEY);
-            if (string.IsNullOrEmpty(root))
-            {
-                Debug.LogError("Can not create lua component,please set up lua template file path.");
-                return;
-            }
-            string path = root + "/Component.lua";
+            string path = LUA_TEMPLATE_ROOT + "Component.lua";
             ProjectWindowUtil.StartNameEditingIfProjectWindowExists(0, CreateInstance<CreateLuaProcessor>(), GetSelectedPathOrFallback() + "/NewLuaComponent.lua", null, path);
         }
 
         [MenuItem("Assets/Create/Lua Blank", false, 4)]
         public static void CreateLuaBlank()
         {
-            string root = EditorUserSettings.GetConfigValue(LUA_TEMPLATE_ROOT_KEY);
-            if (string.IsNullOrEmpty(root))
-            {
-                SetLuaTemplateRoot();
-            }
-            root = EditorUserSettings.GetConfigValue(LUA_TEMPLATE_ROOT_KEY);
-            if (string.IsNullOrEmpty(root))
-            {
-                Debug.LogError("Can not create lua blank,please set up lua template file path.");
-                return;
-            }
-            string path = root + "/Blank.lua";
+            string path = LUA_TEMPLATE_ROOT + "Blank.lua";
             ProjectWindowUtil.StartNameEditingIfProjectWindowExists(0, CreateInstance<CreateLuaProcessor>(), GetSelectedPathOrFallback() + "/NewLuaBlank.lua", null, path);
         }
 
@@ -417,18 +296,8 @@ namespace NCSpeedLight
         private void OnEnable()
         {
             m_Instance = target as LuaBehaviour;
-            m_LuaProjRoot = EditorUserSettings.GetConfigValue(EditorLuaHelper.LUA_IDE_PATH_KEY);
-            if (string.IsNullOrEmpty(m_LuaProjRoot))
-            {
-                EditorLuaHelper.SetLuaProjRoot();
-            }
-            m_LuaProjRoot = EditorUserSettings.GetConfigValue(EditorLuaHelper.LUA_PROJ_ROOT_KEY);
-            if (string.IsNullOrEmpty(m_LuaProjRoot))
-            {
-                m_Instance = null;
-                return;
-            }
-            m_CustomScriptRoot = m_LuaProjRoot + "/NCSpeedLight/";
+            m_LuaProjRoot = EditorLuaHelper.LUA_PROJ_ROOT;
+            m_CustomScriptRoot = m_LuaProjRoot + "NCSpeedLight/";
             List<string> scripts = new List<string>();
             CollectScripts(m_CustomScriptRoot, scripts);
             m_LuaScripts = scripts.ToArray();

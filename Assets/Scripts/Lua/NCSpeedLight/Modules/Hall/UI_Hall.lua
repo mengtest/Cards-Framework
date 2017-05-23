@@ -95,4 +95,9 @@ function UI_Hall.RefreshAnnouncement()
 		tweener.duration = 18;
 		tweener.delay = 1;
 	end
+end
+
+function UI_Hall.ShowMailRedPoint(number)
+	local showRedPoint = number ~= 0;
+	UIHelper.SetActiveState(this.transform, "bottom/function/Message/RedPoint", showRedPoint);
 end 

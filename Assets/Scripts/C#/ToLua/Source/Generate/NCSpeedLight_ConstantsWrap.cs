@@ -15,7 +15,6 @@ public class NCSpeedLight_ConstantsWrap
 		L.RegVar("ASSET_BUNDLE_MANIFEST_FILE", get_ASSET_BUNDLE_MANIFEST_FILE, set_ASSET_BUNDLE_MANIFEST_FILE);
 		L.RegVar("ASSET_MANIFEST_FILE", get_ASSET_MANIFEST_FILE, set_ASSET_MANIFEST_FILE);
 		L.RegVar("SCRIPT_MANIFEST_FILE", get_SCRIPT_MANIFEST_FILE, set_SCRIPT_MANIFEST_FILE);
-		L.RegVar("SCRIPT_BYTE_CODE_MODE", get_SCRIPT_BYTE_CODE_MODE, set_SCRIPT_BYTE_CODE_MODE);
 		L.RegVar("SCRIPT_BUNDLE_FILE_EXTENSION", get_SCRIPT_BUNDLE_FILE_EXTENSION, null);
 		L.RegVar("ASSET_BUNDLE_FILE_EXTENSION", get_ASSET_BUNDLE_FILE_EXTENSION, null);
 		L.RegVar("LUA_SCRIPT_WORKSPACE", get_LUA_SCRIPT_WORKSPACE, set_LUA_SCRIPT_WORKSPACE);
@@ -33,6 +32,7 @@ public class NCSpeedLight_ConstantsWrap
 		L.RegVar("BUILD_ASSET_BUNDLE_PATH", get_BUILD_ASSET_BUNDLE_PATH, null);
 		L.RegVar("STREAMING_PATH", get_STREAMING_PATH, null);
 		L.RegVar("PLATFORM_NAME", get_PLATFORM_NAME, null);
+		L.RegVar("SCRIPT_BYTE_CODE_MODE", get_SCRIPT_BYTE_CODE_MODE, null);
 		L.RegVar("SCRIPT_BUNDLE_MODE", get_SCRIPT_BUNDLE_MODE, null);
 		L.RegVar("ASSET_BUNDLE_MODE", get_ASSET_BUNDLE_MODE, null);
 		L.RegVar("LOCAL_ASSET_BUNDLE_PATH", get_LOCAL_ASSET_BUNDLE_PATH, null);
@@ -161,20 +161,6 @@ public class NCSpeedLight_ConstantsWrap
 		try
 		{
 			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.SCRIPT_MANIFEST_FILE);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_SCRIPT_BYTE_CODE_MODE(IntPtr L)
-	{
-		try
-		{
-			LuaDLL.lua_pushboolean(L, NCSpeedLight.Constants.SCRIPT_BYTE_CODE_MODE);
 			return 1;
 		}
 		catch(Exception e)
@@ -413,6 +399,20 @@ public class NCSpeedLight_ConstantsWrap
 		try
 		{
 			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.PLATFORM_NAME);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_SCRIPT_BYTE_CODE_MODE(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushboolean(L, NCSpeedLight.Constants.SCRIPT_BYTE_CODE_MODE);
 			return 1;
 		}
 		catch(Exception e)
@@ -827,21 +827,6 @@ public class NCSpeedLight_ConstantsWrap
 		{
 			string arg0 = ToLua.CheckString(L, 2);
 			NCSpeedLight.Constants.SCRIPT_MANIFEST_FILE = arg0;
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_SCRIPT_BYTE_CODE_MODE(IntPtr L)
-	{
-		try
-		{
-			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
-			NCSpeedLight.Constants.SCRIPT_BYTE_CODE_MODE = arg0;
 			return 0;
 		}
 		catch(Exception e)

@@ -32,7 +32,7 @@ namespace NCSpeedLight
 
         private static ShareSDK ssdk;
         private static List<AuthCallbackDelegate> authHandlers = new List<AuthCallbackDelegate>();
-        private static List<ShareSDK.EventHandler> shareHandlers = new List<ShareSDK.EventHandler>();
+        private static List<ShareCallbackDelegate> shareHandlers = new List<ShareCallbackDelegate>();
 
         void Start()
         {
@@ -102,10 +102,10 @@ namespace NCSpeedLight
             {
                 for (int i = 0; i < shareHandlers.Count; i++)
                 {
-                    ShareSDK.EventHandler handler = shareHandlers[i];
+                    ShareCallbackDelegate handler = shareHandlers[i];
                     if (handler != null)
                     {
-                        handler(reqID, state, type, result);
+                        handler((RetType)state);
                     }
                 }
                 shareHandlers.Clear();
@@ -205,10 +205,11 @@ namespace NCSpeedLight
 
         public static void ShareWechatMoment(ShareCallbackDelegate handler)
         {
+            shareHandlers.Add(handler);
             ShareContent content = new ShareContent();
-            content.SetTitle(Constants.SHARE_TITLE);
+            content.SetTitle(Constants.SHARE_MOMENT_CONTENT);
             content.SetText(Constants.SHARE_CONTENT);
-            content.SetUrl(Constants.PKG_DOWNLOAD_URL + Constants.WX_UNION_ID + "&");
+            content.SetUrl(Constants.PKG_DOWNLOAD_URL + "?UID=" + Constants.WX_UNION_ID + "&");
             content.SetImageUrl(Constants.SHARE_ICON);
             content.SetShareType(ContentType.Webpage);
             content.SetShareContentCustomize(PlatformType.WeChatMoments, content);
@@ -217,19 +218,28 @@ namespace NCSpeedLight
 
         public static void ShareWechatFriend(ShareCallbackDelegate handler)
         {
+            shareHandlers.Add(handler);
             ShareContent content = new ShareContent();
-            content.SetTitle(Constants.SHARE_TITLE);
+            content.SetTitle("立刻加入雀友红中麻将");
             content.SetText(Constants.SHARE_CONTENT);
-            content.SetUrl(Constants.PKG_DOWNLOAD_URL + Constants.WX_UNION_ID + "&");
+            content.SetUrl(Constants.PKG_DOWNLOAD_URL + "?UID=" + Constants.WX_UNION_ID + "&");
             content.SetImageUrl(Constants.SHARE_ICON);
             content.SetShareType(ContentType.Webpage);
             content.SetShareContentCustomize(PlatformType.WeChat, content);
             ssdk.ShareContent(PlatformType.WeChat, content);
         }
 
-        public static void InviteWechatFriend(ShareCallbackDelegate handler)
+        public static void InviteWechatFriend(ShareCallbackDelegate handler,int roomID,string shareText)
         {
-
+            shareHandlers.Add(handler);
+            ShareContent content = new ShareContent();
+            content.SetTitle(Constants.SHARE_TITLE + roomID);
+            content.SetText(shareText);
+            content.SetUrl(Constants.PKG_DOWNLOAD_URL + "?UID=" + Constants.WX_UNION_ID + "&");
+            content.SetImageUrl(Constants.SHARE_ICON);
+            content.SetShareType(ContentType.Webpage);
+            content.SetShareContentCustomize(PlatformType.WechatPlatform, content);
+            ssdk.ShareContent(PlatformType.WechatPlatform, content);
         }
     }
 }

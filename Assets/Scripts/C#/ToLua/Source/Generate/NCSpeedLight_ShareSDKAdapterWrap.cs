@@ -124,7 +124,7 @@ public class NCSpeedLight_ShareSDKAdapterWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 1);
+			ToLua.CheckArgsCount(L, 3);
 			NCSpeedLight.ShareSDKAdapter.ShareCallbackDelegate arg0 = null;
 			LuaTypes funcType1 = LuaDLL.lua_type(L, 1);
 
@@ -138,7 +138,9 @@ public class NCSpeedLight_ShareSDKAdapterWrap
 				arg0 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.ShareSDKAdapter.ShareCallbackDelegate), func) as NCSpeedLight.ShareSDKAdapter.ShareCallbackDelegate;
 			}
 
-			NCSpeedLight.ShareSDKAdapter.InviteWechatFriend(arg0);
+			int arg1 = (int)LuaDLL.luaL_checknumber(L, 2);
+			string arg2 = ToLua.CheckString(L, 3);
+			NCSpeedLight.ShareSDKAdapter.InviteWechatFriend(arg0, arg1, arg2);
 			return 0;
 		}
 		catch(Exception e)

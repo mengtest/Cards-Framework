@@ -28,7 +28,7 @@ namespace cn.sharesdk.unity3d
         public const int type = (int)PlatformType.WeChat;
         public string AppId = "wx776aff04142fd64f";
         public string AppSecret = "67755b2094a9cb17c000f17c36e49a9e";
-        public bool BypassApproval = true;
+        public bool BypassApproval = false;
 #endif
     }
 

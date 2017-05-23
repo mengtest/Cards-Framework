@@ -45,6 +45,8 @@ HallScene =
 	
 	CurrentFBCloseTime = 300, -- 副本被解散的倒计时
 	
+	MailData = nil, -- 邮件
+	
 -- endregion
 }
 
@@ -68,6 +70,7 @@ function HallScene.Begin()
 	if SceneManager.LastScene == MJScene then
 		Player.RefreshAddress();
 	end
+	HallScene.RequestMail();
 end
 
 function HallScene.Update()
@@ -104,6 +107,9 @@ function HallScene.RegisterNetEvent()
 	NetManager.RegisterEvent(GameMessage.GM_KICKOFF_PLAYER, HallScene.NotifyRe_Register);
 	NetManager.RegisterEvent(GameMessage.GM_GET_CHAT_RETURN, HallScene.OnReceiveAnnouncement); -- 接收到公告信息
 	NetManager.RegisterEvent(GameMessage.GM_PLAYER_PLAYBACK_RETURN, HallScene.OnRecvPlayback); -- 回放信息
+	NetManager.RegisterEvent(GameMessage.GM_MAIL_REQUEST_RETURN, HallScene.ReceiveMail); -- 接收到邮件信息
+	NetManager.RegisterEvent(GameMessage.GM_GET_ONE_MAIL, HallScene.ReceiveNewMail); -- 游戏内接收到新邮件信息
+	
 end
 
 function HallScene.UnRegisterNetEvent()
@@ -118,6 +124,8 @@ function HallScene.UnRegisterNetEvent()
 	NetManager.UnregisterEvent(GameMessage.GM_KICKOFF_PLAYER, HallScene.NotifyRe_Register);
 	NetManager.UnregisterEvent(GameMessage.GM_GET_CHAT_RETURN, HallScene.OnReceiveAnnouncement); -- 接收到公告信息
 	NetManager.UnregisterEvent(GameMessage.GM_PLAYER_PLAYBACK_RETURN, HallScene.OnRecvPlayback); -- 回放信息
+	NetManager.UnregisterEvent(GameMessage.GM_MAIL_REQUEST_RETURN, HallScene.ReceiveMail); -- 接收到邮件信息
+	NetManager.UnregisterEvent(GameMessage.GM_GET_ONE_MAIL, HallScene.ReceiveNewMail); -- 游戏内接收到新邮件信息
 end
 
 function HallScene.SwitchFBStatus(status)
@@ -181,6 +189,14 @@ end
 -- 请求排行榜数据
 function HallScene.RequestRank()
 end
+
+function HallScene.RequestMail()
+	local msg = {
+		roleId = Player.ID;
+	}
+	NetManager.SendEventToLogicServer(GameMessage.GM_MAIL_REQUEST, PBMessage.GM_RoleIdRequest, msg);
+end
+
 
 function HallScene.ReceiveInvitePlayMaJiang(evt)
 	Log.Info("ReceiveInvitePlayMaJiang");
@@ -310,3 +326,42 @@ function HallScene.OnRecvPlayback(evt)
 		SceneManager.Goto(SceneName.MJScene);
 	end
 end
+
+function HallScene.ReceiveMail(evt)
+	local msg = NetManager.DecodeMsg(PBMessage.GM_PlayerMailPack, evt);
+	if msg == false then
+		Log.Error("ReceiveMail: parse msg error," .. PBMessage.GM_PlayerMailPack);
+		return;
+	end	
+	if #msg.mails == 0 then
+		return;
+	end
+	HallScene.MailData = msg.mails;
+	HallScene.MailRedPointState()
+end
+
+function HallScene.ReceiveNewMail(evt)
+	local msg = NetManager.DecodeMsg(PBMessage.GM_PlayerMailPack, evt);
+	if msg == false then
+		Log.Error("ReceiveNewMail: parse msg error," .. PBMessage.GM_PlayerMailPack);
+		return;
+	end
+	if #msg.mails == 0 then
+		return;
+	end
+	table.insert(HallScene.MailData, msg.mails[1]);
+	HallScene.MailRedPointState()
+end
+
+function HallScene.MailRedPointState()
+	local number = 0;
+	for i = 1, #HallScene.MailData do
+		local mailData = HallScene.MailData[i];
+		local state = mailData.state;
+		-- 0 已读  1 未读
+		if state == 1 then
+			number = number + 1;	
+		end
+	end;
+	UI_Hall.ShowMailRedPoint(number);
+end 

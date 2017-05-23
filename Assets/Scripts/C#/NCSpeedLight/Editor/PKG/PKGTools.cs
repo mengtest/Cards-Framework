@@ -20,6 +20,23 @@ namespace NCSpeedLight
 {
     public class ControlPanel : EditorWindow
     {
+        [MenuItem("Framework/PKG/Build Assets")]
+        public static void BuildAssets()
+        {
+            AssetBuilder.Build();
+        }
+
+        [MenuItem("Framework/PKG/Build Scripts")]
+        public static void BuildScripts()
+        {
+            ScriptBuilder.Build();
+        }
+
+        [MenuItem("Framework/PKG/Build Asset Bundle Tag")]
+        public static void BuildAssetBundleTag()
+        {
+            TagBuilder.Build();
+        }
 
         public static ScriptBuilder ScriptBuilder = new ScriptBuilder(null, null);
 
@@ -27,7 +44,7 @@ namespace NCSpeedLight
 
         public static TagBuilder TagBuilder = new TagBuilder(null, null);
 
-        [MenuItem("PKG/Build Panel")]
+        //[MenuItem("PKG/Build Panel")]
         public static void OpenWindow()
         {
             GetWindowWithRect<ControlPanel>(new Rect(10, 10, 300, 250), false, "Build");
