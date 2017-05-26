@@ -20,20 +20,20 @@ namespace NCSpeedLight
 {
     public class ControlPanel : EditorWindow
     {
-        [MenuItem("Framework/Package/Build Assets")]
-        public static void BuildAssets()
+        [MenuItem("Framework/Package/Build Asset %#z")]
+        public static void BuildAsset()
         {
             AssetBuilder.Build();
         }
 
-        [MenuItem("Framework/Package/Build Scripts")]
-        public static void BuildScripts()
+        [MenuItem("Framework/Package/Build Script %#x")]
+        public static void BuildScript()
         {
             ScriptBuilder.Build();
         }
 
-        [MenuItem("Framework/Package/Build Asset Bundle Tag")]
-        public static void BuildAssetBundleTag()
+        [MenuItem("Framework/Package/Build AB Tag")]
+        public static void BuildABTag()
         {
             TagBuilder.Build();
         }
