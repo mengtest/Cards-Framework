@@ -7,36 +7,41 @@ using UnityEditor;
 
 namespace NCSpeedLight
 {
-    public static class APKBuilder
+    public class APKBuilder : Builder
     {
         private static bool PROFILE_VERSION = false;
         private static string ANDROID_APK_PATH = "Bin/Cards.apk";
-        public static void Build()
+
+        public APKBuilder(Action preBuild, Action postBuild) : base(preBuild, postBuild) { }
+
+        public override void Build()
         {
             GenerateAPKName();
-            //SetKeyStore();
+            SetKeyStore();
             BuildOptions ops = SetBuildAPKOption();
             BuildPipeline.BuildPlayer(GetBuildScenes(), ANDROID_APK_PATH, BuildTarget.Android, ops);
         }
         private static string[] GetBuildScenes()
         {
             List<string> names = new List<string>();
-            foreach (EditorBuildSettingsScene e in EditorBuildSettings.scenes)
-            {
-                if (e == null)
-                {
-                    continue;
-                }
-                if (e.enabled)
-                {
-                    names.Add(e.path);
-                }
-            }
+            //foreach (EditorBuildSettingsScene e in EditorBuildSettings.scenes)
+            //{
+            //    if (e == null)
+            //    {
+            //        continue;
+            //    }
+            //    if (e.enabled)
+            //    {
+            //        names.Add(e.path);
+            //    }
+            //}
+            names.Add("Assets/Launcher.unity");
             return names.ToArray();
         }
+
         private static void GenerateAPKName()
         {
-            int apkIndex = 1;
+            int maxIndex = 1;
             string datetime = DateTime.Now.ToString("yyyyMMdd");
             DirectoryInfo binDirectory = new DirectoryInfo(@"Bin\");
             FileInfo[] fileInfos = binDirectory.GetFiles();
@@ -66,26 +71,27 @@ namespace NCSpeedLight
                         {
                             int tempIndex = 0;
                             int.TryParse(strArray[1], out tempIndex);
-                            if (tempIndex >= apkIndex)
+                            if (tempIndex >= maxIndex)
                             {
-                                apkIndex++;
+                                maxIndex = tempIndex;
+                                maxIndex++;
                             }
                         }
                     }
                 }
             }
-            if (apkIndex == 0) apkIndex = 1;
-            ANDROID_APK_PATH = "Bin/" + datetime + "_" + apkIndex + ".apk";
+            ANDROID_APK_PATH = Helper.StringFormat("Bin/{0}{1}_{2}.apk", Constants.GAME_NAME, datetime, maxIndex);
         }
+
         private static void SetProductName(string name)
         {
             PlayerSettings.productName = name;
         }
         private static void SetKeyStore()
         {
-            PlayerSettings.Android.keystoreName = "HLFXQ.keystore";
+            PlayerSettings.Android.keystoreName = "KEY.keystore";
             PlayerSettings.Android.keystorePass = "qwer1234";
-            PlayerSettings.Android.keyaliasName = "fxq";
+            PlayerSettings.Android.keyaliasName = "tp_signed_key";
             PlayerSettings.Android.keyaliasPass = "qwer1234";
         }
         private static BuildOptions SetBuildAPKOption()

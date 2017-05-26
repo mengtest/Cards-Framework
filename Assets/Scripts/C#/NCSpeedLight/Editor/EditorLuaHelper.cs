@@ -303,8 +303,8 @@ namespace NCSpeedLight
             {
                 if (modifiedScripts.Count > 0)
                 {
-                    LuaManager.DoString("require 'NCSpeedLight.Utils.Hotfix'");
-                    LuaInterface.LuaFunction func = LuaManager.LuaState.GetFunction("Hotfix.ReloadFile");
+                    LuaManager.DoString("require 'NCSpeedLight.Utils.HF'");
+                    LuaInterface.LuaFunction func = LuaManager.LuaState.GetFunction("HF.ReloadFile");
                     LuaBehaviour[] luaBehaviours = UnityEngine.Object.FindObjectsOfType<LuaBehaviour>();
                     List<LuaBehaviour> reloadBehaviours = new List<LuaBehaviour>();
 

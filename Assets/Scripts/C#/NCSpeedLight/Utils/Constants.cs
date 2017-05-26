@@ -43,7 +43,7 @@ namespace NCSpeedLight
         /// <summary>
         /// 游戏名称.
         /// </summary>
-        public static string GAME_NAME = "PPNC";
+        public static string GAME_NAME = "PPHZ";
 
         /// <summary>
         /// 公司名称

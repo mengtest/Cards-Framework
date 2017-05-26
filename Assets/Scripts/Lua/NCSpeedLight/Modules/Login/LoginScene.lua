@@ -97,8 +97,8 @@ function LoginScene.OpenSoundVolumeConfig()
 	else
 		local config = NetManager.DecodePB(PBMessage.CFG_SoundVolume, buffer);
 		if config == false then
-			LoginScene.SoundVolume = 1;
-			LoginScene.MusicVolume = 1;
+			LoginScene.SoundVolume = 0.4;
+			LoginScene.MusicVolume = 0.4;
 			Log.Error("OpenSoundVolumeConfig: decode sound volume bytes error.");
 		else
 			LoginScene.SoundVolume = config.Sound;

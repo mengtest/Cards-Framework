@@ -38,11 +38,19 @@ namespace NCSpeedLight
             TagBuilder.Build();
         }
 
+        [MenuItem("Framework/Package/Build APK")]
+        public static void BuildAPK()
+        {
+            APKBuilder.Build();
+        }
+
         public static ScriptBuilder ScriptBuilder = new ScriptBuilder(null, null);
 
         public static AssetBuilder AssetBuilder = new AssetBuilder(null, null);
 
         public static TagBuilder TagBuilder = new TagBuilder(null, null);
+
+        public static APKBuilder APKBuilder = new APKBuilder(null, null);
 
         //[MenuItem("PKG/Build Panel")]
         public static void OpenWindow()

@@ -1,17 +1,22 @@
 ﻿-----------------------------------------------
 -- Copyright © 2014-2017 NCSpeedLight
 --
--- FileName: Hotfix.lua
+-- FileName: HF.lua
 -- Describle:  
 -- Created By:  Wells Hsu
 -- DateTime:  2017/05/26 10:32:11
 -- Modify History:
 --
 -----------------------------------------------
-Hotfix = {};
+HF = {
+	FuncMap = nil,
+};
 
-function Hotfix.ReloadChunk(chunk, chunkName)
-	chunkName = chunkName or "hotfix";
+HF.FuncMap = {};
+setmetatable(HF.FuncMap, {__mode = "v"});
+
+function HF.ReloadChunk(chunk, chunkName)
+	chunkName = chunkName or "HF";
 	local env = {};
 	setmetatable(env, {__index = _G});
 	local _ENV = env;
@@ -124,7 +129,7 @@ function Hotfix.ReloadChunk(chunk, chunkName)
 	end
 end
 
-function Hotfix.ReloadFile(file)
+function HF.ReloadFile(file)
 	local fileContent;
 	local fp = io.open(file);
 	if fp then
@@ -134,5 +139,19 @@ function Hotfix.ReloadFile(file)
 	if not fileContent then
 		return false;
 	end
-	return Hotfix.ReloadChunk(fileContent, file);
+	return HF.ReloadChunk(fileContent, file);
+end
+
+function HF.In(func)
+	local info = {};
+	info.To = func;
+	table.insert(HF.FuncMap, info);
+	return func;
+end
+
+function HF.Plug(from, to)
+	local info = {};
+	info.From = from;
+	info.To = func;
+	table.insert(HF.FuncMap, info);
 end 
