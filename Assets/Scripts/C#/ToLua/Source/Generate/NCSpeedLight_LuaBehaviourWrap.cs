@@ -7,11 +7,45 @@ public class NCSpeedLight_LuaBehaviourWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(NCSpeedLight.LuaBehaviour), typeof(UnityEngine.MonoBehaviour));
+		L.RegFunction("OnPreReload", OnPreReload);
+		L.RegFunction("OnPostReload", OnPostReload);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("Module", get_Module, set_Module);
 		L.RegVar("Script", get_Script, set_Script);
 		L.EndClass();
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int OnPreReload(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			NCSpeedLight.LuaBehaviour obj = (NCSpeedLight.LuaBehaviour)ToLua.CheckObject(L, 1, typeof(NCSpeedLight.LuaBehaviour));
+			obj.OnPreReload();
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int OnPostReload(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			NCSpeedLight.LuaBehaviour obj = (NCSpeedLight.LuaBehaviour)ToLua.CheckObject(L, 1, typeof(NCSpeedLight.LuaBehaviour));
+			obj.OnPostReload();
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

@@ -65,40 +65,14 @@ UIManager =
 	UICamera = nil,
 	WindowRoot = nil,
 	DialogRoot = nil,
-	Windows = {};
+	Windows = {},
+	LastWindowName = nil,
+	CurrentWindowName = nil,
 };
 
 function UIManager.Initialize()
 	if UIManager.IsInitialized == false then
 		UIManager.IsInitialized = true;
-		-- local go = UnityEngine.GameObject("UIManager");
-		-- go.transform:SetParent(Game.transform);
-		-- UIManager.UIRoot = go:AddComponent(typeof(UIRoot));
-		-- UIManager.UIRoot.scalingStyle = UIRoot.Scaling.ConstrainedOnMobiles;
-		-- UIManager.UIRoot.manualHeight = 720;
-		-- UIManager.UIRoot.manualWidth = 1224;
-		-- UIManager.UIRoot.maximumHeight = 720;
-		-- UIManager.UIRoot.minimumHeight = 640;
-		-- UIManager.UIPanel = go:AddComponent(typeof(UIPanel));
-		-- local cameraGO = UnityEngine.GameObject("UICamera");
-		-- cameraGO.transform:SetParent(go.transform);
-		-- cameraGO.transform.localPosition = UnityEngine.Vector3.back;
-		-- UIManager.Camera = cameraGO:AddComponent(typeof(UnityEngine.Camera));
-		-- UIManager.Camera.orthographic = true;
-		-- UIManager.Camera.orthographicSize = 1;
-		-- UIManager.Camera.nearClipPlane = - 10;
-		-- UIManager.Camera.depth = 1;
-		-- UIManager.Camera.clearFlags = UnityEngine.CameraClearFlags.Depth; --CameraClearFlags.Nothing;
-		-- -- UIManager.Camera.cullingMask = NCSpeedLight.Helper.OnlyIncluding("UI");
-		-- UIManager.UICamera = cameraGO:AddComponent(typeof(UICamera));
-		-- -- UIManager.UICamera.eventReceiverMask = Helper.EverythingBut(mUILayer);
-		-- -- Window root.
-		-- UIManager.WindowRoot = UnityEngine.GameObject("Window");
-		-- UIManager.WindowRoot.transform:SetParent(go.transform);
-		-- -- Dialog root.
-		-- UIManager.DialogRoot = UnityEngine.GameObject("Dialog");
-		-- UIManager.DialogRoot.transform:SetParent(go.transform);
-		-- 使用预置的配置
 		local go = UnityEngine.GameObject.Find("Game/UIManager");
 		UIManager.UIRoot = go:GetComponent(typeof(UIRoot));
 		UIManager.UIPanel = go:GetComponent(typeof(UIPanel));
@@ -120,25 +94,38 @@ end
 -- 打开窗口
 function UIManager.OpenWindow(windowName)
 	Log.Info("OpenWindow: " .. windowName);
-	local window = UIManager.Windows[windowName];
-	if window ~= nil then
-		return window;
+	local windowInfo = UIManager.GetWindowInfo(windowName);
+	if windowInfo ~= nil then
+		return windowInfo.GO;
 	end
 	local assetPath = "Bundle/Prefab/UI/" .. windowName;
 	local go = AssetManager.LoadAsset(assetPath, typeof(UnityEngine.GameObject));
 	go = UIManager.SetupWindow(go);
 	if go ~= nil then
-		UIManager.Windows[windowName] = go;
+		UIManager.AddWindowInfo(windowName, go);
+		UIManager.LastWindowName = UIManager.CurrentWindowName;
+		UIManager.CurrentWindowName = windowName;
 	end
 	return go;
 end
 
+-- 重新打开当前窗口
+function UIManager.ReopenCurrentWindow()
+	local info = UIManager.Windows[#UIManager.Windows];
+	if info ~= nil then
+		UIManager.CloseWindow(info.Name);
+		UIManager.OpenWindow(info.Name);
+	end	
+end
+
 function UIManager.CloseWindow(windowName)
 	Log.Info("CloseWindow: " .. windowName);
-	local window = UIManager.Windows[windowName];
-	if window ~= nil then
-		UnityEngine.GameObject.Destroy(window);
-		UIManager.Windows[windowName] = nil;
+	local windowInfo = UIManager.GetWindowInfo(windowName);
+	if windowInfo ~= nil then
+		if windowInfo.GO ~= nil then
+			UnityEngine.GameObject.DestroyImmediate(windowInfo.GO);
+		end
+		UIManager.RemoveWindowInfo(windowName);
 	end
 	if SharedVariable.ASSETBUNDLE_MODE then
 		AssetManager.UnloadAsset("UI/" .. windowName);
@@ -146,26 +133,70 @@ function UIManager.CloseWindow(windowName)
 end
 
 function UIManager.CloseAllWindows()
-	for key, value in pairs(UIManager.Windows) do
-		UIManager.CloseWindow(key);
-		UIManager.Windows[key] = nil;
+	for i = 1, #UIManager.Windows do
+		local info = UIManager.Windows[i];
+		if info ~= nil and info.GO ~= nil then
+			UnityEngine.GameObject.DestroyImmediate(info.GO);
+		end
 	end
+	UIManager.Windows = {};
 end
 
 function UIManager.CloseAllWindowsExcept(...)
-	local arg = {...};
-	for key, value in pairs(UIManager.Windows) do
+	local except = {...};
+	local deletes = {};
+	
+	for i = 1, #UIManager.Windows do
+		local info = UIManager.Windows[i];
 		local delete = true;
-		for key2, value2 in ipairs(arg) do
-			if key == value2 then
+		
+		for j = 1, #except do
+			if info.Name == except[j] then
 				delete = false;
 			end
 		end
+		
 		if delete then
-			UIManager.CloseWindow(key);
-			UIManager.Windows[key] = nil;
+			if info ~= nil and info.GO ~= nil then
+				UnityEngine.GameObject.Destroy(info.GO);
+				table.insert(deletes, info.Name);
+			end
 		end
 	end
+	
+	for i = 1, #deletes do
+		UIManager.RemoveWindowInfo(deletes[i]);
+	end
+end
+
+function UIManager.GetWindowInfo(windowName)
+	for i = 1, #UIManager.Windows do
+		local info = UIManager.Windows[i];
+		if info.Name == windowName then	
+			return info;
+		end
+	end
+	return nil;
+end
+
+function UIManager.RemoveWindowInfo(windowName)
+	for i = 1, #UIManager.Windows do
+		local info = UIManager.Windows[i];
+		if info == nil or info.Name == windowName then	
+			table.remove(UIManager.Windows, i);
+		end
+	end
+end
+
+function UIManager.AddWindowInfo(windowName, GO)	
+	local info = {};
+	info.Name = windowName;
+	info.GO = GO;
+	table.insert(UIManager.Windows, info);
+end
+
+function UIManager.IsWindowOpening(windowName)
+	return UIManager.Windows[windowName] ~= nil;
 end
 
 function UIManager.OpenConfirmDialog(option)

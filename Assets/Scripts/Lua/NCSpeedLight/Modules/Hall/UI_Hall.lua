@@ -2,7 +2,7 @@ UI_Hall = {
 	transform,
 	gameObject,
 }
-
+setmetatable(UI_Hall, {__index = _G})
 local this = UI_Hall;
 
 function UI_Hall.Awake(go)
@@ -13,13 +13,14 @@ end
 function UI_Hall.Start()
 	UI_Hall.InitBtnEvt();
 	UI_Hall.InitSelfInfo();
+	UI_Hall.RefreshAnnouncement();
 end
 
 function UI_Hall.InitBtnEvt()
+	UIHelper.SetButtonEvent(this.transform, "bottom/function/More", UI_Hall.OnClickMore);
 	UIHelper.SetButtonEvent(this.transform, "bottom/function/Share", UI_Hall.OnClickShare);
 	UIHelper.SetButtonEvent(this.transform, "bottom/function/Record", UI_Hall.OnClickRecord);
 	UIHelper.SetButtonEvent(this.transform, "bottom/function/Message", UI_Hall.OnClickMessage);
-	UIHelper.SetButtonEvent(this.transform, "bottom/function/More", UI_Hall.OnClickMore);
 	UIHelper.SetButtonEvent(this.transform, "bottom/function/Return", UI_Hall.OnClickReturn);
 	UIHelper.SetButtonEvent(this.transform, "bottom/function/Return/PlayMethod", UI_Hall.OnClickPlayway);
 	UIHelper.SetButtonEvent(this.transform, "bottom/function/Return/Setting", UI_Hall.OnClickSetting);
@@ -50,13 +51,13 @@ function UI_Hall.OnClickMessage(go)
 end
 
 function UI_Hall.OnClickMore(go)
-	UIHelper.SetActiveState(UI_Hall.transform, "bottom/function/More", false);
-	UIHelper.SetActiveState(UI_Hall.transform, "bottom/function/Return", true);	
+	UIHelper.SetActiveState(this.transform, "bottom/function/More", false);
+	UIHelper.SetActiveState(this.transform, "bottom/function/Return", true);	
 end
 
 function UI_Hall.OnClickReturn(go)
-	UIHelper.SetActiveState(UI_Hall.transform, "bottom/function/More", true);
-	UIHelper.SetActiveState(UI_Hall.transform, "bottom/function/Return", false);
+	UIHelper.SetActiveState(this.transform, "bottom/function/More", true);
+	UIHelper.SetActiveState(this.transform, "bottom/function/Return", false);
 end
 
 function UI_Hall.OnClickPlayway(go)

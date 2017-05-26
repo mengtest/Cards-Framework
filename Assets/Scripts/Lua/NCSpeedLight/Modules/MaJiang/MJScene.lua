@@ -40,13 +40,16 @@ MJScene =
 	ChatHistory = nil,
 }
 
+setmetatable(MJScene, {__index = _G})
+
+local MJScene = MJScene;
+
 function MJScene.Initialize()
 	if MJScene.IsInitialized == false then
 	end
 end
 
 function MJScene.Begin()
-	Log.Info("Begin");
 	HallScene.SwitchFBStatus(FBStatus.WaitingPlayer);
 	if HallScene.CurrentFBPlaybackMode == false then
 		HallScene.CurrentFBTotalRound = HallScene.CurrentFBInfo.m_gameCount;
@@ -114,6 +117,16 @@ end
 
 function MJScene.OnDisconnectFromLogicServer()
 	Log.Info("OnDisconnectFromLogicServer");
+end
+
+function MJScene.OnPreReload()
+	Log.Info("OnPreReload");
+	MJScene.RegisterNetEvent();
+end
+
+function MJScene.OnPostReload()
+	Log.Info("OnPostReload");
+	MJScene.UnRegisterNetEvent();
 end
 
 -- 继续游戏
@@ -880,7 +893,6 @@ function MJScene.ReturnPlayerOutCard(evt)
 			UI_MJPlayer.PlayUIScaleAndDicePanelGrow(MJScene.LastOperator.UI, false);
 		end
 		UI_MJPlayer.PlayUIScaleAndDicePanelGrow(MJScene.CurrentOperator.UI, true);
-		
 		UI_MaJiang.StartOperateCountdown();
 		MJPlayer.MJOT_BEGIN(player, msg);
 	elseif msg.m_OperatorType == MaJiangOperatorType.MJOT_GetCard then
@@ -1157,4 +1169,12 @@ end
 
 function MJScene.StartPlayback()
 	
+end
+
+function MJScene.OnPreReload()
+	Log.Info("MJScene.OnPreReload: player count is " .. #MJScene.Players);
+end
+
+function MJScene.OnPostReload()
+	Log.Info("MJScene.OnPostReload: player count is " .. #MJScene.Players);
 end 

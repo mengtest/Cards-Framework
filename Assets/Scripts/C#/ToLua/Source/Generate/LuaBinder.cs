@@ -183,6 +183,7 @@ public static class LuaBinder
 		NCSpeedLight_ScheduleHideWrap.Register(L);
 		NCSpeedLight_LuaComponentWrap.Register(L);
 		NCSpeedLight_InternalUIWrap.Register(L);
+		NCSpeedLight_ScreenshotWrap.Register(L);
 		NCSpeedLight_EventManagerWrap.Register(L);
 		L.RegFunction("EventHandlerDelegate", NCSpeedLight_EventHandlerDelegate);
 		L.BeginModule("ShareSDKAdapter");

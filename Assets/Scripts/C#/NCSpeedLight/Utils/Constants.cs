@@ -358,6 +358,8 @@ namespace NCSpeedLight
                     {
                         return false;
                     }
+#else
+                    return true;
 #endif
                 }
                 else
@@ -366,6 +368,7 @@ namespace NCSpeedLight
                 }
             }
         }
+
 
         /// <summary>
         /// 是否启用ScriptBundle模式
@@ -390,6 +393,8 @@ namespace NCSpeedLight
                     {
                         return false;
                     }
+#else
+                    return true;
 #endif
                 }
                 else
@@ -422,6 +427,8 @@ namespace NCSpeedLight
                     {
                         return false;
                     }
+#else
+                    return true;
 #endif
                 }
                 else
@@ -643,6 +650,17 @@ namespace NCSpeedLight
         public static string WX_UNION_ID
         {
             get; set;
+        }
+
+        /// <summary>
+        /// 屏幕截图路径
+        /// </summary>
+        public static string SCREEN_SHOT_FILE
+        {
+            get
+            {
+                return DATA_PATH + "Temp/SCREENSHOT.png";
+            }
         }
     }
 }

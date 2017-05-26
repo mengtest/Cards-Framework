@@ -16,89 +16,154 @@ namespace NCSpeedLight
 {
     public class LuaComponent : MonoBehaviour
     {
+        [NoToLua]
         public LuaTable Table;
-        public LuaFunction AwakeFunction;
-        public LuaFunction StartFunction;
-        public LuaFunction OnEnableFunction;
-        public LuaFunction OnDisableFunction;
-        public LuaFunction UpdateFunction;
-        //public LuaFunction OnGUIFunction;
-        public LuaFunction LateUpdateFunction;
-        public LuaFunction OnDestroyFunction;
-        public LuaFunction OnApplicationPauseFunction;
-        public LuaFunction OnApplicationFocusFunction;
+
+        private LuaFunction m_AwakeFunction;
+        private LuaFunction m_StartFunction;
+        private LuaFunction m_OnEnableFunction;
+        private LuaFunction m_OnDisableFunction;
+        private LuaFunction m_UpdateFunction;
+        private LuaFunction m_LateUpdateFunction;
+        private LuaFunction m_OnDestroyFunction;
+
+        private void Initialize()
+        {
+            m_AwakeFunction = Table.GetLuaFunction("Awake");
+            m_StartFunction = Table.GetLuaFunction("Start");
+            m_OnEnableFunction = Table.GetLuaFunction("OnEnable");
+            m_OnDisableFunction = Table.GetLuaFunction("OnDisable");
+            m_UpdateFunction = Table.GetLuaFunction("Update");
+            m_LateUpdateFunction = Table.GetLuaFunction("LateUpdate");
+            m_OnDestroyFunction = Table.GetLuaFunction("OnDestroy");
+        }
+
+        private void ReleaseRef()
+        {
+            if (m_AwakeFunction != null)
+            {
+                m_AwakeFunction.Dispose();
+                m_AwakeFunction = null;
+            }
+            if (m_StartFunction != null)
+            {
+                m_StartFunction.Dispose();
+                m_StartFunction = null;
+            }
+            if (m_OnEnableFunction != null)
+            {
+                m_OnEnableFunction.Dispose();
+                m_OnEnableFunction = null;
+            }
+            if (m_OnDisableFunction != null)
+            {
+                m_OnDisableFunction.Dispose();
+                m_OnDisableFunction = null;
+            }
+            if (m_UpdateFunction != null)
+            {
+                m_UpdateFunction.Dispose();
+                m_UpdateFunction = null;
+            }
+            if (m_LateUpdateFunction != null)
+            {
+                m_LateUpdateFunction.Dispose();
+                m_LateUpdateFunction = null;
+            }
+            if (m_OnDestroyFunction != null)
+            {
+                m_OnDestroyFunction.Dispose();
+                m_OnDestroyFunction = null;
+            }
+            Table = null;
+        }
+
+        [NoToLua]
+        public void CallAwake(LuaTable table)
+        {
+            Table = table;
+            Initialize();
+            if (m_AwakeFunction != null) { m_AwakeFunction.Call(Table, gameObject); };
+        }
+
         protected virtual void Start()
         {
-            if (StartFunction != null) { StartFunction.Call(Table); }
+            if (m_StartFunction != null) { m_StartFunction.Call(Table); }
         }
+
         protected virtual void OnEnable()
         {
-            if (OnEnableFunction != null) { OnEnableFunction.Call(Table); }
+            if (m_OnEnableFunction != null) { m_OnEnableFunction.Call(Table); }
         }
+
         protected virtual void OnDisable()
         {
-            if (OnDisableFunction != null) { OnDisableFunction.Call(Table); }
+            if (m_OnDisableFunction != null) { m_OnDisableFunction.Call(Table); }
         }
+
         protected virtual void Update()
         {
-            if (UpdateFunction != null) { UpdateFunction.Call(Table); }
+            if (m_UpdateFunction != null) { m_UpdateFunction.Call(Table); }
         }
+
         protected virtual void LateUpdate()
         {
-            if (LateUpdateFunction != null) { LateUpdateFunction.Call(Table); }
+            if (m_LateUpdateFunction != null) { m_LateUpdateFunction.Call(Table); }
         }
-        //protected virtual void OnGUI()
-        //{
-        //    if (OnGUIFunction != null) { OnGUIFunction.Call(Table); }
-        //}
+
         protected virtual void OnDestroy()
         {
-            if (OnDestroyFunction != null) { OnDestroyFunction.Call(Table); }
+            if (m_OnDestroyFunction != null) { m_OnDestroyFunction.Call(Table); }
+            ReleaseRef();
         }
-        protected virtual void OnApplicationPause(bool status)
-        {
-            if (OnApplicationPauseFunction != null) { OnApplicationPauseFunction.Call(Table, status); }
-        }
-        protected virtual void OnApplicationFocus(bool status)
-        {
-            if (OnApplicationFocusFunction != null) { OnApplicationFocusFunction.Call(Table, status); }
-        }
-        public static void CallAwake(LuaComponent com)
-        {
-            com.AwakeFunction = com.Table.GetLuaFunction("Awake");
-            com.StartFunction = com.Table.GetLuaFunction("Start");
-            com.OnEnableFunction = com.Table.GetLuaFunction("OnEnable");
-            com.OnDisableFunction = com.Table.GetLuaFunction("OnDisable");
-            com.UpdateFunction = com.Table.GetLuaFunction("Update");
-            //com.OnGUIFunction = com.Table.GetLuaFunction("OnGUI");
-            com.LateUpdateFunction = com.Table.GetLuaFunction("LateUpdate");
-            com.OnDestroyFunction = com.Table.GetLuaFunction("OnDestroy");
-            com.OnApplicationPauseFunction = com.Table.GetLuaFunction("OnApplicationPause");
-            com.OnApplicationFocusFunction = com.Table.GetLuaFunction("OnApplicationFocus");
-            if (com.AwakeFunction != null)
-            {
-                com.AwakeFunction.Call(com.Table, com.gameObject);
-            }
-        }
+
         public static LuaTable Add(GameObject go, LuaTable table)
         {
+            if (go == null)
+            {
+                Helper.LogError("LuaComponent.Add: error caused by nil gameObject.");
+                return null;
+            }
+            if (table == null)
+            {
+                Helper.LogError("LuaComponent.Add: error caused by nil metatable.");
+                return null;
+            }
             LuaFunction func = table.GetLuaFunction("New");
             if (func == null)
             {
+                Helper.LogError("LuaComponent.Add: error caused by nil New() function.");
                 return null;
             }
             object[] rets = func.Call(table);
             if (rets.Length != 1)
             {
+                Helper.LogError("LuaComponent.Add: error caused in New() function.");
+                return null;
+            }
+            LuaTable newTable = (LuaTable)rets[0];
+            if (newTable == null)
+            {
+                Helper.LogError("LuaComponent.Add: error caused by nil newtable.");
                 return null;
             }
             LuaComponent com = go.AddComponent<LuaComponent>();
-            com.Table = (LuaTable)rets[0];
-            CallAwake(com);
-            return com.Table;
+            com.CallAwake(newTable);
+            return newTable;
         }
+
         public static LuaTable Get(GameObject go, LuaTable table)
         {
+            if (go == null)
+            {
+                Helper.LogError("LuaComponent.Get: error caused by nil gameObject.");
+                return null;
+            }
+            if (table == null)
+            {
+                Helper.LogError("LuaComponent.Get: error caused by nil metatable.");
+                return null;
+            }
             LuaComponent[] coms = go.GetComponents<LuaComponent>();
             string meta = table.ToString();
             for (int i = 0; i < coms.Length; i++)
@@ -119,8 +184,19 @@ namespace NCSpeedLight
             }
             return null;
         }
+
         public static void Destroy(GameObject go, LuaTable table)
         {
+            if (go == null)
+            {
+                Helper.LogError("LuaComponent.Destroy: error caused by nil gameObject.");
+                return;
+            }
+            if (table == null)
+            {
+                Helper.LogError("LuaComponent.Destroy: error caused by nil metatable.");
+                return;
+            }
             LuaComponent[] coms = go.GetComponents<LuaComponent>();
             string meta = table.ToString();
             for (int i = 0; i < coms.Length; i++)
@@ -140,8 +216,19 @@ namespace NCSpeedLight
                 }
             }
         }
+
         public static void DestroyImmediate(GameObject go, LuaTable table)
         {
+            if (go == null)
+            {
+                Helper.LogError("LuaComponent.DestroyImmediate: error caused by nil gameObject.");
+                return;
+            }
+            if (table == null)
+            {
+                Helper.LogError("LuaComponent.DestroyImmediate: error caused by nil metatable.");
+                return;
+            }
             LuaComponent[] coms = go.GetComponents<LuaComponent>();
             string meta = table.ToString();
             for (int i = 0; i < coms.Length; i++)
@@ -161,5 +248,6 @@ namespace NCSpeedLight
                 }
             }
         }
+
     }
 }

@@ -1,25 +1,27 @@
------------------------------------------------
+﻿-----------------------------------------------
 -- Copyright © 2014-2017 NCSpeedLight
 --
 -- FileName: UI_MJResult.lua
--- Describle:   单局结算界面
+-- Describle:  单局结算界面
 -- Created By:  Wells Hsu
--- Date&Time:  2017/2/28 19:11:09
+-- DateTime:  2017/05/26 14:28:51
 -- Modify History:
 --
 -----------------------------------------------
 UI_MJResult = {
 	transform = nil,
 	gameObject = nil,
-}
+};
 
 local this = UI_MJResult;
 
+-- Called by mono
 function UI_MJResult.Awake(go)
 	this.gameObject = go;
 	this.transform = go.transform;
 end
 
+-- Use this for initialization
 function UI_MJResult.Start()
 	UI_MJResult.InitBtnEvent();
 	UI_MJResult.SetWinOrLose();
@@ -31,9 +33,18 @@ function UI_MJResult.Start()
 	UI_MJResult.SetRound();
 end
 
+-- Use this for destruction
 function UI_MJResult.OnDestroy()
 	this.transform = nil;
 	this.gameObject = nil;
+end
+
+-- Called when pre reload script.
+function UI_MJResult.OnPreReload()
+end
+
+-- Called when post reload script.
+function UI_MJResult.OnPostReload()
 end
 
 -- 设置按钮事件
@@ -44,8 +55,7 @@ function UI_MJResult.InitBtnEvent()
 		UIManager.CloseAllWindowsExcept(UIName.UI_MaJiang);
 	end);
 	-- 分享
-	UIHelper.SetButtonEvent(this.transform, "Button/Share", function(obj)
-	end);
+	UIHelper.SetButtonEvent(this.transform, "Button/Share", UI_MJResult.OnClickShare);
 	-- 查看总成绩
 	UIHelper.SetButtonEvent(this.transform, "Button/TotalScore", function(obj)
 		UIManager.CloseAllWindowsExcept(UIName.UI_MaJiang);
@@ -94,12 +104,12 @@ function UI_MJResult.SetWinOrLose()
 	if myscore > 0 then
 		UIHelper.SetSpriteName(this.transform, "bk/title/win", "js1");
 		UIHelper.SetSpriteName(this.transform, "bk/title/belt", "js7");
-		UIHelper.SetSpriteName(this.ransform, "bk/title/belt2", "js7");
+		UIHelper.SetSpriteName(this.transform, "bk/title/belt2", "js7");
 		UIHelper.SetActiveState(this.transform, "bk/star1", true);
 		UIHelper.ChangeSpriteColor(this.transform, "bk/star2/Sprite1", false);
 		UIHelper.ChangeSpriteColor(this.transform, "bk/star2/Sprite2", false);
 		UIHelper.ChangeSpriteColor(this.transform, "bk/star2/Sprite3", false);
-		UIHelper.ChangeSpriteColor(this.ransform, "bk/star2/Sprite4", false);
+		UIHelper.ChangeSpriteColor(this.transform, "bk/star2/Sprite4", false);
 		UIHelper.ChangeSpriteColor(this.transform, "bk/star2/Sprite5", false);
 		UIHelper.SetActiveState(this.transform, "Button/Button3", true);
 	elseif myscore < 0 then
@@ -226,4 +236,40 @@ end
 function UI_MJResult.SetRound()
 	local str = "当前局数: " .. HallScene.CurrentFBFinishedRound .. "/" .. HallScene.CurrentFBTotalRound;
 	UIHelper.SetLabelText(this.transform, "LeftTop/Rounds", str);
+end
+
+function UI_MJResult.OnClickShare(go)
+	Screenshot.Take(
+	function()
+		UIManager.OpenWindow(UIName.UI_Share);
+		UI_Share.ShareWithScreenshot = true;
+	end);
+	-- Log.Info("sssssssssssssssssssssss");
+	-- this.transform.Find("");
+	-- if UI_MJResult.PlayTakeShotAnimationCO ~= nil then
+	-- 	coroutine.stop(UI_MJResult.PlayTakeShotAnimationCO);
+	-- end
+	-- UI_MJResult.PlayTakeShotAnimationCO = coroutine.start(UI_MJResult.PlayTakeShotAnimation);
+end
+
+function UI_MJResult.PlayTakeShotAnimation()
+	local alphaTweener = UIHelper.GetComponent(this.transform, "WhiteMask/Sprite", typeof(TweenAlpha));
+	alphaTweener.from = 0;
+	alphaTweener.to = 1;
+	alphaTweener.duration = 0.2;
+	alphaTweener:ResetToBeginning();
+	alphaTweener.enabled = true;
+	
+	coroutine.wait(0.2);
+	
+	alphaTweener:ResetToBeginning();
+	alphaTweener.from = 1;
+	alphaTweener.to = 0;
+	alphaTweener.duration = 0.5;
+	alphaTweener.enabled = true;
+	
+	coroutine.wait(0.5);
+	Screenshot.Take();
+	UIManager.OpenWindow(UIName.UI_Share);
+	UI_Share.ShareWithScreenshot = true;
 end 

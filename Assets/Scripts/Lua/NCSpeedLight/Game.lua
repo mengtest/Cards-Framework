@@ -68,8 +68,8 @@ function Game.LateUpdate()
 end
 
 -- function Game.OnGUI()
--- if UnityEngine.GUI.Button(UnityEngine.Rect(10, 10, 150, 30), "TestReconnect.Connect") then
--- 	TestReconnect.Connect();
+-- if UnityEngine.GUI.Button(UnityEngine.Rect(10, 10, 150, 30), "Reload Lua") then
+-- 	Game.ReloadLua();
 -- end
 -- if UnityEngine.GUI.Button(UnityEngine.Rect(10, 50, 150, 30), "TestReconnect.SendMsg") then
 -- 	TestReconnect.SendMsg();

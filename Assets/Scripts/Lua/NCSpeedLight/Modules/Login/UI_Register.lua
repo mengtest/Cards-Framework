@@ -1,53 +1,47 @@
------------------------------------------------
+﻿-----------------------------------------------
 -- Copyright © 2014-2017 NCSpeedLight
 --
 -- FileName: UI_Register.lua
--- Describle:   
+-- Describle:  
 -- Created By:  Wells Hsu
--- Date&Time:  2017/2/28 19:11:09
+-- DateTime:  2017/05/26 16:22:04
 -- Modify History:
 --
 -----------------------------------------------
 UI_Register = {
-}
+	transform = nil,
+	gameObject = nil,
+};
 
-local this = UI_Register
-local transform
-local gameObject
-local ipAccount
-local ipPassword
-local ipPassword2
+local this = UI_Register;
 
-function UI_Register.New()
-	return this
-end
-
+-- Called by mono
 function UI_Register.Awake(go)
-	gameObject = go
-	transform = go.transform
+	this.gameObject = go;
+	this.transform = go.transform;
 end
 
+-- Use this for initialization
 function UI_Register.Start()
-	ipAccount = transform:Find("Input (account)"):GetComponent('UIInput');
-	ipPassword = transform:Find("Input (password)"):GetComponent('UIInput');
-	ipPassword2 = transform:Find("Input (password2)"):GetComponent('UIInput');
-	NCSpeedLight.UIHelper.SetButtonEvent(transform, 'Button (back)', this.onClickBack)
-	NCSpeedLight.UIHelper.SetButtonEvent(transform, 'Button (submit)', this.onClickSubmit)
+	this.ipAccount = this.transform:Find("Input (account)"):GetComponent('UIInput');
+	this.ipPassword = this.transform:Find("Input (password)"):GetComponent('UIInput');
+	this.ipPassword2 = this.transform:Find("Input (password2)"):GetComponent('UIInput');
+	UIHelper.SetButtonEvent(this.transform, 'Button (back)', UI_Register.onClickBack)
+	UIHelper.SetButtonEvent(this.transform, 'Button (submit)', UI_Register.onClickSubmit)
 end
 
-function UI_Register.OnEnable()
-end
-
-function UI_Register.OnDisable()
-end
-
-function UI_Register.Update()
-end
-
-function UI_Register.LateUpdate()
-end
-
+-- Use this for destruction
 function UI_Register.OnDestroy()
+	this.transform = nil;
+	this.gameObject = nil;
+end
+
+-- Called when pre reload script.
+function UI_Register.OnPreReload()
+end
+
+-- Called when post reload script.
+function UI_Register.OnPostReload()
 end
 
 function UI_Register.onClickBack(go)
@@ -56,19 +50,17 @@ function UI_Register.onClickBack(go)
 end
 
 function UI_Register.onClickSubmit(go)
-	if string.len(ipAccount.value) == 0 then
+	if string.len(this.ipAccount.value) == 0 then
 		UIManager.OpenTipsDialog("请输入账号")
 		return
-	elseif string.len(ipPassword.value) == 0 then
+	elseif string.len(this.ipPassword.value) == 0 then
 		UIManager.OpenTipsDialog("请输入密码")
 		return
-	elseif ipPassword.value ~= ipPassword2.value then
+	elseif this.ipPassword.value ~= this.ipPassword2.value then
 		UIManager.OpenTipsDialog("两次输入的账号不一致")
 		return
 	end
-	LoginScene.currentAccount = ipAccount.value;
-	LoginScene.currentPassword = ipPassword.value;
-	LoginScene.RequestRegister(ipAccount.value, ipPassword.value)
-end
-
-
+	LoginScene.currentAccount = this.ipAccount.value;
+	LoginScene.currentPassword = this.ipPassword.value;
+	LoginScene.RequestRegister(this.ipAccount.value, this.ipPassword.value)
+end 

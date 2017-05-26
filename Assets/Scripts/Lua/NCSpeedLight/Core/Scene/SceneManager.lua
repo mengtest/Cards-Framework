@@ -38,6 +38,7 @@ function SceneManager.Update()
 		if SceneManager.CurrentScene ~= nil then
 			SceneManager.CurrentScene.End();
 		end
+		SceneManager.LastScene = SceneManager.CurrentScene;
 		SceneManager.CurrentScene = SceneManager.NextScene;
 		SceneManager.NextScene = nil;
 		SceneManager.CurrentScene.Begin();
@@ -70,13 +71,27 @@ function SceneManager.Goto(name)
 	if scene == SceneManager.NextScene then
 		return
 	end
-	if SceneManager.CurrentScene == nil then
-		SceneManager.LastScene = SceneManager.CurrentScene;
-		SceneManager.NextScene = scene;
-	elseif SceneManager.CurrentScene.Name ~= name then
-		SceneManager.LastScene = SceneManager.CurrentScene;
+	if SceneManager.CurrentScene ~= scene then
 		SceneManager.NextScene = scene;
 	else
 		Log.Error("Goto: can not go to same scene,name is " .. name);
 	end
 end
+
+function SceneManager.OnPreReloadScene()
+	if SceneManager.CurrentScene ~= nil and SceneManager.CurrentScene["OnPreReload"] ~= nil then
+		SceneManager.CurrentScene["OnPreReload"]();
+	end
+end
+
+function SceneManager.ReloadCurrentScene()
+	if SceneManager.CurrentScene ~= nil then
+		SceneManager.NextScene = SceneManager.CurrentScene;
+	end
+end
+
+function SceneManager.OnPostReloadScene()
+	if SceneManager.CurrentScene ~= nil and SceneManager.CurrentScene["OnPostReload"] ~= nil then
+		SceneManager.CurrentScene["OnPostReload"]();
+	end
+end 

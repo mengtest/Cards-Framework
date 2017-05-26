@@ -229,8 +229,35 @@ namespace NCSpeedLight
             ssdk.ShareContent(PlatformType.WeChat, content);
         }
 
-        public static void InviteWechatFriend(ShareCallbackDelegate handler,int roomID,string shareText)
+        public static void ShareWechatFriendWithScreenshot(ShareCallbackDelegate handler)
         {
+            shareHandlers.Add(handler);
+            ShareContent content = new ShareContent();
+            content.SetTitle("立刻加入雀友红中麻将");
+            content.SetText(Constants.SHARE_CONTENT);
+            content.SetUrl(Constants.PKG_DOWNLOAD_URL + "?UID=" + Constants.WX_UNION_ID + "&");
+            content.SetImagePath(Constants.SCREEN_SHOT_FILE);
+            content.SetShareType(ContentType.Image);
+            content.SetShareContentCustomize(PlatformType.WeChat, content);
+            ssdk.ShareContent(PlatformType.WeChat, content);
+        }
+
+        public static void ShareWechatMomentWithScreenshot(ShareCallbackDelegate handler)
+        {
+            shareHandlers.Add(handler);
+            ShareContent content = new ShareContent();
+            content.SetTitle(Constants.SHARE_MOMENT_CONTENT);
+            content.SetText(Constants.SHARE_CONTENT);
+            content.SetUrl(Constants.PKG_DOWNLOAD_URL + "?UID=" + Constants.WX_UNION_ID + "&");
+            content.SetImagePath(Constants.SCREEN_SHOT_FILE);
+            content.SetShareType(ContentType.Image);
+            content.SetShareContentCustomize(PlatformType.WeChatMoments, content);
+            ssdk.ShareContent(PlatformType.WeChatMoments, content);
+        }
+
+        public static void InviteWechatFriend(ShareCallbackDelegate handler, int roomID, string shareText)
+        {
+#if UNITY_IOS || UNITY_ANDROID
             shareHandlers.Add(handler);
             ShareContent content = new ShareContent();
             content.SetTitle(Constants.SHARE_TITLE + roomID);
@@ -240,6 +267,7 @@ namespace NCSpeedLight
             content.SetShareType(ContentType.Webpage);
             content.SetShareContentCustomize(PlatformType.WechatPlatform, content);
             ssdk.ShareContent(PlatformType.WechatPlatform, content);
+#endif
         }
     }
 }

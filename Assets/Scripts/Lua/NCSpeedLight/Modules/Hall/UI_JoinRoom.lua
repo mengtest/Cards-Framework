@@ -7,9 +7,10 @@ UI_JoinRoom =
 };
 this = UI_JoinRoom;
 function UI_JoinRoom.Awake(go)
-	UI_JoinRoom.gameObject = go;
-	UI_JoinRoom.transform = go.transform;
-	UI_JoinRoom.LB_Number = go.transform:Find("number"):GetComponent(typeof(UILabel));
+	this.gameObject = go;
+	this.transform = go.transform;
+	this.LB_Number = UIHelper.GetComponent(this.transform, "number", typeof(UILabel));
+	local a = 1;
 end
 
 function UI_JoinRoom.Start()
@@ -49,7 +50,7 @@ function UI_JoinRoom.OnClickDialPanelNumber(go)
 		end
 		UI_JoinRoom.RoomNumber = UI_JoinRoom.RoomNumber .. number;
 	end
-	UI_JoinRoom.LB_Number.text = UI_JoinRoom.RoomNumber;
+	this.LB_Number.text = UI_JoinRoom.RoomNumber;
 	if string.len(UI_JoinRoom.RoomNumber) >= 4 then
 		HallScene.RequestJoinRoom(tonumber(UI_JoinRoom.RoomNumber));
 	end
@@ -57,15 +58,15 @@ end
 
 function UI_JoinRoom.OnClickDialPanelReinput(go)
 	UI_JoinRoom.RoomNumber = nil;
-	UI_JoinRoom.LB_Number.text = "请输入房间号";
+	this.LB_Number.text = "请输入房间号";
 end
 
 function UI_JoinRoom.OnClickDialPanelDelete(go)
 	if UI_JoinRoom.RoomNumber == nil then return end;
 	UI_JoinRoom.RoomNumber = string.sub(UI_JoinRoom.RoomNumber, 0, string.len(UI_JoinRoom.RoomNumber) - 1);
 	if string.len(UI_JoinRoom.RoomNumber) == 0 then
-		UI_JoinRoom.LB_Number.text = "请输入房间号";
+		this.LB_Number.text = "请输入房间号";
 	else
-		UI_JoinRoom.LB_Number.text = UI_JoinRoom.RoomNumber;
+		this.LB_Number.text = UI_JoinRoom.RoomNumber;
 	end
 end 

@@ -180,6 +180,14 @@ namespace NCSpeedLight
             return null;
         }
 
+        public static LuaFunction GetFunction(LuaTable table, string module, string name)
+        {
+            LuaFunction func = LuaState.GetFunction(module + "." + name, false);
+            if (func == null) return null;
+            func = table.GetLuaFunction(name);
+            return func;
+        }
+
         public static void PushParam(string moduleName, params object[] args)
         {
             if (LuaState != null)

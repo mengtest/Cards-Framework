@@ -56,6 +56,7 @@ function HallScene.Initialize()
 end
 
 function HallScene.Begin()
+	Log.Info("HallScene.Begin");
 	AudioManager.PlayMusic({BGMusic.Hall}, false);
 	HallScene.CurrentFBCloseTime = 300;
 	HallScene.RegisterNetEvent();
@@ -63,7 +64,7 @@ function HallScene.Begin()
 	UIManager.CloseAllWindows();
 	AssetManager.LoadScene(SceneName.HallScene);
 	UIManager.OpenWindow(UIName.UI_Hall);
-	if SceneManager.LastScene == LoginScene then
+	if SceneManager.LastScene == LoginScene or HallScene then
 		HallScene.RequestPlayerInFb();
 	end
 	HallScene.RequestAnnouncement();

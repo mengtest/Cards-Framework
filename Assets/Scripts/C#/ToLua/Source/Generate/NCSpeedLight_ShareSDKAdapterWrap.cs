@@ -11,6 +11,8 @@ public class NCSpeedLight_ShareSDKAdapterWrap
 		L.RegFunction("GetWechatAuthInfo", GetWechatAuthInfo);
 		L.RegFunction("ShareWechatMoment", ShareWechatMoment);
 		L.RegFunction("ShareWechatFriend", ShareWechatFriend);
+		L.RegFunction("ShareWechatFriendWithScreenshot", ShareWechatFriendWithScreenshot);
+		L.RegFunction("ShareWechatMomentWithScreenshot", ShareWechatMomentWithScreenshot);
 		L.RegFunction("InviteWechatFriend", InviteWechatFriend);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
@@ -111,6 +113,62 @@ public class NCSpeedLight_ShareSDKAdapterWrap
 			}
 
 			NCSpeedLight.ShareSDKAdapter.ShareWechatFriend(arg0);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ShareWechatFriendWithScreenshot(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			NCSpeedLight.ShareSDKAdapter.ShareCallbackDelegate arg0 = null;
+			LuaTypes funcType1 = LuaDLL.lua_type(L, 1);
+
+			if (funcType1 != LuaTypes.LUA_TFUNCTION)
+			{
+				 arg0 = (NCSpeedLight.ShareSDKAdapter.ShareCallbackDelegate)ToLua.CheckObject(L, 1, typeof(NCSpeedLight.ShareSDKAdapter.ShareCallbackDelegate));
+			}
+			else
+			{
+				LuaFunction func = ToLua.ToLuaFunction(L, 1);
+				arg0 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.ShareSDKAdapter.ShareCallbackDelegate), func) as NCSpeedLight.ShareSDKAdapter.ShareCallbackDelegate;
+			}
+
+			NCSpeedLight.ShareSDKAdapter.ShareWechatFriendWithScreenshot(arg0);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ShareWechatMomentWithScreenshot(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			NCSpeedLight.ShareSDKAdapter.ShareCallbackDelegate arg0 = null;
+			LuaTypes funcType1 = LuaDLL.lua_type(L, 1);
+
+			if (funcType1 != LuaTypes.LUA_TFUNCTION)
+			{
+				 arg0 = (NCSpeedLight.ShareSDKAdapter.ShareCallbackDelegate)ToLua.CheckObject(L, 1, typeof(NCSpeedLight.ShareSDKAdapter.ShareCallbackDelegate));
+			}
+			else
+			{
+				LuaFunction func = ToLua.ToLuaFunction(L, 1);
+				arg0 = DelegateFactory.CreateDelegate(typeof(NCSpeedLight.ShareSDKAdapter.ShareCallbackDelegate), func) as NCSpeedLight.ShareSDKAdapter.ShareCallbackDelegate;
+			}
+
+			NCSpeedLight.ShareSDKAdapter.ShareWechatMomentWithScreenshot(arg0);
 			return 0;
 		}
 		catch(Exception e)

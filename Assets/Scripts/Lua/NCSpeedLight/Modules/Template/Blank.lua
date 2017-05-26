@@ -9,8 +9,6 @@
 --
 -----------------------------------------------
 #NAME# = {
-	transform = nil,
-	gameObject = nil,
 };
 
 local this = #NAME#;

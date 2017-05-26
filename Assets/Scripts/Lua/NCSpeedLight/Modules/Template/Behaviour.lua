@@ -30,3 +30,11 @@ function #NAME#.OnDestroy()
 	this.transform = nil;
 	this.gameObject = nil;
 end
+
+-- Called when pre reload script.
+function #NAME#.OnPreReload()
+end 
+
+-- Called when post reload script.
+function #NAME#.OnPostReload()
+end 

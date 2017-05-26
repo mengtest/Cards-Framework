@@ -17,4 +17,5 @@ RongCloudAdapter = NCSpeedLight.RongCloudAdapter;
 AssetManager = NCSpeedLight.AssetManager;
 AMapAdapter = NCSpeedLight.AMapAdapter;
 Evt = NCSpeedLight.Evt;
-AudioManager = NCSpeedLight.AudioManager; 
+AudioManager = NCSpeedLight.AudioManager;
+Screenshot = NCSpeedLight.Screenshot;
