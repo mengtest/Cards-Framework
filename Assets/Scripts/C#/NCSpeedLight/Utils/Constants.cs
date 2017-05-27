@@ -356,7 +356,7 @@ namespace NCSpeedLight
                     }
                     else
                     {
-                        return false;
+                        return true;
                     }
 #else
                     return true;

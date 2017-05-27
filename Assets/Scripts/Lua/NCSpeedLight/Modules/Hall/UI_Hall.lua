@@ -2,7 +2,7 @@ UI_Hall = {
 	transform,
 	gameObject,
 }
-setmetatable(UI_Hall, {__index = _G})
+
 local this = UI_Hall;
 
 function UI_Hall.Awake(go)

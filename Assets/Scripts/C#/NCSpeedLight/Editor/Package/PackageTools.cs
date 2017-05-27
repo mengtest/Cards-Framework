@@ -35,7 +35,14 @@ namespace NCSpeedLight
         [MenuItem("Framework/Package/Build AB Tag")]
         public static void BuildABTag()
         {
-            TagBuilder.Build();
+#if UNITY_ANDROID || UNITY_IOS
+            if (EditorUtility.DisplayDialog("Warning", "Operation is denied,plesase switch to PC environment.", "OK"))
+            {
+                return;
+            }
+#else
+            ABTagBuilder.Build();
+#endif
         }
 
         [MenuItem("Framework/Package/Build APK")]
@@ -44,13 +51,21 @@ namespace NCSpeedLight
             APKBuilder.Build();
         }
 
+        [MenuItem("Framework/Package/Build PBX")]
+        public static void BuildPBX()
+        {
+            PBXBuilder.Build();
+        }
+
         public static ScriptBuilder ScriptBuilder = new ScriptBuilder(null, null);
 
         public static AssetBuilder AssetBuilder = new AssetBuilder(null, null);
 
-        public static TagBuilder TagBuilder = new TagBuilder(null, null);
+        public static ABTagBuilder ABTagBuilder = new ABTagBuilder(null, null);
 
         public static APKBuilder APKBuilder = new APKBuilder(null, null);
+
+        public static PBXBuilder PBXBuilder = new PBXBuilder(null, null);
 
         //[MenuItem("PKG/Build Panel")]
         public static void OpenWindow()
@@ -85,14 +100,14 @@ namespace NCSpeedLight
                 }
                 if (GUILayout.Button("Build AssetBundle Tag", GUILayout.Width(295)))
                 {
-#if UNITY_ANDROID || UNITY_IOS
-                    if (EditorUtility.DisplayDialog("Warning", "Operation is denied,plesase switch to PC environment.", "OK"))
-                    {
-                        return;
-                    }
-#else
-                    TagBuilder.Build();
-#endif
+                    //#if UNITY_ANDROID || UNITY_IOS
+                    //                    if (EditorUtility.DisplayDialog("Warning", "Operation is denied,plesase switch to PC environment.", "OK"))
+                    //                    {
+                    //                        return;
+                    //                    }
+                    //#else
+                    //                    TagBuilder.Build();
+                    //#endif
                 }
                 EditorHelper.EndContents();
             }

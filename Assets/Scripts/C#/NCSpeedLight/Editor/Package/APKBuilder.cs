@@ -10,16 +10,15 @@ namespace NCSpeedLight
     public class APKBuilder : Builder
     {
         private static bool PROFILE_VERSION = false;
-        private static string ANDROID_APK_PATH = "Bin/Cards.apk";
+        private static string BIN_PATH = "Bin/Cards.apk";
 
         public APKBuilder(Action preBuild, Action postBuild) : base(preBuild, postBuild) { }
 
         public override void Build()
         {
-            GenerateAPKName();
+            GenerateBinPath();
             SetKeyStore();
-            BuildOptions ops = SetBuildAPKOption();
-            BuildPipeline.BuildPlayer(GetBuildScenes(), ANDROID_APK_PATH, BuildTarget.Android, ops);
+            BuildPipeline.BuildPlayer(GetBuildScenes(), BIN_PATH, BuildTarget.Android, SetBuildOption());
         }
         private static string[] GetBuildScenes()
         {
@@ -39,7 +38,7 @@ namespace NCSpeedLight
             return names.ToArray();
         }
 
-        private static void GenerateAPKName()
+        private void GenerateBinPath()
         {
             int maxIndex = 1;
             string datetime = DateTime.Now.ToString("yyyyMMdd");
@@ -80,21 +79,21 @@ namespace NCSpeedLight
                     }
                 }
             }
-            ANDROID_APK_PATH = Helper.StringFormat("Bin/{0}{1}_{2}.apk", Constants.GAME_NAME, datetime, maxIndex);
+            BIN_PATH = Helper.StringFormat("Bin/{0}{1}_{2}.apk", Constants.GAME_NAME, datetime, maxIndex);
         }
 
-        private static void SetProductName(string name)
+        private void SetProductName(string name)
         {
             PlayerSettings.productName = name;
         }
-        private static void SetKeyStore()
+        private void SetKeyStore()
         {
             PlayerSettings.Android.keystoreName = "KEY.keystore";
             PlayerSettings.Android.keystorePass = "qwer1234";
             PlayerSettings.Android.keyaliasName = "tp_signed_key";
             PlayerSettings.Android.keyaliasPass = "qwer1234";
         }
-        private static BuildOptions SetBuildAPKOption()
+        private BuildOptions SetBuildOption()
         {
             PlayerSettings.Android.targetDevice = AndroidTargetDevice.ARMv7;
             BuildOptions ops = BuildOptions.None;

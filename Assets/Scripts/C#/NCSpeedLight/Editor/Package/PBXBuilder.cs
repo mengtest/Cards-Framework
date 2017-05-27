@@ -1,9 +1,11 @@
-﻿#if UNITY_IOS
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using System.IO;
+using System;
+#if UNITY_IOS
 using UnityEditor.iOS.Xcode;
+#endif
 using System.Collections.Generic;
 
 namespace NCSpeedLight
@@ -59,8 +61,41 @@ namespace NCSpeedLight
         public void Dispose() { }
     }
 
-    public static class PBXBuilder
+    public class PBXBuilder : Builder
     {
+        private static bool PROFILE_VERSION = false;
+        public static string BIN_PATH = "Bin/XCodeProj";
+        public PBXBuilder(Action preBuild, Action postBuild) : base(preBuild, postBuild) { }
+
+        public override void Build()
+        {
+            BuildOptions ops = SetBuildOption();
+            BuildPipeline.BuildPlayer(GetBuildScenes(), BIN_PATH, BuildTarget.iOS, ops);
+        }
+
+        private string[] GetBuildScenes()
+        {
+            List<string> names = new List<string>();
+            names.Add("Assets/Launcher.unity");
+            return names.ToArray();
+        }
+
+        private BuildOptions SetBuildOption()
+        {
+            PlayerSettings.iOS.targetDevice = iOSTargetDevice.iPhoneAndiPad;
+            BuildOptions ops = BuildOptions.None;
+            if (PROFILE_VERSION)
+            {
+                ops |= BuildOptions.Development;
+                ops |= BuildOptions.AllowDebugging;
+                ops |= BuildOptions.ConnectWithProfiler;
+            }
+            else
+            {
+                ops |= BuildOptions.None;
+            }
+            return ops;
+        }
 
 #if UNITY_IOS
         [PostProcessBuild]
@@ -71,7 +106,6 @@ namespace NCSpeedLight
             EditInfoPlist(pathToBuiltProject);
             EditUnityAppController(pathToBuiltProject);
         }
-#endif
 
         /// <summary>
         /// Edit project settings.
@@ -208,6 +242,6 @@ namespace NCSpeedLight
                 outfiles.Add(directory);
             }
         }
+#endif
     }
 }
-#endif

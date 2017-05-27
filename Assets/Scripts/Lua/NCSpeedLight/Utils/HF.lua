@@ -2,18 +2,13 @@
 -- Copyright © 2014-2017 NCSpeedLight
 --
 -- FileName: HF.lua
--- Describle:  
+-- Describle:  热修复，用于开发阶段使用
 -- Created By:  Wells Hsu
 -- DateTime:  2017/05/26 10:32:11
 -- Modify History:
 --
 -----------------------------------------------
-HF = {
-	FuncMap = nil,
-};
-
-HF.FuncMap = {};
-setmetatable(HF.FuncMap, {__mode = "v"});
+HF = {};
 
 function HF.ReloadChunk(chunk, chunkName)
 	chunkName = chunkName or "HF";
@@ -140,18 +135,4 @@ function HF.ReloadFile(file)
 		return false;
 	end
 	return HF.ReloadChunk(fileContent, file);
-end
-
-function HF.In(func)
-	local info = {};
-	info.To = func;
-	table.insert(HF.FuncMap, info);
-	return func;
-end
-
-function HF.Plug(from, to)
-	local info = {};
-	info.From = from;
-	info.To = func;
-	table.insert(HF.FuncMap, info);
 end 
