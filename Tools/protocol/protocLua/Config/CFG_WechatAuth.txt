@@ -1,0 +1,16 @@
+message CFG_WechatAuth
+{
+    required string openID = 1;
+    required int32 expiresIn = 2;
+    required string userGender = 3;
+    required string tokenSecret = 4;
+    required string userID = 5;
+    required string unionID = 6;
+    required int64 expiresTime = 7;
+    required string userName = 8;
+    required string token = 9;
+    required string userIcon = 10;
+}
+
+
+ 

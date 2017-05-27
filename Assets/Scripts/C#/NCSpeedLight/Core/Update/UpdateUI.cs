@@ -79,84 +79,56 @@ namespace NCSpeedLight
                     }
                 }
             }
-
-            // 对比版本号
-            SetTips("正在检查更新...");
-            string[] version = Constants.NEWEST_VERSION.Split('.');
-            if (version.Length < 3)
+            if (Application.isEditor)
             {
-                SetTips("Version code error: " + Constants.NEWEST_VERSION);
-                yield break;
-            }
-
-            int majorVersion = 0;
-            int middleVersion = 0;
-            int miniorVersion = 0;
-            int.TryParse(version[0], out majorVersion);
-            int.TryParse(version[1], out middleVersion);
-            int.TryParse(version[2], out miniorVersion);
-            if (majorVersion != Constants.MAJOR_VERSION)
-            {
-                InternalUI.Instance.OpenDialog(true, "版本更新", "发现新版本，请前往应用商店下载安装");
+                StartCoroutine(StartGame());
             }
             else
             {
-                Constants.MIDDLE_VERSION = middleVersion;
-                Constants.MINIOR_VERSION = miniorVersion;
-                if (Constants.FORCE_UPDATE)
+                // 对比版本号
+                SetTips("正在检查更新...");
+                string[] version = Constants.NEWEST_VERSION.Split('.');
+                if (version.Length < 3)
                 {
-                    yield return StartCoroutine(FileUpdate.UpdateAsset());
-                    yield return StartCoroutine(FileUpdate.UpdateScript());
-                    yield return StartCoroutine(StartGame());
+                    SetTips("Version code error: " + Constants.NEWEST_VERSION);
+                    yield break;
+                }
+
+                int majorVersion = 0;
+                int middleVersion = 0;
+                int miniorVersion = 0;
+                int.TryParse(version[0], out majorVersion);
+                int.TryParse(version[1], out middleVersion);
+                int.TryParse(version[2], out miniorVersion);
+                if (majorVersion != Constants.MAJOR_VERSION)
+                {
+                    InternalUI.Instance.OpenDialog(true, "版本更新", "发现新版本，请前往应用商店下载安装");
                 }
                 else
                 {
-                    if (middleVersion != Constants.MIDDLE_VERSION)
+                    Constants.MIDDLE_VERSION = middleVersion;
+                    Constants.MINIOR_VERSION = miniorVersion;
+                    if (Constants.FORCE_UPDATE)
                     {
                         yield return StartCoroutine(FileUpdate.UpdateAsset());
                         yield return StartCoroutine(FileUpdate.UpdateScript());
+                        yield return StartCoroutine(StartGame());
                     }
-                    else if (miniorVersion != Constants.MINIOR_VERSION)
+                    else
                     {
-                        yield return StartCoroutine(FileUpdate.UpdateScript());
+                        if (middleVersion != Constants.MIDDLE_VERSION)
+                        {
+                            yield return StartCoroutine(FileUpdate.UpdateAsset());
+                            yield return StartCoroutine(FileUpdate.UpdateScript());
+                        }
+                        else if (miniorVersion != Constants.MINIOR_VERSION)
+                        {
+                            yield return StartCoroutine(FileUpdate.UpdateScript());
+                        }
+                        yield return StartCoroutine(StartGame());
                     }
-                    yield return StartCoroutine(StartGame());
                 }
             }
-            //if (Application.isEditor)
-            //{
-            //    if (Constants.SCRIPT_BUNDLE_MODE)
-            //    {
-            //        yield return StartCoroutine(FileUpdate.UpdateScript());
-            //        if (Constants.ASSET_BUNDLE_MODE)
-            //        {
-            //            yield return StartCoroutine(FileUpdate.UpdateAsset());
-            //            yield return StartCoroutine(StartGame());
-            //        }
-            //        else
-            //        {
-            //            yield return StartCoroutine(StartGame());
-            //        }
-            //    }
-            //    else
-            //    {
-            //        if (Constants.ASSET_BUNDLE_MODE)
-            //        {
-            //            yield return StartCoroutine(FileUpdate.UpdateAsset());
-            //            yield return StartCoroutine(StartGame());
-            //        }
-            //        else
-            //        {
-            //            yield return StartCoroutine(StartGame());
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    yield return StartCoroutine(FileUpdate.UpdateScript());
-            //    yield return StartCoroutine(FileUpdate.UpdateAsset());
-            //    yield return StartCoroutine(StartGame());
-            //}
         }
 
         private bool ParseJson(string json)

@@ -232,9 +232,8 @@ namespace NCSpeedLight
         public static void Log(object str)
         {
 #if OPEN_LOG
-            string head = DateTime.Now.ToString();
-            str = head + " " + str;
-            Debug.Log(str);
+            string logStr = StringFormat("[{0}][{1}-{2}] {3}", "Log.Info", DateTime.Now.ToString("HH:mm:ss"), Time.frameCount, str);
+            Debug.Log(logStr);
 #endif
         }
 
@@ -1194,6 +1193,14 @@ namespace NCSpeedLight
                 }
             }
             return false;
+        }
+
+        public static void DeleteFile(string path)
+        {
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
         }
 
         /// <summary>

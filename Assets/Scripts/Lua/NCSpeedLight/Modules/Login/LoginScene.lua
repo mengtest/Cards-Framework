@@ -27,7 +27,8 @@ LoginScene =
 	LoginServerPort = nil,
 	LogicServerIP = nil,
 	LoginServerPort = nil,
-	AuthInfo = nil,
+	
+	WechatAuth = nil,
 	
 	MusicVolume = 1, -- 音乐音量
 	
@@ -41,6 +42,9 @@ function LoginScene.Initialize()
 		LoginScene.IsInitialized = true;
 		LoginScene.OpenLoginRecord();
 		LoginScene.OpenSoundVolumeConfig();
+		if UnityEngine.Application.isMobilePlatform then
+			LoginScene.OpenWechatAuthInfo();
+		end
 		NetManager.RegisterEvent(GameMessage.GM_RESTORE_CONNECT_FROM_OFFLINEHANG_FAILED, LoginScene.OnReturnReconnectToLogicServerFail);
 		NetManager.RegisterEvent(GameMessage.GM_RESTORE_CONNECT_FROM_OFFLINEHANG_OK, LoginScene.OnReturnReconnectToLogicServerSuccess);
 	end
@@ -148,6 +152,42 @@ function LoginScene.OpenLoginRecord()
 	end
 end
 
+-- 打开微信登录信息
+function LoginScene.OpenWechatAuthInfo()
+	local path = Constants.DATA_PATH .. "Config/WechatAuth.bytes";
+	local buffer = Utility.OpenFile(path);
+	if buffer == nil then
+		Log.Error("OpenWechatAuthInfo: Can not open wechat auth file,is this file exists @ " .. path);
+	else
+		local msg = NetManager.DecodePB(PBMessage.CFG_WechatAuth, buffer);
+		if msg == false then
+			Log.Error("OpenWechatAuthInfo: decode login record error.");
+		else
+			LoginScene.WechatAuth = msg;
+			Log.Info("OpenWechatAuthInfo: success.");
+		end
+	end
+end
+
+-- 删除微信登录信息
+function LoginScene.DeleteWechatAuthInfo()
+	local path = Constants.DATA_PATH .. "Config/WechatAuth.bytes";
+	Utility.DeleteFile(path);
+	Log.Info("DeleteWechatAuthInfo: success.");
+end
+
+-- 保存微信登录信息
+function LoginScene.SaveWechatAuthInfo()
+	local path = Constants.DATA_PATH .. "Config/WechatAuth.bytes";
+	local buffer = NetManager.EncodePB(PBMessage.CFG_WechatAuth, LoginScene.WechatAuth);
+	if buffer == false then
+		Log.Error("SaveWechatAuthInfo: error caused by nil buffer.");
+	else
+		Utility.SaveFile(path, buffer);
+		Log.Info("SaveWechatAuthInfo: save success @ " .. path);
+	end
+end
+
 function LoginScene.GetLoginRecord()
 	return LoginScene.LoginRecord;
 end
@@ -247,12 +287,11 @@ function LoginScene.OnVerifyVersionReturn(evt)
 	if obj.result == 0 then
 		Log.Info("OnVerifyVersionReturn: sccuss.");
 		if Game.Platform == UnityEngine.RuntimePlatform.Android or Game.Platform == UnityEngine.RuntimePlatform.IPhonePlayer then
-			LoginScene.AuthInfo = ShareSDKAdapter.GetWechatAuthInfo();
-			if LoginScene.AuthInfo == nil then
+			if LoginScene.WechatAuth == nil then
 				UIManager.OpenWindow(UIName.UI_MobileLogin);
 			else
 				-- 本地存在验证信息，则直接登录
-				LoginScene.RequestLogin(LoginScene.AuthInfo.unionID, "AllPlatform");
+				LoginScene.RequestLogin(LoginScene.WechatAuth.unionID, "AllPlatform");
 			end
 		else
 			UIManager.OpenWindow(UIName.UI_NormalLogin);

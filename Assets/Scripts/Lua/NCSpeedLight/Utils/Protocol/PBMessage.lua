@@ -855,4 +855,5 @@ PBMessage =
 	CFG_LoginInfo = "CFG_LoginInfo",
 	CFG_LoginRecord = "CFG_LoginRecord",
 	CFG_SoundVolume = "CFG_SoundVolume",
+	CFG_WechatAuth = "CFG_WechatAuth",
 }

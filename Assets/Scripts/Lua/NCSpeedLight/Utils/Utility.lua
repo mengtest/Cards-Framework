@@ -25,6 +25,10 @@ function Utility.SaveFile(path, buffer)
 	return NCSpeedLight.Helper.SaveFile(path, buffer);
 end
 
+function Utility.DeleteFile(path)
+	return NCSpeedLight.Helper.DeleteFile(path);
+end
+
 -- 字符串分割
 function Utility.SplitString(oriStr, delimiter)
 	if oriStr == nil or string.len(oriStr) == 0 or delimiter == nil then

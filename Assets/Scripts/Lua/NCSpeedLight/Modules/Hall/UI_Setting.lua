@@ -16,6 +16,10 @@ function UI_Setting.Start()
 	end);
 	
 	UIHelper.SetButtonEvent(this.transform, "Content/ExitLogin/Button", function()
+		if UnityEngine.Application.isMobilePlatform then
+			LoginScene.WechatAuth = nil;
+			LoginScene.DeleteWechatAuthInfo();
+		end
 		SceneManager.Goto(LoginScene.Name);
 	end);
 	

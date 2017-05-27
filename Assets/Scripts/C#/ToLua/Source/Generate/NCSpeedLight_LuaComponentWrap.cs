@@ -7,7 +7,6 @@ public class NCSpeedLight_LuaComponentWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(NCSpeedLight.LuaComponent), typeof(UnityEngine.MonoBehaviour));
-		L.RegFunction("CallAwake", CallAwake);
 		L.RegFunction("Add", Add);
 		L.RegFunction("Get", Get);
 		L.RegFunction("Destroy", Destroy);
@@ -15,23 +14,6 @@ public class NCSpeedLight_LuaComponentWrap
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.EndClass();
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int CallAwake(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 2);
-			NCSpeedLight.LuaComponent obj = (NCSpeedLight.LuaComponent)ToLua.CheckObject(L, 1, typeof(NCSpeedLight.LuaComponent));
-			LuaTable arg0 = ToLua.CheckLuaTable(L, 2);
-			obj.CallAwake(arg0);
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

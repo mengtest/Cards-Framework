@@ -22,7 +22,12 @@ end
 
 -- 初始化PB文件，注册lua解析
 function NetManager.InitPBMessage()
-	local path = Constants.LOCAL_SCRIPT_BUNDLE_PATH .. "PBMessage.pb";
+	local path;
+	if Constants.SCRIPT_BUNDLE_MODE then
+		path = Constants.LOCAL_SCRIPT_BUNDLE_PATH .. "PBMessage.pb";
+	else
+		path = UnityEngine.Application.dataPath .. "/Scripts/Lua/NCSpeedLight/Utils/Protocol/PBMessage.pb";
+	end
 	local buffer = Utility.OpenFile(path);
 	if buffer == nil then
 		Log.Error("InitPBMessage: open pb file error.");

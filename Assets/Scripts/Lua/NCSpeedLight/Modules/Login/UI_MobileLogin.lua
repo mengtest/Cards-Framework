@@ -1,7 +1,6 @@
 UI_MobileLogin = {
 	transform = nil,
 	gameObject = nil,
-	AuthInfo = nil,
 }
 
 local this = UI_MobileLogin;
@@ -28,14 +27,26 @@ end
 
 
 function UI_MobileLogin.OnAuthCallback(ret, authInfo)
-	UI_MobileLogin.AuthInfo = authInfo;
+	LoginScene.WechatAuth = {
+		openID = authInfo.openID,
+		expiresIn = tonumber(authInfo.expiresIn),
+		userGender = authInfo.userGender,
+		tokenSecret = authInfo.tokenSecret,
+		userID = authInfo.userID,
+		unionID = authInfo.unionID,
+		expiresTime = tonumber(authInfo.expiresTime),
+		userName = authInfo.userName,
+		token = authInfo.token,
+		userIcon = authInfo.userIcon,
+	};
 	if ret == ShareSDKAdapter.RetType.Cancel then
 		UIManager.OpenTipsDialog("取消授权");
 	elseif ret == ShareSDKAdapter.RetType.Fail then
 		UIManager.OpenTipsDialog("授权失败");
 	elseif ret == ShareSDKAdapter.RetType.Success then
 		UIManager.OpenTipsDialog("授权成功");
-		LoginScene.RequestLogin(UI_MobileLogin.AuthInfo.unionID, "AllPlatform");
+		LoginScene.SaveWechatAuthInfo();
+		LoginScene.RequestLogin(authInfo.unionID, "AllPlatform");
 	end
 end
 

@@ -699,6 +699,21 @@ F
 CFG_SoundVolume
 Sound (
 Music (
+Ü
+CFG_WechatAuth.txt"Å
+CFG_WechatAuth
+openID (	
+	expiresIn (
+
+userGender (	
+tokenSecret (	
+userID (	
+unionID (	
+expiresTime (
+userName (	
+token	 (	
+userIcon
+ (	
 ¿
 challenge.txt"¦
 GM_Challenge_Open_Return

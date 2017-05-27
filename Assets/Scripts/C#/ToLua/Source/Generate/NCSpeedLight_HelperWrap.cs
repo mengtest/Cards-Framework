@@ -60,6 +60,7 @@ public class NCSpeedLight_HelperWrap
 		L.RegFunction("BytesMD5", BytesMD5);
 		L.RegFunction("OpenFile", OpenFile);
 		L.RegFunction("SaveFile", SaveFile);
+		L.RegFunction("DeleteFile", DeleteFile);
 		L.RegFunction("LoadAssetFromBundle", LoadAssetFromBundle);
 		L.RegFunction("EncryptString", EncryptString);
 		L.RegFunction("DecryptString", DecryptString);
@@ -1161,6 +1162,22 @@ public class NCSpeedLight_HelperWrap
 			bool o = NCSpeedLight.Helper.SaveFile(arg0, arg1);
 			LuaDLL.lua_pushboolean(L, o);
 			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int DeleteFile(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			string arg0 = ToLua.CheckString(L, 1);
+			NCSpeedLight.Helper.DeleteFile(arg0);
+			return 0;
 		}
 		catch(Exception e)
 		{
