@@ -73,7 +73,7 @@ namespace NCSpeedLight
             }
             catch (Exception e)
             {
-                ErrorrOccurred(e.Message);
+                ErrorOccurred(e.Message);
             }
         }
 
@@ -137,7 +137,7 @@ namespace NCSpeedLight
             });
         }
 
-        private void ErrorrOccurred(string error)
+        private void ErrorOccurred(string error)
         {
             Error = error;
             if (Socket != null)
@@ -184,7 +184,7 @@ namespace NCSpeedLight
             }
             catch (Exception e)
             {
-                ErrorrOccurred(e.Message);
+                ErrorOccurred(e.Message);
             }
         }
 
@@ -241,12 +241,12 @@ namespace NCSpeedLight
                 else
                 {
                     string err = "packet header read error,size is " + bytesRead;
-                    ErrorrOccurred(err);
+                    ErrorOccurred(err);
                 }
             }
             catch (Exception e)
             {
-                ErrorrOccurred(e.Message);
+                ErrorOccurred(e.Message);
             }
         }
 
@@ -268,12 +268,12 @@ namespace NCSpeedLight
                 {
                     string err = "bytes read(" + bytesRead + ") does not equal body size(" + packet.GetBodySize() + ")";
                     Helper.LogError("NetConnection.ReceivePacketBodyCallback: error: " + err);
-                    ErrorrOccurred(err);
+                    ErrorOccurred(err);
                 }
             }
             catch (Exception e)
             {
-                ErrorrOccurred(e.Message);
+                ErrorOccurred(e.Message);
             }
         }
 
@@ -285,7 +285,7 @@ namespace NCSpeedLight
             }
             catch (Exception e)
             {
-                ErrorrOccurred(e.Message);
+                ErrorOccurred(e.Message);
             }
         }
     }

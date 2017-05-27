@@ -26,7 +26,6 @@ function UI_Hall.InitBtnEvt()
 	UIHelper.SetButtonEvent(this.transform, "bottom/function/Return/Setting", UI_Hall.OnClickSetting);
 	UIHelper.SetButtonEvent(this.transform, "right/rightButton/CreateRoom", UI_Hall.OnClickCreateRoom);
 	UIHelper.SetButtonEvent(this.transform, "right/rightButton/JoinRoom", UI_Hall.OnClickJoinRoom);
-	UIHelper.SetButtonEvent(this.transform, "right/rightButton/JoinRoom", UI_Hall.OnClickJoinRoom);
 	UIHelper.SetButtonEvent(this.transform, "left/RoleInfo/Card/Add", UI_Hall.OnClickAddCard);
 end
 

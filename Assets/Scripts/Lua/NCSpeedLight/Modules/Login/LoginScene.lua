@@ -47,6 +47,10 @@ function LoginScene.Initialize()
 end
 
 function LoginScene.Begin()
+	if SceneManager.LastScene == HallScene then
+		UIManager.CloseAllWindows();
+		NetManager.DisconnectAll();
+	end
 	NCSpeedLight.InternalUI.Instance:OpenBG();
 	AssetManager.LoadScene(SceneName.LoginScene);
 	NetManager.RegisterEvent(GameMessage.GM_VERSION_RETURN, LoginScene.OnVerifyVersionReturn);
@@ -410,12 +414,14 @@ end
 
 function LoginScene.OnLogicServerErrorOccupied(connection, error)
 	Log.Error("OnLogicServerErrorOccupied: error message: " .. error);
-	LoginScene.DisconnectTimeStamp = Time.realtimeSinceStartup;
-	local option = ProgressDialogOption.New();
-	option.Content = "网络异常，重新连接中...";
-	UIManager.OpenProgressDialog(option);
-	connection:Reconnect();
-	Log.Info("OnLogicServerErrorOccupied: 逻辑服务器异常,启动重连,时间戳：" .. tostring(LoginScene.DisconnectTimeStamp));
+	if SceneManager.CurrentScene == HallScene or MJScene then
+		LoginScene.DisconnectTimeStamp = Time.realtimeSinceStartup;
+		local option = ProgressDialogOption.New();
+		option.Content = "网络异常，重新连接中...";
+		UIManager.OpenProgressDialog(option);
+		connection:Reconnect();
+		Log.Info("OnLogicServerErrorOccupied: 逻辑服务器异常,启动重连,时间戳：" .. tostring(LoginScene.DisconnectTimeStamp));
+	end
 end
 
 function LoginScene.RequestReconnectToLogicServer()

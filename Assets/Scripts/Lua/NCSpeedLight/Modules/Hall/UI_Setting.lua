@@ -15,6 +15,10 @@ function UI_Setting.Start()
 		UIManager.CloseWindow(UIName.UI_Setting);
 	end);
 	
+	UIHelper.SetButtonEvent(this.transform, "Content/ExitLogin/Button", function()
+		SceneManager.Goto(LoginScene.Name);
+	end);
+	
 	local musicSlider = UIHelper.GetComponent(this.transform, "Content/SettingButton/SL_Music", typeof(UISlider));
 	musicSlider.value = LoginScene.MusicVolume;
 	if LoginScene.MusicVolume == 0 then
