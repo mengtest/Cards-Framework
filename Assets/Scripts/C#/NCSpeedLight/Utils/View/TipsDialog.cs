@@ -61,15 +61,16 @@ namespace NCSpeedLight
                 }
             }
             TweenPosition positionTweener = gameObject.AddComponent<TweenPosition>();
-            transform.localPosition = new Vector3(0, 0, 0);
-            positionTweener.from = new Vector3(0, 0, 0);
-            positionTweener.to = new Vector3(0, 150, 0);
-            positionTweener.duration = m_Timeout;
+            transform.localPosition = new Vector3(0, -100, 0);
+            positionTweener.from = new Vector3(0, -100, 0);
+            positionTweener.to = new Vector3(0, 0, 0);
+            positionTweener.duration = 0.5f;
 
-            //TweenAlpha alphaTweener = gameObject.AddComponent<TweenAlpha>();
-            //alphaTweener.from = 1.0f;
-            //alphaTweener.to = 0.5f;
-            //alphaTweener.duration = m_Timeout;
+            TweenAlpha alphaTweener = gameObject.AddComponent<TweenAlpha>();
+            alphaTweener.from = 1.0f;
+            alphaTweener.to = 0.5f;
+            alphaTweener.duration = 0.3f;
+            alphaTweener.delay = 1.2f;
         }
         void CloseDialog()
         {

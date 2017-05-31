@@ -208,6 +208,7 @@ namespace NCSpeedLight
             UnityAppController.WriteBelow("#include \"PluginBase/AppDelegateListener.h\"", "#include \"LocationUtils.h\"");
             UnityAppController.WriteBelow("#include \"LocationUtils.h\"", "#include \"ShareSDKUnity3DBridge.h\"");
             UnityAppController.WriteBelow("#include \"ShareSDKUnity3DBridge.h\"", "#include \"SoundUtils.h\"");
+            UnityAppController.WriteBelow("#include \"SoundUtils.h\"", "#include \"ClipboardUtils.mm\"");
         }
 
         private static void CollectShareSDKFrameworks(List<string> outfiles, string directory)

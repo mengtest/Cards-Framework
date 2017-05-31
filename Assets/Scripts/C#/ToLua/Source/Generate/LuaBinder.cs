@@ -138,6 +138,8 @@ public static class LuaBinder
 		UnityEngine_GUIWrap.Register(L);
 		UnityEngine_GUIContentWrap.Register(L);
 		UnityEngine_RectWrap.Register(L);
+		UnityEngine_SystemInfoWrap.Register(L);
+		UnityEngine_BatteryStatusWrap.Register(L);
 		L.BeginModule("SceneManagement");
 		UnityEngine_SceneManagement_SceneManagerWrap.Register(L);
 		L.EndModule();
@@ -184,6 +186,7 @@ public static class LuaBinder
 		NCSpeedLight_LuaComponentWrap.Register(L);
 		NCSpeedLight_InternalUIWrap.Register(L);
 		NCSpeedLight_ScreenshotWrap.Register(L);
+		NCSpeedLight_ClipboardUtilsWrap.Register(L);
 		NCSpeedLight_EventManagerWrap.Register(L);
 		L.RegFunction("EventHandlerDelegate", NCSpeedLight_EventHandlerDelegate);
 		L.BeginModule("ShareSDKAdapter");

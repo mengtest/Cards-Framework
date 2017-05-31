@@ -1260,6 +1260,5 @@ namespace NCSpeedLight
                 return decryptString;
             }
         }
-
     }
 }

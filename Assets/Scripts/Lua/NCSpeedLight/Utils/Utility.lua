@@ -59,6 +59,11 @@ function Utility.ReplaceString(str, from, to)
 	return string.gsub(str, from, to);
 end
 
+-- 去掉字符串两侧的空格
+function Utility.TrimString(str)
+	return(string.gsub(str, "^%s*(.-)%s*$", "%1"))
+end
+
 function Utility.FormatTimeStamp(format, timestamp)
 	return os.date(format, timestamp);
 end

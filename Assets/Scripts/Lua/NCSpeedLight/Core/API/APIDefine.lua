@@ -9,6 +9,8 @@
 --
 -----------------------------------------------
 UIHelper = NCSpeedLight.UIHelper;
+Helper = NCSpeedLight.Helper;
+ClipboardUtils = NCSpeedLight.ClipboardUtils;
 LuaComponent = NCSpeedLight.LuaComponent;
 Constants = NCSpeedLight.Constants;
 LuaManager = NCSpeedLight.LuaManager;

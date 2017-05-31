@@ -120,7 +120,8 @@ public static class CustomSettings
         _GT(typeof(Rect)),
 
         _GT(typeof(UnityEngine.SceneManagement.SceneManager)),
-
+        _GT(typeof(SystemInfo)),
+        _GT(typeof(BatteryStatus)),
 #region SDK 
         _GT(typeof(ShareSDKAdapter)),
         _GT(typeof(ShareSDKAdapter.RetType)),
@@ -158,6 +159,7 @@ public static class CustomSettings
 
          _GT(typeof(InternalUI)),
          _GT(typeof(Screenshot)),
+         _GT(typeof(ClipboardUtils)),
 #endregion
 
         #region NGUI Component
@@ -247,7 +249,6 @@ public static class CustomSettings
 
 
         #endregion
-
          
         #region System
         _GT(typeof(BitConverter)),
