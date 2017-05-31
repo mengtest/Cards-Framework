@@ -35,10 +35,10 @@ end
 function UI_MJDraw.InitBtnEvent()
 	UIHelper.SetButtonEvent(this.transform, "Buttom/OnceAgain", function(obj)
 		MJScene.OnceAgain();
-		UIManager.CloseAllWindowsExcept(UIName.UI_MaJiang);
+		UIManager.CloseAllWindowsExcept(UIName.UI_MJBase);
 	end);
 	UIHelper.SetButtonEvent(this.transform, "Buttom/LookTotalResult", function(obj)
-		UIManager.CloseAllWindowsExcept(UIName.UI_MaJiang);
+		UIManager.CloseAllWindowsExcept(UIName.UI_MJBase);
 		UIManager.OpenWindow(UIName.UI_MJTotalResult);
 	end);
 	UIHelper.SetButtonEvent(this.transform, "Buttom/ReturnDeskBtn", function(obj)

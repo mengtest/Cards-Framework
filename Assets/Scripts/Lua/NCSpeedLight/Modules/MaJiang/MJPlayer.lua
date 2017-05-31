@@ -155,7 +155,7 @@ function MJPlayer:SetUI()
 		MJPlayer.RoomMaster = self;
 	end
 	-- 获取玩家的UI位置
-	local vals = UI_MaJiang.GetPlayerUI(self.ServerPosition);
+	local vals = UI_MJBase.GetPlayerUI(self.ServerPosition);
 	self.UI = vals[1];
 	self.UITransform = vals[2];
 	self.UIPosition = vals[3];

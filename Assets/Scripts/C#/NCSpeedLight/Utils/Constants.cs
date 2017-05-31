@@ -319,18 +319,19 @@ namespace NCSpeedLight
         {
             get
             {
-                if (Application.isMobilePlatform || Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.OSXPlayer)
-                {
-                    return true;
-                }
-                else if (Application.isEditor)
-                {
-                    return PlayerPrefs.GetInt(PREF_SCRIPT_BYTE_MODE_KEY) == 1;
-                }
-                else
-                {
-                    return false;
-                }
+                return true;
+                //if (Application.isMobilePlatform || Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.OSXPlayer)
+                //{
+                //    return true;
+                //}
+                //else if (Application.isEditor)
+                //{
+                //    return PlayerPrefs.GetInt(PREF_SCRIPT_BYTE_MODE_KEY) == 1;
+                //}
+                //else
+                //{
+                //    return false;
+                //}
             }
         }
 

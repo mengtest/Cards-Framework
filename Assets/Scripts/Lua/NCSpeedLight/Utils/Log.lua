@@ -94,7 +94,11 @@ function Log.GetCallStack()
 	local info = debug.getinfo(level, "nSl")
 	local callStack = "";
 	if info ~= nil then
-		callStack = "[" .. info.source .. ".lua:" .. info.currentline .. "] ";
+		if info.currentline == nil or info.currentline == 0 then
+			callStack = "[" .. info.source .. ".lua] ";
+		else
+			callStack = "[" .. info.source .. ".lua:" .. info.currentline .. "] ";
+		end
 	end
 	return callStack;
 end

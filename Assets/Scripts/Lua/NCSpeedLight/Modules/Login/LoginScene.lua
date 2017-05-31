@@ -30,9 +30,9 @@ LoginScene =
 	
 	WechatAuth = nil,
 	
-	MusicVolume = 1, -- 音乐音量
+	MusicVolume = 0.3, -- 音乐音量
 	
-	SoundVolume = 1, -- 音效音量
+	SoundVolume = 0.3, -- 音效音量
 	
 	SoundMode = 0 -- 语音版本 0-普通话，2-方言
 };
@@ -99,14 +99,14 @@ function LoginScene.OpenSoundVolumeConfig()
 	local path = Constants.DATA_PATH .. "Config/SoundVolume.bytes";
 	local buffer = Utility.OpenFile(path);
 	if buffer == nil then
-		LoginScene.SoundVolume = 1;
-		LoginScene.MusicVolume = 1;
+		LoginScene.SoundVolume = 0.3;
+		LoginScene.MusicVolume = 0.3;
 		Log.Error("OpenSoundVolumeConfig: Can not open sound volume config,is this file exists @ " .. path);
 	else
 		local config = NetManager.DecodePB(PBMessage.CFG_SoundVolume, buffer);
 		if config == false then
-			LoginScene.SoundVolume = 0.4;
-			LoginScene.MusicVolume = 0.4;
+			LoginScene.SoundVolume = 0.3;
+			LoginScene.MusicVolume = 0.3;
 			Log.Error("OpenSoundVolumeConfig: decode sound volume bytes error.");
 		else
 			LoginScene.SoundVolume = config.Sound;

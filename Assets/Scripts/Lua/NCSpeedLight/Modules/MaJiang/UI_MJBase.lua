@@ -1,7 +1,7 @@
 -----------------------------------------------
 -- Copyright © 2014-2017 NCSpeedLight
 --
--- FileName: UI_MaJiang.lua
+-- FileName: UI_MJBase.lua
 -- Describle:   麻将主界面
 -- Created By:  Wells Hsu
 -- Date&Time:  2017/2/28 19:11:09
@@ -12,7 +12,7 @@ require "NCSpeedLight.Modules.MaJiang.UI_MJHeroCtrl"
 require "NCSpeedLight.Modules.MaJiang.UI_MJPlayer"
 require "NCSpeedLight.Modules.MaJiang.UI_MJInteraction"
 
-UI_MaJiang = {
+UI_MJBase = {
 	transform,
 	gameObject,
 	UI_Player0,
@@ -28,9 +28,9 @@ UI_MaJiang = {
 	RecordSuccess = false,
 }
 
-local this = UI_MaJiang
+local this = UI_MJBase
 
-function UI_MaJiang.Awake(go)
+function UI_MJBase.Awake(go)
 	this.gameObject = go;
 	this.transform = go.transform;
 	IsOpenChat = false;
@@ -38,97 +38,97 @@ function UI_MaJiang.Awake(go)
 	RecordSuccess = false;
 end
 
-function UI_MaJiang.Start()
-	UIHelper.SetButtonEvent(this.transform, "top/topRight/Button (Set)", UI_MaJiang.OnClickSetting);
-	UIHelper.SetButtonEvent(this.transform, "bottom/right/DissolveRoom", UI_MaJiang.DissolveRoom);
-	UIHelper.SetButtonEvent(this.transform, "bottom/right/Button (Message)", UI_MaJiang.OnClickChat);
-	UIHelper.SetButtonEvent(this.transform, "bottom/right/Button (Message2)", UI_MaJiang.OnClickTest);
-	UIHelper.SetButtonEvent(this.transform, "center/Ready/Yes", UI_MaJiang.OnClickYes);
-	UIHelper.SetButtonEvent(this.transform, "center/Ready/No", UI_MaJiang.OnClickNo);
-	UIHelper.SetButtonEvent(this.transform, "center/Ready/Invite", UI_MaJiang.OnClickInvite);
-	UIHelper.SetButtonEvent(this.transform, "center/CastDice/Button", UI_MaJiang.OnClickCastDice);
-	UIHelper.SetButtonEvent(this.transform, "bottom/right/Operate/Hu", UI_MaJiang.OnClickHu);
-	UIHelper.SetButtonEvent(this.transform, "bottom/right/Operate/DingHu", UI_MaJiang.OnClickDingHu);
-	UIHelper.SetButtonEvent(this.transform, "bottom/right/Operate/Pass", UI_MaJiang.OnClickPass);
-	UIHelper.SetButtonEvent(this.transform, "Texture", UI_MaJiang.OnClickOtherArea);
+function UI_MJBase.Start()
+	UIHelper.SetButtonEvent(this.transform, "top/topRight/Button (Set)", UI_MJBase.OnClickSetting);
+	UIHelper.SetButtonEvent(this.transform, "bottom/right/DissolveRoom", UI_MJBase.DissolveRoom);
+	UIHelper.SetButtonEvent(this.transform, "bottom/right/Button (Message)", UI_MJBase.OnClickChat);
+	UIHelper.SetButtonEvent(this.transform, "bottom/right/Button (Message2)", UI_MJBase.OnClickTest);
+	UIHelper.SetButtonEvent(this.transform, "center/Ready/Yes", UI_MJBase.OnClickYes);
+	UIHelper.SetButtonEvent(this.transform, "center/Ready/No", UI_MJBase.OnClickNo);
+	UIHelper.SetButtonEvent(this.transform, "center/Ready/Invite", UI_MJBase.OnClickInvite);
+	UIHelper.SetButtonEvent(this.transform, "center/CastDice/Button", UI_MJBase.OnClickCastDice);
+	UIHelper.SetButtonEvent(this.transform, "bottom/right/Operate/Hu", UI_MJBase.OnClickHu);
+	UIHelper.SetButtonEvent(this.transform, "bottom/right/Operate/DingHu", UI_MJBase.OnClickDingHu);
+	UIHelper.SetButtonEvent(this.transform, "bottom/right/Operate/Pass", UI_MJBase.OnClickPass);
+	UIHelper.SetButtonEvent(this.transform, "Texture", UI_MJBase.OnClickOtherArea);
 	
 	-- 录音按钮相关事件监听逻辑
 	local voiceBtnListener = UIHelper.GetComponent(this.transform, "bottom/right/Button (Voice)", typeof(UIEventListener));
 	if voiceBtnListener == nil then
 		voiceBtnListener = UIHelper.AddComponent(this.transform, "bottom/right/Button (Voice)", typeof(UIEventListener));
 	end
-	voiceBtnListener.onPress = UI_MaJiang.OnVoiceBtnPress;
-	voiceBtnListener.onDragStart = UI_MaJiang.OnVoiceBtnDragStart;
-	voiceBtnListener.onDrag = UI_MaJiang.OnVoiceBtnDrag;
-	voiceBtnListener.onDragEnd = UI_MaJiang.OnVoiceBtnDragEnd;
+	voiceBtnListener.onPress = UI_MJBase.OnVoiceBtnPress;
+	voiceBtnListener.onDragStart = UI_MJBase.OnVoiceBtnDragStart;
+	voiceBtnListener.onDrag = UI_MJBase.OnVoiceBtnDrag;
+	voiceBtnListener.onDragEnd = UI_MJBase.OnVoiceBtnDragEnd;
 	
-	UI_MaJiang.SetupCurrentRound();
-	UI_MaJiang.SetupPlayerUIVisiable();
+	UI_MJBase.SetupCurrentRound();
+	UI_MJBase.SetupPlayerUIVisiable();
 	if HallScene.CurrentFBPlaybackMode then
-		UI_MaJiang.SetupReadyAndInvite(false, false, false);
+		UI_MJBase.SetupReadyAndInvite(false, false, false);
 	else
-		UI_MaJiang.SetupReadyAndInvite(true, false, true);
+		UI_MJBase.SetupReadyAndInvite(true, false, true);
 	end
-	UI_MaJiang.InitPlayerUI();
+	UI_MJBase.InitPlayerUI();
 end
 
-function UI_MaJiang.OnDestroy()
-	UI_MaJiang.transform = nil;
-	UI_MaJiang.gameObject = nil;
-	UI_MaJiang.UI_Player0 = nil;
-	UI_MaJiang.UI_Player1 = nil;
-	UI_MaJiang.UI_Player2 = nil;
-	UI_MaJiang.UI_Player3 = nil;
-	UI_MaJiang.CurrentTime = nil;
-	UI_MaJiang.OperateTime = 15;
-	coroutine.stop(UI_MaJiang.OperateCountdownCo);
-	UI_MaJiang.OperateCountdownCo = nil;
-	UI_MaJiang.IsOpenChat = false;
-	UI_MaJiang.IsRecording = false;
-	UI_MaJiang.RecordStartPos = Vector3.zero;
-	UI_MaJiang.RecordSuccess = false;
+function UI_MJBase.OnDestroy()
+	UI_MJBase.transform = nil;
+	UI_MJBase.gameObject = nil;
+	UI_MJBase.UI_Player0 = nil;
+	UI_MJBase.UI_Player1 = nil;
+	UI_MJBase.UI_Player2 = nil;
+	UI_MJBase.UI_Player3 = nil;
+	UI_MJBase.CurrentTime = nil;
+	UI_MJBase.OperateTime = 15;
+	coroutine.stop(UI_MJBase.OperateCountdownCo);
+	UI_MJBase.OperateCountdownCo = nil;
+	UI_MJBase.IsOpenChat = false;
+	UI_MJBase.IsRecording = false;
+	UI_MJBase.RecordStartPos = Vector3.zero;
+	UI_MJBase.RecordSuccess = false;
 end
 
-function UI_MaJiang.Reset()
-	UI_MaJiang.SetupCurrentRound();
+function UI_MJBase.Reset()
+	UI_MJBase.SetupCurrentRound();
 	if HallScene.CurrentFBPlaybackMode then
-		UI_MaJiang.SetupReadyAndInvite(false, false, false);
+		UI_MJBase.SetupReadyAndInvite(false, false, false);
 	else
-		UI_MaJiang.SetupReadyAndInvite(true, false, true);
+		UI_MJBase.SetupReadyAndInvite(true, false, true);
 	end
 	UIHelper.SetActiveState(this.transform, "center/Time", false);
 	UI_MJHeroCtrl.Reset();
 end
 
 -- 初始化玩家的UI
-function UI_MaJiang.InitPlayerUI()
-	UI_MaJiang.UI_Player0 = this.transform:Find("Player0");
-	UI_MaJiang.UI_Player1 = this.transform:Find("Player1");
-	UI_MaJiang.UI_Player2 = this.transform:Find("Player2");
-	UI_MaJiang.UI_Player3 = this.transform:Find("Player3");
+function UI_MJBase.InitPlayerUI()
+	UI_MJBase.UI_Player0 = this.transform:Find("Player0");
+	UI_MJBase.UI_Player1 = this.transform:Find("Player1");
+	UI_MJBase.UI_Player2 = this.transform:Find("Player2");
+	UI_MJBase.UI_Player3 = this.transform:Find("Player3");
 	
-	LuaComponent.Add(UI_MaJiang.UI_Player0.gameObject, UI_MJPlayer);
-	LuaComponent.Add(UI_MaJiang.UI_Player1.gameObject, UI_MJPlayer);
-	LuaComponent.Add(UI_MaJiang.UI_Player2.gameObject, UI_MJPlayer);
-	LuaComponent.Add(UI_MaJiang.UI_Player3.gameObject, UI_MJPlayer);
+	LuaComponent.Add(UI_MJBase.UI_Player0.gameObject, UI_MJPlayer);
+	LuaComponent.Add(UI_MJBase.UI_Player1.gameObject, UI_MJPlayer);
+	LuaComponent.Add(UI_MJBase.UI_Player2.gameObject, UI_MJPlayer);
+	LuaComponent.Add(UI_MJBase.UI_Player3.gameObject, UI_MJPlayer);
 	
 	if not HallScene.CurrentFBPlaybackMode then
-		UIHelper.SetButtonEvent(UI_MaJiang.UI_Player0, "Enter/Center/Icon/Sprite (Photo)", function()
+		UIHelper.SetButtonEvent(UI_MJBase.UI_Player0, "Enter/Center/Icon/Sprite (Photo)", function()
 			local player = MJScene.GetPlayerByUIPosition(0);
 			UIManager.OpenWindow(UIName.UI_MJPlayerInfo);
 			UI_MJPlayerInfo.CurrentPlayer = player;
 		end);
-		UIHelper.SetButtonEvent(UI_MaJiang.UI_Player1, "Enter/Center/Icon/Sprite (Photo)", function()
+		UIHelper.SetButtonEvent(UI_MJBase.UI_Player1, "Enter/Center/Icon/Sprite (Photo)", function()
 			local player = MJScene.GetPlayerByUIPosition(1);
 			UIManager.OpenWindow(UIName.UI_MJPlayerInfo);
 			UI_MJPlayerInfo.CurrentPlayer = player;
 		end);
-		UIHelper.SetButtonEvent(UI_MaJiang.UI_Player2, "Enter/Center/Icon/Sprite (Photo)", function()
+		UIHelper.SetButtonEvent(UI_MJBase.UI_Player2, "Enter/Center/Icon/Sprite (Photo)", function()
 			local player = MJScene.GetPlayerByUIPosition(2);
 			UIManager.OpenWindow(UIName.UI_MJPlayerInfo);
 			UI_MJPlayerInfo.CurrentPlayer = player;
 		end);
-		UIHelper.SetButtonEvent(UI_MaJiang.UI_Player3, "Enter/Center/Icon/Sprite (Photo)", function()
+		UIHelper.SetButtonEvent(UI_MJBase.UI_Player3, "Enter/Center/Icon/Sprite (Photo)", function()
 			local player = MJScene.GetPlayerByUIPosition(3);
 			UIManager.OpenWindow(UIName.UI_MJPlayerInfo);
 			UI_MJPlayerInfo.CurrentPlayer = player;
@@ -137,24 +137,24 @@ function UI_MaJiang.InitPlayerUI()
 end
 
 -- 获取玩家的UI
-function UI_MaJiang.GetPlayerUI(serverPos)
+function UI_MJBase.GetPlayerUI(serverPos)
 	local heroPos = MJPlayer.Hero.ServerPosition;
 	if HallScene.CurrentFBType == MJRoomType.R_1 then -- 二人场
 		if heroPos == serverPos then
-			local uiCom = LuaComponent.Get(UI_MaJiang.UI_Player0.gameObject, UI_MJPlayer);
-			return {uiCom, UI_MaJiang.UI_Player0, 0};
+			local uiCom = LuaComponent.Get(UI_MJBase.UI_Player0.gameObject, UI_MJPlayer);
+			return {uiCom, UI_MJBase.UI_Player0, 0};
 		else
-			local uiCom = LuaComponent.Get(UI_MaJiang.UI_Player2.gameObject, UI_MJPlayer);
-			return {uiCom, UI_MaJiang.UI_Player2, 2};
+			local uiCom = LuaComponent.Get(UI_MJBase.UI_Player2.gameObject, UI_MJPlayer);
+			return {uiCom, UI_MJBase.UI_Player2, 2};
 		end
 	elseif HallScene.CurrentFBType == MJRoomType.R_2 then -- 四人场
 		if heroPos == serverPos then
-			local uiCom = LuaComponent.Get(UI_MaJiang.UI_Player0.gameObject, UI_MJPlayer);
-			return {uiCom, UI_MaJiang.UI_Player0, 0};
+			local uiCom = LuaComponent.Get(UI_MJBase.UI_Player0.gameObject, UI_MJPlayer);
+			return {uiCom, UI_MJBase.UI_Player0, 0};
 		else
 			local offset = 4 - heroPos;
 			local pos =(offset + serverPos) % 4;
-			local uiTransform = UI_MaJiang.GetPlayerUIByPosition(pos);
+			local uiTransform = UI_MJBase.GetPlayerUIByPosition(pos);
 			local uiCom = LuaComponent.Get(uiTransform.gameObject, UI_OtherPlayer);
 			return {uiCom, uiTransform, pos};
 		end
@@ -162,20 +162,20 @@ function UI_MaJiang.GetPlayerUI(serverPos)
 end
 
 -- 通过UI的位置获取对象
-function UI_MaJiang.GetPlayerUIByPosition(pos)
+function UI_MJBase.GetPlayerUIByPosition(pos)
 	if pos == 0 then
-		return UI_MaJiang.UI_Player0;
+		return UI_MJBase.UI_Player0;
 	elseif pos == 1 then
-		return UI_MaJiang.UI_Player1;
+		return UI_MJBase.UI_Player1;
 	elseif pos == 2 then
-		return UI_MaJiang.UI_Player2;
+		return UI_MJBase.UI_Player2;
 	elseif pos == 3 then
-		return UI_MaJiang.UI_Player3;
+		return UI_MJBase.UI_Player3;
 	end
 end
 
 -- 设置player ui显示
-function UI_MaJiang.SetupPlayerUIVisiable()
+function UI_MJBase.SetupPlayerUIVisiable()
 	if HallScene.CurrentFBType == MJRoomType.R_1 then
 		UIHelper.SetActiveState(this.transform, "Player1", false);
 		UIHelper.SetActiveState(this.transform, "Player3", false);
@@ -183,7 +183,7 @@ function UI_MaJiang.SetupPlayerUIVisiable()
 end
 
 -- 设置准备和邀请按钮的显示状态 , ready/unready/invite
-function UI_MaJiang.SetupReadyAndInvite(ready, unready, invite)
+function UI_MJBase.SetupReadyAndInvite(ready, unready, invite)
 	Log.Info("SetupReadyAndInvite: " .. tostring(ready) .. "," .. tostring(unready) .. "," .. tostring(invite));
 	UIHelper.SetActiveState(this.transform, "center/Ready/Yes", ready);
 	UIHelper.SetActiveState(this.transform, "center/Ready/No", unready);
@@ -191,13 +191,13 @@ function UI_MaJiang.SetupReadyAndInvite(ready, unready, invite)
 end
 
 -- 设置掷骰子
-function UI_MaJiang.SetCastDice(status)
+function UI_MJBase.SetCastDice(status)
 	Log.Info("SetCastDice: status is " .. tostring(status));
 	UIHelper.SetActiveState(this.transform, "center/CastDice/Button", status);
 end
 
 -- 设置当前的局数
-function UI_MaJiang.SetupCurrentRound()
+function UI_MJBase.SetupCurrentRound()
 	UIHelper.SetActiveState(this.transform, "top/topLeft/RemainTime", true);
 	UIHelper.SetActiveState(this.transform, "top/topLeft/RemainTime/Label (Tips)", true);
 	UIHelper.SetActiveState(this.transform, "top/topLeft/RemainTime/Label", true);
@@ -206,28 +206,28 @@ function UI_MaJiang.SetupCurrentRound()
 end
 
 -- 设置剩余的牌的个数
-function UI_MaJiang.SetupRemainCardCount(count)
+function UI_MJBase.SetupRemainCardCount(count)
 	UIHelper.SetActiveState(this.transform, "top/topLeft/RemainCards", true);
 	UIHelper.SetLabelText(this.transform, "top/topLeft/RemainCards/Label", tostring(count));
 end
 
 -- 设置回放控制面板
-function UI_MaJiang.SetupPlaybackControl(status)
+function UI_MJBase.SetupPlaybackControl(status)
 	UIHelper.SetActiveState(this.transform, "center/ContrlPanel", status);
 end
 
 -- 回放模式
-function UI_MaJiang.OnPlaybackMode()
+function UI_MJBase.OnPlaybackMode()
 	UIHelper.SetActiveState(this.transform, "center/ContrlPanel", true);
 	UIHelper.SetActiveState(this.transform, "top/topRight", false);
 	UIHelper.SetActiveState(this.transform, "bottom", false);
 end
 
-function UI_MaJiang.OnClickSetting(go)
+function UI_MJBase.OnClickSetting(go)
 	UIManager.OpenWindow(UIName.UI_MJSetting);	
 end
 
-function UI_MaJiang.DissolveRoom(go)
+function UI_MJBase.DissolveRoom(go)
 	local option = ConfirmDialogOption.New();
 	if MJPlayer.Hero:IsRoomMaster() then
 		option.OnClickOK =
@@ -250,63 +250,63 @@ function UI_MaJiang.DissolveRoom(go)
 	
 end
 
-function UI_MaJiang.OnClickChat(go)
-	UI_MaJiang.IsOpenChat = not UI_MaJiang.IsOpenChat;
-	UI_MaJiang.SetChatActive(UI_MaJiang.IsOpenChat);
+function UI_MJBase.OnClickChat(go)
+	UI_MJBase.IsOpenChat = not UI_MJBase.IsOpenChat;
+	UI_MJBase.SetChatActive(UI_MJBase.IsOpenChat);
 end
 
 -- 偷天换日
-function UI_MaJiang.OnClickTest(go)
+function UI_MJBase.OnClickTest(go)
 	UIManager.OpenWindow(UIName.UI_MJTest);
 end
 
-function UI_MaJiang.OnClickYes(go)
+function UI_MJBase.OnClickYes(go)
 	MJScene.RequestReady(true);
 end
 
-function UI_MaJiang.OnClickNo(go)
+function UI_MJBase.OnClickNo(go)
 	MJScene.RequestReady(false);
 end
 
-function UI_MaJiang.OnClickInvite(go)
+function UI_MJBase.OnClickInvite(go)
 	local shareText = "[" .. Player.Name .. "]" .. "邀你加入:" .. HallScene.CurrentFBTotalRound .. "局," .. HallScene.CurrentFBPlayerCount .. "人场," .. MJScene.GetMJPlaywayStr(HallScene.CurrentFBPlayway);
 	ShareSDKAdapter.InviteWechatFriend(nil, HallScene.CurrentFBID, shareText);
 end
 
-function UI_MaJiang.OnClickCastDice(go)
+function UI_MJBase.OnClickCastDice(go)
 	MJScene.RequestCastDice();
 end
 
-function UI_MaJiang.OnClickHu(go)
-	UI_MaJiang.HideOperateView();
+function UI_MJBase.OnClickHu(go)
+	UI_MJBase.HideOperateView();
 	MJScene.RequestMJOperate_Hu();
 end
 
-function UI_MaJiang.OnClickDingHu(go)
-	UI_MaJiang.HideOperateView();
+function UI_MJBase.OnClickDingHu(go)
+	UI_MJBase.HideOperateView();
 	MJScene.RequestMJOperate_DingHu();
 end
 
-function UI_MaJiang.OnClickPass(go)
-	UI_MaJiang.HideOperateView();
+function UI_MJBase.OnClickPass(go)
+	UI_MJBase.HideOperateView();
 	MJScene.RequestMJOperate_Guo();
 end
 
-function UI_MaJiang.OnClickOtherArea(go)
-	if UI_MaJiang.IsOpenChat then
-		UI_MaJiang.IsOpenChat = not UI_MaJiang.IsOpenChat;
-		UI_MaJiang.SetChatActive(UI_MaJiang.IsOpenChat);
+function UI_MJBase.OnClickOtherArea(go)
+	if UI_MJBase.IsOpenChat then
+		UI_MJBase.IsOpenChat = not UI_MJBase.IsOpenChat;
+		UI_MJBase.SetChatActive(UI_MJBase.IsOpenChat);
 	else
 		UI_MJHeroCtrl.RecoverSelectedCard();
 	end
 end
 
-function UI_MaJiang.OnVoiceBtnPress(go, status)
+function UI_MJBase.OnVoiceBtnPress(go, status)
 	-- Log.Info("OnVoiceBtnPress: status is " .. tostring(status));
-	UI_MaJiang.IsRecording = status;
-	UIHelper.SetActiveState(this.transform, "RecordVoice/Record", UI_MaJiang.IsRecording);
-	if UI_MaJiang.IsRecording == true then
-		UI_MaJiang.RecordSuccess = true;
+	UI_MJBase.IsRecording = status;
+	UIHelper.SetActiveState(this.transform, "RecordVoice/Record", UI_MJBase.IsRecording);
+	if UI_MJBase.IsRecording == true then
+		UI_MJBase.RecordSuccess = true;
 		RongCloudAdapter.StartRecordVoice(
 		function(isTimeout, voiceUri, duration)
 			if duration <= 0 then
@@ -315,7 +315,7 @@ function UI_MaJiang.OnVoiceBtnPress(go, status)
 			end
 			Log.Info("OnVoiceBtnPress: 录音成功，文件路径为 " .. voiceUri .. ",长度为 " .. duration);
 			
-			if UI_MaJiang.RecordSuccess then
+			if UI_MJBase.RecordSuccess then
 				-- 广播给其他人
 				for key, value in pairs(MJScene.Players) do
 					if value:IsHero() == false then
@@ -326,7 +326,7 @@ function UI_MaJiang.OnVoiceBtnPress(go, status)
 				MJScene.AddChatHistory(MJPlayer.Hero.ID, MJChatType.Voice, voiceUri, duration);
 				Loom.QueueOnMainThread(
 				function()
-					UI_MaJiang.HandleVoice(MJPlayer.Hero.ID, voiceUri, duration);
+					UI_MJBase.HandleVoice(MJPlayer.Hero.ID, voiceUri, duration);
 				end, 0);
 			end
 		end,
@@ -341,39 +341,39 @@ function UI_MaJiang.OnVoiceBtnPress(go, status)
 			end
 		end);
 	else
-		UIHelper.SetActiveState(this.transform, "RecordVoice/Record", UI_MaJiang.IsRecording);
-		UIHelper.SetActiveState(this.transform, "RecordVoice/StopRecord", UI_MaJiang.IsRecording);
+		UIHelper.SetActiveState(this.transform, "RecordVoice/Record", UI_MJBase.IsRecording);
+		UIHelper.SetActiveState(this.transform, "RecordVoice/StopRecord", UI_MJBase.IsRecording);
 		RongCloudAdapter.StopRecordVoice();
 	end
 end
 
-function UI_MaJiang.OnVoiceBtnDragStart(go)
+function UI_MJBase.OnVoiceBtnDragStart(go)
 	-- Log.Info("OnVoiceBtnDragStart");
-	UI_MaJiang.RecordStartPos = UnityEngine.Input.mousePosition;
+	UI_MJBase.RecordStartPos = UnityEngine.Input.mousePosition;
 end
 
-function UI_MaJiang.OnVoiceBtnDrag(go, deltaPos)
+function UI_MJBase.OnVoiceBtnDrag(go, deltaPos)
 	-- Log.Info("OnVoiceBtnDrag: deltaPos is " .. tostring(deltaPos));
-	if UnityEngine.Input.mousePosition.y > UI_MaJiang.RecordStartPos.y + 80 then
+	if UnityEngine.Input.mousePosition.y > UI_MJBase.RecordStartPos.y + 80 then
 		-- 显示取消录音界面;
 		UIHelper.SetActiveState(this.transform, "RecordVoice/Record", false);
 		UIHelper.SetActiveState(this.transform, "RecordVoice/StopRecord", true);
-		UI_MaJiang.RecordSuccess = false;
+		UI_MJBase.RecordSuccess = false;
 	else
 		-- 显示继续录音界面;
 		UIHelper.SetActiveState(this.transform, "RecordVoice/Record", true);
 		UIHelper.SetActiveState(this.transform, "RecordVoice/StopRecord", false);
-		UI_MaJiang.RecordSuccess = true;
+		UI_MJBase.RecordSuccess = true;
 	end
 end
 
-function UI_MaJiang.OnVoiceBtnDragEnd(go)
+function UI_MJBase.OnVoiceBtnDragEnd(go)
 	-- Log.Info("OnVoiceBtnDragEnd");
-	UI_MaJiang.RecordStartPos = Vector3.zero;
+	UI_MJBase.RecordStartPos = Vector3.zero;
 end
 
 -- 显示吃碰杠胡界面
-function UI_MaJiang.ShowOperateView(operations)
+function UI_MJBase.ShowOperateView(operations)
 	local tempDic = {};
 	tempDic["ChooseOperate/Peng1"] = false;
 	tempDic["ChooseOperate/Eat1"] = false;
@@ -391,16 +391,16 @@ function UI_MaJiang.ShowOperateView(operations)
 		if tempOperate.m_OperatorType == MaJiangOperatorType.MJOT_CHI then
 			EatNum = EatNum + 1;
 			tempDic["ChooseOperate/Eat" .. tostring(EatNum)] = true;
-			UI_MaJiang.InitEatView(operations);
+			UI_MJBase.InitEatView(operations);
 		elseif tempOperate.m_OperatorType == MaJiangOperatorType.MJOT_PENG then
 			tempDic["ChooseOperate/Peng1"] = true;
-			UI_MaJiang.InitPengView(operations);
+			UI_MJBase.InitPengView(operations);
 		elseif tempOperate.m_OperatorType == MaJiangOperatorType.MJOT_GANG or
 		tempOperate.m_OperatorType == MaJiangOperatorType.MJOT_BuGang or
 		tempOperate.m_OperatorType == MaJiangOperatorType.MJOT_AN_GANG then
 			GangNum = GangNum + 1;
 			tempDic["ChooseOperate/Gang" .. tostring(GangNum)] = true;
-			UI_MaJiang.InitGangView(operations);
+			UI_MJBase.InitGangView(operations);
 		elseif tempOperate.m_OperatorType == MaJiangOperatorType.MJOT_HU then
 			tempDic["Hu"] = true;
 		elseif tempOperate.m_OperatorType == MaJiangOperatorType.MJOT_DingHU then
@@ -435,13 +435,13 @@ function UI_MaJiang.ShowOperateView(operations)
 end
 
 -- 隐藏吃碰杠胡界面
-function UI_MaJiang.HideOperateView()
+function UI_MJBase.HideOperateView()
 	UIHelper.SetActiveState(this.transform, "bottom/right/Operate", false);
 	UIHelper.SetActiveState(this.transform, "bottom/right/Bg", false);
 end
 
 -- 初始化吃的界面
-function UI_MaJiang.InitEatView(operations)
+function UI_MJBase.InitEatView(operations)
 	local tempList = {};
 	for i = 1, #operations do
 		local tempData = operations[i];
@@ -468,7 +468,7 @@ function UI_MaJiang.InitEatView(operations)
 end
 
 -- 初始化碰的界面
-function UI_MaJiang.InitPengView(operations)
+function UI_MJBase.InitPengView(operations)
 	for i = 1, #operations do
 		local tempData = operations[i];
 		if tempData.m_OperatorType == MaJiangOperatorType.MJOT_PENG then
@@ -485,7 +485,7 @@ function UI_MaJiang.InitPengView(operations)
 end
 
 -- 初始化杠的界面
-function UI_MaJiang.InitGangView(operations)
+function UI_MJBase.InitGangView(operations)
 	local tempList = {};
 	for i = 1, #operations do
 		local tempData = operations[i];
@@ -513,7 +513,7 @@ function UI_MaJiang.InitGangView(operations)
 	end
 end
 
-function UI_MaJiang.HandleChat(msg)
+function UI_MJBase.HandleChat(msg)
 	local player = MJScene.GetPlayerByID(msg.roleid);
 	if player == nil then return end;
 	local playerUI = player.UI;
@@ -559,7 +559,7 @@ function UI_MaJiang.HandleChat(msg)
 	end
 end
 
-function UI_MaJiang.HandleVoice(roleid, uri, duration)
+function UI_MJBase.HandleVoice(roleid, uri, duration)
 	local player = MJScene.GetPlayerByID(tonumber(roleid));
 	if player == nil then return end;
 	local playerUI = player.UI;
@@ -573,19 +573,19 @@ function UI_MaJiang.HandleVoice(roleid, uri, duration)
 end
 
 -- 设置聊天面板是否显示
-function UI_MaJiang.SetChatActive(status)
-	UI_MaJiang.IsOpenChat = status;
+function UI_MJBase.SetChatActive(status)
+	UI_MJBase.IsOpenChat = status;
 	UIHelper.SetActiveState(this.transform, "bottom/right/Chat", status);
 end
 
 -- 启动操作倒计时
-function UI_MaJiang.StartOperateCountdown()
+function UI_MJBase.StartOperateCountdown()
 	UIHelper.SetActiveState(this.transform, "center/Time", true);
 	UIHelper.SetActiveState(this.transform, "center/OperatorPrompt", false);
-	coroutine.stop(UI_MaJiang.OperateCountdownCo);
-	UI_MaJiang.OperateCountdownCo = coroutine.start(function()
-		for i = 1, UI_MaJiang.OperateTime do
-			local time = UI_MaJiang.OperateTime - i;
+	coroutine.stop(UI_MJBase.OperateCountdownCo);
+	UI_MJBase.OperateCountdownCo = coroutine.start(function()
+		for i = 1, UI_MJBase.OperateTime do
+			local time = UI_MJBase.OperateTime - i;
 			local timeStr = tostring(time);
 			local timeStr1 = "0";
 			local timeStr2 = "0";

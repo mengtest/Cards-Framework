@@ -47,7 +47,7 @@ function MJPaidunCtrl.Initialize(groupNum, index)
 	for i = 1, startIndex - 1 do
 		table.insert(MJPaidunCtrl.Cards, tempCards[i]);
 	end
-	UI_MaJiang.SetupRemainCardCount(MJPaidunCtrl.ActiveCount());
+	UI_MJBase.SetupRemainCardCount(MJPaidunCtrl.ActiveCount());
 end
 
 -- 隐藏指定位置的牌
@@ -56,7 +56,7 @@ function MJPaidunCtrl.Inactive(index)
 	if card ~= nil then
 		card.gameObject:SetActive(false);
 		table.remove(MJPaidunCtrl.Cards, index);
-		UI_MaJiang.SetupRemainCardCount(MJPaidunCtrl.ActiveCount());	
+		UI_MJBase.SetupRemainCardCount(MJPaidunCtrl.ActiveCount());	
 	end
 end
 

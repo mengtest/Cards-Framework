@@ -27,6 +27,7 @@ function UI_Hall.InitBtnEvt()
 	UIHelper.SetButtonEvent(this.transform, "right/rightButton/CreateRoom", UI_Hall.OnClickCreateRoom);
 	UIHelper.SetButtonEvent(this.transform, "right/rightButton/JoinRoom", UI_Hall.OnClickJoinRoom);
 	UIHelper.SetButtonEvent(this.transform, "left/RoleInfo/Card/Add", UI_Hall.OnClickAddCard);
+	UIHelper.SetButtonEvent(this.transform, "left/RoleInfo/Info/Sprite (Photo)", UI_Hall.OnClickHead);
 end
 
 function UI_Hall.InitSelfInfo()
@@ -77,6 +78,11 @@ end
 
 function UI_Hall.OnClickAddCard(go)
 	UIManager.OpenWindow(UIName.UI_GetRoomCardHint);
+end
+
+function UI_Hall.OnClickHead(go)
+	ClipboardUtils.Copy(Player.DisplayID);
+	UIManager.OpenTipsDialog("复制ID成功");
 end
 
 function UI_Hall.RefreshAnnouncement()

@@ -20,7 +20,7 @@ UIName = {
 	UI_GetRoomCardHint = "Hall/UI_GetRoomCardHint",
 	
 	-- 麻将
-	UI_MaJiang = "MaJiang/UI_MaJiang",
+	UI_MJBase = "MaJiang/UI_MJBase",
 	UI_MJRequestDissolve = "MaJiang/UI_MJRequestDissolve",
 	UI_MJTest = "MaJiang/UI_MJTest",
 	UI_MJResult = "MaJiang/UI_MJResult",

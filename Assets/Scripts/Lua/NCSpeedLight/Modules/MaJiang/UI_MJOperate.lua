@@ -43,7 +43,7 @@ function UI_MJOperate:InitView()
 		self:ShowGangCard();
 	end
 	UIHelper.SetButtonEvent(self.transform, function(go)
-		UI_MaJiang.HideOperateView();
+		UI_MJBase.HideOperateView();
 		MJScene.RequestMJOperate(self.OperateData);
 	end);
 end

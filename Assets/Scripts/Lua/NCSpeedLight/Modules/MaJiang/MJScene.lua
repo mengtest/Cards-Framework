@@ -81,7 +81,7 @@ function MJScene.OnSceneWasLoaded()
 	if HallScene.CurrentFBPlaybackMode == false then
 		RongCloudAdapter.Initialize(MJScene.OnReceiveVoiceMsg);
 	end
-	UIManager.OpenWindow(UIName.UI_MaJiang);
+	UIManager.OpenWindow(UIName.UI_MJBase);
 	MJScene.RegisterNetEvent();
 	if HallScene.CurrentFBPlaybackMode == false then
 		if HallScene.CurrentFBNeedReconnect then
@@ -90,7 +90,7 @@ function MJScene.OnSceneWasLoaded()
 			MJScene.RequestAllPlayerInfo();
 		end
 	else
-		UI_MaJiang.OnPlaybackMode();
+		UI_MJBase.OnPlaybackMode();
 		UI_MJPlayback.Play();
 	end
 end
@@ -140,7 +140,7 @@ end
 function MJScene.Reset()
 	Log.Info("Reset()");
 	MJDeskCtrl.Reset();
-	UI_MaJiang.Reset();
+	UI_MJBase.Reset();
 	for key, value in pairs(MJScene.Players) do
 		value:Reset();
 	end
@@ -506,7 +506,7 @@ function MJScene.ReturnGamePlayerInfo(evt)
 	end
 	MJScene.SetupMaster();
 	MJDeskCtrl.SetPlayway();
-	UIManager.CloseAllWindowsExcept(UIName.UI_MaJiang);
+	UIManager.CloseAllWindowsExcept(UIName.UI_MJBase);
 end
 
 -- 收到断线重连信息
@@ -666,7 +666,7 @@ function MJScene.ReturnReconnectInfo(evt)
 		-- 设置庄家
 		MJScene.SetupBanker();
 		-- 隐藏准备等按钮
-		UI_MaJiang.SetupReadyAndInvite(false, false, false);
+		UI_MJBase.SetupReadyAndInvite(false, false, false);
 		-- 计算玩家的本地位置
 		for i = 1, #MJScene.Players do
 			local player = MJScene.Players[i];
@@ -682,14 +682,14 @@ function MJScene.ReturnReconnectInfo(evt)
 				value:SetupReady(false);
 			end
 			if MJPlayer.Hero:IsBanker() then
-				UI_MaJiang.SetCastDice(true);
+				UI_MJBase.SetCastDice(true);
 				UI_MJPlayer.PlayUIScaleAndDicePanelGrow(MJPlayer.Hero.UI, true);
 			end
 			
 			-- 隐藏
 			MJDeskCtrl.SetPaidunActive(false);
 			
-			UI_MaJiang.StartOperateCountdown();
+			UI_MJBase.StartOperateCountdown();
 		else
 			HallScene.SwitchFBStatus(FBStatus.Playing);
 			
@@ -703,12 +703,12 @@ function MJScene.ReturnReconnectInfo(evt)
 				-- 有可能是等待玩家吃碰杠操作
 				MJScene.CurrentOperator = MJScene.GetPlayerByID(msg.m_sendCardID);
 				UI_MJPlayer.PlayUIScaleAndDicePanelGrow(MJScene.CurrentOperator.UI, true);
-				UI_MaJiang.StartOperateCountdown();
+				UI_MJBase.StartOperateCountdown();
 			end
 			
 			-- 设置当前回合的显示
 			-- HallScene.CurrentFBRound = HallScene.CurrentFBRound + 1;
-			UI_MaJiang.SetupCurrentRound();
+			UI_MJBase.SetupCurrentRound();
 			
 			-- 直接显示牌墩，不播放动画
 			MJDeskCtrl.SetPaidunActive(true);
@@ -763,7 +763,7 @@ function MJScene.ReturnReconnectInfo(evt)
 		end
 	end
 	
-	UIManager.CloseAllWindowsExcept(UIName.UI_MaJiang);
+	UIManager.CloseAllWindowsExcept(UIName.UI_MJBase);
 	
 	if #msg.m_CloseRoomData > 0 then
 		Log.Info("ReturnReconnectInfo: 存在" .. tostring(#msg.m_CloseRoomData) .. "条解散房间信息。");
@@ -817,13 +817,13 @@ function MJScene.ReturnHandCardInfo(evt)
 		MJScene.SetupBanker();
 		
 		-- 打开回放控制面板
-		UI_MaJiang.SetupPlaybackControl(true);
+		UI_MJBase.SetupPlaybackControl(true);
 		
 		-- 设置角色角标显示
-		UI_MaJiang.SetupPlayerUIVisiable();		
+		UI_MJBase.SetupPlayerUIVisiable();		
 		
 		-- 设置回合
-		UI_MaJiang.SetupCurrentRound();
+		UI_MJBase.SetupCurrentRound();
 		
 		-- 设置骰子面板的朝向
 		MJDeskCtrl.SetDicePanelDirection();
@@ -868,7 +868,7 @@ function MJScene.ReturnHandCardInfo(evt)
 		-- 设置骰子面板的朝向
 		MJDeskCtrl.SetDicePanelDirection();
 		if MJPlayer.Hero:IsBanker() then
-			UI_MaJiang.SetCastDice(true);
+			UI_MJBase.SetCastDice(true);
 			UI_MJPlayer.PlayUIScaleAndDicePanelGrow(MJPlayer.Hero.UI, true);
 		end
 	end
@@ -893,7 +893,7 @@ function MJScene.ReturnPlayerOutCard(evt)
 			UI_MJPlayer.PlayUIScaleAndDicePanelGrow(MJScene.LastOperator.UI, false);
 		end
 		UI_MJPlayer.PlayUIScaleAndDicePanelGrow(MJScene.CurrentOperator.UI, true);
-		UI_MaJiang.StartOperateCountdown();
+		UI_MJBase.StartOperateCountdown();
 		MJPlayer.MJOT_BEGIN(player, msg);
 	elseif msg.m_OperatorType == MaJiangOperatorType.MJOT_GetCard then
 		player:MJOT_GetCard(msg);
@@ -940,7 +940,7 @@ function MJScene.ReturnCanOperatorType(evt)
 			Log.Info("ReturnCanOperatorType: operate data: handcard" .. tostring(j) .. ": card id is " .. handCard.m_Index .. ", card type is " .. MaJiangType.ToString(handCard.m_Type));
 		end
 	end
-	UI_MaJiang.ShowOperateView(msg.m_Operator);
+	UI_MJBase.ShowOperateView(msg.m_Operator);
 end
 
 function MJScene.NotifyOneReady(evt)
@@ -955,7 +955,7 @@ function MJScene.NotifyOneReady(evt)
 		local status = msg.m_productid == 1;
 		player:SetupReady(status);
 		if player:IsHero() then
-			UI_MaJiang.SetupReadyAndInvite(not status, status, true);
+			UI_MJBase.SetupReadyAndInvite(not status, status, true);
 		end
 	end
 end
@@ -963,15 +963,15 @@ end
 function MJScene.ReturnAllReady(evt)
 	HallScene.SwitchFBStatus(FBStatus.WaitingCastDice);
 	HallScene.CurrentFBRound = HallScene.CurrentFBRound + 1;
-	UI_MaJiang.SetupCurrentRound();
+	UI_MJBase.SetupCurrentRound();
 	Log.Info("ReturnAllReady: 所有玩家就绪,第【" .. tostring(HallScene.CurrentFBRound) .. "】回合开始");
 	local msg = NetManager.DecodeMsg(PBMessage.GM_NotifyBattleEndTime, evt);
 	for key, value in pairs(MJScene.Players) do
 		value:SetupReady(false);
 	end
-	UI_MaJiang.SetupReadyAndInvite(false, false, false);
+	UI_MJBase.SetupReadyAndInvite(false, false, false);
 	UIManager.OpenWindow(UIName.UI_MJStart);
-	UI_MaJiang.StartOperateCountdown();
+	UI_MJBase.StartOperateCountdown();
 	-- UIManager.OpenTipsDialog("对局开始");
 end
 
@@ -1018,13 +1018,13 @@ function MJScene.NotifyChat(evt)
 	if msg.faceid == MJChatType.CustomText then
 		MJScene.AddChatHistory(msg.roleid, MJChatType.CustomText, msg.faceName, 0, true);
 	end
-	UI_MaJiang.HandleChat(msg);
+	UI_MJBase.HandleChat(msg);
 end
 
 function MJScene.OnReceiveVoiceMsg(roleid, uri, duration)
 	Log.Info("OnReceiveVoiceMsg: roleid is " .. roleid .. ",uri is " .. uri .. ",duration is " .. duration);
 	MJScene.AddChatHistory(roleid, MJChatType.Voice, uri, duration, false);
-	UI_MaJiang.HandleVoice(roleid, uri, duration);
+	UI_MJBase.HandleVoice(roleid, uri, duration);
 end
 
 function MJScene.NotifyTrust(evt)
@@ -1073,7 +1073,7 @@ function MJScene.ReturnRoomMasterDissolve(evt)
 		option.Title = "提  示";
 		UIManager.OpenConfirmDialog(option);
 	elseif msg.request == 3 then
-		UIManager.CloseAllWindowsExcept(UIName.UI_MaJiang);
+		UIManager.CloseAllWindowsExcept(UIName.UI_MJBase);
 		local option = ConfirmDialogOption:New();
 		option.DoubleButton = false;
 		option.Content = "房间已解散,点击确定退出房间";
@@ -1118,7 +1118,7 @@ function MJScene.ReturnCastDice(evt)
 	Log.Info("ReturnCastDice: 从" .. fromPlayer:LogTag() .. "的第【" .. tostring(MJScene.GetCardNumber) .. "】墩开始抓牌");
 	MJPaidunCtrl.Initialize(fromPlayer.UIPosition, MJScene.GetCardNumber);
 	
-	UI_MaJiang.SetCastDice(false);
+	UI_MJBase.SetCastDice(false);
 	MJDeskCtrl.PlayDiceAnimation(MJScene.DiceNumbers[1], MJScene.DiceNumbers[2], nil);
 	MJDeskCtrl.PlayPaidunAnimation(function()
 		StartCoroutine(MJScene.PlaySendCardAnimation);

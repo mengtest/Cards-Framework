@@ -10,7 +10,7 @@ namespace NCSpeedLight
         [MenuItem("Framework/Preferences")]
         static void Open()
         {
-            GetWindowWithRect<ProjSettings>(new Rect(30, 30, 200, 220), false, "Preferences");
+            GetWindowWithRect<ProjSettings>(new Rect(30, 30, 200, 190), false, "Preferences");
         }
 
         private bool AssetBundleMode = false;
@@ -64,19 +64,19 @@ namespace NCSpeedLight
 
 
 
-                GUILayout.BeginHorizontal();
-                ScriptByteMode = PlayerPrefs.GetInt(Constants.PREF_SCRIPT_BYTE_MODE_KEY) == 1;
-                GUILayout.Label("ScriptByteMode", GUILayout.Width(150));
-                ScriptByteMode = GUILayout.Toggle(ScriptByteMode, string.Empty);
-                if (ScriptByteMode)
-                {
-                    PlayerPrefs.SetInt(Constants.PREF_SCRIPT_BYTE_MODE_KEY, 1);
-                }
-                else
-                {
-                    PlayerPrefs.SetInt(Constants.PREF_SCRIPT_BYTE_MODE_KEY, 0);
-                }
-                GUILayout.EndHorizontal();
+                //GUILayout.BeginHorizontal();
+                //ScriptByteMode = PlayerPrefs.GetInt(Constants.PREF_SCRIPT_BYTE_MODE_KEY) == 1;
+                //GUILayout.Label("ScriptByteMode", GUILayout.Width(150));
+                //ScriptByteMode = GUILayout.Toggle(ScriptByteMode, string.Empty);
+                //if (ScriptByteMode)
+                //{
+                //    PlayerPrefs.SetInt(Constants.PREF_SCRIPT_BYTE_MODE_KEY, 1);
+                //}
+                //else
+                //{
+                //    PlayerPrefs.SetInt(Constants.PREF_SCRIPT_BYTE_MODE_KEY, 0);
+                //}
+                //GUILayout.EndHorizontal();
 
 
 

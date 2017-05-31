@@ -96,7 +96,7 @@ function UI_MJChat.InitDefaultChat()
 end
 
 function UI_MJChat.OnClickDefaultChat(go)
-	UI_MaJiang.SetChatActive(false);
+	UI_MJBase.SetChatActive(false);
 	local content = UI_MJChat.DefaultChat[tonumber(go.name)];
 	if content == nil then return end;
 	local msg = {};
@@ -115,7 +115,7 @@ function UI_MJChat.InitFaceChat()
 end
 
 function UI_MJChat.OnClickFace(go)
-	UI_MaJiang.SetChatActive(false);
+	UI_MJBase.SetChatActive(false);
 	if go == nil then return end;
 	local sprite = UIHelper.GetComponent(go.transform, typeof(UISprite));
 	if sprite == nil or sprite.spriteName == nil then return end;
@@ -134,7 +134,7 @@ function UI_MJChat.OnClickSendText(go)
 		UIManager.OpenTipsDialog("消息不能超过" .. UI_MJChat.MAX_TEXT .. "个字");
 		return;
 	end
-	UI_MaJiang.SetChatActive(false);
+	UI_MJBase.SetChatActive(false);
 	local msg = {};
 	msg.faceid = MJChatType.CustomText;
 	msg.roleid = MJPlayer.Hero.ID;
@@ -201,7 +201,7 @@ function UI_MJChat.OnClickHistoryItem(go)
 		local itemHistory = MJScene.ChatHistory[tonumber(go.name)];
 		if itemHistory ~= nil then
 			itemHistory.IsRead = true;
-			UI_MaJiang.HandleVoice(itemHistory.RoleID, itemHistory.Content, itemHistory.Duration);
+			UI_MJBase.HandleVoice(itemHistory.RoleID, itemHistory.Content, itemHistory.Duration);
 			-- UI_MJChat.RefreshHistory();
 		end
 	end

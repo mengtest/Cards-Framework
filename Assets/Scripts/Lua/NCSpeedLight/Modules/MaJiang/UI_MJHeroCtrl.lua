@@ -89,7 +89,7 @@ function UI_MJHeroCtrl.OnStartDragCard(go)
 	end
 	UI_MJHeroCtrl.DragingCardObj = UnityEngine.GameObject.Instantiate(go);
 	UI_MJHeroCtrl.DragingCardObj.name = "DragingCard";
-	UI_MJHeroCtrl.DragingCardObj.transform:SetParent(UI_MaJiang.transform);
+	UI_MJHeroCtrl.DragingCardObj.transform:SetParent(UI_MJBase.transform);
 	UI_MJHeroCtrl.DragingCardObj.transform.localPosition = UnityEngine.Vector3.zero;
 	UI_MJHeroCtrl.DragingCardObj.transform.localScale = UnityEngine.Vector3.one;
 	UI_MJHeroCtrl.DragingCardObj.transform.localRotation = UnityEngine.Quaternion.identity;

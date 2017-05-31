@@ -52,13 +52,13 @@ function UI_MJResult.InitBtnEvent()
 	-- 继续游戏
 	UIHelper.SetButtonEvent(this.transform, "Button/Continue", function(obj)
 		MJScene.OnceAgain();
-		UIManager.CloseAllWindowsExcept(UIName.UI_MaJiang);
+		UIManager.CloseAllWindowsExcept(UIName.UI_MJBase);
 	end);
 	-- 分享
 	UIHelper.SetButtonEvent(this.transform, "Button/Share", UI_MJResult.OnClickShare);
 	-- 查看总成绩
 	UIHelper.SetButtonEvent(this.transform, "Button/TotalScore", function(obj)
-		UIManager.CloseAllWindowsExcept(UIName.UI_MaJiang);
+		UIManager.CloseAllWindowsExcept(UIName.UI_MJBase);
 		UIManager.OpenWindow(UIName.UI_MJTotalResult);
 	end);
 	-- 查看牌局
