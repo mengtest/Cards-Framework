@@ -78,6 +78,7 @@ function HallScene.Update()
 end
 
 function HallScene.End()
+	HallScene.UnRegisterNetEvent();
 end
 
 function HallScene.OnApplicationPause(status)

@@ -21,6 +21,16 @@ public class NCSpeedLight_ConstantsWrap
 		L.RegVar("BUNDLE_ASSET_WORKSPACE", get_BUNDLE_ASSET_WORKSPACE, set_BUNDLE_ASSET_WORKSPACE);
 		L.RegVar("BUNDLE_SCENE_WORKSPACE", get_BUNDLE_SCENE_WORKSPACE, set_BUNDLE_SCENE_WORKSPACE);
 		L.RegVar("RESOURCE_WORKSPACE", get_RESOURCE_WORKSPACE, set_RESOURCE_WORKSPACE);
+		L.RegVar("PREF_ASSET_BUNDLE_MODE_KEY", get_PREF_ASSET_BUNDLE_MODE_KEY, null);
+		L.RegVar("PREF_SCRIPT_BUNDLE_MODE_KEY", get_PREF_SCRIPT_BUNDLE_MODE_KEY, null);
+		L.RegVar("PREF_SCRIPT_BYTE_MODE_KEY", get_PREF_SCRIPT_BYTE_MODE_KEY, null);
+		L.RegVar("PREF_CHECK_UPDATE_KEY", get_PREF_CHECK_UPDATE_KEY, null);
+		L.RegVar("PREF_USE_INNER_LOGIN_SERVER_KEY", get_PREF_USE_INNER_LOGIN_SERVER_KEY, null);
+		L.RegVar("PREF_INNER_LOGIN_SERVER_HOST_KEY", get_PREF_INNER_LOGIN_SERVER_HOST_KEY, null);
+		L.RegVar("PREF_INNER_LOGIN_SERVER_PORT_KEY", get_PREF_INNER_LOGIN_SERVER_PORT_KEY, null);
+		L.RegVar("PREF_USE_INNER_ASSET_SERVER_KEY", get_PREF_USE_INNER_ASSET_SERVER_KEY, null);
+		L.RegVar("PREF_INNER_ASSET_SERVER_HOST_KEY", get_PREF_INNER_ASSET_SERVER_HOST_KEY, null);
+		L.RegVar("PREF_INNER_ASSET_SERVER_PORT_KEY", get_PREF_INNER_ASSET_SERVER_PORT_KEY, null);
 		L.RegVar("FORCE_UPDATE", get_FORCE_UPDATE, null);
 		L.RegVar("CHECK_UPDATE", get_CHECK_UPDATE, null);
 		L.RegVar("MIDDLE_VERSION", get_MIDDLE_VERSION, set_MIDDLE_VERSION);
@@ -247,6 +257,146 @@ public class NCSpeedLight_ConstantsWrap
 		try
 		{
 			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.RESOURCE_WORKSPACE);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_PREF_ASSET_BUNDLE_MODE_KEY(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.PREF_ASSET_BUNDLE_MODE_KEY);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_PREF_SCRIPT_BUNDLE_MODE_KEY(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.PREF_SCRIPT_BUNDLE_MODE_KEY);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_PREF_SCRIPT_BYTE_MODE_KEY(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.PREF_SCRIPT_BYTE_MODE_KEY);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_PREF_CHECK_UPDATE_KEY(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.PREF_CHECK_UPDATE_KEY);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_PREF_USE_INNER_LOGIN_SERVER_KEY(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.PREF_USE_INNER_LOGIN_SERVER_KEY);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_PREF_INNER_LOGIN_SERVER_HOST_KEY(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.PREF_INNER_LOGIN_SERVER_HOST_KEY);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_PREF_INNER_LOGIN_SERVER_PORT_KEY(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.PREF_INNER_LOGIN_SERVER_PORT_KEY);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_PREF_USE_INNER_ASSET_SERVER_KEY(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.PREF_USE_INNER_ASSET_SERVER_KEY);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_PREF_INNER_ASSET_SERVER_HOST_KEY(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.PREF_INNER_ASSET_SERVER_HOST_KEY);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_PREF_INNER_ASSET_SERVER_PORT_KEY(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.PREF_INNER_ASSET_SERVER_PORT_KEY);
 			return 1;
 		}
 		catch(Exception e)

@@ -12,32 +12,9 @@
 using System;
 using System.IO;
 using UnityEngine;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 namespace NCSpeedLight
 {
-    public class ProjPreferences : ScriptableObject
-    {
-
-        public static string FILE_PATH = "Assets/ProjectPref.asset";
-
-        public bool AssetBundleMode;
-        public bool ScriptBundleMode;
-        public bool ScriptByteCode;
-
-        public bool CheckUpdate;
-
-        public bool ConnectInterLoginServer;
-        public string InterLoginServerHost = string.Empty;
-        public int InterLoginServerPort;
-
-        public bool ConnectInterAssetServer;
-        public string InterAssetServerHost = string.Empty;
-        public int InterAssetServerPort;
-    }
-
     public static class Constants
     {
         /// <summary>
@@ -348,19 +325,7 @@ namespace NCSpeedLight
                 }
                 else if (Application.isEditor)
                 {
-#if UNITY_EDITOR
-                    ProjPreferences pref = AssetDatabase.LoadAssetAtPath<ProjPreferences>(ProjPreferences.FILE_PATH);
-                    if (pref)
-                    {
-                        return pref.ScriptByteCode;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-#else
-                    return true;
-#endif
+                    return PlayerPrefs.GetInt(PREF_SCRIPT_BYTE_MODE_KEY) == 1;
                 }
                 else
                 {
@@ -383,19 +348,7 @@ namespace NCSpeedLight
                 }
                 else if (Application.isEditor)
                 {
-#if UNITY_EDITOR
-                    ProjPreferences pref = AssetDatabase.LoadAssetAtPath<ProjPreferences>(ProjPreferences.FILE_PATH);
-                    if (pref)
-                    {
-                        return pref.ScriptBundleMode;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-#else
-                    return true;
-#endif
+                    return PlayerPrefs.GetInt(PREF_SCRIPT_BUNDLE_MODE_KEY) == 1;
                 }
                 else
                 {
@@ -417,19 +370,7 @@ namespace NCSpeedLight
                 }
                 else if (Application.isEditor)
                 {
-#if UNITY_EDITOR
-                    ProjPreferences pref = AssetDatabase.LoadAssetAtPath<ProjPreferences>(ProjPreferences.FILE_PATH);
-                    if (pref)
-                    {
-                        return pref.AssetBundleMode;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-#else
-                    return true;
-#endif
+                    return PlayerPrefs.GetInt(PREF_ASSET_BUNDLE_MODE_KEY) == 1;
                 }
                 else
                 {
@@ -662,5 +603,25 @@ namespace NCSpeedLight
                 return DATA_PATH + "Temp/SCREENSHOT.png";
             }
         }
+
+        public const string PREF_ASSET_BUNDLE_MODE_KEY = "AssetBundleMode";
+
+        public const string PREF_SCRIPT_BUNDLE_MODE_KEY = "ScriptBundleMode";
+
+        public const string PREF_SCRIPT_BYTE_MODE_KEY = "ScriptByteMode";
+
+        public const string PREF_CHECK_UPDATE_KEY = "CheckUpdate";
+
+        public const string PREF_USE_INNER_LOGIN_SERVER_KEY = "UseInnerLoginServer";
+
+        public const string PREF_INNER_LOGIN_SERVER_HOST_KEY = "InnerLoginServerHost";
+
+        public const string PREF_INNER_LOGIN_SERVER_PORT_KEY = "InnerLoginServerPort";
+
+        public const string PREF_USE_INNER_ASSET_SERVER_KEY = "UseInnerAssetServer";
+
+        public const string PREF_INNER_ASSET_SERVER_HOST_KEY = "InnerAssetServerHost";
+
+        public const string PREF_INNER_ASSET_SERVER_PORT_KEY = "InnerAssetServerPort";
     }
 }

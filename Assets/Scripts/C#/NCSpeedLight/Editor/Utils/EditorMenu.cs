@@ -9,7 +9,6 @@ namespace NCSpeedLight
     public class EditorMenu
     {
         [MenuItem("Framework/Start Game #%a", false, 0)]
-        [MenuItem("Assets/Start Game", false, 0)]
         public static void StartGame()
         {
             if (!EditorApplication.isPlaying)
@@ -20,7 +19,7 @@ namespace NCSpeedLight
             }
         }
 
-        [MenuItem("Assets/Set Assetbundle Tag(s)", false, 0)]
+        [MenuItem("Assets/Set AB Tags", false, 5)]
         public static void SetAssetBundleTag()
         {
             UnityEngine.Object[] selected = Selection.objects;

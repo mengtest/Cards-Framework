@@ -411,6 +411,7 @@ end
 function MJPlayer:MJOT_BEGIN(data)
 	Log.Info("MJOT_BEGIN: " .. self:LogTag());
 end
+
 --抓牌
 function MJPlayer:MJOT_GetCard(data)
 	Log.Info("MJOT_GetCard: " .. self:LogTag());
