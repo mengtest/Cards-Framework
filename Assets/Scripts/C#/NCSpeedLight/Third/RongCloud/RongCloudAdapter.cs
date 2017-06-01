@@ -169,14 +169,16 @@ namespace NCSpeedLight
         /// </summary>
         public static void StartRecordVoice(RCVoiceCaptureCallback.VoiceCaptureFinishedCallback onFinished, RCVoiceCaptureCallback.VoiceCaptureVolumeCallback onVolumeChanged, RCVoiceCaptureCallback.VoiceCaptureErrorCallback onError)
         {
-#if UNITY_ANDROID || UNITY_IOS
-            RongIMAPI.GetInstance().StartRecordVoice(new RCVoiceCaptureCallback()
+            if (Application.isMobilePlatform)
             {
-                onVoiceCaptureFinished = onFinished,
-                onVoiceVolume = onVolumeChanged,
-                onVoiceCaptureError = onError
-            });
-#endif
+                GC.Collect();
+                RongIMAPI.GetInstance().StartRecordVoice(new RCVoiceCaptureCallback()
+                {
+                    onVoiceCaptureFinished = onFinished,
+                    onVoiceVolume = onVolumeChanged,
+                    onVoiceCaptureError = onError
+                });
+            }
         }
 
         /// <summary>
@@ -184,9 +186,11 @@ namespace NCSpeedLight
         /// </summary>
         public static void StopRecordVoice()
         {
-#if UNITY_ANDROID || UNITY_IOS
-            RongIMAPI.GetInstance().StopRecordVoice();
-#endif
+            if (Application.isMobilePlatform)
+            {
+                RongIMAPI.GetInstance().StopRecordVoice();
+                GC.Collect();
+            }
         }
 
         /// <summary>
@@ -196,19 +200,21 @@ namespace NCSpeedLight
         /// <param name="content"></param>
         public static void SendVoiceMessage(string targetID, string uri, int duration)
         {
-#if UNITY_ANDROID || UNITY_IOS
-            RCAudioMessageContent msg = new RCAudioMessageContent(uri, duration);
-            RCSendMessageCallback cb = new RCSendMessageCallback();
-            cb.onSendSuccessCallback = () =>
+            if (Application.isMobilePlatform)
             {
-                Helper.Log("RongCloudAdapter.SendVoiceMessage: send to " + targetID + " success.");
-            };
-            cb.onSendFailureCallback = (RCErrorCode code) =>
-            {
-                Helper.Log("RongCloudAdapter.SendVoiceMessage: send to " + targetID + " fail.");
-            };
-            RongIMAPI.GetInstance().SendMessage(ConversationType.ConversationType_PRIVATE, targetID, msg, "", "", cb);
-#endif
+                RCAudioMessageContent msg = new RCAudioMessageContent(uri, duration);
+                RCSendMessageCallback cb = new RCSendMessageCallback();
+                cb.onSendSuccessCallback = () =>
+                {
+                    Helper.Log("RongCloudAdapter.SendVoiceMessage: send to " + targetID + " success.");
+                };
+                cb.onSendFailureCallback = (RCErrorCode code) =>
+                {
+                    Helper.Log("RongCloudAdapter.SendVoiceMessage: send to " + targetID + " fail.");
+                };
+                RongIMAPI.GetInstance().SendMessage(ConversationType.ConversationType_PRIVATE, targetID, msg, "", "", cb);
+                GC.Collect();
+            }
         }
 
         /// <summary>

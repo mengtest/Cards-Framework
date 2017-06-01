@@ -11,18 +11,13 @@ function UI_Setting.Awake(go)
 end
 
 function UI_Setting.Start()
-	UIHelper.SetButtonEvent(this.transform, "Bg/Close", function()
-		UIManager.CloseWindow(UIName.UI_Setting);
-	end);
 	
-	UIHelper.SetButtonEvent(this.transform, "Content/ExitLogin/Button", function()
-		if UnityEngine.Application.isMobilePlatform then
-			LoginScene.WechatAuth = nil;
-			LoginScene.DeleteWechatAuthInfo();
-		end
-		SceneManager.Goto(LoginScene.Name);
-	end);
+	UIHelper.SetButtonEvent(this.transform, "Bg/Close", UI_Setting.OnClickClose);
+	UIHelper.SetButtonEvent(this.transform, "Content/ExitLogin/Button", UI_Setting.OnClickExitLogin);
+	UIHelper.SetButtonEvent(this.transform, "Content/SettingButton/SL_Music/Status/Sprite", UI_Setting.OnClickMuteMusic);
+	UIHelper.SetButtonEvent(this.transform, "Content/SettingButton/SL_Sound/Status/Sprite", UI_Setting.OnClickMuteSound);
 	
+	-- 音乐设置
 	local musicSlider = UIHelper.GetComponent(this.transform, "Content/SettingButton/SL_Music", typeof(UISlider));
 	musicSlider.value = LoginScene.MusicVolume;
 	if LoginScene.MusicVolume == 0 then
@@ -30,7 +25,13 @@ function UI_Setting.Start()
 	else
 		UIHelper.SetSpriteName(this.transform, "Content/SettingButton/SL_Music/Status/Sprite", "SZ-8");
 	end
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Music/Progress/Back", LoginScene.MuteMusic);
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Music/Progress/Fore", LoginScene.MuteMusic);
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Music/Progress/Drag", LoginScene.MuteMusic);
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Music/Status/Sprite", LoginScene.MuteMusic);
+	UIHelper.SetEventEnabled(this.transform, "Content/SettingButton/SL_Music", not LoginScene.MuteMusic);
 	
+	-- 音效设置
 	local soundSlider = UIHelper.GetComponent(this.transform, "Content/SettingButton/SL_Sound", typeof(UISlider));
 	soundSlider.value = LoginScene.SoundVolume;
 	if LoginScene.SoundVolume == 0 then
@@ -38,6 +39,11 @@ function UI_Setting.Start()
 	else
 		UIHelper.SetSpriteName(this.transform, "Content/SettingButton/SL_Sound/Status/Sprite", "SZ-8");
 	end
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Sound/Progress/Back", LoginScene.MuteSound);
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Sound/Progress/Fore", LoginScene.MuteSound);
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Sound/Progress/Drag", LoginScene.MuteSound);
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Sound/Status/Sprite", LoginScene.MuteSound);
+	UIHelper.SetEventEnabled(this.transform, "Content/SettingButton/SL_Sound", not LoginScene.MuteSound);
 	
 	local musicEvtLisener = UIHelper.GetComponent(this.transform, "Content/SettingButton/SL_Music", typeof(UIEventListener));
 	musicEvtLisener.onDrag = UI_Setting.OnMusicSliderDrag;
@@ -46,6 +52,41 @@ function UI_Setting.Start()
 	local soundEvtListener = UIHelper.GetComponent(this.transform, "Content/SettingButton/SL_Sound", typeof(UIEventListener));
 	soundEvtListener.onDrag = UI_Setting.OnSoundSliderDrag;
 	soundEvtListener.onClick = UI_Setting.OnSoundSliderClick;
+end
+
+function UI_Setting.OnClickClose(go)
+	UIManager.CloseWindow(UIName.UI_Setting);
+end
+
+function UI_Setting.OnClickExitLogin(go)
+	if UnityEngine.Application.isMobilePlatform then
+		LoginScene.WechatAuth = nil;
+		LoginScene.DeleteWechatAuthInfo();
+	end
+	SceneManager.Goto(LoginScene.Name);
+end
+
+function UI_Setting.OnClickMuteMusic()
+	LoginScene.MuteMusic = not LoginScene.MuteMusic;
+	AudioManager.MuteMusic = LoginScene.MuteMusic;
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Music/Progress/Back", LoginScene.MuteMusic);
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Music/Progress/Fore", LoginScene.MuteMusic);
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Music/Progress/Drag", LoginScene.MuteMusic);
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Music/Status/Sprite", LoginScene.MuteMusic);
+	UIHelper.SetEventEnabled(this.transform, "Content/SettingButton/SL_Music", not LoginScene.MuteMusic);
+	if LoginScene.MuteMusic == false then
+		AudioManager.PlayMusic({BGMusic.Hall}, true);
+	end
+end
+
+function UI_Setting.OnClickMuteSound()
+	LoginScene.MuteSound = not LoginScene.MuteSound;
+	AudioManager.MuteSound = LoginScene.MuteSound;
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Sound/Progress/Back", LoginScene.MuteSound);
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Sound/Progress/Fore", LoginScene.MuteSound);
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Sound/Progress/Drag", LoginScene.MuteSound);
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Sound/Status/Sprite", LoginScene.MuteSound);
+	UIHelper.SetEventEnabled(this.transform, "Content/SettingButton/SL_Sound", not LoginScene.MuteSound);
 end
 
 function UI_Setting.OnMusicSliderDrag(go, delta)

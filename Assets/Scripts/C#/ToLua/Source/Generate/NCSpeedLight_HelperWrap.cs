@@ -27,7 +27,6 @@ public class NCSpeedLight_HelperWrap
 		L.RegFunction("GetTextBySeconds", GetTextBySeconds);
 		L.RegFunction("MoneyFormatInput", MoneyFormatInput);
 		L.RegFunction("GetCurrentTimeWithMillisecond", GetCurrentTimeWithMillisecond);
-		L.RegFunction("ChangeSpriteColor", ChangeSpriteColor);
 		L.RegFunction("OnlyIncluding", OnlyIncluding);
 		L.RegFunction("EverythingBut", EverythingBut);
 		L.RegFunction("SetActiveState", SetActiveState);
@@ -487,49 +486,6 @@ public class NCSpeedLight_HelperWrap
 			string o = NCSpeedLight.Helper.GetCurrentTimeWithMillisecond();
 			LuaDLL.lua_pushstring(L, o);
 			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int ChangeSpriteColor(IntPtr L)
-	{
-		try
-		{
-			int count = LuaDLL.lua_gettop(L);
-
-			if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(UISprite), typeof(bool)))
-			{
-				UISprite arg0 = (UISprite)ToLua.ToObject(L, 1);
-				bool arg1 = LuaDLL.lua_toboolean(L, 2);
-				bool o = NCSpeedLight.Helper.ChangeSpriteColor(arg0, arg1);
-				LuaDLL.lua_pushboolean(L, o);
-				return 1;
-			}
-			else if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Transform), typeof(bool)))
-			{
-				UnityEngine.Transform arg0 = (UnityEngine.Transform)ToLua.ToObject(L, 1);
-				bool arg1 = LuaDLL.lua_toboolean(L, 2);
-				bool o = NCSpeedLight.Helper.ChangeSpriteColor(arg0, arg1);
-				LuaDLL.lua_pushboolean(L, o);
-				return 1;
-			}
-			else if (count == 3 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Transform), typeof(string), typeof(bool)))
-			{
-				UnityEngine.Transform arg0 = (UnityEngine.Transform)ToLua.ToObject(L, 1);
-				string arg1 = ToLua.ToString(L, 2);
-				bool arg2 = LuaDLL.lua_toboolean(L, 3);
-				bool o = NCSpeedLight.Helper.ChangeSpriteColor(arg0, arg1, arg2);
-				LuaDLL.lua_pushboolean(L, o);
-				return 1;
-			}
-			else
-			{
-				return LuaDLL.luaL_throw(L, "invalid arguments to method: NCSpeedLight.Helper.ChangeSpriteColor");
-			}
 		}
 		catch(Exception e)
 		{

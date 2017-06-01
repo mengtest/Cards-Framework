@@ -467,11 +467,7 @@ namespace NCSpeedLight
         /// </summary>
         public static string REMOTE_SCRIPT_BUNDLE_PATH
         {
-            get
-            {
-                return "http://192.168.1.155:9555/" + PLATFORM_NAME + "/Scripts/";
-            }
-            set { }
+            get; set;
         }
 
         /// <summary>

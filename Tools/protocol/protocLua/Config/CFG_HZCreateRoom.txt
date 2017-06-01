@@ -1,0 +1,9 @@
+message CFG_HZCreateRoom
+{
+    required int32 RoundCount = 1;
+    required int32 PlayerCount = 2;
+    required string Playway = 3;
+}
+
+
+ 

@@ -10,6 +10,7 @@ public class UISpriteWrap
 		L.RegFunction("GetAtlasSprite", GetAtlasSprite);
 		L.RegFunction("MakePixelPerfect", MakePixelPerfect);
 		L.RegFunction("OnFill", OnFill);
+		L.RegFunction("SetGray", SetGray);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("material", get_material, null);
@@ -72,6 +73,23 @@ public class UISpriteWrap
 			BetterList<UnityEngine.Vector2> arg1 = (BetterList<UnityEngine.Vector2>)ToLua.CheckObject(L, 3, typeof(BetterList<UnityEngine.Vector2>));
 			BetterList<UnityEngine.Color> arg2 = (BetterList<UnityEngine.Color>)ToLua.CheckObject(L, 4, typeof(BetterList<UnityEngine.Color>));
 			obj.OnFill(arg0, arg1, arg2);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SetGray(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			UISprite obj = (UISprite)ToLua.CheckObject(L, 1, typeof(UISprite));
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.SetGray(arg0);
 			return 0;
 		}
 		catch(Exception e)

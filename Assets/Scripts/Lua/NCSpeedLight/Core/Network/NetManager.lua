@@ -8,7 +8,10 @@
 -- Modify History:
 --
 -----------------------------------------------
-NetManager = {};
+NetManager = {
+	ProtobufProcessor = require "protobuf",
+	JsonProcessor = require "cjson",
+};
 
 ServerType = {Login = 0, Logic = 1};
 
@@ -32,7 +35,7 @@ function NetManager.InitPBMessage()
 	if buffer == nil then
 		Log.Error("InitPBMessage: open pb file error.");
 	else
-		SharedVariable.ProtobufProcessor.register(buffer);
+		NetManager.ProtobufProcessor.register(buffer);
 		Log.Info("InitPBMessage: success.");
 	end
 end
@@ -55,7 +58,7 @@ end
 
 -- 发送消息至登录服务器
 function NetManager.SendEventToLoginServer(id, structName, msg)
-	local buffer = SharedVariable.ProtobufProcessor.encode(structName, msg);
+	local buffer = NetManager.ProtobufProcessor.encode(structName, msg);
 	if buffer == false then
 		Log.Error("SendEventToLoginServer error.");
 		return false;
@@ -66,15 +69,12 @@ end
 
 -- 发送消息至逻辑服务器
 function NetManager.SendEventToLogicServer(id, structName, msg)
-	local buffer = SharedVariable.ProtobufProcessor.encode(structName, msg);
+	local buffer = NetManager.ProtobufProcessor.encode(structName, msg);
 	if buffer == false then
 		Log.Error("SendEventToLogicServer error.");
 		return false;
 	else
-		local roleID = 0;
-		if SharedVariable.SelfInfo ~= nil and SharedVariable.SelfInfo.FullInfo ~= nil then
-			roleID = SharedVariable.SelfInfo.FullInfo.id;
-		end
+		local roleID = Player.ID;
 		return NetManager.SendEvent(id, buffer, roleID, 1, ServerType.Logic);
 	end
 end
@@ -96,27 +96,27 @@ function NetManager.UnregisterEvent(id, func)
 end
 
 function NetManager.DecodeMsg(structName, evt)
-	local obj = SharedVariable.ProtobufProcessor.decode(structName, evt.LuaParam);
+	local obj = NetManager.ProtobufProcessor.decode(structName, evt.LuaParam);
 	return obj;
 end
 
 function NetManager.EncodeMsg(structName, msg)
-	buffer = SharedVariable.ProtobufProcessor.encode(structName, msg);
+	buffer = NetManager.ProtobufProcessor.encode(structName, msg);
 	return buffer;
 end
 
 function NetManager.DecodeJson(bytes)
 	local str = tolua.tolstring(bytes);
-	local obj = SharedVariable.JsonProcessor.decode(str);
+	local obj = NetManager.JsonProcessor.decode(str);
 	return obj;
 end
 
 function NetManager.DecodePB(structName, buffer)
-	local obj = SharedVariable.ProtobufProcessor.decode(structName, buffer);
+	local obj = NetManager.ProtobufProcessor.decode(structName, buffer);
 	return obj;
 end
 
 function NetManager.EncodePB(structName, msg)
-	local buffer = SharedVariable.ProtobufProcessor.encode(structName, msg);
+	local buffer = NetManager.ProtobufProcessor.encode(structName, msg);
 	return buffer;
 end

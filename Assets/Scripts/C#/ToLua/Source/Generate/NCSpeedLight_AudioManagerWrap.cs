@@ -21,8 +21,8 @@ public class NCSpeedLight_AudioManagerWrap
 		L.RegFunction("New", _CreateNCSpeedLight_AudioManager);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("GO", get_GO, set_GO);
-		L.RegVar("SoundEnabled", get_SoundEnabled, set_SoundEnabled);
-		L.RegVar("MusicEnabled", get_MusicEnabled, set_MusicEnabled);
+		L.RegVar("MuteSound", get_MuteSound, set_MuteSound);
+		L.RegVar("MuteMusic", get_MuteMusic, set_MuteMusic);
 		L.EndClass();
 	}
 
@@ -242,11 +242,11 @@ public class NCSpeedLight_AudioManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_SoundEnabled(IntPtr L)
+	static int get_MuteSound(IntPtr L)
 	{
 		try
 		{
-			LuaDLL.lua_pushboolean(L, NCSpeedLight.AudioManager.SoundEnabled);
+			LuaDLL.lua_pushboolean(L, NCSpeedLight.AudioManager.MuteSound);
 			return 1;
 		}
 		catch(Exception e)
@@ -256,11 +256,11 @@ public class NCSpeedLight_AudioManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_MusicEnabled(IntPtr L)
+	static int get_MuteMusic(IntPtr L)
 	{
 		try
 		{
-			LuaDLL.lua_pushboolean(L, NCSpeedLight.AudioManager.MusicEnabled);
+			LuaDLL.lua_pushboolean(L, NCSpeedLight.AudioManager.MuteMusic);
 			return 1;
 		}
 		catch(Exception e)
@@ -285,12 +285,12 @@ public class NCSpeedLight_AudioManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_SoundEnabled(IntPtr L)
+	static int set_MuteSound(IntPtr L)
 	{
 		try
 		{
 			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
-			NCSpeedLight.AudioManager.SoundEnabled = arg0;
+			NCSpeedLight.AudioManager.MuteSound = arg0;
 			return 0;
 		}
 		catch(Exception e)
@@ -300,12 +300,12 @@ public class NCSpeedLight_AudioManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_MusicEnabled(IntPtr L)
+	static int set_MuteMusic(IntPtr L)
 	{
 		try
 		{
 			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
-			NCSpeedLight.AudioManager.MusicEnabled = arg0;
+			NCSpeedLight.AudioManager.MuteMusic = arg0;
 			return 0;
 		}
 		catch(Exception e)

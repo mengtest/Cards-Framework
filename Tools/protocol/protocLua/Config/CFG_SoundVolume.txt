@@ -1,6 +1,8 @@
 message CFG_SoundVolume{
 	required float Sound = 1;
 	required float Music = 2;
+	required bool MuteMusic = 3;
+	required bool MuteSound = 4;
 }
 
 

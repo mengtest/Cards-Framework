@@ -852,6 +852,7 @@ PBMessage =
 	GM_Rotate_rotate_return = "GM_Rotate_rotate_return",
 	GM_Rotate_record = "GM_Rotate_record",
 	GM_Rotate_record_return = "GM_Rotate_record_return",
+	CFG_HZCreateRoom = "CFG_HZCreateRoom",
 	CFG_LoginInfo = "CFG_LoginInfo",
 	CFG_LoginRecord = "CFG_LoginRecord",
 	CFG_SoundVolume = "CFG_SoundVolume",

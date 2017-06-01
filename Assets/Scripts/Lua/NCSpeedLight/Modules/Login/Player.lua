@@ -40,7 +40,7 @@ end
 
 function Player.OnGetLocation(address)
 	if address == nil or string.len(address) == 0 then
-		Log.Error("OnGetLocation: address is nil,未获取到有效地址信息.");
+		Log.Info("OnGetLocation: address is nil(未获取到有效地址信息).");
 		Player.Address = "未获取到有效地址信息";
 	else
 		Log.Info("OnGetLocation: address is " .. address);

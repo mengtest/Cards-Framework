@@ -93,7 +93,7 @@ end
 
 -- 打开窗口
 function UIManager.OpenWindow(windowName)
-	Log.Info("OpenWindow: " .. windowName);
+	-- Log.Info("OpenWindow: " .. windowName);
 	local windowInfo = UIManager.GetWindowInfo(windowName);
 	if windowInfo ~= nil then
 		return windowInfo.GO;
@@ -119,7 +119,7 @@ function UIManager.ReopenCurrentWindow()
 end
 
 function UIManager.CloseWindow(windowName)
-	Log.Info("CloseWindow: " .. windowName);
+	-- Log.Info("CloseWindow: " .. windowName);
 	local windowInfo = UIManager.GetWindowInfo(windowName);
 	if windowInfo ~= nil then
 		if windowInfo.GO ~= nil then
@@ -127,7 +127,7 @@ function UIManager.CloseWindow(windowName)
 		end
 		UIManager.RemoveWindowInfo(windowName);
 	end
-	if SharedVariable.ASSETBUNDLE_MODE then
+	if Constants.ASSET_BUNDLE_MODE then
 		AssetManager.UnloadAsset("UI/" .. windowName);
 	end
 end

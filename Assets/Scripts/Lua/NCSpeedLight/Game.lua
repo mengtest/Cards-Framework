@@ -18,7 +18,6 @@ require "NCSpeedLight.Third.pbc.protobuf"
 require("NCSpeedLight.Utils.LuaDebug")("localhost", 7003)
 require "NCSpeedLight.Utils.Protocol.GameMessage"
 require "NCSpeedLight.Utils.Protocol.PBMessage"
-require "NCSpeedLight.Utils.SharedVariable"
 require "NCSpeedLight.Utils.Define"
 require "NCSpeedLight.Core.Event.EvtQueue"
 require "NCSpeedLight.Core.Event.EvtProcessor"

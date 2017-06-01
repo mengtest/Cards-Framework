@@ -28,14 +28,14 @@ UI_MJBase = {
 	RecordSuccess = false,
 }
 
-local this = UI_MJBase
+local this = UI_MJBase;
 
 function UI_MJBase.Awake(go)
 	this.gameObject = go;
 	this.transform = go.transform;
-	IsOpenChat = false;
-	IsRecording = false;
-	RecordSuccess = false;
+	this.IsOpenChat = false;
+	this.IsRecording = false;
+	this.RecordSuccess = false;
 end
 
 function UI_MJBase.Start()
@@ -62,8 +62,10 @@ function UI_MJBase.Start()
 	voiceBtnListener.onDrag = UI_MJBase.OnVoiceBtnDrag;
 	voiceBtnListener.onDragEnd = UI_MJBase.OnVoiceBtnDragEnd;
 	
-	UI_MJBase.SetupCurrentRound();
+	UI_MJBase.SetRound(false);
+	
 	UI_MJBase.SetupPlayerUIVisiable();
+	
 	if HallScene.CurrentFBPlaybackMode then
 		UI_MJBase.SetupReadyAndInvite(false, false, false);
 	else
@@ -90,7 +92,7 @@ function UI_MJBase.OnDestroy()
 end
 
 function UI_MJBase.Reset()
-	UI_MJBase.SetupCurrentRound();
+	UI_MJBase.SetRound(false);
 	if HallScene.CurrentFBPlaybackMode then
 		UI_MJBase.SetupReadyAndInvite(false, false, false);
 	else
@@ -190,6 +192,17 @@ function UI_MJBase.SetupReadyAndInvite(ready, unready, invite)
 	UIHelper.SetActiveState(this.transform, "center/Ready/Invite", invite);
 end
 
+function UI_MJBase.SetInviteBtnGray(status)
+	if status == nil then
+		status = HallScene.CurrentFBPlayerCount == MJScene.GetPlayerCount();
+		UIHelper.SetSpriteGray(this.transform, "center/Ready/Invite/Background", status);
+		UIHelper.SetSpriteGray(this.transform, "center/Ready/Invite/Sprite", status);
+	else
+		UIHelper.SetSpriteGray(this.transform, "center/Ready/Invite/Background", status);
+		UIHelper.SetSpriteGray(this.transform, "center/Ready/Invite/Sprite", status);
+	end
+end
+
 -- 设置掷骰子
 function UI_MJBase.SetCastDice(status)
 	Log.Info("SetCastDice: status is " .. tostring(status));
@@ -197,12 +210,15 @@ function UI_MJBase.SetCastDice(status)
 end
 
 -- 设置当前的局数
-function UI_MJBase.SetupCurrentRound()
-	UIHelper.SetActiveState(this.transform, "top/topLeft/RemainTime", true);
-	UIHelper.SetActiveState(this.transform, "top/topLeft/RemainTime/Label (Tips)", true);
-	UIHelper.SetActiveState(this.transform, "top/topLeft/RemainTime/Label", true);
+function UI_MJBase.SetRound(status)
+	if status == nil then status = true; end;
+	UIHelper.SetActiveState(this.transform, "top/topLeft/RemainTime", status);
+	UIHelper.SetActiveState(this.transform, "top/topLeft/RemainTime/Label (Tips)", status);
+	UIHelper.SetActiveState(this.transform, "top/topLeft/RemainTime/Label", status);
 	UIHelper.SetLabelText(this.transform, "top/topLeft/RemainTime/Label (Tips)", "当前局数");
-	UIHelper.SetLabelText(this.transform, "top/topLeft/RemainTime/Label", HallScene.CurrentFBRound .. "/" .. HallScene.CurrentFBTotalRound);
+	local str = HallScene.CurrentFBRound .. "/" .. HallScene.CurrentFBTotalRound;
+	UIHelper.SetLabelText(this.transform, "top/topLeft/RemainTime/Label", str);
+	Log.Info("SetRound: status is " .. tostring(status) .. ",str is " .. str);
 end
 
 -- 设置剩余的牌的个数

@@ -48,6 +48,10 @@ namespace NCSpeedLight
                 LocRequest();
 #endif
             }
+            else
+            {
+                callback(null);
+            }
         }
 
         public static void StopLocation()

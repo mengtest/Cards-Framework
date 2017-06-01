@@ -687,6 +687,13 @@ m_objectId ("=
 GM_BlackMarket_Recast_Return
 m_result ((
 data (2.GM_BlackMarket_Return_obj
+d
+CFG_HZCreateRoom.txt"L
+CFG_HZCreateRoom
+
+RoundCount (
+PlayerCount (
+Playway (	
 
 CFG_LoginRecord.txt"2
 CFG_LoginInfo
@@ -694,11 +701,13 @@ m_objectId ("=
 password (	"4
 CFG_LoginRecord!
 	loginInfo (2.CFG_LoginInfo
-F
-CFG_SoundVolume.txt"/
+l
+CFG_SoundVolume.txt"U
 CFG_SoundVolume
 Sound (
-Music (
+Music (
+	MuteMusic (
+	MuteSound (
 Ü
 CFG_WechatAuth.txt"Å
 CFG_WechatAuth

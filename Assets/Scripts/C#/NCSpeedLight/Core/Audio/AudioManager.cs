@@ -17,14 +17,14 @@ namespace NCSpeedLight
     {
         public static GameObject GO;
 
-        private static bool m_SoundEnabled = true;
+        private static bool m_MuteSound = false;
 
-        private static bool m_MusicEnabled = true;
+        private static bool m_MuteMusic = false;
 
         public static void Initialize()
         {
             GameObject controller = AssetManager.LoadAsset("Bundle/Prefab/Audio/AudioController", typeof(GameObject)) as GameObject;
-            controller = GameObject.Instantiate<GameObject>(controller);
+            controller = Object.Instantiate(controller);
             if (controller)
             {
                 controller.transform.SetParent(Game.Instance.transform);
@@ -37,34 +37,39 @@ namespace NCSpeedLight
             }
         }
 
-        public static bool SoundEnabled
+        public static bool MuteSound
         {
             get
             {
-                return m_SoundEnabled;
+                return m_MuteSound;
             }
             set
             {
-                m_SoundEnabled = value;
+                m_MuteSound = value;
             }
         }
 
-        public static bool MusicEnabled
+        public static bool MuteMusic
         {
             get
             {
-                return m_MusicEnabled;
+                return m_MuteMusic;
             }
             set
             {
-                m_MusicEnabled = value;
+                m_MuteMusic = value;
+                if (value)
+                {
+                    StopMusic();
+                }
             }
         }
 
 
         public static void PlayMusic(string[] playlist, bool forcePlay = false)
         {
-            if (playlist == null || playlist.Length == 0 || m_MusicEnabled == false) return;
+            if (m_MuteMusic) return;
+            if (playlist == null || playlist.Length == 0) return;
             string[] currentPlaylist = AudioController.GetMusicPlaylist();
             bool needPlay = false;
             if (currentPlaylist == null || currentPlaylist.Length == 0 || playlist.Length != currentPlaylist.Length)
@@ -110,7 +115,7 @@ namespace NCSpeedLight
 
         public static void PlaySound(string sound)
         {
-            if (m_SoundEnabled)
+            if (m_MuteSound == false)
             {
                 AudioController.Play(sound);
             }

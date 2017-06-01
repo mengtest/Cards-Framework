@@ -1,25 +1,62 @@
-UI_CreateRoom =
-{
+﻿-----------------------------------------------
+-- Copyright © 2014-2017 NCSpeedLight
+--
+-- FileName: UI_CreateRoom.lua
+-- Describle:  
+-- Created By:  Wells Hsu
+-- DateTime:  2017/06/01 17:20:11
+-- Modify History:
+--
+-----------------------------------------------
+UI_CreateRoom = {
+	transform = nil,
+	gameObject = nil,
 	Round = nil,
 	PlayerNum = nil,
 	Playway = nil,
-}
+};
 
-local transform;
-local gameObject;
+local this = UI_CreateRoom;
 
+-- Called by mono
 function UI_CreateRoom.Awake(go)
-	gameObject = go;
-	transform = go.transform;
+	this.gameObject = go;
+	this.transform = go.transform;
 end
 
+-- Use this for initialization
 function UI_CreateRoom.Start()
-	UIHelper.SetButtonEvent(transform, "top/topLeft/BackButton", UI_CreateRoom.OnClickClose);
-	UIHelper.SetButtonEvent(transform, "Center/Button", UI_CreateRoom.OnClickConfirm);
+	UIHelper.SetButtonEvent(this.transform, "top/topLeft/BackButton", UI_CreateRoom.OnClickClose);
+	UIHelper.SetButtonEvent(this.transform, "Center/Button", UI_CreateRoom.OnClickConfirm);
+	local roundBtn = UIHelper.GetComponent(this.transform, "Center/RadioBtn_Round/" .. HallScene.HZCreateRoomConfig.RoundCount, typeof(UIToggle));
+	local playerBtn = UIHelper.GetComponent(this.transform, "Center/RadioBtn_Player/" .. HallScene.HZCreateRoomConfig.PlayerCount, typeof(UIToggle));
+	roundBtn.value = true;
+	playerBtn.value = true;
+	local playwayStrs = Utility.SplitString(HallScene.HZCreateRoomConfig.Playway, ",");
+	for i = 1, #playwayStrs do
+		if i == 1 then
+			local maBtn = UIHelper.GetComponent(this.transform, "Center/RadioBtn_Playway/Playway1/" .. MJPlayway.ToString(tonumber(playwayStrs[1])), typeof(UIToggle));
+			maBtn.value = true;
+		elseif i == 2 then
+			local duiBtn = UIHelper.GetComponent(this.transform, "Center/RadioBtn_Playway/Playway2/" .. MJPlayway.ToString(tonumber(playwayStrs[2])), typeof(UIToggle));
+			duiBtn.value = true;
+		end
+	end
 	HallScene.RequestPlayerInFb();
 end
 
+-- Use this for destruction
 function UI_CreateRoom.OnDestroy()
+	this.transform = nil;
+	this.gameObject = nil;
+end
+
+-- Called when pre reload script.
+function UI_CreateRoom.OnPreReload()
+end
+
+-- Called when post reload script.
+function UI_CreateRoom.OnPostReload()
 end
 
 function UI_CreateRoom.OnClickClose(go)

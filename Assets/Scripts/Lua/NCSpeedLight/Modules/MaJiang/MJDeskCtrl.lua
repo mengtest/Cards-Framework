@@ -177,7 +177,7 @@ function MJDeskCtrl.SetPlayway()
 			Log.Error("SetPlayway: error caused by spilt HallScene.CurrentFBPlayway str fail.");
 			return;
 		end
-		UIHelper.SetActiveState(this.transform, "Text/Playway/OneText", true);
+		UIHelper.SetActiveState(this.transform, "Text/Playway/OneText", false);
 		UIHelper.SetActiveState(this.transform, "Text/Playway/TwoText", false);
 		local count = #playway;
 		if count == 1 then

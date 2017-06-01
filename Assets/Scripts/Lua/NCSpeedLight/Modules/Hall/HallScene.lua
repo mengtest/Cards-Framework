@@ -16,38 +16,25 @@ HallScene =
 	
 	Announcement = nil, -- 公告信息
 	
-	-- region 副本信息 
+	-- 副本信息 
 	CurrentFBNeedReconnect = false, -- 当前副本是否需要重连
-	
 	CurrentFBID = 0, -- 麻将的ID
-	
 	CurrentFBType = 0, -- 副本类型
-	
 	CurrentFBPlayway = nil, -- 副本玩法
-	
 	CurrentFBMasterID = 0, -- 副本房主ID
-	
 	CurrentFBPlayerCount = 0, -- 副本人数
-	
 	CurrentFBRound = 0, -- 副本的当前回合
-	
 	CurrentFBTotalRound = 0,-- 副本总的回合数
-	
 	CurrentFBFinishedRound = 0, -- 副本已完成的回合数
-	
 	CurrentFBInfo = nil, -- 副本信息 【PBMessage.GM_BattleFBServerInfo】
-	
 	CurrentFBPlaybackMode = false, -- 副本回放模式
-	
 	CurrentFBPlaybackData = nil, -- 麻将回放数据
-	
 	CurrentFBStatus = FBStatus.Waitting, -- 副本状态
-	
 	CurrentFBCloseTime = 300, -- 副本被解散的倒计时
-	
 	MailData = nil, -- 邮件
 	
--- endregion
+	-- 红中创建房间配置
+	HZCreateRoomConfig = nil,
 }
 
 function HallScene.Initialize()
@@ -57,6 +44,7 @@ end
 
 function HallScene.Begin()
 	Log.Info("HallScene.Begin");
+	HallScene.OpenHZCreateRoomConfig();
 	AudioManager.PlayMusic({BGMusic.Hall}, false);
 	HallScene.CurrentFBCloseTime = 300;
 	HallScene.RegisterNetEvent();
@@ -107,7 +95,7 @@ function HallScene.RegisterNetEvent()
 	NetManager.RegisterEvent(GameMessage.GM_NOTIFY_CHANGE_LONG64, HallScene.NotifyChangeSomething);
 	NetManager.RegisterEvent(GameMessage.GM_NOTIFY_CHANGE_int32, HallScene.NotifyChangeSomethingInt32);
 	NetManager.RegisterEvent(GameMessage.GM_KICKOFF_PLAYER, HallScene.NotifyRe_Register);
-	NetManager.RegisterEvent(GameMessage.GM_GET_CHAT_RETURN, HallScene.OnReceiveAnnouncement); -- 接收到公告信息
+	NetManager.RegisterEvent(GameMessage.GM_GET_CHAT_RETURN, HallScene.OnRecvAnnouncement); -- 公告信息
 	NetManager.RegisterEvent(GameMessage.GM_PLAYER_PLAYBACK_RETURN, HallScene.OnRecvPlayback); -- 回放信息
 	NetManager.RegisterEvent(GameMessage.GM_MAIL_REQUEST_RETURN, HallScene.ReceiveMail); -- 接收到邮件信息
 	NetManager.RegisterEvent(GameMessage.GM_GET_ONE_MAIL, HallScene.ReceiveNewMail); -- 游戏内接收到新邮件信息
@@ -124,11 +112,49 @@ function HallScene.UnRegisterNetEvent()
 	NetManager.UnregisterEvent(GameMessage.GM_NOTIFY_CHANGE_LONG64, HallScene.NotifyChangeSomething);
 	NetManager.UnregisterEvent(GameMessage.GM_NOTIFY_CHANGE_int32, HallScene.NotifyChangeSomethingInt32);
 	NetManager.UnregisterEvent(GameMessage.GM_KICKOFF_PLAYER, HallScene.NotifyRe_Register);
-	NetManager.UnregisterEvent(GameMessage.GM_GET_CHAT_RETURN, HallScene.OnReceiveAnnouncement); -- 接收到公告信息
+	NetManager.UnregisterEvent(GameMessage.GM_GET_CHAT_RETURN, HallScene.OnRecvAnnouncement); -- 公告信息
 	NetManager.UnregisterEvent(GameMessage.GM_PLAYER_PLAYBACK_RETURN, HallScene.OnRecvPlayback); -- 回放信息
 	NetManager.UnregisterEvent(GameMessage.GM_MAIL_REQUEST_RETURN, HallScene.ReceiveMail); -- 接收到邮件信息
 	NetManager.UnregisterEvent(GameMessage.GM_GET_ONE_MAIL, HallScene.ReceiveNewMail); -- 游戏内接收到新邮件信息
 end
+
+-- 打开红中麻将创建房间配置
+function HallScene.OpenHZCreateRoomConfig()
+	local path = Constants.CONFIG_PATH .. "HZCreateRoom.bytes";
+	local buffer = Utility.OpenFile(path);
+	if buffer == nil then
+		HallScene.HZCreateRoomConfig = {};
+		HallScene.HZCreateRoomConfig.RoundCount = 6;
+		HallScene.HZCreateRoomConfig.PlayerCount = 2;
+		HallScene.HZCreateRoomConfig.Playway = "2,1";
+		Log.Error("OpenHZCreateRoomConfig: Can not open hzcreate room config,is this file exists @ " .. path);
+	else
+		local msg = NetManager.DecodePB(PBMessage.CFG_HZCreateRoom, buffer);
+		if msg == false then
+			HallScene.HZCreateRoomConfig = {};
+			HallScene.HZCreateRoomConfig.RoundCount = 6;
+			HallScene.HZCreateRoomConfig.PlayerCount = 2;
+			HallScene.HZCreateRoomConfig.Playway = "2,1";
+			Log.Error("OpenHZCreateRoomConfig: decode hzcreate room config error.");
+		else
+			HallScene.HZCreateRoomConfig = msg;
+			Log.Info("OpenHZCreateRoomConfig: success.");
+		end
+	end
+end
+
+-- 保存红中麻将创建房间配置
+function HallScene.SaveHZCreateRoomConfig()
+	local path = Constants.CONFIG_PATH .. "HZCreateRoom.bytes";
+	local buffer = NetManager.EncodePB(PBMessage.CFG_HZCreateRoom, HallScene.HZCreateRoomConfig);
+	if buffer == false then
+		Log.Error("SaveHZCreateRoomConfig: error caused by nil buffer.");
+	else
+		Utility.SaveFile(path, buffer);
+		Log.Info("SaveHZCreateRoomConfig: save success @ " .. path);
+	end
+end
+
 
 function HallScene.SwitchFBStatus(status)
 	Log.Info("SwitchFBStatus: status is " .. FBStatus.ToString(status));
@@ -231,6 +257,7 @@ function HallScene.ReturnPlayerInFb(evt)
 		HallScene.CurrentFBID = msg.m_FBID;
 		HallScene.CurrentFBType = msg.m_FBTypeID;
 		HallScene.CurrentFBPlayway = msg.m_playWay;
+		HallScene.CurrentFBPlayerCount = msg.m_playerCount;
 		local option = ConfirmDialogOption.New("提示", "当前房间未解散，是否进入？", true,
 		function()
 			HallScene.CurrentFBNeedReconnect = true;
@@ -256,6 +283,12 @@ function HallScene.ReceiveFbInfo(evt)
 			HallScene.CurrentFBID = msg.m_FBID;
 			HallScene.CurrentFBType = msg.m_FBTypeID;
 			HallScene.CurrentFBPlayway = msg.m_playWay;
+			HallScene.CurrentFBPlayerCount = msg.m_playerCount;
+			HallScene.HZCreateRoomConfig = {};
+			HallScene.HZCreateRoomConfig.RoundCount = msg.m_gameCount;
+			HallScene.HZCreateRoomConfig.PlayerCount = msg.m_playerCount;
+			HallScene.HZCreateRoomConfig.Playway = msg.m_playWay;
+			HallScene.SaveHZCreateRoomConfig();
 			HallScene.RequestLoginFb();
 		elseif msg.m_Result == 1 then
 			UIManager.OpenTipsDialog("房间不存在");
@@ -298,13 +331,13 @@ function HallScene.NotifyRe_Register(evt)
 	Log.Info("NotifyRe_Register");
 end
 
-function HallScene.OnReceiveAnnouncement(evt)
+function HallScene.OnRecvAnnouncement(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GM_GetChatInfo, evt);
 	if msg == false then
-		Log.Error("OnReceiveAnnouncement: parse msg error," .. PBMessage.GM_GetChatInfo);
+		Log.Error("OnRecvAnnouncement: parse msg error," .. PBMessage.GM_GetChatInfo);
 		return;
 	end;
-	Log.Info("OnReceiveAnnouncement: word is " .. msg.word .. ",repeat " .. tostring(msg.repeatTimes));
+	Log.Info("OnRecvAnnouncement: word is " .. msg.word .. ",repeat " .. tostring(msg.repeatTimes));
 	if msg.channel == 6 then
 		HallScene.Announcement = {};
 		HallScene.Announcement.Content = msg.word;

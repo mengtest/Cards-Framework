@@ -43,6 +43,7 @@ function UI_GetRoomCardHint.RequestJson()
 	end
 	local www = UnityEngine.WWW(url);
 	coroutine.www(www);
+	Log.Info("RequestJson: www url is: " .. url);
 	if www.error ~= nil then
 		Log.Error("RequestJson: www error: " .. www.error);
 		return;

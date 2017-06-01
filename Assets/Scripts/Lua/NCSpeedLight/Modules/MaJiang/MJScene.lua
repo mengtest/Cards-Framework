@@ -40,8 +40,6 @@ MJScene =
 	ChatHistory = nil,
 }
 
-setmetatable(MJScene, {__index = _G})
-
 local MJScene = MJScene;
 
 function MJScene.Initialize()
@@ -160,6 +158,7 @@ function MJScene.RegisterNetEvent()
 	NetManager.RegisterEvent(GameMessage.GM_NOTIFY_HuPai_OPERATOR, MJScene.ReturnPlayerHu);
 	NetManager.RegisterEvent(GameMessage.GM_BROADCAST_BATTLESCENE_LEAVE, MJScene.NotifyPlayerLeave);
 	NetManager.RegisterEvent(GameMessage.GM_ANSWER_FACE_RETURN, MJScene.NotifyChat);
+	NetManager.RegisterEvent(GameMessage.GM_GET_CHAT_RETURN, MJScene.OnRecvTextChat);
 	NetManager.RegisterEvent(GameMessage.GM_NOTIFY_TRUSTTEE, MJScene.NotifyTrust);
 	NetManager.RegisterEvent(GameMessage.GM_NOTIFY_WANTCLOSEROOM, MJScene.NotifyDissolveRoom);
 	NetManager.RegisterEvent(GameMessage.GM_CHOOSE_IS_CLOSEROOM_RETURN, MJScene.ChooseDissolveRoom);
@@ -171,6 +170,7 @@ function MJScene.RegisterNetEvent()
 	--掷骰子返回
 	NetManager.RegisterEvent(GameMessage.GM_PlayerRollTouZi_Request, MJScene.ReturnCastDice);
 	NetManager.RegisterEvent(GameMessage.GM_MJOperator_Error, MJScene.ReturnOperateError);
+	NetManager.RegisterEvent(GameMessage.GM_CHAT_ERROR, MJScene.OnRecvChatError);
 end
 
 function MJScene.UnRegisterNetEvent()
@@ -184,6 +184,7 @@ function MJScene.UnRegisterNetEvent()
 	NetManager.UnregisterEvent(GameMessage.GM_NOTIFY_HuPai_OPERATOR, MJScene.ReturnPlayerHu);
 	NetManager.UnregisterEvent(GameMessage.GM_BROADCAST_BATTLESCENE_LEAVE, MJScene.NotifyPlayerLeave);
 	NetManager.UnregisterEvent(GameMessage.GM_ANSWER_FACE_RETURN, MJScene.NotifyChat);
+	NetManager.UnregisterEvent(GameMessage.GM_GET_CHAT_RETURN, MJScene.OnRecvTextChat);
 	NetManager.UnregisterEvent(GameMessage.GM_NOTIFY_TRUSTTEE, MJScene.NotifyTrust);
 	NetManager.UnregisterEvent(GameMessage.GM_NOTIFY_WANTCLOSEROOM, MJScene.NotifyDissolveRoom);
 	NetManager.UnregisterEvent(GameMessage.GM_CHOOSE_IS_CLOSEROOM_RETURN, MJScene.ChooseDissolveRoom);
@@ -506,6 +507,7 @@ function MJScene.ReturnGamePlayerInfo(evt)
 	end
 	MJScene.SetupMaster();
 	MJDeskCtrl.SetPlayway();
+	UI_MJBase.SetInviteBtnGray();
 	UIManager.CloseAllWindowsExcept(UIName.UI_MJBase);
 end
 
@@ -555,6 +557,7 @@ function MJScene.ReturnReconnectInfo(evt)
 		Log.Info("ReturnReconnectInfo: 存在结算信息");
 	end
 	
+	HallScene.CurrentFBPlayerCount = msg.m_playerCount;
 	HallScene.CurrentFBBankerPosition = msg.m_bankerPos; -- 庄家的位置
 	HallScene.CurrentFBMasterID = msg.m_RoomMasterID; -- 房主的位置
 	MJScene.DiceNumbers = msg.m_saizi; -- 骰子的点数
@@ -574,78 +577,84 @@ function MJScene.ReturnReconnectInfo(evt)
 		-- 创建主角
 		for i = 1, #msg.m_AllData do
 			local data = msg.m_AllData[i];
-			if data.m_roleid == Player.ID then
-				local player = MJPlayer.New();
-				MJPlayer.Hero = player;
-				local nickName = data.m_NickName;
-				if string.len(nickName) == 0 then
-					nickName = data.m_Name;
+			if data.m_roleid ~= 0 then
+				if data.m_roleid == Player.ID then
+					local player = MJPlayer.New();
+					MJPlayer.Hero = player;
+					local nickName = data.m_NickName;
+					if string.len(nickName) == 0 then
+						nickName = data.m_Name;
+					end
+					player:SetData(data.m_roleid,
+					data.m_Name,
+					nickName,
+					data.m_HeadPhotoUrl,
+					data.m_Sex,
+					data.m_Postion,
+					data.m_IsReady,
+					data.m_TotalScore,
+					data.m_Longitude,
+					data.m_Latitude,
+					data.m_reallyPos);
+					player:SetUI(true);
+					MJScene.AddPlayer(player);
+					Log.Info("ReturnReconnectInfo: Create hero id is " .. player.ID .. ",server position is " .. player.ServerPosition);
 				end
-				player:SetData(data.m_roleid,
-				data.m_Name,
-				nickName,
-				data.m_HeadPhotoUrl,
-				data.m_Sex,
-				data.m_Postion,
-				data.m_IsReady,
-				data.m_TotalScore,
-				data.m_Longitude,
-				data.m_Latitude,
-				data.m_reallyPos);
-				player:SetUI(true);
-				MJScene.AddPlayer(player);
-				Log.Info("ReturnReconnectInfo: Create hero id is " .. player.ID .. ",server position is " .. player.ServerPosition);
 			end
 		end
 		
 		-- 创建其他玩家
 		for i = 1, #msg.m_AllData do
 			local data = msg.m_AllData[i];
-			local player = MJScene.GetPlayerByID(data.m_roleid);
-			if player == nil then
-				player = MJPlayer.New();
-				local nickName = data.m_NickName;
-				if string.len(nickName) == 0 then
-					nickName = data.m_Name;
+			if data.m_roleid ~= 0 then
+				local player = MJScene.GetPlayerByID(data.m_roleid);
+				if player == nil then
+					player = MJPlayer.New();
+					local nickName = data.m_NickName;
+					if string.len(nickName) == 0 then
+						nickName = data.m_Name;
+					end
+					player:SetData(data.m_roleid,
+					data.m_Name,
+					nickName,
+					data.m_HeadPhotoUrl,
+					data.m_Sex,
+					data.m_Postion,
+					data.m_IsReady,
+					data.m_TotalScore,
+					data.m_Longitude,
+					data.m_Latitude,
+					data.m_reallyPos);
+					player:SetUI();
+					MJScene.AddPlayer(player);
+					Log.Info("ReturnReconnectInfo: Create player id is " .. player.ID .. ",server position is " .. player.ServerPosition);
 				end
-				player:SetData(data.m_roleid,
-				data.m_Name,
-				nickName,
-				data.m_HeadPhotoUrl,
-				data.m_Sex,
-				data.m_Postion,
-				data.m_IsReady,
-				data.m_TotalScore,
-				data.m_Longitude,
-				data.m_Latitude,
-				data.m_reallyPos);
-				player:SetUI();
-				MJScene.AddPlayer(player);
-				Log.Info("ReturnReconnectInfo: Create player id is " .. player.ID .. ",server position is " .. player.ServerPosition);
 			end
 		end
 	else
-		-- 创建其他玩家
+		-- 刷新玩家数据
 		for i = 1, #msg.m_AllData do
 			local data = msg.m_AllData[i];
-			local player = MJScene.GetPlayerByID(data.m_roleid);
-			if player ~= nil then
-				local nickName = data.m_NickName;
-				if string.len(nickName) == 0 then
-					nickName = data.m_Name;
+			if data.m_roleid ~= 0 then
+				local player = MJScene.GetPlayerByID(data.m_roleid);
+				if player ~= nil then
+					local nickName = data.m_NickName;
+					if string.len(nickName) == 0 then
+						nickName = data.m_Name;
+					end
+					player:SetData(data.m_roleid,
+					data.m_Name,
+					nickName,
+					data.m_HeadPhotoUrl,
+					data.m_Sex,
+					data.m_Postion,
+					data.m_IsReady,
+					data.m_TotalScore,
+					data.m_Longitude,
+					data.m_Latitude,
+					data.m_reallyPos);
+					player:SetUI();
 				end
-				player:SetData(data.m_roleid,
-				data.m_Name,
-				nickName,
-				data.m_HeadPhotoUrl,
-				data.m_Sex,
-				data.m_Postion,
-				data.m_IsReady,
-				data.m_TotalScore,
-				data.m_Longitude,
-				data.m_Latitude,
-				data.m_reallyPos);
-				player:SetUI();
 			end
 		end
 	end
@@ -655,6 +664,9 @@ function MJScene.ReturnReconnectInfo(evt)
 	
 	-- 设置玩法
 	MJDeskCtrl.SetPlayway();
+	
+	-- 设置邀请按钮
+	UI_MJBase.SetInviteBtnGray();
 	
 	if msg.m_FreeCard == MJDefine.TOTAL_CARD_COUNT then
 		-- 对局还没开始
@@ -679,7 +691,7 @@ function MJScene.ReturnReconnectInfo(evt)
 			-- 已经收到手牌信息了,但还没骰子骰子
 			Log.Info("ReturnReconnectInfo: 已经收到手牌信息了,掷骰子的次数还没达到最大值，当前次数：" .. tostring(msg.m_rollCount) .. ",最大值：" .. tostring(MJDefine.MAX_CAST_DICE_NUMBER));
 			for key, value in pairs(MJScene.Players) do
-				value:SetupReady(false);
+				MJPlayer.SetupReady(value, false);
 			end
 			if MJPlayer.Hero:IsBanker() then
 				UI_MJBase.SetCastDice(true);
@@ -708,7 +720,7 @@ function MJScene.ReturnReconnectInfo(evt)
 			
 			-- 设置当前回合的显示
 			-- HallScene.CurrentFBRound = HallScene.CurrentFBRound + 1;
-			UI_MJBase.SetupCurrentRound();
+			UI_MJBase.SetRound();
 			
 			-- 直接显示牌墩，不播放动画
 			MJDeskCtrl.SetPaidunActive(true);
@@ -823,7 +835,7 @@ function MJScene.ReturnHandCardInfo(evt)
 		UI_MJBase.SetupPlayerUIVisiable();		
 		
 		-- 设置回合
-		UI_MJBase.SetupCurrentRound();
+		UI_MJBase.SetRound();
 		
 		-- 设置骰子面板的朝向
 		MJDeskCtrl.SetDicePanelDirection();
@@ -963,7 +975,7 @@ end
 function MJScene.ReturnAllReady(evt)
 	HallScene.SwitchFBStatus(FBStatus.WaitingCastDice);
 	HallScene.CurrentFBRound = HallScene.CurrentFBRound + 1;
-	UI_MJBase.SetupCurrentRound();
+	UI_MJBase.SetRound();
 	Log.Info("ReturnAllReady: 所有玩家就绪,第【" .. tostring(HallScene.CurrentFBRound) .. "】回合开始");
 	local msg = NetManager.DecodeMsg(PBMessage.GM_NotifyBattleEndTime, evt);
 	for key, value in pairs(MJScene.Players) do
@@ -1006,6 +1018,7 @@ function MJScene.NotifyPlayerLeave(evt)
 		player:SetupEnterAndLeave(false, true);
 	end
 	MJScene.RemovePlayer(player);
+	UI_MJBase.SetInviteBtnGray();
 end
 
 function MJScene.NotifyChat(evt)
@@ -1015,9 +1028,6 @@ function MJScene.NotifyChat(evt)
 		Log.Error("NotifyChat: parse msg error: " .. PBMessage.GM_AnswerFaceReturn);
 		return;
 	end
-	if msg.faceid == MJChatType.CustomText then
-		MJScene.AddChatHistory(msg.roleid, MJChatType.CustomText, msg.faceName, 0, true);
-	end
 	UI_MJBase.HandleChat(msg);
 end
 
@@ -1025,6 +1035,35 @@ function MJScene.OnReceiveVoiceMsg(roleid, uri, duration)
 	Log.Info("OnReceiveVoiceMsg: roleid is " .. roleid .. ",uri is " .. uri .. ",duration is " .. duration);
 	MJScene.AddChatHistory(roleid, MJChatType.Voice, uri, duration, false);
 	UI_MJBase.HandleVoice(roleid, uri, duration);
+end
+
+function MJScene.OnRecvTextChat(evt)
+	local msg = NetManager.DecodeMsg(PBMessage.GM_GetChatInfo, evt);
+	if msg == false then
+		Log.Error("OnRecvTextChat: parse msg error," .. PBMessage.GM_GetChatInfo);
+		return;
+	end;
+	if msg.channel == 4 then
+		Log.Info("OnRecvTextChat: text is " .. msg.word);
+		local chat = {};
+		chat.faceid = MJChatType.CustomText;
+		chat.roleid = msg.roleId;
+		chat.faceName = msg.word;
+		MJScene.AddChatHistory(chat.roleid, MJChatType.CustomText, chat.faceName, 0, true);
+		UI_MJBase.HandleChat(chat);
+	end
+end
+
+function MJScene.OnRecvChatError(evt)
+	Log.Info("OnRecvChatError");
+	local msg = NetManager.DecodeMsg(PBMessage.GM_Result, evt);
+	if msg == false then
+		Log.Error("OnRecvChatError: parse msg error: " .. PBMessage.GM_Result);
+		return;
+	end
+	if msg.m_Result == - 1 then
+		UIManager.OpenTipsDialog("敏感字符");
+	end
 end
 
 function MJScene.NotifyTrust(evt)

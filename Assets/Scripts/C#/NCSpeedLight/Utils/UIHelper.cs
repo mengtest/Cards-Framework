@@ -147,6 +147,32 @@ namespace NCSpeedLight
             return null;
         }
 
+        public static void SetSpriteGray(Transform parent, string path, bool status)
+        {
+            if (parent == null)
+            {
+                return;
+            }
+            UISprite sprite = GetComponent(parent, path, typeof(UISprite)) as UISprite;
+            if (sprite)
+            {
+                sprite.SetGray(status);
+            }
+        }
+
+        public static void SetSpriteGray(Transform transform, bool status)
+        {
+            if (transform == null)
+            {
+                return;
+            }
+            UISprite sprite = GetComponent(transform, typeof(UISprite)) as UISprite;
+            if (sprite)
+            {
+                sprite.SetGray(status);
+            }
+        }
+
         public static UITexture SetTexture(Transform parent, string path, string url)
         {
             if (parent == null)
@@ -252,64 +278,22 @@ namespace NCSpeedLight
             return transform.gameObject.AddComponent(type);
         }
 
-        /// <summary>
-        /// 改变图片的显示状态，Isgray=true,则图片设置为灰色,否则设置成白色
-        /// </summary>
-        /// <param name="root"></param>
-        /// <param name="path"></param>
-        /// <param name="isGrey"></param>
-        /// <returns></returns>
-        public static bool ChangeSpriteColor(Transform root, string path, bool isGrey)
+        public static void SetEventEnabled(Transform parent, string path, bool status)
         {
-            if (root != null)
+            BoxCollider bx = GetComponent(parent, path, typeof(BoxCollider)) as BoxCollider;
+            if (bx)
             {
-                Transform sprite = root.Find(path);
-                if (sprite != null)
-                {
-                    return ChangeSpriteColor(sprite, isGrey);
-                }
+                bx.enabled = status;
             }
-            return false;
         }
 
-        /// <summary>
-        /// 改变图片的显示状态，Isgray=true,则图片设置为灰色,否则设置成白色
-        /// </summary>
-        /// <param name="transform"></param>
-        /// <param name="isGrey"></param>
-        /// <returns></returns>
-        public static bool ChangeSpriteColor(Transform transform, bool isGrey)
+        public static void SetEventEnabled(Transform transform, bool status)
         {
-            if (transform != null)
+            BoxCollider bx = GetComponent(transform, typeof(BoxCollider)) as BoxCollider;
+            if (bx)
             {
-                UISprite sprite = transform.GetComponent<UISprite>();
-                if (sprite != null)
-                {
-                    return ChangeSpriteColor(sprite, isGrey);
-                }
+                bx.enabled = status;
             }
-            return false;
-        }
-
-        /// <summary>
-        /// 改变图片的显示状态，Isgray=true,则图片设置为灰色,否则设置成白色
-        /// </summary>
-        /// <param name="sprite"></param>
-        /// <param name="isGrey"></param>
-        /// <returns></returns>
-        public static bool ChangeSpriteColor(UISprite sprite, bool isGrey)
-        {
-            Color changecolor = Color.white;
-            if (isGrey)
-            {
-                changecolor = new Color(0, 0, 0);
-            }
-            if (sprite != null)
-            {
-                sprite.color = changecolor;
-                return true;
-            }
-            return false;
         }
     }
 }

@@ -11,9 +11,9 @@ function UI_MJSetting.Awake(go)
 end
 
 function UI_MJSetting.Start()
-	UIHelper.SetButtonEvent(this.transform, "Bg/Close", function()
-		UIManager.CloseWindow(UIName.UI_MJSetting);
-	end);
+	UIHelper.SetButtonEvent(this.transform, "Bg/Close", UI_MJSetting.OnClickClose);
+	UIHelper.SetButtonEvent(this.transform, "Content/SettingButton/SL_Music/Status/Sprite", UI_MJSetting.OnClickMuteMusic);
+	UIHelper.SetButtonEvent(this.transform, "Content/SettingButton/SL_Sound/Status/Sprite", UI_MJSetting.OnClickMuteSound);
 	
 	local musicSlider = UIHelper.GetComponent(this.transform, "Content/SettingButton/SL_Music", typeof(UISlider));
 	musicSlider.value = LoginScene.MusicVolume;
@@ -22,6 +22,11 @@ function UI_MJSetting.Start()
 	else
 		UIHelper.SetSpriteName(this.transform, "Content/SettingButton/SL_Music/Status/Sprite", "SZ-8");
 	end
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Music/Progress/Back", LoginScene.MuteMusic);
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Music/Progress/Fore", LoginScene.MuteMusic);
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Music/Progress/Drag", LoginScene.MuteMusic);
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Music/Status/Sprite", LoginScene.MuteMusic);
+	UIHelper.SetEventEnabled(this.transform, "Content/SettingButton/SL_Music", not LoginScene.MuteMusic);
 	
 	local soundSlider = UIHelper.GetComponent(this.transform, "Content/SettingButton/SL_Sound", typeof(UISlider));
 	soundSlider.value = LoginScene.SoundVolume;
@@ -30,6 +35,11 @@ function UI_MJSetting.Start()
 	else
 		UIHelper.SetSpriteName(this.transform, "Content/SettingButton/SL_Sound/Status/Sprite", "SZ-8");
 	end
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Sound/Progress/Back", LoginScene.MuteSound);
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Sound/Progress/Fore", LoginScene.MuteSound);
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Sound/Progress/Drag", LoginScene.MuteSound);
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Sound/Status/Sprite", LoginScene.MuteSound);
+	UIHelper.SetEventEnabled(this.transform, "Content/SettingButton/SL_Sound", not LoginScene.MuteSound);
 	
 	local musicEvtLisener = UIHelper.GetComponent(this.transform, "Content/SettingButton/SL_Music", typeof(UIEventListener));
 	musicEvtLisener.onDrag = UI_MJSetting.OnMusicSliderDrag;
@@ -38,6 +48,33 @@ function UI_MJSetting.Start()
 	local soundEvtListener = UIHelper.GetComponent(this.transform, "Content/SettingButton/SL_Sound", typeof(UIEventListener));
 	soundEvtListener.onDrag = UI_MJSetting.OnSoundSliderDrag;
 	soundEvtListener.onClick = UI_MJSetting.OnSoundSliderClick;
+end
+
+function UI_MJSetting.OnClickClose(go)
+	UIManager.CloseWindow(UIName.UI_MJSetting);
+end
+
+function UI_MJSetting.OnClickMuteMusic()
+	LoginScene.MuteMusic = not LoginScene.MuteMusic;
+	AudioManager.MuteMusic = LoginScene.MuteMusic;
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Music/Progress/Back", LoginScene.MuteMusic);
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Music/Progress/Fore", LoginScene.MuteMusic);
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Music/Progress/Drag", LoginScene.MuteMusic);
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Music/Status/Sprite", LoginScene.MuteMusic);
+	UIHelper.SetEventEnabled(this.transform, "Content/SettingButton/SL_Music", not LoginScene.MuteMusic);
+	if LoginScene.MuteMusic == false then
+		AudioManager.PlayMusic({BGMusic.MaJiang}, true);
+	end
+end
+
+function UI_MJSetting.OnClickMuteSound()
+	LoginScene.MuteSound = not LoginScene.MuteSound;
+	AudioManager.MuteSound = LoginScene.MuteSound;
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Sound/Progress/Back", LoginScene.MuteSound);
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Sound/Progress/Fore", LoginScene.MuteSound);
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Sound/Progress/Drag", LoginScene.MuteSound);
+	UIHelper.SetSpriteGray(this.transform, "Content/SettingButton/SL_Sound/Status/Sprite", LoginScene.MuteSound);
+	UIHelper.SetEventEnabled(this.transform, "Content/SettingButton/SL_Sound", not LoginScene.MuteSound);
 end
 
 function UI_MJSetting.OnMusicSliderDrag(go, delta)

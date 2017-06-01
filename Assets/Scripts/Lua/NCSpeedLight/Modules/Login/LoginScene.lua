@@ -30,9 +30,13 @@ LoginScene =
 	
 	WechatAuth = nil,
 	
-	MusicVolume = 0.3, -- 音乐音量
+	MusicVolume = 1, -- 音乐音量
 	
-	SoundVolume = 0.3, -- 音效音量
+	SoundVolume = 1, -- 音效音量
+	
+	MuteMusic = false, -- 音乐静音
+	
+	MuteSound = false, -- 音效静音
 	
 	SoundMode = 0 -- 语音版本 0-普通话，2-方言
 };
@@ -99,21 +103,29 @@ function LoginScene.OpenSoundVolumeConfig()
 	local path = Constants.DATA_PATH .. "Config/SoundVolume.bytes";
 	local buffer = Utility.OpenFile(path);
 	if buffer == nil then
-		LoginScene.SoundVolume = 0.3;
-		LoginScene.MusicVolume = 0.3;
+		LoginScene.SoundVolume = 1;
+		LoginScene.MusicVolume = 1;
+		LoginScene.MuteMusic = false;
+		LoginScene.MuteSound = false;
 		Log.Error("OpenSoundVolumeConfig: Can not open sound volume config,is this file exists @ " .. path);
 	else
 		local config = NetManager.DecodePB(PBMessage.CFG_SoundVolume, buffer);
 		if config == false then
-			LoginScene.SoundVolume = 0.3;
-			LoginScene.MusicVolume = 0.3;
+			LoginScene.SoundVolume = 1;
+			LoginScene.MusicVolume = 1;
+			LoginScene.MuteMusic = false;
+			LoginScene.MuteSound = false;
 			Log.Error("OpenSoundVolumeConfig: decode sound volume bytes error.");
 		else
 			LoginScene.SoundVolume = config.Sound;
 			LoginScene.MusicVolume = config.Music;
+			LoginScene.MuteMusic = config.MuteMusic;
+			LoginScene.MuteSound = config.MuteMusic;
 			Log.Info("OpenSoundVolumeConfig: sound volume is " .. LoginScene.SoundVolume .. " and music volume is " .. LoginScene.MusicVolume);
 		end
 	end
+	AudioManager.MuteMusic = LoginScene.MuteMusic;
+	AudioManager.MuteSound = LoginScene.MuteSound;
 	AudioManager.SetCategoryVolume("BGMusic", LoginScene.MusicVolume);
 	AudioManager.SetCategoryVolume("Interaction", LoginScene.SoundVolume);
 	AudioManager.SetCategoryVolume("MaJiangCardFYNan_103104", LoginScene.SoundVolume);
@@ -129,6 +141,8 @@ function LoginScene.SaveSoundVolumeConfig()
 	local obj = {};
 	obj.Sound = LoginScene.SoundVolume;
 	obj.Music = LoginScene.MusicVolume;
+	obj.MuteMusic = LoginScene.MuteMusic;
+	obj.MuteSound = LoginScene.MuteMusic;
 	local buffer = NetManager.EncodePB(PBMessage.CFG_SoundVolume, obj);
 	Utility.SaveFile(path, buffer);
 	Log.Info("SaveSoundVolumeConfig: save success @ " .. path);
@@ -516,9 +530,6 @@ function LoginScene.OnRoleLoginReturn(evt)
 	if msg ~= nil then
 		if msg.id > 0 then
 			Log.Info("OnRoleLoginReturn: role id is " .. msg.id .. ',name is ' .. msg.name);
-			SharedVariable.SelfInfo.FullInfo = msg;
-			SharedVariable.SelfInfo.ID = msg.id;
-			SharedVariable.SelfInfo.AccountID = msg.accountid;
 			Player.SetFullInfo(msg);
 			SceneManager.Goto(SceneName.HallScene);
 			-- HallScene.RequestPlayerInFb();
