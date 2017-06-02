@@ -65,7 +65,6 @@ function UI_MJChat.GetDefaultTextSound(index, player)
 end
 
 function UI_MJChat.InitView()
-	UIHelper.SetLabelText(this.transform, "Text/Shuru/Text", "");
 end
 
 function UI_MJChat.InitBtnEvent()
@@ -132,10 +131,10 @@ function UI_MJChat.OnClickFace(go)
 end
 
 function UI_MJChat.OnClickSendText(go)
-	local label = UIHelper.GetComponent(this.transform, "Text/Shuru/Text", typeof(UILabel));
-	if label == nil then return end;
-	if utf8.len(label.text) == 0 then UIManager.OpenTipsDialog("消息不可为空"); return end;
-	if utf8.len(label.text) > UI_MJChat.MAX_TEXT then
+	local input = UIHelper.GetComponent(this.transform, "Text/Shuru", typeof(UIInput));
+	if input == nil then return end;
+	if utf8.len(input.value) == 0 then UIManager.OpenTipsDialog("消息不可为空"); return end;
+	if utf8.len(input.value) > UI_MJChat.MAX_TEXT then
 		UIManager.OpenTipsDialog("消息不能超过" .. UI_MJChat.MAX_TEXT .. "个字");
 		return;
 	end
@@ -144,9 +143,10 @@ function UI_MJChat.OnClickSendText(go)
 	msg.roleId = MJPlayer.Hero.ID;
 	msg.channel = 4;-- 组队频道
 	msg.name = MJPlayer.Hero.Name;
-	msg.word = label.text;
+	msg.word = input.value;
 	msg.profession = HallScene.CurrentFBID;
 	NetManager.SendEventToLogicServer(GameMessage.GM_SEND_CHAT_WORD, PBMessage.GM_GetChatInfo, msg);
+	input.value = nil;
 end
 
 -- 更新聊天历史列表显示

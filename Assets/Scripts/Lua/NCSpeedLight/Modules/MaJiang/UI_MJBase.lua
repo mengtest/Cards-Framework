@@ -240,6 +240,7 @@ function UI_MJBase.OnPlaybackMode()
 end
 
 function UI_MJBase.OnClickSetting(go)
+	UI_MJBase.SetChatActive(false);
 	UIManager.OpenWindow(UIName.UI_MJSetting);	
 end
 

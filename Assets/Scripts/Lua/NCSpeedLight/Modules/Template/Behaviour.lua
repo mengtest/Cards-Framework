@@ -15,17 +15,17 @@
 
 local this = #NAME#;
 
--- Called by mono
+-- Called by mono.
 function #NAME#.Awake(go)
 	this.gameObject = go;
 	this.transform = go.transform;
 end
 
--- Use this for initialization
+-- Use this for initialization.
 function #NAME#.Start()
 end
 
--- Use this for destruction
+-- Use this for destruction.
 function #NAME#.OnDestroy()
 	this.transform = nil;
 	this.gameObject = nil;
