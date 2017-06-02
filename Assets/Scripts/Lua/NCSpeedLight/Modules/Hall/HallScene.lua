@@ -29,7 +29,8 @@ HallScene =
 	CurrentFBInfo = nil, -- 副本信息 【PBMessage.GM_BattleFBServerInfo】
 	CurrentFBPlaybackMode = false, -- 副本回放模式
 	CurrentFBPlaybackData = nil, -- 麻将回放数据
-	CurrentFBStatus = FBStatus.Waitting, -- 副本状态
+	FBCurrentStatus = FBStatus.GameBegin, -- 副本当前状态
+	FBLastStatus = FBStatus.GameBegin, -- 副本上一状态
 	CurrentFBCloseTime = 300, -- 副本被解散的倒计时
 	MailData = nil, -- 邮件
 	
@@ -157,8 +158,9 @@ end
 
 
 function HallScene.SwitchFBStatus(status)
-	Log.Info("SwitchFBStatus: status is " .. FBStatus.ToString(status));
-	HallScene.CurrentFBStatus = status;
+	HallScene.FBLastStatus = HallScene.FBCurrentStatus;
+	HallScene.FBCurrentStatus = status;
+	Log.Info("SwitchFBStatus: from " .. FBStatus.ToString(HallScene.FBLastStatus) .. " to " .. FBStatus.ToString(HallScene.FBCurrentStatus));
 end
 
 -- 判断当前玩家是否在副本内

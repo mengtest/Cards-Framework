@@ -42,6 +42,11 @@ function UI_MJTotalResult.InitBtnEvent()
 	end);
 	-- 分享
 	UIHelper.SetButtonEvent(this.transform, "Button/Share", function(obj)
+		Screenshot.Take(
+		function()
+			UIManager.OpenWindow(UIName.UI_Share);
+			UI_Share.ShareWithScreenshot = true;
+		end);
 	end);
 end
 
@@ -60,7 +65,7 @@ function UI_MJTotalResult.SetPlayerInfo()
 				UIHelper.SetActiveState(tempTrans, "Role/Master", true);
 			end
 			UIHelper.SetLabelText(tempTrans, "Role/Label (Name)", tempPlayer.Name);
-			UIHelper.SetLabelText(tempTrans, "Role/Label (ID)", "ID:" .. tempPlayer.ID);
+			UIHelper.SetLabelText(tempTrans, "Role/Label (ID)", "ID:" .. tempPlayer.DisplayID);
 			-- 设置头像
 			UIHelper.SetTexture(tempTrans, "Role/Sprite (Photo)", tempPlayer.HeadURL);
 		end

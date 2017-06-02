@@ -20,7 +20,7 @@ UI_MJBase = {
 	UI_Player2,
 	UI_Player3,
 	CurrentTime = nil,
-	OperateTime = 15, -- 操作的倒计时
+	OperateTime = 16, -- 操作的倒计时
 	OperateCountdownFunc = nil,
 	IsOpenChat = false,
 	IsRecording = false, -- 是否正在录音
@@ -51,6 +51,7 @@ function UI_MJBase.Start()
 	UIHelper.SetButtonEvent(this.transform, "bottom/right/Operate/DingHu", UI_MJBase.OnClickDingHu);
 	UIHelper.SetButtonEvent(this.transform, "bottom/right/Operate/Pass", UI_MJBase.OnClickPass);
 	UIHelper.SetButtonEvent(this.transform, "Texture", UI_MJBase.OnClickOtherArea);
+	UIHelper.SetButtonEvent(this.transform, "center/Btn_BackToResult", UI_MJBase.OnClickBackToResult);
 	
 	-- 录音按钮相关事件监听逻辑
 	local voiceBtnListener = UIHelper.GetComponent(this.transform, "bottom/right/Button (Voice)", typeof(UIEventListener));
@@ -93,11 +94,9 @@ end
 
 function UI_MJBase.Reset()
 	UI_MJBase.SetRound(false);
-	if HallScene.CurrentFBPlaybackMode then
-		UI_MJBase.SetupReadyAndInvite(false, false, false);
-	else
-		UI_MJBase.SetupReadyAndInvite(true, false, true);
-	end
+	UI_MJBase.SetupReadyAndInvite(false, false, false);
+	UI_MJBase.SetupReadyAndInvite(false, false, false);
+	UI_MJBase.SetBackToResultButtonActive(false);
 	UIHelper.SetActiveState(this.transform, "center/Time", false);
 	UI_MJHeroCtrl.Reset();
 end
@@ -631,4 +630,27 @@ function UI_MJBase.StartOperateCountdown()
 			AudioManager.PlaySound("MJ_TimeZero");
 		end
 	end);
+end
+
+-- 停止操作倒计时
+function UI_MJBase.StopOperateCountdown()
+	UIHelper.SetActiveState(this.transform, "center/Time", false);
+	UIHelper.SetActiveState(this.transform, "center/OperatorPrompt", false);
+	coroutine.stop(UI_MJBase.OperateCountdownCo);
+end
+
+-- 设置返回结算按钮的显示
+function UI_MJBase.SetBackToResultButtonActive(status)
+	UIHelper.SetActiveState(this.transform, "center/Btn_BackToResult", status);
+end
+
+function UI_MJBase.OnClickBackToResult()
+	UI_MJBase.SetBackToResultButtonActive(false);
+	local huPlayerID = MJScene.CurrentResultInfo.m_huRoleid;
+	local huPlayer = MJScene.GetPlayerByID(huPlayerID);	
+	if huPlayer == nil then
+		UIManager.OpenWindow(UIName.UI_MJDraw);
+	else
+		UIManager.OpenWindow(UIName.UI_MJResult);
+	end
 end 

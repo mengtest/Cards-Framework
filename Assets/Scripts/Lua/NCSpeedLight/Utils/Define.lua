@@ -40,17 +40,17 @@ SceneName =
 
 FBStatus = {
 	
-	-- 等待其他玩家准备
-	WaitingPlayer = 0,
+	GameBegin = 0,-- 对局开始，第0回合
 	
-	-- 等待投掷骰子
-	WaitingCastDice = 1,
+	RoundWait = 1,-- 回合，等待其他玩家准备
 	
-	-- 游戏中
-	Playing = 2,
+	RoundBegin = 2,-- 回合，等待投掷骰子
 	
-	-- 回合结束
-	FinishedRound = 3,
+	RoundPlaying = 3,-- 回合，等待投掷骰子
+	
+	RoundEnd = 4,-- 回合，结算
+	
+	GameEnd = 5,-- 对局结束
 	
 	ToString = function(index)
 		for key, value in pairs(FBStatus) do

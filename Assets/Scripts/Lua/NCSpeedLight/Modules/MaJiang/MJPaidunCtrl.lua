@@ -62,7 +62,6 @@ end
 
 -- 隐藏队列前部的牌
 function MJPaidunCtrl.InactiveFront(count)
-	if HallScene.CurrentFBPlaybackMode then return end;
 	if #MJPaidunCtrl.Cards == 0 then
 		Log.Error("InactiveFront: can not pop a card caused by nil cards queue.");
 		return;
@@ -78,7 +77,6 @@ end
 
 -- 隐藏队列后部的牌
 function MJPaidunCtrl.InactiveRear(count)
-	if HallScene.CurrentFBPlaybackMode then return end;
 	if #MJPaidunCtrl.Cards == 0 then
 		Log.Error("InactiveRear: can not pop a card caused by nil cards queue.");
 		return;

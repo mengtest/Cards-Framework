@@ -15,13 +15,13 @@ UI_MJResult = {
 
 local this = UI_MJResult;
 
--- Called by mono
+-- Called by mono.
 function UI_MJResult.Awake(go)
 	this.gameObject = go;
 	this.transform = go.transform;
 end
 
--- Use this for initialization
+-- Use this for initialization.
 function UI_MJResult.Start()
 	UI_MJResult.InitBtnEvent();
 	UI_MJResult.SetWinOrLose();
@@ -33,7 +33,7 @@ function UI_MJResult.Start()
 	UI_MJResult.SetRound();
 end
 
--- Use this for destruction
+-- Use this for destruction.
 function UI_MJResult.OnDestroy()
 	this.transform = nil;
 	this.gameObject = nil;
@@ -67,6 +67,7 @@ function UI_MJResult.InitBtnEvent()
 		if HallScene.CurrentFBPlaybackMode then
 			UI_MJPlayback.WaitReplay();
 		else
+			UI_MJBase.SetBackToResultButtonActive(true);
 		end
 	end);
 	-- 重新播放
@@ -106,32 +107,32 @@ function UI_MJResult.SetWinOrLose()
 		UIHelper.SetSpriteName(this.transform, "bk/title/belt", "js7");
 		UIHelper.SetSpriteName(this.transform, "bk/title/belt2", "js7");
 		UIHelper.SetActiveState(this.transform, "bk/star1", true);
-		UIHelper.ChangeSpriteColor(this.transform, "bk/star2/Sprite1", false);
-		UIHelper.ChangeSpriteColor(this.transform, "bk/star2/Sprite2", false);
-		UIHelper.ChangeSpriteColor(this.transform, "bk/star2/Sprite3", false);
-		UIHelper.ChangeSpriteColor(this.transform, "bk/star2/Sprite4", false);
-		UIHelper.ChangeSpriteColor(this.transform, "bk/star2/Sprite5", false);
+		UIHelper.SetSpriteGray(this.transform, "bk/star2/Sprite1", false);
+		UIHelper.SetSpriteGray(this.transform, "bk/star2/Sprite2", false);
+		UIHelper.SetSpriteGray(this.transform, "bk/star2/Sprite3", false);
+		UIHelper.SetSpriteGray(this.transform, "bk/star2/Sprite4", false);
+		UIHelper.SetSpriteGray(this.transform, "bk/star2/Sprite5", false);
 		UIHelper.SetActiveState(this.transform, "Button/Button3", true);
 	elseif myscore < 0 then
 		UIHelper.SetSpriteName(this.transform, "bk/title/win", "js2");
 		UIHelper.SetSpriteName(this.transform, "bk/title/belt", "js6");
 		UIHelper.SetSpriteName(this.transform, "bk/title/belt", "js6");
 		UIHelper.SetActiveState(this.transform, "bk/star1", false);
-		UIHelper.ChangeSpriteColor(this.transform, "bk/star2/Sprite1", true);
-		UIHelper.ChangeSpriteColor(this.transform, "bk/star2/Sprite2", true);
-		UIHelper.ChangeSpriteColor(this.transform, "bk/star2/Sprite3", true);
-		UIHelper.ChangeSpriteColor(this.transform, "bk/star2/Sprite4", true);
-		UIHelper.ChangeSpriteColor(this.transform, "bk/star2/Sprite5", true);
+		UIHelper.SetSpriteGray(this.transform, "bk/star2/Sprite1", true);
+		UIHelper.SetSpriteGray(this.transform, "bk/star2/Sprite2", true);
+		UIHelper.SetSpriteGray(this.transform, "bk/star2/Sprite3", true);
+		UIHelper.SetSpriteGray(this.transform, "bk/star2/Sprite4", true);
+		UIHelper.SetSpriteGray(this.transform, "bk/star2/Sprite5", true);
 	else
 		UIHelper.SetSpriteName(this.transform, "bk/title/win", "js1-1");
 		UIHelper.SetSpriteName(this.transform, "bk/title/belt", "js7");
 		UIHelper.SetSpriteName(this.transform, "bk/title/belt2", "js7");
 		UIHelper.SetActiveState(this.transform, "bk/star1", false);
-		UIHelper.ChangeSpriteColor(this.transform, "bk/star2/Sprite1", false);
-		UIHelper.ChangeSpriteColor(this.transform, "bk/star2/Sprite2", false);
-		UIHelper.ChangeSpriteColor(this.transform, "bk/star2/Sprite3", false);
-		UIHelper.ChangeSpriteColor(this.transform, "bk/star2/Sprite4", false);
-		UIHelper.ChangeSpriteColor(this.transform, "bk/star2/Sprite5", false);
+		UIHelper.SetSpriteGray(this.transform, "bk/star2/Sprite1", false);
+		UIHelper.SetSpriteGray(this.transform, "bk/star2/Sprite2", false);
+		UIHelper.SetSpriteGray(this.transform, "bk/star2/Sprite3", false);
+		UIHelper.SetSpriteGray(this.transform, "bk/star2/Sprite4", false);
+		UIHelper.SetSpriteGray(this.transform, "bk/star2/Sprite5", false);
 	end
 end
 
@@ -142,12 +143,13 @@ function UI_MJResult.SetJiangMa()
 	for i = 1, #MJScene.CurrentResultInfo.m_MaCardType do
 		local tempType = MJScene.CurrentResultInfo.m_MaCardType[i];
 		local tempNewObj = NGUITools.AddChild(tempParent.gameObject, tempCloneTrans.gameObject);
+		tempNewObj.name = tostring(i - 1);
 		tempNewObj.transform.localScale = tempCloneTrans.localScale;
 		UIHelper.SetSpriteName(tempNewObj.transform, "Sprite", MaJiangType.ToString(tempType));
 		tempNewObj:SetActive(true);
 	end
 	for i = 1, #MJScene.CurrentResultInfo.m_MaCardSign do
-		local tempClone = tempParent.GetChild(MJScene.CurrentResultInfo.m_MaCardSign[i]);
+		local tempClone = tempParent:Find(MJScene.CurrentResultInfo.m_MaCardSign[i]);
 		UIHelper.SetActiveState(tempClone, "Kuang", true);
 	end
 	local tempGrid = tempParent:GetComponent(typeof(UIGrid));
@@ -198,6 +200,8 @@ end
 
 -- 展示玩家信息
 function UI_MJResult.SetPlayerInfo()
+	local tempHuId = MJScene.CurrentResultInfo.m_huRoleid;
+	local tempFpId = MJScene.CurrentResultInfo.m_fpid;
 	local allRoleHandCards = MJScene.CurrentResultInfo.m_Data;
 	for i = 1, #allRoleHandCards do
 		local card = allRoleHandCards[i];
@@ -211,18 +215,29 @@ function UI_MJResult.SetPlayerInfo()
 			UIHelper.SetActiveState(tempTran, "Role/Master", true);
 		end
 		UIHelper.SetLabelText(tempTran, "Label (Name)", tempPlayer.Name);
-		UIHelper.SetLabelText(tempTran, "Label (ID)", "ID:" .. tostring(tempPlayer.ID));
+		UIHelper.SetLabelText(tempTran, "Label (ID)", "ID:" .. tostring(tempPlayer.DisplayID));
 		local tempScore = tempTran:FindChild("Score");
 		UIHelper.SetLabelText(tempScore, "Label (Gang)/Label", tostring(card.m_anGang + card.m_Gang));
 		UIHelper.SetLabelText(tempScore, "Label (Hu)/Label", tostring(card.m_Hufeng));
 		UIHelper.SetLabelText(tempScore, "Label (Jiang)/Label", tostring(card.m_reward));
 		UIHelper.SetLabelText(tempScore, "Label (Score)/Label", tostring(card.m_score));
 		UIHelper.SetLabelText(tempTran, "Label (Total)/Label", tostring(card.m_TotalScore));
+		
+		-- 设置头像
+		UIHelper.SetTexture(tempTran, "Role/Sprite (Photo)", tempPlayer.HeadURL);
+		
+		-- 设置胡牌放炮
+		if card.m_roleid == tempHuId then
+			UIHelper.SetSpriteName(tempTran, "Sprite (Type)", "js4");
+			UIHelper.SetActiveState(tempTran, "Sprite (Type)", true);
+		elseif card.m_roleid == tempFpId then
+			UIHelper.SetSpriteName(tempTran, "Sprite (Type)", "js5");
+			UIHelper.SetActiveState(tempTran, "Sprite (Type)", true);
+		end
+		
 		local tempGrid = tempScore:GetComponent(typeof(UIGrid));
 		tempGrid.enabled = true;
 		tempGrid:Reposition();
-		-- 设置头像
-		UIHelper.SetTexture(tempTran, "Role/Sprite (Photo)", tempPlayer.HeadURL);
 	end
 	local tempParentGrid = UIHelper.GetComponent(this.transform, "Grid", typeof(UIGrid));
 	tempParentGrid.enabled = true;
@@ -244,12 +259,6 @@ function UI_MJResult.OnClickShare(go)
 		UIManager.OpenWindow(UIName.UI_Share);
 		UI_Share.ShareWithScreenshot = true;
 	end);
-	-- Log.Info("sssssssssssssssssssssss");
-	-- this.transform.Find("");
-	-- if UI_MJResult.PlayTakeShotAnimationCO ~= nil then
-	-- 	coroutine.stop(UI_MJResult.PlayTakeShotAnimationCO);
-	-- end
-	-- UI_MJResult.PlayTakeShotAnimationCO = coroutine.start(UI_MJResult.PlayTakeShotAnimation);
 end
 
 function UI_MJResult.PlayTakeShotAnimation()

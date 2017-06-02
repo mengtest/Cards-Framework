@@ -64,6 +64,23 @@ function Utility.TrimString(str)
 	return(string.gsub(str, "^%s*(.-)%s*$", "%1"))
 end
 
+-- 字符串长度
+function Utility.LenString(str)
+	if str == nil or type(str) ~= "string" then return 0 end;
+	local length = 0;
+	for i in utf8.byte_indices(str) do			
+		local next = utf8.next(str, i)
+		local right = next and next - 1;
+		if right == nil then break end;
+		length = length + 1;
+	end
+	return length;
+end
+
+-- 
+function Utility.SubString(str)
+end
+
 function Utility.FormatTimeStamp(format, timestamp)
 	return os.date(format, timestamp);
 end

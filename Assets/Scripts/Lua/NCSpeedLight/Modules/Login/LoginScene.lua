@@ -142,7 +142,7 @@ function LoginScene.SaveSoundVolumeConfig()
 	obj.Sound = LoginScene.SoundVolume;
 	obj.Music = LoginScene.MusicVolume;
 	obj.MuteMusic = LoginScene.MuteMusic;
-	obj.MuteSound = LoginScene.MuteMusic;
+	obj.MuteSound = LoginScene.MuteSound;
 	local buffer = NetManager.EncodePB(PBMessage.CFG_SoundVolume, obj);
 	Utility.SaveFile(path, buffer);
 	Log.Info("SaveSoundVolumeConfig: save success @ " .. path);

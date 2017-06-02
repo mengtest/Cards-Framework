@@ -163,10 +163,10 @@ function MJPlayer:SetUI()
 	if self:IsHero() then
 		UI_MJHeroCtrl.Player = self;
 	end
-	self.UI:Initialize(self);
-	self:SetupUI();
-	Log.Info("SetUI: ID is " .. self.ID);
-	Log.Info("SetUI: UI is " .. self.UITransform.name);
+	UI_MJPlayer.Initialize(self.UI, self);
+	UI_MJPlayer.SetBaseInfo(self.UI);
+	UI_MJPlayer.SetEnterOrLeave(self.UI, true, false);
+	UI_MJPlayer.SetScore(self.UI);
 	Log.Info("SetUI: ServerPosition is " .. self.ServerPosition);
 	Log.Info("SetUI: UIPosition is " .. self.UIPosition);
 end
@@ -212,6 +212,13 @@ function MJPlayer:GetHeadTexture()
 	if self.UI == nil then return nil end;
 	local uiTexture = UIHelper.GetComponent(self.UI.transform, "Enter/Center/Icon/Sprite (Photo)", typeof(UITexture));
 	return uiTexture.mainTexture;
+end
+
+-- 获取显示的名字，...
+function MJPlayer:GetDisplayName()
+	local str = "test测试名字@#@";
+	local len = utf8.len(str);
+	
 end
 
 -- data= PBMessage.GMHandCard
@@ -377,34 +384,13 @@ function MJPlayer:AddTotalScore(score)
 	return self.TotalScore;
 end
 
--- 设置玩家UI
-function MJPlayer:SetupUI()
-	UIHelper.SetLabelText(self.UITransform, "Enter/Center/Label (Name)", self.Name);
-	UIHelper.SetTexture(self.UITransform, "Enter/Center/Icon/Sprite (Photo)", self.HeadURL);
-	-- 显示房主标识
-	if self:IsRoomMaster() then
-		UIHelper.SetActiveState(self.UITransform, "Enter/Center/Master", true);
-	end
-	self:SetupReady(self.IsReady == 1);
-	self:SetupEnterAndLeave(true, false);
+-- 对局开始
+function MJPlayer:OnRoundStart()
+	UI_MJPlayer.SetReady(self.UI, false);
 end
 
--- 设置Ready标识
-function MJPlayer:SetupReady(status)
-	Log.Info("SetupReady: " .. self:LogTag() .. "status is " .. tostring(status));
-	UIHelper.SetActiveState(self.UITransform, "Enter/Center/Label (Prepare)", status);
-end
-
--- 设置进入/离开状态 Enter/Leave
-function MJPlayer:SetupEnterAndLeave(...)
-	local args = {...};
-	UIHelper.SetActiveState(self.UITransform, "Enter", args[1]);
-	UIHelper.SetActiveState(self.UITransform, "Leave", args[2]);
-end
-
-function MJPlayer:StartGame()
-	Log.Info("StartGame: " .. self:LogTag());
-	self:SetupReady(false);
+-- 对局结束
+function MJPlayer:OnRoundEnd()
 end
 
 -- 自己的回合
@@ -424,10 +410,10 @@ function MJPlayer:MJOT_GetCard(data)
 			self:AddHandCard(card);
 		end
 		if HallScene.CurrentFBPlaybackMode == false then
-			self.UI:GetCard();
+			UI_MJPlayer.GetCard(self.UI);
 		end
 	end
-	self.UI:UpdateCards(false, true);
+	UI_MJPlayer.UpdateCards(self.UI, false, true);
 end
 
 --补牌

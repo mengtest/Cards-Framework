@@ -21,7 +21,7 @@ UI_MJPlayer = {
 	UICardWorldSpaceWidth = nil, -- UI牌在场景内的宽度
 	UICardHeadMargin = nil, -- UI牌距离操作牌的边距
 	UICardLastMargin = nil, -- UI最后一张牌的边距
-	HuCardPos = nil, -- 胡牌的位置
+	HuCardPos = nil, -- 胡的那张牌的位置
 	
 }
 
@@ -56,7 +56,7 @@ end
 
 -- 设置该玩家牌展示的相关参数
 function UI_MJPlayer:SetCardDisplayParam()
-	local isTwoPlayers = HallScene.CurrentFBType == MJRoomType.R_1;
+	local isTwoPlayers = HallScene.CurrentFBPlayerCount == 2;
 	if self.Player.UIPosition == 0 then
 		-- 手牌
 		self.HandCardRotation = Vector3.New(- 18, 90, 0);
@@ -82,6 +82,8 @@ function UI_MJPlayer:SetCardDisplayParam()
 		self.UICardLastMargin = 18;
 		self.UICardHeadMargin = 36;
 		self.UICardWorldSpaceWidth = 52;
+		-- 胡牌
+		self.HuCardPos = Vector3.New(7.63, 3.82, - 8.44);
 	elseif self.Player.UIPosition == 1 then
 		-- 手牌
 		self.HandCardRotation = Vector3.New(0, - 90, 0);
@@ -97,6 +99,8 @@ function UI_MJPlayer:SetCardDisplayParam()
 		self.OperateCardStartPos = self.HandCardStartPos - self.HandCardOffset * 3.5;
 		self.OperateCardOffset = Vector3.New(0, 0, MJDefine.TableCardX);
 		self.OperateCardRotation = Vector3.New(90, - 90, 0);
+		-- 胡牌
+		self.HuCardPos = Vector3.New(7.8, 3.67, 7.71);
 	elseif self.Player.UIPosition == 2 then
 		-- 手牌
 		self.HandCardRotation = Vector3.New(0, 180, 0);
@@ -117,6 +121,8 @@ function UI_MJPlayer:SetCardDisplayParam()
 		self.OperateCardStartPos = self.HandCardStartPos - self.HandCardOffset * 3.5;
 		self.OperateCardOffset = Vector3.New(- MJDefine.TableCardX, 0, 0);
 		self.OperateCardRotation = Vector3.New(90, 180, 0);
+		-- 胡牌
+		self.HuCardPos = Vector3.New(- 7.84, 3.67, 7.86);
 	elseif self.Player.UIPosition == 3 then
 		-- 手牌
 		self.HandCardRotation = Vector3.New(0, 90, 0);
@@ -131,12 +137,14 @@ function UI_MJPlayer:SetCardDisplayParam()
 		self.OperateCardStartPos = self.HandCardStartPos - self.HandCardOffset * 3.5;
 		self.OperateCardOffset = Vector3.New(0, 0, - MJDefine.TableCardX);
 		self.OperateCardRotation = Vector3.New(90, 90, 0);
+		-- 胡牌
+		self.HuCardPos = Vector3.New(- 8.1, 3.67, - 8.2);
 	else
 	end
 end
 
 function UI_MJPlayer:Reset()
-	self:PlayUIScaleAndDicePanelGrow(false);
+	self:PlayUIScale(false);
 end
 
 -- 出牌效果
@@ -189,10 +197,19 @@ function UI_MJPlayer:UpdateCards(sort, lastMargin, maxCount)
 			end
 			if sort then
 				table.sort(self.Player.HandCards, function(o1, o2)
-					return o1.m_Type < o2.m_Type;
+					local type1 = o1.m_Type;
+					local type2 = o2.m_Type;
+					if MJScene.IsJingCard(type1) then
+						type1 = - 100;
+					end
+					if MJScene.IsJingCard(type2) then
+						type2 = - 100;
+					end
+					return type1 < type2;
 				end);	
 			end
 			local cardGridPanel = self.transform:Find("Cards/CardGrid");
+			UIHelper.SetActiveState(self.transform, "Cards/CardGrid", true);
 			local gridCom = cardGridPanel:GetComponent(typeof(UIGrid));
 			local currentPos = self.UICardStartPos - Vector3.New(self.UICardWidth, 0, 0);
 			if self.Player.OperateTotalCount > 0 then
@@ -269,7 +286,15 @@ function UI_MJPlayer:UpdateCards(sort, lastMargin, maxCount)
 		self.Cards = {};
 		if sort then
 			table.sort(self.Player.HandCards, function(o1, o2)
-				return o1.m_Type < o2.m_Type;
+				local type1 = o1.m_Type;
+				local type2 = o2.m_Type;
+				if MJScene.IsJingCard(type1) then
+					type1 = - 100;
+				end
+				if MJScene.IsJingCard(type2) then
+					type2 = - 100;
+				end
+				return type1 < type2;
 			end);	
 		end
 		for i = 1, #self.Player.HandCards do
@@ -292,6 +317,59 @@ function UI_MJPlayer:UpdateCards(sort, lastMargin, maxCount)
 	end
 end
 
+-- 展示胡牌
+function UI_MJPlayer:PutHuCards(handCards, huCard)
+	if MJPlayer.IsHero(self.Player) then
+		UIHelper.SetActiveState(self.transform, "Cards/CardGrid", false);
+	else
+		UIHelper.SetActiveState(MJDeskCtrl.transform, "backCard/" .. self.transform.name, false);
+	end
+	-- 回放的牌
+	if self.Cards ~= nil then
+		for i = 1, #self.Cards do
+			local card = self.Cards[i];
+			card:Reset();
+		end
+	end
+	if huCard ~= nil then
+		local card = MJDeskCtrl.GetOneUnuseCard(0, huCard, self.Player.ID);
+		card:Show(self.HuCardPos, self.OperateCardRotation);
+		for i = 1, #handCards do
+			local cardType = handCards[i];
+			if cardType == huCard then
+				table.remove(handCards, i);
+				break;
+			end
+		end
+	end
+	table.sort(handCards, function(o1, o2)
+		local type1 = o1;
+		local type2 = o2;
+		if MJScene.IsJingCard(type1) then
+			type1 = - 100;
+		end
+		if MJScene.IsJingCard(type2) then
+			type2 = - 100;
+		end
+		return type1 < type2;
+	end);	
+	for i = 1, #handCards do
+		local cardType = handCards[i];
+		local card = MJDeskCtrl.GetOneUnuseCard(0, cardType, self.Player.ID);
+		local startPos = nil;
+		local factor = 0;
+		local operateCount = self.Player:GetOperateTotalCount();
+		if operateCount ~= 0 then
+			startPos = self.OperateCardStartPos;
+			factor = operateCount * 3 + i;
+		else
+			startPos = self.HandCardStartPos;
+			factor = i - 1;
+		end
+		local cardPos = startPos + self.OperateCardOffset * factor;
+		card:Show(cardPos, self.OperateCardRotation);
+	end
+end
 
 -- 放置吃的牌
 function UI_MJPlayer:PutChiCard(data)
@@ -486,13 +564,44 @@ function UI_MJPlayer:GetTableCardPos(varIndex)
 end
 
 -- 播放UI框的缩放,以及骰子面板的闪光效果
-function UI_MJPlayer:PlayUIScaleAndDicePanelGrow(status)
-	local scaleAnimation = self.transform:Find("Enter/Center"):GetComponent(typeof(TweenScale));
-	local name = MJPlayerSeatEnum.ToString(self.Player.ClientPosition);
-	MJDeskCtrl.PlayDicePanelGrowEffect(name, status);
+function UI_MJPlayer:PlayUIScale(status)
+	local scaleAnimation = UIHelper.GetComponent(self.transform, "Enter/Center", typeof(TweenScale));
 	scaleAnimation.enabled = status;
 end
 
+function UI_MJPlayer:PlayDicePanelGrow(status)
+	local name = MJPlayerSeatEnum.ToString(self.Player.ClientPosition);
+	MJDeskCtrl.PlayDicePanelGrowEffect(name, status);
+end
+
+-- 设置房主标识
+function UI_MJPlayer:SetMaster()
+	UIHelper.SetActiveState(self.transform, "Enter/Center/Master", MJPlayer.IsRoomMaster(self.Player));
+end
+
+-- 设置庄家的标识
 function UI_MJPlayer:SetBanker()
 	UIHelper.SetActiveState(self.transform, "Enter/Center/Banker", MJPlayer.IsBanker(self.Player));
+end
+
+-- 设置分数
+function UI_MJPlayer:SetScore()
+	UIHelper.SetLabelText(self.transform, "Enter/Center/LB_Score", self.Player.TotalScore);
+end
+
+-- 设置基本信息
+function UI_MJPlayer:SetBaseInfo()
+	UIHelper.SetLabelText(self.transform, "Enter/Center/Label (Name)", self.Player.Name);
+	UIHelper.SetTexture(self.transform, "Enter/Center/Icon/Sprite (Photo)", self.Player.HeadURL);
+end
+
+-- 设置进入/离开状态 Enter/Leave
+function UI_MJPlayer:SetEnterOrLeave(enter, leave)
+	UIHelper.SetActiveState(self.transform, "Enter", enter);
+	UIHelper.SetActiveState(self.transform, "Leave", leave);
+end
+
+-- 设置Ready标识
+function UI_MJPlayer:SetReady(status)
+	UIHelper.SetActiveState(self.transform, "Enter/Center/Label (Prepare)", status);
 end 

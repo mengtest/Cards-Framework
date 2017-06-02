@@ -46,6 +46,8 @@ function UI_MJDraw.InitBtnEvent()
 		UIManager.CloseWindow(UIName.UI_MJDraw);
 		if HallScene.CurrentFBPlaybackMode then
 			UI_MJPlayback.WaitReplay();
+		else
+			UI_MJBase.SetBackToResultButtonActive(true);
 		end
 	end);
 	UIHelper.SetButtonEvent(this.transform, "Buttom/Replay", function(obj)
@@ -78,7 +80,7 @@ function UI_MJDraw.SetPlayerInfo()
 			UIHelper.SetActiveState(tempTran, "Role/Master", true);
 		end
 		UIHelper.SetLabelText(tempTran, "Label (Name)", tempPlayer.Name);
-		UIHelper.SetLabelText(tempTran, "Label (ID)", "ID:" .. tostring(tempPlayer.ID));
+		UIHelper.SetLabelText(tempTran, "Label (ID)", "ID:" .. tostring(tempPlayer.DisplayID));
 		local tempScore = tempTran:FindChild("Score");
 		UIHelper.SetLabelText(tempScore, "Label (Gang)/Label", tostring(card.m_anGang + card.m_Gang));
 		UIHelper.SetLabelText(tempScore, "Label (Hu)/Label", tostring(card.m_Hufeng));

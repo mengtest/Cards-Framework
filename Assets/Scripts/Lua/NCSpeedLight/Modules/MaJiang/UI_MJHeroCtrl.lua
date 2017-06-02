@@ -74,10 +74,7 @@ function UI_MJHeroCtrl.OnDestroy()
 end
 
 function UI_MJHeroCtrl.Reset()
-	local cardGridTrans = this.transform:Find("Cards/CardGrid");
-	for i = 0, cardGridTrans.childCount - 1 do
-		cardGridTrans:GetChild(i).gameObject:SetActive(false);
-	end
+	UIHelper.SetActiveState(this.transform, "Cards/CardGrid", false);
 	if UI_MJHeroCtrl.DragingCardObj ~= nil then
 		UnityEngine.GameObject.Destroy(UI_MJHeroCtrl.DragingCardObj);
 	end
