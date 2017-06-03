@@ -67,9 +67,23 @@ public class Loom : MonoBehaviour
     {
         if (time != 0)
         {
-            lock (Current._delayed)
+            //int threadID = Thread.CurrentThread.ManagedThreadId;
+            //if (IsInMainThread(threadID) == false)
+            //{
+            //    QueueOnMainThread(() =>
+            //    {
+            //        lock (Current._delayed)
+            //        {
+            //            Current._delayed.Add(new DelayedQueueItem { time = Time.time + time, action = action });
+            //        }
+            //    });
+            //}
+            //else
             {
-                Current._delayed.Add(new DelayedQueueItem { time = Time.time + time, action = action });
+                lock (Current._delayed)
+                {
+                    Current._delayed.Add(new DelayedQueueItem { time = Time.time + time, action = action });
+                }
             }
         }
         else

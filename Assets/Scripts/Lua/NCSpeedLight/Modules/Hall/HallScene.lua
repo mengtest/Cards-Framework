@@ -49,7 +49,7 @@ function HallScene.Begin()
 	AudioManager.PlayMusic({BGMusic.Hall}, false);
 	HallScene.CurrentFBCloseTime = 300;
 	HallScene.RegisterNetEvent();
-	NCSpeedLight.InternalUI.Instance:CloseBG();
+	InternalUIManager.CloseBG();
 	UIManager.CloseAllWindows();
 	AssetManager.LoadScene(SceneName.HallScene);
 	UIManager.OpenWindow(UIName.UI_Hall);

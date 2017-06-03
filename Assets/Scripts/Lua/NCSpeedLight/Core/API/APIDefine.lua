@@ -11,6 +11,7 @@
 UIHelper = NCSpeedLight.UIHelper;
 Helper = NCSpeedLight.Helper;
 ClipboardUtils = NCSpeedLight.ClipboardUtils;
+InternalUIManager = NCSpeedLight.InternalUIManager;
 LuaComponent = NCSpeedLight.LuaComponent;
 Constants = NCSpeedLight.Constants;
 LuaManager = NCSpeedLight.LuaManager;

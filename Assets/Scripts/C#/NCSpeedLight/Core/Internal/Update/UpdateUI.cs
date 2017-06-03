@@ -11,13 +11,39 @@ namespace NCSpeedLight
     {
         private UIProgressBar progressBar;
         private UILabel labelTips;
-        public UpdateProcessor FileUpdate;
+        public FileDownloader fileDownloader;
+
+        private HttpListener jsonServerListener;
+        private HttpListener.Status jsonServerLastStatus;
+        private HttpListener.Status jsonServerCurrentStatus;
+
+        private HttpListener fileServerListener;
 
         private void Awake()
         {
-            FileUpdate = new UpdateProcessor(this);
+            fileDownloader = new FileDownloader(this);
             progressBar = UIHelper.GetComponent(transform, "Progress Bar", typeof(UIProgressBar)) as UIProgressBar;
             labelTips = UIHelper.GetComponent(transform, "Tips/Content", typeof(UILabel)) as UILabel;
+        }
+
+        private void OnGUI()
+        {
+            if (GUI.Button(new Rect(10, 10, 150, 30), "[JsonServer] HostError"))
+            {
+                jsonServerListener.SwitchStatus(HttpListener.Status.HostError, null);
+            }
+            if (GUI.Button(new Rect(10, 40, 150, 30), "[JsonServer] NetworkError"))
+            {
+                jsonServerListener.SwitchStatus(HttpListener.Status.NetworkError, null);
+            }
+            if (GUI.Button(new Rect(10, 90, 150, 30), "[FileServer] HostError"))
+            {
+                fileServerListener.SwitchStatus(HttpListener.Status.HostError, null);
+            }
+            if (GUI.Button(new Rect(10, 130, 150, 30), "[FileServer] NetworkError"))
+            {
+                fileServerListener.SwitchStatus(HttpListener.Status.NetworkError, null);
+            }
         }
 
         public void SetTips(string tips)
@@ -50,85 +76,115 @@ namespace NCSpeedLight
 
         public void StartUpdate()
         {
-            StartCoroutine(ProcessUpdate());
+            RequestJson();
         }
 
-        private IEnumerator ProcessUpdate()
+        private void RequestJson()
         {
-            SetTips("正在连接服务器...");
-            using (WWW www = new WWW(Constants.JSON_URL))
+            Helper.Log("RequestJson: request json @ " + Constants.JSON_URL);
+            jsonServerListener = new HttpListener(Constants.JSON_URL, 3, (HttpListener.Status last, HttpListener.Status current, WWW www) =>
             {
-                Helper.Log("UpdateUI.ProcessUpdate: request json @ " + Constants.JSON_URL);
-                yield return www;
-                if (string.IsNullOrEmpty(www.error) == false)
+                jsonServerLastStatus = last;
+                jsonServerCurrentStatus = current;
+
+                if (jsonServerCurrentStatus == HttpListener.Status.NetworkError)
                 {
-                    SetTips(www.error);
-                    yield break;
+                    SetTips("当前网络不可用,请检查设备是否连接至互联网");
                 }
-                else if (www.isDone == false)
+                else if (jsonServerCurrentStatus == HttpListener.Status.HostError)
                 {
-                    SetTips("Can not get json.");
-                    yield break;
+                    SetTips("服务器异常,重新连接中...");
                 }
-                else
+                else if (jsonServerCurrentStatus == HttpListener.Status.HostOK)
                 {
+                    jsonServerListener.Stop();
                     if (ParseJson(www.text) == false)
                     {
-                        SetTips("Parse json error.");
-                        yield break;
-                    }
-                }
-            }
-            if (Application.isEditor)
-            {
-                StartCoroutine(StartGame());
-            }
-            else
-            {
-                // 对比版本号
-                SetTips("正在检查更新...");
-                string[] version = Constants.NEWEST_VERSION.Split('.');
-                if (version.Length < 3)
-                {
-                    SetTips("Version code error: " + Constants.NEWEST_VERSION);
-                    yield break;
-                }
-
-                int majorVersion = 0;
-                int middleVersion = 0;
-                int miniorVersion = 0;
-                int.TryParse(version[0], out majorVersion);
-                int.TryParse(version[1], out middleVersion);
-                int.TryParse(version[2], out miniorVersion);
-                if (majorVersion != Constants.MAJOR_VERSION)
-                {
-                    InternalUI.Instance.OpenDialog(true, "版本更新", "发现新版本，请前往应用商店下载安装");
-                }
-                else
-                {
-                    Constants.MIDDLE_VERSION = middleVersion;
-                    Constants.MINIOR_VERSION = miniorVersion;
-                    if (Constants.FORCE_UPDATE)
-                    {
-                        yield return StartCoroutine(FileUpdate.UpdateAsset());
-                        yield return StartCoroutine(FileUpdate.UpdateScript());
-                        yield return StartCoroutine(StartGame());
+                        SetTips("数据解析异常");
                     }
                     else
                     {
-                        if (middleVersion != Constants.MIDDLE_VERSION)
-                        {
-                            yield return StartCoroutine(FileUpdate.UpdateAsset());
-                            yield return StartCoroutine(FileUpdate.UpdateScript());
-                        }
-                        else if (miniorVersion != Constants.MINIOR_VERSION)
-                        {
-                            yield return StartCoroutine(FileUpdate.UpdateScript());
-                        }
-                        yield return StartCoroutine(StartGame());
+                        CompareVersion();
                     }
                 }
+            });
+            jsonServerListener.Start();
+        }
+
+        private void CompareVersion()
+        {
+            SetTips("正在对比版本号...");
+            string[] version = Constants.NEWEST_VERSION.Split('.');
+            if (version.Length < 3)
+            {
+                SetTips("正在检查更新...");
             }
+            int majorVersion = 0;
+            int middleVersion = 0;
+            int miniorVersion = 0;
+            int.TryParse(version[0], out majorVersion);
+            int.TryParse(version[1], out middleVersion);
+            int.TryParse(version[2], out miniorVersion);
+            if (majorVersion != Constants.MAJOR_VERSION)
+            {
+                InternalUIManager.OpenConfirmDialog("发现新版本，点击确定打开浏览器下载", true, () => { Application.OpenURL(Constants.PKG_DOWNLOAD_URL); }, () => { Application.Quit(); });
+                SetTips("发现新版本");
+            }
+            else
+            {
+                StartCoroutine(UpdateFile(middleVersion, miniorVersion));
+            }
+        }
+
+        private IEnumerator UpdateFile(int middleVersion, int miniorVersion)
+        {
+            SetTips("正在检查更新...");
+            if (fileServerListener != null)
+            {
+                fileServerListener.Stop();
+            }
+            fileServerListener = new HttpListener(Constants.REMOTE_FILE_BUNDLE_ROOT, 3, (HttpListener.Status last, HttpListener.Status current, WWW www) =>
+            {
+                if (current == HttpListener.Status.NetworkError)
+                {
+                    SetTips("当前网络不可用,请检查设备是否连接至互联网");
+                }
+                else if (current == HttpListener.Status.HostError)
+                {
+                    SetTips("服务器异常,重新连接中...");
+                }
+
+                if ((last == HttpListener.Status.HostError || last == HttpListener.Status.NetworkError) && current == HttpListener.Status.HostOK)
+                {
+                    StartCoroutine(UpdateFile(middleVersion, miniorVersion));
+                }
+            });
+            Constants.MIDDLE_VERSION = middleVersion;
+            Constants.MINIOR_VERSION = miniorVersion;
+            bool updateAsset = false;
+            bool updateScript = false;
+            if (Constants.FORCE_UPDATE)
+            {
+                updateAsset = true;
+                updateScript = true;
+            }
+            else
+            {
+                if (middleVersion != Constants.MIDDLE_VERSION)
+                {
+                    updateAsset = true;
+                    updateScript = true;
+                }
+                else if (miniorVersion != Constants.MINIOR_VERSION)
+                {
+                    updateAsset = false;
+                    updateScript = true;
+                }
+            }
+            fileDownloader.Start(updateAsset, updateScript);
+            yield return new WaitUntil(() => { return fileDownloader.IsDone; });
+            fileServerListener.Stop();
+            yield return StartCoroutine(StartGame());
         }
 
         private bool ParseJson(string json)
@@ -150,6 +206,7 @@ namespace NCSpeedLight
                     switch (kvp.Key)
                     {
                         case "xmlurl":
+                            Constants.REMOTE_FILE_BUNDLE_ROOT = kvp.Value + "/";
                             Constants.REMOTE_ASSET_BUNDLE_PATH = kvp.Value + "/" + Constants.PLATFORM_NAME + "/Assets/";
                             Constants.REMOTE_SCRIPT_BUNDLE_PATH = kvp.Value + "/" + Constants.PLATFORM_NAME + "/Scripts/";
                             //Constants.REMOTE_ASSET_BUNDLE_PATH = "http://192.168.1.155:9555/" + Constants.PLATFORM_NAME + "/Assets/";

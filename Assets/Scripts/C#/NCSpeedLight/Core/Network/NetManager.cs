@@ -45,9 +45,6 @@ namespace NCSpeedLight
                 DisconnectFrom(type);
             }
             NetConnection connection = new NetConnection(host, post, onConnected, onDisconnected, onReconnected, onErrorOccupied);
-            connection.OnConnected = onConnected;
-            connection.OnDisconnected = onDisconnected;
-            connection.OnReconnected = onReconnected;
             connection.Connect();
             m_Connections.Add(type, connection);
             return connection;

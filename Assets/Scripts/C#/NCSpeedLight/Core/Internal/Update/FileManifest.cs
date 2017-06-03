@@ -128,17 +128,26 @@ namespace NCSpeedLight
             if ((streaming && Application.platform == RuntimePlatform.Android) || usewww)
             {
                 string url = RemoteDirectory + Name;
-                WWW www = new WWW(url);
-                yield return www;
-                if (string.IsNullOrEmpty(www.error))
+                using (WWW www = new WWW(url))
                 {
-                    Load(www.bytes);
-                    yield return 0;
-                }
-                else
-                {
-                    Helper.LogError("FileManifest.Load: www error is " + www.error);
-                    yield return null;
+                    yield return www;
+                    if (string.IsNullOrEmpty(www.error) && www.isDone)
+                    {
+                        Load(www.bytes);
+                        yield return 0;
+                    }
+                    else
+                    {
+                        Helper.LogError("FileManifest.Load: www error is " + www.error);
+                        if (usewww)
+                        {
+                            yield break;
+                        }
+                        else
+                        {
+                            yield return null;
+                        }
+                    }
                 }
             }
             else

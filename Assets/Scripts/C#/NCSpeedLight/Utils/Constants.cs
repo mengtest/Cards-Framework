@@ -471,6 +471,14 @@ namespace NCSpeedLight
         }
 
         /// <summary>
+        /// 远端文件根目录
+        /// </summary>
+        public static string REMOTE_FILE_BUNDLE_ROOT
+        {
+            get; set;
+        }
+
+        /// <summary>
         /// 登录服务器地址
         /// </summary>
         public static string ACCOUNT_SERVER_IP

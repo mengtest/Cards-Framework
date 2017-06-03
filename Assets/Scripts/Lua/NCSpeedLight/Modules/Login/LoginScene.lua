@@ -49,8 +49,8 @@ function LoginScene.Initialize()
 		if UnityEngine.Application.isMobilePlatform then
 			LoginScene.OpenWechatAuthInfo();
 		end
-		NetManager.RegisterEvent(GameMessage.GM_RESTORE_CONNECT_FROM_OFFLINEHANG_FAILED, LoginScene.OnReturnReconnectToLogicServerFail);
-		NetManager.RegisterEvent(GameMessage.GM_RESTORE_CONNECT_FROM_OFFLINEHANG_OK, LoginScene.OnReturnReconnectToLogicServerSuccess);
+		NetManager.RegisterEvent(GameMessage.GM_RESTORE_CONNECT_FROM_OFFLINEHANG_FAILED, LoginScene.RecvReconnectToLogicServerFail);
+		NetManager.RegisterEvent(GameMessage.GM_RESTORE_CONNECT_FROM_OFFLINEHANG_OK, LoginScene.RecvReconnectToLogicServerSuccess);
 	end
 end
 
@@ -59,15 +59,15 @@ function LoginScene.Begin()
 		UIManager.CloseAllWindows();
 		NetManager.DisconnectAll();
 	end
-	NCSpeedLight.InternalUI.Instance:OpenBG();
+	InternalUIManager.OpenBG();
 	AssetManager.LoadScene(SceneName.LoginScene);
 	NetManager.RegisterEvent(GameMessage.GM_VERSION_RETURN, LoginScene.OnVerifyVersionReturn);
 	NetManager.RegisterEvent(GameMessage.GM_ACCOUNT_VERIFY_RETURN, LoginScene.OnLoginReturn);
-	NetManager.RegisterEvent(GameMessage.GM_ACCOUNT_CREATE_RETURN, LoginScene.OnRegisterReturn);
-	NetManager.RegisterEvent(GameMessage.GM_CHOOSE_AREA_RETURN, LoginScene.OnChoseAreaReturn);
-	NetManager.RegisterEvent(GameMessage.GM_ROLELIST_RETURN, LoginScene.OnAccountRolesReturn);
-	NetManager.RegisterEvent(GameMessage.GM_ROLE_LOGIN_RETURN, LoginScene.OnRoleLoginReturn);
-	NetManager.RegisterEvent(GameMessage.GM_ROLE_CREATE_RETURN, LoginScene.OnCreateRoleReturn);
+	NetManager.RegisterEvent(GameMessage.GM_ACCOUNT_CREATE_RETURN, LoginScene.RecvRegister);
+	NetManager.RegisterEvent(GameMessage.GM_CHOOSE_AREA_RETURN, LoginScene.RecvChooseArea);
+	NetManager.RegisterEvent(GameMessage.GM_ROLELIST_RETURN, LoginScene.RecvAccountRoles);
+	NetManager.RegisterEvent(GameMessage.GM_ROLE_LOGIN_RETURN, LoginScene.RecvRoleLogin);
+	NetManager.RegisterEvent(GameMessage.GM_ROLE_CREATE_RETURN, LoginScene.RecvCreateRole);
 	LoginScene.ConnnectLoginServer();
 end
 
@@ -77,11 +77,11 @@ end
 function LoginScene.End()
 	NetManager.UnregisterEvent(GameMessage.GM_VERSION_RETURN, LoginScene.OnVerifyVersionReturn);
 	NetManager.UnregisterEvent(GameMessage.GM_ACCOUNT_VERIFY_RETURN, LoginScene.OnLoginReturn);
-	NetManager.UnregisterEvent(GameMessage.GM_ACCOUNT_CREATE_RETURN, LoginScene.OnRegisterReturn);
-	NetManager.UnregisterEvent(GameMessage.GM_CHOOSE_AREA_RETURN, LoginScene.OnChoseAreaReturn);
-	NetManager.UnregisterEvent(GameMessage.GM_ROLELIST_RETURN, LoginScene.OnAccountRolesReturn);
-	NetManager.UnregisterEvent(GameMessage.GM_ROLE_LOGIN_RETURN, LoginScene.OnRoleLoginReturn);
-	NetManager.UnregisterEvent(GameMessage.GM_ROLE_CREATE_RETURN, LoginScene.OnCreateRoleReturn);
+	NetManager.UnregisterEvent(GameMessage.GM_ACCOUNT_CREATE_RETURN, LoginScene.RecvRegister);
+	NetManager.UnregisterEvent(GameMessage.GM_CHOOSE_AREA_RETURN, LoginScene.RecvChooseArea);
+	NetManager.UnregisterEvent(GameMessage.GM_ROLELIST_RETURN, LoginScene.RecvAccountRoles);
+	NetManager.UnregisterEvent(GameMessage.GM_ROLE_LOGIN_RETURN, LoginScene.RecvRoleLogin);
+	NetManager.UnregisterEvent(GameMessage.GM_ROLE_CREATE_RETURN, LoginScene.RecvCreateRole);
 end
 
 function LoginScene.OnApplicationPause(status)
@@ -351,7 +351,7 @@ function LoginScene.OnLoginReturn(evt)
 		-- 保存至本地
 		LoginScene.AddLoginRecord(LoginScene.currentAccount, LoginScene.currentPassword, obj.m_lastloginServerID);
 		-- 请求选区
-		LoginScene.RequestChooseArea();
+		LoginScene.ReqChooseArea();
 	elseif obj.m_Result == 1 then
 		UIManager.CloseWindow(UIName.UI_SceneLoad);
 		UIManager.OpenTipsDialog("账号密码错误");
@@ -375,26 +375,26 @@ function LoginScene.OnLoginReturn(evt)
 	end
 end
 
-function LoginScene.RequestRegister(account, password)
-	local msg =
+function LoginScene.ReqRegister(account, password)
+	local msg = {};
+	msg.m_AccountName = account;
+	msg.m_Password = password;
+	msg.accountLogInfo =
 	{
-		m_AccountName = account,
-		m_Password = password,
-		accountLogInfo =
-		{
-			platformID = 1,
-			ditchID = "2",
-			version = "1.0.1",
-			accountID = 99988254,
-			macAddress = "4D6MDJJ",
-			deviceUUID = "547SFHBSDFHESYHTRY",
-		}
-	}
+		platformID = 1,
+		ditchID = "2",
+		version = "1999",
+		accountID = 1999,
+		macAddress = "1999",
+		deviceUUID = "1999",
+	};
+	Log.Info("ReqRegister: account is " .. account);
 	NetManager.SendEventToLoginServer(GameMessage.GM_ACCOUNT_CREATE, PBMessage.GM_AccountCreate, msg)
 end
 
-function LoginScene.OnRegisterReturn(evt)
+function LoginScene.RecvRegister(evt)
 	local obj = NetManager.DecodeMsg(PBMessage.GM_AccountCreateReturn, evt)
+	Log.Info("RecvRegister: result is " .. obj.m_Result);
 	if obj.m_Result == 0 then
 		UIManager.OpenTipsDialog("创建成功")
 		-- 保存账号信息至本地
@@ -417,27 +417,27 @@ function LoginScene.OnRegisterReturn(evt)
 	end
 end
 
-function LoginScene.RequestChooseArea()
-	local msg = {
-		m_Account = LoginScene.Token.AccountID,
-		m_AreaID = LoginScene.Token.LatestArea,
-		m_RandStr = LoginScene.Token.AccountToken,
-	};
+function LoginScene.ReqChooseArea()
+	local msg = {};
+	msg.m_Account = LoginScene.Token.AccountID;
+	msg.m_AreaID = LoginScene.Token.LatestArea;
+	msg.m_RandStr = LoginScene.Token.AccountToken;
+	Log.Info("ReqChooseArea: account is " .. msg.m_Account);
 	NetManager.SendEventToLoginServer(GameMessage.GM_CHOOSE_AREA, PBMessage.GM_ChooseArea, msg);
 end
 
-function LoginScene.OnChoseAreaReturn(evt)
+function LoginScene.RecvChooseArea(evt)
 	local obj = NetManager.DecodeMsg(PBMessage.GM_ChooseAreaReturn, evt);
 	if obj.m_Result == 0 then
 		UIManager.CloseWindow(UIName.UI_MobileLogin);
-		Log.Info("OnChoseAreaReturn：选区成功,开始连接逻辑服务器");
-		Log.Info("OnChoseAreaReturn: logic server ip is " .. obj.m_ServerIP);
-		Log.Info("OnChoseAreaReturn: logic server port is " .. obj.m_PortNumber);
+		Log.Info("RecvChooseArea,开始连接逻辑服务器");
+		Log.Info("RecvChooseArea: logic server ip is " .. obj.m_ServerIP);
+		Log.Info("RecvChooseArea: logic server port is " .. obj.m_PortNumber);
 		LoginScene.LogicServerIP = obj.m_ServerIP;
 		LoginScene.LoginServerPort = obj.m_PortNumber;
-		NetManager.ConnectTo(ServerType.Logic, LoginScene.LogicServerIP, LoginScene.LoginServerPort, LoginScene.OnConnectLogicServer, LoginScene.OnDisconnectLogicServer, LoginScene.OnReconnectLogicServer, LoginScene.OnLogicServerErrorOccupied);
+		NetManager.ConnectTo(ServerType.Logic, LoginScene.LogicServerIP, LoginScene.LoginServerPort, LoginScene.OnConnectLogicServer, LoginScene.OnDisconnectLogicServer, LoginScene.OnReconnectLogicServer, LoginScene.OnLogicServerErrorOccurred);
 	else
-		Log.Info("OnChoseAreaReturn：选区失败");
+		Log.Info("RecvChooseArea：选区失败");
 		UIManager.CloseWindow(UIName.UI_SceneLoad);
 		UIManager.OpenTipsDialog("选区失败");
 	end
@@ -446,7 +446,7 @@ end
 function LoginScene.OnConnectLogicServer(connection)
 	Log.Info("OnConnectLogicServer: 成功连接至逻辑服务器");
 	UIManager.CloseProgressDialog();
-	LoginScene.RequestAccountRoles();
+	LoginScene.ReqAccountRoles();
 	if SceneManager.CurrentScene ~= nil then
 		SceneManager.CurrentScene.OnConnectToLogicServer();
 	end
@@ -462,23 +462,23 @@ end
 function LoginScene.OnReconnectLogicServer(connection)
 	UIManager.CloseProgressDialog();
 	Log.Info("OnReconnectLogicServer: 成功重连至逻辑服务器,耗时：" .. tostring(Time.realtimeSinceStartup - LoginScene.DisconnectTimeStamp) .. "s");
-	LoginScene.RequestReconnectToLogicServer();
+	LoginScene.ReqReconnectToLogicServer();
 end
 
-function LoginScene.OnLogicServerErrorOccupied(connection, error)
-	Log.Error("OnLogicServerErrorOccupied: error message: " .. error);
+function LoginScene.OnLogicServerErrorOccurred(connection, error)
+	Log.Error("OnLogicServerErrorOccurred: error message: " .. error);
 	if SceneManager.CurrentScene == HallScene or MJScene then
 		LoginScene.DisconnectTimeStamp = Time.realtimeSinceStartup;
 		local option = ProgressDialogOption.New();
 		option.Content = "网络异常，重新连接中...";
 		UIManager.OpenProgressDialog(option);
 		connection:Reconnect();
-		Log.Info("OnLogicServerErrorOccupied: 逻辑服务器异常,启动重连,时间戳：" .. tostring(LoginScene.DisconnectTimeStamp));
+		Log.Info("OnLogicServerErrorOccurred: 逻辑服务器异常,启动重连,时间戳：" .. tostring(LoginScene.DisconnectTimeStamp));
 	end
 end
 
-function LoginScene.RequestReconnectToLogicServer()
-	Log.Info("RequestReconnectToLogicServer");
+function LoginScene.ReqReconnectToLogicServer()
+	Log.Info("ReqReconnectToLogicServer");
 	local msg = {};
 	msg.m_AccountID = LoginScene.Token.AccountID;
 	msg.m_RoleID = LoginScene.Token.RoleID;
@@ -486,85 +486,77 @@ function LoginScene.RequestReconnectToLogicServer()
 	NetManager.SendEventToLogicServer(GameMessage.GM_RESTORE_CONNECT_FROM_OFFLINEHANG, PBMessage.GMOffLineReconnect, msg);
 end
 
-function LoginScene.OnReturnReconnectToLogicServerSuccess(evt)
-	Log.Info("OnReturnReconnectToLogicServerSuccess");
+function LoginScene.RecvReconnectToLogicServerSuccess(evt)
+	Log.Info("RecvReconnectToLogicServerSuccess");
 	if SceneManager.CurrentScene ~= nil then
 		SceneManager.CurrentScene.OnReconnectToLogicServer();
 	end
 end
 
-function LoginScene.OnReturnReconnectToLogicServerFail(evt)
-	Log.Info("OnReturnReconnectToLogicServerFail");
+function LoginScene.RecvReconnectToLogicServerFail(evt)
+	Log.Info("RecvReconnectToLogicServerFail");
 end
 
-function LoginScene.RequestAccountRoles()
-	local msg = {
-		m_accountID = LoginScene.Token.AccountID,
-		m_area = LoginScene.Token.LatestArea,
-	};
+function LoginScene.ReqAccountRoles()
+	local msg = {};
+	msg.m_accountID = LoginScene.Token.AccountID;
+	msg.m_area = LoginScene.Token.LatestArea;
+	Log.Info("ReqAccountRoles: account is " .. msg.m_accountID);
 	NetManager.SendEventToLogicServer(GameMessage.GM_ROLELIST_REQUEST, PBMessage.GMRoleListRequest, msg)
 end
 
-function LoginScene.OnAccountRolesReturn(evt)
+function LoginScene.RecvAccountRoles(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GMRoleListEx, evt);
+	Log.Info("RecvAccountRoles: roleid is " .. msg.m_roleid);
 	if msg.m_roleid ~= 0 then
 		LoginScene.Token.RoleID = msg.m_roleid;
-		LoginScene.RequestRoleLogin();
+		LoginScene.ReqRoleLogin();
 	else
-		LoginScene.RequestCreateRole();
+		LoginScene.ReqCreateRole();
 	end
 end
 
-function LoginScene.RequestRoleLogin()
-	local msg = {
-		m_AccountID = LoginScene.Token.AccountID,
-		m_RoleID = LoginScene.Token.RoleID,
-		m_randstr = LoginScene.Token.AccountToken,
-		m_info = nil,
-	};
+function LoginScene.ReqRoleLogin()
+	local msg = {};
+	msg.m_AccountID = LoginScene.Token.AccountID;
+	msg.m_RoleID = LoginScene.Token.RoleID;
+	msg.m_randstr = LoginScene.Token.AccountToken;
+	msg.m_info = nil;
+	Log.Info("ReqRoleLogin: account is " .. msg.m_AccountID);
 	NetManager.SendEventToLogicServer(GameMessage.GM_ROLE_LOGIN, PBMessage.GMRoleLogin, msg);
 end
 
-function LoginScene.OnRoleLoginReturn(evt)
+function LoginScene.RecvRoleLogin(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GM_FullRoleInfo, evt);
-	if msg ~= nil then
-		if msg.id > 0 then
-			Log.Info("OnRoleLoginReturn: role id is " .. msg.id .. ',name is ' .. msg.name);
-			Player.SetFullInfo(msg);
-			SceneManager.Goto(SceneName.HallScene);
-			-- HallScene.RequestPlayerInFb();
-		else
-			Log.Info("OnRoleLoginReturn: role login error caused by \' msg.id<=0\' ");
-			UIManager.CloseWindow(UIName.UI_SceneLoad);
-		end
+	if msg.id > 0 then
+		Log.Info("RecvRoleLogin: role id is " .. msg.id .. ',name is ' .. msg.name);
+		Player.SetFullInfo(msg);
+		SceneManager.Goto(SceneName.HallScene);
 	else
-		Log.Info("OnRoleLoginReturn: role login error caused by nil msg.");
+		Log.Error("RecvRoleLogin: role login error caused by 'msg.id<=0'.");
 		UIManager.CloseWindow(UIName.UI_SceneLoad);
 	end
 end
 
-function LoginScene.RequestCreateRole()
+function LoginScene.ReqCreateRole()
 	local msg = {};
 	msg.m_AccountID = LoginScene.Token.AccountID;
 	msg.m_info = nil;
 	msg.m_NickName = LoginScene.Token.AccountID;
 	msg.m_HeadPhotoUrl = "http://d.hiphotos.baidu.com/zhidao/pic/item/b8389b504fc2d562562d540ae51190ef76c66c34.jpg";
 	msg.m_sex = 1;
-	msg.m_UnionID = "10086";
+	msg.m_UnionID = "2000";
+	Log.Info("ReqCreateRole: account is " .. msg.m_AccountID);
 	NetManager.SendEventToLogicServer(GameMessage.GM_ROLE_CREATE, PBMessage.GMRoleCreate, msg);
 end
 
-function LoginScene.OnCreateRoleReturn(evt)
+function LoginScene.RecvCreateRole(evt)
 	local obj = NetManager.DecodeMsg(PBMessage.GMRoleCreateReturn, evt);
-	if obj ~= nil then
-		if obj.m_Result == 0 then
-			LoginScene.RequestRoleLogin();
-		else
-			UIManager.CloseWindow(UIName.UI_SceneLoad);
-			Log.Info("OnCreateRoleReturn: role create error , m_Result = " .. obj.m_Result);
-		end
+	Log.Info("RecvCreateRole: result is " .. obj.m_Result);
+	if obj.m_Result == 0 then
+		LoginScene.ReqRoleLogin();
 	else
 		UIManager.CloseWindow(UIName.UI_SceneLoad);
-		Log.Info("OnCreateRoleReturn: role create error caused by nil msg.");
+		Log.Error("RecvCreateRole: error result is " .. obj.m_Result);
 	end
 end 

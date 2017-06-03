@@ -33,9 +33,9 @@ end
 function UI_Hall.InitSelfInfo()
 	UIHelper.SetLabelText(this.transform, "left/RoleInfo/Info/Label (Name)", Player.Name);
 	UIHelper.SetLabelText(this.transform, "left/RoleInfo/Info/Label (ID)", "ID:" .. Player.DisplayID);
-	UIHelper.SetLabelText(this.transform, "left/RoleInfo/Info/Label (IP)", Player.FullInfo.name);
-	UIHelper.SetTexture(this.transform, "left/RoleInfo/Info/Sprite (Photo)", Player.FullInfo.headPhotoUrl);
-	UIHelper.SetLabelText(this.transform, "left/RoleInfo/Card/Label (Card)", Player.FullInfo.roomcard);
+	UIHelper.SetLabelText(this.transform, "left/RoleInfo/Info/Label (IP)", Player.Name);
+	UIHelper.SetTexture(this.transform, "left/RoleInfo/Info/Sprite (Photo)", Player.HeadUrl);
+	UIHelper.SetLabelText(this.transform, "left/RoleInfo/Card/Label (Card)", Player.RoomCard);
 end
 
 function UI_Hall.OnClickShare(go)

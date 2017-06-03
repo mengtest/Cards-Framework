@@ -12,12 +12,14 @@
 using System;
 using System.Net.Sockets;
 using System.Net;
+using UnityEngine;
+using System.Collections;
 
 namespace NCSpeedLight
 {
     public class NetConnection
     {
-        public enum CallbackType
+        enum CallbackType
         {
             OnConnected,
             OnDisconnected,
@@ -26,16 +28,21 @@ namespace NCSpeedLight
         }
 
         public delegate void StatusDelegate(NetConnection connection, object param);
-        public string Host;
-        public int Port;
-        public Socket Socket;
-        public string Error;
-        public float ReconnectInterval = 1f;
-        public byte[] Header = new byte[NetPacket.PACK_HEAD_SIZE];
-        public StatusDelegate OnConnected;
-        public StatusDelegate OnDisconnected;
-        public StatusDelegate OnReconnected;
-        public StatusDelegate OnErrorOccurred;
+
+        private string Host;
+        private int Port;
+        private Socket Socket;
+        private string Error;
+        private float ReconnectInterval = 1f;
+        private byte[] ReceiveHeader = new byte[NetPacket.PACK_HEAD_SIZE];
+
+        private bool SigReconnectOne = false;
+        private bool SigReconnecting = false;
+
+        private StatusDelegate OnConnected;
+        private StatusDelegate OnDisconnected;
+        private StatusDelegate OnReconnected;
+        private StatusDelegate OnErrorOccurred;
 
         public NetConnection(string host, int port, StatusDelegate onConnected, StatusDelegate onDisconnected, StatusDelegate onReconnected, StatusDelegate onErrorOccurred)
         {
@@ -73,13 +80,18 @@ namespace NCSpeedLight
             }
             catch (Exception e)
             {
-                ErrorOccurred(e.Message);
+                Error = e.Message;
+                ErrorOccurred();
             }
         }
 
         public void Reconnect()
         {
-            ExecuteReconnect();
+            if (SigReconnecting == false)
+            {
+                SigReconnecting = true;
+                Game.Instance.StartCoroutine(ProcessReconnect());
+            }
         }
 
         public void Disconnect()
@@ -91,20 +103,32 @@ namespace NCSpeedLight
                     Socket.Shutdown(SocketShutdown.Both);
                 }
                 Socket.Close();
+                Socket = null;
             }
             Callback(CallbackType.OnDisconnected);
         }
 
         public void Send(NetPacket packet)
         {
-            if (IsConnected)
+            if (Socket == null)
             {
-                Socket.BeginSend(packet.GetBuffer(), 0, packet.GetTotalSize(), SocketFlags.None, new AsyncCallback(SendCallback), this);
+                Error = "Can not send data,because socket is disposed.";
+                ErrorOccurred();
+                return;
             }
-            else
+            if (IsConnected == false)
             {
-                Helper.LogError("Can not send data,caused by not connected.");
+                Error = "Can not send data,because socket is not connected.";
+                ErrorOccurred();
+                return;
             }
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                Error = "Can not send data,because network is not reachable.";
+                ErrorOccurred();
+                return;
+            }
+            Socket.BeginSend(packet.GetBuffer(), 0, packet.GetTotalSize(), SocketFlags.None, new AsyncCallback(SendCallback), this);
         }
 
         private void Callback(CallbackType type, object param = null)
@@ -137,9 +161,8 @@ namespace NCSpeedLight
             });
         }
 
-        private void ErrorOccurred(string error)
+        private void ErrorOccurred()
         {
-            Error = error;
             if (Socket != null)
             {
                 if (IsConnected)
@@ -147,31 +170,40 @@ namespace NCSpeedLight
                     Socket.Shutdown(SocketShutdown.Both);
                 }
                 Socket.Close();
+                Socket = null;
             }
-            Callback(CallbackType.OnErrorrOccurred, error);
+            Helper.LogError("NetConnection.ErrorOccurred: " + Error);
+            Callback(CallbackType.OnErrorrOccurred, Error);
         }
 
-        private void RepeatReconnect()
+        private IEnumerator ProcessReconnect()
         {
-            Loom.QueueOnMainThread(() =>
+            while (IsConnected == false)
             {
-                ExecuteReconnect();
-            }, ReconnectInterval);
-        }
+                SigReconnectOne = false;
+                try
+                {
+                    IPAddress[] addresses = Dns.GetHostAddresses(Host);
+                    IPEndPoint remoteEP = new IPEndPoint(addresses[0], Port);
+                    Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                    IAsyncResult ret = Socket.BeginConnect(remoteEP, ReconnectCallback, this);
+                }
+                catch
+                {
 
-        private void ExecuteReconnect()
-        {
-            try
-            {
-                IPAddress[] addresses = Dns.GetHostAddresses(Host);
-                IPEndPoint remoteEP = new IPEndPoint(addresses[0], Port);
-                Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                Socket.BeginConnect(remoteEP, ReconnectCallback, this);
+                }
+                yield return new WaitWhile(() => { return SigReconnectOne; });
+                if (IsConnected)
+                {
+                    SigReconnecting = false;
+                    Game.Instance.StopCoroutine(ProcessReconnect());
+                }
+                else
+                {
+                    yield return new WaitForSeconds(ReconnectInterval);
+                }
             }
-            catch
-            {
-                RepeatReconnect();
-            }
+
         }
 
         private void ConnectCallback(IAsyncResult result)
@@ -180,11 +212,12 @@ namespace NCSpeedLight
             {
                 Socket.EndConnect(result);
                 Callback(CallbackType.OnConnected);
-                StartReceivePacket();
+                StartReceive();
             }
             catch (Exception e)
             {
-                ErrorOccurred(e.Message);
+                Error = e.Message;
+                ErrorOccurred();
             }
         }
 
@@ -194,86 +227,58 @@ namespace NCSpeedLight
             {
                 Socket.EndConnect(result);
                 Callback(CallbackType.OnReconnected);
-                StartReceivePacket();
+                StartReceive();
             }
             catch
             {
-                RepeatReconnect();
             }
+            SigReconnectOne = true;
         }
 
-        private void StartReceivePacket()
+        private void StartReceive()
         {
-            Socket.BeginReceive(Header, 0, Header.Length, SocketFlags.None, new AsyncCallback(ReceivePacketCallback), this);
+            Socket.BeginReceive(ReceiveHeader, 0, ReceiveHeader.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), this);
         }
 
-        private void StartReceivePacketBody(NetPacket packet, int offset, int size)
+        private void ReceiveCallback(IAsyncResult result)
         {
-            Socket.BeginReceive(packet.GetBody(), offset, size, SocketFlags.None, new AsyncCallback(ReceivePacketBodyCallback), packet);
-        }
-
-        private void ReceivePacketCallback(IAsyncResult result)
-        {
-            try
+            if (Socket != null)
             {
-                int bytesRead = Socket.EndReceive(result);
-                if (bytesRead == NetPacket.PACK_HEAD_SIZE)
+                try
                 {
-                    int id = BitConverter.ToInt32(Header, NetPacket.PACK_MESSAGEID_OFFSET);
-                    int packetSize = BitConverter.ToInt32(Header, NetPacket.PACK_LENGTH_OFFSET);
-                    int bodySize = packetSize - NetPacket.PACK_HEAD_SIZE;
-                    NetPacket packet = new NetPacket(id, bodySize);
-                    packet.SetHeader(Header);
-                    if (bodySize > 0)
+                    int bytesRead = Socket.EndReceive(result);
+                    if (bytesRead == NetPacket.PACK_HEAD_SIZE)
                     {
-                        bytesRead = Socket.Receive(packet.GetBody(), 0, packet.GetBodySize(), SocketFlags.None);
-                        while (bytesRead != packet.GetBodySize())
+                        int id = BitConverter.ToInt32(ReceiveHeader, NetPacket.PACK_MESSAGEID_OFFSET);
+                        int packetSize = BitConverter.ToInt32(ReceiveHeader, NetPacket.PACK_LENGTH_OFFSET);
+                        int bodySize = packetSize - NetPacket.PACK_HEAD_SIZE;
+                        NetPacket packet = new NetPacket(id, bodySize);
+                        packet.SetHeader(ReceiveHeader);
+                        if (bodySize > 0)
                         {
-                            bytesRead += Socket.Receive(packet.GetBody(), bytesRead, packet.GetBodySize() - bytesRead, SocketFlags.None);
+                            bytesRead = Socket.Receive(packet.GetBody(), 0, packet.GetBodySize(), SocketFlags.None);
+                            while (bytesRead != packet.GetBodySize())
+                            {
+                                bytesRead += Socket.Receive(packet.GetBody(), bytesRead, packet.GetBodySize() - bytesRead, SocketFlags.None);
+                            }
                         }
+                        StartReceive();
+                        Loom.QueueOnMainThread(() =>
+                        {
+                            NetManager.NotifyEvent(new Evt() { ID = packet.GetMessageID(), LuaParam = packet.GetBody() });
+                        });
                     }
-                    StartReceivePacket();
-                    Loom.QueueOnMainThread(() =>
+                    else
                     {
-                        NetManager.NotifyEvent(new Evt() { ID = packet.GetMessageID(), LuaParam = packet.GetBody() });
-                    });
+                        Error = "packet header read error,size is " + bytesRead;
+                        ErrorOccurred();
+                    }
                 }
-                else
+                catch (Exception e)
                 {
-                    string err = "packet header read error,size is " + bytesRead;
-                    ErrorOccurred(err);
+                    Error = e.Message;
+                    ErrorOccurred();
                 }
-            }
-            catch (Exception e)
-            {
-                ErrorOccurred(e.Message);
-            }
-        }
-
-        private void ReceivePacketBodyCallback(IAsyncResult result)
-        {
-            try
-            {
-                NetPacket packet = result.AsyncState as NetPacket;
-                int bytesRead = Socket.EndReceive(result);
-                if (bytesRead == packet.GetBodySize())
-                {
-                    StartReceivePacket();
-                    Loom.QueueOnMainThread(() =>
-                    {
-                        NetManager.NotifyEvent(new Evt() { ID = packet.GetMessageID(), LuaParam = packet.GetBody() });
-                    });
-                }
-                else
-                {
-                    string err = "bytes read(" + bytesRead + ") does not equal body size(" + packet.GetBodySize() + ")";
-                    Helper.LogError("NetConnection.ReceivePacketBodyCallback: error: " + err);
-                    ErrorOccurred(err);
-                }
-            }
-            catch (Exception e)
-            {
-                ErrorOccurred(e.Message);
             }
         }
 
@@ -285,8 +290,10 @@ namespace NCSpeedLight
             }
             catch (Exception e)
             {
-                ErrorOccurred(e.Message);
+                Error = e.Message;
+                ErrorOccurred();
             }
         }
+
     }
 }

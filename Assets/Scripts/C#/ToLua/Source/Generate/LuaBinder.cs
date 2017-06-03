@@ -184,7 +184,7 @@ public static class LuaBinder
 		NCSpeedLight_InvisiableOnTweenFinishWrap.Register(L);
 		NCSpeedLight_ScheduleHideWrap.Register(L);
 		NCSpeedLight_LuaComponentWrap.Register(L);
-		NCSpeedLight_InternalUIWrap.Register(L);
+		NCSpeedLight_InternalUIManagerWrap.Register(L);
 		NCSpeedLight_ScreenshotWrap.Register(L);
 		NCSpeedLight_ClipboardUtilsWrap.Register(L);
 		NCSpeedLight_EventManagerWrap.Register(L);

@@ -15,13 +15,13 @@ UI_Register = {
 
 local this = UI_Register;
 
--- Called by mono
+-- Called by mono.
 function UI_Register.Awake(go)
 	this.gameObject = go;
 	this.transform = go.transform;
 end
 
--- Use this for initialization
+-- Use this for initialization.
 function UI_Register.Start()
 	this.ipAccount = this.transform:Find("Input (account)"):GetComponent('UIInput');
 	this.ipPassword = this.transform:Find("Input (password)"):GetComponent('UIInput');
@@ -30,7 +30,7 @@ function UI_Register.Start()
 	UIHelper.SetButtonEvent(this.transform, 'Button (submit)', UI_Register.onClickSubmit)
 end
 
--- Use this for destruction
+-- Use this for destruction.
 function UI_Register.OnDestroy()
 	this.transform = nil;
 	this.gameObject = nil;
@@ -62,5 +62,5 @@ function UI_Register.onClickSubmit(go)
 	end
 	LoginScene.currentAccount = this.ipAccount.value;
 	LoginScene.currentPassword = this.ipPassword.value;
-	LoginScene.RequestRegister(this.ipAccount.value, this.ipPassword.value)
+	LoginScene.ReqRegister(this.ipAccount.value, this.ipPassword.value)
 end 

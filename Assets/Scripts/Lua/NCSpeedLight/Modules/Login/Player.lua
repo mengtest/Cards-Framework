@@ -5,19 +5,23 @@ Player =
 	ID = 0,
 	DisplayID = nil,
 	Name = nil,
+	HeadUrl = nil,
+	RoomCard = nil,
 	Address = nil,
 };
 
 -- 设置当前玩家的完整信息
 function Player.SetFullInfo(data)
-	Log.Info("SetFullInfo: id is " .. tostring(data.id));
+	Log.Info("SetFullInfo: id is " .. tostring(data.id) .. ",name is " .. tostring(data.name) .. ",nickname is " .. data.nickName .. ",roomcard is " .. data.roomcard .. ",headurl is " .. data.headPhotoUrl);
 	Player.FullInfo = data;
 	Player.ID = data.id;
-	Player.Name = Player.FullInfo.nickName;
+	Player.HeadUrl = data.headPhotoUrl;
+	Player.Name = data.nickName;
+	Player.RoomCard = data.roomcard;
 	if string.len(Player.Name) == 0 then
-		Player.Name = Player.FullInfo.name;
+		Player.Name = data.name;
 	end
-	Player.DisplayID = Player.FullInfo.name;
+	Player.DisplayID = data.name;
 	Player.RefreshAddress();
 end
 

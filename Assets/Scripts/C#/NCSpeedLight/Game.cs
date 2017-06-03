@@ -19,7 +19,6 @@ namespace NCSpeedLight
         public static Game Instance;
         public static EventManager GlobalEventProcessor = new EventManager();
 
-        public InternalUI InternalUI;
         public LuaFunction AwakeFunction;
         public LuaFunction UpdateFunction;
         public LuaFunction OnGUIFunction;
@@ -41,15 +40,15 @@ namespace NCSpeedLight
 
         private void Start()
         {
-            InternalUI.OpenBG();
-            InternalUI.OpenUpdate();
-            InternalUI.UpdateUI.StartUpdate();
+            InternalUIManager.OpenBG();
+            InternalUIManager.OpenUpdate();
+            InternalUIManager.Instance.UpdateUI.StartUpdate();
         }
 
         public void Launch()
         {
-            InternalUI.CloseDialog();
-            InternalUI.CloseUpdate();
+            InternalUIManager.CloseConfirmDialog();
+            InternalUIManager.CloseUpdate();
             isLuaOK = true;
             LuaManager.DoString("require 'NCSpeedLight.Game'");
             AwakeFunction = LuaManager.LuaState.GetFunction("Game.Awake");

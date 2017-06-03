@@ -157,7 +157,7 @@ public static class CustomSettings
 
          _GT(typeof(LuaComponent)),
 
-         _GT(typeof(InternalUI)),
+         _GT(typeof(InternalUIManager)),
          _GT(typeof(Screenshot)),
          _GT(typeof(ClipboardUtils)),
 #endregion
