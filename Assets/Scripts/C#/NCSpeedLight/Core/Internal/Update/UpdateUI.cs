@@ -11,39 +11,19 @@ namespace NCSpeedLight
     {
         private UIProgressBar progressBar;
         private UILabel labelTips;
-        public FileDownloader fileDownloader;
 
-        private HttpListener jsonServerListener;
-        private HttpListener.Status jsonServerLastStatus;
-        private HttpListener.Status jsonServerCurrentStatus;
-
-        private HttpListener fileServerListener;
+        [NonSerialized]
+        public FileDownloader FileDownloader;
+        [NonSerialized]
+        public HttpListener JsonServerListener;
+        [NonSerialized]
+        public HttpListener FileServerListener;
 
         private void Awake()
         {
-            fileDownloader = new FileDownloader(this);
+            FileDownloader = new FileDownloader(this);
             progressBar = UIHelper.GetComponent(transform, "Progress Bar", typeof(UIProgressBar)) as UIProgressBar;
             labelTips = UIHelper.GetComponent(transform, "Tips/Content", typeof(UILabel)) as UILabel;
-        }
-
-        private void OnGUI()
-        {
-            if (GUI.Button(new Rect(10, 10, 150, 30), "[JsonServer] HostError"))
-            {
-                jsonServerListener.SwitchStatus(HttpListener.Status.HostError, null);
-            }
-            if (GUI.Button(new Rect(10, 40, 150, 30), "[JsonServer] NetworkError"))
-            {
-                jsonServerListener.SwitchStatus(HttpListener.Status.NetworkError, null);
-            }
-            if (GUI.Button(new Rect(10, 90, 150, 30), "[FileServer] HostError"))
-            {
-                fileServerListener.SwitchStatus(HttpListener.Status.HostError, null);
-            }
-            if (GUI.Button(new Rect(10, 130, 150, 30), "[FileServer] NetworkError"))
-            {
-                fileServerListener.SwitchStatus(HttpListener.Status.NetworkError, null);
-            }
         }
 
         public void SetTips(string tips)
@@ -82,25 +62,22 @@ namespace NCSpeedLight
         private void RequestJson()
         {
             Helper.Log("RequestJson: request json @ " + Constants.JSON_URL);
-            jsonServerListener = new HttpListener(Constants.JSON_URL, 3, (HttpListener.Status last, HttpListener.Status current, WWW www) =>
+            JsonServerListener = new HttpListener(Constants.JSON_URL, 2, (HttpListener.Status last, HttpListener.Status current, WWW www) =>
             {
-                jsonServerLastStatus = last;
-                jsonServerCurrentStatus = current;
-
-                if (jsonServerCurrentStatus == HttpListener.Status.NetworkError)
+                if (current == HttpListener.Status.NetworkError)
                 {
                     SetTips("当前网络不可用,请检查设备是否连接至互联网");
                 }
-                else if (jsonServerCurrentStatus == HttpListener.Status.HostError)
+                else if (current == HttpListener.Status.HostError)
                 {
-                    SetTips("服务器异常,重新连接中...");
+                    SetTips("配置服务器异常,重新连接中");
                 }
-                else if (jsonServerCurrentStatus == HttpListener.Status.HostOK)
+                else if (current == HttpListener.Status.OK)
                 {
-                    jsonServerListener.Stop();
+                    JsonServerListener.Stop();
                     if (ParseJson(www.text) == false)
                     {
-                        SetTips("数据解析异常");
+                        SetTips("配置解析异常");
                     }
                     else
                     {
@@ -108,17 +85,13 @@ namespace NCSpeedLight
                     }
                 }
             });
-            jsonServerListener.Start();
+            JsonServerListener.Start();
         }
 
         private void CompareVersion()
         {
-            SetTips("正在对比版本号...");
+            SetTips("对比版本号");
             string[] version = Constants.NEWEST_VERSION.Split('.');
-            if (version.Length < 3)
-            {
-                SetTips("正在检查更新...");
-            }
             int majorVersion = 0;
             int middleVersion = 0;
             int miniorVersion = 0;
@@ -127,38 +100,27 @@ namespace NCSpeedLight
             int.TryParse(version[2], out miniorVersion);
             if (majorVersion != Constants.MAJOR_VERSION)
             {
-                InternalUIManager.OpenConfirmDialog("发现新版本，点击确定打开浏览器下载", true, () => { Application.OpenURL(Constants.PKG_DOWNLOAD_URL); }, () => { Application.Quit(); });
-                SetTips("发现新版本");
+                if (Application.platform == RuntimePlatform.IPhonePlayer)
+                {
+                    InternalUIManager.OpenConfirmDialog("发现新版本，请前往AppStore进行更新", false, null, null);
+                    SetTips("发现新版本，请前往AppStore进行更新");
+                }
+                else
+                {
+                    //Constants.APK_DOWNLOAD_URL = Constants.REMOTE_FILE_BUNDLE_ROOT + "PPHZ20170604_5.apk";
+                    //Constants.APK_SIZE = 18755859;
+                    InternalUIManager.OpenConfirmDialog("发现新版本，点击确定开始下载", true, () => { Loom.StartCR(UpdateAPK()); }, () => { Application.Quit(); });
+                }
             }
             else
             {
-                StartCoroutine(UpdateFile(middleVersion, miniorVersion));
+                Loom.StartCR(UpdateFile(middleVersion, miniorVersion));
             }
         }
 
         private IEnumerator UpdateFile(int middleVersion, int miniorVersion)
         {
-            SetTips("正在检查更新...");
-            if (fileServerListener != null)
-            {
-                fileServerListener.Stop();
-            }
-            fileServerListener = new HttpListener(Constants.REMOTE_FILE_BUNDLE_ROOT, 3, (HttpListener.Status last, HttpListener.Status current, WWW www) =>
-            {
-                if (current == HttpListener.Status.NetworkError)
-                {
-                    SetTips("当前网络不可用,请检查设备是否连接至互联网");
-                }
-                else if (current == HttpListener.Status.HostError)
-                {
-                    SetTips("服务器异常,重新连接中...");
-                }
-
-                if ((last == HttpListener.Status.HostError || last == HttpListener.Status.NetworkError) && current == HttpListener.Status.HostOK)
-                {
-                    StartCoroutine(UpdateFile(middleVersion, miniorVersion));
-                }
-            });
+            SetTips("检查更新");
             Constants.MIDDLE_VERSION = middleVersion;
             Constants.MINIOR_VERSION = miniorVersion;
             bool updateAsset = false;
@@ -181,12 +143,104 @@ namespace NCSpeedLight
                     updateScript = true;
                 }
             }
-            fileDownloader.Start(updateAsset, updateScript);
-            yield return new WaitUntil(() => { return fileDownloader.IsDone; });
-            fileServerListener.Stop();
-            yield return StartCoroutine(StartGame());
+            if (FileServerListener != null)
+            {
+                FileServerListener.Stop();
+            }
+            FileServerListener = new HttpListener(Constants.REMOTE_FILE_BUNDLE_ROOT, 2, (HttpListener.Status last, HttpListener.Status current, WWW www) =>
+             {
+                 Helper.Log("OnFileServerStatusChanged: timeframe is " + Time.frameCount + ",last is " + last + ",current is " + current);
+                 if (current == HttpListener.Status.NetworkError)
+                 {
+                     SetTips("当前网络不可用,请检查设备是否连接至互联网");
+                 }
+                 else if (current == HttpListener.Status.HostError)
+                 {
+                     SetTips("资源服务器异常,重新连接中");
+                 }
+                 if ((last == HttpListener.Status.HostError || last == HttpListener.Status.NetworkError || last == HttpListener.Status.None) && current == HttpListener.Status.OK)
+                 {
+                     FileDownloader.Start(updateAsset, updateScript);
+                 }
+             });
+            if (updateAsset || updateScript)
+            {
+                FileServerListener.Start();
+                yield return new WaitUntil(() => { return FileDownloader.IsDone && string.IsNullOrEmpty(FileDownloader.Error); });
+                FileServerListener.Stop();
+                yield return StartCoroutine(StartGame());
+            }
+            else
+            {
+                yield return StartCoroutine(StartGame());
+            }
         }
 
+        private IEnumerator UpdateAPK()
+        {
+            int downloadCount = 1;
+            while (downloadCount <= 3)
+            {
+                SetTips("正在下载安装包,请不要断开网络");
+                WWW www = new WWW(Constants.APK_DOWNLOAD_URL);
+                while (www.isDone == false)
+                {
+                    yield return new WaitForSeconds(0.1f);
+                    UpdateProgressBar((int)(Constants.APK_SIZE * www.progress), Constants.APK_SIZE);
+                }
+                yield return new WaitUntil(() => { return www.isDone; });
+                if (string.IsNullOrEmpty(www.error) == false)
+                {
+                    downloadCount++;
+                    yield return null;
+                }
+                else
+                {
+                    string directory = Path.GetDirectoryName(Constants.APK_FILE);
+                    if (Directory.Exists(directory) == false)
+                    {
+                        Directory.CreateDirectory(directory);
+                    }
+                    File.WriteAllBytes(Constants.APK_FILE, www.bytes);
+                    downloadCount = 99;
+                    InstallAPK(Constants.APK_FILE);
+                    Application.Quit();
+                }
+            }
+            if (downloadCount != 99)
+            {
+                InternalUIManager.OpenConfirmDialog("更新失败,请稍后重试", false, () => { Application.Quit(); }, () => { });
+            }
+        }
+
+        private bool InstallAPK(string path)
+        {
+            try
+            {
+                var Intent = new AndroidJavaClass("android.content.Intent");
+                var ACTION_VIEW = Intent.GetStatic<string>("ACTION_VIEW");
+                var FLAG_ACTIVITY_NEW_TASK = Intent.GetStatic<int>("FLAG_ACTIVITY_NEW_TASK");
+                var intent = new AndroidJavaObject("android.content.Intent", ACTION_VIEW);
+
+                var file = new AndroidJavaObject("java.io.File", path);
+                var Uri = new AndroidJavaClass("android.net.Uri");
+                var uri = Uri.CallStatic<AndroidJavaObject>("fromFile", file);
+
+                intent.Call<AndroidJavaObject>("setDataAndType", uri, "application/vnd.android.package-archive");
+                intent.Call<AndroidJavaObject>("addFlags", FLAG_ACTIVITY_NEW_TASK);
+                intent.Call<AndroidJavaObject>("setClassName", "com.android.packageinstaller", "com.android.packageinstaller.PackageInstallerActivity");
+
+                var UnityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+                var currentActivity = UnityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+                currentActivity.Call("startActivity", intent);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Helper.LogError("InstallAPK: " + e.Message);
+                return false;
+            }
+        }
         private bool ParseJson(string json)
         {
             try
@@ -228,12 +282,12 @@ namespace NCSpeedLight
                             Constants.SHARE_ICON = kvp.Value;
                             break;
                         case "urldownload":
-                            Constants.PKG_DOWNLOAD_URL = kvp.Value;
+                            Constants.APK_DOWNLOAD_URL = kvp.Value;
                             break;
                         case "size":
                             int size = 0;
                             int.TryParse(kvp.Value, out size);
-                            Constants.PKG_SIZE = size;
+                            Constants.APK_SIZE = size;
                             break;
                         case "question":
                             Constants.FEEDBACK_URL = kvp.Value;
@@ -269,7 +323,7 @@ namespace NCSpeedLight
 
         private IEnumerator StartGame()
         {
-            SetTips("正在进入游戏...");
+            SetTips("正在进入游戏");
             yield return new WaitForSeconds(0.1f);
             LuaManager.Initialize();// 加载内置的bundle
             Game.Instance.Launch();

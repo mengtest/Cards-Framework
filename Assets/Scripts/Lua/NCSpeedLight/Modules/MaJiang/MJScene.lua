@@ -1212,6 +1212,7 @@ function MJScene.ReturnCastDice(evt)
 	UI_MJBase.SetCastDice(false);
 	UI_MJBase.StopOperateCountdown();
 	MJDeskCtrl.PlayDiceAnimation(MJScene.DiceNumbers[1], MJScene.DiceNumbers[2], nil);
+	AudioManager.PlaySound("MJ_touzi");
 	MJDeskCtrl.PlayPaidunAnimation(function()
 		StartCoroutine(MJScene.PlaySendCardAnimation);
 	end);
@@ -1234,18 +1235,21 @@ function MJScene.PlaySendCardAnimation()
 		end
 		UI_MJPlayer.UpdateCards(value.UI, false, false, 4);
 	end
+	AudioManager.PlaySound("MJ_SendCard");
 	WaitForSeconds(0.2);
 	
 	MJPaidunCtrl.InactiveFront(MJScene.GetPlayerCount() * 4);
 	for key, value in pairs(MJScene.Players) do
 		UI_MJPlayer.UpdateCards(value.UI, false, false, 8);
 	end
+	AudioManager.PlaySound("MJ_SendCard");
 	WaitForSeconds(0.2);
 	
 	MJPaidunCtrl.InactiveFront(MJScene.GetPlayerCount() * 4);
 	for key, value in pairs(MJScene.Players) do
 		UI_MJPlayer.UpdateCards(value.UI, false, false, 12);
 	end
+	AudioManager.PlaySound("MJ_SendCard");
 	WaitForSeconds(0.2);
 	
 	MJPaidunCtrl.InactiveFront(MJScene.GetPlayerCount() + 1);
@@ -1256,6 +1260,9 @@ function MJScene.PlaySendCardAnimation()
 			UI_MJPlayer.UpdateCards(value.UI, true, false);
 		end
 		MJPlayer.OnRoundStart(value);
+	end
+	if MJPlayer.IsBanker(MJPlayer.Hero) then
+		AudioManager.PlaySound("MJ_GrapCard");
 	end
 end
 

@@ -29,6 +29,7 @@ UIName = {
 	UI_MJSetting = "MaJiang/UI_MJSetting",
 	UI_MJPlayerInfo = "MaJiang/UI_MJPlayerInfo",
 	UI_MJStart = "MaJiang/UI_MJStart",
+	UI_MJPlayJing = "MaJiang/UI_MJPlayJing",
 }
 
 SceneName =

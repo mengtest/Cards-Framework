@@ -34,7 +34,6 @@ public class NCSpeedLight_HelperWrap
 		L.RegFunction("SetLabelText", SetLabelText);
 		L.RegFunction("SetSpriteName", SetSpriteName);
 		L.RegFunction("GetColorBgSpriteName", GetColorBgSpriteName);
-		L.RegFunction("CreateDirectory", CreateDirectory);
 		L.RegFunction("FilePathToMD5", FilePathToMD5);
 		L.RegFunction("CheckChinese", CheckChinese);
 		L.RegFunction("GetFileNameFromPath", GetFileNameFromPath);
@@ -60,6 +59,7 @@ public class NCSpeedLight_HelperWrap
 		L.RegFunction("OpenFile", OpenFile);
 		L.RegFunction("SaveFile", SaveFile);
 		L.RegFunction("DeleteFile", DeleteFile);
+		L.RegFunction("CreateDirectory", CreateDirectory);
 		L.RegFunction("LoadAssetFromBundle", LoadAssetFromBundle);
 		L.RegFunction("EncryptString", EncryptString);
 		L.RegFunction("DecryptString", DecryptString);
@@ -687,23 +687,6 @@ public class NCSpeedLight_HelperWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int CreateDirectory(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 1);
-			string arg0 = ToLua.CheckString(L, 1);
-			bool o = NCSpeedLight.Helper.CreateDirectory(arg0);
-			LuaDLL.lua_pushboolean(L, o);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int FilePathToMD5(IntPtr L)
 	{
 		try
@@ -1010,11 +993,26 @@ public class NCSpeedLight_HelperWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 1);
-			string arg0 = ToLua.CheckString(L, 1);
-			bool o = NCSpeedLight.Helper.DeleteDirectory(arg0);
-			LuaDLL.lua_pushboolean(L, o);
-			return 1;
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 1 && TypeChecker.CheckTypes(L, 1, typeof(string)))
+			{
+				string arg0 = ToLua.ToString(L, 1);
+				bool o = NCSpeedLight.Helper.DeleteDirectory(arg0);
+				LuaDLL.lua_pushboolean(L, o);
+				return 1;
+			}
+			else if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(string), typeof(bool)))
+			{
+				string arg0 = ToLua.ToString(L, 1);
+				bool arg1 = LuaDLL.lua_toboolean(L, 2);
+				NCSpeedLight.Helper.DeleteDirectory(arg0, arg1);
+				return 0;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: NCSpeedLight.Helper.DeleteDirectory");
+			}
 		}
 		catch(Exception e)
 		{
@@ -1133,6 +1131,22 @@ public class NCSpeedLight_HelperWrap
 			ToLua.CheckArgsCount(L, 1);
 			string arg0 = ToLua.CheckString(L, 1);
 			NCSpeedLight.Helper.DeleteFile(arg0);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int CreateDirectory(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			string arg0 = ToLua.CheckString(L, 1);
+			NCSpeedLight.Helper.CreateDirectory(arg0);
 			return 0;
 		}
 		catch(Exception e)

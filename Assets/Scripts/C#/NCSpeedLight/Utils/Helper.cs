@@ -566,21 +566,6 @@ namespace NCSpeedLight
             return tempTrans.GetComponent<T>();
         }
 
-        /// <summary>
-        /// 创建目录
-        /// </summary>
-        /// <param name="directoryPath"></param>
-        /// <returns></returns>
-        public static bool CreateDirectory(string directoryPath)
-        {
-            if (!Directory.Exists(directoryPath))
-            {
-                Directory.CreateDirectory(directoryPath);
-                return true;
-            }
-            return false;
-        }
-
 
         /// <summary>
         /// 根据文件路径生成MD5值
@@ -1141,6 +1126,19 @@ namespace NCSpeedLight
             {
                 File.Delete(path);
             }
+        }
+
+        public static void DeleteDirectory(string path, bool recursive = true)
+        {
+            if (Directory.Exists(path))
+            {
+                Directory.Delete(path, recursive);
+            }
+        }
+
+        public static void CreateDirectory(string path)
+        {
+            Directory.CreateDirectory(path);
         }
 
         /// <summary>

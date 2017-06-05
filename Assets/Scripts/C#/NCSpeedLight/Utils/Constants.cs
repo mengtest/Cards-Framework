@@ -505,7 +505,7 @@ namespace NCSpeedLight
         /// <summary>
         /// 安装包下载地址
         /// </summary>
-        public static string PKG_DOWNLOAD_URL
+        public static string APK_DOWNLOAD_URL
         {
             get; set;
         }
@@ -513,7 +513,7 @@ namespace NCSpeedLight
         /// <summary>
         /// 安装包大小
         /// </summary>
-        public static int PKG_SIZE
+        public static int APK_SIZE
         {
             get; set;
         }
@@ -606,6 +606,17 @@ namespace NCSpeedLight
             get
             {
                 return DATA_PATH + "Temp/SCREENSHOT.png";
+            }
+        }
+
+        /// <summary>
+        /// 安卓安装包路径
+        /// </summary>
+        public static string APK_FILE
+        {
+            get
+            {
+                return DATA_PATH + "Temp/Android.apk";
             }
         }
 

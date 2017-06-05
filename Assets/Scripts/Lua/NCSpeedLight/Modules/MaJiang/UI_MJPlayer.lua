@@ -220,6 +220,7 @@ function UI_MJPlayer:UpdateCards(sort, lastMargin, maxCount)
 				local card = self.Player.HandCards[i];
 				local cardObj = cardGridPanel:Find(tostring(i));
 				UIHelper.SetSpriteName(cardObj, "Sprite", MaJiangType.ToString(card.m_Type));
+				UIHelper.SetActiveState(cardObj, "Jing", MJScene.IsJingCard(card.m_Type));
 				local offset = nil;
 				if i == arrayCount and lastMargin == true then
 					offset = Vector3.New(self.UICardWidth + self.UICardLastMargin, 0, 0);

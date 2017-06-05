@@ -16,7 +16,8 @@ function UI_Setting.Start()
 	UIHelper.SetButtonEvent(this.transform, "Content/ExitLogin/Button", UI_Setting.OnClickExitLogin);
 	UIHelper.SetButtonEvent(this.transform, "Content/SettingButton/SL_Music/Status/Sprite", UI_Setting.OnClickMuteMusic);
 	UIHelper.SetButtonEvent(this.transform, "Content/SettingButton/SL_Sound/Status/Sprite", UI_Setting.OnClickMuteSound);
-	
+	UIHelper.SetLabelText(this.transform, "LB_Version", "版本号：" .. Constants.VERSION);
+	UIHelper.SetButtonEvent(this.transform, "LB_Version", UI_Setting.OnClickVersion);
 	-- 音乐设置
 	local musicSlider = UIHelper.GetComponent(this.transform, "Content/SettingButton/SL_Music", typeof(UISlider));
 	musicSlider.value = LoginScene.MusicVolume;
@@ -52,6 +53,26 @@ function UI_Setting.Start()
 	local soundEvtListener = UIHelper.GetComponent(this.transform, "Content/SettingButton/SL_Sound", typeof(UIEventListener));
 	soundEvtListener.onDrag = UI_Setting.OnSoundSliderDrag;
 	soundEvtListener.onClick = UI_Setting.OnSoundSliderClick;
+end
+
+function UI_Setting.OnDestroy()
+	this.transform = nil;
+	this.gameObject = nil;
+	LoginScene.SaveSoundVolumeConfig();
+end
+
+function UI_Setting.OnClickVersion()
+	local option = ConfirmDialogOption:New();
+	option.OnClickOK =
+	function()
+		Helper.DeleteDirectory(Constants.LOCAL_ASSET_BUNDLE_PATH, true);
+		Helper.DeleteDirectory(Constants.LOCAL_SCRIPT_BUNDLE_PATH, true);
+		UIManager.OpenTipsDialog("删除成功");
+	end;
+	option.DoubleButton = true;
+	option.Content = "是否删除资源文件？";
+	option.Title = "提  示";
+	UIManager.OpenConfirmDialog(option);
 end
 
 function UI_Setting.OnClickClose(go)
@@ -151,8 +172,3 @@ function UI_Setting.OnSoundSliderClick(go, delta)
 	AudioManager.SetCategoryVolume("UIMusic", LoginScene.SoundVolume);
 end
 
-function UI_Setting.OnDestroy()
-	this.transform = nil;
-	this.gameObject = nil;
-	LoginScene.SaveSoundVolumeConfig();
-end 

@@ -96,9 +96,9 @@ function HallScene.RegisterNetEvent()
 	NetManager.RegisterEvent(GameMessage.GM_NOTIFY_CHANGE_LONG64, HallScene.NotifyChangeSomething);
 	NetManager.RegisterEvent(GameMessage.GM_NOTIFY_CHANGE_int32, HallScene.NotifyChangeSomethingInt32);
 	NetManager.RegisterEvent(GameMessage.GM_KICKOFF_PLAYER, HallScene.NotifyRe_Register);
-	NetManager.RegisterEvent(GameMessage.GM_GET_CHAT_RETURN, HallScene.OnRecvAnnouncement); -- 公告信息
-	NetManager.RegisterEvent(GameMessage.GM_PLAYER_PLAYBACK_RETURN, HallScene.OnRecvPlayback); -- 回放信息
-	NetManager.RegisterEvent(GameMessage.GM_MAIL_REQUEST_RETURN, HallScene.ReceiveMail); -- 接收到邮件信息
+	NetManager.RegisterEvent(GameMessage.GM_GET_CHAT_RETURN, HallScene.RecvAnnouncement); -- 公告信息
+	NetManager.RegisterEvent(GameMessage.GM_PLAYER_PLAYBACK_RETURN, HallScene.RecvPlayback); -- 回放信息
+	NetManager.RegisterEvent(GameMessage.GM_MAIL_REQUEST_RETURN, HallScene.RecvMail); -- 接收到邮件信息
 	NetManager.RegisterEvent(GameMessage.GM_GET_ONE_MAIL, HallScene.ReceiveNewMail); -- 游戏内接收到新邮件信息
 	
 end
@@ -113,9 +113,9 @@ function HallScene.UnRegisterNetEvent()
 	NetManager.UnregisterEvent(GameMessage.GM_NOTIFY_CHANGE_LONG64, HallScene.NotifyChangeSomething);
 	NetManager.UnregisterEvent(GameMessage.GM_NOTIFY_CHANGE_int32, HallScene.NotifyChangeSomethingInt32);
 	NetManager.UnregisterEvent(GameMessage.GM_KICKOFF_PLAYER, HallScene.NotifyRe_Register);
-	NetManager.UnregisterEvent(GameMessage.GM_GET_CHAT_RETURN, HallScene.OnRecvAnnouncement); -- 公告信息
-	NetManager.UnregisterEvent(GameMessage.GM_PLAYER_PLAYBACK_RETURN, HallScene.OnRecvPlayback); -- 回放信息
-	NetManager.UnregisterEvent(GameMessage.GM_MAIL_REQUEST_RETURN, HallScene.ReceiveMail); -- 接收到邮件信息
+	NetManager.UnregisterEvent(GameMessage.GM_GET_CHAT_RETURN, HallScene.RecvAnnouncement); -- 公告信息
+	NetManager.UnregisterEvent(GameMessage.GM_PLAYER_PLAYBACK_RETURN, HallScene.RecvPlayback); -- 回放信息
+	NetManager.UnregisterEvent(GameMessage.GM_MAIL_REQUEST_RETURN, HallScene.RecvMail); -- 接收到邮件信息
 	NetManager.UnregisterEvent(GameMessage.GM_GET_ONE_MAIL, HallScene.ReceiveNewMail); -- 游戏内接收到新邮件信息
 end
 
@@ -260,14 +260,16 @@ function HallScene.ReturnPlayerInFb(evt)
 		HallScene.CurrentFBType = msg.m_FBTypeID;
 		HallScene.CurrentFBPlayway = msg.m_playWay;
 		HallScene.CurrentFBPlayerCount = msg.m_playerCount;
-		local option = ConfirmDialogOption.New("提示", "当前房间未解散，是否进入？", true,
-		function()
-			HallScene.CurrentFBNeedReconnect = true;
-			SceneManager.Goto(SceneName.MJScene);
-		end,
-		function()
-		end);
-		UIManager.OpenConfirmDialog(option);
+		HallScene.CurrentFBNeedReconnect = true;
+		SceneManager.Goto(SceneName.MJScene);
+		-- local option = ConfirmDialogOption.New("提示", "当前房间未解散，是否进入？", true,
+-- function()
+-- 	HallScene.CurrentFBNeedReconnect = true;
+-- 	SceneManager.Goto(SceneName.MJScene);
+-- end,
+-- function()
+-- end);
+-- UIManager.OpenConfirmDialog(option);
 	else
 		Log.Info("ReturnPlayerInFb: 玩家不在副本中");
 	end
@@ -333,13 +335,13 @@ function HallScene.NotifyRe_Register(evt)
 	Log.Info("NotifyRe_Register");
 end
 
-function HallScene.OnRecvAnnouncement(evt)
+function HallScene.RecvAnnouncement(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GM_GetChatInfo, evt);
 	if msg == false then
-		Log.Error("OnRecvAnnouncement: parse msg error," .. PBMessage.GM_GetChatInfo);
+		Log.Error("RecvAnnouncement: parse msg error," .. PBMessage.GM_GetChatInfo);
 		return;
 	end;
-	Log.Info("OnRecvAnnouncement: word is " .. msg.word .. ",repeat " .. tostring(msg.repeatTimes));
+	Log.Info("RecvAnnouncement: word is " .. msg.word .. ",repeat " .. tostring(msg.repeatTimes));
 	if msg.channel == 6 then
 		HallScene.Announcement = {};
 		HallScene.Announcement.Content = msg.word;
@@ -348,13 +350,13 @@ function HallScene.OnRecvAnnouncement(evt)
 	end
 end
 
-function HallScene.OnRecvPlayback(evt)
+function HallScene.RecvPlayback(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GM_PlayBack, evt);
 	if msg == false then
-		Log.Error("OnRecvPlayback: parse msg error," .. PBMessage.GM_PlayBack);
+		Log.Error("RecvPlayback: parse msg error," .. PBMessage.GM_PlayBack);
 		return;
 	end;
-	Log.Info("OnRecvPlayback:");
+	Log.Info("RecvPlayback.");
 	if msg.m_Result == 1 then
 		UIManager.OpenTipsDialog("无此回放");
 	else
@@ -364,10 +366,10 @@ function HallScene.OnRecvPlayback(evt)
 	end
 end
 
-function HallScene.ReceiveMail(evt)
+function HallScene.RecvMail(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GM_PlayerMailPack, evt);
 	if msg == false then
-		Log.Error("ReceiveMail: parse msg error," .. PBMessage.GM_PlayerMailPack);
+		Log.Error("RecvMail: parse msg error," .. PBMessage.GM_PlayerMailPack);
 		return;
 	end	
 	if #msg.mails == 0 then

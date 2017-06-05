@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 public class Loom : MonoBehaviour
 {
@@ -58,6 +59,16 @@ public class Loom : MonoBehaviour
 
     List<DelayedQueueItem> _currentDelayed = new List<DelayedQueueItem>();
 
+    public static Coroutine StartCR(IEnumerator cr)
+    {
+       return  _current.StartCoroutine(cr);
+    }
+
+    public static void StopCR(Coroutine cr_ret)
+    {
+        _current.StopCoroutine(cr_ret);
+    }
+
     public static bool IsInMainThread(int threadID)
     {
         return _mainThreadID == threadID;
@@ -67,23 +78,9 @@ public class Loom : MonoBehaviour
     {
         if (time != 0)
         {
-            //int threadID = Thread.CurrentThread.ManagedThreadId;
-            //if (IsInMainThread(threadID) == false)
-            //{
-            //    QueueOnMainThread(() =>
-            //    {
-            //        lock (Current._delayed)
-            //        {
-            //            Current._delayed.Add(new DelayedQueueItem { time = Time.time + time, action = action });
-            //        }
-            //    });
-            //}
-            //else
+            lock (Current._delayed)
             {
-                lock (Current._delayed)
-                {
-                    Current._delayed.Add(new DelayedQueueItem { time = Time.time + time, action = action });
-                }
+                Current._delayed.Add(new DelayedQueueItem { time = Time.time + time, action = action });
             }
         }
         else

@@ -207,6 +207,11 @@ end
 -- 播放骰子面板的东南西北闪光效果
 function MJDeskCtrl.PlayDicePanelGrowEffect(name, status)
 	UIHelper.SetActiveState(this.transform, "direction/Flicker/" .. name, status);
+	for key, value in pairs(MJPlayerSeatEnum) do
+		if key ~= name then
+			UIHelper.SetActiveState(this.transform, "direction/Flicker/" .. key, false);
+		end
+	end
 end
 
 function MJDeskCtrl.ShowArrow(position)

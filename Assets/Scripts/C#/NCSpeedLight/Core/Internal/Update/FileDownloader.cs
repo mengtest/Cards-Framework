@@ -17,10 +17,15 @@ namespace NCSpeedLight
 
         public UpdateUI UI;
 
-        private int TotalSize;
-        private int DownloadSize;
+        public int TotalSize;
+        public int DownloadSize;
 
         public bool IsDone
+        {
+            get; set;
+        }
+
+        public string Error
         {
             get; set;
         }
@@ -32,36 +37,48 @@ namespace NCSpeedLight
 
         public void Start(bool updateAsset, bool updateScript)
         {
-            IsDone = false;
-            UI.StartCoroutine(ProcessUpdate(updateAsset, updateScript));
+            Loom.StartCR(ProcessUpdate(updateAsset, updateScript));
         }
 
         private IEnumerator ProcessUpdate(bool updateAsset, bool updateScript)
         {
+            IsDone = false;
             // initialize asset manifest.
             StreamingAssetManifest = new FileManifest(Constants.LOCAL_ASSET_BUNDLE_PATH, Constants.REMOTE_ASSET_BUNDLE_PATH, Constants.ASSET_MANIFEST_FILE);
-            yield return UI.StartCoroutine(StreamingAssetManifest.Initialize(true, false));
+            yield return Loom.StartCR(StreamingAssetManifest.Initialize(true, false));
             LocalAssetManifest = new FileManifest(Constants.LOCAL_ASSET_BUNDLE_PATH, Constants.REMOTE_ASSET_BUNDLE_PATH, Constants.ASSET_MANIFEST_FILE);
-            yield return UI.StartCoroutine(LocalAssetManifest.Initialize(false, false));
+            yield return Loom.StartCR(LocalAssetManifest.Initialize(false, false));
             if (updateAsset)
             {
                 RemoteAssetManifest = new FileManifest(Constants.LOCAL_ASSET_BUNDLE_PATH, Constants.REMOTE_ASSET_BUNDLE_PATH, Constants.ASSET_MANIFEST_FILE);
-                yield return UI.StartCoroutine(RemoteAssetManifest.Initialize(false, true));
+                yield return Loom.StartCR(RemoteAssetManifest.Initialize(false, true));
+                Error = RemoteAssetManifest.Error;
+                if (string.IsNullOrEmpty(Error) == false)
+                {
+                    IsDone = true;
+                    yield break;
+                }
             }
             // initialize script manifest.
             StreamingScriptManifest = new FileManifest(Constants.LOCAL_SCRIPT_BUNDLE_PATH, Constants.REMOTE_SCRIPT_BUNDLE_PATH, Constants.SCRIPT_MANIFEST_FILE);
-            yield return UI.StartCoroutine(StreamingScriptManifest.Initialize(true, false));
+            yield return Loom.StartCR(StreamingScriptManifest.Initialize(true, false));
             LocalScriptManifest = new FileManifest(Constants.LOCAL_SCRIPT_BUNDLE_PATH, Constants.REMOTE_SCRIPT_BUNDLE_PATH, Constants.SCRIPT_MANIFEST_FILE);
-            yield return UI.StartCoroutine(LocalScriptManifest.Initialize(false, false));
+            yield return Loom.StartCR(LocalScriptManifest.Initialize(false, false));
             if (updateScript)
             {
                 RemoteScriptManifest = new FileManifest(Constants.LOCAL_SCRIPT_BUNDLE_PATH, Constants.REMOTE_SCRIPT_BUNDLE_PATH, Constants.SCRIPT_MANIFEST_FILE);
-                yield return UI.StartCoroutine(RemoteScriptManifest.Initialize(false, true));
+                yield return Loom.StartCR(RemoteScriptManifest.Initialize(false, true));
+                Error = RemoteScriptManifest.Error;
+                if (string.IsNullOrEmpty(Error) == false)
+                {
+                    IsDone = true;
+                    yield break;
+                }
             }
             // ensure local asset is ok.
             if (LocalAssetManifest.FileInfos.Count == 0)
             {
-                yield return UI.StartCoroutine(ExtractStreamingAsset());
+                yield return Loom.StartCR(ExtractStreamingAsset());
                 // reload asset manifest.
                 LocalAssetManifest = new FileManifest(Constants.LOCAL_ASSET_BUNDLE_PATH, Constants.REMOTE_ASSET_BUNDLE_PATH, Constants.ASSET_MANIFEST_FILE);
                 yield return LocalAssetManifest.Initialize(false, false);
@@ -69,7 +86,7 @@ namespace NCSpeedLight
             // ensure local script is ok.
             if (LocalScriptManifest.FileInfos.Count == 0)
             {
-                yield return UI.StartCoroutine(ExtractStreamingScript());
+                yield return Loom.StartCR(ExtractStreamingScript());
                 // reload script manifest.
                 LocalScriptManifest = new FileManifest(Constants.LOCAL_SCRIPT_BUNDLE_PATH, Constants.REMOTE_SCRIPT_BUNDLE_PATH, Constants.SCRIPT_MANIFEST_FILE);
                 yield return LocalScriptManifest.Initialize(false, false);
@@ -88,47 +105,72 @@ namespace NCSpeedLight
                     TotalSize += scriptDifferInfo.UpdateSize;
                 }
                 yield return UpdateAsset(assetDifferInfo);
+                if (string.IsNullOrEmpty(Error) == false)
+                {
+                    IsDone = true;
+                    yield break;
+                }
                 if (updateScript)
                 {
                     yield return UpdateScript(scriptDifferInfo);
+                    if (string.IsNullOrEmpty(Error) == false)
+                    {
+                        IsDone = true;
+                        yield break;
+                    }
                 }
             }
             else if (updateScript)
             {
-                FileManifest.DifferInfo differInfo = LocalScriptManifest.CompareWith(RemoteScriptManifest);
-                TotalSize += differInfo.UpdateSize;
-                yield return UpdateScript(differInfo);
+                FileManifest.DifferInfo scriptDifferInfo = LocalScriptManifest.CompareWith(RemoteScriptManifest);
+                TotalSize += scriptDifferInfo.UpdateSize;
+                yield return UpdateScript(scriptDifferInfo);
+                if (string.IsNullOrEmpty(Error) == false)
+                {
+                    IsDone = true;
+                    yield break;
+                }
             }
             IsDone = true;
         }
 
         public IEnumerator UpdateScript(FileManifest.DifferInfo differInfo)
         {
+            Error = string.Empty;
             if (differInfo.HasDiffer == false)
             {
                 Helper.Log("FileDownloader.UpdateScript: lcoal scripts is same with remote,no need to update.");
+                yield break;
             }
             else
             {
                 if (differInfo.NeedUpdate)
                 {
-                    UI.SetTips("正在下载必要的资源,请不要断开网络...");
+                    UI.SetTips("正在下载必要的资源,请不要断开网络");
                     UI.UpdateProgressBar(DownloadSize, TotalSize);
                 }
                 if (differInfo.Modified.Count > 0)
                 {
                     // 下载服务器差异的文件
-                    yield return UI.StartCoroutine(DownloadScript(differInfo.Modified, differInfo));
+                    yield return Loom.StartCR(DownloadScript(differInfo.Modified, differInfo));
+                }
+                if (string.IsNullOrEmpty(Error) == false)
+                {
+                    yield break;
                 }
                 if (differInfo.Added.Count > 0)
                 {
                     // 下载服务器新增的文件
-                    yield return UI.StartCoroutine(DownloadScript(differInfo.Added, differInfo));
+                    yield return Loom.StartCR(DownloadScript(differInfo.Added, differInfo));
+                }
+                if (string.IsNullOrEmpty(Error) == false)
+                {
+                    yield break;
                 }
                 if (differInfo.Deleted.Count > 0)
                 {
                     // 删除服务器不存在的文件
-                    yield return UI.StartCoroutine(DeleteOldScript(differInfo.Deleted));
+                    yield return Loom.StartCR(DeleteOldScript(differInfo.Deleted));
                 }
             }
             yield return 0;
@@ -188,6 +230,11 @@ namespace NCSpeedLight
             WWW www = null;
             for (int i = 0; i < fileInfos.Count; i++)
             {
+                if (UI.FileServerListener.CurrentStatus == HttpListener.Status.HostError || UI.FileServerListener.CurrentStatus == HttpListener.Status.NetworkError)
+                {
+                    Error = "ServerError";
+                    yield break;
+                }
                 FileManifest.FileInfo fileInfo = fileInfos[i];
                 string remoteFilePath = Constants.REMOTE_SCRIPT_BUNDLE_PATH + fileInfo.Name;
                 string localFilePath = Constants.LOCAL_SCRIPT_BUNDLE_PATH + fileInfo.Name;
@@ -203,6 +250,8 @@ namespace NCSpeedLight
                 }
                 else
                 {
+                    Error = www.error;
+                    www.Dispose();
                     yield break;
                 }
             }
@@ -241,34 +290,45 @@ namespace NCSpeedLight
 
         public IEnumerator UpdateAsset(FileManifest.DifferInfo differInfo)
         {
+            Error = string.Empty;
             if (differInfo.HasDiffer == false)
             {
                 Helper.Log("FileDownloader.UpdateAsset: lcoal assets is same with remote,no need to update.");
+                yield break;
             }
             else
             {
                 if (differInfo.NeedUpdate)
                 {
-                    UI.SetTips("正在下载必要的资源,请不要断开网络...");
+                    UI.SetTips("正在下载必要的资源,请不要断开网络");
                     UI.UpdateProgressBar(DownloadSize, TotalSize);
                 }
                 if (differInfo.Modified.Count > 0)
                 {
                     // 下载服务器差异的文件
-                    yield return UI.StartCoroutine(DownloadAsset(differInfo.Modified, differInfo));
+                    yield return Loom.StartCR(DownloadAsset(differInfo.Modified, differInfo));
+                }
+                if (string.IsNullOrEmpty(Error) == false)
+                {
+                    yield break;
                 }
                 if (differInfo.Added.Count > 0)
                 {
                     // 下载服务器新增的文件
-                    yield return UI.StartCoroutine(DownloadAsset(differInfo.Added, differInfo));
+                    yield return Loom.StartCR(DownloadAsset(differInfo.Added, differInfo));
+                }
+                if (string.IsNullOrEmpty(Error) == false)
+                {
+                    yield break;
                 }
                 if (differInfo.Deleted.Count > 0)
                 {
                     // 删除服务器不存在的文件
-                    yield return UI.StartCoroutine(DeleteOldAsset(differInfo.Deleted));
+                    yield return Loom.StartCR(DeleteOldAsset(differInfo.Deleted));
                 }
+                Error = string.Empty;
+                yield return 0;
             }
-            yield return 0;
         }
 
         private IEnumerator ExtractStreamingAsset()
@@ -326,6 +386,11 @@ namespace NCSpeedLight
             WWW www = null;
             for (int i = 0; i < fileInfos.Count; i++)
             {
+                if (UI.FileServerListener.CurrentStatus == HttpListener.Status.HostError || UI.FileServerListener.CurrentStatus == HttpListener.Status.NetworkError)
+                {
+                    Error = "ServerError";
+                    yield break;
+                }
                 FileManifest.FileInfo fileInfo = fileInfos[i];
                 string remoteFilePath = Constants.REMOTE_ASSET_BUNDLE_PATH + fileInfo.Name;
                 string localFilePath = Constants.LOCAL_ASSET_BUNDLE_PATH + fileInfo.Name;
@@ -341,6 +406,8 @@ namespace NCSpeedLight
                 }
                 else
                 {
+                    Error = www.error;
+                    www.Dispose();
                     yield break;
                 }
             }

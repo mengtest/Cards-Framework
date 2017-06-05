@@ -209,7 +209,7 @@ namespace NCSpeedLight
             ShareContent content = new ShareContent();
             content.SetTitle(Constants.SHARE_MOMENT_CONTENT);
             content.SetText(Constants.SHARE_CONTENT);
-            content.SetUrl(Constants.PKG_DOWNLOAD_URL + "?UID=" + Constants.WX_UNION_ID + "&");
+            content.SetUrl(Constants.APK_DOWNLOAD_URL + "?UID=" + Constants.WX_UNION_ID + "&");
             content.SetImageUrl(Constants.SHARE_ICON);
             content.SetShareType(ContentType.Webpage);
             content.SetShareContentCustomize(PlatformType.WeChatMoments, content);
@@ -222,7 +222,7 @@ namespace NCSpeedLight
             ShareContent content = new ShareContent();
             content.SetTitle("立刻加入雀友红中麻将");
             content.SetText(Constants.SHARE_CONTENT);
-            content.SetUrl(Constants.PKG_DOWNLOAD_URL + "?UID=" + Constants.WX_UNION_ID + "&");
+            content.SetUrl(Constants.APK_DOWNLOAD_URL + "?UID=" + Constants.WX_UNION_ID + "&");
             content.SetImageUrl(Constants.SHARE_ICON);
             content.SetShareType(ContentType.Webpage);
             content.SetShareContentCustomize(PlatformType.WeChat, content);
@@ -235,7 +235,7 @@ namespace NCSpeedLight
             ShareContent content = new ShareContent();
             content.SetTitle("立刻加入雀友红中麻将");
             content.SetText(Constants.SHARE_CONTENT);
-            content.SetUrl(Constants.PKG_DOWNLOAD_URL + "?UID=" + Constants.WX_UNION_ID + "&");
+            content.SetUrl(Constants.APK_DOWNLOAD_URL + "?UID=" + Constants.WX_UNION_ID + "&");
             content.SetImagePath(Constants.SCREEN_SHOT_FILE);
             content.SetShareType(ContentType.Image);
             content.SetShareContentCustomize(PlatformType.WeChat, content);
@@ -248,7 +248,7 @@ namespace NCSpeedLight
             ShareContent content = new ShareContent();
             content.SetTitle(Constants.SHARE_MOMENT_CONTENT);
             content.SetText(Constants.SHARE_CONTENT);
-            content.SetUrl(Constants.PKG_DOWNLOAD_URL + "?UID=" + Constants.WX_UNION_ID + "&");
+            content.SetUrl(Constants.APK_DOWNLOAD_URL + "?UID=" + Constants.WX_UNION_ID + "&");
             content.SetImagePath(Constants.SCREEN_SHOT_FILE);
             content.SetShareType(ContentType.Image);
             content.SetShareContentCustomize(PlatformType.WeChatMoments, content);
@@ -262,7 +262,7 @@ namespace NCSpeedLight
             ShareContent content = new ShareContent();
             content.SetTitle(Constants.SHARE_TITLE + roomID);
             content.SetText(shareText);
-            content.SetUrl(Constants.PKG_DOWNLOAD_URL + "?UID=" + Constants.WX_UNION_ID + "&");
+            content.SetUrl(Constants.APK_DOWNLOAD_URL + "?UID=" + Constants.WX_UNION_ID + "&");
             content.SetImageUrl(Constants.SHARE_ICON);
             content.SetShareType(ContentType.Webpage);
             content.SetShareContentCustomize(PlatformType.WechatPlatform, content);

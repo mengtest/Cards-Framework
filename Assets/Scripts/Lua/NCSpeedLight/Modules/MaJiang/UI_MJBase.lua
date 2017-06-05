@@ -52,6 +52,8 @@ function UI_MJBase.Start()
 	UIHelper.SetButtonEvent(this.transform, "bottom/right/Operate/Pass", UI_MJBase.OnClickPass);
 	UIHelper.SetButtonEvent(this.transform, "Texture", UI_MJBase.OnClickOtherArea);
 	UIHelper.SetButtonEvent(this.transform, "center/Btn_BackToResult", UI_MJBase.OnClickBackToResult);
+	UIHelper.SetButtonEvent(this.transform, "PlayJing/Btn_Yes", UI_MJHeroCtrl.OnClickJingYes);
+	UIHelper.SetButtonEvent(this.transform, "PlayJing/Btn_No", UI_MJHeroCtrl.OnClickJingNo);
 	
 	-- 录音按钮相关事件监听逻辑
 	local voiceBtnListener = UIHelper.GetComponent(this.transform, "bottom/right/Button (Voice)", typeof(UIEventListener));
@@ -98,6 +100,7 @@ function UI_MJBase.Reset()
 	UI_MJBase.SetupReadyAndInvite(false, false, false);
 	UI_MJBase.SetBackToResultButtonActive(false);
 	UIHelper.SetActiveState(this.transform, "center/Time", false);
+	UI_MJBase.SetPlayJingActive(false);
 	UI_MJHeroCtrl.Reset();
 end
 
@@ -229,6 +232,10 @@ end
 -- 设置回放控制面板
 function UI_MJBase.SetupPlaybackControl(status)
 	UIHelper.SetActiveState(this.transform, "center/ContrlPanel", status);
+end
+
+function UI_MJBase.SetPlayJingActive(status)
+	UIHelper.SetActiveState(this.transform, "PlayJing", status);
 end
 
 -- 回放模式
@@ -653,4 +660,5 @@ function UI_MJBase.OnClickBackToResult()
 	else
 		UIManager.OpenWindow(UIName.UI_MJResult);
 	end
-end 
+end
+

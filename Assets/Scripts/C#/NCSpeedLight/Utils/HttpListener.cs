@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using System.Net;
+using System.Text;
 using UnityEngine;
 
 namespace NCSpeedLight
@@ -8,7 +10,7 @@ namespace NCSpeedLight
         public enum Status
         {
             None = 0,
-            HostOK = 1,
+            OK = 1,
             NetworkError = 2,
             HostError = 3,
         }
@@ -17,9 +19,10 @@ namespace NCSpeedLight
 
         private StatusDelegate Handler;
         private string URL;
-        private Status LastStatus;
-        private Status CurrentStatus;
+        public Status LastStatus;
+        public Status CurrentStatus;
         private float Interval;
+        private Coroutine CR;
 
         public HttpListener(string url, float interval, StatusDelegate handler)
         {
@@ -32,12 +35,12 @@ namespace NCSpeedLight
 
         public void Start()
         {
-            Game.Instance.StartCoroutine(ProcessCheck());
+            CR = Loom.StartCR(ProcessCheck());
         }
 
         public void Stop()
         {
-            Game.Instance.StopCoroutine(ProcessCheck());
+            Loom.StopCR(CR);
         }
 
         private IEnumerator ProcessCheck()
@@ -51,16 +54,27 @@ namespace NCSpeedLight
                 }
                 else
                 {
+                    int elapseTime = 0;
                     using (WWW www = new WWW(URL))
                     {
-                        yield return www;
-                        if (www.isDone && string.IsNullOrEmpty(www.error))
+                        while (www.isDone == false)
                         {
-                            SwitchStatus(Status.HostOK, www);
+                            yield return new WaitForSeconds(0.1f);
+                            elapseTime++;
+                            if (elapseTime > 50) // time out. 
+                            {
+                                SwitchStatus(Status.HostError, null);
+                                yield return null;
+                            }
+                        }
+                        yield return new WaitUntil(() => { return www.isDone; });
+                        if (string.IsNullOrEmpty(www.error))
+                        {
+                            SwitchStatus(Status.OK, www);
                         }
                         else
                         {
-                            SwitchStatus(Status.HostError, www);
+                            SwitchStatus(Status.HostError, null);
                         }
                     }
                 }

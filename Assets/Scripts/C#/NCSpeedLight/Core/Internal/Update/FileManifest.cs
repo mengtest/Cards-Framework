@@ -24,6 +24,7 @@ namespace NCSpeedLight
             public string MD5;
             public int Size;
         }
+
         public class DifferInfo
         {
             public List<FileInfo> Added = new List<FileInfo>();
@@ -77,6 +78,7 @@ namespace NCSpeedLight
         public string RemoteDirectory;
         public string LocalDirectory;
         public string Name;
+        public string Error;
         public List<FileInfo> FileInfos = new List<FileInfo>();
 
         public FileManifest(string localDirectory, string remoteDirectory, string name)
@@ -111,10 +113,12 @@ namespace NCSpeedLight
 
         public void Initialize()
         {
+            Error = string.Empty;
             string path = LocalDirectory + Name;
             byte[] bytes = Helper.OpenFile(path);
             if (bytes == null)
             {
+                Error = "bytes is nil.";
                 return;
             }
             else
@@ -125,6 +129,7 @@ namespace NCSpeedLight
 
         public IEnumerator Initialize(bool streaming, bool usewww)
         {
+            Error = string.Empty;
             if ((streaming && Application.platform == RuntimePlatform.Android) || usewww)
             {
                 string url = RemoteDirectory + Name;
@@ -138,15 +143,9 @@ namespace NCSpeedLight
                     }
                     else
                     {
-                        Helper.LogError("FileManifest.Load: www error is " + www.error);
-                        if (usewww)
-                        {
-                            yield break;
-                        }
-                        else
-                        {
-                            yield return null;
-                        }
+                        Error = "www error is " + www.error;
+                        Helper.LogError("FileManifest.Load: " + Error);
+                        yield return null;
                     }
                 }
             }
@@ -156,6 +155,7 @@ namespace NCSpeedLight
                 byte[] bytes = Helper.OpenFile(path);
                 if (bytes == null)
                 {
+                    Error = "bytes is nil.";
                     yield return null;
                 }
                 else

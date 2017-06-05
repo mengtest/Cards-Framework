@@ -8,6 +8,8 @@ public class LoomWrap
 	{
 		L.BeginClass(typeof(Loom), typeof(UnityEngine.MonoBehaviour));
 		L.RegFunction("Initialize", Initialize);
+		L.RegFunction("StartCR", StartCR);
+		L.RegFunction("StopCR", StopCR);
 		L.RegFunction("IsInMainThread", IsInMainThread);
 		L.RegFunction("QueueOnMainThread", QueueOnMainThread);
 		L.RegFunction("RunAsync", RunAsync);
@@ -25,6 +27,39 @@ public class LoomWrap
 		{
 			ToLua.CheckArgsCount(L, 0);
 			Loom.Initialize();
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int StartCR(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			System.Collections.IEnumerator arg0 = (System.Collections.IEnumerator)ToLua.CheckObject(L, 1, typeof(System.Collections.IEnumerator));
+			UnityEngine.Coroutine o = Loom.StartCR(arg0);
+			ToLua.PushObject(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int StopCR(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UnityEngine.Coroutine arg0 = (UnityEngine.Coroutine)ToLua.CheckObject(L, 1, typeof(UnityEngine.Coroutine));
+			Loom.StopCR(arg0);
 			return 0;
 		}
 		catch(Exception e)
