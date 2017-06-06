@@ -64,11 +64,6 @@ namespace NCSpeedLight
             }
         }
 
-        public void RestartGame()
-        {
-
-        }
-
         private void Update()
         {
             if (isLuaOK && UpdateFunction != null)

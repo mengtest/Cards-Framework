@@ -241,9 +241,8 @@ namespace NCSpeedLight
         public static void Log(object str, UnityEngine.Object obj)
         {
 #if OPEN_LOG
-            string head = DateTime.Now.ToString();
-            str = head + " " + str;
-            Debug.Log(str, obj);
+            string logStr = StringFormat("[{0}][{1}-{2}] {3}", "Log.Info", DateTime.Now.ToString("HH:mm:ss"), Time.frameCount, str);
+            Debug.Log(logStr, obj);
 #endif
 
         }
@@ -251,36 +250,32 @@ namespace NCSpeedLight
         public static void LogError(object str)
         {
 #if OPEN_LOG
-            string head = DateTime.Now.ToString();
-            str = head + " " + str;
-            Debug.LogError(str);
+            string logStr = StringFormat("[{0}][{1}-{2}] {3}", "Log.Error", DateTime.Now.ToString("HH:mm:ss"), Time.frameCount, str);
+            Debug.LogError(logStr);
 #endif
         }
 
         public static void LogError(object str, UnityEngine.Object obj)
         {
 #if OPEN_LOG
-            string head = DateTime.Now.ToString();
-            str = head + " " + str;
-            Debug.LogError(str, obj);
+            string logStr = StringFormat("[{0}][{1}-{2}] {3}", "Log.Error", DateTime.Now.ToString("HH:mm:ss"), Time.frameCount, str);
+            Debug.LogError(logStr, obj);
 #endif
         }
 
         public static void LogWarning(object str)
         {
 #if OPEN_LOG
-            string head = DateTime.Now.ToString();
-            str = head + " " + str;
-            Debug.LogWarning(str);
+            string logStr = StringFormat("[{0}][{1}-{2}] {3}", "Log.Warning", DateTime.Now.ToString("HH:mm:ss"), Time.frameCount, str);
+            Debug.LogWarning(logStr);
 #endif
         }
 
         public static void LogWarning(object str, UnityEngine.Object obj)
         {
 #if OPEN_LOG
-            string head = DateTime.Now.ToString();
-            str = head + " " + str;
-            Debug.LogWarning(str, obj);
+            string logStr = StringFormat("[{0}][{1}-{2}] {3}", "Log.Warning", DateTime.Now.ToString("HH:mm:ss"), Time.frameCount, str);
+            Debug.LogWarning(logStr, obj);
 #endif
         }
 

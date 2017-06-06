@@ -156,7 +156,7 @@ namespace NCSpeedLight
         /// <param name="headurl"></param>
         public static void Login(string roleid, string rolename, string headurl)
         {
-            if (Application.isEditor == false)
+            if (Application.isMobilePlatform)
             {
 #if UNITY_IOS || UNITY_ANDROID
                 Instance.StartCoroutine(Instance.RequestToken(roleid, rolename, headurl));
@@ -171,13 +171,21 @@ namespace NCSpeedLight
         {
             if (Application.isMobilePlatform)
             {
-                Helper.ReleaseMemory(true, true, true);
-                RongIMAPI.GetInstance().StartRecordVoice(new RCVoiceCaptureCallback()
+                Helper.Log("RongCloudAdapter.StartRecordVoice");
+                try
                 {
-                    onVoiceCaptureFinished = onFinished,
-                    onVoiceVolume = onVolumeChanged,
-                    onVoiceCaptureError = onError
-                });
+                    Helper.ReleaseMemory(true, true, true);
+                    RongIMAPI.GetInstance().StartRecordVoice(new RCVoiceCaptureCallback()
+                    {
+                        onVoiceCaptureFinished = onFinished,
+                        onVoiceVolume = onVolumeChanged,
+                        onVoiceCaptureError = onError
+                    });
+                }
+                catch (Exception e)
+                {
+                    Helper.LogError("RongCloudAdapter.StartRecordVoice: exception is " + e.Message);
+                }
             }
         }
 
@@ -188,8 +196,16 @@ namespace NCSpeedLight
         {
             if (Application.isMobilePlatform)
             {
-                RongIMAPI.GetInstance().StopRecordVoice();
-                Helper.ReleaseMemory(true, true, true);
+                Helper.Log("RongCloudAdapter.StopRecordVoice");
+                try
+                {
+                    RongIMAPI.GetInstance().StopRecordVoice();
+                    Helper.ReleaseMemory(true, true, true);
+                }
+                catch (Exception e)
+                {
+                    Helper.LogError("RongCloudAdapter.StopRecordVoice: exception is " + e.Message);
+                }
             }
         }
 
@@ -202,18 +218,26 @@ namespace NCSpeedLight
         {
             if (Application.isMobilePlatform)
             {
-                RCAudioMessageContent msg = new RCAudioMessageContent(uri, duration);
-                RCSendMessageCallback cb = new RCSendMessageCallback();
-                cb.onSendSuccessCallback = () =>
+                Helper.Log("RongCloudAdapter.SendVoiceMessage");
+                try
                 {
-                    Helper.Log("RongCloudAdapter.SendVoiceMessage: send to " + targetID + " success.");
-                };
-                cb.onSendFailureCallback = (RCErrorCode code) =>
+                    RCAudioMessageContent msg = new RCAudioMessageContent(uri, duration);
+                    RCSendMessageCallback cb = new RCSendMessageCallback();
+                    cb.onSendSuccessCallback = () =>
+                    {
+                        Helper.Log("RongCloudAdapter.SendVoiceMessage: send to " + targetID + " success.");
+                    };
+                    cb.onSendFailureCallback = (RCErrorCode code) =>
+                    {
+                        Helper.Log("RongCloudAdapter.SendVoiceMessage: send to " + targetID + " fail.");
+                    };
+                    RongIMAPI.GetInstance().SendMessage(ConversationType.ConversationType_PRIVATE, targetID, msg, "", "", cb);
+                    Helper.ReleaseMemory(true, true, true);
+                }
+                catch (Exception e)
                 {
-                    Helper.Log("RongCloudAdapter.SendVoiceMessage: send to " + targetID + " fail.");
-                };
-                RongIMAPI.GetInstance().SendMessage(ConversationType.ConversationType_PRIVATE, targetID, msg, "", "", cb);
-                Helper.ReleaseMemory(true, true, true);
+                    Helper.LogError("RongCloudAdapter.SendVoiceMessage: exception is " + e.Message);
+                }
             }
         }
 
@@ -229,6 +253,7 @@ namespace NCSpeedLight
 #elif UNITY_ANDROID
         public static void PlayVoice(string file, float volume = 1f)
         {
+            Helper.Log("RongCloudAdapter.PlayVoice: file is " + file);
             SoundUtils.Call("Play", file, volume);
             Helper.ReleaseMemory(true, true, true);
         }
@@ -244,29 +269,37 @@ namespace NCSpeedLight
         public void OnRecivedMessage(RCMessage message)
         {
 #if UNITY_ANDROID || UNITY_IOS
-            RCDownloadMediaFileCallback callback = new RCDownloadMediaFileCallback
+            Helper.Log("RongCloudAdapter.OnRecivedMessage: begin download media.");
+            try
             {
-                onSuccess = (string localMediaPath) =>
+                RCDownloadMediaFileCallback callback = new RCDownloadMediaFileCallback
                 {
-                    Helper.Log("RongCloudAdapter.OnRecivedMessage.onSuccess: download media file to " + localMediaPath);
-                    Loom.QueueOnMainThread(() =>
+                    onSuccess = (string localMediaPath) =>
                     {
-                        RCAudioMessageContent tempMessage = message.content as RCAudioMessageContent;
-                        if (ReceiveVoiceCallback != null)
+                        Helper.Log("RongCloudAdapter.OnRecivedMessage.onSuccess: download media file to " + localMediaPath);
+                        Loom.QueueOnMainThread(() =>
                         {
-                            ReceiveVoiceCallback(message.senderUserId, localMediaPath, tempMessage.Duration);
-                        }
-                    });
-                },
-                onFailure = (RCErrorCode error) =>
-                {
-                    Helper.LogError("RongCloudAdapter.OnRecivedMessage.onFailure: download media file error,code is " + error);
-                }
-            };
-            Helper.ReleaseMemory(true, true, true);
-            RCAudioMessageContent voiceMsg = message.content as RCAudioMessageContent;
-            RongIMAPI.GetInstance().DownloadMedia(message.m_conversation.Type, message.m_conversation.TargetId,
-                MediaType.MediaType_AUDIO, voiceMsg.VoiceUri, callback);
+                            RCAudioMessageContent tempMessage = message.content as RCAudioMessageContent;
+                            if (ReceiveVoiceCallback != null)
+                            {
+                                ReceiveVoiceCallback(message.senderUserId, localMediaPath, tempMessage.Duration);
+                            }
+                        });
+                    },
+                    onFailure = (RCErrorCode error) =>
+                    {
+                        Helper.LogError("RongCloudAdapter.OnRecivedMessage.onFailure: download media file error,code is " + error);
+                    }
+                };
+                Helper.ReleaseMemory(true, true, true);
+                RCAudioMessageContent voiceMsg = message.content as RCAudioMessageContent;
+                RongIMAPI.GetInstance().DownloadMedia(message.m_conversation.Type, message.m_conversation.TargetId,
+                    MediaType.MediaType_AUDIO, voiceMsg.VoiceUri, callback);
+            }
+            catch (Exception e)
+            {
+                Helper.LogError("RongCloudAdapter.OnRecivedMessage: exception: " + e.Message);
+            }
 #endif
         }
 

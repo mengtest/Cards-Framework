@@ -26,6 +26,8 @@ UI_MJBase = {
 	IsRecording = false, -- 是否正在录音
 	RecordStartPos = Vector3.zero,
 	RecordSuccess = false,
+	RecordInterval = 0.8,
+	LastRecordTime = - 1,
 }
 
 local this = UI_MJBase;
@@ -325,33 +327,42 @@ function UI_MJBase.OnClickOtherArea(go)
 end
 
 function UI_MJBase.OnVoiceBtnPress(go, status)
-	-- Log.Info("OnVoiceBtnPress: status is " .. tostring(status));
+	if status then
+		local deltaTime = Time.GetTimestamp() - this.LastRecordTime;
+		if this.LastRecordTime ~= - 1 and deltaTime < this.RecordInterval then
+			-- UIManager.OpenTipsDialog("操作过于频繁");			
+			return;
+		end
+	else
+		if UI_MJBase.IsRecording then
+			this.LastRecordTime = Time.GetTimestamp();
+		end
+	end
 	UI_MJBase.IsRecording = status;
 	UIHelper.SetActiveState(this.transform, "RecordVoice/Record", UI_MJBase.IsRecording);
 	if UI_MJBase.IsRecording == true then
 		UI_MJBase.RecordSuccess = true;
 		RongCloudAdapter.StartRecordVoice(
 		function(isTimeout, voiceUri, duration)
-			if duration <= 0 then
-				UIManager.OpenTipsDialog("录音时间小于1s，无法发送");
-				return;		
-			end
-			Log.Info("OnVoiceBtnPress: 录音成功，文件路径为 " .. voiceUri .. ",长度为 " .. duration);
-			
-			if UI_MJBase.RecordSuccess then
-				-- 广播给其他人
-				for key, value in pairs(MJScene.Players) do
-					if value:IsHero() == false then
-						RongCloudAdapter.SendVoiceMessage(value.ID, voiceUri, duration);
-					end
+			Loom.QueueOnMainThread(
+			function()
+				if duration <= 0.5 then
+					UIManager.OpenTipsDialog("录音时间太短");
+					return;		
 				end
-				-- 同时播放自己的声音，确保在主线程里面调用，否则会闪退
-				MJScene.AddChatHistory(MJPlayer.Hero.ID, MJChatType.Voice, voiceUri, duration);
-				Loom.QueueOnMainThread(
-				function()
+				Log.Info("OnVoiceBtnPress: 录音成功，文件路径为 " .. voiceUri .. ",长度为 " .. duration);
+				if UI_MJBase.RecordSuccess then
+					-- 广播给其他人
+					for key, value in pairs(MJScene.Players) do
+						if value:IsHero() == false then
+							RongCloudAdapter.SendVoiceMessage(value.ID, voiceUri, duration);
+						end
+					end
+					-- 同时播放自己的声音，确保在主线程里面调用，否则会闪退
+					MJScene.AddChatHistory(MJPlayer.Hero.ID, MJChatType.Voice, voiceUri, duration);
 					UI_MJBase.HandleVoice(MJPlayer.Hero.ID, voiceUri, duration);
-				end, 0);
-			end
+				end
+			end, 0);
 		end,
 		nil,
 		function(errorCode)
