@@ -4,7 +4,6 @@
 		<service android:name="com.amap.api.location.APSService"></service>
 		<meta-data android:name="com.amap.api.v2.apikey" android:value="a1e77f815b544cbbae915698dbf333a1"></meta-data>
 	</application>
-	<uses-feature android:glEsVersion="0x20000"/>
 	<uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
 	<uses-feature android:name="android.hardware.touchscreen.multitouch" android:required="false"/>
 	<uses-feature android:name="android.hardware.touchscreen.multitouch.distinct" android:required="false"/>

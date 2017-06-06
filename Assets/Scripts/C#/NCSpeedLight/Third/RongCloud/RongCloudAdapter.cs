@@ -171,7 +171,7 @@ namespace NCSpeedLight
         {
             if (Application.isMobilePlatform)
             {
-                GC.Collect();
+                Helper.ReleaseMemory(true, true, true);
                 RongIMAPI.GetInstance().StartRecordVoice(new RCVoiceCaptureCallback()
                 {
                     onVoiceCaptureFinished = onFinished,
@@ -189,7 +189,7 @@ namespace NCSpeedLight
             if (Application.isMobilePlatform)
             {
                 RongIMAPI.GetInstance().StopRecordVoice();
-                GC.Collect();
+                Helper.ReleaseMemory(true, true, true);
             }
         }
 
@@ -213,7 +213,7 @@ namespace NCSpeedLight
                     Helper.Log("RongCloudAdapter.SendVoiceMessage: send to " + targetID + " fail.");
                 };
                 RongIMAPI.GetInstance().SendMessage(ConversationType.ConversationType_PRIVATE, targetID, msg, "", "", cb);
-                GC.Collect();
+                Helper.ReleaseMemory(true, true, true);
             }
         }
 
@@ -230,12 +230,14 @@ namespace NCSpeedLight
         public static void PlayVoice(string file, float volume = 1f)
         {
             SoundUtils.Call("Play", file, volume);
+            Helper.ReleaseMemory(true, true, true);
         }
 
 #else
         public static void PlayVoice(string file, float volume = 1f)
         {
             Helper.Log("RongCloudAdapter.PlayVoice: not support this platform");
+            Helper.ReleaseMemory(true, true, true);
         }
 #endif
         [LuaInterface.NoToLua]
@@ -261,6 +263,7 @@ namespace NCSpeedLight
                     Helper.LogError("RongCloudAdapter.OnRecivedMessage.onFailure: download media file error,code is " + error);
                 }
             };
+            Helper.ReleaseMemory(true, true, true);
             RCAudioMessageContent voiceMsg = message.content as RCAudioMessageContent;
             RongIMAPI.GetInstance().DownloadMedia(message.m_conversation.Type, message.m_conversation.TargetId,
                 MediaType.MediaType_AUDIO, voiceMsg.VoiceUri, callback);

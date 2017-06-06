@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography;
 using UnityEngine;
+using LuaInterface;
 
 namespace NCSpeedLight
 {
@@ -1159,6 +1160,7 @@ namespace NCSpeedLight
 
         private static byte[] RGBIV = { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
 
+        [NoToLua]
         public static string EncryptString(string encryptString, string key)
         {
             try
@@ -1179,6 +1181,7 @@ namespace NCSpeedLight
             }
         }
 
+        [NoToLua]
         public static string DecryptString(string decryptString, string key)
         {
             try
@@ -1196,6 +1199,22 @@ namespace NCSpeedLight
             catch
             {
                 return decryptString;
+            }
+        }
+
+        public static void ReleaseMemory(bool mono, bool luajit, bool resource)
+        {
+            if (mono)
+            {
+                GC.Collect();
+            }
+            if (luajit)
+            {
+                LuaManager.GC();
+            }
+            if (resource)
+            {
+                Resources.UnloadUnusedAssets();
             }
         }
     }

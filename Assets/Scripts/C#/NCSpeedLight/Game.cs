@@ -99,6 +99,7 @@ namespace NCSpeedLight
         }
         private void OnApplicationPause(bool status)
         {
+            Helper.ReleaseMemory(true, true, true);
             if (isLuaOK && OnApplicationPauseFunction != null)
             {
                 OnApplicationPauseFunction.Call(status);

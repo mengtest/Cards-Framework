@@ -90,6 +90,7 @@ namespace NCSpeedLight
             }
             if (needPlay || forcePlay)
             {
+                Helper.ReleaseMemory(true, true, true);
                 AudioController.SetMusicPlaylist(playlist);
                 AudioController.PlayMusicPlaylist();
             }
@@ -97,6 +98,7 @@ namespace NCSpeedLight
 
         public static void StopMusic(float fadeOut = 0f)
         {
+            Helper.ReleaseMemory(true, true, true);
             fadeOut = Mathf.Max(fadeOut, 0);
             AudioController.StopMusic(fadeOut);
         }
@@ -117,12 +119,14 @@ namespace NCSpeedLight
         {
             if (m_MuteSound == false)
             {
+                Helper.ReleaseMemory(true, true, true);
                 AudioController.Play(sound);
             }
         }
 
         public static void StopSound(string sound)
         {
+            Helper.ReleaseMemory(true, true, true);
             AudioController.Stop(sound);
         }
 

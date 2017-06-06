@@ -92,6 +92,7 @@ namespace NCSpeedLight
                 m_OnDestroyFunction.Dispose();
                 m_OnDestroyFunction = null;
             }
+            Helper.ReleaseMemory(true, true, true);
         }
 
         protected virtual void Awake()
