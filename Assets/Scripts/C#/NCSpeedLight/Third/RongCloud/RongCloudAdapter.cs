@@ -169,6 +169,7 @@ namespace NCSpeedLight
         /// </summary>
         public static void StartRecordVoice(RCVoiceCaptureCallback.VoiceCaptureFinishedCallback onFinished, RCVoiceCaptureCallback.VoiceCaptureVolumeCallback onVolumeChanged, RCVoiceCaptureCallback.VoiceCaptureErrorCallback onError)
         {
+#if UNITY_IOS || UNITY_ANDROID
             if (Application.isMobilePlatform)
             {
                 Helper.Log("RongCloudAdapter.StartRecordVoice");
@@ -187,6 +188,7 @@ namespace NCSpeedLight
                     Helper.LogError("RongCloudAdapter.StartRecordVoice: exception is " + e.Message);
                 }
             }
+#endif
         }
 
         /// <summary>
@@ -194,6 +196,7 @@ namespace NCSpeedLight
         /// </summary>
         public static void StopRecordVoice()
         {
+#if UNITY_IOS || UNITY_ANDROID
             if (Application.isMobilePlatform)
             {
                 Helper.Log("RongCloudAdapter.StopRecordVoice");
@@ -207,6 +210,7 @@ namespace NCSpeedLight
                     Helper.LogError("RongCloudAdapter.StopRecordVoice: exception is " + e.Message);
                 }
             }
+#endif
         }
 
         /// <summary>
@@ -216,6 +220,7 @@ namespace NCSpeedLight
         /// <param name="content"></param>
         public static void SendVoiceMessage(string targetID, string uri, int duration)
         {
+#if UNITY_IOS || UNITY_ANDROID
             if (Application.isMobilePlatform)
             {
                 Helper.Log("RongCloudAdapter.SendVoiceMessage");
@@ -239,6 +244,7 @@ namespace NCSpeedLight
                     Helper.LogError("RongCloudAdapter.SendVoiceMessage: exception is " + e.Message);
                 }
             }
+#endif
         }
 
         /// <summary>
