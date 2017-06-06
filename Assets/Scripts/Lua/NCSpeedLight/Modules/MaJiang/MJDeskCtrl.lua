@@ -294,6 +294,7 @@ function MJDeskCtrl.CreateMJCard(obj, type)
 	card.RoleID = - 1;
 	card.Status = MJTableCardStatus.MJCS_Begin;
 	card.Type = type;
+	card.BlueMask = card.GO.transform:GetChild(0).transform:GetChild(0).gameObject;
 	return card;
 end
 
@@ -361,4 +362,18 @@ function MJDeskCtrl.PutOneBackCard(position, eulerAngles)
 		MJDeskCtrl.BackCards = {};
 	end
 	table.insert(MJDeskCtrl.BackCards, newObj);
+end
+
+-- 设置桌面牌蓝色遮罩显示
+function MJDeskCtrl.SetTableCardBlueMaskActive(type)
+	for key, value in pairs(this.AllCards) do
+		for i = 1, #value do
+			local card = value[i];
+			if card.RoleID ~= 0 and card.Type == type then
+				card:SetBlueMaskActive(true);
+			else
+				card:SetBlueMaskActive(false);
+			end
+		end
+	end
 end 

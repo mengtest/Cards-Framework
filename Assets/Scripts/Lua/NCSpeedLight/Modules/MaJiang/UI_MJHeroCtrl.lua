@@ -104,6 +104,7 @@ function UI_MJHeroCtrl.RecoverSelectedCard()
 	if this.SelectedCardObj ~= nil then
 		this.SelectedCardObj.transform.localPosition = Vector3(this.SelectedCardObj.transform.localPosition.x, 0, this.SelectedCardObj.transform.localPosition.z);
 		UIHelper.SetActiveState(this.SelectedCardObj.transform, "UpCard", false);
+		MJDeskCtrl.SetTableCardBlueMaskActive();
 		this.SelectedCardObj = nil;
 	end
 end
@@ -113,6 +114,7 @@ function UI_MJHeroCtrl.OnClickCard(go)
 		if this.SelectedCardObj == go then
 			if MJScene.IsMyTurn() == false then
 				-- UIManager.OpenTipsDialog("不是你的回合，无法出牌");
+				MJDeskCtrl.SetTableCardBlueMaskActive();				
 			else
 				local cardIndex = tonumber(go.name);
 				local card = this.Player:GetHandCardByPosition(cardIndex);
@@ -125,6 +127,7 @@ function UI_MJHeroCtrl.OnClickCard(go)
 					go.transform.localPosition = Vector3(go.transform.localPosition.x, 0, go.transform.localPosition.z);
 					this.SelectedCardObj = nil;
 					UI_MJBase.SetPlayJingActive(false);
+					MJDeskCtrl.SetTableCardBlueMaskActive();	
 				end
 			end
 		else
@@ -132,7 +135,9 @@ function UI_MJHeroCtrl.OnClickCard(go)
 				this.SelectedCardObj.transform.localPosition = Vector3(this.SelectedCardObj.transform.localPosition.x, 0, this.SelectedCardObj.transform.localPosition.z);
 				UIHelper.SetActiveState(this.SelectedCardObj.transform, "UpCard", false);
 			end
-			
+			local cardIndex = tonumber(go.name);
+			local card = this.Player:GetHandCardByPosition(cardIndex);
+			MJDeskCtrl.SetTableCardBlueMaskActive(card.m_Type);
 			this.SelectedCardObj = go;
 			this.SelectedCardObj.transform.localPosition = Vector3(this.SelectedCardObj.transform.localPosition.x, 30, this.SelectedCardObj.transform.localPosition.z);
 			UIHelper.SetActiveState(this.SelectedCardObj.transform, "UpCard", true);
@@ -160,6 +165,7 @@ function UI_MJHeroCtrl.OnClickJingYes()
 		local card = this.Player:GetHandCardByPosition(cardIndex);
 		MJScene.RequestMJOperate_OutCard(card);
 	end
+	MJDeskCtrl.SetTableCardBlueMaskActive();
 end
 
 function UI_MJHeroCtrl.OnClickJingNo()
@@ -170,4 +176,5 @@ function UI_MJHeroCtrl.OnClickJingNo()
 		UIHelper.SetActiveState(go.transform, "UpCard", false);
 		this.SelectedCardObj = nil;
 	end
+	MJDeskCtrl.SetTableCardBlueMaskActive();
 end 

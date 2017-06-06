@@ -18,6 +18,7 @@ MJTableCard =
 	Status = MJTableCardStatus.MJCS_Begin, -- 牌的状态
 	Type = MaJiangType.MJ_1_TIAO, -- 牌的类型
 	ID = - 1, -- 牌的ID
+	BlueMask = nil,
 };
 
 MJTableCard.__index = MJTableCard;
@@ -34,6 +35,7 @@ function MJTableCard:Reset()
 	self.ID = - 1;
 	self.RoleID = 0;
 	self.Status = MJTableCardStatus.MJCS_Begin;
+	self.BlueMask:SetActive(false);
 	self:Hide();
 end
 
@@ -62,4 +64,8 @@ end
 function MJTableCard:SetRoleID(roleID)
 	self.LastRoleID = self.RoleID;
 	self.RoleID = roleID;
+end
+
+function MJTableCard:SetBlueMaskActive(status)
+	self.BlueMask:SetActive(status);
 end 
