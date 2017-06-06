@@ -9,7 +9,7 @@ MJDefine = {
 	HandCardX = 0.8029202,-- 手牌的宽度
 	HandCardY = 1.03921676,-- 手牌的高度
 	HandCardZ = 0.5301034,-- 手牌的厚度
-	OpenTest = true,-- 是否开启偷天换日
+	OpenTest = false,-- 是否开启偷天换日
 }
 
 -- 计算字符对应
