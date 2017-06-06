@@ -65,8 +65,6 @@ namespace NCSpeedLight
             LuaBinder.Bind(LuaState);
             LuaCoroutine.Register(LuaState, Instance);
 
-            InitializeLuaDirectory();
-
             if (Constants.SCRIPT_BUNDLE_MODE)
             {
                 LuaLoader = new LuaLoader();
@@ -138,11 +136,6 @@ namespace NCSpeedLight
             }
         }
 
-        private static void InitializeLuaDirectory()
-        {
-            //LuaState.AddSearchPath(Application.dataPath + "/Scripts/Lua/");
-        }
-
         private static void InitializeToLuaBundle()
         {
             LuaLoader.AddBundle("tolua" + Constants.SCRIPT_BUNDLE_FILE_EXTENSION);
@@ -188,23 +181,13 @@ namespace NCSpeedLight
             return func;
         }
 
-        public static void PushParam(string moduleName, params object[] args)
+        public static void GC()
         {
             if (LuaState != null)
             {
-                //LuaState.push
+                LuaState.LuaGC(LuaGCOptions.LUA_GCCOLLECT);
             }
         }
-
-        public static void GC()
-        {
-            LuaState.LuaGC(LuaGCOptions.LUA_GCCOLLECT);
-        }
-
-        public void Close()
-        {
-        }
-
     }
 
     public class LuaLoader : LuaFileUtils

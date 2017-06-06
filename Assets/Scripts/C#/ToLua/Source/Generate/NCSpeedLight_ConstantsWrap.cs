@@ -54,8 +54,8 @@ public class NCSpeedLight_ConstantsWrap
 		L.RegVar("ACCOUNT_SERVER_IP", get_ACCOUNT_SERVER_IP, set_ACCOUNT_SERVER_IP);
 		L.RegVar("ACCOUNT_SERVER_PORT", get_ACCOUNT_SERVER_PORT, set_ACCOUNT_SERVER_PORT);
 		L.RegVar("NEWEST_VERSION", get_NEWEST_VERSION, set_NEWEST_VERSION);
-		L.RegVar("PKG_DOWNLOAD_URL", get_PKG_DOWNLOAD_URL, set_PKG_DOWNLOAD_URL);
-		L.RegVar("PKG_SIZE", get_PKG_SIZE, set_PKG_SIZE);
+		L.RegVar("APK_DOWNLOAD_URL", get_APK_DOWNLOAD_URL, set_APK_DOWNLOAD_URL);
+		L.RegVar("APK_SIZE", get_APK_SIZE, set_APK_SIZE);
 		L.RegVar("WECHAT_URL", get_WECHAT_URL, set_WECHAT_URL);
 		L.RegVar("FEEDBACK_URL", get_FEEDBACK_URL, set_FEEDBACK_URL);
 		L.RegVar("RONGCLOUD_KEY", get_RONGCLOUD_KEY, set_RONGCLOUD_KEY);
@@ -67,6 +67,7 @@ public class NCSpeedLight_ConstantsWrap
 		L.RegVar("SHARE_ICON", get_SHARE_ICON, set_SHARE_ICON);
 		L.RegVar("WX_UNION_ID", get_WX_UNION_ID, set_WX_UNION_ID);
 		L.RegVar("SCREEN_SHOT_FILE", get_SCREEN_SHOT_FILE, null);
+		L.RegVar("APK_FILE", get_APK_FILE, null);
 		L.EndStaticLibs();
 	}
 
@@ -729,7 +730,7 @@ public class NCSpeedLight_ConstantsWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_PKG_DOWNLOAD_URL(IntPtr L)
+	static int get_APK_DOWNLOAD_URL(IntPtr L)
 	{
 		try
 		{
@@ -743,7 +744,7 @@ public class NCSpeedLight_ConstantsWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_PKG_SIZE(IntPtr L)
+	static int get_APK_SIZE(IntPtr L)
 	{
 		try
 		{
@@ -902,6 +903,20 @@ public class NCSpeedLight_ConstantsWrap
 		try
 		{
 			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.SCREEN_SHOT_FILE);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_APK_FILE(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.APK_FILE);
 			return 1;
 		}
 		catch(Exception e)
@@ -1211,7 +1226,7 @@ public class NCSpeedLight_ConstantsWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_PKG_DOWNLOAD_URL(IntPtr L)
+	static int set_APK_DOWNLOAD_URL(IntPtr L)
 	{
 		try
 		{
@@ -1226,7 +1241,7 @@ public class NCSpeedLight_ConstantsWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_PKG_SIZE(IntPtr L)
+	static int set_APK_SIZE(IntPtr L)
 	{
 		try
 		{

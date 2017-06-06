@@ -61,8 +61,7 @@ public class NCSpeedLight_HelperWrap
 		L.RegFunction("DeleteFile", DeleteFile);
 		L.RegFunction("CreateDirectory", CreateDirectory);
 		L.RegFunction("LoadAssetFromBundle", LoadAssetFromBundle);
-		L.RegFunction("EncryptString", EncryptString);
-		L.RegFunction("DecryptString", DecryptString);
+		L.RegFunction("ReleaseMemory", ReleaseMemory);
 		L.RegFunction("New", _CreateNCSpeedLight_Helper);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegFunction("ChildDelegate", NCSpeedLight_Helper_ChildDelegate);
@@ -1175,34 +1174,16 @@ public class NCSpeedLight_HelperWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int EncryptString(IntPtr L)
+	static int ReleaseMemory(IntPtr L)
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 2);
-			string arg0 = ToLua.CheckString(L, 1);
-			string arg1 = ToLua.CheckString(L, 2);
-			string o = NCSpeedLight.Helper.EncryptString(arg0, arg1);
-			LuaDLL.lua_pushstring(L, o);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int DecryptString(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 2);
-			string arg0 = ToLua.CheckString(L, 1);
-			string arg1 = ToLua.CheckString(L, 2);
-			string o = NCSpeedLight.Helper.DecryptString(arg0, arg1);
-			LuaDLL.lua_pushstring(L, o);
-			return 1;
+			ToLua.CheckArgsCount(L, 3);
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 1);
+			bool arg1 = LuaDLL.luaL_checkboolean(L, 2);
+			bool arg2 = LuaDLL.luaL_checkboolean(L, 3);
+			NCSpeedLight.Helper.ReleaseMemory(arg0, arg1, arg2);
+			return 0;
 		}
 		catch(Exception e)
 		{

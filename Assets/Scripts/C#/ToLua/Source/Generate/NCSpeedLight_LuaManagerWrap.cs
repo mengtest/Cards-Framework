@@ -12,9 +12,7 @@ public class NCSpeedLight_LuaManagerWrap
 		L.RegFunction("DoString", DoString);
 		L.RegFunction("CallFunction", CallFunction);
 		L.RegFunction("GetFunction", GetFunction);
-		L.RegFunction("PushParam", PushParam);
 		L.RegFunction("GC", GC);
-		L.RegFunction("Close", Close);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("Root", get_Root, set_Root);
@@ -112,45 +110,12 @@ public class NCSpeedLight_LuaManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int PushParam(IntPtr L)
-	{
-		try
-		{
-			int count = LuaDLL.lua_gettop(L);
-			string arg0 = ToLua.CheckString(L, 1);
-			object[] arg1 = ToLua.ToParamsObject(L, 2, count - 1);
-			NCSpeedLight.LuaManager.PushParam(arg0, arg1);
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int GC(IntPtr L)
 	{
 		try
 		{
 			ToLua.CheckArgsCount(L, 0);
 			NCSpeedLight.LuaManager.GC();
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int Close(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 1);
-			NCSpeedLight.LuaManager obj = (NCSpeedLight.LuaManager)ToLua.CheckObject(L, 1, typeof(NCSpeedLight.LuaManager));
-			obj.Close();
 			return 0;
 		}
 		catch(Exception e)
