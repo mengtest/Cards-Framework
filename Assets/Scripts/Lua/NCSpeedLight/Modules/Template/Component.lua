@@ -51,4 +51,4 @@ end
 
 -- Called when post reload script.
 function #NAME#:OnPostReload()
-end 
+end

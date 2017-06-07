@@ -1,4 +1,4 @@
-﻿-----------------------------------------------
+-----------------------------------------------
 -- Copyright © 2014-2017 NCSpeedLight
 --
 -- FileName: UI_CreateRoom.lua
@@ -76,4 +76,4 @@ function UI_CreateRoom.OnClickConfirm(go)
 		UI_CreateRoom.Playway = MJPlayway.ToInt(playway1Btn.name) .. "," .. MJPlayway.ToInt(playway2Btn.name);
 	end
 	HallScene.RequestCreateRoom();
-end 
+end

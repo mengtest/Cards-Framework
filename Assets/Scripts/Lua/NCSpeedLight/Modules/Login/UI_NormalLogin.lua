@@ -1,4 +1,4 @@
-﻿-----------------------------------------------
+-----------------------------------------------
 -- Copyright © 2014-2017 NCSpeedLight
 --
 -- FileName: UI_NormalLogin.lua
@@ -21,14 +21,14 @@ UI_NormalLogin = {
 
 local this = UI_NormalLogin;
 
--- Called by mono
+-- Called by mono.
 function UI_NormalLogin.Awake(go)
 	this.gameObject = go;
 	this.transform = go.transform;
 	this.isRecordPanelOpen = false;
 end
 
--- Use this for initialization
+-- Use this for initialization.
 function UI_NormalLogin.Start()
 	this.lbAccount = this.transform:Find("Input (account)/Label"):GetComponent("UILabel");
 	this.ipPassword = this.transform:Find("Input (password)"):GetComponent("UIInput");
@@ -46,7 +46,7 @@ function UI_NormalLogin.Start()
 	UIHelper.SetButtonEvent(this.transform, "Input (account)", UI_NormalLogin.onClickArrow);
 end
 
--- Use this for destruction
+-- Use this for destruction.
 function UI_NormalLogin.OnDestroy()
 	this.transform = nil;
 	this.gameObject = nil;
@@ -198,4 +198,4 @@ function UI_NormalLogin.TryGetLoginRecordInfo(go)
 			return item4;
 		end
 	end
-end 
+end

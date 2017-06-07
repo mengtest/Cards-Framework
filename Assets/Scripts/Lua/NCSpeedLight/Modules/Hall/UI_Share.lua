@@ -1,4 +1,4 @@
-﻿-----------------------------------------------
+-----------------------------------------------
 -- Copyright © 2014-2017 NCSpeedLight
 --
 -- FileName: UI_Share.lua
@@ -54,4 +54,4 @@ function UI_Share.OnClickShareMoment(go)
 	else
 		ShareSDKAdapter.ShareWechatMoment(nil);
 	end
-end 
+end

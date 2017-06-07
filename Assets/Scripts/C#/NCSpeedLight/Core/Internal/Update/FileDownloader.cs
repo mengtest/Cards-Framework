@@ -240,10 +240,15 @@ namespace NCSpeedLight
                 string localFilePath = Constants.LOCAL_SCRIPT_BUNDLE_PATH + fileInfo.Name;
                 Helper.Log("FileDownloader.DownloadScript: download from " + remoteFilePath + " to " + localFilePath);
                 www = new WWW(remoteFilePath);
-                yield return www;
-                if (www.isDone && string.IsNullOrEmpty(www.error))
+                while (www.isDone == false)
                 {
-                    DownloadSize += www.bytes.Length;
+                    UI.UpdateProgressBar((int)(DownloadSize + fileInfo.Size * www.progress), TotalSize);
+                    yield return new WaitForSeconds(0.1f);
+                }
+                yield return new WaitUntil(() => { return www.isDone; });
+                if (string.IsNullOrEmpty(www.error))
+                {
+                    DownloadSize += fileInfo.Size;
                     UI.UpdateProgressBar(DownloadSize, TotalSize);
                     File.WriteAllBytes(localFilePath, www.bytes);
                     yield return new WaitForEndOfFrame();
@@ -396,10 +401,15 @@ namespace NCSpeedLight
                 string localFilePath = Constants.LOCAL_ASSET_BUNDLE_PATH + fileInfo.Name;
                 Helper.Log("FileDownloader.DownloadAsset: download from " + remoteFilePath + " to " + localFilePath);
                 www = new WWW(remoteFilePath);
-                yield return www;
-                if (www.isDone && string.IsNullOrEmpty(www.error))
+                while (www.isDone == false)
                 {
-                    DownloadSize += www.bytes.Length;
+                    UI.UpdateProgressBar((int)(DownloadSize + fileInfo.Size * www.progress), TotalSize);
+                    yield return new WaitForSeconds(0.1f);
+                }
+                yield return new WaitUntil(() => { return www.isDone; });
+                if (string.IsNullOrEmpty(www.error))
+                {
+                    DownloadSize += fileInfo.Size;
                     UI.UpdateProgressBar(DownloadSize, TotalSize);
                     File.WriteAllBytes(localFilePath, www.bytes);
                     yield return new WaitForEndOfFrame();

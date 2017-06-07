@@ -179,7 +179,7 @@ namespace NCSpeedLight
                 Socket.Close();
                 Socket = null;
             }
-            Helper.LogError("NetConnection.ErrorOccurred: " + Error);
+            //Helper.LogError("NetConnection.ErrorOccurred: " + Error);
             Callback(CallbackType.OnErrorrOccurred, Error);
         }
 
