@@ -394,6 +394,10 @@ function UI_MJPlayer:PutGangCard(data)
 	card2:Show(card2Pos, self.OperateCardRotation);
 	card3:Show(card3Pos, self.OperateCardRotation);
 	card4:Show(card4Pos, self.OperateCardRotation);
+	-- 保存四张牌至数组中，用于结算时的显示
+	table.insert(self.Player.GangCards, data.m_LastCard);
+	table.insert(self.Player.GangCards, data.m_LastCard);
+	table.insert(self.Player.GangCards, data.m_LastCard);
 end
 
 -- 放置暗杠的牌
@@ -411,6 +415,10 @@ function UI_MJPlayer:PutAnGangCard(data)
 		MJDeskCtrl.PutOneBackCard(card3Pos, self.OperateCardRotation);
 		local card4 = MJDeskCtrl.GetOneUnuseCard(data.m_HandCard[1].m_Index, data.m_HandCard[1].m_Type, self.Player.ID);
 		card4:Show(card4Pos, self.OperateCardRotation);
+		-- 保存四张牌至数组中，用于结算时的显示
+		table.insert(self.Player.GangCards, data.m_HandCard[1]);
+		table.insert(self.Player.GangCards, data.m_HandCard[1]);
+		table.insert(self.Player.GangCards, data.m_HandCard[1]);
 	else
 		MJDeskCtrl.PutOneBackCard(card1Pos, self.OperateCardRotation);
 		MJDeskCtrl.PutOneBackCard(card2Pos, self.OperateCardRotation);
@@ -435,6 +443,22 @@ function UI_MJPlayer:PutBuGangCard(data)
 	local card2Pos = card2.GO.transform.position;
 	local card1Pos = Vector3.New(card2Pos.x, card2Pos.y + MJDefine.TableCardZ, card2Pos.z);
 	card1:Show(card1Pos, self.OperateCardRotation);
+	-- 保存四张牌至数组中，用于结算时的显示
+	table.insert(self.Player.GangCards, data.m_LastCard);
+	table.insert(self.Player.GangCards, data.m_LastCard);
+	table.insert(self.Player.GangCards, data.m_LastCard);
+	-- 从碰的牌中移除这张牌
+	local removeIndex = {};
+	for i = 1, #self.Player.PengCards do
+		local card = self.Player.PengCards[i];
+		if card.m_Type == data.m_LastCard.m_Type then
+			table.insert(removeIndex, i);
+		end
+	end
+	for i = 1, #removeIndex do
+		local index = removeIndex[i];
+		table.remove(self.Player.PengCards, index);
+	end
 end
 
 -- 放置碰的牌
@@ -457,6 +481,10 @@ function UI_MJPlayer:PutPengCard(data)
 	cards[1]:Show(card1Pos, self.OperateCardRotation);
 	cards[2]:Show(card2Pos, self.OperateCardRotation);
 	cards[3]:Show(card3Pos, self.OperateCardRotation);
+	-- 保存三张牌至数组中，用于结算时的显示
+	table.insert(self.Player.PengCards, data.m_LastCard);
+	table.insert(self.Player.PengCards, data.m_LastCard);
+	table.insert(self.Player.PengCards, data.m_LastCard);
 end
 
 -- 断线重连时，放置杠的牌
@@ -475,6 +503,10 @@ function UI_MJPlayer:PutGangCardWhenReconnect(data)
 	card2:Show(card2Pos, self.OperateCardRotation);
 	card3:Show(card3Pos, self.OperateCardRotation);
 	card4:Show(card4Pos, self.OperateCardRotation);
+	-- 保存四张牌至数组中，用于结算时的显示
+	table.insert(self.Player.GangCards, data.m_FunHandCard[1]);
+	table.insert(self.Player.GangCards, data.m_FunHandCard[1]);
+	table.insert(self.Player.GangCards, data.m_FunHandCard[1]);
 end
 
 -- 断线重连时，放置暗杠的牌
@@ -492,6 +524,10 @@ function UI_MJPlayer:PutAnGangCardWhenReconnect(data)
 		MJDeskCtrl.PutOneBackCard(card3Pos, self.OperateCardRotation);
 		local card4 = MJDeskCtrl.GetOneUnuseCard(data.m_FunHandCard[1].m_Index, data.m_FunHandCard[1].m_Type, self.Player.ID);
 		card4:Show(card4Pos, self.OperateCardRotation);
+		-- 保存四张牌至数组中，用于结算时的显示
+		table.insert(self.Player.GangCards, data.m_FunHandCard[1]);
+		table.insert(self.Player.GangCards, data.m_FunHandCard[1]);
+		table.insert(self.Player.GangCards, data.m_FunHandCard[1]);
 	else
 		MJDeskCtrl.PutOneBackCard(card1Pos, self.OperateCardRotation);
 		MJDeskCtrl.PutOneBackCard(card2Pos, self.OperateCardRotation);
@@ -515,6 +551,20 @@ function UI_MJPlayer:PutBuGangCardWhenReconnect(data)
 	local card2Pos = card2.GO.transform.position;
 	local card1Pos = Vector3.New(card2Pos.x, card2Pos.y + MJDefine.TableCardZ, card2Pos.z);
 	card1:Show(card1Pos, self.OperateCardRotation);
+	-- 保存四张牌至数组中，用于结算时的显示
+	table.insert(self.Player.GangCards, data.m_FunHandCard[1]);
+	table.insert(self.Player.GangCards, data.m_FunHandCard[1]);
+	table.insert(self.Player.GangCards, data.m_FunHandCard[1]);
+	-- 从碰的牌中移除这张牌
+	local index = 1;
+	while index <= #self.Player.PengCards do
+		local card = self.Player.PengCards[index];
+		if card.m_Type == data.m_FunHandCard[1].m_Type then
+			table.remove(self.Player.PengCards, index);
+		else
+			index = index + 1;
+		end
+	end
 end
 
 -- 断线重连时，放置碰的牌
@@ -535,6 +585,10 @@ function UI_MJPlayer:PutPengCardWhenReconnect(data)
 	cards[1]:Show(card1Pos, self.OperateCardRotation);
 	cards[2]:Show(card2Pos, self.OperateCardRotation);
 	cards[3]:Show(card3Pos, self.OperateCardRotation);
+	-- 保存三张牌至数组中，用于结算时的显示
+	table.insert(self.Player.PengCards, data.m_FunHandCard[1]);
+	table.insert(self.Player.PengCards, data.m_FunHandCard[1]);
+	table.insert(self.Player.PengCards, data.m_FunHandCard[1]);
 end
 
 -- 计算桌子上的点

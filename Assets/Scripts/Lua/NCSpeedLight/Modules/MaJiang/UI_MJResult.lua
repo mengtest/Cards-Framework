@@ -172,27 +172,74 @@ end
 function UI_MJResult.SetHuCards()
 	local tempHuId = MJScene.CurrentResultInfo.m_huRoleid;
 	local tempFpId = MJScene.CurrentResultInfo.m_fpid;
-	local tempList = MJScene.CurrentResultInfo.m_Data;
-	for i = 1, #tempList do
-		local tempData = tempList[i];
-		if tempData.m_roleid == tempHuId then
-			local tempHuPlayer = MJScene.GetPlayerByID(tempData.m_roleid);
+	local roleDatas = MJScene.CurrentResultInfo.m_Data;
+	for i = 1, #roleDatas do
+		local roleData = roleDatas[i];
+		if roleData.m_roleid == tempHuId then
+			local player = MJScene.GetPlayerByID(roleData.m_roleid);
 			local tempCloneTrans = this.transform:Find("Card/Clone");
 			local tempParent = this.transform:Find("Card/Grid");
 			local tempFirstCardTrans = nil;
-			local tempCardsType = tempData.m_HandCardType;
-			table.sort(tempCardsType, function(o1, o2)
-				return o1 < o2;
+			local displayCards = {};
+			for j = 1, #roleData.m_HandCardType do
+				local cardType = roleData.m_HandCardType[j];
+				local card = {};
+				card.Type = cardType;
+				card.Operate = 0;
+				table.insert(displayCards, card);
+			end
+			for j = 1, #player.PengCards do
+				local cardType = player.PengCards[j].m_Type;
+				local card = {};
+				card.Type = cardType;
+				card.Operate = 1;
+				table.insert(displayCards, card);
+			end
+			for j = 1, #player.GangCards do
+				local cardType = player.GangCards[j].m_Type;
+				local card = {};
+				card.Type = cardType;
+				card.Operate = 2;
+				table.insert(displayCards, card);
+			end
+			for j = 1, #roleData.m_SaoType do
+				local cardType = #roleData.m_SaoType[j];
+				for k = 1, 4 do
+					local card = {};
+					card.Type = cardType;
+					card.Operate = 2;
+					table.insert(displayCards, card);
+				end
+			end
+			table.sort(displayCards, function(o1, o2)
+				local type1 = o1.Type;
+				local type2 = o2.Type;
+				if MJScene.IsJingCard(type1) then
+					type1 = - 100;
+				end
+				if MJScene.IsJingCard(type2) then
+					type2 = - 100;
+				end
+				return type1 < type2;
 			end);
-			table.insert(tempCardsType, 1, MJScene.CurrentResultInfo.m_huCard.m_Type);
+			local card = {};
+			card.Type = MJScene.CurrentResultInfo.m_huCard.m_Type;
+			card.Operate = 0;
+			table.insert(displayCards, 1, card);
 			local currentLocalPos = Vector3.New(- 18, 0, 0);
-			for j = 1, #tempCardsType do
+			for j = 1, #displayCards do
 				local tempItem = NGUITools.AddChild(tempParent.gameObject, tempCloneTrans.gameObject);
 				tempItem:SetActive(true);
 				tempItem.transform.localScale = tempCloneTrans.localScale;
 				tempItem.transform.localPosition = currentLocalPos;
 				currentLocalPos = Vector3.New(40, 0, 0) * j;
-				UIHelper.SetSpriteName(tempItem.transform, "Sprite", MaJiangType.ToString(tempCardsType[j]));
+				local card = displayCards[j];
+				UIHelper.SetSpriteName(tempItem.transform, "Sprite", MaJiangType.ToString(card.Type));
+				UIHelper.SetActiveState(tempItem.transform, "Jing", MJScene.IsJingCard(card.Type));
+				if card.Operate == 2 then
+					UIHelper.SetActiveState(tempItem.transform, "Jing", true);
+					UIHelper.SetSpriteName(tempItem.transform, "Jing", "MJ-96")
+				end
 			end
 		end
 	end

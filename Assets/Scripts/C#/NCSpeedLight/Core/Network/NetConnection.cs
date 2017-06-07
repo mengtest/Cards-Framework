@@ -33,11 +33,14 @@ namespace NCSpeedLight
         private int Port;
         private Socket Socket;
         private string Error;
-        private float ReconnectInterval = 1f;
+        private float ReconnectInterval = 2f;
         private byte[] ReceiveHeader = new byte[NetPacket.PACK_HEAD_SIZE];
 
-        private bool SigReconnectOne = false;
+        private bool SigReconnectOneDone = false;
         private bool SigReconnecting = false;
+        private bool SigReconnectOneTimeout = false;
+        private float ReconnectOneElapse = 0f;
+        private Coroutine ReconnectCR = null;
 
         private StatusDelegate OnConnected;
         private StatusDelegate OnDisconnected;
@@ -90,7 +93,11 @@ namespace NCSpeedLight
             if (SigReconnecting == false)
             {
                 SigReconnecting = true;
-                Game.Instance.StartCoroutine(ProcessReconnect());
+                if (ReconnectCR != null)
+                {
+                    Loom.StopCR(ReconnectCR);
+                }
+                ReconnectCR = Loom.StartCR(ProcessReconnect());
             }
         }
 
@@ -180,27 +187,45 @@ namespace NCSpeedLight
         {
             while (IsConnected == false)
             {
-                SigReconnectOne = false;
+                SigReconnectOneDone = false;
+                SigReconnectOneTimeout = false;
+                ReconnectOneElapse = 0f;
                 try
                 {
                     IPAddress[] addresses = Dns.GetHostAddresses(Host);
                     IPEndPoint remoteEP = new IPEndPoint(addresses[0], Port);
-                    Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                    IAsyncResult ret = Socket.BeginConnect(remoteEP, ReconnectCallback, this);
+                    if (Socket == null)
+                    {
+                        Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                    }
+                    Socket.BeginConnect(remoteEP, new AsyncCallback(ReconnectCallback), this);
                 }
                 catch
                 {
 
                 }
-                yield return new WaitWhile(() => { return SigReconnectOne; });
+                while (SigReconnectOneDone == false && SigReconnectOneTimeout == false)
+                {
+                    yield return new WaitForSeconds(0.1f);
+                    ReconnectOneElapse += 0.1f;
+                    if (ReconnectOneElapse > 3)
+                    {
+                        SigReconnectOneTimeout = true;
+                    }
+                }
+                yield return new WaitUntil(() => { return SigReconnectOneDone || SigReconnectOneTimeout; });
                 if (IsConnected)
                 {
                     SigReconnecting = false;
-                    Game.Instance.StopCoroutine(ProcessReconnect());
+                    Loom.StopCR(ReconnectCR);
+                    ReconnectCR = null;
+                    yield break;
                 }
                 else
                 {
-                    yield return new WaitForSeconds(ReconnectInterval);
+                    float waitTime = ReconnectInterval - ReconnectOneElapse;
+                    waitTime = waitTime <= 0 ? 0 : waitTime;
+                    yield return new WaitForSeconds(waitTime);
                 }
             }
 
@@ -223,6 +248,7 @@ namespace NCSpeedLight
 
         private void ReconnectCallback(IAsyncResult result)
         {
+            SigReconnectOneDone = true;
             try
             {
                 Socket.EndConnect(result);
@@ -232,7 +258,6 @@ namespace NCSpeedLight
             catch
             {
             }
-            SigReconnectOne = true;
         }
 
         private void StartReceive()

@@ -92,6 +92,15 @@ MJPlayer = {
 	
 	-- 吃碰杠的总次数
 	OperateTotalCount = 0,
+	
+	-- 碰的牌
+	PengCards = nil,
+	
+	-- 吃的牌
+	ChiCards = nil,
+	
+	-- 杠的牌 
+	GangCards = nil,
 };
 
 MJPlayer.__index = MJPlayer;
@@ -100,6 +109,9 @@ function MJPlayer.New()
 	local obj = {};
 	setmetatable(obj, MJPlayer);
 	obj.TableCardCount = 0;
+	obj.ChiCards = {};
+	obj.PengCards = {};
+	obj.GangCards = {};
 	return obj;
 end
 
@@ -199,6 +211,9 @@ function MJPlayer:Reset()
 	UI_MJPlayer.Reset(self.UI);
 	self.TableCardCount = 0;
 	self.OperateTotalCount = 0;
+	self.ChiCards = {};
+	self.PengCards = {};
+	self.GangCards = {};
 end
 
 -- Log 标签

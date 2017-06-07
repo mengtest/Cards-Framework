@@ -204,22 +204,14 @@ namespace NCSpeedLight
         {
             get
             {
-                if (Application.isMobilePlatform || Application.platform == RuntimePlatform.WindowsPlayer)
-                {
-                    return Application.persistentDataPath + "/";
-                }
-                else if (Application.isEditor)
-                {
-                    return "C:/" + GAME_NAME + "/";
-                }
-                else if (Application.platform == RuntimePlatform.OSXEditor)
+                if (Application.isEditor)
                 {
                     int i = Application.dataPath.LastIndexOf('/');
-                    return Application.dataPath.Substring(0, i + 1) + GAME_NAME + "/";
+                    return Application.dataPath.Substring(0, i + 1) + "/PersistentData/";
                 }
                 else
                 {
-                    return "C:/" + GAME_NAME + "/";
+                    return Application.persistentDataPath + "/";
                 }
             }
         }
