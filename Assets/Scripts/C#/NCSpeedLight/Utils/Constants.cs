@@ -11,6 +11,7 @@
 
 using System;
 using System.IO;
+using System.Net.NetworkInformation;
 using UnityEngine;
 
 namespace NCSpeedLight
@@ -631,5 +632,29 @@ namespace NCSpeedLight
         public const string PREF_INNER_ASSET_SERVER_HOST_KEY = "InnerAssetServerHost";
 
         public const string PREF_INNER_ASSET_SERVER_PORT_KEY = "InnerAssetServerPort";
+
+        public static string DEVICEID
+        {
+            get
+            {
+                return SystemInfo.deviceUniqueIdentifier;
+            }
+        }
+
+        public static string MAC_ADDRESS
+        {
+            get
+            {
+                NetworkInterface[] nis = NetworkInterface.GetAllNetworkInterfaces();
+                if (nis.Length > 0)
+                {
+                    return "no mac address.";
+                }
+                else
+                {
+                    return nis[0].GetPhysicalAddress().ToString();
+                }
+            }
+        }
     }
 }

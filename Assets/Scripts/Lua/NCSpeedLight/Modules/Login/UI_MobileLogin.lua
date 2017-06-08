@@ -11,20 +11,16 @@ function UI_MobileLogin.Awake(go)
 end
 
 function UI_MobileLogin.Start()
-	UIHelper.SetButtonEvent(this.transform, "Btn_QQ",
-	function(obj)
-	end);
 	UIHelper.SetButtonEvent(this.transform, "Btn_Wechat", UI_MobileLogin.OnClickWechat);
-	UIHelper.SetButtonEvent(this.transform, "Btn_Vistor",
-	function(obj)
-	end);
+	UIHelper.SetButtonEvent(this.transform, "Btn_Vistor", UI_MobileLogin.OnClickVistor);
 end
 
-
-function UI_MobileLogin.OnClickWechat(obj)
+function UI_MobileLogin.OnClickWechat()
 	ShareSDKAdapter.AuthWechat(UI_MobileLogin.OnAuthCallback);
 end
 
+function UI_MobileLogin.OnClickVistor()
+end
 
 function UI_MobileLogin.OnAuthCallback(ret, authInfo)
 	LoginScene.WechatAuth = {

@@ -262,7 +262,20 @@ namespace NCSpeedLight
                         case "xmlurl":
                             Constants.REMOTE_FILE_BUNDLE_ROOT = kvp.Value + "/";
                             Constants.REMOTE_ASSET_BUNDLE_PATH = kvp.Value + "/" + Constants.PLATFORM_NAME + "/Assets/";
+#if UNITY_IOS
+                            if (IntPtr.Size == 4)
+                            {
+                                //32 Bit  
+                                Constants.REMOTE_SCRIPT_BUNDLE_PATH = kvp.Value + "/" + Constants.PLATFORM_NAME + "/Scripts/x86/";
+                            }
+                            else if (IntPtr.Size == 8)
+                            {
+                                //64 Bit  
+                                Constants.REMOTE_SCRIPT_BUNDLE_PATH = kvp.Value + "/" + Constants.PLATFORM_NAME + "/Scripts/x64/";
+                            }
+#else
                             Constants.REMOTE_SCRIPT_BUNDLE_PATH = kvp.Value + "/" + Constants.PLATFORM_NAME + "/Scripts/";
+#endif
                             //Constants.REMOTE_ASSET_BUNDLE_PATH = "http://192.168.1.155:9555/" + Constants.PLATFORM_NAME + "/Assets/";
                             //Constants.REMOTE_SCRIPT_BUNDLE_PATH = "http://192.168.1.155:9555/" + Constants.PLATFORM_NAME + "/Scripts/";
                             break;

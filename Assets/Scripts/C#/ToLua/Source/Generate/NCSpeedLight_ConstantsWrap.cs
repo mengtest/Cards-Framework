@@ -68,6 +68,8 @@ public class NCSpeedLight_ConstantsWrap
 		L.RegVar("WX_UNION_ID", get_WX_UNION_ID, set_WX_UNION_ID);
 		L.RegVar("SCREEN_SHOT_FILE", get_SCREEN_SHOT_FILE, null);
 		L.RegVar("APK_FILE", get_APK_FILE, null);
+		L.RegVar("DEVICEID", get_DEVICEID, null);
+		L.RegVar("MAC_ADDRESS", get_MAC_ADDRESS, null);
 		L.EndStaticLibs();
 	}
 
@@ -917,6 +919,34 @@ public class NCSpeedLight_ConstantsWrap
 		try
 		{
 			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.APK_FILE);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_DEVICEID(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.DEVICEID);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_MAC_ADDRESS(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.MAC_ADDRESS);
 			return 1;
 		}
 		catch(Exception e)

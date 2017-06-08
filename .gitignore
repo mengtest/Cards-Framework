@@ -32,3 +32,4 @@
 /MaJiang_Lua.CSharp.Editor.csproj
 /MaJiang_Lua.CSharp.csproj
 /PersistentData
+*.csproj

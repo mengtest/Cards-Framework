@@ -23,25 +23,36 @@ namespace NCSpeedLight
     public class ScriptBuilder : Builder
     {
         public static bool IsCompiling = false;
+        public static bool arm64 = false;
         public ScriptBuilder(Action preBuild, Action postBuild) : base(preBuild, postBuild) { }
         public override void Build()
         {
-            if (!PrepareDirectory()) return;
+            arm64 = false;
+            int build = 1;
+#if UNITY_IOS
+            build = 2;
+#endif
+            for (int i = 0; i < build; i++)
+            {
+                if (!PrepareDirectory()) return;
 
-            IsCompiling = true;
+                IsCompiling = true;
 
-            List<string> byteFiles = new List<string>();
-            LuaFileToBytes(byteFiles);
+                List<string> byteFiles = new List<string>();
+                LuaFileToBytes(byteFiles);
 
-            ProcessBuild();
+                ProcessBuild();
 
-            CopyProtocolFiles();
+                CopyProtocolFiles();
 
-            DeleteLuaBytesFiles(byteFiles);
+                DeleteLuaBytesFiles(byteFiles);
 
-            GenerateManifest();
+                GenerateManifest();
 
-            IsCompiling = false;
+                IsCompiling = false;
+
+                arm64 = true;
+            }
         }
 
         private static bool PrepareDirectory()
@@ -51,14 +62,27 @@ namespace NCSpeedLight
                 Helper.LogError("Directory doesn't exist: " + Constants.LUA_SCRIPT_WORKSPACE);
                 return false;
             }
-            if (Directory.Exists(Constants.BUILD_SCRIPT_BUNDLE_PATH) == false)
+            string targetPath;
+#if UNITY_IOS
+            if (arm64)
             {
-                Directory.CreateDirectory(Constants.BUILD_SCRIPT_BUNDLE_PATH);
+                targetPath = Constants.BUILD_SCRIPT_BUNDLE_PATH + "x64/";
             }
             else
             {
-                Directory.Delete(Constants.BUILD_SCRIPT_BUNDLE_PATH, true);
-                Directory.CreateDirectory(Constants.BUILD_SCRIPT_BUNDLE_PATH);
+                targetPath = Constants.BUILD_SCRIPT_BUNDLE_PATH + "x86/";
+            }
+#else
+            targetPath = Constants.BUILD_SCRIPT_BUNDLE_PATH;
+#endif
+            if (Directory.Exists(targetPath) == false)
+            {
+                Directory.CreateDirectory(targetPath);
+            }
+            else
+            {
+                Directory.Delete(targetPath, true);
+                Directory.CreateDirectory(targetPath);
             }
             return true;
         }
@@ -107,11 +131,24 @@ namespace NCSpeedLight
 
         private static void CopyProtocolFiles()
         {
+            string targetPath;
+#if UNITY_IOS
+            if (arm64)
+            {
+                targetPath = Constants.BUILD_SCRIPT_BUNDLE_PATH + "x64/";
+            }
+            else
+            {
+                targetPath = Constants.BUILD_SCRIPT_BUNDLE_PATH + "x86/";
+            }
+#else
+            targetPath = Constants.BUILD_SCRIPT_BUNDLE_PATH;
+#endif
             List<string> files = new List<string>();
             CollectFiles(Constants.LUA_SCRIPT_WORKSPACE, files, "*.pb");
             for (int i = 0; i < files.Count; i++)
             {
-                string outputPath = Constants.BUILD_SCRIPT_BUNDLE_PATH + Path.GetFileName(files[i]);
+                string outputPath = targetPath + Path.GetFileName(files[i]);
                 File.Copy(files[i], outputPath, true);
             }
         }
@@ -138,7 +175,19 @@ namespace NCSpeedLight
                 BuildAssetBundleOptions options = BuildAssetBundleOptions.CollectDependencies | BuildAssetBundleOptions.CompleteAssets |
                                                 BuildAssetBundleOptions.DeterministicAssetBundle | BuildAssetBundleOptions.UncompressedAssetBundle;
 
-                string outputPath = Constants.BUILD_SCRIPT_BUNDLE_PATH + bundleName;
+                string outputPath;
+#if UNITY_IOS
+                if (arm64)
+                {
+                    outputPath = Constants.BUILD_SCRIPT_BUNDLE_PATH + "x64/" + bundleName;
+                }
+                else
+                {
+                    outputPath = Constants.BUILD_SCRIPT_BUNDLE_PATH + "x86/" + bundleName;
+                }
+#else
+                outputPath = Constants.BUILD_SCRIPT_BUNDLE_PATH + bundleName;
+#endif
 
                 if (File.Exists(outputPath))
                 {
@@ -166,14 +215,26 @@ namespace NCSpeedLight
 
         private static void GenerateManifest()
         {
-            string directory = Constants.BUILD_SCRIPT_BUNDLE_PATH;
-            string filePath = directory + "/manifest.txt";
+            string targetPath;
+#if UNITY_IOS
+            if (arm64)
+            {
+                targetPath = Constants.BUILD_SCRIPT_BUNDLE_PATH + "x64/";
+            }
+            else
+            {
+                targetPath = Constants.BUILD_SCRIPT_BUNDLE_PATH + "x86/";
+            }
+#else
+            targetPath = Constants.BUILD_SCRIPT_BUNDLE_PATH;
+#endif
+            string filePath = targetPath + "/manifest.txt";
             if (File.Exists(filePath))
             {
                 File.Delete(filePath);
             }
             List<string> files = new List<string>();
-            CollectFiles(directory, files, "*");
+            CollectFiles(targetPath, files, "*");
             FileStream fs = new FileStream(filePath, FileMode.CreateNew);
             StreamWriter sw = new StreamWriter(fs);
             for (int i = 0; i < files.Count; i++)
@@ -181,7 +242,7 @@ namespace NCSpeedLight
                 string file = files[i];
                 if (file.EndsWith(".meta")) continue;
                 string md5 = Helper.FileMD5(file);
-                string value = file.Replace(directory, string.Empty);
+                string value = file.Replace(targetPath, string.Empty);
                 int size = Helper.FileSize(file);
                 sw.WriteLine(value + "|" + md5 + "|" + size);
             }
@@ -276,10 +337,27 @@ namespace NCSpeedLight
             string currDir = Directory.GetCurrentDirectory();
             if (Application.platform == RuntimePlatform.WindowsEditor)
             {
+#if UNITY_IOS
+                if (arm64)
+                {
+                    isWin = true;
+                    luaexe = "luajit.exe";
+                    args = "-b " + srcFile + " " + outFile;
+                    exedir = Application.dataPath.Replace("Assets", "") + "/LuaEncoder/luajit_ios/x64/";
+                }
+                else
+                {
+                    isWin = true;
+                    luaexe = "luajit.exe";
+                    args = "-b " + srcFile + " " + outFile;
+                    exedir = Application.dataPath.Replace("Assets", "") + "/LuaEncoder/luajit_ios/x86/";
+                }
+#else
                 isWin = true;
                 luaexe = "luajit.exe";
                 args = "-b " + srcFile + " " + outFile;
                 exedir = Application.dataPath.Replace("Assets", "") + "/LuaEncoder/luajit/";
+#endif
             }
             else if (Application.platform == RuntimePlatform.OSXEditor)
             {
