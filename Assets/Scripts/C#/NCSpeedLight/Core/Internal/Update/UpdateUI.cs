@@ -81,7 +81,14 @@ namespace NCSpeedLight
                     }
                     else
                     {
-                        CompareVersion();
+                        if (Constants.CHECK_UPDATE)
+                        {
+                            CompareVersion();
+                        }
+                        else
+                        {
+                            StartCoroutine(StartGame());
+                        }
                     }
                 }
             });
@@ -283,11 +290,19 @@ namespace NCSpeedLight
                             break;
                         case "accountserverip":
                             Constants.ACCOUNT_SERVER_IP = kvp.Value;
+                            if (Constants.USE_INNER_LOGIN_SERVER)
+                            {
+                                Constants.ACCOUNT_SERVER_IP = Constants.INNER_LOGIN_SERVER_HOST;
+                            }
                             break;
                         case "accountserverport":
                             int port = 0;
                             int.TryParse(kvp.Value, out port);
                             Constants.ACCOUNT_SERVER_PORT = port;
+                            if (Constants.USE_INNER_LOGIN_SERVER)
+                            {
+                                Constants.ACCOUNT_SERVER_PORT = Constants.INNER_LOGIN_SERVER_PORT;
+                            }
                             break;
                         case "urlpush":
                             break;

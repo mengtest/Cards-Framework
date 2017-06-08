@@ -181,7 +181,7 @@ namespace NCSpeedLight
                 Socket.Close();
                 Socket = null;
             }
-            Loom.StopCR(ListenNetworkStatusCR);
+            //Loom.StopCR(ListenNetworkStatusCR);
             //Helper.LogError("NetConnection.ErrorOccurred: " + Error);
             Callback(CallbackType.OnErrorrOccurred, Error);
         }
@@ -241,7 +241,7 @@ namespace NCSpeedLight
                 Socket.EndConnect(result);
                 Callback(CallbackType.OnConnected);
                 StartReceive();
-                ListenNetworkStatusCR = Loom.StartCR(ListenNetworkStatus());
+                //ListenNetworkStatusCR = Loom.StartCR(ListenNetworkStatus());
             }
             catch (Exception e)
             {
@@ -258,7 +258,7 @@ namespace NCSpeedLight
                 Socket.EndConnect(result);
                 Callback(CallbackType.OnReconnected);
                 StartReceive();
-                ListenNetworkStatusCR = Loom.StartCR(ListenNetworkStatus());
+                //ListenNetworkStatusCR = Loom.StartCR(ListenNetworkStatus());
             }
             catch
             {

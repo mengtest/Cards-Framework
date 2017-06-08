@@ -13,6 +13,13 @@ end
 function UI_MobileLogin.Start()
 	UIHelper.SetButtonEvent(this.transform, "Btn_Wechat", UI_MobileLogin.OnClickWechat);
 	UIHelper.SetButtonEvent(this.transform, "Btn_Vistor", UI_MobileLogin.OnClickVistor);
+	if Game.Platform == UnityEngine.RuntimePlatform.IPhonePlayer or UnityEngine.Application.isEditor then
+		UIHelper.SetActiveState(this.transform, "Btn_Wechat", false);
+		UIHelper.SetActiveState(this.transform, "Btn_Vistor", true);
+	else
+		UIHelper.SetActiveState(this.transform, "Btn_Wechat", true);
+		UIHelper.SetActiveState(this.transform, "Btn_Vistor", false);
+	end
 end
 
 function UI_MobileLogin.OnClickWechat()
@@ -20,6 +27,11 @@ function UI_MobileLogin.OnClickWechat()
 end
 
 function UI_MobileLogin.OnClickVistor()
+	local msg = {};
+	msg.deviceid = Constants.DEVICEID;
+	msg.mac = Constants.MAC_ADDRESS;
+	msg.idfa = "idfa";
+	NetManager.SendEventToLoginServer(GameMessage.GM_TEASTACCOUNT_REQUEST, PBMessage.GM_TestAccountRequest, msg);
 end
 
 function UI_MobileLogin.OnAuthCallback(ret, authInfo)

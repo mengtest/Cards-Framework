@@ -53,7 +53,7 @@ namespace NCSpeedLight
         {
             get
             {
-                return true;
+                return PlayerPrefs.GetInt(PREF_CHECK_UPDATE_KEY) == 1;
             }
         }
 
@@ -633,6 +633,21 @@ namespace NCSpeedLight
 
         public const string PREF_INNER_ASSET_SERVER_PORT_KEY = "InnerAssetServerPort";
 
+        public static bool USE_INNER_LOGIN_SERVER
+        {
+            get { return PlayerPrefs.GetInt(PREF_USE_INNER_LOGIN_SERVER_KEY) == 1; }
+        }
+
+        public static string INNER_LOGIN_SERVER_HOST
+        {
+            get { return PlayerPrefs.GetString(PREF_INNER_LOGIN_SERVER_HOST_KEY); }
+        }
+
+        public static int INNER_LOGIN_SERVER_PORT
+        {
+            get { return PlayerPrefs.GetInt(PREF_INNER_LOGIN_SERVER_PORT_KEY); }
+        }
+
         public static string DEVICEID
         {
             get
@@ -646,7 +661,7 @@ namespace NCSpeedLight
             get
             {
                 NetworkInterface[] nis = NetworkInterface.GetAllNetworkInterfaces();
-                if (nis.Length > 0)
+                if (nis.Length <= 0)
                 {
                     return "no mac address.";
                 }

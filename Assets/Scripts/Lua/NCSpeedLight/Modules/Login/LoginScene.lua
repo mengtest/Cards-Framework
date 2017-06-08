@@ -68,6 +68,7 @@ function LoginScene.Begin()
 	NetManager.RegisterEvent(GameMessage.GM_ROLELIST_RETURN, LoginScene.RecvAccountRoles);
 	NetManager.RegisterEvent(GameMessage.GM_ROLE_LOGIN_RETURN, LoginScene.RecvRoleLogin);
 	NetManager.RegisterEvent(GameMessage.GM_ROLE_CREATE_RETURN, LoginScene.RecvCreateRole);
+	NetManager.RegisterEvent(GameMessage.GM_TEASTACCOUNT_RETURN, LoginScene.RecvVisitorAccount);
 	LoginScene.ConnnectLoginServer();
 end
 
@@ -82,6 +83,7 @@ function LoginScene.End()
 	NetManager.UnregisterEvent(GameMessage.GM_ROLELIST_RETURN, LoginScene.RecvAccountRoles);
 	NetManager.UnregisterEvent(GameMessage.GM_ROLE_LOGIN_RETURN, LoginScene.RecvRoleLogin);
 	NetManager.UnregisterEvent(GameMessage.GM_ROLE_CREATE_RETURN, LoginScene.RecvCreateRole);
+	NetManager.UnregisterEvent(GameMessage.GM_TEASTACCOUNT_RETURN, LoginScene.RecvVisitorAccount);
 end
 
 function LoginScene.OnApplicationPause(status)
@@ -300,16 +302,18 @@ function LoginScene.OnVerifyVersionReturn(evt)
 	local obj = NetManager.DecodeMsg(PBMessage.GM_VerifyVersionReturn, evt)
 	if obj.result == 0 then
 		Log.Info("OnVerifyVersionReturn: sccuss.");
-		-- if Game.Platform == UnityEngine.RuntimePlatform.Android or Game.Platform == UnityEngine.RuntimePlatform.IPhonePlayer then
-		-- 	if LoginScene.WechatAuth == nil then
-		-- 		UIManager.OpenWindow(UIName.UI_MobileLogin);
-		-- 	else
-		-- 		-- 本地存在验证信息，则直接登录
-		-- 		LoginScene.RequestLogin(LoginScene.WechatAuth.unionID, "AllPlatform");
-		-- 	end
-		-- else
-		UIManager.OpenWindow(UIName.UI_NormalLogin);
-		-- end
+		if Game.Platform == UnityEngine.RuntimePlatform.Android or Game.Platform == UnityEngine.RuntimePlatform.IPhonePlayer then
+			if LoginScene.WechatAuth == nil then
+				UIManager.OpenWindow(UIName.UI_MobileLogin);
+			else
+				-- 本地存在验证信息，则直接登录
+				LoginScene.RequestLogin(LoginScene.WechatAuth.unionID, "AllPlatform");
+			end
+		else
+			UIManager.OpenWindow(UIName.UI_NormalLogin);
+		end
+		-- UIManager.OpenWindow(UIName.UI_MobileLogin);
+-- UIManager.OpenWindow(UIName.UI_NormalLogin);
 	else
 		Log.Error("OnVerifyVersionReturn: version does not match,can not enter game,please update.");
 		UIManager.OpenTipsDialog("版本不匹配，无法进入游戏");
@@ -559,4 +563,27 @@ function LoginScene.RecvCreateRole(evt)
 		UIManager.CloseWindow(UIName.UI_SceneLoad);
 		Log.Error("RecvCreateRole: error result is " .. obj.m_Result);
 	end
+end
+
+-- 游客账号
+function LoginScene.RecvVisitorAccount(evt)
+	Log.Info("LoginScene.RecvVisitorAccount");
+	-- NetWorkEventEx<NetPacket> param = varData as NetWorkEventEx<NetPacket>;
+	-- PBMessage.GM_TestAccountReturn tempAccount = GameClient.DeserializeProtoBuf<PBMessage.GM_TestAccountReturn>(param.GetData());
+	-- LastLoginAccountInfo tempLastAccount = LoginAccount.GetSingleton().CreateLastLoginAccout(tempAccount.accountName, tempAccount.password);
+	-- tempLastAccount.Reset();
+	-- tempLastAccount.pCreateTime = MathOperation.GetUnixTimestamp(tempAccount.createTime.ToString());
+	-- if (tempAccount.accountType == 0)
+	-- {
+	--     // 正式账号;
+	--     tempLastAccount.pLoginWay = (int)OperationStyle.Login;
+	-- }
+	-- else
+	-- {
+	--     // 试玩账号;
+	--     tempLastAccount.pLoginWay = (int)OperationStyle.TryPlay;
+	-- }
+	-- tempLastAccount.pLoginNum = 0;
+	-- LoginAccount.GetSingleton().WriteLoginInfo();
+	-- RequestAccountLogin(tempAccount.accountName, tempAccount.password, 0);
 end 
