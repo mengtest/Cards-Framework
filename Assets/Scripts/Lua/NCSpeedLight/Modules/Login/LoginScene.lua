@@ -567,23 +567,7 @@ end
 
 -- 游客账号
 function LoginScene.RecvVisitorAccount(evt)
-	Log.Info("LoginScene.RecvVisitorAccount");
-	-- NetWorkEventEx<NetPacket> param = varData as NetWorkEventEx<NetPacket>;
-	-- PBMessage.GM_TestAccountReturn tempAccount = GameClient.DeserializeProtoBuf<PBMessage.GM_TestAccountReturn>(param.GetData());
-	-- LastLoginAccountInfo tempLastAccount = LoginAccount.GetSingleton().CreateLastLoginAccout(tempAccount.accountName, tempAccount.password);
-	-- tempLastAccount.Reset();
-	-- tempLastAccount.pCreateTime = MathOperation.GetUnixTimestamp(tempAccount.createTime.ToString());
-	-- if (tempAccount.accountType == 0)
-	-- {
-	--     // 正式账号;
-	--     tempLastAccount.pLoginWay = (int)OperationStyle.Login;
-	-- }
-	-- else
-	-- {
-	--     // 试玩账号;
-	--     tempLastAccount.pLoginWay = (int)OperationStyle.TryPlay;
-	-- }
-	-- tempLastAccount.pLoginNum = 0;
-	-- LoginAccount.GetSingleton().WriteLoginInfo();
-	-- RequestAccountLogin(tempAccount.accountName, tempAccount.password, 0);
+	local msg = NetManager.DecodeMsg(PBMessage.GM_TestAccountReturn, evt);
+	Log.Info("RecvVisitorAccount: account name is " .. msg.accountName);
+	LoginScene.RequestLogin(msg.accountName, msg.password);
 end 

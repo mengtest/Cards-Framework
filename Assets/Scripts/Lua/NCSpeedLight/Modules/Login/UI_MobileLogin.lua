@@ -28,6 +28,7 @@ end
 
 function UI_MobileLogin.OnClickVistor()
 	local msg = {};
+	msg.result = 0; --0，ios,1 安卓
 	msg.deviceid = Constants.DEVICEID;
 	msg.mac = Constants.MAC_ADDRESS;
 	msg.idfa = "idfa";

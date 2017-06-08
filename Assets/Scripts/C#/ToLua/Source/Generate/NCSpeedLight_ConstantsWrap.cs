@@ -68,6 +68,9 @@ public class NCSpeedLight_ConstantsWrap
 		L.RegVar("WX_UNION_ID", get_WX_UNION_ID, set_WX_UNION_ID);
 		L.RegVar("SCREEN_SHOT_FILE", get_SCREEN_SHOT_FILE, null);
 		L.RegVar("APK_FILE", get_APK_FILE, null);
+		L.RegVar("USE_INNER_LOGIN_SERVER", get_USE_INNER_LOGIN_SERVER, null);
+		L.RegVar("INNER_LOGIN_SERVER_HOST", get_INNER_LOGIN_SERVER_HOST, null);
+		L.RegVar("INNER_LOGIN_SERVER_PORT", get_INNER_LOGIN_SERVER_PORT, null);
 		L.RegVar("DEVICEID", get_DEVICEID, null);
 		L.RegVar("MAC_ADDRESS", get_MAC_ADDRESS, null);
 		L.EndStaticLibs();
@@ -919,6 +922,48 @@ public class NCSpeedLight_ConstantsWrap
 		try
 		{
 			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.APK_FILE);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_USE_INNER_LOGIN_SERVER(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushboolean(L, NCSpeedLight.Constants.USE_INNER_LOGIN_SERVER);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_INNER_LOGIN_SERVER_HOST(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.INNER_LOGIN_SERVER_HOST);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_INNER_LOGIN_SERVER_PORT(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushinteger(L, NCSpeedLight.Constants.INNER_LOGIN_SERVER_PORT);
 			return 1;
 		}
 		catch(Exception e)
