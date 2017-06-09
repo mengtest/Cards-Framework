@@ -53,7 +53,18 @@ namespace NCSpeedLight
         {
             get
             {
-                return PlayerPrefs.GetInt(PREF_CHECK_UPDATE_KEY) == 1;
+                if (Application.isMobilePlatform)
+                {
+                    return true;
+                }
+                else if (Application.isEditor)
+                {
+                    return PlayerPrefs.GetInt(PREF_CHECK_UPDATE_KEY) == 1;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
 
@@ -635,7 +646,17 @@ namespace NCSpeedLight
 
         public static bool USE_INNER_LOGIN_SERVER
         {
-            get { return PlayerPrefs.GetInt(PREF_USE_INNER_LOGIN_SERVER_KEY) == 1; }
+            get
+            {
+                if (Application.isEditor)
+                {
+                    return PlayerPrefs.GetInt(PREF_USE_INNER_LOGIN_SERVER_KEY) == 1;
+                }
+                else
+                {
+                    return false;
+                }
+            }
         }
 
         public static string INNER_LOGIN_SERVER_HOST
@@ -670,6 +691,11 @@ namespace NCSpeedLight
                     return nis[0].GetPhysicalAddress().ToString();
                 }
             }
+        }
+
+        public static bool IOS_CHECK
+        {
+            get { return true && Application.platform == RuntimePlatform.IPhonePlayer; }
         }
     }
 }

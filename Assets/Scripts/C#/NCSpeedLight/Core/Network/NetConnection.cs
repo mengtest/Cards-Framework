@@ -197,9 +197,10 @@ namespace NCSpeedLight
                 {
                     IPAddress[] addresses = Dns.GetHostAddresses(Host);
                     IPEndPoint remoteEP = new IPEndPoint(addresses[0], Port);
+                    bool ipv6 = Application.platform == RuntimePlatform.IPhonePlayer && addresses[0].AddressFamily == AddressFamily.InterNetworkV6;
                     if (Socket == null)
                     {
-                        Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                        Socket = new Socket(ipv6 ? AddressFamily.InterNetworkV6 : AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                     }
                     Socket.BeginConnect(remoteEP, new AsyncCallback(ReconnectCallback), this);
                 }

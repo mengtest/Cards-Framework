@@ -64,7 +64,7 @@ namespace NCSpeedLight
     public class PBXBuilder : Builder
     {
         private static bool PROFILE_VERSION = false;
-        public static string BIN_PATH = "Bin/XCodeProj";
+        public static string BIN_PATH = "Bin/proj.ios";
         public PBXBuilder(Action preBuild, Action postBuild) : base(preBuild, postBuild) { }
 
         public override void Build()

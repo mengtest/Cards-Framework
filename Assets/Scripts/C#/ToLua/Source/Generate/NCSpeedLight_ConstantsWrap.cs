@@ -73,6 +73,7 @@ public class NCSpeedLight_ConstantsWrap
 		L.RegVar("INNER_LOGIN_SERVER_PORT", get_INNER_LOGIN_SERVER_PORT, null);
 		L.RegVar("DEVICEID", get_DEVICEID, null);
 		L.RegVar("MAC_ADDRESS", get_MAC_ADDRESS, null);
+		L.RegVar("IOS_CHECK", get_IOS_CHECK, null);
 		L.EndStaticLibs();
 	}
 
@@ -992,6 +993,20 @@ public class NCSpeedLight_ConstantsWrap
 		try
 		{
 			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.MAC_ADDRESS);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_IOS_CHECK(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushboolean(L, NCSpeedLight.Constants.IOS_CHECK);
 			return 1;
 		}
 		catch(Exception e)
