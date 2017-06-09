@@ -76,93 +76,108 @@ namespace NCSpeedLight
 
         public void Connect()
         {
-            try
+            Loom.QueueOnMainThread(() =>
             {
-                IPAddress[] addresses = Dns.GetHostAddresses(Host);
-                IPEndPoint remoteEP = new IPEndPoint(addresses[0], Port);
-                Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                Socket.BeginConnect(remoteEP, ConnectCallback, this);
-            }
-            catch (Exception e)
-            {
-                Error = e.Message;
-                ErrorOccurred();
-            }
+                try
+                {
+                    IPAddress[] addresses = Dns.GetHostAddresses(Host);
+                    IPEndPoint remoteEP = new IPEndPoint(addresses[0], Port);
+                    bool ipv6 = Application.platform == RuntimePlatform.IPhonePlayer && addresses[0].AddressFamily == AddressFamily.InterNetworkV6;
+                    if (Socket == null)
+                    {
+                        Socket = new Socket(ipv6 ? AddressFamily.InterNetworkV6 : AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                    }
+                    Socket.BeginConnect(remoteEP, new AsyncCallback(ConnectCallback), this);
+                }
+                catch (Exception e)
+                {
+                    Error = e.Message;
+                    ErrorOccurred();
+                }
+            });
         }
 
         public void Reconnect()
         {
-            if (SigReconnecting == false)
+            Loom.QueueOnMainThread(() =>
             {
-                SigReconnecting = true;
-                if (ReconnectCR != null)
+                if (SigReconnecting == false)
                 {
-                    Loom.StopCR(ReconnectCR);
+                    SigReconnecting = true;
+                    if (ReconnectCR != null)
+                    {
+                        Loom.StopCR(ReconnectCR);
+                    }
+                    ReconnectCR = Loom.StartCR(ProcessReconnect());
                 }
-                ReconnectCR = Loom.StartCR(ProcessReconnect());
-            }
+            });
         }
 
         public void Disconnect()
         {
-            if (Socket != null)
+            Loom.QueueOnMainThread(() =>
             {
-                if (IsConnected)
+                if (Socket != null)
                 {
-                    Socket.Shutdown(SocketShutdown.Both);
+                    if (IsConnected)
+                    {
+                        Socket.Shutdown(SocketShutdown.Both);
+                    }
+                    Socket.Close();
+                    Socket = null;
                 }
-                Socket.Close();
-                Socket = null;
-            }
-            Callback(CallbackType.OnDisconnected);
+                Callback(CallbackType.OnDisconnected);
+            });
         }
 
         public void Send(NetPacket packet)
         {
-            if (Socket == null)
+            Loom.QueueOnMainThread(() =>
             {
-                Error = "Can not send data,because socket is disposed.";
-                ErrorOccurred();
-                return;
-            }
-            if (IsConnected == false)
-            {
-                Error = "Can not send data,because socket is not connected.";
-                ErrorOccurred();
-                return;
-            }
-            if (Application.internetReachability == NetworkReachability.NotReachable)
-            {
-                Error = "Can not send data,because network is not reachable.";
-                ErrorOccurred();
-                return;
-            }
-            Socket.BeginSend(packet.GetBuffer(), 0, packet.GetTotalSize(), SocketFlags.None, new AsyncCallback(SendCallback), this);
+                if (Socket == null)
+                {
+                    Error = "Can not send data,because socket is disposed.";
+                    ErrorOccurred();
+                    return;
+                }
+                if (IsConnected == false)
+                {
+                    Error = "Can not send data,because socket is not connected.";
+                    ErrorOccurred();
+                    return;
+                }
+                if (Application.internetReachability == NetworkReachability.NotReachable)
+                {
+                    Error = "Can not send data,because network is not reachable.";
+                    ErrorOccurred();
+                    return;
+                }
+                Socket.BeginSend(packet.GetBuffer(), 0, packet.GetTotalSize(), SocketFlags.None, new AsyncCallback(SendCallback), this);
+            });
         }
 
         private void Callback(CallbackType type, object param = null)
         {
-            StatusDelegate func = null;
-            switch (type)
-            {
-                case CallbackType.OnConnected:
-                    func = OnConnected;
-                    break;
-
-                case CallbackType.OnDisconnected:
-                    func = OnDisconnected;
-                    break;
-                case CallbackType.OnReconnected:
-                    func = OnReconnected;
-                    break;
-                case CallbackType.OnErrorrOccurred:
-                    func = OnErrorOccurred;
-                    break;
-                default:
-                    break;
-            }
             Loom.QueueOnMainThread(() =>
             {
+                StatusDelegate func = null;
+                switch (type)
+                {
+                    case CallbackType.OnConnected:
+                        func = OnConnected;
+                        break;
+                    case CallbackType.OnDisconnected:
+                        func = OnDisconnected;
+                        break;
+                    case CallbackType.OnReconnected:
+                        func = OnReconnected;
+                        break;
+                    case CallbackType.OnErrorrOccurred:
+                        func = OnErrorOccurred;
+                        break;
+                    default:
+                        break;
+                }
                 if (func != null)
                 {
                     func(this, param);
@@ -172,18 +187,21 @@ namespace NCSpeedLight
 
         private void ErrorOccurred()
         {
-            if (Socket != null)
+            Loom.QueueOnMainThread(() =>
             {
-                if (IsConnected)
+                if (Socket != null)
                 {
-                    Socket.Shutdown(SocketShutdown.Both);
+                    if (IsConnected)
+                    {
+                        Socket.Shutdown(SocketShutdown.Both);
+                    }
+                    Socket.Close();
+                    Socket = null;
                 }
-                Socket.Close();
-                Socket = null;
-            }
-            //Loom.StopCR(ListenNetworkStatusCR);
-            //Helper.LogError("NetConnection.ErrorOccurred: " + Error);
-            Callback(CallbackType.OnErrorrOccurred, Error);
+                Loom.StopCR(ListenNetworkStatusCR);
+                Helper.LogError("NetConnection.ErrorOccurred: " + Error);
+                Callback(CallbackType.OnErrorrOccurred, Error);
+            });
         }
 
         private IEnumerator ProcessReconnect()
@@ -242,7 +260,10 @@ namespace NCSpeedLight
                 Socket.EndConnect(result);
                 Callback(CallbackType.OnConnected);
                 StartReceive();
-                //ListenNetworkStatusCR = Loom.StartCR(ListenNetworkStatus());
+                Loom.QueueOnMainThread(() =>
+                {
+                    ListenNetworkStatusCR = Loom.StartCR(ListenNetworkStatus());
+                });
             }
             catch (Exception e)
             {
@@ -259,7 +280,10 @@ namespace NCSpeedLight
                 Socket.EndConnect(result);
                 Callback(CallbackType.OnReconnected);
                 StartReceive();
-                //ListenNetworkStatusCR = Loom.StartCR(ListenNetworkStatus());
+                Loom.QueueOnMainThread(() =>
+                {
+                    ListenNetworkStatusCR = Loom.StartCR(ListenNetworkStatus());
+                });
             }
             catch
             {
@@ -270,7 +294,7 @@ namespace NCSpeedLight
         {
             while (IsConnected)
             {
-                if (Application.internetReachability == NetworkReachability.NotReachable)
+                if (Application.internetReachability != NetworkReachability.ReachableViaCarrierDataNetwork && Application.internetReachability != NetworkReachability.ReachableViaLocalAreaNetwork)
                 {
                     Error = "Network is not reachable.";
                     ErrorOccurred();
