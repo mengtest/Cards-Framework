@@ -12,7 +12,7 @@ extern "C"
     void LocInitialize(){
         
         // Do any additional setup after loading the view, typically from a nib.
-        [AMapServices sharedServices].apiKey =@"07bb30dadd60ca497becf2c39d687325";
+        [AMapServices sharedServices].apiKey =@"b11f8c53896a90c72da9924945515663";
         
         locationManager = [[AMapLocationManager alloc] init];
         

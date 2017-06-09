@@ -28,11 +28,16 @@ function UI_MJTotalResult.Start()
 	UI_MJTotalResult.SetRound();
 	UI_MJTotalResult.SetPlayerInfo();
 	UI_MJTotalResult.SetGreatWinner();
+	UI_MJTotalResult.iOSCheck();
 end
 
 function UI_MJTotalResult.OnDestroy()
 	this.transform = nil;
 	this.gameObject = nil;
+end
+
+function UI_MJTotalResult.iOSCheck()
+	UIHelper.SetActiveState(this.transform, "Button/Share", not Constants.IOS_CHECK);
 end
 
 function UI_MJTotalResult.InitBtnEvent()

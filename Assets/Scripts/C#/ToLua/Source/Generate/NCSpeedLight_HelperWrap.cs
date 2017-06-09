@@ -60,6 +60,7 @@ public class NCSpeedLight_HelperWrap
 		L.RegFunction("SaveFile", SaveFile);
 		L.RegFunction("DeleteFile", DeleteFile);
 		L.RegFunction("CreateDirectory", CreateDirectory);
+		L.RegFunction("CopyDirectory", CopyDirectory);
 		L.RegFunction("LoadAssetFromBundle", LoadAssetFromBundle);
 		L.RegFunction("ReleaseMemory", ReleaseMemory);
 		L.RegFunction("New", _CreateNCSpeedLight_Helper);
@@ -1146,6 +1147,24 @@ public class NCSpeedLight_HelperWrap
 			ToLua.CheckArgsCount(L, 1);
 			string arg0 = ToLua.CheckString(L, 1);
 			NCSpeedLight.Helper.CreateDirectory(arg0);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int CopyDirectory(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			string arg0 = ToLua.CheckString(L, 1);
+			string arg1 = ToLua.CheckString(L, 2);
+			string[] arg2 = ToLua.CheckParamsString(L, 3, count - 2);
+			NCSpeedLight.Helper.CopyDirectory(arg0, arg1, arg2);
 			return 0;
 		}
 		catch(Exception e)

@@ -105,6 +105,7 @@ namespace NCSpeedLight
             EditProj(pathToBuiltProject);
             EditInfoPlist(pathToBuiltProject);
             EditUnityAppController(pathToBuiltProject);
+            //CopyStreamingFile(pathToBuiltProject);
         }
 
         /// <summary>
@@ -242,6 +243,12 @@ namespace NCSpeedLight
                 directory = directory.Replace("//", "/");
                 outfiles.Add(directory);
             }
+        }
+
+        private static void CopyStreamingFile(string root)
+        {
+            Helper.CopyDirectory(Constants.BUILD_ASSET_BUNDLE_PATH, root + "/Data/Raw/Assets/");
+            Helper.CopyDirectory(Constants.BUILD_SCRIPT_BUNDLE_PATH, root + "/Data/Raw/Scripts/");
         }
 #endif
     }

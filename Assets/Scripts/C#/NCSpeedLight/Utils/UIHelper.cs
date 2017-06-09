@@ -295,5 +295,45 @@ namespace NCSpeedLight
                 bx.enabled = status;
             }
         }
+
+        public static void SetPosition(Transform parent, string path, Vector3 position)
+        {
+            if (parent)
+            {
+                Transform t = parent.Find(path);
+                if (t)
+                {
+                    t.position = position;
+                }
+            }
+        }
+
+        public static void SetPosition(Transform transform, Vector3 position)
+        {
+            if (transform)
+            {
+                transform.position = position;
+            }
+        }
+
+        public static void SetLocalPosition(Transform parent, string path, Vector3 position)
+        {
+            if (parent)
+            {
+                Transform t = parent.Find(path);
+                if (t)
+                {
+                    t.localPosition = position;
+                }
+            }
+        }
+
+        public static void SetLocalPosition(Transform transform, Vector3 position)
+        {
+            if (transform)
+            {
+                transform.localPosition = position;
+            }
+        }
     }
 }

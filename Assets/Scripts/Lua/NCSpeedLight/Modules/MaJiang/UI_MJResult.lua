@@ -31,6 +31,7 @@ function UI_MJResult.Start()
 	UI_MJResult.SetPlayerInfo();
 	UI_MJResult.SetPlayway();
 	UI_MJResult.SetRound();
+	UI_MJResult.iOSCheck();
 end
 
 -- Use this for destruction.
@@ -45,6 +46,10 @@ end
 
 -- Called when post reload script.
 function UI_MJResult.OnPostReload()
+end
+
+function UI_MJResult.iOSCheck()
+	UIHelper.SetActiveState(this.transform, "Button/Share", not Constants.IOS_CHECK);
 end
 
 -- 设置按钮事件

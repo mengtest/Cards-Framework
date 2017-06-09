@@ -1,15 +1,4 @@
-﻿/*----------------------------------------------------------------
-           // Copyright © 2014-2017 NCSpeedLight
-           // 
-           // FileName: FileManifest.cs
-           // Describle: 文件清单文件
-           // Created By:  Wells Hsu
-           // Date&Time:  2016/1/19 10:03:15
-           // Modify History:
-           //
-//----------------------------------------------------------------*/
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -75,17 +64,16 @@ namespace NCSpeedLight
         public int TotalFileSize;
         public string MD5;
         public byte[] Bytes;
-        public string RemoteDirectory;
-        public string LocalDirectory;
+        //public string RemoteDirectory;
+        public string Directory;
         public string Name;
         public string Error;
         public List<FileInfo> FileInfos = new List<FileInfo>();
 
-        public FileManifest(string localDirectory, string remoteDirectory, string name)
+        public FileManifest(string directory, string name)
         {
             TotalFileSize = 0;
-            LocalDirectory = localDirectory;
-            RemoteDirectory = remoteDirectory;
+            Directory = directory;
             Name = name;
         }
 
@@ -114,7 +102,7 @@ namespace NCSpeedLight
         public void Initialize()
         {
             Error = string.Empty;
-            string path = LocalDirectory + Name;
+            string path = Directory + Name;
             byte[] bytes = Helper.OpenFile(path);
             if (bytes == null)
             {
@@ -132,7 +120,7 @@ namespace NCSpeedLight
             Error = string.Empty;
             if ((streaming && Application.platform == RuntimePlatform.Android) || usewww)
             {
-                string url = RemoteDirectory + Name;
+                string url = Directory + Name;
                 using (WWW www = new WWW(url))
                 {
                     yield return www;
@@ -151,7 +139,7 @@ namespace NCSpeedLight
             }
             else
             {
-                string path = LocalDirectory + Name;
+                string path = Directory + Name;
                 byte[] bytes = Helper.OpenFile(path);
                 if (bytes == null)
                 {

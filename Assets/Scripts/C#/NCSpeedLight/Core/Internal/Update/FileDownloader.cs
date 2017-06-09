@@ -44,13 +44,13 @@ namespace NCSpeedLight
         {
             IsDone = false;
             // initialize asset manifest.
-            StreamingAssetManifest = new FileManifest(Constants.LOCAL_ASSET_BUNDLE_PATH, Constants.REMOTE_ASSET_BUNDLE_PATH, Constants.ASSET_MANIFEST_FILE);
+            StreamingAssetManifest = new FileManifest(Constants.STREAMING_ASSET_BUNDLE_PATH, Constants.ASSET_MANIFEST_FILE);
             yield return Loom.StartCR(StreamingAssetManifest.Initialize(true, false));
-            LocalAssetManifest = new FileManifest(Constants.LOCAL_ASSET_BUNDLE_PATH, Constants.REMOTE_ASSET_BUNDLE_PATH, Constants.ASSET_MANIFEST_FILE);
+            LocalAssetManifest = new FileManifest(Constants.LOCAL_ASSET_BUNDLE_PATH, Constants.ASSET_MANIFEST_FILE);
             yield return Loom.StartCR(LocalAssetManifest.Initialize(false, false));
             if (updateAsset)
             {
-                RemoteAssetManifest = new FileManifest(Constants.LOCAL_ASSET_BUNDLE_PATH, Constants.REMOTE_ASSET_BUNDLE_PATH, Constants.ASSET_MANIFEST_FILE);
+                RemoteAssetManifest = new FileManifest(Constants.REMOTE_ASSET_BUNDLE_PATH, Constants.ASSET_MANIFEST_FILE);
                 yield return Loom.StartCR(RemoteAssetManifest.Initialize(false, true));
                 Error = RemoteAssetManifest.Error;
                 if (string.IsNullOrEmpty(Error) == false)
@@ -60,13 +60,13 @@ namespace NCSpeedLight
                 }
             }
             // initialize script manifest.
-            StreamingScriptManifest = new FileManifest(Constants.LOCAL_SCRIPT_BUNDLE_PATH, Constants.REMOTE_SCRIPT_BUNDLE_PATH, Constants.SCRIPT_MANIFEST_FILE);
+            StreamingScriptManifest = new FileManifest(Constants.STREAMING_SCRIPT_BUNDLE_PATH, Constants.SCRIPT_MANIFEST_FILE);
             yield return Loom.StartCR(StreamingScriptManifest.Initialize(true, false));
-            LocalScriptManifest = new FileManifest(Constants.LOCAL_SCRIPT_BUNDLE_PATH, Constants.REMOTE_SCRIPT_BUNDLE_PATH, Constants.SCRIPT_MANIFEST_FILE);
+            LocalScriptManifest = new FileManifest(Constants.LOCAL_SCRIPT_BUNDLE_PATH, Constants.SCRIPT_MANIFEST_FILE);
             yield return Loom.StartCR(LocalScriptManifest.Initialize(false, false));
             if (updateScript)
             {
-                RemoteScriptManifest = new FileManifest(Constants.LOCAL_SCRIPT_BUNDLE_PATH, Constants.REMOTE_SCRIPT_BUNDLE_PATH, Constants.SCRIPT_MANIFEST_FILE);
+                RemoteScriptManifest = new FileManifest(Constants.REMOTE_SCRIPT_BUNDLE_PATH, Constants.SCRIPT_MANIFEST_FILE);
                 yield return Loom.StartCR(RemoteScriptManifest.Initialize(false, true));
                 Error = RemoteScriptManifest.Error;
                 if (string.IsNullOrEmpty(Error) == false)
@@ -80,7 +80,7 @@ namespace NCSpeedLight
             {
                 yield return Loom.StartCR(ExtractStreamingAsset());
                 // reload asset manifest.
-                LocalAssetManifest = new FileManifest(Constants.LOCAL_ASSET_BUNDLE_PATH, Constants.REMOTE_ASSET_BUNDLE_PATH, Constants.ASSET_MANIFEST_FILE);
+                LocalAssetManifest = new FileManifest(Constants.LOCAL_ASSET_BUNDLE_PATH, Constants.ASSET_MANIFEST_FILE);
                 yield return LocalAssetManifest.Initialize(false, false);
             }
             // ensure local script is ok.
@@ -88,7 +88,7 @@ namespace NCSpeedLight
             {
                 yield return Loom.StartCR(ExtractStreamingScript());
                 // reload script manifest.
-                LocalScriptManifest = new FileManifest(Constants.LOCAL_SCRIPT_BUNDLE_PATH, Constants.REMOTE_SCRIPT_BUNDLE_PATH, Constants.SCRIPT_MANIFEST_FILE);
+                LocalScriptManifest = new FileManifest(Constants.LOCAL_SCRIPT_BUNDLE_PATH, Constants.SCRIPT_MANIFEST_FILE);
                 yield return LocalScriptManifest.Initialize(false, false);
             }
             // process update.
@@ -179,23 +179,20 @@ namespace NCSpeedLight
         private IEnumerator ExtractStreamingScript()
         {
             Helper.Log("FileDownloader.ExtractStreamingScript: start.");
-            string dataPath = Constants.LOCAL_SCRIPT_BUNDLE_PATH;  //数据目录
-            string contentPath = Constants.STREAMING_PATH + "Scripts/"; //游戏包资源目录
-            Helper.Log("FileDownloader.ExtractStreamingScript: data path is " + dataPath);
-            Helper.Log("FileDownloader.ExtractStreamingScript: content path is " + contentPath);
-
-            if (Directory.Exists(dataPath))
+            Helper.Log("FileDownloader.ExtractStreamingScript: data path is " + Constants.LOCAL_SCRIPT_BUNDLE_PATH);
+            Helper.Log("FileDownloader.ExtractStreamingScript: streaming path is " + Constants.STREAMING_SCRIPT_BUNDLE_PATH);
+            if (Directory.Exists(Constants.LOCAL_SCRIPT_BUNDLE_PATH))
             {
-                Directory.Delete(dataPath, true);
+                Directory.Delete(Constants.LOCAL_SCRIPT_BUNDLE_PATH, true);
             }
-            Directory.CreateDirectory(dataPath);
+            Directory.CreateDirectory(Constants.LOCAL_SCRIPT_BUNDLE_PATH);
 
             // 拷贝清单里的其他文件
             for (int i = 0; i < StreamingScriptManifest.FileInfos.Count; i++)
             {
                 FileManifest.FileInfo fileInfo = StreamingScriptManifest.FileInfos[i];
-                string contentFilePath = contentPath + fileInfo.Name;
-                string localFilePath = dataPath + fileInfo.Name;
+                string contentFilePath = Constants.STREAMING_SCRIPT_BUNDLE_PATH + fileInfo.Name;
+                string localFilePath = Constants.LOCAL_SCRIPT_BUNDLE_PATH + fileInfo.Name;
                 Helper.Log("FileDownloader.ExtractStreamingScript: extract " + contentFilePath + " to " + localFilePath);
                 if (Application.platform == RuntimePlatform.Android)
                 {
@@ -216,6 +213,12 @@ namespace NCSpeedLight
                     File.Copy(contentFilePath, localFilePath, true);
                 }
                 yield return new WaitForEndOfFrame();
+            }
+            // 保存manifest文件至本地
+            if (StreamingScriptManifest.Bytes != null)
+            {
+                string localManifestPath = Constants.LOCAL_SCRIPT_BUNDLE_PATH + Constants.SCRIPT_MANIFEST_FILE;
+                File.WriteAllBytes(localManifestPath, StreamingScriptManifest.Bytes);
             }
             Helper.Log("FileDownloader.ExtractStreamingScript: done.");
             yield return 0;
@@ -339,24 +342,19 @@ namespace NCSpeedLight
         private IEnumerator ExtractStreamingAsset()
         {
             Helper.Log("FileDownloader.ExtractStreamingAsset: start.");
-            string dataPath = Constants.LOCAL_ASSET_BUNDLE_PATH;  //数据目录
-            string contentPath = Constants.STREAMING_PATH + "Assets/"; //游戏包资源目录
-            Helper.Log("FileDownloader.ExtractStreamingAsset: data path is " + dataPath);
-            Helper.Log("FileDownloader.ExtractStreamingAsset: content path is " + contentPath);
-
-            if (Directory.Exists(dataPath))
+            Helper.Log("FileDownloader.ExtractStreamingAsset: data path is " + Constants.LOCAL_ASSET_BUNDLE_PATH);
+            Helper.Log("FileDownloader.ExtractStreamingAsset: streaming path is " + Constants.STREAMING_ASSET_BUNDLE_PATH);
+            if (Directory.Exists(Constants.LOCAL_ASSET_BUNDLE_PATH))
             {
-                Directory.Delete(dataPath, true);
+                Directory.Delete(Constants.LOCAL_ASSET_BUNDLE_PATH, true);
             }
-
-            Directory.CreateDirectory(dataPath);
-
+            Directory.CreateDirectory(Constants.LOCAL_ASSET_BUNDLE_PATH);
             // 拷贝清单里的其他文件
             for (int i = 0; i < StreamingAssetManifest.FileInfos.Count; i++)
             {
                 FileManifest.FileInfo fileInfo = StreamingAssetManifest.FileInfos[i];
-                string contentFilePath = contentPath + fileInfo.Name;
-                string localFilePath = dataPath + fileInfo.Name;
+                string contentFilePath = Constants.STREAMING_ASSET_BUNDLE_PATH + fileInfo.Name;
+                string localFilePath = Constants.LOCAL_ASSET_BUNDLE_PATH + fileInfo.Name;
                 Helper.Log("FileDownloader.ExtractStreamingAsset: extract " + contentFilePath + " to " + localFilePath);
                 if (Application.platform == RuntimePlatform.Android)
                 {
@@ -377,6 +375,12 @@ namespace NCSpeedLight
                     File.Copy(contentFilePath, localFilePath, true);
                 }
                 yield return new WaitForEndOfFrame();
+            }
+            // 保存manifest文件至本地
+            if(StreamingScriptManifest.Bytes!= null)
+            {
+                string localManifestPath = Constants.LOCAL_ASSET_BUNDLE_PATH + Constants.SCRIPT_MANIFEST_FILE;
+                File.WriteAllBytes(localManifestPath, StreamingAssetManifest.Bytes);
             }
             Helper.Log("FileDownloader.ExtractStreamingAsset: done.");
             yield return 0;

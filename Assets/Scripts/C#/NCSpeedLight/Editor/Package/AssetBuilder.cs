@@ -36,7 +36,7 @@ namespace NCSpeedLight
         {
             base.OnPreBuild();
             Caching.CleanCache();
-            preBuildManifest = new FileManifest(Constants.BUILD_ASSET_BUNDLE_PATH, null, Constants.ASSET_MANIFEST_FILE);
+            preBuildManifest = new FileManifest(Constants.BUILD_ASSET_BUNDLE_PATH, Constants.ASSET_MANIFEST_FILE);
             preBuildManifest.Initialize();
         }
         public override void OnPostBuild()
@@ -50,7 +50,7 @@ namespace NCSpeedLight
                 Directory.CreateDirectory(Constants.BUILD_ASSET_BUNDLE_PATH);
             }
         }
-     
+
         private void ProcessBuild()
         {
             BuildPipeline.BuildAssetBundles(Constants.BUILD_ASSET_BUNDLE_PATH, BuildAssetBundleOptions.None, EditorUserBuildSettings.activeBuildTarget);
@@ -93,7 +93,7 @@ namespace NCSpeedLight
         }
         private void CaculateDiffer()
         {
-            postBuildManifest = new FileManifest(Constants.BUILD_ASSET_BUNDLE_PATH, null, Constants.ASSET_MANIFEST_FILE);
+            postBuildManifest = new FileManifest(Constants.BUILD_ASSET_BUNDLE_PATH, Constants.ASSET_MANIFEST_FILE);
             postBuildManifest.Initialize();
             FileManifest.DifferInfo differInfo = preBuildManifest.CompareWith(postBuildManifest);
             for (int i = 0; i < differInfo.Modified.Count; i++)

@@ -42,6 +42,7 @@ function UI_CreateRoom.Start()
 			duiBtn.value = true;
 		end
 	end
+	UI_CreateRoom.iOSCheck();
 	HallScene.RequestPlayerInFb();
 end
 
@@ -77,3 +78,14 @@ function UI_CreateRoom.OnClickConfirm(go)
 	end
 	HallScene.RequestCreateRoom();
 end
+
+function UI_CreateRoom.iOSCheck()
+	if Constants.IOS_CHECK then
+		UIHelper.SetLabelText(this.transform, "Center/RadioBtn_Round/6/Label", "6局");
+		UIHelper.SetLabelText(this.transform, "Center/RadioBtn_Round/12/Label", "12局");
+	else
+		UIHelper.SetLabelText(this.transform, "Center/RadioBtn_Round/6/Label", "6局(房卡X1)");
+		UIHelper.SetLabelText(this.transform, "Center/RadioBtn_Round/12/Label", "12局(房卡X2)");
+	end
+	UIHelper.SetActiveState(this.transform, "Center/Label", not Constants.IOS_CHECK);
+end 

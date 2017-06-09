@@ -14,6 +14,13 @@ function UI_Hall.Start()
 	UI_Hall.InitBtnEvt();
 	UI_Hall.InitSelfInfo();
 	UI_Hall.RefreshAnnouncement();
+	UI_Hall.iOSCheck();
+end
+
+function UI_Hall.iOSCheck()
+	UIHelper.SetActiveState(this.transform, "left/RoleInfo/Card", not Constants.IOS_CHECK);
+	UIHelper.SetActiveState(this.transform, "bottom/function/Share", not Constants.IOS_CHECK);
+	UIHelper.SetActiveState(this.transform, "top", not Constants.IOS_CHECK);
 end
 
 function UI_Hall.InitBtnEvt()

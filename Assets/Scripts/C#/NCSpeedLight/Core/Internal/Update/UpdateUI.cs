@@ -92,12 +92,12 @@ namespace NCSpeedLight
                     }
                 }
             });
+            SetTips("连接服务器");
             JsonServerListener.Start();
         }
 
         private void CompareVersion()
         {
-            SetTips("对比版本号");
             string[] version = Constants.NEWEST_VERSION.Split('.');
             int majorVersion = 0;
             int middleVersion = 0;
@@ -127,12 +127,16 @@ namespace NCSpeedLight
 
         private IEnumerator UpdateFile(int middleVersion, int miniorVersion)
         {
-            SetTips("检查更新");
             Constants.MIDDLE_VERSION = middleVersion;
             Constants.MINIOR_VERSION = miniorVersion;
             bool updateAsset = false;
             bool updateScript = false;
-            if (Constants.FORCE_UPDATE)
+            if (Constants.IOS_CHECK)
+            {
+                updateAsset = false;
+                updateScript = false;
+            }
+            else if (Constants.FORCE_UPDATE)
             {
                 updateAsset = true;
                 updateScript = true;
@@ -172,6 +176,7 @@ namespace NCSpeedLight
              });
             if (updateAsset || updateScript)
             {
+                SetTips("检查更新");
                 FileServerListener.Start();
                 yield return new WaitUntil(() => { return FileDownloader.IsDone && string.IsNullOrEmpty(FileDownloader.Error); });
                 FileServerListener.Stop();
@@ -179,6 +184,8 @@ namespace NCSpeedLight
             }
             else
             {
+                FileDownloader.Start(updateAsset, updateScript);
+                yield return new WaitUntil(() => { return FileDownloader.IsDone; });
                 yield return StartCoroutine(StartGame());
             }
         }

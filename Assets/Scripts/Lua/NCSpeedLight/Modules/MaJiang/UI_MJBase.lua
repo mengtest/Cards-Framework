@@ -194,6 +194,11 @@ function UI_MJBase.SetupReadyAndInvite(ready, unready, invite)
 	UIHelper.SetActiveState(this.transform, "center/Ready/Yes", ready);
 	UIHelper.SetActiveState(this.transform, "center/Ready/No", unready);
 	UIHelper.SetActiveState(this.transform, "center/Ready/Invite", invite);
+	if Constants.IOS_CHECK then
+		UIHelper.SetActiveState(this.transform, "center/Ready/Invite", false);
+		UIHelper.SetLocalPosition(this.transform, "center/Ready/Yes", Vector3.New(0, - 201, 0));
+		UIHelper.SetLocalPosition(this.transform, "center/Ready/No", Vector3.New(0, - 201, 0));
+	end
 end
 
 function UI_MJBase.SetInviteBtnGray(status)
@@ -260,7 +265,11 @@ function UI_MJBase.DissolveRoom(go)
 			MJScene.RequestCloseRoom();
 		end;
 		option.DoubleButton = true;
-		option.Content = "解散房间不扣除房卡，是否确定解散？";
+		if Constants.IOS_CHECK then
+			option.Content = "是否解散房间？";
+		else
+			option.Content = "解散房间不扣除房卡，是否确定解散？";
+		end
 		option.Title = "解散房间";
 	else
 		option.OnClickOK =

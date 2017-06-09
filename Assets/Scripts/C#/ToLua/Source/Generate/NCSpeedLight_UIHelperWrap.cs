@@ -19,6 +19,8 @@ public class NCSpeedLight_UIHelperWrap
 		L.RegFunction("GetComponent", GetComponent);
 		L.RegFunction("AddComponent", AddComponent);
 		L.RegFunction("SetEventEnabled", SetEventEnabled);
+		L.RegFunction("SetPosition", SetPosition);
+		L.RegFunction("SetLocalPosition", SetLocalPosition);
 		L.RegFunction("New", _CreateNCSpeedLight_UIHelper);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.EndClass();
@@ -460,6 +462,72 @@ public class NCSpeedLight_UIHelperWrap
 			else
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to method: NCSpeedLight.UIHelper.SetEventEnabled");
+			}
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SetPosition(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Transform), typeof(UnityEngine.Vector3)))
+			{
+				UnityEngine.Transform arg0 = (UnityEngine.Transform)ToLua.ToObject(L, 1);
+				UnityEngine.Vector3 arg1 = ToLua.ToVector3(L, 2);
+				NCSpeedLight.UIHelper.SetPosition(arg0, arg1);
+				return 0;
+			}
+			else if (count == 3 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Transform), typeof(string), typeof(UnityEngine.Vector3)))
+			{
+				UnityEngine.Transform arg0 = (UnityEngine.Transform)ToLua.ToObject(L, 1);
+				string arg1 = ToLua.ToString(L, 2);
+				UnityEngine.Vector3 arg2 = ToLua.ToVector3(L, 3);
+				NCSpeedLight.UIHelper.SetPosition(arg0, arg1, arg2);
+				return 0;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: NCSpeedLight.UIHelper.SetPosition");
+			}
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SetLocalPosition(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Transform), typeof(UnityEngine.Vector3)))
+			{
+				UnityEngine.Transform arg0 = (UnityEngine.Transform)ToLua.ToObject(L, 1);
+				UnityEngine.Vector3 arg1 = ToLua.ToVector3(L, 2);
+				NCSpeedLight.UIHelper.SetLocalPosition(arg0, arg1);
+				return 0;
+			}
+			else if (count == 3 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Transform), typeof(string), typeof(UnityEngine.Vector3)))
+			{
+				UnityEngine.Transform arg0 = (UnityEngine.Transform)ToLua.ToObject(L, 1);
+				string arg1 = ToLua.ToString(L, 2);
+				UnityEngine.Vector3 arg2 = ToLua.ToVector3(L, 3);
+				NCSpeedLight.UIHelper.SetLocalPosition(arg0, arg1, arg2);
+				return 0;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: NCSpeedLight.UIHelper.SetLocalPosition");
 			}
 		}
 		catch(Exception e)

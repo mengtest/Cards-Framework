@@ -219,7 +219,7 @@ namespace NCSpeedLight
                 if (Application.isEditor)
                 {
                     int i = Application.dataPath.LastIndexOf('/');
-                    return Application.dataPath.Substring(0, i + 1) + "/PersistentData/";
+                    return Application.dataPath.Substring(0, i + 1) + "PersistentData/";
                 }
                 else
                 {
@@ -413,6 +413,39 @@ namespace NCSpeedLight
         /// 资源目录
         /// </summary>
         public static string RESOURCE_WORKSPACE = Application.dataPath + "/Resources/";
+
+        /// <summary>
+        /// 内部资源包目录
+        /// </summary>
+        public static string STREAMING_ASSET_BUNDLE_PATH
+        {
+            get
+            {
+                return STREAMING_PATH + "Assets/";
+            }
+        }
+
+        /// <summary>
+        /// 内部脚本包目录
+        /// </summary>
+        public static string STREAMING_SCRIPT_BUNDLE_PATH
+        {
+            get
+            {
+#if UNITY_IOS
+                if (IntPtr.Size == 4)
+                {
+                    return STREAMING_PATH + "Scripts/x86/";
+                }
+                else
+                {
+                    return STREAMING_PATH + "Scripts/x64/";
+                }
+#else
+                return STREAMING_PATH+"Scripts/";
+#endif
+            }
+        }
 
         /// <summary>
         /// 本地资源包目录
@@ -695,6 +728,7 @@ namespace NCSpeedLight
 
         public static bool IOS_CHECK
         {
+            //get { return true; }
             get { return true && Application.platform == RuntimePlatform.IPhonePlayer; }
         }
     }

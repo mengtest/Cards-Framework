@@ -17,9 +17,9 @@ namespace NCSpeedLight
 
         public static ReceiveVoiceCallbackDelegate ReceiveVoiceCallback;
 
-        public static string APP_KEY = "bmdehs6pbinqs";
+        public static string APP_KEY = "k51hidwqk95bb";
 
-        public static string APP_SECRET = "9pJFCVLYeYxbEl";
+        public static string APP_SECRET = "obyA2EEnLFXW";
 
         public static string TOKEN = string.Empty;
 

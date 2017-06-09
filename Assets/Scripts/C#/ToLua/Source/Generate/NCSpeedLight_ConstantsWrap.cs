@@ -46,6 +46,8 @@ public class NCSpeedLight_ConstantsWrap
 		L.RegVar("SCRIPT_BYTE_CODE_MODE", get_SCRIPT_BYTE_CODE_MODE, null);
 		L.RegVar("SCRIPT_BUNDLE_MODE", get_SCRIPT_BUNDLE_MODE, null);
 		L.RegVar("ASSET_BUNDLE_MODE", get_ASSET_BUNDLE_MODE, null);
+		L.RegVar("STREAMING_ASSET_BUNDLE_PATH", get_STREAMING_ASSET_BUNDLE_PATH, null);
+		L.RegVar("STREAMING_SCRIPT_BUNDLE_PATH", get_STREAMING_SCRIPT_BUNDLE_PATH, null);
 		L.RegVar("LOCAL_ASSET_BUNDLE_PATH", get_LOCAL_ASSET_BUNDLE_PATH, null);
 		L.RegVar("LOCAL_SCRIPT_BUNDLE_PATH", get_LOCAL_SCRIPT_BUNDLE_PATH, null);
 		L.RegVar("REMOTE_ASSET_BUNDLE_PATH", get_REMOTE_ASSET_BUNDLE_PATH, set_REMOTE_ASSET_BUNDLE_PATH);
@@ -615,6 +617,34 @@ public class NCSpeedLight_ConstantsWrap
 		try
 		{
 			LuaDLL.lua_pushboolean(L, NCSpeedLight.Constants.ASSET_BUNDLE_MODE);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_STREAMING_ASSET_BUNDLE_PATH(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.STREAMING_ASSET_BUNDLE_PATH);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_STREAMING_SCRIPT_BUNDLE_PATH(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.STREAMING_SCRIPT_BUNDLE_PATH);
 			return 1;
 		}
 		catch(Exception e)
