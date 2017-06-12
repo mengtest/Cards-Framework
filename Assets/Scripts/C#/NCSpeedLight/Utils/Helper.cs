@@ -1137,61 +1137,44 @@ namespace NCSpeedLight
             Directory.CreateDirectory(path);
         }
 
-        public static void CopyDirectory(string srcdir, string desdir, params string[] excludeFileExtension)
+        public static void CopyDirectory(string src, string dest, params string[] exclude)
         {
-            string folderName = srcdir.Substring(srcdir.LastIndexOf("\\") + 1);
-
-            string desfolderdir = desdir + "\\" + folderName;
-
-            if (desdir.LastIndexOf("\\") == (desdir.Length - 1))
+            string[] paths = Directory.GetFileSystemEntries(src);
+            for (int i = 0; i < paths.Length; i++)
             {
-                desfolderdir = desdir + folderName;
-            }
-            string[] filenames = Directory.GetFileSystemEntries(srcdir);
-
-            foreach (string file in filenames)// 遍历所有的文件和目录
-            {
-                if (Directory.Exists(file))// 先当作目录处理如果存在这个目录就递归Copy该目录下面的文件
+                string path = paths[i];
+                path = path.Replace("//", "/");
+                path = path.Replace("\\", "/");
+                bool copy = true;
+                for (int j = 0; j < exclude.Length; j++)
                 {
-
-                    string currentdir = desfolderdir + "\\" + file.Substring(file.LastIndexOf("\\") + 1);
-                    if (!Directory.Exists(currentdir))
+                    string ext = exclude[j];
+                    if (path.EndsWith(ext))
                     {
-                        Directory.CreateDirectory(currentdir);
+                        copy = false;
+                        break;
                     }
-
-                    CopyDirectory(file, desfolderdir);
                 }
-
-                else // 否则直接copy文件
+                if (copy)
                 {
-                    string srcfileName = file.Substring(file.LastIndexOf("\\") + 1);
-
-                    bool exclude = false;
-                    for (int j = 0; j < excludeFileExtension.Length; j++)
+                    if (Directory.Exists(path))
                     {
-                        if (srcfileName.EndsWith(excludeFileExtension[j]))
+                        string folder = path.Substring(path.LastIndexOf("/") + 1);
+                        CopyDirectory(path, dest + folder + "/", exclude);
+                    }
+                    else
+                    {
+                        string file = path.Substring(src.Length);
+                        file = dest + file;
+                        if (Directory.Exists(Path.GetDirectoryName(file)) == false)
                         {
-                            exclude = true;
-                            break;
+                            Directory.CreateDirectory(Path.GetDirectoryName(file));
                         }
+                        File.Copy(path, file, true);
                     }
-                    if (exclude) continue;
-
-                    srcfileName = desfolderdir + "\\" + srcfileName;
-
-
-                    if (!Directory.Exists(desfolderdir))
-                    {
-                        Directory.CreateDirectory(desfolderdir);
-                    }
-
-
-                    File.Copy(file, srcfileName);
                 }
-            }//foreach 
+            }
         }
-
         /// <summary>
         /// 解决AssetBundle.LoadAsset(string,type) 无法映射lua的问题.
         /// </summary>

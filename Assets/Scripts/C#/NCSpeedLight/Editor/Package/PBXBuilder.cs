@@ -69,8 +69,10 @@ namespace NCSpeedLight
 
         public override void Build()
         {
+#if UNITY_IOS
             BuildOptions ops = SetBuildOption();
             BuildPipeline.BuildPlayer(GetBuildScenes(), BIN_PATH, BuildTarget.iOS, ops);
+#endif
         }
 
         private string[] GetBuildScenes()
@@ -245,10 +247,11 @@ namespace NCSpeedLight
             }
         }
 
+
         private static void CopyStreamingFile(string root)
         {
-            Helper.CopyDirectory(Constants.BUILD_ASSET_BUNDLE_PATH, root + "/Data/Raw/Assets/");
-            Helper.CopyDirectory(Constants.BUILD_SCRIPT_BUNDLE_PATH, root + "/Data/Raw/Scripts/");
+            Helper.CopyDirectory(Constants.BUILD_ASSET_BUNDLE_PATH, root + "/Data/Raw/Assets/", ".meta", ".manifest", ".DS_Store");
+            Helper.CopyDirectory(Constants.BUILD_SCRIPT_BUNDLE_PATH, root + "/Data/Raw/Scripts/", ".meta", ".manifest", ".DS_Store");
         }
 #endif
     }

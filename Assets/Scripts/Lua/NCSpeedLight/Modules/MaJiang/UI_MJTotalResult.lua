@@ -37,7 +37,10 @@ function UI_MJTotalResult.OnDestroy()
 end
 
 function UI_MJTotalResult.iOSCheck()
-	UIHelper.SetActiveState(this.transform, "Button/Share", not Constants.IOS_CHECK);
+	if Constants.IOS_CHECK then
+		UIHelper.SetLocalPosition(this.transform, "Button/Back", Vector3.New(0, - 310, 0));
+		UIHelper.SetActiveState(this.transform, "Button/Share", false);
+	end
 end
 
 function UI_MJTotalResult.InitBtnEvent()
