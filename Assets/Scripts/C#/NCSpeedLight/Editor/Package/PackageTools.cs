@@ -57,6 +57,12 @@ namespace NCSpeedLight
             PBXBuilder.Build();
         }
 
+        [MenuItem("Framework/Package/Build Simulator")]
+        public static void BuildSimulator()
+        {
+            SimBuilder.Build();
+        }
+
         public static ScriptBuilder ScriptBuilder = new ScriptBuilder(null, null);
 
         public static AssetBuilder AssetBuilder = new AssetBuilder(null, null);
@@ -66,6 +72,8 @@ namespace NCSpeedLight
         public static APKBuilder APKBuilder = new APKBuilder(null, null);
 
         public static PBXBuilder PBXBuilder = new PBXBuilder(null, null);
+
+        public static SimulatorBuilder SimBuilder = new SimulatorBuilder(null, null);
 
         //[MenuItem("PKG/Build Panel")]
         public static void OpenWindow()

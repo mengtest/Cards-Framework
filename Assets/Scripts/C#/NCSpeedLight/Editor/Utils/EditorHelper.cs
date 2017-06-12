@@ -109,6 +109,7 @@ namespace NCSpeedLight
 
         public static string NormalizePath(string path)
         {
+            path = path.Replace("//", "/");
             return path.Replace("\\", "/");
         }
 
@@ -136,7 +137,7 @@ namespace NCSpeedLight
             return string.Concat(input.Substring(0, pos), newValue, input.Substring(pos + oldValue.Length));
         }
 
-        public static void CollectAssets(string directory, List<string> outfiles)
+        public static void CollectAssets(string directory, List<string> outfiles, params string[] exclude)
         {
             if (Directory.Exists(directory))
             {
@@ -144,25 +145,47 @@ namespace NCSpeedLight
                 for (int i = 0; i < files.Length; i++)
                 {
                     string file = NormalizePath(files[i]);
-                    if (file.EndsWith(".meta") || file.EndsWith(".cs") || file.EndsWith(".js"))
+                    bool avilable = true;
+                    for (int j = 0; j < exclude.Length; j++)
                     {
-                        continue;
+                        string ext = exclude[j];
+                        if (file.EndsWith(ext))
+                        {
+                            avilable = false;
+                            break;
+                        }
                     }
-                    file = file.Substring(Application.dataPath.Length + 1);
-                    file = "Assets/" + file;
-                    outfiles.Add(file);
+                    if (avilable)
+                    {
+                        file = file.Substring(Application.dataPath.Length + 1);
+                        file = "Assets/" + file;
+                        outfiles.Add(file);
+                    }
                 }
                 string[] dirs = Directory.GetDirectories(directory);
                 for (int i = 0; i < dirs.Length; i++)
                 {
-                    CollectAssets(dirs[i], outfiles);
+                    CollectAssets(dirs[i], outfiles, exclude);
                 }
             }
             else if (File.Exists(directory))
             {
-                directory = directory.Substring(Application.dataPath.Length + 1);
-                directory = "Assets/" + directory;
-                outfiles.Add(directory);
+                bool avilable = true;
+                for (int j = 0; j < exclude.Length; j++)
+                {
+                    string ext = exclude[j];
+                    if (directory.EndsWith(ext))
+                    {
+                        avilable = false;
+                        break;
+                    }
+                }
+                if (avilable)
+                {
+                    directory = directory.Substring(Application.dataPath.Length + 1);
+                    directory = "Assets/" + directory;
+                    outfiles.Add(directory);
+                }
             }
         }
 
@@ -213,7 +236,7 @@ namespace NCSpeedLight
             }
         }
 
-        public static void Unzip(string path, string to)
+        public static void UnzipFile(string path, string to)
         {
             //这是根目录的路径  
             string dirPath = to;
@@ -293,6 +316,139 @@ namespace NCSpeedLight
             }
         }
 
+        public static bool ZipFile(IEnumerable<string> sourceList, string zipFilePath, string comment = null, string password = null, int compressionLevel = 6)
+        {
+            bool result = false;
+
+            try
+            {
+                //检测目标文件所属的文件夹是否存在，如果不存在则建立
+                string zipFileDirectory = Path.GetDirectoryName(zipFilePath);
+                if (!Directory.Exists(zipFileDirectory))
+                {
+                    Directory.CreateDirectory(zipFileDirectory);
+                }
+
+                Dictionary<string, string> dictionaryList = PrepareFileSystementities(sourceList);
+
+                using (ZipOutputStream zipStream = new ZipOutputStream(File.Create(zipFilePath)))
+                {
+                    zipStream.Password = password;//设置密码
+                    zipStream.SetComment(comment);//添加注释
+                    zipStream.SetLevel(compressionLevel);//设置压缩等级
+
+                    foreach (string key in dictionaryList.Keys)//从字典取文件添加到压缩文件
+                    {
+                        if (File.Exists(key))//判断是文件还是文件夹
+                        {
+                            FileInfo fileItem = new FileInfo(key);
+
+                            using (FileStream readStream = fileItem.Open(FileMode.Open,
+                                FileAccess.Read, FileShare.Read))
+                            {
+                                ZipEntry zipEntry = new ZipEntry(dictionaryList[key]);
+                                zipEntry.DateTime = fileItem.LastWriteTime;
+                                zipEntry.Size = readStream.Length;
+                                zipStream.PutNextEntry(zipEntry);
+                                int readLength = 0;
+                                byte[] buffer = new byte[1024];
+
+                                do
+                                {
+                                    readLength = readStream.Read(buffer, 0, 1024);
+                                    zipStream.Write(buffer, 0, readLength);
+                                } while (readLength == 1024);
+
+                                readStream.Close();
+                            }
+                        }
+                        else//对文件夹的处理
+                        {
+                            ZipEntry zipEntry = new ZipEntry(dictionaryList[key] + "/");
+                            zipStream.PutNextEntry(zipEntry);
+                        }
+                    }
+
+                    zipStream.Flush();
+                    zipStream.Finish();
+                    zipStream.Close();
+                }
+
+                result = true;
+            }
+            catch (System.Exception ex)
+            {
+                throw new Exception("压缩文件失败", ex);
+            }
+
+            return result;
+        }
+
+        private static Dictionary<string, string> PrepareFileSystementities(IEnumerable<string> sourceFileEntityPathList)
+        {
+            Dictionary<string, string> fileEntityDictionary = new Dictionary<string, string>();//文件字典
+            string parentDirectoryPath = "";
+            foreach (string fileEntityPath in sourceFileEntityPathList)
+            {
+                string path = fileEntityPath;
+                //保证传入的文件夹也被压缩进文件
+                if (path.EndsWith(@"\"))
+                {
+                    path = path.Remove(path.LastIndexOf(@"\"));
+                }
+
+                parentDirectoryPath = Path.GetDirectoryName(path) + @"\";
+
+                if (parentDirectoryPath.EndsWith(@":\\"))//防止根目录下把盘符压入的错误
+                {
+                    parentDirectoryPath = parentDirectoryPath.Replace(@"\\", @"\");
+                }
+
+                //获取目录中所有的文件系统对象
+                Dictionary<string, string> subDictionary = GetAllFileSystemEntities(path, parentDirectoryPath);
+
+                //将文件系统对象添加到总的文件字典中
+                foreach (string key in subDictionary.Keys)
+                {
+                    if (!fileEntityDictionary.ContainsKey(key))//检测重复项
+                    {
+                        fileEntityDictionary.Add(key, subDictionary[key]);
+                    }
+                }
+            }
+            return fileEntityDictionary;
+        }
+
+        /// <summary>
+        /// 获取所有文件系统对象
+        /// </summary>
+        /// <param name="source">源路径</param>
+        /// <param name="topDirectory">顶级文件夹</param>
+        /// <returns>字典中Key为完整路径，Value为文件(夹)名称</returns>
+        private static Dictionary<string, string> GetAllFileSystemEntities(string source, string topDirectory)
+        {
+            Dictionary<string, string> entitiesDictionary = new Dictionary<string, string>();
+            entitiesDictionary.Add(source, source.Replace(topDirectory, ""));
+
+            if (Directory.Exists(source))
+            {
+                //一次性获取下级所有目录，避免递归
+                string[] directories = Directory.GetDirectories(source, "*.*", SearchOption.AllDirectories);
+                foreach (string directory in directories)
+                {
+                    entitiesDictionary.Add(directory, directory.Replace(topDirectory, ""));
+                }
+
+                string[] files = Directory.GetFiles(source, "*.*", SearchOption.AllDirectories);
+                foreach (string file in files)
+                {
+                    entitiesDictionary.Add(file, file.Replace(topDirectory, ""));
+                }
+            }
+
+            return entitiesDictionary;
+        }
+
         private static bool IsDirectory(string path)
         {
 
@@ -301,6 +457,75 @@ namespace NCSpeedLight
                 return true;
             }
             return false;
+        }
+
+        public static void BackupAssetOnPreBuild()
+        {
+            string src = Application.dataPath;
+            string dest = string.Format("{0}/Temp", src);
+            if (AssetDatabase.IsValidFolder("Assets/Temp") == false)
+            {
+                AssetDatabase.CreateFolder("Assets", "Temp");
+            }
+            dest = string.Format("{0}/Resources", src);
+            try
+            {
+                string[] paths = Directory.GetDirectories(dest);
+                for (int i = 0; i < paths.Length; i++)
+                {
+                    dest = paths[i];
+                    dest = NormalizePath(dest);
+                    int index = dest.LastIndexOf("/");
+                    if (index < 0)
+                    {
+                        continue;
+                    }
+                    string folder = dest.Substring(index + 1);
+                    if (folder == "Internal")
+                    {
+                        continue;
+                    }
+                    string from = string.Format("Assets/Resources/{0}", folder);
+                    string to = string.Format("Assets/Temp/{0}", folder);
+                    AssetDatabase.MoveAsset(from, to);
+                }
+            }
+            catch (DirectoryNotFoundException e)
+            {
+                Helper.LogError("BackupAssetOnPreBuild: exception is " + e.Message);
+            }
+            AssetDatabase.Refresh();
+        }
+
+        public static void RestoreAssetOnPostBuild()
+        {
+            string src = Application.dataPath;
+            string dest = string.Format("{0}/Resources", src);
+            dest = string.Format("{0}/Temp", src);
+            try
+            {
+                string[] paths = Directory.GetDirectories(dest);
+                for (int i = 0; i < paths.Length; i++)
+                {
+                    dest = paths[i];
+                    dest = NormalizePath(dest);
+                    int index = dest.LastIndexOf("/");
+                    if (index < 0)
+                    {
+                        continue;
+                    }
+                    string folder = dest.Substring(index + 1);
+                    string from = string.Format("Assets/Temp/{0}", folder);
+                    string to = string.Format("Assets/Resources/{0}", folder);
+                    AssetDatabase.MoveAsset(from, to);
+                }
+                Helper.DeleteDirectory(Application.dataPath + "/Temp");
+            }
+            catch (Exception e)
+            {
+                Helper.LogError("RestoreAssetOnPostBuild: exception is " + e.Message);
+            }
+            AssetDatabase.Refresh();
         }
     }
 }

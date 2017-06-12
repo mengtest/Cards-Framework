@@ -35,6 +35,15 @@ namespace NCSpeedLight
             DontDestroyOnLoad(gameObject);
             Application.targetFrameRate = Constants.TARGET_FRAME_RATE;
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
+            if (Application.platform == RuntimePlatform.WindowsPlayer)
+            {
+                Screen.SetResolution(612, 360, false);
+                UIRoot root = UIHelper.GetComponent(transform, "UIManager", typeof(UIRoot)) as UIRoot;
+                if (root)
+                {
+                    root.scalingStyle = UIRoot.Scaling.Constrained;
+                }
+            }
             Loom.Initialize();
         }
 

@@ -4,40 +4,34 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using UnityEditor;
+using UnityEngine;
 
 namespace NCSpeedLight
 {
-    public class APKBuilder : Builder
+    public class SimulatorBuilder : Builder
     {
-        private static bool PROFILE_VERSION = false;
-        private static string BIN_PATH = "Bin/Cards.apk";
+        private string binPath = "Bin/Cards.exe";
 
-        public APKBuilder(Action preBuild, Action postBuild) : base(preBuild, postBuild) { }
+        private string zipPath = "Bin/Cards.zip";
+
+        private string root = Application.dataPath.Substring(0, Application.dataPath.LastIndexOf("/") + 1) + "Bin/";
+
+        public SimulatorBuilder(Action preBuild, Action postBuild) : base(preBuild, postBuild) { }
 
         public override void Build()
         {
-#if UNITY_ANDROID
+#if UNITY_STANDALONE_WIN
             GenerateBinPath();
-            SetKeyStore();
+            BuildOptions ops = BuildOptions.None;
             EditorHelper.BackupAssetOnPreBuild();
-            BuildPipeline.BuildPlayer(GetBuildScenes(), BIN_PATH, BuildTarget.Android, SetBuildOption());
+            BuildPipeline.BuildPlayer(GetBuildScenes(), binPath, BuildTarget.StandaloneWindows64, ops);
             EditorHelper.RestoreAssetOnPostBuild();
+            //ZipFile();
 #endif
         }
-        private static string[] GetBuildScenes()
+        private string[] GetBuildScenes()
         {
             List<string> names = new List<string>();
-            //foreach (EditorBuildSettingsScene e in EditorBuildSettings.scenes)
-            //{
-            //    if (e == null)
-            //    {
-            //        continue;
-            //    }
-            //    if (e.enabled)
-            //    {
-            //        names.Add(e.path);
-            //    }
-            //}
             names.Add("Assets/Launcher.unity");
             return names.ToArray();
         }
@@ -56,7 +50,8 @@ namespace NCSpeedLight
                     if (fileInfo == null) continue;
                     string fileName = fileInfo.Name;
                     if (string.IsNullOrEmpty(fileName)) continue;
-                    if (fileName.EndsWith(".apk") == false) continue;
+                    if (fileName.EndsWith(".exe") == false) continue;
+
                     string[] dotArray = fileName.Split(new char[] { '.' });
                     if (dotArray == null || dotArray.Length == 0)
                     {
@@ -83,35 +78,17 @@ namespace NCSpeedLight
                     }
                 }
             }
-            BIN_PATH = Helper.StringFormat("Bin/{0}{1}_{2}.apk", Constants.GAME_NAME, datetime, maxIndex);
+            binPath = Helper.StringFormat("{0}{1}{2}_{3}.exe", root, Constants.GAME_NAME, datetime, maxIndex);
+            zipPath = Helper.StringFormat("{0}{1}{2}_{3}.exe", root, Constants.GAME_NAME, datetime, maxIndex);
         }
 
-        private void SetProductName(string name)
+        private void ZipFile()
         {
-            PlayerSettings.productName = name;
-        }
-        private void SetKeyStore()
-        {
-            PlayerSettings.Android.keystoreName = "KEY.keystore";
-            PlayerSettings.Android.keystorePass = "qwer1234";
-            PlayerSettings.Android.keyaliasName = "tp_signed_key";
-            PlayerSettings.Android.keyaliasPass = "qwer1234";
-        }
-        private BuildOptions SetBuildOption()
-        {
-            PlayerSettings.Android.targetDevice = AndroidTargetDevice.ARMv7;
-            BuildOptions ops = BuildOptions.None;
-            if (PROFILE_VERSION)
-            {
-                ops |= BuildOptions.Development;
-                ops |= BuildOptions.AllowDebugging;
-                ops |= BuildOptions.ConnectWithProfiler;
-            }
-            else
-            {
-                ops |= BuildOptions.None;
-            }
-            return ops;
+            List<string> files = new List<string>();
+            files.Add(binPath);
+            files.Add(Path.GetFileNameWithoutExtension(binPath));
+            EditorHelper.ZipFile(files, zipPath);
         }
     }
 }
+

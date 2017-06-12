@@ -17,7 +17,7 @@ namespace NCSpeedLight
         private void ClearAssetBundleTag()
         {
             List<string> assets = new List<string>();
-            EditorHelper.CollectAssets(Constants.RESOURCE_WORKSPACE, assets);
+            EditorHelper.CollectAssets(Constants.RESOURCE_WORKSPACE, assets,".cs",".js",".meta",".DS_Store");
             for (int i = 0; i < assets.Count; i++)
             {
                 string asset = assets[i];
@@ -33,7 +33,7 @@ namespace NCSpeedLight
         {
             List<string> sourceAssets = new List<string>();
             List<string> doneAssets = new List<string>();
-            EditorHelper.CollectAssets(Constants.BUNDLE_ASSET_WORKSPACE, sourceAssets);
+            EditorHelper.CollectAssets(Constants.BUNDLE_ASSET_WORKSPACE, sourceAssets, ".cs", ".js", ".meta", ".DS_Store");
             for (int i = 0; i < sourceAssets.Count; i++)
             {
                 string asset = sourceAssets[i];

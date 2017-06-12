@@ -21,7 +21,7 @@ namespace NCSpeedLight
         /// <summary>
         /// 游戏名称.
         /// </summary>
-        public static string GAME_NAME = "PPHZ";
+        public static string GAME_NAME = "QYHZ";
 
         /// <summary>
         /// 公司名称
@@ -63,7 +63,7 @@ namespace NCSpeedLight
                 }
                 else
                 {
-                    return false;
+                    return true;
                 }
             }
         }
@@ -221,6 +221,11 @@ namespace NCSpeedLight
                     int i = Application.dataPath.LastIndexOf('/');
                     return Application.dataPath.Substring(0, i + 1) + "PersistentData/";
                 }
+                else if (Application.platform == RuntimePlatform.WindowsPlayer)
+                {
+                    int i = Application.streamingAssetsPath.LastIndexOf('/');
+                    return Application.streamingAssetsPath.Substring(0, i + 1) + "PersistentData/";
+                }
                 else
                 {
                     return Application.persistentDataPath + "/";
@@ -311,7 +316,7 @@ namespace NCSpeedLight
 #elif UNITY_IPHONE
                 return "iOS";
 #else
-    return string.Empty;        
+                return string.Empty;        
 #endif
             }
         }
@@ -442,7 +447,7 @@ namespace NCSpeedLight
                     return STREAMING_PATH + "Scripts/x64/";
                 }
 #else
-                return STREAMING_PATH+"Scripts/";
+                return STREAMING_PATH + "Scripts/";
 #endif
             }
         }
@@ -454,18 +459,7 @@ namespace NCSpeedLight
         {
             get
             {
-                if (Application.isMobilePlatform || Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.OSXPlayer)
-                {
-                    return Application.persistentDataPath + "/Assets/";
-                }
-                else if (Application.isEditor)
-                {
-                    return DATA_PATH + "Assets/";
-                }
-                else
-                {
-                    return string.Empty;
-                }
+                return DATA_PATH + "Assets/";
             }
         }
 
@@ -476,18 +470,7 @@ namespace NCSpeedLight
         {
             get
             {
-                if (Application.isMobilePlatform || Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.OSXPlayer)
-                {
-                    return Application.persistentDataPath + "/Scripts/";
-                }
-                else if (Application.isEditor)
-                {
-                    return DATA_PATH + "Scripts/";
-                }
-                else
-                {
-                    return string.Empty;
-                }
+                return DATA_PATH + "Scripts/";
             }
         }
 
