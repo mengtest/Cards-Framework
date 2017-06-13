@@ -1,0 +1,35 @@
+ManifestFileVersion: 0
+CRC: 563208218
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: f123bfd2be2c42a8feec79efb26fc30b
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 0520077050483de6babb9bd310d40764
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Effect/MaJiang/kaiju/8.mat
+- Assets/Resources/Raw/Effect/MaJiang/kaiju/6.mat
+- Assets/Resources/Raw/Effect/MaJiang/kaiju/7.mat
+- Assets/Resources/Raw/Effect/MaJiang/kaiju/glow_00009.png
+- Assets/Resources/Raw/Effect/MaJiang/kaiju/Effects_Textures_1012.png
+- Assets/Resources/Raw/Effect/MaJiang/kaiju/Effects_Textures_0129.png
+- Assets/Resources/Raw/Effect/MaJiang/kaiju/2.mat
+- Assets/Resources/Raw/Effect/MaJiang/kaiju/particle_00004_Alpha.png
+- Assets/Resources/Raw/Effect/MaJiang/kaiju/1.mat
+- Assets/Resources/Raw/Effect/MaJiang/kaiju/3.mat
+- Assets/Resources/Raw/Effect/MaJiang/kaiju/KJ-5.png
+- Assets/Resources/Raw/Effect/MaJiang/kaiju/2-1.mat
+- Assets/Resources/Raw/Effect/MaJiang/kaiju/4.mat
+- Assets/Resources/Raw/Effect/MaJiang/kaiju/Effects_Textures_1120.png
+- Assets/Resources/Raw/Effect/MaJiang/kaiju/2-2.mat
+Dependencies:
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_effect_majiang_operate.asset

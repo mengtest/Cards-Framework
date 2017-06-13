@@ -1,0 +1,48 @@
+ManifestFileVersion: 0
+CRC: 3339948039
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 7f933315695382fb8a90b046b9cc858b
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c5089152672fec2c40a3419b9c16209c
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 111
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Scenes/MJScene/Model/Effect/yuanpan/nan.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/Effect/yuanpan/texiao.controller
+- Assets/Resources/Raw/Scenes/MJScene/Model/Effect/yuanpan/texiao.fbx
+- Assets/Resources/Raw/Scenes/MJScene/Model/Effect/yuanpan/MJ_dizuo.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/Effect/yuanpan/Mj_jishi.png
+- Assets/Resources/Raw/Scenes/MJScene/Model/Effect/yuanpan/MJ_dizuo.jpg
+- Assets/Resources/Raw/Scenes/MJScene/Model/Effect/yuanpan/dong.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/Effect/yuanpan/bei.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/Effect/yuanpan/xi.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/Effect/yuanpan/majiangzuo-donghua.anim
+Dependencies:
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_scenes_mjscene_model_effect_yuanpan_materials.asset

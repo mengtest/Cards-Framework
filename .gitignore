@@ -15,10 +15,6 @@
 /AssetBundles/iOS/
 /AssetBundles/Win/
 /AssetBundles/Windows/
-/Assets/StreamingAssets/Scripts
-/Assets/StreamingAssets/Assets
-/Assets/StreamingAssets/Scripts.meta
-/Assets/StreamingAssets/Assets.meta
 /Tools/proto-gen-pb/bin/Debug/
 /Tools/proto-gen-pb/.vs
 /Tools/protocol/protocLua/Temp

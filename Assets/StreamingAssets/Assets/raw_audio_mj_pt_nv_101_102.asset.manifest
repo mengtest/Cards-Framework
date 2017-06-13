@@ -1,0 +1,54 @@
+ManifestFileVersion: 0
+CRC: 940539677
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 4658c9d7abf2883ee0ebb57b327a0ef3
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c516f2a3b2b6b67ef759f6410a790acd
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/4tong.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/3wan.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/7wan.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/5tiao.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/9tiao.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/4tiao.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/9wan.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/xifeng.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/hongzhong.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/facai.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/nanfeng.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/2wan.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/7tong.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/5wan.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/6wan.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/gang.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/7tiao.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/1tiao.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/zimo.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/beifeng.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/peng.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/8wan.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/hu.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/2tiao.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/8tiao.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/chi.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/dongfeng.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/5tong.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/2tong.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/6tiao.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/8tong.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/3tong.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/6tong.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/1tong.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/3tiao.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/1wan.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/baiban.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/4wan.ogg
+- Assets/Resources/Raw/Audio/MJ/PT/Nv_101_102/9tong.ogg
+Dependencies: []

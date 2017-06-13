@@ -1,0 +1,46 @@
+ManifestFileVersion: 0
+CRC: 3878058604
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 8dadbb0fa3e09ba585a8ec1efe7473e4
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: d3fbe2642b8d8b8a965f78ca5685daa7
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 111
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Scenes/MJScene/Model/Arrow/ziyuan/tubiao.fbx
+- Assets/Resources/Raw/Scenes/MJScene/Model/Arrow/ziyuan/zhizhen.anim
+- Assets/Resources/Raw/Scenes/MJScene/Model/Arrow/ziyuan/1070-1.png
+- Assets/Resources/Raw/Scenes/MJScene/Model/Arrow/ziyuan/tietu.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/Arrow/ziyuan/shanguang 1.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/Arrow/ziyuan/tubiao.controller
+- Assets/Resources/Raw/Scenes/MJScene/Model/Arrow/ziyuan/shanguang.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/Arrow/ziyuan/324-1.bmp
+- Assets/Resources/Raw/Scenes/MJScene/Model/Arrow/ziyuan/tubiao.jpg
+- Assets/Resources/Raw/Scenes/MJScene/Model/Arrow/ziyuan/pingmian.FBX
+Dependencies:
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_scenes_mjscene_model_arrow_ziyuan_materials.asset

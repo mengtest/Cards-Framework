@@ -1,0 +1,93 @@
+ManifestFileVersion: 0
+CRC: 1811392652
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: fd98425c8bf59a266bec8ce933068a96
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 2fd746a56eb83a4e0546454cd9323456
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
+- Class: 111
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 87336b627a85f154ab2b074b8a8c3a02, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 23161892fae3ff54b97a4cef4fe85efa, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 66ca9c6e5cbd4544ab22016a27d817a4, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 198
+  Script: {instanceID: 0}
+- Class: 199
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Scenes/MJScene/MJScene.prefab
+Dependencies:
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_effect_majiang_player_gang.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_effect_majiang_player_hu.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_effect_majiang_player_chi.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_effect_majiang_player_peng.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_effect_majiang_bawang.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_effect_majiang_zuomian_peng.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_effect_majiang_zuomian-hu.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_effect_majiang_gang.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_effect_majiang_room.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_scenes_mjscene_model_arrow_ziyuan.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_scenes_mjscene_model_cards.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_scenes_mjscene_model.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_scenes_mjscene_model_dice_1.5.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_scenes_mjscene_model_effect_yuanpan.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_scenes_mjscene_model_dice_2.4.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_scenes_mjscene_model_dice_3.5.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_scenes_mjscene_model_dice_4.6.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_scenes_mjscene_model_roomnumber.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_scenes_mjscene_model_dice_2.6.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_scenes_mjscene_model_dice_2.2.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_scenes_mjscene_model_dice_ziyuan.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_scenes_mjscene_model_dice_1.1.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_scenes_mjscene_model_dice_3.6.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_scenes_mjscene_model_dice_1.3.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_scenes_mjscene_model_dice_1.2.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_scenes_mjscene_model_materials.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_scenes_mjscene_model_dice_5.6.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_scenes_mjscene_model_dice_2.5.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_scenes_mjscene_model_dice_1.6.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_scenes_mjscene_model_dice_2.3.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_scenes_mjscene_model_dice_5.5.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_scenes_mjscene_model_dice_4.5.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_scenes_mjscene_model_dice_3.3.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_scenes_mjscene_model_dice_3.4.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_scenes_mjscene_model_dice_1.4.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_scenes_mjscene_model_dice_4.4.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_scenes_mjscene_model_dice_6.6.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_effect_majiang_chongguan.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_effect_majiang_hu.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_effect_majiang_mailei.asset
+- G:/Projects/MJ/MaJiang_Lua/AssetBundles/iOS/Assets/raw_effect_majiang_bawangchongguang.asset
