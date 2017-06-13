@@ -70,8 +70,10 @@ namespace NCSpeedLight
         public override void Build()
         {
 #if UNITY_IOS
+            EditorHelper.BackupAssetOnPreBuild();
             BuildOptions ops = SetBuildOption();
             BuildPipeline.BuildPlayer(GetBuildScenes(), BIN_PATH, BuildTarget.iOS, ops);
+            EditorHelper.RestoreAssetOnPostBuild();
 #endif
         }
 
