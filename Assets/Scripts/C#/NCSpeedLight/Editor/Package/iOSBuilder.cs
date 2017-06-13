@@ -144,7 +144,7 @@ namespace NCSpeedLight
 
             string shareSDKZipFile = Application.dataPath + "/Plugins/iOS/ShareSDK/ShareSDK.zip";
             string shareSDKExtractPath = pathToBuiltProject + "/Frameworks/Plugins/iOS/";
-            EditorHelper.Unzip(shareSDKZipFile, shareSDKExtractPath);
+            EditorHelper.UnzipFile(shareSDKZipFile, shareSDKExtractPath);
             //删除多余解压文件
             if (Directory.Exists(shareSDKExtractPath + "/__MACOSX"))
             {

@@ -26,7 +26,7 @@ UI_MJBase = {
 	IsRecording = false, -- 是否正在录音
 	RecordStartPos = Vector3.zero,
 	RecordSuccess = false,
-	RecordInterval = 0.8,
+	RecordInterval = 0.5,
 	LastRecordTime = - 1,
 }
 
@@ -258,7 +258,6 @@ function UI_MJBase.OnClickSetting(go)
 end
 
 function UI_MJBase.DissolveRoom(go)
-	local option = ConfirmDialogOption.New();
 	local titleSprite;
 	local content;
 	local onClickOK;

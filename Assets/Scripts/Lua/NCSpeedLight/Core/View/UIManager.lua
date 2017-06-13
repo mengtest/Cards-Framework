@@ -8,32 +8,6 @@
 -- Modify History:
 --
 -----------------------------------------------
-ConfirmDialogOption =
-{
-	Title = "提示",
-	TitleFontSize = 35,
-	TitleSprite,
-	ShowTitleSprite = false,
-	Content = "您确定吗",
-	ContentFontSize = 30,
-	DoubleButton = false,
-	OnClickOK = nil,
-	OnClickCancel = nil,
-}
-ConfirmDialogOption.__index = ConfirmDialogOption;
-function ConfirmDialogOption.New(title, content, doubleButton, onClickOK, onClickCancel)
-	local obj = {};
-	setmetatable(obj, ConfirmDialogOption);
-	obj.Title = title;
-	obj.Content = content;
-	obj.DoubleButton = doubleButton;
-	obj.OnClickOK = onClickOK;
-	obj.OnClickCancel = onClickCancel;
-	obj.TitleFontSize = 35;
-	obj.ContentFontSize = 30;
-	return obj;
-end
-
 ProgressDialogOption =
 {
 	AutoClose = false,

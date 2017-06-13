@@ -44,7 +44,7 @@ function HallScene.Initialize()
 end
 
 function HallScene.Begin()
-	Log.Info("HallScene.Begin");
+	Log.Info("==> Begin <==");
 	HallScene.OpenHZCreateRoomConfig();
 	AudioManager.PlayMusic({BGMusic.Hall}, false);
 	HallScene.CurrentFBCloseTime = 300;
@@ -68,6 +68,7 @@ end
 
 function HallScene.End()
 	HallScene.UnRegisterNetEvent();
+	Log.Info("==> End <==");
 end
 
 function HallScene.OnApplicationPause(status)
@@ -254,7 +255,7 @@ function HallScene.ReturnPlayerInFb(evt)
 	Log.Info("ReturnPlayerInFb: msg.m_Result is " .. msg.m_Result);
 	if msg.m_Result == 0 then
 		Log.Info("ReturnPlayerInFb: 玩家在副本中");
-		-- 房间已存在，提示是否进入
+		-- 房间已存在，直接进入
 		HallScene.CurrentFBInfo = msg;
 		HallScene.CurrentFBID = msg.m_FBID;
 		HallScene.CurrentFBType = msg.m_FBTypeID;
@@ -262,14 +263,6 @@ function HallScene.ReturnPlayerInFb(evt)
 		HallScene.CurrentFBPlayerCount = msg.m_playerCount;
 		HallScene.CurrentFBNeedReconnect = true;
 		SceneManager.Goto(SceneName.MJScene);
-		-- local option = ConfirmDialogOption.New("提示", "当前房间未解散，是否进入？", true,
--- function()
--- 	HallScene.CurrentFBNeedReconnect = true;
--- 	SceneManager.Goto(SceneName.MJScene);
--- end,
--- function()
--- end);
--- UIManager.OpenConfirmDialog(option);
 	else
 		Log.Info("ReturnPlayerInFb: 玩家不在副本中");
 	end

@@ -41,9 +41,9 @@ function UI_NormalLogin.Start()
 			this.ipPassword.value = firstInfo.password;
 		end
 	end
-	UIHelper.SetButtonEvent(this.transform, "Btn/Button (login)", UI_NormalLogin.onClickLogin);
-	UIHelper.SetButtonEvent(this.transform, "Btn/Button (regist)", UI_NormalLogin.onClickRegister);
-	UIHelper.SetButtonEvent(this.transform, "Input (account)", UI_NormalLogin.onClickArrow);
+	UIHelper.SetButtonEvent(this.transform, "Btn/Button (login)", UI_NormalLogin.OnClickLogin);
+	UIHelper.SetButtonEvent(this.transform, "Btn/Button (regist)", UI_NormalLogin.OnClickRegister);
+	UIHelper.SetButtonEvent(this.transform, "Input (account)", UI_NormalLogin.OnClickArrow);
 end
 
 -- Use this for destruction.
@@ -55,7 +55,7 @@ end
 function UI_NormalLogin.OnPostReload()
 end
 
-function UI_NormalLogin.onClickLogin(go)
+function UI_NormalLogin.OnClickLogin(go)
 	if string.len(this.lbAccount.text) == 0 then
 		UIManager.OpenTipsDialog("请输入账号");
 		return;
@@ -65,27 +65,26 @@ function UI_NormalLogin.onClickLogin(go)
 	end
 	LoginScene.currentAccount = this.lbAccount.text;
 	LoginScene.currentPassword = this.ipPassword.value;
-	-- LoginScene:AddLoginRecord(this.lbAccount.text, this.ipPassword.value);
 	LoginScene.RequestLogin(this.lbAccount.text, this.ipPassword.value);
 end
 
-function UI_NormalLogin.onClickRegister(go)
+function UI_NormalLogin.OnClickRegister(go)
 	UIManager.CloseWindow(UIName.UI_NormalLogin);
 	UIManager.OpenWindow(UIName.UI_Register);
 end
 
-function UI_NormalLogin.onClickArrow(go)
+function UI_NormalLogin.OnClickArrow(go)
 	this.isRecordPanelOpen = not this.isRecordPanelOpen;
 	if this.isRecordPanelOpen == true then
 		this.recordLoginInfo = {};
-		UI_NormalLogin.displayRecordPanel();
+		UI_NormalLogin.DisplayRecordPanel();
 	else
-		UI_NormalLogin.clearRecordPanel();
+		UI_NormalLogin.ClearRecordPanel();
 		this.recordLoginInfo = nil;
 	end
 end
 
-function UI_NormalLogin.displayRecordPanel()
+function UI_NormalLogin.DisplayRecordPanel()
 	local bg = this.transform:Find("Panel/Sprite"):GetComponent("UISprite");
 	local panel = this.transform:Find("Panel/Accounts");
 	local item = this.transform:Find("Panel/CloneAccount");
@@ -102,8 +101,8 @@ function UI_NormalLogin.displayRecordPanel()
 			childItem.gameObject:SetActive(true);
 			childItem.name = info.account;
 			NCSpeedLight.UIHelper.SetLabelText(childItem, "Label", info.account);
-			NCSpeedLight.UIHelper.SetButtonEvent(childItem, "Label", onClickAccountItem);
-			NCSpeedLight.UIHelper.SetButtonEvent(childItem, "Delete", onClickDeleteItem);
+			NCSpeedLight.UIHelper.SetButtonEvent(childItem, "Label", UI_NormalLogin.OnClickAccountItem);
+			NCSpeedLight.UIHelper.SetButtonEvent(childItem, "Delete", UI_NormalLogin.OnClickDeleteItem);
 			local delete = childItem:Find("Delete");
 			local label = childItem:Find("Label");
 			this.recordLoginInfo[i] = {childItem.gameObject, label.gameObject, delete.gameObject, info};
@@ -122,7 +121,7 @@ function UI_NormalLogin.displayRecordPanel()
 			if grid ~= nil then
 				grid.enabled = true;
 			end
-			local bgHeight = UI_NormalLogin.getRecordPanelHeight(index);
+			local bgHeight = UI_NormalLogin.GetRecordPanelHeight(index);
 			bg.height = bgHeight;
 			index = index + 1;
 			this.recordLoginInfo[index] = {otherAccountItemClone.gameObject, nil, nil, nil};
@@ -134,7 +133,7 @@ function UI_NormalLogin.displayRecordPanel()
 	end
 end
 
-function UI_NormalLogin.getRecordPanelHeight(count)
+function UI_NormalLogin.GetRecordPanelHeight(count)
 	if count == 1 then
 		return 130;
 	elseif count == 2 then
@@ -146,7 +145,7 @@ function UI_NormalLogin.getRecordPanelHeight(count)
 	end
 end
 
-function UI_NormalLogin.clearRecordPanel()
+function UI_NormalLogin.ClearRecordPanel()
 	for i = 1, #this.recordLoginInfo do
 		local item = this.recordLoginInfo[i];
 		if item ~= nil and item[1] ~= nil then
@@ -155,9 +154,9 @@ function UI_NormalLogin.clearRecordPanel()
 	end
 end
 
-function UI_NormalLogin.onClickAccountItem(go)
+function UI_NormalLogin.OnClickAccountItem(go)
 	this.isRecordPanelOpen = not this.isRecordPanelOpen;
-	local info = UI_NormalLogin.TryGetLoginRecordInfo(go);
+	local info = UI_NormalLogin.GetLoginRecordInfo(go);
 	if info ~= nill then
 		if this.lbAccount ~= nil then
 			this.lbAccount.text = info.account;
@@ -170,23 +169,23 @@ function UI_NormalLogin.onClickAccountItem(go)
 	if alphaTweener ~= nil then
 		alphaTweener:Play(false);
 	end
-	UI_NormalLogin.clearRecordPanel();
+	UI_NormalLogin.ClearRecordPanel();
 end
 
-function UI_NormalLogin.onClickDeleteItem(go)
-	local info = TryGetLoginRecordInfo(go);
+function UI_NormalLogin.OnClickDeleteItem(go)
+	local info = UI_NormalLogin.GetLoginRecordInfo(go);
 	if info ~= nil then
 		LoginScene.RemoveLoginRecord(info.account, info.password);
 	end
-	UI_NormalLogin.clearRecordPanel();
+	UI_NormalLogin.ClearRecordPanel();
 	this.isRecordPanelOpen = true;
-	UI_NormalLogin.displayRecordPanel();
+	UI_NormalLogin.DisplayRecordPanel();
 end
 
 function UI_NormalLogin.onClickOtherAccount(go)
 end
 
-function UI_NormalLogin.TryGetLoginRecordInfo(go)
+function UI_NormalLogin.GetLoginRecordInfo(go)
 	UnityEngine.GameObject.Destroy(go);
 	for i = 1, #this.recordLoginInfo do
 		local info = this.recordLoginInfo[i];
@@ -198,4 +197,4 @@ function UI_NormalLogin.TryGetLoginRecordInfo(go)
 			return item4;
 		end
 	end
-end
+end 

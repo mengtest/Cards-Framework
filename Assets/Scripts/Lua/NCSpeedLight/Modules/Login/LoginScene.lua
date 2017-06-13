@@ -232,7 +232,7 @@ function LoginScene.AddLoginRecord(accountStr, passwordStr, latestAreaStr, lates
 		end
 	end
 	LoginScene.LoginRecord = info;
-	LoginScene.SaveLoginRecordFile();
+	LoginScene.SaveLoginRecordConfig();
 end
 
 function LoginScene.ExistRecord(accountStr)
@@ -258,10 +258,10 @@ function LoginScene.RemoveLoginRecord(accountStr, passwordStr)
 			end
 		end
 	end
-	LoginScene.SaveLoginRecordFile();
+	LoginScene.SaveLoginRecordConfig();
 end
 
-function LoginScene.SaveLoginRecordFile()
+function LoginScene.SaveLoginRecordConfig()
 	local path = Constants.DATA_PATH .. "Config/LoginRecord.bytes";
 	local buffer = NetManager.EncodePB(PBMessage.CFG_LoginRecord, LoginScene.LoginRecord);
 	Utility.SaveFile(path, buffer);
