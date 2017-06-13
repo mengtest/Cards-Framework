@@ -45,22 +45,22 @@ namespace NCSpeedLight
 #endif
         }
 
-        [MenuItem("Framework/Package/Build APK")]
-        public static void BuildAPK()
+        [MenuItem("Framework/Package/Build iOS")]
+        public static void BuildiOS()
         {
-            APKBuilder.Build();
+            iOSBuilder.Build();
         }
 
-        [MenuItem("Framework/Package/Build PBX")]
-        public static void BuildPBX()
+        [MenuItem("Framework/Package/Build Android")]
+        public static void BuildAndroid()
         {
-            PBXBuilder.Build();
+            AndroidBuilder.Build();
         }
 
-        [MenuItem("Framework/Package/Build Simulator")]
-        public static void BuildSimulator()
+        [MenuItem("Framework/Package/Build Windows")]
+        public static void BuildWindows()
         {
-            SimBuilder.Build();
+            WindowsBuilder.Build();
         }
 
         public static ScriptBuilder ScriptBuilder = new ScriptBuilder(null, null);
@@ -69,11 +69,11 @@ namespace NCSpeedLight
 
         public static ABTagBuilder ABTagBuilder = new ABTagBuilder(null, null);
 
-        public static APKBuilder APKBuilder = new APKBuilder(null, null);
+        public static AndroidBuilder AndroidBuilder = new AndroidBuilder(null, null);
 
-        public static PBXBuilder PBXBuilder = new PBXBuilder(null, null);
+        public static iOSBuilder iOSBuilder = new iOSBuilder(null, null);
 
-        public static SimulatorBuilder SimBuilder = new SimulatorBuilder(null, null);
+        public static WindowsBuilder WindowsBuilder = new WindowsBuilder(null, null);
 
         //[MenuItem("PKG/Build Panel")]
         public static void OpenWindow()
@@ -103,7 +103,7 @@ namespace NCSpeedLight
                     CopyScripts();
                     CopyAssets();
                     MoveResourcesToR();
-                    APKBuilder.Build();
+                    AndroidBuilder.Build();
                     MoveRToResources();
                 }
                 if (GUILayout.Button("Build AssetBundle Tag", GUILayout.Width(295)))

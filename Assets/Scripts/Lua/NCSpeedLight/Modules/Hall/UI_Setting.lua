@@ -62,17 +62,12 @@ function UI_Setting.OnDestroy()
 end
 
 function UI_Setting.OnClickVersion()
-	local option = ConfirmDialogOption:New();
-	option.OnClickOK =
+	UIManager.OpenConfirmDialog(nil, nil, "是否清空缓存文件", true,
 	function()
 		Helper.DeleteDirectory(Constants.LOCAL_ASSET_BUNDLE_PATH, true);
 		Helper.DeleteDirectory(Constants.LOCAL_SCRIPT_BUNDLE_PATH, true);
 		UIManager.OpenTipsDialog("删除成功");
-	end;
-	option.DoubleButton = true;
-	option.Content = "是否删除资源文件？";
-	option.Title = "提  示";
-	UIManager.OpenConfirmDialog(option);
+	end, nil);
 end
 
 function UI_Setting.OnClickClose(go)

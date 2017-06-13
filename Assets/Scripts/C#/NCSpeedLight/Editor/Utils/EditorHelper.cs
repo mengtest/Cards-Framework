@@ -343,8 +343,7 @@ namespace NCSpeedLight
                         {
                             FileInfo fileItem = new FileInfo(key);
 
-                            using (FileStream readStream = fileItem.Open(FileMode.Open,
-                                FileAccess.Read, FileShare.Read))
+                            using (FileStream readStream = fileItem.Open(FileMode.Open,FileAccess.Read, FileShare.ReadWrite))
                             {
                                 ZipEntry zipEntry = new ZipEntry(dictionaryList[key]);
                                 zipEntry.DateTime = fileItem.LastWriteTime;
@@ -376,7 +375,7 @@ namespace NCSpeedLight
 
                 result = true;
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception("压缩文件失败", ex);
             }

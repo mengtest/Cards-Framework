@@ -259,28 +259,29 @@ end
 
 function UI_MJBase.DissolveRoom(go)
 	local option = ConfirmDialogOption.New();
+	local titleSprite;
+	local content;
+	local onClickOK;
 	if MJPlayer.Hero:IsRoomMaster() then
-		option.OnClickOK =
+		onClickOK =
 		function()
 			MJScene.RequestCloseRoom();
 		end;
-		option.DoubleButton = true;
 		if Constants.IOS_CHECK then
-			option.Content = "是否解散房间？";
+			content = "是否解散房间？";
 		else
-			option.Content = "解散房间不扣除房卡，是否确定解散？";
+			content = "解散房间不扣除房卡，是否确定解散？";
 		end
-		option.Title = "解散房间";
+		titleSprite = "TC-";
 	else
-		option.OnClickOK =
+		onClickOK =
 		function()
 			SceneManager.Goto(SceneName.HallScene);
 		end;
-		option.DoubleButton = true;
-		option.Content = "确定退出吗？";
-		option.Title = "返回大厅";
+		content = "确定退出吗？";
+		titleSprite = "TC-1";
 	end
-	UIManager.OpenConfirmDialog(option);
+	UIManager.OpenConfirmDialog(nil, titleSprite, content, true, onClickOK);
 	
 end
 

@@ -1149,8 +1149,7 @@ function MJScene.ReturnRoomMasterDissolve(evt)
 	end
 	Log.Info("ReturnRoomMasterDissolve: msg.request is " .. tostring(msg.request));
 	if msg.request == 0 then
-		local option = ConfirmDialogOption:New();
-		option.OnClickOK =
+		UIManager.OpenConfirmDialog(nil, nil, "房间已解散,点击确定退出房间", false,
 		function()
 			UIManager.CloseWindow(UIName.UI_MJRequestDissolve);
 			if HallScene.CurrentFBRound > 1 then
@@ -1158,17 +1157,9 @@ function MJScene.ReturnRoomMasterDissolve(evt)
 			else
 				SceneManager.Goto(SceneName.HallScene);
 			end
-		end;
-		option.DoubleButton = false;
-		option.Content = "房间已解散,点击确定退出房间";
-		option.Title = "提  示";
-		UIManager.OpenConfirmDialog(option);
+		end, nil);
 	elseif msg.request == 3 then
 		UIManager.CloseAllWindowsExcept(UIName.UI_MJBase);
-		local option = ConfirmDialogOption:New();
-		option.DoubleButton = false;
-		option.Content = "房间已解散,点击确定退出房间";
-		option.Title = "提  示";
 		local content = "[9F2D38]因玩家";
 		for key, value in pairs(UI_MJRequestDissolve.Status) do
 			if value == 1 then
@@ -1177,7 +1168,7 @@ function MJScene.ReturnRoomMasterDissolve(evt)
 		end
 		content = content .. "不同意，解散失败[-]";
 		option.Content = content;
-		UIManager.OpenConfirmDialog(option);
+		UIManager.OpenConfirmDialog(nil, nil, content, false);
 	end
 end
 

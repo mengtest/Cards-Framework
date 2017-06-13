@@ -176,7 +176,7 @@ namespace NCSpeedLight
             {
                 OnPostBuildPlayerEvent(target, pathToBuiltProject);
             }
-            Helper.Log(string.Format("Success build ({0}) : {1}", target, pathToBuiltProject));
+            Helper.Log(string.Format("Build Success ({0}) : {1}", target, pathToBuiltProject));
         }
 
         /// <summary>

@@ -51,6 +51,7 @@ function LoginScene.Initialize()
 		end
 		NetManager.RegisterEvent(GameMessage.GM_RESTORE_CONNECT_FROM_OFFLINEHANG_FAILED, LoginScene.RecvReconnectToLogicServerFail);
 		NetManager.RegisterEvent(GameMessage.GM_RESTORE_CONNECT_FROM_OFFLINEHANG_OK, LoginScene.RecvReconnectToLogicServerSuccess);
+		NetManager.RegisterEvent(GameMessage.GM_KICKOFF_PLAYER, LoginScene.RecvKickOff);
 	end
 end
 
@@ -499,6 +500,13 @@ end
 
 function LoginScene.RecvReconnectToLogicServerFail(evt)
 	Log.Info("RecvReconnectToLogicServerFail");
+end
+
+function LoginScene.RecvKickOff(evt)
+	Log.Info("RecvKickOff");
+	if SceneManager.CurrentScene ~= LoginScene then
+		UIManager.OpenConfirmDialog(nil, nil, "您的账号已在其他设备登录,请重新登录", false, function() SceneManager.Goto(SceneName.LoginScene) end, nil);
+	end
 end
 
 function LoginScene.ReqAccountRoles()

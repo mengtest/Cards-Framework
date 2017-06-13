@@ -93,7 +93,6 @@ end
 
 -- 打开窗口
 function UIManager.OpenWindow(windowName)
-	-- Log.Info("OpenWindow: " .. windowName);
 	local windowInfo = UIManager.GetWindowInfo(windowName);
 	if windowInfo ~= nil then
 		return windowInfo.GO;
@@ -119,7 +118,6 @@ function UIManager.ReopenCurrentWindow()
 end
 
 function UIManager.CloseWindow(windowName)
-	-- Log.Info("CloseWindow: " .. windowName);
 	local windowInfo = UIManager.GetWindowInfo(windowName);
 	if windowInfo ~= nil then
 		if windowInfo.GO ~= nil then
@@ -199,11 +197,7 @@ function UIManager.IsWindowOpening(windowName)
 	return UIManager.Windows[windowName] ~= nil;
 end
 
-function UIManager.OpenConfirmDialog(option)
-	if option == nil then
-		Log.Error('Can not open ConfirmDialog,please input option.');
-		return;
-	end
+function UIManager.OpenConfirmDialog(title, titleSprite, content, doubleBtn, onClickOK, onClickCancel)
 	if UIManager.ConfirmDialog == nil then
 		local assetPath = "Bundle/Prefab/UI/Dialog/UI_Confirm";
 		local go = AssetManager.LoadAsset(assetPath, typeof(UnityEngine.GameObject));
@@ -212,49 +206,45 @@ function UIManager.OpenConfirmDialog(option)
 	end
 	local dialog = UIManager.ConfirmDialog;
 	if dialog ~= nil then
-		local titleSprite = dialog.transform:Find("BG/Title"):GetComponent(typeof(UISprite));
-		local contentLabel = dialog.transform:Find("Label_Content"):GetComponent(typeof(UILabel));
-		local titleLabel = dialog.transform:Find("Label_Title"):GetComponent(typeof(UILabel));
-		if titleSprite ~= nil then
-			titleSprite.enabled = option.ShowTitleSprite;
-			if option.ShowTitleSprite == true then
-				titleSprite.spriteName = option.TitleSprite;
-			end
+		if title ~= nil then
+			UIHelper.SetLabelText(dialog.transform, "LB_Title", title);
+			UIHelper.SetActiveState(dialog.transform, "LB_Title", true);
+			UIHelper.SetActiveState(dialog.transform, "SP_Title", false);
+		elseif titleSprite ~= nil then
+			UIHelper.SetSpriteName(dialog.transform, "SP_Title", titleSprite);
+			UIHelper.SetActiveState(dialog.transform, "LB_Title", false);
+			UIHelper.SetActiveState(dialog.transform, "SP_Title", true);
+		else
+			UIHelper.SetSpriteName(dialog.transform, "SP_Title", "TC-3");
+			UIHelper.SetActiveState(dialog.transform, "LB_Title", false);
+			UIHelper.SetActiveState(dialog.transform, "SP_Title", true);
 		end
-		if titleLabel ~= nil then
-			titleLabel.enabled = not option.ShowTitleSprite;
-			titleLabel.text = option.Title;
-			titleLabel.fontSize = option.TitleFontSize;
-		end
-		if contentLabel ~= nil then
-			contentLabel.text = option.Content;
-			contentLabel.fontSize = option.ContentFontSize;
-		end
-		if option.DoubleButton == true then
-			NCSpeedLight.UIHelper.SetActiveState(dialog.transform, "DoubleBtn", true);
-			NCSpeedLight.UIHelper.SetActiveState(dialog.transform, "SingleBtn", false);
-			NCSpeedLight.UIHelper.SetButtonEvent(dialog.transform, "DoubleBtn/OK",
+		UIHelper.SetLabelText(dialog.transform, "LB_Content", content);
+		if doubleBtn == true then
+			UIHelper.SetActiveState(dialog.transform, "DoubleBtn", true);
+			UIHelper.SetActiveState(dialog.transform, "SingleBtn", false);
+			UIHelper.SetButtonEvent(dialog.transform, "DoubleBtn/OK",
 			function(go)
 				UIManager.CloseConfirmDialog();
-				if option.OnClickOK ~= nil then
-					option.OnClickOK(nil);
+				if onClickOK ~= nil then
+					onClickOK();
 				end
 			end);
-			NCSpeedLight.UIHelper.SetButtonEvent(dialog.transform, "DoubleBtn/Cancel",
+			UIHelper.SetButtonEvent(dialog.transform, "DoubleBtn/Cancel",
 			function(go)
 				UIManager.CloseConfirmDialog();
-				if option.OnClickCancel ~= nil then
-					option.OnClickCancel(nil);
+				if onClickCancel ~= nil then
+					onClickCancel(nil);
 				end
 			end);
 		else
-			NCSpeedLight.UIHelper.SetActiveState(dialog.transform, "DoubleBtn", false);
-			NCSpeedLight.UIHelper.SetActiveState(dialog.transform, "SingleBtn", true);
-			NCSpeedLight.UIHelper.SetButtonEvent(dialog.transform, "SingleBtn/OK",
+			UIHelper.SetActiveState(dialog.transform, "DoubleBtn", false);
+			UIHelper.SetActiveState(dialog.transform, "SingleBtn", true);
+			UIHelper.SetButtonEvent(dialog.transform, "SingleBtn/OK",
 			function(go)
 				UIManager.CloseConfirmDialog();
-				if option.OnClickOK ~= nil then
-					option.OnClickOK(nil);
+				if onClickOK ~= nil then
+					onClickOK();
 				end
 			end);
 		end

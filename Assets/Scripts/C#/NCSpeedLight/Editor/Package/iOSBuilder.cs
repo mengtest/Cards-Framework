@@ -61,11 +61,11 @@ namespace NCSpeedLight
         public void Dispose() { }
     }
 
-    public class PBXBuilder : Builder
+    public class iOSBuilder : Builder
     {
         private static bool PROFILE_VERSION = false;
         public static string BIN_PATH = "Bin/proj.ios";
-        public PBXBuilder(Action preBuild, Action postBuild) : base(preBuild, postBuild) { }
+        public iOSBuilder(Action preBuild, Action postBuild) : base(preBuild, postBuild) { }
 
         public override void Build()
         {
