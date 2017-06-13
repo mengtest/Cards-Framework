@@ -21,13 +21,13 @@ namespace cn.sharesdk.unity3d
     {
 #if UNITY_IPHONE
         public const int type = (int)PlatformType.WeChat;
-        public string app_id = "wx776aff04142fd64f";
-        public string app_secret = "67755b2094a9cb17c000f17c36e49a9e";
+        public string app_id = "wxb3ae4be45780f44a";
+        public string app_secret = "60781e2b93bd09436095a48c05caff54";
 #else
         public string SortId = "5";
         public const int type = (int)PlatformType.WeChat;
-        public string AppId = "wx776aff04142fd64f";
-        public string AppSecret = "67755b2094a9cb17c000f17c36e49a9e";
+        public string AppId = "wxb3ae4be45780f44a";
+        public string AppSecret = "60781e2b93bd09436095a48c05caff54";
         public bool BypassApproval = false;
 #endif
     }
@@ -37,13 +37,13 @@ namespace cn.sharesdk.unity3d
     {
 #if UNITY_IPHONE
         public const int type = (int)PlatformType.WeChatMoments;
-        public string app_id = "wx776aff04142fd64f";
-        public string app_secret = "67755b2094a9cb17c000f17c36e49a9e";
+        public string app_id = "wxb3ae4be45780f44a";
+        public string app_secret = "60781e2b93bd09436095a48c05caff54";
 #else
         public string SortId = "6";
         public const int type = (int)PlatformType.WeChatMoments;
-        public string AppId = "wx776aff04142fd64f";
-        public string AppSecret = "67755b2094a9cb17c000f17c36e49a9e";
+        public string AppId = "wxb3ae4be45780f44a";
+        public string AppSecret = "60781e2b93bd09436095a48c05caff54";
         public bool BypassApproval = false;
 #endif
     }
@@ -53,13 +53,13 @@ namespace cn.sharesdk.unity3d
     {
 #if UNITY_IPHONE
         public const int type = (int)PlatformType.WeChatFavorites;
-        public string app_id = "wx776aff04142fd64f";
-        public string app_secret = "67755b2094a9cb17c000f17c36e49a9e";
+        public string app_id = "wxb3ae4be45780f44a";
+        public string app_secret = "60781e2b93bd09436095a48c05caff54";
 #else
         public string SortId = "7";
         public const int type = (int)PlatformType.WeChatFavorites;
-        public string AppId = "wx776aff04142fd64f";
-        public string AppSecret = "67755b2094a9cb17c000f17c36e49a9e";
+        public string AppId = "wxb3ae4be45780f44a";
+        public string AppSecret = "60781e2b93bd09436095a48c05caff54";
 #endif
     }
 }
