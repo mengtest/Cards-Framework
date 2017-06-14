@@ -49,6 +49,7 @@ function UI_MJSetting.Start()
 	soundEvtListener.onDrag = UI_MJSetting.OnSoundSliderDrag;
 	soundEvtListener.onClick = UI_MJSetting.OnSoundSliderClick;
 	
+	UIHelper.SetButtonEvent(this.transform, "Content/CloseRoom", UI_MJSetting.OnClickCloseRoom);
 	if HallScene.FBCurrentStatus == FBStatus.RoundWait or HallScene.FBCurrentStatus == FBStatus.GameBegin then
 		UIHelper.SetActiveState(this.transform, "Content/CloseRoom", false);
 	else
@@ -143,6 +144,10 @@ function UI_MJSetting.OnSoundSliderClick(go, delta)
 	AudioManager.SetCategoryVolume("MaJiangCardPTNv_101102", LoginScene.SoundVolume);
 	AudioManager.SetCategoryVolume("MaJiangSound", LoginScene.SoundVolume);
 	AudioManager.SetCategoryVolume("UIMusic", LoginScene.SoundVolume);
+end
+
+function UI_MJSetting.OnClickCloseRoom()
+	MJScene.RequestCloseRoom();
 end
 
 function UI_MJSetting.OnDestroy()

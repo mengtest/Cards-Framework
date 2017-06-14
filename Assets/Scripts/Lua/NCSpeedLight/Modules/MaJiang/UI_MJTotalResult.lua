@@ -92,7 +92,7 @@ function UI_MJTotalResult.SetPlayerInfo()
 				if tempPlayer:IsRoomMaster() then
 					UIHelper.SetActiveState(tempTrans, "Role/Master", true);
 				end
-				UIHelper.SetLabelText(tempTrans, "Role/Label (Name)", tempPlayer.Name);
+				UIHelper.SetLabelText(tempTrans, "Role/Label (Name)", Utility.TrimNickName(tempPlayer.Name));
 				UIHelper.SetLabelText(tempTrans, "Role/Label (ID)", "ID:" .. tempPlayer.ID);
 				-- 设置头像
 				UIHelper.SetTexture(tempTrans, "Role/Sprite (Photo)", tempPlayer.HeadURL);

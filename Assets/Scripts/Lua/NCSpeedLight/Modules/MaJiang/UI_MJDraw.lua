@@ -79,7 +79,7 @@ function UI_MJDraw.SetPlayerInfo()
 		if tempPlayer:IsRoomMaster() then
 			UIHelper.SetActiveState(tempTran, "Role/Master", true);
 		end
-		UIHelper.SetLabelText(tempTran, "Label (Name)", tempPlayer.Name);
+		UIHelper.SetLabelText(tempTran, "Label (Name)", Utility.TrimNickName(tempPlayer.Name));
 		UIHelper.SetLabelText(tempTran, "Label (ID)", "ID:" .. tostring(tempPlayer.DisplayID));
 		local tempScore = tempTran:FindChild("Score");
 		UIHelper.SetLabelText(tempScore, "Label (Gang)/Label", tostring(card.m_anGang + card.m_Gang));

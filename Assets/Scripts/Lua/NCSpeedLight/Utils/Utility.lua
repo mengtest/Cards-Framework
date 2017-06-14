@@ -64,21 +64,73 @@ function Utility.TrimString(str)
 	return(string.gsub(str, "^%s*(.-)%s*$", "%1"))
 end
 
--- 字符串长度
-function Utility.LenString(str)
+-- 字符串字节长度
+function Utility.LenByteString(str)
 	if str == nil or type(str) ~= "string" then return 0 end;
-	local length = 0;
-	for i in utf8.byte_indices(str) do			
-		local next = utf8.next(str, i)
-		local right = next and next - 1;
-		if right == nil then break end;
-		length = length + 1;
+	local totalCount = 0;
+	local strLen = #str;
+	local index = 1;
+	while index <= strLen do
+		local byte = string.byte(str, index)
+		local byteCount = 1;
+		if byte > 0 and byte <= 127 then
+			byteCount = 1
+		elseif byte >= 192 and byte < 223 then
+			byteCount = 2
+		elseif byte >= 224 and byte < 239 then
+			byteCount = 3
+		elseif byte >= 240 and byte <= 247 then
+			byteCount = 4
+		end
+		index = index + byteCount;
+		if byteCount == 1 then
+			totalCount = totalCount + 1;
+		else
+			totalCount = totalCount + 2;
+		end
 	end
-	return length;
+	return totalCount;
 end
 
 -- 
 function Utility.SubString(str)
+end
+
+-- 裁剪昵称
+function Utility.TrimNickName(str)
+	if Utility.LenByteString(str) <= 8 then return str; end
+	local finalStr = "";
+	local strLen = #str;
+	local totalCount = 0;
+	local index = 1;
+	while index <= strLen do
+		local byte = string.byte(str, index)
+		local byteCount = 1;
+		if byte > 0 and byte <= 127 then
+			byteCount = 1
+		elseif byte >= 192 and byte < 223 then
+			byteCount = 2
+		elseif byte >= 224 and byte < 239 then
+			byteCount = 3
+		elseif byte >= 240 and byte <= 247 then
+			byteCount = 4
+		end
+		local char = string.sub(str, index, index + byteCount - 1)
+		index = index + byteCount;
+		if byteCount == 1 then
+			totalCount = totalCount + 1;
+		else
+			totalCount = totalCount + 2;
+		end
+		if totalCount < 8 then
+			finalStr = finalStr .. char;
+		else
+			finalStr = finalStr .. char;
+			finalStr = finalStr .. "...";
+			break;
+		end
+	end
+	return finalStr;
 end
 
 function Utility.FormatTimeStamp(format, timestamp)

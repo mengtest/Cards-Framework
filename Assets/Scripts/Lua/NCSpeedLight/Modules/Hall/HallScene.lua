@@ -47,7 +47,7 @@ function HallScene.Begin()
 	Log.Info("==> Begin <==");
 	HallScene.OpenHZCreateRoomConfig();
 	AudioManager.PlayMusic({BGMusic.Hall}, false);
-	HallScene.CurrentFBCloseTime = 300;
+	HallScene.FBCloseTime = 300;
 	HallScene.RegisterNetEvent();
 	InternalUIManager.CloseBG();
 	UIManager.CloseAllWindows();

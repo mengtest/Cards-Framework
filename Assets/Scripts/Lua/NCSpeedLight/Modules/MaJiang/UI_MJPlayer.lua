@@ -646,7 +646,7 @@ end
 
 -- 设置基本信息
 function UI_MJPlayer:SetBaseInfo()
-	UIHelper.SetLabelText(self.transform, "Enter/Center/Label (Name)", self.Player.Name);
+	UIHelper.SetLabelText(self.transform, "Enter/Center/Label (Name)", Utility.TrimNickName(self.Player.Name));
 	UIHelper.SetTexture(self.transform, "Enter/Center/Icon/Sprite (Photo)", self.Player.HeadURL);
 end
 

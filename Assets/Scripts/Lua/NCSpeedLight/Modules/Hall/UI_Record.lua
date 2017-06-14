@@ -58,12 +58,14 @@ function UI_Record.OnRecvData(evt)
 	end
 	
 	UI_Record.SetGridChildCount();
+	
 	table.insert(this.FullData, msg.data);
 	local panel = this.transform:Find("ListView/Grid");
 	local uiWrapContent = panel:GetComponent(typeof(UIWrapContent));
-	uiWrapContent.minIndex = -(#this.FullData.data);
+	uiWrapContent.minIndex = -(#this.FullData.data - 1);
 	uiWrapContent.maxIndex = 0;
 	uiWrapContent.onInitializeItem = UI_Record.ShowRecordView;
+	uiWrapContent.gameObject:SetActive(true);
 end
 
 function UI_Record.OnClickItem(go)
@@ -80,59 +82,6 @@ function UI_Record.OnClickView(go)
 	local msg = {};
 	msg.request = id;
 	NetManager.SendEventToLogicServer(GameMessage.GM_PLAYER_PLAYBACK_REQUEST, PBMessage.GM_Request, msg);
-end
-
-function UI_Record.DisplayListView()
-	-- if #this.FullData.data == 0 then
-	-- 	UIHelper.SetActiveState(this.transform, "BG/back_5", true);
-	-- else
-	-- local panel = this.transform:Find("ListView/Grid");
-	-- local oriItem = panel:Find("Item");
-	-- local uiGrid = panel:GetComponent(typeof(UIGrid));
-	-- for i = 1, #this.FullData.data do
-	-- local itemData = this.FullData.data[i];
-	-- local begintime = itemData.begintime;
-	-- local endtime = itemData.endtime;
-	-- local rate = itemData.rate;
-	-- local roleid = itemData.roleid;
-	-- local name = itemData.name;
-	-- 	local itemObj = NGUITools.AddChild(panel.gameObject, oriItem.gameObject);
-	-- 	itemObj:SetActive(true);
-	-- itemObj.name = tostring(i);
-	-- 	itemObj.transform.localScale = Vector3(0.781, 0.781, 0.781);
-	-- 	local item = itemObj.transform;
-	-- UIHelper.SetButtonEvent(item, UI_Record.OnClickItem);
-	-- UIHelper.SetLabelText(item, "LB_Index", tostring(i));
-	-- UIHelper.SetLabelText(item, "LB_RoomNumber", "[AD2630FF]" .. roleid .. "[-][1C1110FF]号房间[-]");
-	-- UIHelper.SetLabelText(item, "LB_Time", Utility.FormatTimeStamp("%Y-%m-%d %H:%M:%S", begintime));
-	-- 设置名称	
-	-- local totalScoreInfo = {};
-	-- for j = 1, #itemData.playercount do
-	-- 	local playData = itemData.playercount[j]; -- 当前局的数据
-	-- 	for k = 1, #playData.role do
-	-- 		local roleData = playData.role[k]; -- 玩家数据
-	-- 		local rolename = roleData.rolename;
-	-- 		local score = roleData.wingolde;
-	-- 		if totalScoreInfo[rolename] == nil then
-	-- 			totalScoreInfo[rolename] = score;
-	-- 		else
-	-- 			totalScoreInfo[rolename] = totalScoreInfo[rolename] + score;
-	-- 		end
-	-- 	end
-	-- end
-	-- 	local playerCount = 1;
-	-- 	for key, value in pairs(totalScoreInfo) do
-	-- 		local scorePanel = item:Find("GRP_Name" .. playerCount);
-	-- 		UIHelper.SetLabelText(scorePanel, key);
-	-- 		UIHelper.SetLabelText(scorePanel, "LB_Score", value);	
-	-- 		playerCount = playerCount + 1;
-	-- 	end
-	-- 	for j = playerCount, 4 do
-	-- 		UIHelper.SetActiveState(item, "GRP_Name" .. j, false);
-	-- 	end
-	-- end
-	-- uiGrid:Reposition();
-	-- end
 end
 
 function UI_Record.DisplayDetailView()
@@ -296,5 +245,4 @@ function UI_Record.SetGridChildCount()
 			item.gameObject:SetActive(false);
 		end
 	end
-	
 end 

@@ -1,6 +1,7 @@
 UI_MJStart = {
 	transform = nil,
 	gameObject = nil,
+	PlayAnimationCO = nil,
 }
 
 local this = UI_MJStart;
@@ -13,12 +14,13 @@ end
 function UI_MJStart.Start()
 	UI_MJStart.SetWidget();
 	UI_MJStart.SetPlayerInfo();
-	UI_MJStart.PlayAnimation();
+	UI_MJStart.PlayAnimationCO = coroutine.start(UI_MJStart.PlayAnimation);
 end
 
 function UI_MJStart.OnDestroy()
 	this.transform = nil;
 	this.gameObject = nil;
+	coroutine.stop(UI_MJStart.PlayAnimationCO);
 end
 
 function UI_MJStart.SetWidget()
@@ -46,17 +48,14 @@ function UI_MJStart.SetPlayerInfo()
 end
 
 function UI_MJStart.PlayAnimation()
-	coroutine.start(
-	function()
-		AudioManager.PlaySound("MJ_start");
-		coroutine.wait(0.05);
-		UIHelper.SetActiveState(this.transform, "Widget/BG", true);
-		coroutine.wait(0.18);
-		local effect = this.transform:Find("Effect");
-		if effect ~= nil then
-			effect.gameObject:SetActive(true);
-		end
-		coroutine.wait(1.4);
-		UIManager.CloseWindow(UIName.UI_MJStart);
-	end);
+	AudioManager.PlaySound("MJ_start");
+	coroutine.wait(0.05);
+	UIHelper.SetActiveState(this.transform, "Widget/BG", true);
+	coroutine.wait(0.18);
+	local effect = this.transform:Find("Effect");
+	if effect ~= nil then
+		effect.gameObject:SetActive(true);
+	end
+	coroutine.wait(1.4);
+	UIManager.CloseWindow(UIName.UI_MJStart);
 end 

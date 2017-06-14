@@ -6,7 +6,7 @@ UI_MJRequestDissolve = {
 	
 	gameObject = nil,
 	
-	CountdownTimer = nil,
+	CountdownCO = nil,
 	
 	Status = {}, -- key=player,status=0/1/2 0=ok 1=not ok 2=waiting
 }
@@ -17,6 +17,7 @@ function UI_MJRequestDissolve.Awake(go)
 	this.gameObject = go;
 	this.transform = go.transform;
 	this.Status = {};
+	-- coroutine.stop(UI_MJRequestDissolve.CountdownCO);
 end
 
 function UI_MJRequestDissolve.Start()
@@ -36,21 +37,22 @@ function UI_MJRequestDissolve.Start()
 			this.Status[player] = 2;
 		end
 	end
-	this.CountdownTimer = coroutine.start(UI_MJRequestDissolve.StartCountdown);
+	UI_MJRequestDissolve.CountdownCO = coroutine.start(UI_MJRequestDissolve.Countdown);
 	UI_MJRequestDissolve.RefreshContent();
-	NetManager.RegisterEvent(GameMessage.GM_CHOOSE_IS_CLOSEROOM_RETURN, UI_MJRequestDissolve.OnRecvStatusChange);
+	NetManager.RegisterEvent(GameMessage.GM_CHOOSE_IS_CLOSEROOM_RETURN, UI_MJRequestDissolve.RecvStatusChange);
 end
 
 function UI_MJRequestDissolve.OnDestroy()
-	coroutine.stop(this.CountdownTimer);
-	NetManager.UnregisterEvent(GameMessage.GM_CHOOSE_IS_CLOSEROOM_RETURN, UI_MJRequestDissolve.OnRecvStatusChange);
+	coroutine.stop(UI_MJRequestDissolve.CountdownCO);
+	UI_MJRequestDissolve.CountdownCO = nil;
+	NetManager.UnregisterEvent(GameMessage.GM_CHOOSE_IS_CLOSEROOM_RETURN, UI_MJRequestDissolve.RecvStatusChange);
 end
 
 -- 启动倒计时
-function UI_MJRequestDissolve.StartCountdown()
-	Log.Info("StartCountdown: HallScene.CurrentFBCloseTime is " .. tostring(HallScene.CurrentFBCloseTime));
-	for i = 1, HallScene.CurrentFBCloseTime do
-		local time = HallScene.CurrentFBCloseTime - i;
+function UI_MJRequestDissolve.Countdown()
+	Log.Info("Countdown: HallScene.FBCloseTime is " .. tostring(HallScene.FBCloseTime));
+	for i = 1, HallScene.FBCloseTime do
+		local time = HallScene.FBCloseTime - i;
 		local timeStr = tostring(time);
 		local timeStr1 = "0";
 		local timeStr2 = "0";
@@ -122,7 +124,7 @@ function UI_MJRequestDissolve.OnClickCancel(go)
 	NetManager.SendEventToLogicServer(GameMessage.GM_CHOOSE_IS_CLOSEROOM, PBMessage.GM_SendReady, msg);
 end
 
-function UI_MJRequestDissolve.OnRecvStatusChange(evt)
+function UI_MJRequestDissolve.RecvStatusChange(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GM_SendReady, evt);
 	local player = MJScene.GetPlayerByID(msg.m_RoleID);
 	this.Status[player] = msg.m_Resutl;

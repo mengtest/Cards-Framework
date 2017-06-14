@@ -28,6 +28,7 @@ UI_MJBase = {
 	RecordSuccess = false,
 	RecordInterval = 0.5,
 	LastRecordTime = - 1,
+	PlaySendCardAnimationCO = nil,
 }
 
 local this = UI_MJBase;
@@ -90,6 +91,8 @@ function UI_MJBase.OnDestroy()
 	UI_MJBase.OperateTime = 15;
 	coroutine.stop(UI_MJBase.OperateCountdownCo);
 	UI_MJBase.OperateCountdownCo = nil;
+	coroutine.stop(UI_MJBase.PlaySendCardAnimationCO);
+	UI_MJBase.PlaySendCardAnimationCO = nil;
 	UI_MJBase.IsOpenChat = false;
 	UI_MJBase.IsRecording = false;
 	UI_MJBase.RecordStartPos = Vector3.zero;
@@ -104,6 +107,8 @@ function UI_MJBase.Reset()
 	UIHelper.SetActiveState(this.transform, "center/Time", false);
 	UI_MJBase.SetPlayJingActive(false);
 	UI_MJHeroCtrl.Reset();
+	UI_MJBase.StopOperateCountdown();
+	coroutine.stop(UI_MJBase.PlaySendCardAnimationCO);
 end
 
 -- 初始化玩家的UI
@@ -692,3 +697,49 @@ function UI_MJBase.OnClickBackToResult()
 	end
 end
 
+-- 播放发牌效果
+function UI_MJBase.PlaySendCardAnimation()
+	if UI_MJBase.PlaySendCardAnimationCO ~= nil then
+		coroutine.stop(UI_MJBase.PlaySendCardAnimationCO);
+	end
+	UI_MJBase.PlaySendCardAnimationCO =	coroutine.start(function()
+		MJPaidunCtrl.InactiveFront(MJScene.GetPlayerCount() * 4);
+		for key, value in pairs(MJScene.Players) do
+			if value:IsBanker() then
+				value:SetHandCardCount(MJDefine.BANKER_INITIAL_CARD_COUNT);
+			else
+				value:SetHandCardCount(MJDefine.XIAN_INITIAL_CARD_COUNT);
+			end
+			UI_MJPlayer.UpdateCards(value.UI, false, false, 4);
+		end
+		AudioManager.PlaySound("MJ_SendCard");
+		coroutine.wait(0.2);
+		
+		MJPaidunCtrl.InactiveFront(MJScene.GetPlayerCount() * 4);
+		for key, value in pairs(MJScene.Players) do
+			UI_MJPlayer.UpdateCards(value.UI, false, false, 8);
+		end
+		AudioManager.PlaySound("MJ_SendCard");
+		coroutine.wait(0.2);
+		
+		MJPaidunCtrl.InactiveFront(MJScene.GetPlayerCount() * 4);
+		for key, value in pairs(MJScene.Players) do
+			UI_MJPlayer.UpdateCards(value.UI, false, false, 12);
+		end
+		AudioManager.PlaySound("MJ_SendCard");
+		coroutine.wait(0.2);
+		
+		MJPaidunCtrl.InactiveFront(MJScene.GetPlayerCount() + 1);
+		for key, value in pairs(MJScene.Players) do
+			if value:IsBanker() then
+				UI_MJPlayer.UpdateCards(value.UI, true, true);
+			else
+				UI_MJPlayer.UpdateCards(value.UI, true, false);
+			end
+			MJPlayer.OnRoundStart(value);
+		end
+		if MJPlayer.IsBanker(MJPlayer.Hero) then
+			AudioManager.PlaySound("MJ_GrapCard");
+		end
+	end);
+end

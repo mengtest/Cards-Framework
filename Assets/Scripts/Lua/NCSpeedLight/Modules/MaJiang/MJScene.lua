@@ -48,7 +48,8 @@ function MJScene.Initialize()
 end
 
 function MJScene.Begin()
-	HallScene.SwitchFBStatus(FBStatus.RoundWait);
+	HallScene.SwitchFBStatus(FBStatus.GameBegin);
+	HallScene.FBCloseTime = 300;
 	if HallScene.CurrentFBPlaybackMode == false then
 		HallScene.CurrentFBTotalRound = HallScene.CurrentFBInfo.m_gameCount;
 	end
@@ -577,7 +578,7 @@ function MJScene.ReturnReconnectInfo(evt)
 	MJScene.GetCardNumber = msg.m_getCardNum;
 	HallScene.CurrentFBPlayway = msg.m_fbplayway;
 	
-	HallScene.CurrentFBCloseTime = msg.m_closeRoomLeftTime;
+	HallScene.FBCloseTime = msg.m_closeRoomLeftTime;
 	
 	-- [正常断线重连模式] player 为空，则代表当前场景内没有玩家，这时开始创建玩家
 	if MJScene.GetPlayerCount() == 0 then
@@ -766,11 +767,13 @@ function MJScene.ReturnReconnectInfo(evt)
 				MJScene.LastOperator = MJScene.GetPlayerByID(msg.m_lastOutCardRoleId);
 				
 				if msg.m_sendCardID ~= 0 then
-					-- 有可能是等待玩家吃碰杠操作
-					MJScene.CurrentOperator = MJScene.GetPlayerByID(msg.m_sendCardID);
-					UI_MJPlayer.PlayUIScale(MJScene.CurrentOperator.UI, true);
-					UI_MJPlayer.PlayDicePanelGrow(MJScene.CurrentOperator.UI, true);
-					UI_MJBase.StartOperateCountdown();
+					if HallScene.FBCurrentStatus == FBStatus.RoundPlaying then
+						-- 有可能是等待玩家吃碰杠操作
+						MJScene.CurrentOperator = MJScene.GetPlayerByID(msg.m_sendCardID);
+						UI_MJPlayer.PlayUIScale(MJScene.CurrentOperator.UI, true);
+						UI_MJPlayer.PlayDicePanelGrow(MJScene.CurrentOperator.UI, true);
+						UI_MJBase.StartOperateCountdown();
+					end
 				end
 				
 				-- 设置当前回合的显示
@@ -1223,8 +1226,9 @@ function MJScene.ReturnCastDice(evt)
 	UI_MJBase.StopOperateCountdown();
 	MJDeskCtrl.PlayDiceAnimation(MJScene.DiceNumbers[1], MJScene.DiceNumbers[2], nil);
 	AudioManager.PlaySound("MJ_touzi");
-	MJDeskCtrl.PlayPaidunAnimation(function()
-		StartCoroutine(MJScene.PlaySendCardAnimation);
+	MJDeskCtrl.PlayPaidunAnimation(
+	function()
+		UI_MJBase.PlaySendCardAnimation();
 	end);
 end
 
@@ -1234,47 +1238,7 @@ function MJScene.ReturnOperateError(evt)
 	MJScene.RequestReconnectInfo(); -- 操作失败时刷新桌面的数据
 end
 
--- 播放发牌效果
-function MJScene.PlaySendCardAnimation()
-	MJPaidunCtrl.InactiveFront(MJScene.GetPlayerCount() * 4);
-	for key, value in pairs(MJScene.Players) do
-		if value:IsBanker() then
-			value:SetHandCardCount(MJDefine.BANKER_INITIAL_CARD_COUNT);
-		else
-			value:SetHandCardCount(MJDefine.XIAN_INITIAL_CARD_COUNT);
-		end
-		UI_MJPlayer.UpdateCards(value.UI, false, false, 4);
-	end
-	AudioManager.PlaySound("MJ_SendCard");
-	WaitForSeconds(0.2);
-	
-	MJPaidunCtrl.InactiveFront(MJScene.GetPlayerCount() * 4);
-	for key, value in pairs(MJScene.Players) do
-		UI_MJPlayer.UpdateCards(value.UI, false, false, 8);
-	end
-	AudioManager.PlaySound("MJ_SendCard");
-	WaitForSeconds(0.2);
-	
-	MJPaidunCtrl.InactiveFront(MJScene.GetPlayerCount() * 4);
-	for key, value in pairs(MJScene.Players) do
-		UI_MJPlayer.UpdateCards(value.UI, false, false, 12);
-	end
-	AudioManager.PlaySound("MJ_SendCard");
-	WaitForSeconds(0.2);
-	
-	MJPaidunCtrl.InactiveFront(MJScene.GetPlayerCount() + 1);
-	for key, value in pairs(MJScene.Players) do
-		if value:IsBanker() then
-			UI_MJPlayer.UpdateCards(value.UI, true, true);
-		else
-			UI_MJPlayer.UpdateCards(value.UI, true, false);
-		end
-		MJPlayer.OnRoundStart(value);
-	end
-	if MJPlayer.IsBanker(MJPlayer.Hero) then
-		AudioManager.PlaySound("MJ_GrapCard");
-	end
-end
+
 
 -- 正常的胡
 function MJScene.HandleHu()
