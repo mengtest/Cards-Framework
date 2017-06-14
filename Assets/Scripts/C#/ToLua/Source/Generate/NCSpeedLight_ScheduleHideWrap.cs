@@ -10,6 +10,7 @@ public class NCSpeedLight_ScheduleHideWrap
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("Time", get_Time, set_Time);
+		L.RegVar("OnFinished", get_OnFinished, set_OnFinished);
 		L.EndClass();
 	}
 
@@ -51,6 +52,25 @@ public class NCSpeedLight_ScheduleHideWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_OnFinished(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			NCSpeedLight.ScheduleHide obj = (NCSpeedLight.ScheduleHide)o;
+			System.Action ret = obj.OnFinished;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnFinished on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_Time(IntPtr L)
 	{
 		object o = null;
@@ -66,6 +86,37 @@ public class NCSpeedLight_ScheduleHideWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index Time on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_OnFinished(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			NCSpeedLight.ScheduleHide obj = (NCSpeedLight.ScheduleHide)o;
+			System.Action arg0 = null;
+			LuaTypes funcType2 = LuaDLL.lua_type(L, 2);
+
+			if (funcType2 != LuaTypes.LUA_TFUNCTION)
+			{
+				 arg0 = (System.Action)ToLua.CheckObject(L, 2, typeof(System.Action));
+			}
+			else
+			{
+				LuaFunction func = ToLua.ToLuaFunction(L, 2);
+				arg0 = DelegateFactory.CreateDelegate(typeof(System.Action), func) as System.Action;
+			}
+
+			obj.OnFinished = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnFinished on a nil value" : e.Message);
 		}
 	}
 }

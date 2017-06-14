@@ -236,6 +236,11 @@ function UI_MJBase.SetupRemainCardCount(count)
 	UIHelper.SetLabelText(this.transform, "top/topLeft/RemainCards/Label", tostring(count));
 end
 
+-- 隐藏剩余的牌数
+function UI_MJBase.HideRemainCardCount()
+	UIHelper.SetActiveState(this.transform, "top/topLeft/RemainCards", false);
+end
+
 -- 设置回放控制面板
 function UI_MJBase.SetupPlaybackControl(status)
 	UIHelper.SetActiveState(this.transform, "center/ContrlPanel", status);
@@ -243,6 +248,11 @@ end
 
 function UI_MJBase.SetPlayJingActive(status)
 	UIHelper.SetActiveState(this.transform, "PlayJing", status);
+end
+
+-- 设置返回按钮的显示
+function UI_MJBase.SetBackBtnActive(status)
+	UIHelper.SetActiveState(this.transform, "bottom/right/DissolveRoom", status);
 end
 
 -- 回放模式

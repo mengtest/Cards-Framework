@@ -243,13 +243,8 @@ namespace NCSpeedLight
                 string localFilePath = Constants.LOCAL_SCRIPT_BUNDLE_PATH + fileInfo.Name;
                 Helper.Log("FileDownloader.DownloadScript: download from " + remoteFilePath + " to " + localFilePath);
                 www = new WWW(remoteFilePath);
-                while (www.isDone == false)
-                {
-                    UI.UpdateProgressBar((int)(DownloadSize + fileInfo.Size * www.progress), TotalSize);
-                    yield return new WaitForSeconds(0.1f);
-                }
-                yield return new WaitUntil(() => { return www.isDone; });
-                if (string.IsNullOrEmpty(www.error))
+                yield return www;
+                if (string.IsNullOrEmpty(www.error) && www.isDone)
                 {
                     DownloadSize += fileInfo.Size;
                     UI.UpdateProgressBar(DownloadSize, TotalSize);
@@ -377,7 +372,7 @@ namespace NCSpeedLight
                 yield return new WaitForEndOfFrame();
             }
             // 保存manifest文件至本地
-            if(StreamingScriptManifest.Bytes!= null)
+            if (StreamingScriptManifest.Bytes != null)
             {
                 string localManifestPath = Constants.LOCAL_ASSET_BUNDLE_PATH + Constants.SCRIPT_MANIFEST_FILE;
                 File.WriteAllBytes(localManifestPath, StreamingAssetManifest.Bytes);
@@ -405,13 +400,8 @@ namespace NCSpeedLight
                 string localFilePath = Constants.LOCAL_ASSET_BUNDLE_PATH + fileInfo.Name;
                 Helper.Log("FileDownloader.DownloadAsset: download from " + remoteFilePath + " to " + localFilePath);
                 www = new WWW(remoteFilePath);
-                while (www.isDone == false)
-                {
-                    UI.UpdateProgressBar((int)(DownloadSize + fileInfo.Size * www.progress), TotalSize);
-                    yield return new WaitForSeconds(0.1f);
-                }
-                yield return new WaitUntil(() => { return www.isDone; });
-                if (string.IsNullOrEmpty(www.error))
+                yield return www;
+                if (string.IsNullOrEmpty(www.error) && www.isDone)
                 {
                     DownloadSize += fileInfo.Size;
                     UI.UpdateProgressBar(DownloadSize, TotalSize);

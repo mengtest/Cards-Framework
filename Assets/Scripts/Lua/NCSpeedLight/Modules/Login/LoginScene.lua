@@ -123,7 +123,7 @@ function LoginScene.OpenSoundVolumeConfig()
 			LoginScene.SoundVolume = config.Sound;
 			LoginScene.MusicVolume = config.Music;
 			LoginScene.MuteMusic = config.MuteMusic;
-			LoginScene.MuteSound = config.MuteMusic;
+			LoginScene.MuteSound = config.MuteSound;
 			Log.Info("OpenSoundVolumeConfig: sound volume is " .. LoginScene.SoundVolume .. " and music volume is " .. LoginScene.MusicVolume);
 		end
 	end

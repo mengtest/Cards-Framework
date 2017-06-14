@@ -55,3 +55,36 @@ function UI_Share.OnClickShareMoment(go)
 		ShareSDKAdapter.ShareWechatMoment(nil);
 	end
 end
+
+function UI_Share.ShareMoentCallBack(ret)
+	log.Info("ShareMoentCallBack ShareSDKAdapter.RetType:" .. ret);	
+	if ShareSDKAdapter.RetType.Success == ret then
+		this.RequestJsonCo = coroutine.start(UI_Share.RequestJson);
+	end
+end
+
+function UI_Share.RequestJson()
+	if Constants.SHARE_URL == nil then return end
+	local url = nil;
+	if Constants.WX_UNION_ID ~= nil then
+		url = Constants.SHARE_URL .. "&unionid=" .. Constants.WX_UNION_ID .. "&role_id=" .. Player.DisplayID;
+	else
+		url = Constants.SHARE_URL .. "&unionid=&role_id=" .. Player.DisplayID;
+	end	
+	local www = UnityEngine.www(url);
+	coroutine.www(www);
+	log.Info("UI_Share RequestJon: www url is:" .. url);
+	if www.error ~= nil then
+		log.Error("UI_Share RequestJon: www error:" .. www.error);	
+	end
+	if www.isDone then
+		local obj = NetManager.DecodeJson(www.bytes);
+		if obj == nil or obj == false then
+			log.Error("UI_Share RequestJon: decode json error:");	
+			return
+		end
+		local shareResult = obj["result"];
+		local shareText = obj["card_count"];
+		UIManager.OpenConfirmDialog(nil, nil, shareText, false, nil, nil);
+	end
+end 

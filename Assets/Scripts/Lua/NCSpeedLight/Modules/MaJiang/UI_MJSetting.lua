@@ -48,6 +48,12 @@ function UI_MJSetting.Start()
 	local soundEvtListener = UIHelper.GetComponent(this.transform, "Content/SettingButton/SL_Sound", typeof(UIEventListener));
 	soundEvtListener.onDrag = UI_MJSetting.OnSoundSliderDrag;
 	soundEvtListener.onClick = UI_MJSetting.OnSoundSliderClick;
+	
+	if HallScene.FBCurrentStatus == FBStatus.RoundWait or HallScene.FBCurrentStatus == FBStatus.GameBegin then
+		UIHelper.SetActiveState(this.transform, "Content/CloseRoom", false);
+	else
+		UIHelper.SetActiveState(this.transform, "Content/CloseRoom", true);
+	end
 end
 
 function UI_MJSetting.OnClickClose(go)

@@ -79,6 +79,7 @@ function MJDeskCtrl.Reset()
 	MJDeskCtrl.DiceAnimationTimer = nil;
 	MJDeskCtrl.HideArrow();
 	MJDeskCtrl.SetPaidunActive(false);
+	UI_MJBase.HideRemainCardCount();
 end
 
 -- 设置牌墩的显示/隐藏
@@ -376,4 +377,23 @@ function MJDeskCtrl.SetTableCardBlueMaskActive(type)
 			end
 		end
 	end
-end 
+end
+
+-- 播放胡牌时的特效
+function MJDeskCtrl.PlayerHuEffect(fun, huPlayer)
+	Log.Info("HC  MJDeskCtrl  PlayerHuEffect Effect/EF_hu");
+	huPlayer:MJOT_HU();
+	local EF_hu = MJDeskCtrl.transform:Find("Effect/EF_hu");
+	EF_hu.transform.position = huPlayer.UI.HuCardPos;
+	EF_hu.gameObject:SetActive(true);
+	local ScheduleHide = EF_hu:GetComponent(typeof(NCSpeedLight.ScheduleHide));
+	ScheduleHide.OnFinished =
+	function()
+		Log.Info("HC  MJDeskCtrl PlayerHuEffect Effect/EF_hu_zuo");
+		local EF_huzuo = MJDeskCtrl.transform:Find("Effect/EF_hu_zuo");
+		EF_huzuo.transform.position = huPlayer.UI.HuCardPos;
+		EF_huzuo.gameObject:SetActive(true);
+		local ScheduleHide = EF_huzuo:GetComponent(typeof(NCSpeedLight.ScheduleHide));
+		ScheduleHide.OnFinished = fun;
+	end
+end

@@ -97,8 +97,10 @@ function MJScene.OnApplicationPause(status)
 	if status then
 		Log.Info("OnApplicationPause: 游戏进程暂停");
 	else
-		Log.Info("OnApplicationPause: 游戏进程恢复，开始请求重连数据");
-		MJScene.RequestReconnectInfo();
+		if HallScene.CurrentFBPlaybackMode == false then
+			Log.Info("OnApplicationPause: 游戏进程恢复，开始请求重连数据");
+			MJScene.RequestReconnectInfo();
+		end
 	end
 end
 
@@ -110,7 +112,9 @@ end
 
 function MJScene.OnReconnectToLogicServer()
 	Log.Info("OnReconnectToLogicServer");
-	MJScene.RequestReconnectInfo();
+	if HallScene.CurrentFBPlaybackMode == false then
+		MJScene.RequestReconnectInfo();
+	end
 end
 
 function MJScene.OnDisconnectFromLogicServer()
@@ -132,6 +136,7 @@ function MJScene.OnceAgain()
 	Log.Info("OnceAgain: 继续游戏");
 	MJScene.Reset();
 	MJScene.RequestReady(1);
+	UI_MJBase.SetRound();
 end
 
 -- 重置场景
@@ -533,6 +538,8 @@ function MJScene.ReturnReconnectInfo(evt)
 		Log.Error("ReturnReconnectInfo: parse msg error," .. PBMessage.GM_ReconnectMJData);
 		return;
 	end
+	UIManager.CloseAllWindowsExcept(UIName.UI_MJBase);
+	
 	Log.Info("ReturnReconnectInfo: 庄家的位置：" .. msg.m_bankerPos);
 	Log.Info("ReturnReconnectInfo: 房主的ID：" .. msg.m_RoomMasterID);
 	Log.Info("ReturnReconnectInfo: 剩余牌数：" .. msg.m_FreeCard);
@@ -680,7 +687,8 @@ function MJScene.ReturnReconnectInfo(evt)
 		HallScene.CurrentFBFinishedRound = msg.m_leftCount;
 		HallScene.CurrentFBTotalRound = msg.m_totalCount;
 		HallScene.CurrentFBRound = HallScene.CurrentFBFinishedRound;
-		UI_MJBase.SetRound();
+		UI_MJBase.SetRound(false);
+		UI_MJBase.SetBackBtnActive(true);
 	else
 		-- 设置自己的手牌信息
 		MJPlayer.Hero:SetHandCards(msg.m_HandCard);
@@ -690,6 +698,8 @@ function MJScene.ReturnReconnectInfo(evt)
 		
 		-- 隐藏准备等按钮
 		UI_MJBase.SetupReadyAndInvite(false, false, false);
+		
+		UI_MJBase.SetBackBtnActive(false);
 		
 		-- 计算玩家的本地位置
 		for i = 1, #MJScene.Players do
@@ -719,7 +729,7 @@ function MJScene.ReturnReconnectInfo(evt)
 			UI_MJBase.StartOperateCountdown();
 			HallScene.CurrentFBFinishedRound = msg.m_leftCount;
 			HallScene.CurrentFBTotalRound = msg.m_totalCount;
-			HallScene.CurrentFBRound = HallScene.CurrentFBFinishedRound;
+			HallScene.CurrentFBRound = HallScene.CurrentFBFinishedRound + 1;
 			UI_MJBase.SetRound();
 		else
 			local isAllReady = true;
@@ -743,9 +753,15 @@ function MJScene.ReturnReconnectInfo(evt)
 				HallScene.CurrentFBRound = HallScene.CurrentFBFinishedRound;
 				UI_MJBase.SetRound();
 			else
-				-- 正在对局中
-				Log.Info("ReturnReconnectInfo: 正在对局中");
-				HallScene.SwitchFBStatus(FBStatus.RoundPlaying);
+				if MJPlayer.Hero.IsReady == 0 then
+					Log.Info("ReturnReconnectInfo: 存在结算信息");
+					HallScene.SwitchFBStatus(FBStatus.RoundEnd);
+				else
+					-- 正在对局中
+					Log.Info("ReturnReconnectInfo: 正在对局中");
+					HallScene.SwitchFBStatus(FBStatus.RoundPlaying);
+				end
+				
 				-- 设置当前玩家以及上一个玩家
 				MJScene.LastOperator = MJScene.GetPlayerByID(msg.m_lastOutCardRoleId);
 				
@@ -758,11 +774,6 @@ function MJScene.ReturnReconnectInfo(evt)
 				end
 				
 				-- 设置当前回合的显示
-				HallScene.CurrentFBFinishedRound = msg.m_leftCount;
-				HallScene.CurrentFBTotalRound = msg.m_totalCount;
-				HallScene.CurrentFBRound = HallScene.CurrentFBFinishedRound + 1;
-				UI_MJBase.SetRound();
-				
 				-- 直接显示牌墩，不播放动画
 				MJDeskCtrl.SetPaidunActive(true);
 				
@@ -813,11 +824,25 @@ function MJScene.ReturnReconnectInfo(evt)
 						UI_MJPlayer.UpdateCards(player.UI, true, false);
 					end
 				end
+				
+				if HallScene.FBCurrentStatus == FBStatus.RoundEnd then
+					HallScene.CurrentFBFinishedRound = msg.m_leftCount;
+					HallScene.CurrentFBTotalRound = msg.m_totalCount;
+					HallScene.CurrentFBRound = HallScene.CurrentFBFinishedRound;
+					MJScene.CurrentResultInfo = msg.m_huOperatorData;
+					MJScene.HandleReconnectHu();
+				else
+					HallScene.CurrentFBFinishedRound = msg.m_leftCount;
+					HallScene.CurrentFBTotalRound = msg.m_totalCount;
+					HallScene.CurrentFBRound = HallScene.CurrentFBFinishedRound + 1;
+				end
+				-- 设置当前回合的显示
+				UI_MJBase.SetRound();
+				
 			end
 		end
 	end
 	
-	UIManager.CloseAllWindowsExcept(UIName.UI_MJBase);
 	
 	if #msg.m_CloseRoomData > 0 then
 		Log.Info("ReturnReconnectInfo: 存在" .. tostring(#msg.m_CloseRoomData) .. "条解散房间信息。");
@@ -827,13 +852,7 @@ function MJScene.ReturnReconnectInfo(evt)
 		Log.Info("ReturnReconnectInfo: 不存在解散房间信息。");
 	end
 	
-	if msg.m_huOperatorData.m_huRoleid ~= - 1 then
-		Log.Info("ReturnReconnectInfo: 存在结算信息");
-		MJScene.CurrentResultInfo = msg.m_huOperatorData;
-		MJScene.HandleReconnectHu();
-	else
-		Log.Info("ReturnReconnectInfo: 不存在结算信息");
-	end
+	
 	
 end
 
@@ -1022,8 +1041,8 @@ function MJScene.NotifyOneReady(evt)
 		return;
 	end
 	local player = MJScene.GetPlayerByID(msg.m_Result);
-	Log.Info("NotifyOneReady: player is " .. player.UITransform.name);
 	if player ~= nil then
+		Log.Info("NotifyOneReady: player is " .. player.UITransform.name);
 		local status = msg.m_productid == 1;
 		UI_MJPlayer.SetReady(player.UI, status);
 		if player:IsHero() and HallScene.CurrentFBFinishedRound == 0 then
@@ -1042,6 +1061,7 @@ function MJScene.OnRecvAllPlayerReady(evt)
 		UI_MJPlayer.SetReady(value.UI, false);
 	end
 	UI_MJBase.SetupReadyAndInvite(false, false, false);
+	UI_MJBase.SetBackBtnActive(false);
 	UIManager.OpenWindow(UIName.UI_MJStart);
 	UI_MJBase.StartOperateCountdown();
 end
@@ -1167,7 +1187,6 @@ function MJScene.ReturnRoomMasterDissolve(evt)
 			end
 		end
 		content = content .. "不同意，解散失败[-]";
-		option.Content = content;
 		UIManager.OpenConfirmDialog(nil, nil, content, false);
 	end
 end
@@ -1281,7 +1300,10 @@ function MJScene.HandleHu()
 	if huPlayer == nil then
 		UIManager.OpenWindow(UIName.UI_MJDraw);
 	else
-		UIManager.OpenWindow(UIName.UI_MJResult);
+		local func = function()
+			UIManager.OpenWindow(UIName.UI_MJResult);
+		end;
+		MJDeskCtrl.PlayerHuEffect(func, huPlayer);
 	end
 end
 
@@ -1291,7 +1313,6 @@ function MJScene.HandleReconnectHu()
 	local huPlayerID = MJScene.CurrentResultInfo.m_huRoleid;
 	local huPlayer = MJScene.GetPlayerByID(huPlayerID);	
 	Log.Info("HandleReconnectHu: hu role id is " .. huPlayerID);
-	HallScene.CurrentFBFinishedRound = HallScene.CurrentFBFinishedRound + 1;
 	MJDeskCtrl.SetPaidunActive(false);
 	MJDeskCtrl.HideArrow();
 	UI_MJBase.StopOperateCountdown();
@@ -1311,4 +1332,4 @@ function MJScene.HandleReconnectHu()
 	else
 		UIManager.OpenWindow(UIName.UI_MJResult);
 	end
-end 
+end
