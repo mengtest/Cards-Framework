@@ -146,12 +146,12 @@ namespace NCSpeedLight
                     ErrorOccurred();
                     return;
                 }
-                if (Application.internetReachability == NetworkReachability.NotReachable)
-                {
-                    Error = "Can not send data,because network is not reachable.";
-                    ErrorOccurred();
-                    return;
-                }
+                //if (Application.internetReachability == NetworkReachability.NotReachable)
+                //{
+                //    Error = "Can not send data,because network is not reachable.";
+                //    ErrorOccurred();
+                //    return;
+                //}
                 Socket.BeginSend(packet.GetBuffer(), 0, packet.GetTotalSize(), SocketFlags.None, new AsyncCallback(SendCallback), this);
             });
         }
