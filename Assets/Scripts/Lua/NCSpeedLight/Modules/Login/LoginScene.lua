@@ -19,7 +19,6 @@ LoginScene =
 		RoleID,
 	},
 	
-	LoginRecord = nil,
 	IsInitialized = false,
 	ReconnectToLoginServerTimer = nil,
 	DisconnectTimeStamp = 0,
@@ -27,6 +26,8 @@ LoginScene =
 	LoginServerPort = nil,
 	LogicServerIP = nil,
 	LoginServerPort = nil,
+	
+	LoginRecord = nil,
 	
 	WechatAuth = nil,
 	
@@ -70,6 +71,8 @@ function LoginScene.Begin()
 	NetManager.RegisterEvent(GameMessage.GM_ROLE_LOGIN_RETURN, LoginScene.RecvRoleLogin);
 	NetManager.RegisterEvent(GameMessage.GM_ROLE_CREATE_RETURN, LoginScene.RecvCreateRole);
 	NetManager.RegisterEvent(GameMessage.GM_TEASTACCOUNT_RETURN, LoginScene.RecvVisitorAccount);
+	-- NetManager.RegisterEvent(GameMessage.GM_NOTIFY_NAMECHANGE, LoginScene.RecvChangeName);
+	-- NetManager.RegisterEvent(GameMessage.GM_NOTIFY_SEXCHANGE, LoginScene.RecvChangeGender);
 	LoginScene.ConnnectLoginServer();
 end
 
@@ -85,6 +88,8 @@ function LoginScene.End()
 	NetManager.UnregisterEvent(GameMessage.GM_ROLE_LOGIN_RETURN, LoginScene.RecvRoleLogin);
 	NetManager.UnregisterEvent(GameMessage.GM_ROLE_CREATE_RETURN, LoginScene.RecvCreateRole);
 	NetManager.UnregisterEvent(GameMessage.GM_TEASTACCOUNT_RETURN, LoginScene.RecvVisitorAccount);
+	-- NetManager.UnregisterEvent(GameMessage.GM_NOTIFY_NAMECHANGE, LoginScene.RecvChangeName);
+	-- NetManager.UnregisterEvent(GameMessage.GM_NOTIFY_SEXCHANGE, LoginScene.RecvChangeGender);
 end
 
 function LoginScene.OnApplicationPause(status)
@@ -552,12 +557,25 @@ end
 
 function LoginScene.ReqCreateRole()
 	local msg = {};
-	msg.m_AccountID = LoginScene.Token.AccountID;
-	msg.m_info = nil;
-	msg.m_NickName = LoginScene.Token.AccountID;
-	msg.m_HeadPhotoUrl = "http://d.hiphotos.baidu.com/zhidao/pic/item/b8389b504fc2d562562d540ae51190ef76c66c34.jpg";
-	msg.m_sex = 1;
-	msg.m_UnionID = "2000";
+	if LoginScene.WechatAuth ~= nil then
+		msg.m_AccountID = LoginScene.Token.AccountID;
+		msg.m_info = nil;
+		msg.m_NickName = LoginScene.WechatAuth.userName;
+		msg.m_HeadPhotoUrl = LoginScene.WechatAuth.userIcon;
+		if LoginScene.WechatAuth.userGender == "m" then
+			msg.m_sex = 0;
+		else
+			msg.m_sex = 1;
+		end
+		msg.m_UnionID = LoginScene.WechatAuth.unionID;
+	else
+		msg.m_AccountID = LoginScene.Token.AccountID;
+		msg.m_info = nil;
+		msg.m_NickName = LoginScene.Token.AccountID;
+		msg.m_HeadPhotoUrl = "http://d.hiphotos.baidu.com/zhidao/pic/item/b8389b504fc2d562562d540ae51190ef76c66c34.jpg";
+		msg.m_sex = 1;
+		msg.m_UnionID = "2000";
+	end
 	Log.Info("ReqCreateRole: account is " .. msg.m_AccountID);
 	NetManager.SendEventToLogicServer(GameMessage.GM_ROLE_CREATE, PBMessage.GMRoleCreate, msg);
 end
@@ -578,4 +596,16 @@ function LoginScene.RecvVisitorAccount(evt)
 	local msg = NetManager.DecodeMsg(PBMessage.GM_TestAccountReturn, evt);
 	Log.Info("RecvVisitorAccount: account name is " .. msg.accountName);
 	LoginScene.RequestLogin(msg.accountName, msg.password);
+end
+
+-- 修改名字
+function LoginScene.RecvChangeName(evt)
+	Log.Info("RecvChangeName");
+	local msg = NetManager.DecodeMsg(PBMessage.GMRoleNameReturn, evt);
+end
+
+-- 修改性别
+function LoginScene.RecvChangeGender(evt)
+	Log.Info("RecvChangeGender");
+	local msg = NetManager.DecodeMsg(PBMessage.GM_Player_changeSex, evt);
 end 

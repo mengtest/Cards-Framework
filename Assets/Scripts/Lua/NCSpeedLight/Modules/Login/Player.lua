@@ -18,10 +18,12 @@ function Player.SetFullInfo(data)
 	Player.HeadUrl = data.headPhotoUrl;
 	Player.Name = data.nickName;
 	Player.RoomCard = data.roomcard;
+	-- 自有平台nickname为空，显示为ID
 	if string.len(Player.Name) == 0 then
 		Player.Name = data.name;
 	end
 	Player.DisplayID = data.name;
+	Player.CompareAndUpdateInfo();
 	Player.RefreshAddress();
 end
 
@@ -51,3 +53,45 @@ function Player.OnGetLocation(address)
 		Player.Address = address;
 	end
 end
+
+-- 对比并且更新服务器的玩家数据
+function Player.CompareAndUpdateInfo()
+	if LoginScene.WechatAuth ~= nil then
+		-- 处理微信登录，改名改头像等逻辑
+		-- if LoginScene.WechatAuth.userIcon ~= Player.HeadUrl then
+		local msg = {};
+		if LoginScene.WechatAuth.userGender == "m" then
+			msg.sex = 0;
+		else
+			msg.sex = 1;
+		end
+		msg.sex = 0;
+		msg.head = 0;
+		msg.frame = 0;
+		msg.headurl = LoginScene.WechatAuth.userIcon;
+		NetManager.SendEventToLogicServer(GameMessage.GM_NOTIFY_SEXCHANGE, PBMessage.GM_Player_changeSex, msg);
+		-- end
+		if LoginScene.WechatAuth.userName ~= Player.Name then
+			local msg = {};
+			msg.Name = LoginScene.WechatAuth.userName;
+			-- msg.Name = "wellshsu";
+			msg.type = 2;
+			msg.result = 0;
+			NetManager.SendEventToLogicServer(GameMessage.GM_NOTIFY_NAMECHANGE, PBMessage.GMRoleNameReturn, msg);
+		end
+		Player.Name = LoginScene.WechatAuth.userName;
+		Player.HeadUrl = LoginScene.WechatAuth.userIcon;
+	else
+		-- local msg = {};
+		-- msg.sex = 1;
+		-- msg.head = 0;
+		-- msg.frame = 0;
+		-- msg.headurl = "666666666666";
+		-- NetManager.SendEventToLogicServer(GameMessage.GM_NOTIFY_SEXCHANGE, PBMessage.GM_Player_changeSex, msg);
+		-- local msg2 = {};
+		-- msg2.Name = "HHHHHH";
+		-- msg2.type = 2;
+		-- msg2.result = 0;
+		-- NetManager.SendEventToLogicServer(GameMessage.GM_NOTIFY_NAMECHANGE, PBMessage.GMRoleNameReturn, msg2);
+	end
+end 

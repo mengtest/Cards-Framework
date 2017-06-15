@@ -99,11 +99,14 @@ function UI_Record.DisplayDetailView()
 	-- 设置分数
 	local panel = detailViewTransform:Find("Scroll View/Grid");
 	local childCount = panel.childCount;
-	for i = 0, childCount - 1 do
-		local tempObj = panel:GetChild(i);
+	local index = 0;
+	while index < childCount do
+		local tempObj = panel:GetChild(index);
 		if tempObj.name ~= "Item" then
 			UnityEngine.GameObject.DestroyImmediate(tempObj.gameObject);
 			childCount = childCount - 1;
+		else
+			index = index + 1;
 		end
 	end
 	local oriItem = panel:Find("Item");

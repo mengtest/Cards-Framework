@@ -41,7 +41,7 @@ namespace NCSpeedLight
         private bool SigReconnectOneTimeout = false;
         private float ReconnectOneElapse = 0f;
         private Coroutine ReconnectCR = null;
-        private Coroutine ListenNetworkStatusCR = null;
+        //private Coroutine ListenNetworkStatusCR = null;
         private float NetworkListenInterval = 1f;
 
         private StatusDelegate OnConnected;
@@ -198,7 +198,7 @@ namespace NCSpeedLight
                     Socket.Close();
                     Socket = null;
                 }
-                Loom.StopCR(ListenNetworkStatusCR);
+                //Loom.StopCR(ListenNetworkStatusCR);
                 Helper.LogError("NetConnection.ErrorOccurred: " + Error);
                 Callback(CallbackType.OnErrorrOccurred, Error);
             });
@@ -260,10 +260,10 @@ namespace NCSpeedLight
                 Socket.EndConnect(result);
                 Callback(CallbackType.OnConnected);
                 StartReceive();
-                Loom.QueueOnMainThread(() =>
-                {
-                    ListenNetworkStatusCR = Loom.StartCR(ListenNetworkStatus());
-                });
+                //Loom.QueueOnMainThread(() =>
+                //{
+                //    ListenNetworkStatusCR = Loom.StartCR(ListenNetworkStatus());
+                //});
             }
             catch (Exception e)
             {
@@ -280,10 +280,10 @@ namespace NCSpeedLight
                 Socket.EndConnect(result);
                 Callback(CallbackType.OnReconnected);
                 StartReceive();
-                Loom.QueueOnMainThread(() =>
-                {
-                    ListenNetworkStatusCR = Loom.StartCR(ListenNetworkStatus());
-                });
+                //Loom.QueueOnMainThread(() =>
+                //{
+                //    ListenNetworkStatusCR = Loom.StartCR(ListenNetworkStatus());
+                //});
             }
             catch
             {

@@ -158,7 +158,7 @@ function MJPlayer:SetData(id, displayID, name, headurl, sex, serverposition, isr
 	if self:IsHero() then
 		RongCloudAdapter.Login(self.ID, self.Name, self.HeadURL);
 	end
-	Log.Info("SetData: ID is " .. self.ID);
+	Log.Info("SetData: ID is " .. self.ID .. ",Sex is " .. self.Sex);
 end
 
 function MJPlayer:SetUI()

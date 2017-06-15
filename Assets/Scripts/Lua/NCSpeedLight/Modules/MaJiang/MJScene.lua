@@ -677,9 +677,7 @@ function MJScene.ReturnReconnectInfo(evt)
 	UI_MJBase.SetInviteBtnGray();
 	
 	if msg.m_FreeCard == MJDefine.TOTAL_CARD_COUNT then
-		-- 对局还没开始
-		Log.Info("ReturnReconnectInfo: 对局还没开始");
-		HallScene.SwitchFBStatus(FBStatus.RoundWait);
+		
 		for i = 1, #MJScene.Players do
 			local player = MJScene.Players[i];
 			UI_MJPlayer.SetReady(player.UI, player.IsReady == 1);
@@ -688,6 +686,15 @@ function MJScene.ReturnReconnectInfo(evt)
 		HallScene.CurrentFBFinishedRound = msg.m_leftCount;
 		HallScene.CurrentFBTotalRound = msg.m_totalCount;
 		HallScene.CurrentFBRound = HallScene.CurrentFBFinishedRound;
+		-- 对局还没开始 第0回合
+		if HallScene.CurrentFBRound == 0 then
+			Log.Info("ReturnReconnectInfo: 对局开始，第0回合");
+			HallScene.SwitchFBStatus(FBStatus.GameBegin);
+		else
+			-- 回合，等待其他玩家准备
+			Log.Info("ReturnReconnectInfo: 对局还没开始");
+			HallScene.SwitchFBStatus(FBStatus.RoundWait);
+		end
 		UI_MJBase.SetRound(false);
 		UI_MJBase.SetBackBtnActive(true);
 	else
@@ -1158,6 +1165,7 @@ function MJScene.NotifyDissolveRoom(evt)
 	end
 	UIManager.OpenWindow(UIName.UI_MJRequestDissolve);
 	UI_MJRequestDissolve.DissolveID = msg.m_Result;
+	HallScene.FBCloseTime = 300;
 end
 
 function MJScene.ChooseDissolveRoom(evt)
@@ -1172,7 +1180,20 @@ function MJScene.ReturnRoomMasterDissolve(evt)
 	end
 	Log.Info("ReturnRoomMasterDissolve: msg.request is " .. tostring(msg.request));
 	if msg.request == 0 then
-		UIManager.OpenConfirmDialog(nil, nil, "房间已解散,点击确定退出房间", false,
+		local content = nil;
+		if FBStatus.GameBegin == HallScene.FBCurrentStatus then
+			content = "房间已解散,点击确认退出房间";
+		else
+			content = "[9F2D38]经玩家";
+			for key, value in pairs(UI_MJRequestDissolve.Status) do
+				if value == 0 then
+					content = content .. "【" .. key.Name .. "】";
+				end
+			end
+			content = content .. "同意，房间解散成功[-]";
+		end
+		
+		UIManager.OpenConfirmDialog(nil, nil, content, false,
 		function()
 			UIManager.CloseWindow(UIName.UI_MJRequestDissolve);
 			if HallScene.CurrentFBRound > 1 then

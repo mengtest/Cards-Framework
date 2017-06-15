@@ -86,11 +86,11 @@ public class Loom : MonoBehaviour
         else
         {
             int threadID = Thread.CurrentThread.ManagedThreadId;
-            if (IsInMainThread(threadID))
-            {
-                action();
-            }
-            else
+            //if (IsInMainThread(threadID))
+            //{
+            //    action();
+            //}
+            //else
             {
                 lock (Current._actions)
                 {

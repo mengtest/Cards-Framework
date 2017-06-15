@@ -130,7 +130,7 @@ function UIManager.CloseAllWindowsExcept(...)
 		
 		if delete then
 			if info ~= nil and info.GO ~= nil then
-				UnityEngine.GameObject.Destroy(info.GO);
+				UnityEngine.GameObject.DestroyImmediate(info.GO);
 				table.insert(deletes, info.Name);
 			end
 		end

@@ -52,7 +52,7 @@ function UI_Share.OnClickShareMoment(go)
 	if UI_Share.ShareWithScreenshot then
 		ShareSDKAdapter.ShareWechatMomentWithScreenshot(nil);
 	else
-		ShareSDKAdapter.ShareWechatMoment(nil);
+		ShareSDKAdapter.ShareWechatMoment(UI_Share.ShareMoentCallBack);
 	end
 end
 

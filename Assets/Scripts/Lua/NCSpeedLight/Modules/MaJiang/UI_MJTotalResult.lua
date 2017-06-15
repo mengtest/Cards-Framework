@@ -93,7 +93,7 @@ function UI_MJTotalResult.SetPlayerInfo()
 					UIHelper.SetActiveState(tempTrans, "Role/Master", true);
 				end
 				UIHelper.SetLabelText(tempTrans, "Role/Label (Name)", Utility.TrimNickName(tempPlayer.Name));
-				UIHelper.SetLabelText(tempTrans, "Role/Label (ID)", "ID:" .. tempPlayer.ID);
+				UIHelper.SetLabelText(tempTrans, "Role/Label (ID)", "ID:" .. tempPlayer.DisplayID);
 				-- 设置头像
 				UIHelper.SetTexture(tempTrans, "Role/Sprite (Photo)", tempPlayer.HeadURL);
 				local tempItem = tempTrans:FindChild("ScrollView/UIGrid/Item");
