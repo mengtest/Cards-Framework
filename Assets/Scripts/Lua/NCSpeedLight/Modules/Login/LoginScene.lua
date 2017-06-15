@@ -57,7 +57,7 @@ function LoginScene.Initialize()
 end
 
 function LoginScene.Begin()
-	if SceneManager.LastScene == HallScene then
+	if SceneManager.LastScene == HallScene or SceneManager.LastScene == MJScene then
 		UIManager.CloseAllWindows();
 		NetManager.DisconnectAll();
 	end
@@ -293,7 +293,17 @@ function LoginScene.ConnnectLoginServer()
 	function(connection)
 		Log.Info("ConnnectLoginServer: 断开与登录服务器的连接");
 	end,
-	nil);
+	function(connection)
+		Log.Info("ConnnectLoginServer: 重新连接至登录服务器");
+		UIManager.CloseProgressDialog();
+		LoginScene.RequestVerifyVersion();
+	end,
+	function(connection, error)
+		if SceneManager.CurrentScene == LoginScene then
+			Log.Info("OnLogicServerErrorOccurred: 登录服务器异常,启动重连");
+			connection:Reconnect();
+		end
+	end);
 end
 
 function LoginScene.RequestVerifyVersion()
@@ -470,6 +480,10 @@ function LoginScene.OnDisconnectLogicServer(connection)
 end
 
 function LoginScene.OnReconnectLogicServer(connection)
+	if LoginScene.LogicServerFail ~= nil then
+		LoginScene.LogicServerFail:Stop();
+		LoginScene.LogicServerFail = nil;
+	end
 	UIManager.CloseProgressDialog();
 	Log.Info("OnReconnectLogicServer: 成功重连至逻辑服务器,耗时：" .. tostring(Time.realtimeSinceStartup - LoginScene.DisconnectTimeStamp) .. "s");
 	LoginScene.ReqReconnectToLogicServer();
@@ -485,6 +499,14 @@ function LoginScene.OnLogicServerErrorOccurred(connection, error)
 		connection:Reconnect();
 		Log.Info("OnLogicServerErrorOccurred: 逻辑服务器异常,启动重连,时间戳：" .. tostring(LoginScene.DisconnectTimeStamp));
 	end
+	LoginScene.LogicServerFail = Timer.New(LoginScene.ReconnectToLogicServerFail, 30, false, false);
+	LoginScene.LogicServerFail:Start();
+end
+
+function LoginScene.ReconnectToLogicServerFail()
+	UIManager.CloseProgressDialog();
+	SceneManager.Goto(SceneName.LoginScene);
+	UIManager.OpenConfirmDialog(nil, nil, "网络异常，请检查网络情况", false);
 end
 
 function LoginScene.ReqReconnectToLogicServer()
