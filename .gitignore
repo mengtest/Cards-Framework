@@ -3,6 +3,7 @@
 ################################################################################
 
 *.vs
+*.db
 *.sln
 *.csproj
 /Temp
@@ -11,3 +12,7 @@
 /Docs/Archives/
 
 
+/Assets/StreamingAssets/Assets
+/Assets/StreamingAssets/Scripts
+/Assets/StreamingAssets/Assets.meta
+/Assets/StreamingAssets/Scripts.meta
