@@ -1,0 +1,60 @@
+
+¬	
+generalize.txt"q
+GM_Generalize_Code_Return
+	m_getgold (
+m_totalgold (,
+
+m_codedata (2.GM_Generalize_Code_Data"]
+GM_Generalize_Code_Data
+m_roleid (
+m_name (	
+m_headid (
+m_time ("˝
+GM_Generalize_Feedback_Return
+m_hasgetone (
+m_cangetone (
+m_hasgettwo (
+m_cangettwo (
+m_viplevelone (
+m_vipleveltwo (,
+m_feedbackone (2.GM_Feedback_One_Data,
+m_feedbacktwo (2.GM_Feedback_Two_Data"Å
+GM_Feedback_One_Data
+m_roleid (
+m_name (	
+m_headid (
+m_level (
+
+m_viplevel (
+m_canget ("Å
+GM_Feedback_Two_Data
+m_roleid (
+m_name (	
+m_headid (
+m_level (
+
+m_viplevel (
+m_canget ("(
+GM_Generalize_GetReward
+m_tag ("A
+GM_Generalize_GetReward_Result
+m_tag (
+m_result ("8
+GM_Generalize_Bind
+m_bindid (
+m_roleid ("-
+GM_Generalize_Bind_Return
+m_result ("`
+GM_Generalize_Center_Data
+m_roleid (1
+	m_OneData (2.GM_Generalize_Center_One_Data"ù
+GM_Generalize_Center_One_Data
+m_roleid (
+m_name (	
+m_headid (
+m_level (
+
+m_viplevel (
+	m_timenow (
+m_canget (

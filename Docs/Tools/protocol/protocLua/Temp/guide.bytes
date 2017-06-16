@@ -1,0 +1,21 @@
+
+—
+	guide.txt"I
+GM_Guide_System_Item
+level (
+systemid (
+unlocked ("O
+GM_Guide_AllSystem_Return
+count (#
+item (2.GM_Guide_System_Item"9
+GM_Guide_AllGuide_Return
+count (
+guides ("&
+GM_Guide_Guide_Item
+guideid ("/
+GM_Guide_FinishGuide_Request
+guideid ("-
+GM_Guide_FinishGuide_Return
+result ("+
+GM_GuideClose_level_Return
+level (

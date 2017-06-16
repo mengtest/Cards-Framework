@@ -1,0 +1,137 @@
+message GMTeamPerson
+{ 
+	required int32  roleID=1;//角色ID
+	optional string rolename=2;  //角色名字
+	optional int32 rolelv=3;     //角色等级
+	optional int32 fightvalue=4; //战力
+	optional int32 profession=5; //职业
+
+	optional int32 mStatus=10; // 在线状态  0 不在线 1 在线
+
+}
+
+message GMCreateTeam
+{
+	required int32 teamtype=1;  //队伍类型  0普通，1征战三荒 2 巫满之战 3 古神浩劫
+	optional int32 matchtype=2; //匹配类型  0普通，1单人匹配， 2组队
+	optional int32 fbid=3; 		//副本id
+}
+
+message GMCreateTeamResult
+{
+	required int32 m_result=1; 	// 0 成功 1 未解锁 2 当前副本挑战次数不够 3 总次数不够 4 角色已经在副本中 
+								// 5 副本未解锁 6 玩家不在线 7 角色已经在其他队伍中 8 未在挑战时间内
+								// 12 历练不足 11 临时背包有物品 13 服务器错误
+ 	optional int32 teamid=2;
+	optional int32 teamtype=3;	// 队伍类型  0普通，1征战三荒 2 巫蛮之战
+	optional int32 matchtype=4;	// 匹配类型  0普通，1单人匹配， 2 组队
+}
+
+message GMInviteFriendListRequest
+{
+	required int32 fbid=1;
+}
+message GMInviteFriendList
+{
+	required int32 count=1;
+	repeated GMTeamPerson data=2;
+}
+
+message GMInviteRoleInTeam
+{
+	required int32  inviteroleid=1;    //邀请人ID
+	optional string inviterolename=2; //邀请人姓名
+	required int32  beinvitedroleid=3; //被邀请人ID
+	optional string beinvitedrolename=4;  //被邀请人姓名
+	required int32  teamid=5;          //队伍ID
+	required int32  teamtype=6;        //队伍类型  0普通，1征战三荒 2 巫蛮之战
+	required int32  fbid=7;        		// 副本id
+
+	optional int32  timemark=10;        //  邀请时间
+
+}
+
+message GMInviteRoleInTeamResult
+{
+	required int32  m_result=1;            //0 成功	 enum TeamOperResult
+	required int32  beinvitedroleid=2;  //被邀请人ID
+	optional string beinvitedrolename=3;  //被邀请人姓名
+	required int32  teamid=4;           //队伍ID
+}
+
+message GMAnswerRoleInTeam
+{
+	required int32  answerresult=1;    //0同意， 1不同意
+	required int32  inviteroleid=2;    //邀请人ID      //告诉邀请人，我不同意
+	optional string inviterolename=3;  //邀请人姓名
+	required int32  beinvitedroleid=4; //被邀请人ID
+	optional string beinvitedrolename=5;  //被邀请人姓名
+	required int32  teamid=6;          //队伍ID
+	required int32  teamtype=7;        //队伍类型  0普通，1征战三荒 2 巫满之战
+}
+
+message GMChatRoleInTeam
+{
+	required int32  answerresult=1;    //0同意， 1不同意
+	required int32  roleid=6;          //发队伍信息的角色
+	optional int32  teamid=7;          //队伍id
+}
+
+message GMAnswerRoleInTeamResult
+{
+	required int32  m_result=1;        // 0成功  enum TeamOperResult 10 不能进入自己队伍 11 临时背包有物品 12 历练不足 13 无法挑战该副本
+										// 14 未在挑战时间内
+	optional int32  teamid=2;          // 队伍ID
+	optional int32 fbid=3;				// 副本id
+	optional int32  teamtype=4;        //队伍类型  0普通，1征战三荒 2 巫满之战
+}
+
+message GMRoleTeamNotify
+{
+	required int32 m_result=1;        //0在队中   1已解散, 2被踢出  3离开队伍  TeamStatus
+	optional int32 m_teamleader=2;    //队长ID
+	repeated GMTeamPerson m_person=3; //当前组员
+}
+
+
+//剔出队伍
+message GMKickoutTeam
+{
+	required int32 m_outroleid=1;  //被踢出的角色id
+	required int32 m_teamid=2;
+}
+
+//踢出队伍结果
+message GMKickoutTeamResult
+{
+	required int32 m_result=1;      //0成功  TeamOperResult
+	required int32 m_outroleid=2;   //
+}
+
+//离开队伍
+message GMLeaveTeam
+{
+	required int32 m_teamid=1;  //离开这个队伍
+}
+
+//离开队伍操作结果
+message GMLeaveTeamResult	
+{
+	required int32 m_result=1;    //0成功	TeamOperResult
+}
+
+
+//离开队伍操作结果
+message GM_NotifyActiveOver	
+{
+	required int32 m_nFbTypeId=4;        //副本id  
+}
+
+//离开队伍操作结果
+message GM_NotifyInviteData	
+{
+	required int32 count=1;
+	repeated GMInviteRoleInTeam mdata=2;
+}
+
+

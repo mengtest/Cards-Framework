@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 1819681306
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 5cd955b2201f9b5d4090b68ecdb97251
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 02bb1a4f827934bc9f9224f61c0f3e4c
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Effect/MaJiang/mailei/Materials/No Name.mat
+Dependencies: []

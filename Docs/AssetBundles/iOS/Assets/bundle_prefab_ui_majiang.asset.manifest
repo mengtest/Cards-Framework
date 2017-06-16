@@ -1,0 +1,160 @@
+ManifestFileVersion: 0
+CRC: 11093580
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 0e2422bb29db4a9ee480477da9c534a9
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 210ea2c782a2165c037c1f9ef7b901bf
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 20
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 54
+  Script: {instanceID: 0}
+- Class: 65
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 81
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
+- Class: 111
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: e2c7c160bb195954ba7444e3161d307e, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ae942c9068183dc40a9d01f648273726, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5c041f61e4a9fbf4e830210f5d933ece, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 75e7459110b9666449485c40f25362a5, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 858a20c1b21a3f94bb5b2d3b901c9aaf, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 9b07b9d136934c04b965f9adb7054484, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 87336b627a85f154ab2b074b8a8c3a02, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 23161892fae3ff54b97a4cef4fe85efa, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: d81807633ea807d4c8e3fff7e10c6000, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 9e2747e3775af504da1a4d5a46c5a1ce, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: e9d0b5f3bbe925a408bd595c79d0bf63, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 1fdca5042b1d12a4890ec1bd4f04290d, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 1ebb23549685bb2478289571b9c01858, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 0b4eb3a400afab046abb8471a9d746d6, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 3d166255cacf07b4292b8402b3ddefc5, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2c5ecb5660b11414fb042fb826e03b73, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 446d504799d99174383957fca80713c8, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: d5c5ca47aa5c01740810b7c66662099f, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2a92b5d748695fd44aac9feef17ba415, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 492792286ed0cd941832ca14353357dc, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ac5060295fbd39b4a88d20d0c83d925e, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 7d44bc69c2ca5f943b845318866dc1bd, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 1d805c79a1ab11643bfd9d91e10c195a, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 04d1b7c9e9a19a24ab67123a43c6544b, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f02842fa4878db54f9587ff4de7d9f2d, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 07c4de3b4b6fe9045b059ee627c100df, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4d0c51bb0b6e93049af5e88f93826e3b, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: df9bfb5c080dac24cbbc6c9f595ed413, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 3c8d596c16f05d949922ef16347e4cc9, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: b5f48ecc218d2db49baa9ac1bfe73ba9, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: b1bd99dcf43f97d48bb6215c70f0cd40, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 6c20815eb3063c24290a61b7020a1836, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 66ca9c6e5cbd4544ab22016a27d817a4, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: b56bbc9eec7ee854689e0024113f6215, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 1b3dc54f924693f41b5cbecb267e647a, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: da3c750cf41add74fbd33afe8e6c86d4, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 721eeb77f263a574da5ff70a8d838f29, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: e68bbba3b5b2e8745bd3f9659ccb7749, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4e1ce8f4b02770441b487ed164bb0911, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 3ed1321d63a02dd408c9d02e26fad79b, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 198
+  Script: {instanceID: 0}
+- Class: 199
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Bundle/Prefab/UI/MaJiang/WeiXinInvite.prefab
+- Assets/Resources/Bundle/Prefab/UI/MaJiang/UI_MJPlayerInfo.prefab
+- Assets/Resources/Bundle/Prefab/UI/MaJiang/UI_MJTest.prefab
+- Assets/Resources/Bundle/Prefab/UI/MaJiang/UI_MJTotalResult.prefab
+- Assets/Resources/Bundle/Prefab/UI/MaJiang/UI_MJPlayJing.prefab
+- Assets/Resources/Bundle/Prefab/UI/MaJiang/UI_MJSetting.prefab
+- Assets/Resources/Bundle/Prefab/UI/MaJiang/UI_MJBase.prefab
+- Assets/Resources/Bundle/Prefab/UI/MaJiang/UI_MJStart.prefab
+- Assets/Resources/Bundle/Prefab/UI/MaJiang/XuFei.prefab
+- Assets/Resources/Bundle/Prefab/UI/MaJiang/UI_MJResult.prefab
+- Assets/Resources/Bundle/Prefab/UI/MaJiang/InviteFriend.prefab
+- Assets/Resources/Bundle/Prefab/UI/MaJiang/UI_MJRequestDissolve.prefab
+- Assets/Resources/Bundle/Prefab/UI/MaJiang/UI_MJDraw.prefab
+Dependencies:
+- G:/Projects/MJ/MaJiang_Lua/Docs/AssetBundles/iOS/Assets/raw_atlas_majiang.asset
+- G:/Projects/MJ/MaJiang_Lua/Docs/AssetBundles/iOS/Assets/raw_effect_majiang_bawang.asset
+- G:/Projects/MJ/MaJiang_Lua/Docs/AssetBundles/iOS/Assets/raw_effect_majiang_chongguan.asset
+- G:/Projects/MJ/MaJiang_Lua/Docs/AssetBundles/iOS/Assets/raw_effect_majiang_kaiju.asset
+- G:/Projects/MJ/MaJiang_Lua/Docs/AssetBundles/iOS/Assets/raw_atlas_public.asset
+- G:/Projects/MJ/MaJiang_Lua/Docs/AssetBundles/iOS/Assets/internal_ui_mask.asset
+- G:/Projects/MJ/MaJiang_Lua/Docs/AssetBundles/iOS/Assets/raw_atlas_dialog.asset
+- G:/Projects/MJ/MaJiang_Lua/Docs/AssetBundles/iOS/Assets/raw_effect_majiang_operate.asset
+- G:/Projects/MJ/MaJiang_Lua/Docs/AssetBundles/iOS/Assets/raw_atlas_center.asset
+- G:/Projects/MJ/MaJiang_Lua/Docs/AssetBundles/iOS/Assets/raw_atlas_hall.asset
+- G:/Projects/MJ/MaJiang_Lua/Docs/AssetBundles/iOS/Assets/raw_atlas_recordvoice.asset
+- G:/Projects/MJ/MaJiang_Lua/Docs/AssetBundles/iOS/Assets/raw_third_ngui_resources_shaders.asset
+- G:/Projects/MJ/MaJiang_Lua/Docs/AssetBundles/iOS/Assets/raw_font.asset
+- G:/Projects/MJ/MaJiang_Lua/Docs/AssetBundles/iOS/Assets/raw_effect_majiang_biankuang.asset

@@ -1,0 +1,118 @@
+
+È
+Proto/match.txt"®
+GM_match_UI_info
+
+ID (
+matchid (
+
+battletype (
+	starttype (
+rank (
+	starttime (
+endtime (
+remark (	
+	matchname	 (	
+
+circletime
+ (
+	peoplenum (
+costid (
+cost (
+picture (
+state (
+isopen (
+icon (	"o
+GM_match_reward
+
+ID (
+matchid (
+maxrank (
+minrank (
+objectid (
+num ("F
+GM_match_reward_all
+matchid (
+data (2.GM_match_reward"D
+GM_match_selfJoin
+matchid (
+
+createtime (
+
+id ("Œ
+GM_match_UI_return
+
+id (
+data (2.GM_match_UI_info#
+matchid (2.GM_match_selfJoin$
+reward (2.GM_match_reward_all"D
+GM_match_peoplenum
+
+id (
+matchid (
+	peoplenum ("(
+GM_match_peoplenum_request
+
+id ("N
+GM_match_peoplenum_return
+roleid (!
+data (2.GM_match_peoplenum"<
+GM_Match_notify
+matchid (
+time (
+
+id (")
+GM_match_apply_request
+matchid ("H
+GM_match_apply_return
+errorid (
+
+createtime (
+
+id ("(
+GM_match_join_request
+matchid ("3
+GM_match_join_return
+errorid (
+
+id ("#
+GM_match_quit_request
+
+id ("D
+GM_match_quit_return
+errorid (
+
+id (
+matchid ("_
+GM_match_rank_role
+rank (
+name (	
+score (
+data (2.GM_match_object"‘
+GM_match_rank_return
+rank (
+score (
+
+id (!
+data (2.GM_match_rank_role
+num ( 
+reward (2.GM_match_object"1
+GM_match_rank_request
+page (
+
+id ("
+GM_Match_team
+time ("0
+GM_match_object
+objectid (
+num ("o
+GM_Match_result
+rank (
+isover (
+score (
+data (2.GM_match_object
+lastnum (")
+GM_Match_time_return
+	begintime ("$
+GM_Match_rate_return
+rate (

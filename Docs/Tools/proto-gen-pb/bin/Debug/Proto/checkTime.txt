@@ -1,0 +1,5 @@
+
+message GM_ServerTime_t
+{
+  required int64 time_t=1;
+}

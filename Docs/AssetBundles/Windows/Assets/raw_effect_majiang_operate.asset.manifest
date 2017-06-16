@@ -1,0 +1,27 @@
+ManifestFileVersion: 0
+CRC: 3178913987
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 46bda0b445bed8d6c3a1782ff81484aa
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: dafb67cca6a2c3bf62fa900616455a9b
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Effect/MaJiang/Operate/kuosan-hu.mat
+- Assets/Resources/Raw/Effect/MaJiang/Operate/guangquan.png
+- Assets/Resources/Raw/Effect/MaJiang/Operate/kuosan-hu2.mat
+- Assets/Resources/Raw/Effect/MaJiang/Operate/kuosan-hu1.mat
+- Assets/Resources/Raw/Effect/MaJiang/Operate/Effects_Textures_1012.png
+- Assets/Resources/Raw/Effect/MaJiang/Operate/texiao_1.png
+Dependencies: []

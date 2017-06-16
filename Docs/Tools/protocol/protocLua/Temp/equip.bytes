@@ -1,0 +1,26 @@
+
+§
+	equip.txt"M
+GMMountEquip
+m_gmid (
+m_packagetype (
+
+m_position (:-1"\
+GMEquipResult
+m_result (
+m_gmid (
+m_packagetype (
+
+m_position ("O
+GMUnmountEquip
+m_gmid (
+m_packagetype (
+
+m_position (:-1"O
+GMEquipLinkInfo
+m_equipgmid (
+m_equiptypeid (
+m_linkid ("K
+GMEquipLinkList
+	m_useness (%
+m_equiplink (2.GMEquipLinkInfo

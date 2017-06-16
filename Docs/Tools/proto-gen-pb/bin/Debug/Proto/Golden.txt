@@ -1,0 +1,601 @@
+//创建房间返回;
+message GM_CREATEROOM_Golden_Return
+{
+//1成功，2房间数 已经满了不能创建更多房间 3服务器错误，/*4已经在房间*/,5不存在该区;
+required int32 result=1;
+//创建成功的房间id;    
+required int32 ID=2;
+//区号;
+required int32 areaid=3;
+}
+
+   
+//请求创建房间;
+message GM_CREATEROOM_Golden_Request
+{
+//区号;（初级场1，高级场2，土豪场3 包间4）   
+required int32 areaid=1;  
+//请求的倍率;   
+optional int32 rate=2;
+}
+   
+
+//请求进入房间返回;
+message GM_LOGINROOM_Golden_Return
+{
+//---普通1 成功，2资产不足，3资产过多，4等级不足，5vip等级不足，6服务器错误,7已经在房间里,8请求的倍率不存在
+required int32 m_result=1;
+//房间id;
+required int32 ID=2;
+//区号 （初级场1，高级场2，土豪场3 包间4）;
+optional int32 areaid=3;
+}
+
+//请求进入房间;
+message GM_LOGINROOM_Golden_Request
+{
+//房间id;
+required int32 ID=1;
+//区号id;
+required int32 areaid=2;
+}
+
+
+//请求进入副本;
+message GM_LOGINCOPY_Golden_Request
+{
+//房间id;
+required int32 ID=1;
+//区号id;
+required int32 areaid=2;
+}
+
+//请求进入副本返回;
+message GM_LOGINCOPY_Golden_Return
+{
+//1成功， 2不存在该房间，3该房间没有此人,4 服务器错误;
+required int32 result=1;
+}
+
+
+
+//玩家信息;
+message GM_GoldenData
+{
+//玩家id;
+required int32 playerid=1;
+//人物名字;
+optional string name=2;
+//玩家位置;
+optional int32 place=3;
+//金币;
+optional int64 golde=4;
+//头像;
+optional int32 head=5;
+//相框;
+optional int32 frame=6;
+//性别;
+optional int32 sex=7;
+//qqhead;
+optional string qqhead=8;
+}
+
+//一个房间的信息;
+message GM_Room_GoldenData
+{
+//房间id;
+required int32 ID=1;
+//房主id;
+optional int32 ownid=2;
+//位置;
+//optional int32 place=3;
+//每个玩家信息;
+repeated GM_GoldenData m_fishman=4;
+}
+
+
+//广播该区所有玩家信息;
+message GM_AreaAllinfoGolden_Return
+{
+//区号id;
+required int32 areaid=1;
+//所有房间;
+repeated GM_Room_GoldenData m_data=2;
+}
+
+
+//请求该区的所有房间信息;
+message GM_AreaAllinfoGoldenRequest
+{
+//区号;
+required int32 areaid=1;
+}
+
+
+
+//离开房间;
+message GM_leaveGoldenRequest
+{
+//区号;
+required int32 areaid=1;
+//房间号;
+required int32 roomid=2;
+}
+
+//离开房间返回;
+message GM_leaveGoldenReturn   
+{
+// 1 房间不存在，2人物不存在 ，0成功 ;
+required int32 errorid=1;
+//离开的人物id;
+optional int32 roleid=2;
+//离开的区号;
+optional int32 areaid=3;
+//离开的房间号;
+optional int32 id=4;
+}
+
+
+//请求查看 房间内的全部玩家信息;
+message GM_Golden_All_request
+{
+//区id;
+required int32 areaid=1;
+//房间id;
+optional int32 id=2;
+}
+
+
+///////////////////////COPY////////////////////////////////
+
+
+
+//一局开始;
+message GM_Golden_Begin_return
+{
+//庄家id;
+required int32 backerid=1;
+}
+
+
+
+//请求看牌;
+message GM_Golden_Card
+{
+//站位作用 不读;
+required int32 roleid=1;
+//牌型  牌型[豹子=1,同花顺=2,金花=3,顺子=4,对子=5,散牌=6,特殊=7];
+optional int32 type_id=2;
+//牌的集合 101（红桃 1） 一个三位数的int值 ，第一位表示花色（从1 开始 红黑梅方） 后两位表示字面值    ;
+repeated int32 card=3;
+//人物的位置;
+optional int32 pos=4;
+}
+
+//广播有人看牌 除了自己;
+message GM_Golden_Broad_Card
+{
+//人物id;
+required int32 roleid=1;  
+}
+
+
+
+    
+//请求加注;
+message GM_Golden_add_request
+{
+//投入的资产值;
+required int64 money=1;
+}
+
+//请求加注返回;
+message GM_Golden_add_return
+{
+//返回，1 成功，2不能少于当前地注，3 资产不够，4不能高于限制，5服务器错误，6自己还不能操作, 7不能少于当前单注,8发的注的数值错误,9操作者不是自己,10动画未播完;
+required int32 errorid=1;
+//加注者人物id;
+required int32 roleid=2;
+//加了多少;
+optional int64 money=3;
+}
+
+
+
+
+
+//请求比牌;
+message GM_Golden_Compare_request
+{
+//对方的人物id;
+required int32 roleid=1;
+//1孤注一掷,0不是;
+optional int32 nomoney=2;
+}
+
+//比牌结果;
+message GM_Golden_Compare_return
+{
+//胜者的id  如果为1的话 第一回合不能比牌;
+required int32 winid=1;
+//失败者id;
+required int32 failureid=2;
+//所得的资产;
+required int64 money=3;
+
+//失败消息 1成功，2第一回合 不能比牌,3服务器错误，4自己 已经弃牌,5自己处于离线状态，6对方已经弃牌，7对方离线;
+optional int32 errorid=4;
+//1孤注一掷,0不是;
+optional int32 nomoney=5;
+}
+
+
+//广播给所有人，谁是操作者;
+message GM_Golden_maker_return
+{
+//操作者的人物id;
+required int32 makerid=1;
+}
+
+
+//所有人的牌;
+message GM_Golden_allCard_return
+{
+//胜者id;
+required int32 winerid=1;
+//应得 资产;
+optional int64 shouldget=2;
+//实得资产;
+optional int64 get=3;
+//所有人的牌;
+repeated GM_Golden_Card m_data=4;
+}
+
+
+//弃牌返回;
+message GM_Golden_abandon_return
+{
+//1 成功，2当前不能操作，3服务器错误,4动画未播完;
+required int32 errorid=1;
+//人物id;
+optional int32 roleid=2;
+}
+
+
+//资产的变化;
+message GM_Golden_gamble_return
+{
+//当前值;
+required int64 gamble=1;
+}
+
+//自己资产的变化;
+message GM_Golden_selfGamble_return
+{
+//当前值;
+required int64 gamble=1;
+//人物id;
+optional int32 roleid=2;
+}
+
+
+
+//回合 变化;
+message SM_Golden_Boun_return
+{
+//第几 回合;
+required int32 bout=1;
+}
+
+
+//开局 倒计时5秒;
+message GM_Golden_Begin_Time_return
+{
+//从0 开始 到5结束;
+required int32 time=1;
+}
+
+
+//单人时间倒计时;
+message GM_Golden_Begin_Singletime_return
+{
+//从 1 开始 到10结束;
+required int32 time=1;   
+}
+
+
+
+//客户端 请求暂停 ，开始;
+message GM_Golden_pause_request
+{
+//1 暂停，2开始;
+required int32 pause=1;
+}
+
+//暂停 返回;
+message GM_Golden_pause_return
+{
+//服务器的状态 1暂停，2开始;
+required int32 pause=1;
+}
+
+
+//请求亮牌;
+message GM_Golden_show
+{
+//亮牌的人物id ,-1还不能请求名牌（错误的话 只会会给 自己）;
+required int32 roleid=1;
+}
+
+//请求亮牌;
+message GM_Golden_show_return
+{
+//亮牌的人物id ,-1还不能请求名牌（错误的话 只会会给 自己）;
+required int32 roleid=1;
+optional GM_Golden_Card data=2;
+}
+
+
+
+///////////////////////////包间///////////////////////////////
+
+//请求创建房间;
+message GM_Golden_private_request
+{
+//创建房间的倍率;
+required int32 rate=1;
+}
+
+message GM_Golden_private_return
+{
+//请求创建包间 返回;
+//1成功，2房卡不足，3服	器错误，4该区不存在,5请求的倍率不存在,6自己的资产不足;
+required int32 errorid=1;
+//房间id,区id为4;
+optional int32 id=2;
+//区id;
+optional int32 areaid=3;
+}
+
+
+//请求邀请 好友;
+message GM_Godlen_invite_requrest
+{
+//自己的房间id;
+required int32 id=1;
+//被邀请者 的人物id;
+optional int32 roleid=2;
+}
+
+//邀请好友返回;
+message GM_Golden_invite_return
+{
+//1 成功，2该房间不存在，3对方 不是你的好友，4对方不在线，5时间已到（房卡过期了），6服务器错误，7房间已满;
+required int32 errorid=1;
+}
+
+//被邀请者 收到信息;
+message GM_Golden_invitate_roler_eturn
+{
+//邀请者的人物id;  
+required int32 roleid=1;
+//邀请者的名字;
+optional string name=2;
+//房间 倍率信息;
+optional int32 rate=3;
+//邀请者的 头像id;
+optional int32 head=4;
+//邀请者的 相框;
+optional int32 frame=5;
+//房间id;
+optional int32 id=6;
+}
+
+
+//请求 踢人;
+message GM_Golden_kick
+{
+//被 踢者人物id;
+required int32 roleid=1;
+//操作者人物id;
+optional int32 makeid=2;
+//房间id;
+optional int32 id=3;
+}
+
+//踢人 返回;
+message GM_Golden_kick_return
+{
+//1 成功，2自己不是房主没有权限，3不存在该玩家,4不存在该房间;
+required int32 errorid=1;
+//被 踢者人物id;
+required int32 roleid=2;
+//操作者人物id;
+optional int32 makeid=3;
+}
+
+
+
+
+//请求转换房间;
+message GM_Golden_switch_return
+{
+//1成功，2该玩家之前未进入房间，3服务器错误，4包间不能匹配
+required int32 errorid=1;
+}
+
+
+
+
+//炸金花 通知有玩家离开;
+message SM_Golden_Notify_leave
+{
+//copyid;
+required int32 copyid=1;
+//自增副本号;
+optional int32 fbid=2;
+//人物id;
+optional int32 roleid=3;
+}
+
+
+
+
+
+//每个人的状态;
+message GM_GodlenMan_state
+{
+//人物id;
+required int32 roleid=1;
+//自己加的注;
+optional int32 m_gamble=2;
+//牌的情况，1暗牌，2看牌，3弃牌;
+optional int32 m_abandon=3;
+//自己有无牌，1有，2没有(没有就代表该局没有参与 观战);
+optional int32 m_hascard=4;
+//比牌结果，1没有比牌，2比牌输，3比牌影;
+optional int32 m_isCompare=5;
+//财产值;
+optional int32 m_money=6;
+}
+
+
+
+//房间状态;
+message GM_GoldenRoom_state
+{
+//单注值;
+required int32 m_singgamble=1;
+//全部注的值;
+optional int32 m_totalgamble=2;
+//操作者id(单人倒计时时间 每秒会回);
+optional int32 m_Singroleid=3;
+//人员信息;
+repeated GM_GodlenMan_state m_data=4;
+// 每个注;
+repeated int32 m_groupgamble=5;
+//距离多少秒换操作者;
+optional int32 m_singtime=6;
+//当前回合数;
+optional int32 m_bout=7;
+}
+
+
+
+//通知玩家进入离线状态 广播;
+message GM_Golden_offline_return
+{
+required int32 roleid=1;
+}
+
+
+//通知充值中;
+message GM_Godlen_Charge_return
+{
+required int32 roleid=1;
+}
+
+
+
+
+//请求准备;
+message GM_Golden_prepare_request
+{
+//房间id;
+required int32 id=1;
+//0 请求准备，1取消准备;
+optional int32 type=2;
+}
+
+//准备回包;
+message GM_Godlen_prepare_return
+{
+//1成功，2未在该房间;
+required int32 errorid=1;
+optional int32 roleid=2;
+//0 请求准备，1取消准备;
+optional int32 type=3;
+}
+
+//请求开始;
+message GM_Golden_start_request
+{
+required int32 id=1;
+}
+
+//准备回包;
+message GM_Godlen_start_return
+{
+//1成功，2未在该房间;,3不是房主
+required int32 errorid=1;
+optional int32 roleid=2;
+//剩余时间;
+optional int32 lasttime=3;
+}
+
+
+//请求充值;
+message GM_Golden_charge_request
+{
+//2充值，3救济金;
+required int32 typecharge=1;
+}
+
+
+//包间房间人员信息;
+message GM_Godlen_room_role
+{
+//玩家id;
+required int32 roleid=1;
+}
+
+
+//房卡扣除通知逻辑服务器（包间）;
+message GM_Golden_roomcard_return
+{
+//房主id;
+required int32 monsterid=1;
+//包间id;
+required int32 roomid=2;
+//副本id;
+optional int32 copyid=3;
+//倍率;
+optional int32 rate=4;
+
+repeated GM_Godlen_room_role roleinfo=5;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

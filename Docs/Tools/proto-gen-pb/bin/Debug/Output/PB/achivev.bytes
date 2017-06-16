@@ -1,0 +1,35 @@
+
+¿
+Proto/achivev.txt"-
+SM_Achieve_channel_request
+channel ("f
+SM_Achieve_data
+	achieveid (
+conditiontype (
+mow (
+limit (
+iscan ("L
+SM_Achieve_channel_return
+channel (
+data (2.SM_Achieve_data"X
+GM_Achieve_all_return
+rolied (/
+channeldata (2.SM_Achieve_channel_return"?
+SM_Achieve_accept_request
+channel (
+	achieveid ("]
+SM_Achieve_accept_return
+errorid (
+	achieveid (
+objectid (
+num ("9
+SM_Achieve_can_data
+channel (
+	achieveid ("K
+SM_Achieve_can_return
+roleid ("
+data (2.SM_Achieve_can_data"C
+GM_Achieve_Condition
+tag (
+	condition (
+num (

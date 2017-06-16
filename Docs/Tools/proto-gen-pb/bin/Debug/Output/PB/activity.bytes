@@ -1,0 +1,49 @@
+
+¾
+Proto/activity.txt",
+GM_RewardObj
+objid (
+count ("­
+GM_RewardInfo
+chargecount (
+gold (
+money (
+exp (
+percentgold (
+percentmoney (
+giftbag_objid (
+objs (2.GM_RewardObj"Ï
+GM_ChargeInfo
+firstchargedata (
+oncechargedata (
+totalchargedata (
+dailychargedata (
+dailychargecount	 (#
+firstcharge (2.GM_RewardInfo"
+
+oncecharge (2.GM_RewardInfo#
+totalcharge (2.GM_RewardInfo#
+dailycharge (2.GM_RewardInfo
+	firsttxt1 (	
+	firsttxt2 (	
+	dailytxt1 (	
+	dailytxt2 (	
+oncetxt1 (	
+oncetxt2 (	
+	totaltxt1 (	
+	totaltxt2 (	
+totalchargecount
+ ("8
+GM_GetReward_Result
+result (
+	leftTimes ("G
+GM_RequestGetReward
+type (
+whichone (
+objectid ("M
+GM_FristChargeData
+m_firststate (!
+
+m_objectid (2.GM_RewardObj"&
+GM_GetWeaponResult
+m_result (

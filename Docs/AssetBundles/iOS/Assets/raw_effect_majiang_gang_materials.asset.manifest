@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 692325821
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: ff7c2999165c19530e82a3548db9b7a4
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 02bb1a4f827934bc9f9224f61c0f3e4c
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+Assets:
+- "Assets/Resources/Raw/Effect/MaJiang/gang/Materials/\u87BA\u65CB.mat"
+Dependencies: []

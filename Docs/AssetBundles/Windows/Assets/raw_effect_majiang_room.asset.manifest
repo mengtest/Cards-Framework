@@ -1,0 +1,31 @@
+ManifestFileVersion: 0
+CRC: 2522141591
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: a6a39939ad2d5358cc28e8645ae90bd8
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 9ca468e704c37c931278b35c73c0f64d
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 90
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Effect/MaJiang/room/pingmian.FBX
+Dependencies:
+- G:/Projects/MJ/MaJiang_Lua/Docs/AssetBundles/Windows/Assets/raw_effect_majiang_room_materials.asset

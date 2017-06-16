@@ -1,0 +1,71 @@
+
+ 
+
+common.txt"D
+	GM_Result
+m_Result (
+userData (	
+m_productid ("P
+GM_RoleIdRequest
+roleId (
+
+ip (	
+userId (
+userGmid ("
+GM_GmidRequest
+gmid ("
+
+GM_Request
+request (".
+GM_CheckTime
+timet (
+nowtick ("’
+GM_BuyTiredResult
+m_result (
+hasbuy_times (
+nextneedgold (
+
+tiredvalue (
+
+isdiscount (
+istiredvalueadd ("G
+GM_StatisticsLog
+result (
+	rolelogin (	
+recharge (	".
+GM_Get_object
+objectid (
+num ("?
+GM_Get_Result
+m_Result (
+data (2.GM_Get_object"M
+GM_Common_roleinfo_requrest
+roleid (
+copyid (
+roomid ("ì
+GM_Comon_role_info
+roleid (
+sign (	
+name (	
+head (
+frame (
+sex (
+golde (
+ticket (
+card	 (
+majiang
+ (
+
+majiangwin (
+jinhua (
+	jinhuawin (
+
+matchscore (
+fruit (
+majiangbaojian (
+jinhuabaojian (
+vip (
+nickname (	
+qqhead (	
+
+ip (	

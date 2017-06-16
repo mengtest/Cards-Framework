@@ -1,0 +1,48 @@
+ManifestFileVersion: 0
+CRC: 1899345798
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 6594ff49bb7a8911f370357519e5146a
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: f326f20a7b6d06de24aa375bdaff5c91
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 111
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Effect/MaJiang/mailei/New Material.mat
+- Assets/Resources/Raw/Effect/MaJiang/mailei/kuosan 2.mat
+- Assets/Resources/Raw/Effect/MaJiang/mailei/jpg_d_Bomb011.png
+- Assets/Resources/Raw/Effect/MaJiang/mailei/huoyan.mat
+- Assets/Resources/Raw/Effect/MaJiang/mailei/mailei_3.mat
+- Assets/Resources/Raw/Effect/MaJiang/mailei/mailei_1.mat
+- Assets/Resources/Raw/Effect/MaJiang/mailei/jpg_l_huoyun01.png
+- Assets/Resources/Raw/Effect/MaJiang/mailei/kuosan_2.FBX
+- Assets/Resources/Raw/Effect/MaJiang/mailei/kuosan.mat
+- Assets/Resources/Raw/Effect/MaJiang/mailei/mailei_4.mat
+- Assets/Resources/Raw/Effect/MaJiang/mailei/mailei_2.mat
+- Assets/Resources/Raw/Effect/MaJiang/mailei/3.png
+- Assets/Resources/Raw/Effect/MaJiang/mailei/kuosan_3.FBX
+- Assets/Resources/Raw/Effect/MaJiang/mailei/efa_skill02i.png
+Dependencies:
+- G:/Projects/MJ/MaJiang_Lua/Docs/AssetBundles/iOS/Assets/raw_effect_majiang_chongguan.asset
+- G:/Projects/MJ/MaJiang_Lua/Docs/AssetBundles/iOS/Assets/raw_shader.asset
+- G:/Projects/MJ/MaJiang_Lua/Docs/AssetBundles/iOS/Assets/raw_effect_majiang_mailei_materials.asset

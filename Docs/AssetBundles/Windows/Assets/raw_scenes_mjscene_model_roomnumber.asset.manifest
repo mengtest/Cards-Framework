@@ -1,0 +1,53 @@
+ManifestFileVersion: 0
+CRC: 3171126279
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 58d1f535c5acb7858dcc93dbdfbe14e6
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 0520077050483de6babb9bd310d40764
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/PW_7DUI.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/9.png
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/PW_6MA.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/MJ-fangjianhao.png
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/PW_4MA.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/6.png
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/4.png
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/0.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/1.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/6.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/7.png
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/3.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/point.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/5.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/4.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/PW_1MA.png
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/7.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/2.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/difen.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/3.png
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/point.png
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/2.png
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/PW_4MA.png
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/5.png
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/8.png
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/0.png
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/PW_7DUI.png
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/PW_1MA.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/8.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/9.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/PW_2MA.png
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/1.png
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/PW_2MA.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/RoomNumber/PW_6MA.png
+Dependencies: []

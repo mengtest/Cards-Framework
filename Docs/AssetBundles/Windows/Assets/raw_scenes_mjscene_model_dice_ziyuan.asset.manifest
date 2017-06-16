@@ -1,0 +1,36 @@
+ManifestFileVersion: 0
+CRC: 467200056
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 85e67f25d247593f8b4c188f0dfda10e
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: f326f20a7b6d06de24aa375bdaff5c91
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 111
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Scenes/MJScene/Model/Dice/ziyuan/touzi 1.fbx
+- Assets/Resources/Raw/Scenes/MJScene/Model/Dice/ziyuan/touzi.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/Dice/ziyuan/touzi 1.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/Dice/ziyuan/zi1.jpg
+Dependencies:
+- G:/Projects/MJ/MaJiang_Lua/Docs/AssetBundles/Windows/Assets/raw_scenes_mjscene_model_dice_ziyuan_materials.asset

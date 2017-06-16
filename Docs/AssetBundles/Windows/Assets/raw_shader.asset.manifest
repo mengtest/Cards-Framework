@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 784805057
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 549710483a2bb12b33a41dd90c6ff569
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: cc7b69794a2bdada249e557ebbfded10
+HashAppended: 0
+ClassTypes:
+- Class: 48
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Shader/SM_TransparentRim.shader
+Dependencies: []

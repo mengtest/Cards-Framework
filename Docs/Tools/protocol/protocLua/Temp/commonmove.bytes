@@ -1,0 +1,50 @@
+
+§
+commonmove.txt"B
+GM_RoleShowChange
+
+id (
+equippos (
+equipid ("1
+GM_RoleTitleChange
+
+id (
+titleId ("1
+GM_RoleGangChange
+
+id (
+gangName (	")
+GM_VIPChange
+
+id (
+viplv ("ª
+GM_NetRoleAction
+
+id (
+
+motionType (
+posX (
+posZ (
+vecX (
+vecZ (
+time (
+sceneID	 (
+type
+ (
+	isCommand ("G
+GM_MpChangeNotify
+roleId (
+roleType (
+mpChange ("%
+GM_RequestResetPos
+sceneID ("/
+GM_ReturnResetPos
+posx (
+posz ("5
+GM_RoleNameChange
+roleID (
+roleName (	";
+GM_RoleTopGradeChange
+roleid (
+
+newgradelv (

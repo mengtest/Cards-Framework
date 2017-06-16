@@ -1,0 +1,89 @@
+
+message GMTaskCondition
+{
+required	uint32 m_ID=1;					///目标类型ID
+required	uint32 m_Type=2;				///任务目标类型,0打怪,1找东西,2连击
+required	uint32 m_FinishNum=3;			///已经完成数量
+required	uint32 m_NeedNum=4;				///总共需要完成数量
+}
+
+message GMTaskFinishObject
+{
+required	uint32 m_ObjectTypeID=1;//完成奖励物品
+required	uint32 m_ObjectNum=2;//物品重叠数
+required	uint32 m_ObjecRank=3;//物品排序
+}
+
+message GMTask   ///任务消息包
+{
+required	uint32 m_PlayerID=1;
+required	uint32 m_TaskID=2;///任务类型id
+required	int64 m_GMID=3;///玩家任务id
+required	uint32 m_State=4;///任务状态,0表示未接,1表示已接但未完成,2表示完成,3、任务失败
+
+required	string m_Name=5;//任务名字
+required	string m_AcceptDescrible=6;//任务接收描述
+required	string m_AcceptTaskDescribe=7;///接受任务的对白
+required	string m_FinishDescribe=8;///任务完成的描述
+
+required        int32 m_guideid=9;  //副本指引ID
+required   	int32 m_guidetype=10;//指引类型[0:NPC;1:副本;2,系统枚举]
+required	int32 m_guidelevel=11;//指引级别（无，-1；普通，0；冒险，1；王者，2；炼狱，3；	深渊，4；）
+
+required        int32 m_rank=12; //排序
+
+required	uint32 m_Category=13;///任务分类(主线支线日常)
+required	uint32 m_LVNeed=14;///等级需求
+
+repeated	GMTaskCondition   m_Condition=15;///任务进度
+repeated	GMTaskFinishObject  m_FinishObject=16;///任务完成后奖励物品信息
+
+required	uint32 m_AcceptNPC=17;///接收任务的NPC的ID，可以找到NPC
+required	uint32 m_CommitNPC=18;///提交任务的NPC的ID，可以找到NPC
+
+optional        string m_UnAcceptDescribe=19;  //任务未接描述
+optional        int32 m_kind=20;  //任务类型（0,无类型;1,交谈;2,通关;3,杀怪;4,技能升级;5,灵宠升级;6,强化装备;7,夺宝掠夺;8,抽取宝藏;9,连续通关;10,财源广进;11,西环逃亡;12,精英副本;13,团队副本;14,升灵竞技;15,征战三荒;16,决战天寒;17,实时战场;18,道海试炼;19,购买月卡;20,购买尊享卡;21,N件精炼至M;22,N个灵宠至M;23,N个技能至M;24,N个雕纹至M;25,N件装备镶嵌M个雕纹;26,收集通关;27,插入通关;）
+}
+
+
+
+message GMTaskCollect
+{
+ required	uint32	m_Count=1;
+ repeated	GMTask	m_Tasks=2;
+}
+
+
+message GM_Task_Finsh
+{
+ required	int64  m_TaskID=1;						///任务gmid;
+}
+
+message GM_TaskResult
+{
+ required	uint32 m_byte=1;				///0为成功,否则失败
+ optional       int64  m_gmid=2;				///任务GMID
+ optional       int32  m_task_state=3;                          ///任务最新状态
+}
+
+
+message GM_CommitTask
+{
+ required       int64  m_gmid=1;	///任务gmid
+}
+
+message GM_AcceptTask
+{
+ required       int64  m_gmid=1;	///任务gmid
+}
+
+message GMUpdateTaskCondition
+{
+  required int64 m_GMID=1;///玩家任务id
+  repeated GMTaskCondition m_condition=2;
+}
+
+message GM_TalkEvent//客户端向服务器发送NPC对话事件
+{
+ required       int32  NPCID=1;	///NPCID
+}

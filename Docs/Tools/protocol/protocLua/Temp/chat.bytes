@@ -1,0 +1,65 @@
+
+õ
+chat.txt"Þ
+GM_GetChatInfo
+roleId (
+channel (
+name (	
+vip (
+word (	
+receName (	
+repeatTimes (
+intervalTime (
+
+receroleid	 (
+recevip
+ (
+kind (
+
+profession ("Ö
+GM_SendAudio
+roleId (
+areaId (
+	audioInfo (	
+channel (
+receName (	
+vip (
+sendname (	
+audioLength (
+	audioGmid	 (
+audioSecond
+ (
+audioconnect ("Í
+GM_GetAudio
+m_result (
+channel (
+vip (
+sendname (	
+	audioGmid (
+	audioInfo (	
+recvname (	
+sendid (
+audioSecond	 (
+recvId
+ (
+recvVip ("=
+GM_ReadAudio
+aredId (
+	audioGmid (
+
+IP (	"7
+GM_ChatShield
+m_shield (
+m_shieldname (	"F
+DB_ChatShieldList
+m_roleId (
+m_datas (2.GM_ChatShield"8
+GM_GetRoomID
+m_RoomID (
+m_CenterRoomID ("4
+GM_ChargeCfgResult
+	m_cfgInfo (2.GM_CfgInfo"/
+
+GM_CfgInfo
+m_typeId (
+m_state (

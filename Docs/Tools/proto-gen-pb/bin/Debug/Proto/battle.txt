@@ -1,0 +1,507 @@
+//副本返回信息
+message GM_BattleFBServerInfo 
+{
+   required int32 m_Result=1;			//0 成功,1副本不存在,2 你已经在副本了,3副本已满，4副本人数已满
+   optional int32 m_FBID=2;				///副本ID(服务器分配)
+   optional int32 m_FBServerID=3;		///副本服务器ID
+   optional int32 m_FBTypeID=4;			//所进入的副本
+   optional int32 m_increidmatch=5;
+   optional string m_playWay = 6;		//副本玩法;
+   optional int32 m_playerCount = 7;			///麻将的人数（4表示4人场，2表示2人场）  
+   optional int32 m_gameCount = 8;		//麻将局数(8和16);
+}
+
+//请求登入
+message GM_LoginFBServer
+{
+   required int32 m_RoleID=1;//角色ID
+   optional int32 m_FBID=2;  //进入的副本ID
+   optional double m_Longitude = 3;//经度;
+   optional double m_Latitude = 4;//纬度;
+   optional string m_reallyPos = 5;//真实位置;
+}
+
+//登入结果返回    还用于获取剧情用时
+message GM_LoginFBServerResult
+{
+   required int32 result=1;			//0成功，1副本id不正确，2登陆失败，3其他
+   optional int32 m_battletype=2;		//副本的战斗类型;
+}
+
+//角色进入场景包
+message GM_BattleEntryInfo
+{
+   required bool m_isSelf = 1;			 //是否自己请求
+   optional int32 m_RoomMasterID = 2;   //房主id
+   repeated GM_EntryInfo_Single m_Character = 3;//角色信息
+}
+
+//物品掉落
+message GM_ItemDrop
+{
+   required int32 m_ObjectID=1;//物品类型ID
+   optional int32 m_Count=2;   //物品个数
+}
+
+//人物技能信息
+message GM_SkillInfo
+{
+	required int32 m_SkillID=1;//技能ID
+	optional int32 m_SkillLv=2;//技能等级
+}
+///角色基础信息传输
+message GM_RoleBaseInfo
+{
+	required int32 m_Roleid = 1;		///角色id;
+	optional int64 m_Gold = 2;		///金币
+	optional int32 m_HeadPhoto = 3;		///头像
+	optional int32 m_CataterType = 4;	///CharacterType(见usermessage）
+	optional int32 m_Postion = 5;		///位置信息
+	optional string m_Name = 6;		///名字
+	optional int32 m_Sex = 7;		///性别
+	optional int32 m_viplevel=8;		//vip等级;
+	optional int32 m_HeadFrame = 9;	///头像框
+	optional string m_NickName = 10;	///昵称
+	optional string m_HeadPhotoUrl = 11;///头像uil地址
+}
+
+// buff数据
+message GM_Buff 
+{
+	required int32 buffid=1;				// buffid
+	optional int32 fromid=2;				// 来源
+}
+
+// 所有buff
+message GM_ClientBuffs
+{
+	required int32 ownerid=1;				// 拥有者id
+
+	repeated GM_Buff m_Buffs=10;			//添加的buff
+}
+
+// 所有buff
+message GM_ClientAllBuffs
+{
+	required int32 count=1;						// 玩家个数
+	optional int32 needClear=2;					// 需要清除全有buff
+
+	repeated GM_ClientBuffs m_RoleBuff=10;		// 玩家buff
+}
+
+//单个角色登入信息
+message GM_EntryInfo_Single
+{
+	required GM_RoleBaseInfo m_RoleData=1;//角色基本属性
+	optional int32 m_isReady=2;			  //是否准备 0 未准备 1准备
+	optional int32 m_totalScore=3;		//角色比赛场积分
+	optional double m_Longitude = 4;//经度;
+    optional double m_Latitude = 5;//纬度;
+	optional string m_reallyPos = 6;//真实位置;
+}
+
+message GM_EnterSceneInfo
+{
+  repeated GM_EntryInfo_Single entryInfo = 1;
+}
+
+
+
+///角色进入游戏;
+message GM_FullRoleInfo  
+{
+	required int32 id=1;						//角色id; -1、登陆失败 -2、角色被冻结 
+	optional string name=2;						//角色名;
+	optional int32 accountid=3;                 //帐号ID
+	 
+	optional int32 sex=4;			   			//性别 0男1女;
+	optional int32 level=5;					    //等级;
+	optional string sign=6;						//个性签名;
+	optional int32 headpotot=7;				 	//头像
+	optional int32 viplv=9;		        		///vip等级
+	
+	optional int64 gold=10;						//金币
+	optional int64 diamond=11;					//奖券
+	optional int64 roomcard=12;					//当前经验;
+	optional int32 mjAllNum=13;					//麻将总场数;
+	optional int32 mjWinNum=14;					//麻将胜场数;
+	optional int32 zjhAllNum=15;				//扎金花总场数;
+	optional int32 zjhWinNum=16;				//扎金花胜场数;
+	optional int64 fishGet=17;					//捕鱼收益;
+	optional int64 fruitGet=18;					//老虎机收益;
+	optional int32 headframe=19;					//相框;
+	optional string nickName=20;				//昵称；
+	optional string headPhotoUrl=21;			//头像下载地址
+}
+
+//通知服务器准备结果
+message GM_SendReady
+{
+	required int32 m_Resutl=1;//0成功，1加载失败
+	optional int32 m_RoleID=2;//角色ID
+	optional int32 m_FBID=3;  //进入的副本ID
+}
+
+//当所有角色都ready后，发送战斗结束时间包
+message GM_NotifyBattleEndTime
+{
+	required int32 m_EndTime=1;//战斗结束服务器时间，0表示无时间限制 
+}
+
+//客户端激活大波消息
+message GM_ActiveBigWave
+{
+ required int32 m_FBID=1;///副本id;
+ optional int32 m_BigWave=2;///大波数;
+}
+
+//单人模式中不回
+message GM_ActiveMonster
+{
+   required int32 m_resutl=1;//0激活成功，1激活波数异常
+   repeated int32 monsterID=2;//怪物ID 
+}
+
+///客户端通知战斗对象死亡
+message GM_ClientNotifyDied
+{
+    required int32 m_BattleObjectID=1; ///死亡战斗对象的ID
+	optional int32 m_AttackObjectID=2; ///伤害者的ID
+}
+
+///普通副本战斗结算
+
+message GM_BattleInfo_Result 
+{
+	required int32 m_Result = 1;		//1胜利 2失败
+	optional string m_name =2;			//名字
+	optional int32 m_level =3;			//等级
+	optional int32 m_val =4;			//玩家战力
+	optional int32 m_killnum =5;		//杀人数
+	optional int32 m_deadnum = 6;		//死亡数
+	optional int32 m_hurt=7;			//造成的伤害
+	optional int32 m_RoleID=8;			//玩家ID
+	optional int32 m_point=9;			//玩家积分
+	optional string m_parentName=10;	//父类名字
+	optional int32 m_toprank=11;		//决战天寒排名段位;
+	optional int32 m_areanid=12;		//区号
+	optional int32 m_percentage=13;         //巫族战争对boss伤害的百分比;	
+}
+message GM_BattleResult
+{
+    required int32 m_Result=1; 			//1胜利 2失败
+	optional int32 m_BattleType=2; 		//战斗类型
+	optional int32 m_FBTypeID=3;		//副本类型ID
+	optional int32 m_UseTime=4;			//副本通关使用时间
+	optional int32 m_StarNum=5;			//获取星星数
+	optional int32 m_laterRank=7;		//竞技场战斗后名次
+	optional int32 m_arenaPres=8;		//竞技场声望;
+	optional int32 m_topscore=10;		//决斗之巅奖励积分;
+	optional int32 m_errorcode=11;		//错误码，同GM_FBJOIN_RETURN，返回值
+	optional bool m_isDoubleActivity=12;		//是否是双倍
+	repeated GM_BattleInfo_Result m_BattleData = 9;	//对战双方信息
+	//怪物掉落内容
+	repeated GM_ItemDrop m_DropData=6;//物品掉落
+}
+
+
+//通知副本服务器玩家数据    
+message SM_BattleRequest
+{
+	required int32  m_FBID=1;		//逻辑服务器分配的副本id
+	optional int32  m_FBTypeID=2;	//副本类型ID
+	optional int32  rate=3;		//倍率;  
+	optional int32  m_increMatchid=4;//比赛场自增id;
+	optional int32  m_copyAILevel = 5;//副本ai等级;
+	optional string	m_FBPlayWay = 6;//房间玩法;
+	optional int32	m_RoomCount = 7;//单次房卡局数;
+	optional int32	m_PlayerCount = 8;//麻将的人数（4表示4人场，2表示2人场）
+	repeated GM_EntryInfo_Single m_PlayerData=10;	//玩家消息
+	repeated GM_WhiteListInfo m_WhiteListInfo=11;	//白名单信息
+}
+
+//通知副本服务器玩家是否在白名单以及相关数据;
+message GM_WhiteListInfo
+{
+	required int32 roleid=1;		//角色id;
+	optional int32 isSelf=2;		//是否是白名单角色;
+	optional int32 szMinCount=3;	//允许拿到上精正精的最小数量;
+	optional int32 szMaxCount=4;	//允许拿到上精正精的最大数量;
+	optional int32 sfMinCount=5;	//允许拿到上精副精的最小数量;
+	optional int32 sfMaxCount=6;	//允许拿到上精副精的最大数量;
+}
+
+//翻牌请求
+message GM_DrawCardRequest
+{
+   required int32 m_CardID=1;//第几个卡
+   optional int32 m_FBID=2;  //副本ID
+}
+
+//宠物替换
+message GM_ReplacePet
+{
+   required int32 m_roleid=1;//角色
+   optional int32 m_FBID=2;//副本ID
+   optional int32 m_TeamID=3;//队伍ID
+   repeated	int32 m_petid=4;//宠物id
+   repeated	int32 m_hp=5;//宠物血量
+}
+
+message GM_DrawCardReturn
+{
+   required int32 m_Resul=1;//0成功，1失败，2已领取，3其他
+   repeated GM_ItemDrop m_DropData=2;//卡片情况
+}
+
+///伤害通知;
+message GM_Damage
+{
+   required int32	fbid=1;         ///副本ID
+   optional int32	damagerId=2;	///被攻击者id;
+   optional int32 	attackerId=3;	///攻击者id;
+   optional int32 	damageVal=4;	///普通伤害值;
+   optional float 	vecX=5;			///受伤角色面向的x方向;
+   optional float 	vecY=6;			///受伤角色面向的x方向;
+   optional float 	vecZ=7;			///受伤角色面向的z方向;
+   optional int32   damageType=8;	///伤害类型
+   optional bool    isDodge=9;		//闪避
+   optional bool    isBlock=10;		//格挡
+   optional bool    isCritical=11;	//暴击
+   optional int32   nowtime=12;		//现在时间
+   optional int32   attackBreakDefense=13;//本次攻击打掉破防值
+}
+
+///广播玩家血或者蓝改变
+message GM_NotifyHPMPChange
+{
+	required int32 type=1;//1 hp,2 mp
+	optional int32 value=2;
+	optional int32 roleid=3;
+}
+
+///广播场景中角色离开
+message GM_LeaveBattle
+{
+  	required int32 roleID=2;
+}
+
+message GM_RoleLeave
+{
+	repeated GM_LeaveBattle leaveInfo = 1;
+}
+
+message SM_BattleInfo
+{
+	required int32 m_RoleID=1;	//玩家ID
+	optional int32 m_Camp=2;	//玩家阵营
+	optional int32 m_RemainHP=3;//玩家剩余血量 
+	optional int32 m_HurtVal=4;    //玩家累计伤害值
+	optional int32 m_killNum=5;//玩家杀人数
+	optional int32 m_dieNum=6;//玩家死亡次数
+	optional string m_name=7;//玩家姓名
+	optional int32 m_level=8;//玩家等级
+	optional int32 m_fightval=9;//玩家战力
+	optional int32 m_point=10;//玩家积分
+	optional int32 m_CharacterType=11;//玩家类型见CharacterType
+	optional int32 m_parentID=12;//父类ID
+	optional int32 m_exitType=13;//玩家退出类型，见BattleExitType
+	optional string m_parentName=14;//父类名字
+	optional int32 m_topgrade=15;	//天寒段位;
+	optional int32 m_serverid=16;	//区号
+	optional int32 m_topsocre=17;	//天寒积分;
+	optional int32 m_bosspercentage=18;//对boss伤害的百分比10000为满;
+	//怪物掉落内容
+	repeated GM_ItemDrop m_DropData=20;//物品掉落
+	repeated GM_ItemDrop m_KillMonsterData=21;//怪物死亡统计
+}
+
+message SM_BattleResult
+{
+    required int32 m_WinCamp=1; 	//胜利的阵营
+	optional int32 m_BattleType=2; 	//战斗类型
+	optional int32 m_FBTypeID=3;	//副本类型ID
+	optional int32 m_UseTime=4;		//副本通关使用时间
+	optional int32 m_BossHP=5;		//boss剩余血量
+	 
+	repeated SM_BattleInfo m_PlayerData=6;//玩家数据
+}
+
+message SyncMovement
+{
+    required int32 m_roleid = 1;		//角色ID
+	optional float m_PosX = 2;			///x位置;
+	optional float m_PosZ = 3;			//z位置;
+	optional float m_VecX = 4;			//角色x方向;
+	optional float m_VecZ = 5;			//角色z方向;
+}
+
+message GM_FBSweepRequest
+{
+	required int32 m_fbtypeid=1;		//副本typeID
+	optional int32 m_fbid=2;			//副本自增id;
+	optional int32 m_repeat=3;			//;(多次扫荡次数)
+	optional int32 m_profession=4;		//玩家职业;
+}
+
+message GM_FBSweepReturn
+{
+	required int32 m_fbtypeid=1;		//副本type ID
+	optional int32 m_sweepcount=2;		//多次扫荡次数;
+	repeated GM_ItemDrop m_DropData=3;	//扫荡物品信息;
+	repeated GM_ItemDrop m_KillMonsterData=21;//怪物死亡统计
+}
+
+
+message GM_PetBattleInfo
+{
+	required int32 m_roleID=1;//唯一ID
+	optional int32 m_typeID=2;//宠物类型ID
+	optional int32 m_position=3;//位置信息（11 12 21 22）
+}
+
+message GM_AllPetBattleInfo
+{
+	required int32 m_count=1;//个数
+	repeated GM_PetBattleInfo m_Data=2;//宠物信息
+}
+
+message GM_RealTime_SendPoint
+{
+	required int32 m_point=1;		// 得积分
+	optional int32 m_type=2;		// 类型 0 普通 1 资源点
+	optional int32 m_serialkill=3;	// 连杀次数
+	optional string m_attackname=4;	// 击杀者
+	optional string m_diename=5; 	// 被击杀者 
+	optional int32 m_bekilledid=6; 	// 被击杀者 id
+	optional int32 m_attackpoint=7; // 己方总分
+	optional int32 m_battlepoint=8; // 对方总分
+}
+
+message GM_NotifyBuff
+{
+	required int32 m_roleid = 1;	//buff的受用者
+	optional int32 m_attackid = 2;	//攻击者的ID
+	optional int32 m_buffid = 3;	//buffid
+	optional float m_time=4;		//buff持续时间
+	optional int32 m_extend=5;		//用于扩展
+}  
+
+message GM_ClientHpNotify
+{
+	required int32 m_attackID=1;				///攻击者ID
+	optional int32 m_beAttackID=2;				///被攻击ID;
+	optional int32 m_hurtVal=3;				///伤害值;
+	optional int32 m_hurtType=4;			///伤害类型;
+}
+
+message GM_ClientMpNotify
+{
+	required int32 m_roleid=1;				///玩家
+	optional int32 m_value=2;				///蓝量变化 正值:增加 负值:减少
+}
+
+message GM_Notify_Specialskill
+{
+	required int32 m_roleid=1;					//角色ID
+	optional int32 m_type=2;
+}
+
+message GM_CenterBattle
+{
+	required string m_fbIp=1;     		///中心服务器副本ip;
+	optional int32 m_rolegmid=2;		///角色在中心服务器的唯一id;
+}
+
+
+///组队副本 队伍信息
+message SM_TeamMatchData
+{
+	required int32 m_areanID=1;					///玩家所在区号;
+	// optional string m_areanIP=2;				///区IP;
+
+
+	optional int32 m_nleaderid=3;				///队伍id
+	optional int32 m_nfbtypeid=4;				///副本id
+	optional int32 m_nmembernum=5;				///成员数目
+
+	repeated SM_BattleRequest m_member=20;		///玩家角色信息包括宠物
+}
+
+message GM_ClientRelive
+{
+	required int32 m_roleid=1;					///玩家id;
+	optional int32 m_fbid=2;					///副本id;
+	optional int32 m_hpPercent=3;				///恢复的血量百分比
+	optional int32 m_attackPercent=4;			///攻击属性改变百分比
+}
+
+message SM_majiang_role_battleresult
+{
+	required int32 m_roleid=1;
+	optional int64 m_allGold=2;//所剩金币;
+	optional int64 m_winGold=3;//该局赢的金钱(正负);
+	optional int32 m_character=4;//人物类型 见CharacterType定义 （角色0，机器人2）;
+
+	optional string m_winType=5;//麻将胡牌类型,金花手牌类型;
+	optional int32 m_sjChongGuan=6;//上精冲关;
+	optional int32 m_sjBaWang=7;//上精霸王;
+	optional int32 m_xjChongGuan=8;
+	optional int32 m_xjBaWang=9;//;
+	optional int32 m_cartype=10;//牌局类型;
+	optional int32 m_room_id=11;//房间id;
+	optional int32 m_room_bnote=12;//房间底注;	
+	optional int32 m_win_type=13;//是否胡牌;
+	optional int32 m_is_blasting=14;//是否放炮;
+	optional int32 m_is_washedoff=15;//是否冲关;
+	optional int32 m_left_card=16;//剩余牌数;
+	optional int32 m_chow=17;//吃次数;
+	optional int32 m_pong=18;//碰次数;
+	optional int32 m_exposed=19;//明杠次数;
+	optional int32 m_concealed_kong=20;//暗杠次数;
+	optional int32 m_patch=21;//补杠次数;
+	optional int32 m_up_score=22;//上精;
+	optional int32 m_down_score=23;//下精分数;
+	optional int32 m_result=24;//战斗结果;
+	optional int32 m_Exposed_score=25;//杠分数;
+	optional int32 m_smile_score=26;//回头一笑;
+	optional int32 m_mines_score=27;//埋地雷;
+	optional int32 m_song_score=28;//同一首歌;   
+	optional int32 m_hu_score=29;//胡牌分数;   
+	
+	optional int32 g_card_type=30;//金花牌局类型(初级场，中级场，高级场，包间场，比赛场);	
+	optional int32 g_player_num=31;//玩家数量;
+	optional int32 g_rolecard_type=32;//玩家牌型;
+	optional int32 g_is_win=33;//是否获胜;
+	optional int32 g_is_dealer=34;//是否庄家;
+	optional int32 g_is_discard=35;//是否弃牌;
+	optional int32 g_fill_counts=36;//加注次数;
+	optional int32 g_compare_counts=37;//比牌次数;
+	optional int32 g_look_counts=38;//看牌轮数;
+	optional int32 g_call_counts=39;//跟注轮数;
+	optional int32 g_role_counts=40;//角色跟注数量;
+	optional int32 g_total_counts=41;//该局跟注总量;
+	optional int32 g_exit_type=42;//结束类型;
+
+
+	    
+	
+}
+
+//南昌麻将结算包;
+message SM_majiang_battleResult
+{
+	required int32 m_BattleType=1; 	//战斗类型;
+	optional int32 m_FBTypeID=2;	//副本类型ID;	
+	optional int32 m_increMatchid=3;//比赛场自增id;
+	optional int32 m_isMatchOverGolden=4;//炸金花比赛场使用，该桌是否结束0没有，1结束;
+	optional int32 m_isReallyResult=5;//是否是真实可用的结算,0表示正常,其他为异常;
+	optional int32 m_playcount=6;//局数，从0开始;
+	optional int32 m_monsterid=7;//房主id;
+	optional int32 m_roomcount=8;//可玩局数;	
+	repeated SM_majiang_role_battleresult m_roleresult=9;  
+	optional int32 m_is_dealer=10;//是否庄家
+
+}  
+
+

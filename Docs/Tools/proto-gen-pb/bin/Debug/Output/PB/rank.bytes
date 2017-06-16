@@ -1,0 +1,32 @@
+
+ÿ
+Proto/rank.txt"´
+GM_RankInfo
+m_place (
+m_roleID (
+
+m_roleName (	
+m_vip (
+m_value (
+m_headphoto (
+m_headFrame (
+m_qqhead (	
+
+m_nickname	 (	"M
+GM_RankPageRequest
+m_RoleID (
+
+m_RankType (
+	m_pagenum ("k
+GM_RankListReturn
+
+m_RankType ( 
+
+m_SelfInfo (2.GM_RankInfo 
+
+m_RankInfo (2.GM_RankInfo")
+GM_AllRankListRequest
+m_RoleID ("O
+GM_AllRankTypeListReturn
+count ($
+ranklist (2.GM_RankListReturn

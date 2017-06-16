@@ -1,0 +1,182 @@
+
+ö
+Proto/gang.txt"ü
+GM_GangInfo
+gmid (
+rank (
+name (	
+
+leaderName (	
+
+lv (
+	memberNum (
+	maxMember (
+pronoce (	
+isApply	 ("ì
+	GM_MyGang
+roleId (
+baseInfo (2.GM_GangInfo
+pow (
+richies (
+notice (	
+exp (
+roles (2.GM_GangRole"T
+GM_AllGangInfo
+roleId (
+m_allgangcount (
+gang (2.GM_GangInfo">
+GM_AllGangApply
+roleId (
+roles (2.GM_GangRole"-
+GM_CreateGang
+roleId (
+name (	"R
+GM_GangRoleOperate
+roleId (
+operId (
+job (
+isAgree ("‹
+GM_GangRole
+roleId (
+rank (
+name (	
+
+lv (
+vocation (
+job (
+	lastLogin (
+
+hisRichies	 (
+power
+ (
+richies (
+flag (
+contype (
+isfriend ("=
+GM_AllGangRole
+roleId (
+roles (2.GM_GangRole"5
+GM_GangNoticeChange
+roleId (
+notice (	"4
+GM_GangQuickJoin
+result (
+gangGmid ("u
+
+GM_GangLog
+log (	
+time (	
+m_roleId (
+m_profession (
+
+m_rolename (	
+m_rolelv ("8
+GM_AllGangLog
+gmid (
+logs (2.GM_GangLog"j
+GM_GangRankInfo
+m_place (
+
+m_gangName (	
+m_level (
+m_value (
+m_people ("l
+GM_GangRank
+count ("
+gangrank (2.GM_GangRankInfo
+m_myGangRank (
+m_myGangName (	"ù
+GM_GangIntroduction
+	gangLevel (
+gangMembers (
+
+gangLeader (	
+
+gangNotice (	
+gangName (	
+
+maxMembers (
+gangRank ("(
+GM_GangFB_FBInfo_Request
+fbid ("W
+GM_GangFB_FBInfo
+fbid (
+	challenge (
+	lefttimes (
+percent ("L
+GM_GangFB_FBInfo_Return
+result (!
+fbinfo (2.GM_GangFB_FBInfo"*
+GM_GangFB_RankInfo_Request
+fbid ("U
+GM_GangFB_RankInfo
+fbid (
+rank (
+rolename (	
+	totalmage ("R
+GM_GangFB_RankInfo_Return
+result (%
+rankinfo (2.GM_GangFB_RankInfo"'
+GM_GangFB_Fight_Request
+fbid ("(
+GM_GangFB_Fight_Return
+result ("4
+GM_GangFB_Reward
+objectid (
+number ("I
+GM_GangFB_TakeFight
+damage ("
+rewards (2.GM_GangFB_Reward"S
+GM_GangShop
+m_lv (
+
+m_uplecost ("
+	m_shopobj (2.GM_GangShopObj"G
+GM_GangShopObj
+m_objid (
+
+m_showtype (
+m_remain ("¨
+GM_GangModuleInfo
+moduleid (
+isUnlock ( 
+
+m_HallData (2.GM_GangHall 
+
+m_TempData (2.GM_GangTemp 
+
+m_ShopData (2.GM_GangShop
+maxlv ("T
+GM_GangHall
+m_lv (
+
+m_uplecost (
+m_ishall (
+	m_hallLog (	"d
+GM_GangTemp
+m_lv (
+
+m_uplecost (
+m_remain (
+m_cost (
+	m_isbless ("@
+GM_BlessResult
+m_result (
+m_objs (2.GM_BlessObj"2
+GM_BlessObj
+m_objid (
+
+m_objcount ("T
+GM_GangModuleInfoList
+hasGang (*
+gangModuleInfo (2.GM_GangModuleInfo"H
+GM_GangNotify
+
+m_ganggmid (
+	m_gangexp (
+m_ganglv ("f
+GM_ApplyResult
+m_result (
+m_preganggmid (
+m_nowganggmid (
+m_applycount (

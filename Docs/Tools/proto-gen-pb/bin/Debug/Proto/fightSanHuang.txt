@@ -1,0 +1,39 @@
+message GMBraveStoreObject
+{                    
+	required int32 m_objectid=1;               //物品ID                                                                                            
+  	required int32 m_remaindercount=2;          //剩余购买次数
+}
+
+
+
+message GMBraveStore
+{
+	required int32 m_sanhuangling=1;           //三荒令     
+	repeated GMBraveStoreObject m_storeobjects=2;
+	optional int32 resetcost=3;					// 重置消耗                    
+}
+
+
+message GMBraveStoreReset
+{
+	required int32 m_result=1;              //重置结果  0成功，1三荒令不足，2服务器内部错误 
+	required int32 m_sanhuangling=2;         //当前三荒令                
+}
+
+message GMBraveStoreBuy
+{
+	required int32 m_objectid=1;               //物品ID                   
+}
+
+message GMBraveStoreBuyResult
+{
+	required int32 m_result=1;              //购买结果，0成功， 1三荒令不足，2可购买次数不足， 3物品不存在， 
+											// 4内部服务器错误  5临时背包满了 
+	required int32 m_objectid=2;            //物品ID 
+	required int32 m_sanhuangling=3;        //当前三荒令                    
+}
+
+
+
+
+

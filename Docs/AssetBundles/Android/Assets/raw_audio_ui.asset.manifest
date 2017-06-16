@@ -1,0 +1,22 @@
+ManifestFileVersion: 0
+CRC: 1428967991
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: cc6fbef5917a9a8d651e448046a5ccba
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c516f2a3b2b6b67ef759f6410a790acd
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Audio/UI/getgold2.ogg
+- Assets/Resources/Raw/Audio/UI/sendmessage.ogg
+- Assets/Resources/Raw/Audio/UI/UIclick.ogg
+- Assets/Resources/Raw/Audio/UI/UIopen.ogg
+- Assets/Resources/Raw/Audio/UI/getgold.ogg
+- Assets/Resources/Raw/Audio/UI/UIbuy.ogg
+- Assets/Resources/Raw/Audio/UI/UIclose.ogg
+Dependencies: []

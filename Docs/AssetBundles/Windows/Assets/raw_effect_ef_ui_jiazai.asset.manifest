@@ -1,0 +1,48 @@
+ManifestFileVersion: 0
+CRC: 139577152
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 225ea2c4e00d3426127cec90277885ea
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c5089152672fec2c40a3419b9c16209c
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 111
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Effect/EF_ui/jiazai/donghua.controller
+- Assets/Resources/Raw/Effect/EF_ui/jiazai/yanhua 3.mat
+- Assets/Resources/Raw/Effect/EF_ui/jiazai/jiazai.anim
+- Assets/Resources/Raw/Effect/EF_ui/jiazai/tuoyan.png
+- Assets/Resources/Raw/Effect/EF_ui/jiazai/quan-3.FBX
+- Assets/Resources/Raw/Effect/EF_ui/jiazai/touzi.png
+- Assets/Resources/Raw/Effect/EF_ui/jiazai/yanhua 1.mat
+- Assets/Resources/Raw/Effect/EF_ui/jiazai/960-1-1.png
+- Assets/Resources/Raw/Effect/EF_ui/jiazai/yanhua 2.mat
+- Assets/Resources/Raw/Effect/EF_ui/jiazai/touzi.mat
+Dependencies:
+- G:/Projects/MJ/MaJiang_Lua/Docs/AssetBundles/Windows/Assets/raw_effect_ef_ui_jiazai_materials.asset

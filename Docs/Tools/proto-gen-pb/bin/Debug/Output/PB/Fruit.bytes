@@ -1,0 +1,38 @@
+
+‹
+Proto/Fruit.txt"*
+GM_Fruit_Login_request
+roomtype ("6
+GM_Fruit_Login_return
+errorid (
+rate ("5
+SM_Fruit_Gamble
+
+objecytype (
+monrey ("E
+SM_Fruit_Gamble_Request
+
+id (
+data (2.SM_Fruit_Gamble")
+SM_Fruit_Gamble_return
+errorid ("K
+SM_Fruit_Gamble_Go_Return
+
+fortuntype (
+pos (2.GM_Fruit_Pos"6
+GM_Fruit_Pos
+pos (
+rate (
+get ("(
+SM_Fruit_plus_request
+plusmin ("'
+SM_Fruit_plus_return
+errorid ("6
+SM_Fruit_Figure_return
+success (
+win ("&
+SM_Fruit_Money_return
+money ("3
+GM_Fruit_Money_return
+money (
+win (

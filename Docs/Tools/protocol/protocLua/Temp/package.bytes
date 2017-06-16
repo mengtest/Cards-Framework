@@ -1,0 +1,63 @@
+
+¦
+package.txt"6
+GMPackObjectList"
+
+m_Packages (2.GMUserPackage"O
+GMUserPackage
+m_PackID (
+m_Count (
+m_Object (2	.GMObject" 
+GMObject
+m_GMID (
+m_TypeID (
+m_PackID (
+m_Grid (
+m_Count (
+m_Bind (
+m_Seal (
+m_Indate (
+m_way	 ("@
+GMPackageAllGrid
+m_PackID (
+m_Grids (2	.GMObject"
+
+GMPackTidy
+m_PackID ("6
+GMPackTidyResult
+m_PackID (
+m_Resutl ("P
+GMPackSplit
+m_PackID (
+m_Grid (
+m_Count (
+m_GMID ("Ž
+GMPackSplitResult
+m_PackID (
+m_Grid (
+m_Count (
+m_GMID (
+m_Result (
+	m_NewGrid (
+	m_NewGMID ("
+GM_UnlockGrid
+PackID ("5
+GM_UnlockGridReturn
+Result (
+PackID (":
+GM_PackageGridNotify
+PackID (
+
+ValidCount ("
+GMStoreObject
+gmid ("3
+GMStoreObjectResult
+result (
+gmid (" 
+GM_RestoreObject
+gmid ("6
+GM_RestoreObjectResult
+result (
+gmid (",
+GM_PickUpTempPackageResult
+result (

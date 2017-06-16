@@ -248,7 +248,7 @@ namespace NCSpeedLight
         {
             get
             {
-                return Application.dataPath.Substring(0, Application.dataPath.IndexOf("/Assets")) + "/AssetBundles/" + PLATFORM_NAME + "/Scripts/";
+                return Application.dataPath.Substring(0, Application.dataPath.IndexOf("/Assets")) + "/Docs/AssetBundles/" + PLATFORM_NAME + "/Scripts/";
             }
         }
 
@@ -259,7 +259,7 @@ namespace NCSpeedLight
         {
             get
             {
-                return Application.dataPath.Substring(0, Application.dataPath.IndexOf("/Assets")) + "/AssetBundles/" + PLATFORM_NAME + "/Assets/";
+                return Application.dataPath.Substring(0, Application.dataPath.IndexOf("/Assets")) + "/Docs/AssetBundles/" + PLATFORM_NAME + "/Assets/";
             }
         }
 

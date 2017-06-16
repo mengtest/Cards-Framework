@@ -1,0 +1,124 @@
+
+Ð
+
+friend.txt"T
+	GM_Friend
+m_count (
+coldtime ($
+m_FriendData (2.GM_FriendData"ò
+GM_FriendData
+	m_frendid (
+m_name (	
+
+m_viplevel (
+m_level (
+m_sex (
+m_online (
+m_give (
+
+m_isCouple (
+m_headPhoto	 (
+m_headFrame
+ (
+
+m_NickName (	
+m_HeadPhotoUrl (	"a
+GM_Friend_recommend_return
+m_count (2
+m_FriendRecommendData (2.GM_FriendRecommend"h
+!GM_Friend_single_recommend_return
+m_count (2
+m_FriendRecommendData (2.GM_FriendRecommend"Á
+GM_FriendRecommend
+	m_frendid (
+m_name (	
+m_sex (
+m_level (
+
+m_viplevel (
+m_headPhoto (
+m_headFrame (
+
+m_NickName (	
+m_HeadPhotoUrl	 (	".
+GM_Friend_Exprecieve_Return
+m_state ("*
+GM_Friend_Invite_return
+m_state (".
+GM_Friend_Delete_Request
+
+m_friendid ("*
+GM_Friend_Delete_return
+m_state ("r
+GM_Friend_recieve_return
+m_count (
+m_recievetime (.
+m_FriendrecieveData (2.GM_Friendrecieve"Ð
+GM_Friendrecieve
+
+m_friendid (
+m_name (	
+m_sex (
+m_level (
+
+m_viplevel (
+m_time (
+m_headPhoto (
+m_headFrame (
+
+m_NickName	 (	
+m_HeadPhotoUrl
+ (	"R
+GM_One_Friend_Recieve_return
+m_state (
+m_num (
+
+m_friendid ("R
+GM_All_Friend_Recieve_return
+m_state (
+m_num (
+
+m_friendid ("Q
+GM_Invitelist_return
+m_count ((
+m_InvitelistData (2.GM_Invitelist"Ð
+GM_Invitelist
+
+m_friendid (
+m_name (	
+m_sex (
+m_level (
+
+m_viplevel (
+	m_content (	
+m_headPhoto (
+m_headFrame (
+
+m_NickName	 (	
+m_HeadPhotoUrl
+ (	">
+GM_Invite_Agree_Return
+m_result (
+
+m_friendid ("A
+GM_Invite_AgreeAll_Return
+m_result (
+
+m_friendid ("?
+GM_Invite_Refuse_Return
+m_result (
+
+m_friendid (",
+GM_Single_Friend_Recommend
+m_name (	"A
+GM_Friend_Invite_Request
+
+m_friendid (
+	m_content (	"'
+GM_Friend_Request
+
+m_friendid (";
+GM_Friend_Notice_Return
+m_id (
+
+m_rolename (	

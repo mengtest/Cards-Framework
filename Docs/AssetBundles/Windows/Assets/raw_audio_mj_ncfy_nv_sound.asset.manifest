@@ -1,0 +1,25 @@
+ManifestFileVersion: 0
+CRC: 2837305286
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: bb2455c4240a091d9b75fbad4eb5a659
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c516f2a3b2b6b67ef759f6410a790acd
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Audio/MJ/NCFY/Nv_Sound/4.ogg
+- Assets/Resources/Raw/Audio/MJ/NCFY/Nv_Sound/7.ogg
+- Assets/Resources/Raw/Audio/MJ/NCFY/Nv_Sound/1.ogg
+- Assets/Resources/Raw/Audio/MJ/NCFY/Nv_Sound/6.ogg
+- Assets/Resources/Raw/Audio/MJ/NCFY/Nv_Sound/10.ogg
+- Assets/Resources/Raw/Audio/MJ/NCFY/Nv_Sound/2.ogg
+- Assets/Resources/Raw/Audio/MJ/NCFY/Nv_Sound/9.ogg
+- Assets/Resources/Raw/Audio/MJ/NCFY/Nv_Sound/3.ogg
+- Assets/Resources/Raw/Audio/MJ/NCFY/Nv_Sound/8.ogg
+- Assets/Resources/Raw/Audio/MJ/NCFY/Nv_Sound/5.ogg
+Dependencies: []

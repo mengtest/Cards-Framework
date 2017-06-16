@@ -1,0 +1,111 @@
+
+¿
+challenge.txt"¦
+GM_Challenge_Open_Return
+result (
+roleHP (
+	matchName (	
+
+matchlevel (
+matchfightvalue (
+	matchtime (
+matchprofession ("-
+GM_Challenge_Choose_Request
+degree (",
+GM_Challenge_Choose_Return
+result ("+
+GM_Challenge_Reset_Return
+result ("g
+ GM_Challenge_Fortune_Open_Return
+
+remaintime (/
+fortuneInfo (2.GM_Challenge_Fortune_Info"x
+!GM_Challenge_Reset_Fortune_Return
+result (
+
+remaintime (/
+fortuneInfo (2.GM_Challenge_Fortune_Info"X
+GM_Challenge_Fortune_Info
+fbtypeid (
+role_fortune (
+pet_fortune ("+
+GM_Challenge_Start_Return
+result ("Q
+GM_Challenge_Ready_Return
+result ($
+data (2.GM_Challenge_Pet_Info"{
+GM_Challenge_Pet_Info
+roleid (
+gmid (
+
+hpdecrease (
+ownerid (
+onbattle (
+petid ("*
+GM_Challenge_Proof_Notify
+proof ("l
+GM_Challenge_Store_Open_Return
+proof ((
+data (2.GM_Challenge_Store_Object
+	resetcost ("V
+GM_Challenge_Store_Object
+objectid (
+remaindercount (
+costnum ("@
+GM_Challenge_Store_Reset_Return
+result (
+proof ("1
+GM_Challenge_Store_Buy_Return
+objectid ("P
+GM_Challenge_Store_Buy_Result
+result (
+objectid (
+proof ("9
+GM_Challenge_OnBattle
+gmid (
+
+battleHole ("l
+GM_Challenge_OnBattle_Return
+result (
+
+battleHole ((
+dataInfo (2.GM_Challenge_OnBattle"J
+GM_Challenge_RentPet_Return
+result (
+gmid (
+money ("B
+!GM_Challenge_RentPet_Rent_Request
+gmid (
+operate ("`
+ GM_Challenge_RentPet_Rent_Return
+result (
+gmid (
+operate (
+money ("k
+ GM_Challenge_RentPet_Open_Return
+result (
+count ((
+data (2.GM_Challenge_RentPet_Info"y
+GM_Challenge_RentPet_Info
+gmid (
+petid (
+level (
+evolve (
+money (
+	ownerName (	"1
+!GM_Challenge_RentPet_Hire_Request
+gmid ("f
+ GM_Challenge_RentPet_Hire_Return
+result (
+gmid ($
+data (2.GM_Challenge_Pet_Info"O
+GM_Challenge_SwitchCardItem
+pos (
+objectid (
+	objectnum (".
+GM_Challenge_SwitchCard_Request
+pos ("i
+GM_Challenge_SwitchCard_Return
+result (
+pos (*
+item (2.GM_Challenge_SwitchCardItem

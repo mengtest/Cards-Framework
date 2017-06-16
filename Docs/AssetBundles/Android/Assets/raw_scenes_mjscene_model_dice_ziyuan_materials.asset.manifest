@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 900480619
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 64b491b2bd6e41a858ae6e6e2f35fd8d
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 02bb1a4f827934bc9f9224f61c0f3e4c
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Scenes/MJScene/Model/Dice/ziyuan/Materials/u=1255080491,870545803&fm=21&gp=0.mat
+Dependencies: []

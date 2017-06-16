@@ -1,0 +1,268 @@
+message GMRoleListRequest 
+{
+  required int32 m_accountID =1;
+  required int32 m_area=2;///区号
+}
+
+
+message GMRoleListEx
+{
+  optional int32 m_roleid = 1;			//角色id 0表示没有角色
+  optional int32 communid = 2;			///临时通道号
+}
+
+
+message GMEquipInfo
+{
+  required int32 packid=1;			//时装or装备
+  required int32 grid=2;			//装配位置
+  required int32 type=3;			//装配的typeid
+  optional int64 gmid=4;			//装配物品的gmid
+}
+
+
+///日志服务器用
+message GMLogServerInfo
+{
+	required int32 platformid = 1;		//平台id
+	required string ditchid = 2;		//渠道id
+	required string version = 3;		//版本
+	optional int32 serverid = 4;		//服务器id
+	optional string ipaddress = 5;		//角色ip
+	optional string macAddress = 6;		//登入设备MAC地址
+	optional string deviceUUID = 7;		//登入设备UUID
+	optional string token = 8;		//令牌，ios专用
+	optional string idfa = 9;		//登入设备UUID
+	optional string devicetype = 10;	//登陆设备类型
+	optional string networktype = 11;//网络类型
+}
+
+message GMRoleCreate
+{
+  required int32  m_AccountID = 1;						///创建角色的账号ID
+  
+  optional GMLogServerInfo m_info=2;
+  optional string m_NickName = 3;		//昵称
+  optional string m_HeadPhotoUrl = 4;	//头像url地址
+  optional int32 m_sex = 5;				//性别
+  optional string m_UnionID = 6;		//微信的unionid
+}
+
+
+message GMRoleCreateReturn
+{
+  required int32  m_Result = 1;							///大于等于0返回创建成功后的角色id, 1:有相同用户名，2:已经有4个角色了,3:包含非法字符,4:长度不在6~20个字符之内
+  required int32  m_RoleID = 2;							///成功创建的角色ID
+  optional int32 m_accountid = 3;
+  optional string m_rolename = 4;
+}
+
+
+message GMRoleLogin
+{
+  required int32  m_AccountID = 1;
+  required int32  m_RoleID = 2;
+  required string m_randstr = 3;
+  optional GMLogServerInfo m_info=4;
+}
+
+message GMOffLineReconnect
+{
+  required int32  m_AccountID = 1;
+  required int32  m_RoleID = 2;
+  required string m_randstr = 3;
+}
+
+
+message GMRoleNameRequest
+{
+  required int32  m_RoleProfession = 1;					///职业
+}
+
+message GMRoleNameReturn
+{
+  required string Name = 1;///角色名称
+  optional int32 result=2;//返回结果(0成功，2名字太短，4名字太长，5有关键字，3已经存在,
+  optional int32 type=3;//(1表示验证，2表示更改);
+}
+
+
+
+
+message GM_UPDATEFightVal
+{
+  required int32 fightval=1;
+}
+
+
+message GM_ProfessionChange
+{
+  required int32 professionID=1;///目标职业
+}
+
+
+message GM_ProfessionChangeReturn
+{
+  required int32 result=1;///转职结果,0成功,1金币不足,2职业错误
+}
+
+
+
+message GM_FightDataChangeItem
+{
+	required int32 property=1;	//属性类型
+	required int32 changevalue=2;	//属性变化值
+}
+
+///副本用
+message GM_FightDataChangeNotifyInFB 
+{
+	required uint32 roleID=2;//针对的角色
+	required uint32 roleType=3;//角色类型
+	repeated GM_FightDataChangeItem changeitems=1;		//属性变化列表
+}
+
+message GM_FightDataChangeNotify
+{
+	repeated GM_FightDataChangeItem changeitems=1;		//属性变化列表
+}
+
+message GM_UnlockSystem
+{
+	required int32 enumID=1;//枚举ID
+	required int32 isSpecialEffect=2;	//是否要有解锁特效
+}
+
+message GM_UnlockSystemList
+{
+	required int32 count=2;
+	repeated int32 enumID=1;//枚举ID
+}
+
+
+message GM_Commonint32ChangeNotify
+{
+	required int32 property=1;		//被改变的值的标记
+	required int32 value=2;			//新值
+}
+
+message GM_CommonLONG64ChangeNotify
+{
+	required int32 property=1;		//被改变的值的标记
+	required int64 value=2;			//新值
+}
+
+message GM_CommonfloatChangeNotify
+{
+	required int32 property=1;		//被改变的值的标记
+	required float value=2;			//新值
+}
+
+
+message GM_RoleDelete_Request
+{
+	required int32 accountid=1;
+	required int32 roleID=2;
+	optional GMLogServerInfo m_info=3; //删除角色添加LOG
+}
+
+message GM_RoleDelete_Return
+{
+	required int32 result=1;//0成功,1失败
+	optional int32 roleid=2;
+}
+
+
+message GM_TiredValueInfo
+{
+	required int32 tiredvaluemax=1;
+	required int32 tiredvalue=2;
+}
+
+
+message GM_QueryOtherPlayer
+{
+	required int32 targetid=1;				//目标角色ID
+}
+
+
+message GM_GangInfoResult
+{
+	required string gangname=1;
+	required int32 gangjob=2; 
+}
+
+message  GM_Crckey
+{
+     required  uint32  crcKey=1;
+	 repeated  int32   messageid=2;///需要校验的消息id
+}
+
+
+message GM_Recover_DeleteRole_Request
+{
+ 	required int32 accountid=1;
+	required int32 roleid=2;
+}
+
+message GM_Recover_DeleteRole_Return
+{
+ 	required int32 result=1;//0成功,1失败
+}
+
+message GM_Cancel_Recover_DeleteRole_Request
+{
+ 	required int32 roleid=1;    
+}
+
+message GM_Cancel_Recover_DeleteRole_Return
+{
+ 	required int32 result=1;//0成功,1失败
+}
+
+message GM_Recover_DeleteRole_Notify
+{
+	required int32 roleid=1;     
+}
+
+message GM_Player_Recovery
+{
+	required int32 tiredremainder=1;	// 体力剩余时间
+	optional int32 chastenremainder=2;	// 历练剩余时间
+	optional int32 tiredRecover=3;		// 体力每多少时间回复一次
+	optional int32 chastenRecover=4;	// 历练每多少时间回复一次
+	optional int32 tirednum=5;			// 体力每次回复多少点
+	optional int32 chastennum=6;		// 历练每次回复多少点
+}
+
+
+//请求改变性别，相框，头像;
+message GM_Player_changeSex
+{  
+//请求的头像id;
+required int32 sex=1;
+ //请求的相框id;
+optional int32 head=2;
+//性别 0男 1女;
+optional int32 frame=3; 
+//错误id;
+//0成功，2头像的vip等级不足，3头像的数据表错误，4请求的相框的vip等级不足，，5相框的数据表错误，6性别不存在，7服务器错误,8头像性别不符,9头像太短;
+optional int32 errorid=4;
+//头像url;
+optional string headurl=5;
+}
+
+//角色的serverid;
+message GM_Ip_request
+{
+required int32 serverid=1;
+//玩家id;
+optional int32 roleid=2;
+}
+//角色ip;
+message GM_Ip_return
+{
+required string ip=1;
+//玩家id;
+optional int32 roleid=2;
+}

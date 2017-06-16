@@ -1,0 +1,126 @@
+
+×
+wedding.txt"/
+GM_Notify_JoinWedding
+canJoinWedding ("9
+GM_JoinWedding_Return
+result (
+lastTime ("s
+GM_Notify_BeginProcess
+process (
+lastTime (
+canWorldInvite (
+manid (
+womanid ("%
+GM_InviteOpen_Request
+kind ("O
+GM_InviteOpenFriend_Return
+result (!
+item (2.GMInviteFriendItem"6
+GM_InviteFriend_Request
+count (
+item ("y
+GMInviteFriendItem
+friendid (
+friendprofession (
+
+friendname (	
+	hasInvite (
+isOnline ("5
+GM_InviteFriend_Return
+count (
+item ("&
+GM_FlowerBless_Request
+kind ("³
+GM_SimilarOperate_Return
+result (
+hasCount (
+getDiamonds (
+objectid (
+	objectnum (
+canHideActivity (
+celeType (
+coldTime ("'
+GM_FireWork_Request
+firekind ("O
+GM_BlessRank_Return
+myRank (
+myBless (
+item (2	.RankItem"8
+RankItem
+rank (
+name (	
+getCount ("O
+GM_TimeAndCount_Return
+count (
+lastTime (
+isCompOnline ("—
+GM_ProcessData_Request
+lastTime (
+process (
+item (2	.ColdTime
+man (
+woman (
+	hasGetRed (
+
+isProhibit ("@
+ColdTime
+celeType (
+coldtime (
+hasCount ("&
+GM_BigMeal_Request
+eatValue ("Z
+GM_BigMeal_Return
+result (
+coldTime (
+objectid (
+	objectnum ("?
+GM_SlotMachineObject_Return 
+item (2.SlotMachineObject"G
+SlotMachineObject
+place (
+objectid (
+	objectnum ("#
+GM_SlotTurn_Return
+place ("0
+GM_ObjectSee_Return
+item (2.ObjectData"1
+
+ObjectData
+objectid (
+	objectnum ("(
+InstanceInviteFriend
+friendid (""
+GMKickOutRequest
+roleid ("$
+GMReserchDataRequest
+name (	".
+GMReserchDataReturn
+item (2	.RoleData":
+RoleData
+isFriend (
+roleid (
+name (	"!
+GMProhibitRequest
+kind ("7
+GMManagerProceeReturn
+result (
+roleid ("Ì
+GMWeddingChat
+roleId (
+name (	
+vip (
+word (	
+receName (	
+repeatTimes (
+intervalTime (
+
+receroleid	 (
+recevip
+ (
+kind (
+
+profession ("#
+GMGiftRequest
+
+blessValue (

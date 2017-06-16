@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 319593337
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: e2b899772cdb7c5be6ab27e92dc5eb2c
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 3af99b83e3d58d4f8cfc3914b834d4a5
+HashAppended: 0
+ClassTypes:
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Scenes/MJScene/Model/Dice/1.1/touzi.controller
+- Assets/Resources/Raw/Scenes/MJScene/Model/Dice/1.1/donghua.anim
+Dependencies: []

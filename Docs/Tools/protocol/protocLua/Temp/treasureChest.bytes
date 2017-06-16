@@ -1,0 +1,35 @@
+
+Ô
+treasureChest.txt"V
+GM_TreasureChestInfo_Return
+count ((
+subBox (2.GM_TreasureChestSubInfo"Â
+GM_TreasureChestSubInfo
+boxType (
+costType (
+
+numberType (
+costNum (
+discount (
+	freeTimes (
+totalFreeTimes (
+leftTime (
+BuyCount	 ("C
+GM_TreasureChestOpen_Request
+boxType (
+
+numberType ("s
+ GM_TreasureChestGetObject_Return
+result (
+count (0
+	subObject (2.GM_TreasureChestGetSubObject"@
+GM_TreasureChestGetSubObject
+objectId (
+number ("2
+GM_TreasureTokenOpen_Request
+
+boxTokenID ("r
+GM_TreasureTokenetObject_Return
+result (
+count (0
+	subObject (2.GM_TreasureChestGetSubObject

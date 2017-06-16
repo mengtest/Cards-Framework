@@ -1,0 +1,23 @@
+ManifestFileVersion: 0
+CRC: 1183812535
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 7e99733c5bf07718b8488ebf23ddc635
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c1642440719609290a7e09a50a7286f4
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Effect/MaJiang/texture/dilie.png
+- Assets/Resources/Raw/Effect/MaJiang/texture/luxuan.png
+- Assets/Resources/Raw/Effect/MaJiang/texture/1972-1.png
+- Assets/Resources/Raw/Effect/MaJiang/texture/SF4_dds_0048.png
+- Assets/Resources/Raw/Effect/MaJiang/texture/hu-3.png
+- Assets/Resources/Raw/Effect/MaJiang/texture/SF4_dds_0311.png
+- Assets/Resources/Raw/Effect/MaJiang/texture/shandian.png
+- Assets/Resources/Raw/Effect/MaJiang/texture/shuye.png
+Dependencies: []

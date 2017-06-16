@@ -1,0 +1,24 @@
+
+¨
+	skill.txt"€
+GM_Skill_Info_return
+result (.
+playerskillinfo (2.GM_Player_Skill_Info(
+petskillinfo (2.GM_Pet_Skill_Info";
+GM_Player_Skill_Info
+skillID (
+
+skilllevel ("Y
+GM_Pet_Skill_Info
+petID (
+skillID (
+
+skilllevel (
+isActive ("!
+GM_SkillUpdate
+skillid ("]
+GM_SkillUpdate_Return
+result (
+skillid (
+skilllvl (
+	skillType (

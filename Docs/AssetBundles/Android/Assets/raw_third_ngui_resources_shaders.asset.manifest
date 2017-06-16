@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 368510874
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 37adad21941c7706af8b61f6bab44658
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: cc7b69794a2bdada249e557ebbfded10
+HashAppended: 0
+ClassTypes:
+- Class: 48
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Third/NGUI/Resources/Shaders/Unlit - Transparent Colored.shader
+Dependencies: []

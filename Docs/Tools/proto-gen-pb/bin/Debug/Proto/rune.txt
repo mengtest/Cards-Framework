@@ -1,0 +1,66 @@
+//一条雕纹属性记录
+message GM_RuneItem
+{
+	required int64 runegmid=1;	//雕纹gmid
+	required int32 objectid=2;	//雕纹物品id
+	required int32 runelevel=3;	//雕纹当前等级
+	required int64 totalexp=4;	//雕纹拥有总经验
+}
+
+//玩家身上所有雕纹属性记录
+message GM_AllRuneItem_Return
+{
+	required int32 count=1;  //当前雕纹属性数量
+	repeated GM_RuneItem item=2;//雕纹属性数组
+}
+
+//客户端请求对雕纹喂养
+message GM_RuneFeed_Request
+{
+	required int64 runegmid=1;	//需要喂养的雕纹gmid
+	repeated int64 material=2;	//提供喂养的材料数组雕纹gmid
+}
+
+//返回喂养雕纹结果
+message GM_RuneFeed_Return
+{
+	required int32 result=1;	//喂养雕纹的结果，0，成功，1，不存在的雕纹，2，材料不足，3，不能超过角色等级
+	repeated int64 material=2;	//被吃掉的雕纹gmid(如果成功则会填写此字段)
+	optional GM_RuneItem item=3;//返回雕纹喂养后的信息(如果成功则会填写此字段)
+}
+
+message GM_RuneMatchItem
+{
+	required int32 runenum=1;	//雕纹的位置
+	required int64 runegmid=2;	//雕纹的gmid
+}
+
+//客户端请求装备雕纹
+message GM_RuneDress_Request
+{
+	required int32 bodytype=1;		//角色身上的哪个位置
+	repeated GM_RuneMatchItem item=2;		//需要镶嵌的位置各雕纹gmid
+}
+
+//返回装备雕纹结果
+message GM_RuneDress_Return
+{
+	required int32 result=1;	//装备雕纹的结果，0，成功，1，不存在的雕纹，4，角色部位错误，5,未达到解锁等级，6，雕纹位置错误，7，雕纹类型不匹配
+	required int32 bodytype=2;	//角色身上的哪个位置
+	repeated GM_RuneMatchItem item=3;		//返回镶嵌的位置各雕纹gmid(如果成功则会填写此字段)
+}
+
+//客户端请求卸下雕纹
+message GM_RuneDown_Request
+{
+	required int32 bodytype=1;		//人物身上的哪个位置
+	repeated int32 runenum=2;		//雕纹的位置(数组)
+}
+
+//返回卸下雕纹结果
+message GM_RuneDown_Return
+{
+	required int32 result=1;	//卸下雕纹的结果，0，成功，4，角色部位错误，6，雕纹位置错误，8，该位置没有雕纹，9，背包格子不足
+	required int32 bodytype=2;	//人物身上的哪个位置
+	repeated int32 runenum=3;	//雕纹的位置
+}

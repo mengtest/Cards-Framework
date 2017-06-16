@@ -1,0 +1,33 @@
+ManifestFileVersion: 0
+CRC: 3787473181
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 7d0f11256f08ad8a67953dcd6249af36
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c516f2a3b2b6b67ef759f6410a790acd
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Audio/MJ/Sound/touzi.ogg
+- Assets/Resources/Raw/Audio/MJ/Sound/hu.ogg
+- Assets/Resources/Raw/Audio/MJ/Sound/ClickCard.mp3
+- Assets/Resources/Raw/Audio/MJ/Sound/act_sendcard.mp3
+- Assets/Resources/Raw/Audio/MJ/Sound/bawangchongguan.ogg
+- Assets/Resources/Raw/Audio/MJ/Sound/fail.ogg
+- Assets/Resources/Raw/Audio/MJ/Sound/outcard.ogg
+- Assets/Resources/Raw/Audio/MJ/Sound/0.mp3
+- Assets/Resources/Raw/Audio/MJ/Sound/peng.ogg
+- Assets/Resources/Raw/Audio/MJ/Sound/bawang.ogg
+- Assets/Resources/Raw/Audio/MJ/Sound/5-3.mp3
+- Assets/Resources/Raw/Audio/MJ/Sound/win.ogg
+- Assets/Resources/Raw/Audio/MJ/Sound/chongguan.ogg
+- Assets/Resources/Raw/Audio/MJ/Sound/slefoutcard.ogg
+- Assets/Resources/Raw/Audio/MJ/Sound/start.ogg
+- Assets/Resources/Raw/Audio/MJ/Sound/4-2.mp3
+- Assets/Resources/Raw/Audio/MJ/Sound/act_card_dao.mp3
+- Assets/Resources/Raw/Audio/MJ/Sound/act_grapcard.mp3
+Dependencies: []

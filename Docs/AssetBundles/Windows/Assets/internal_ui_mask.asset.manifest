@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 3928504384
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: df9a5c1984c13d78b1a6d3b0db5c5619
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c1642440719609290a7e09a50a7286f4
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Internal/UI/Mask/label_20.png
+Dependencies: []

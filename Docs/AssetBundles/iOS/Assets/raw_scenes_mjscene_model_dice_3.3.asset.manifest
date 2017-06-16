@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 1462778174
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 0f22f4fad1492f36fe6dbfa010de2d95
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 3af99b83e3d58d4f8cfc3914b834d4a5
+HashAppended: 0
+ClassTypes:
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Scenes/MJScene/Model/Dice/3.3/3.3.anim
+- Assets/Resources/Raw/Scenes/MJScene/Model/Dice/3.3/EF_3.3.controller
+Dependencies: []

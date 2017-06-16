@@ -1,0 +1,39 @@
+message GM_Guide_System_Item
+{
+	required int32 level=1;	//该等级解锁
+	required int32 systemid=2;	//系统id
+	required int32 unlocked=3;	//是否已经解锁(0,未解锁，1，已解锁)
+}
+
+message GM_Guide_AllSystem_Return
+{
+	required int32 count=1;	//已经解锁的系统个数
+	repeated GM_Guide_System_Item item=2;	//系统数组
+}
+
+//
+message GM_Guide_AllGuide_Return
+{
+	required int32 count=1;
+	repeated int32 guides=2;	//所有未完成的新手指引
+}
+
+message GM_Guide_Guide_Item
+{
+	required int32 guideid=1;	//新手指引id
+}
+
+message GM_Guide_FinishGuide_Request
+{
+	required int32 guideid=1;	//客户端请求完成一个新手指引
+}
+
+message GM_Guide_FinishGuide_Return
+{
+	required int32 result=1;	//(0表示成功)，永远成功
+}
+
+message GM_GuideClose_level_Return
+{
+	required int32 level=1;		//客户端请求需要关闭多少级一下的指引
+}

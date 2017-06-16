@@ -1,0 +1,29 @@
+
+ù
+topfight.txt"Ë
+GM_TopfightInfo
+m_roleid (
+
+m_rolename (	
+m_profession (
+	m_toptime (
+m_score (
+m_grade (
+m_level (
+m_reward (
+	m_pagecnt	 (
+	m_hadrank
+ ("ˆ
+GM_TopfightReturn
+m_totalcount (#
+	m_curRank (2.GM_TopfightInfo#
+	m_hisRank (2.GM_TopfightInfo
+m_matchtime ("Z
+GM_TopshopReturn
+	m_ownwand (
+m_resetcost (
+m_objs (2.GM_ShopObject"4
+GM_ShopObject
+
+m_objectid (
+m_count (

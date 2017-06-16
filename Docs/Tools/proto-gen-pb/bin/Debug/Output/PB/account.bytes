@@ -1,0 +1,85 @@
+
+ý
+Proto/account.txt"·
+GM_AccountLog
+
+platformID (
+ditchID (	
+version (	
+	accountID (
+
+macAddress (	
+
+deviceUUID (	
+idfa (	
+
+deviceType (	
+networkType	 (	"x
+GM_AccountRequest
+m_AccountName (	
+
+m_Password (	
+platform (&
+accountLogInfo (2.GM_AccountLog"æ
+GM_AccountReturn
+m_Result (
+m_AccountID (
+	m_RandStr (	
+m_lastloginServerID (
+m_lastloginServerID2 (
+m_lastloginServerState (
+m_lastloginServerName (	
+m_lastloginServerName2 (	"|
+GM_AccountCreate
+m_AccountName (	
+
+m_Password (	&
+accountLogInfo (2.GM_AccountLog
+m_activatekey (	"j
+GM_AccountCreateReturn
+m_Result (
+m_AccountID (
+m_AccountName (	
+
+m_Password (	"/
+GM_AccountExistRequest
+m_AccountName (	"#
+GM_VerifyVersion
+version (	"S
+GM_VerifyVersionReturn
+result (
+serverversion (	
+
+serverFlag ("f
+GM_TestAccountReturn
+accountName (	
+password (	
+accountType (
+
+createTime ("‰
+GM_BindTestAccountRequest
+testAccountName (	
+testPassword (	
+newAccountName (	
+newPassword (	
+platform (	"*
+GM_BindTestAccountReturn
+result ("i
+SP_BindTestAccountRequest:
+bindTestAccountRequest (2.GM_BindTestAccountRequest
+clientIP (	"T
+GM_TestAccountRequest
+result (
+idfa (	
+mac (	
+deviceid (	"r
+GM_RecordAccountInfo
+username (	
+userpassword (	
+userkey (	
+platform (
+channel (	"a
+GM_AccountOPEvent
+op_type (
+device_guid (	&
+accountLogInfo (2.GM_AccountLog

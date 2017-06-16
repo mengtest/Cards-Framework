@@ -1,0 +1,32 @@
+ManifestFileVersion: 0
+CRC: 2473687731
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 23dbc9f56ca8f679a838e58b37518a87
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: b27395869106ca70862d74db7ea621b3
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4d0c51bb0b6e93049af5e88f93826e3b, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Atlas/Hall/ZJM-20.jpg
+- Assets/Resources/Raw/Atlas/Hall/Main.png
+- Assets/Resources/Raw/Atlas/Hall/main.prefab
+- Assets/Resources/Raw/Atlas/Hall/main.mat
+Dependencies:
+- G:/Projects/MJ/MaJiang_Lua/Docs/AssetBundles/Android/Assets/raw_third_ngui_resources_shaders.asset

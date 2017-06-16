@@ -1,0 +1,187 @@
+
+«
+majiang.txt"t
+GMMJRequest
+m_roleid (
+
+m_fbtypeid (
+m_fbplayway (	
+m_roomcount (
+m_playerCount ("°
+
+GMHandCard
+m_bankerPos (
+m_leftCount (
+m_totalCount (
+m_getCardId (
+m_getCardNum (
+m_saizi (&
+
+m_HandCard (2.GM_PlayerHandCard"ä
+GMHandCard_PlayerBack
+m_bankerPos (
+m_leftCount (
+m_totalCount (
+
+m_fbtypeid (
+m_fbplayway (	
+m_playerCount (
+m_roomid (
+m_saizi ((
+m_handCardData (2.GMHandCard_Info"K
+GMHandCard_Info
+m_roleid (&
+
+m_HandCard (2.GM_PlayerHandCard"4
+GM_PlayerHandCard
+m_Index (
+m_Type ("J
+GM_MJCanOperator
+m_roleid ($
+
+m_Operator (2.GM_OperatorData"·
+GM_OperatorData
+m_OperatorType (
+m_FunID (
+m_OperatorCard (
+m_RoleVoice (
+m_CardVoice (
+	m_CardNum (&
+
+m_HandCard
+ (2.GM_PlayerHandCard"×
+GM_MJOperator
+m_roleid (
+m_OperatorType (
+m_RoleVoice (
+m_CardVoice (
+m_Order (
+	m_CardNum (&
+
+m_LastCard (2.GM_PlayerHandCard&
+
+m_HandCard
+ (2.GM_PlayerHandCard"‘
+GM_HUOperator
+
+m_huRoleid (
+m_huType (
+m_fpid ("
+m_Data (2.GM_HuHandCardData
+m_RoleVoice (
+m_CardVoice ($
+m_huCard (2.GM_PlayerHandCard
+m_AllHuRoleid (
+m_AllHuType	 (
+m_MaCardType (
+m_MaCardSign ("þ
+GM_HuHandCardData
+m_roleid (
+m_HandCardType (
+m_Hufeng (
+	m_ZongLei (
+m_Tan (
+m_Sao (
+m_Peng (
+m_Gang (
+m_anGang	 (
+m_reward
+ (
+m_score (
+m_TotalScore (
+	m_SaoType ("U
+GM_AskFriend
+m_Roleid (
+m_Beinvited (
+m_Name (	
+m_FBID ("3
+GM_AutoInfo
+m_Roleid (
+
+m_AutoFlag ("–
+GM_ReconnectMJData
+m_bankerPos (
+m_RoomMasterID (
+
+m_FreeCard (
+m_leftCount (
+m_totalCount (
+m_rollCount (
+m_playerCount (
+m_lastOutCardRoleId (
+m_closeRoomLeftTime	 (
+m_huLastCard
+ (
+m_getCardId (
+m_getCardNum (
+m_sendCardID (
+m_fbplayway (	
+m_saizi (&
+
+m_HandCard (2.GM_PlayerHandCard*
+	m_AllData (2.GM_ReconnectPlayerData3
+m_CloseRoomData (2.GM_ReconnectCloseRoomData(
+m_huOperatorData (2.GM_HUOperator"ˆ
+GM_ReconnectPlayerData
+m_roleid (
+m_Gold (
+m_HeadPhoto (
+m_CataterType (
+	m_Postion (
+m_Name (	
+m_Sex (
+m_handCardNum (
+m_HeadFrame	 (
+
+m_NickName
+ (	
+m_HeadPhotoUrl (	
+m_IsAuto (
+m_TotalScore (
+	m_IsReady (
+m_RoleVoice (
+m_CardVoice (
+m_Longitude (
+
+m_Latitude (
+m_reallyPos (	
+m_DingState ()
+m_OutHandCard (2.GM_PlayerHandCard3
+m_FunHandCardList (2.GM_ReconnectFunHandCard">
+GM_ReconnectCloseRoomData
+m_roleid (
+m_state ("_
+GM_ReconnectFunHandCard
+m_OperatorType (,
+m_FunHandCard (2.GM_PlayerFunHandCard"I
+GM_PlayerFunHandCard
+m_Index (
+m_Type (
+m_RoleId ("P
+GM_MJCardRoomResult
+m_count ((
+	m_OneData (2.GM_MJCardRoomOneData"S
+GM_MJCardRoomOneData
+m_count (*
+m_ResultInfo (2.GM_PlayerResultInfo"²
+GM_PlayerResultInfo
+m_roleid (
+m_score (
+m_sex (
+
+m_congguan (
+m_bawang (
+
+m_vipLevel (
+m_name (	
+	m_headUrl (	
+m_id	 (	"7
+GM_PlayerRollRequest
+m_roleid (
+m_pos (";
+GM_PlayerRecivePack
+m_roleid (
+
+m_packFlag ("&
+GM_MJOperatorError
+m_Result (

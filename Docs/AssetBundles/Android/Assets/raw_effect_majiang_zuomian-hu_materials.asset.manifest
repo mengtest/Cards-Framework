@@ -1,0 +1,21 @@
+ManifestFileVersion: 0
+CRC: 1620192535
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: ab7ed02475d480dfd3baecfb2db73992
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 0520077050483de6babb9bd310d40764
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Effect/MaJiang/zuomian-hu/Materials/hu.mat
+Dependencies:
+- G:/Projects/MJ/MaJiang_Lua/Docs/AssetBundles/Android/Assets/raw_effect_majiang_texture.asset

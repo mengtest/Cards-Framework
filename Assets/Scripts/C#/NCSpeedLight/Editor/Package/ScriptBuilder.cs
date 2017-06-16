@@ -343,20 +343,20 @@ namespace NCSpeedLight
                     isWin = true;
                     luaexe = "luajit.exe";
                     args = "-b " + srcFile + " " + outFile;
-                    exedir = Application.dataPath.Replace("Assets", "") + "/LuaEncoder/luajit_ios/x64/";
+                    exedir = Application.dataPath.Replace("Assets", "") + "/Docs/Tools/LuaEncoder/luajit_ios/x64/";
                 }
                 else
                 {
                     isWin = true;
                     luaexe = "luajit.exe";
                     args = "-b " + srcFile + " " + outFile;
-                    exedir = Application.dataPath.Replace("Assets", "") + "/LuaEncoder/luajit_ios/x86/";
+                    exedir = Application.dataPath.Replace("Assets", "") + "/Docs/Tools/LuaEncoder/luajit_ios/x86/";
                 }
 #else
                 isWin = true;
                 luaexe = "luajit.exe";
                 args = "-b " + srcFile + " " + outFile;
-                exedir = Application.dataPath.Replace("Assets", "") + "/LuaEncoder/luajit/";
+                exedir = Application.dataPath.Replace("Assets", "") + "/Docs/Tools/LuaEncoder/luajit/";
 #endif
             }
             else if (Application.platform == RuntimePlatform.OSXEditor)
@@ -364,7 +364,7 @@ namespace NCSpeedLight
                 isWin = false;
                 luaexe = "./luac";
                 args = "-o " + outFile + " " + srcFile;
-                exedir = Application.dataPath.Replace("Assets", "") + "/LuaEncoder/luavm/";
+                exedir = Application.dataPath.Replace("Assets", "") + "/Docs/Tools/LuaEncoder/luavm/";
             }
             Directory.SetCurrentDirectory(exedir);
             ProcessStartInfo info = new ProcessStartInfo();

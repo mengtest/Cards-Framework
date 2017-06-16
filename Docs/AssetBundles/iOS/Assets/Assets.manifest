@@ -1,0 +1,396 @@
+ManifestFileVersion: 0
+CRC: 810704460
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: bundle_scenes.asset
+      Dependencies:
+        Dependency_0: raw_scenes_mjscene.asset
+    Info_1:
+      Name: raw_scenes_mjscene_model_roomnumber.asset
+      Dependencies: {}
+    Info_2:
+      Name: raw_atlas_majiang.asset
+      Dependencies:
+        Dependency_0: raw_atlas_hall.asset
+        Dependency_1: raw_third_ngui_resources_shaders.asset
+    Info_3:
+      Name: raw_scenes_mjscene_model_effect_yuanpan.asset
+      Dependencies:
+        Dependency_0: raw_scenes_mjscene_model_effect_yuanpan_materials.asset
+    Info_4:
+      Name: raw_effect_majiang_bawang.asset
+      Dependencies:
+        Dependency_0: raw_effect_majiang_kaiju.asset
+        Dependency_1: raw_effect_majiang_mailei.asset
+        Dependency_2: raw_effect_majiang_bawangchongguang.asset
+    Info_5:
+      Name: raw_effect_majiang_chongguan.asset
+      Dependencies:
+        Dependency_0: raw_effect_majiang_bawang.asset
+        Dependency_1: raw_effect_majiang_kaiju.asset
+        Dependency_2: raw_effect_majiang_chongguan_materials.asset
+    Info_6:
+      Name: raw_effect_majiang_kaiju.asset
+      Dependencies:
+        Dependency_0: raw_effect_majiang_operate.asset
+    Info_7:
+      Name: raw_atlas_public.asset
+      Dependencies:
+        Dependency_0: raw_third_ngui_resources_shaders.asset
+    Info_8:
+      Name: raw_scenes_mjscene_model_materials.asset
+      Dependencies: {}
+    Info_9:
+      Name: internal_ui_mask.asset
+      Dependencies: {}
+    Info_10:
+      Name: raw_effect_main_yanhua.asset
+      Dependencies: {}
+    Info_11:
+      Name: raw_scenes_mjscene_model_arrow_ziyuan.asset
+      Dependencies:
+        Dependency_0: raw_scenes_mjscene_model_arrow_ziyuan_materials.asset
+    Info_12:
+      Name: raw_atlas_joinroom.asset
+      Dependencies:
+        Dependency_0: raw_third_ngui_resources_shaders.asset
+    Info_13:
+      Name: raw_effect_majiang_player_gang.asset
+      Dependencies: {}
+    Info_14:
+      Name: raw_effect_ef_ui_jiazai.asset
+      Dependencies:
+        Dependency_0: raw_effect_ef_ui_jiazai_materials.asset
+    Info_15:
+      Name: raw_atlas_dialog.asset
+      Dependencies:
+        Dependency_0: raw_third_ngui_resources_shaders.asset
+    Info_16:
+      Name: raw_effect_majiang_player_hu.asset
+      Dependencies: {}
+    Info_17:
+      Name: raw_effect_majiang_player_chi.asset
+      Dependencies: {}
+    Info_18:
+      Name: raw_effect_majiang_operate.asset
+      Dependencies: {}
+    Info_19:
+      Name: raw_atlas_center.asset
+      Dependencies:
+        Dependency_0: raw_third_ngui_resources_shaders.asset
+    Info_20:
+      Name: raw_effect_majiang_mailei.asset
+      Dependencies:
+        Dependency_0: raw_effect_majiang_chongguan.asset
+        Dependency_1: raw_shader.asset
+        Dependency_2: raw_effect_majiang_mailei_materials.asset
+    Info_21:
+      Name: raw_effect_majiang_texture.asset
+      Dependencies: {}
+    Info_22:
+      Name: raw_effect_majiang_player_peng.asset
+      Dependencies: {}
+    Info_23:
+      Name: raw_atlas_login.asset
+      Dependencies:
+        Dependency_0: raw_third_ngui_resources_shaders.asset
+    Info_24:
+      Name: raw_scenes_mjscene_model_dice_ziyuan.asset
+      Dependencies:
+        Dependency_0: raw_scenes_mjscene_model_dice_ziyuan_materials.asset
+    Info_25:
+      Name: raw_atlas_hall.asset
+      Dependencies:
+        Dependency_0: raw_third_ngui_resources_shaders.asset
+    Info_26:
+      Name: raw_atlas_record.asset
+      Dependencies:
+        Dependency_0: raw_third_ngui_resources_shaders.asset
+    Info_27:
+      Name: raw_atlas_recordvoice.asset
+      Dependencies:
+        Dependency_0: raw_third_ngui_resources_shaders.asset
+    Info_28:
+      Name: raw_effect_majiang_bawangchongguang.asset
+      Dependencies:
+        Dependency_0: raw_effect_majiang_bawang.asset
+        Dependency_1: raw_effect_majiang_kaiju.asset
+        Dependency_2: raw_effect_majiang_operate.asset
+    Info_29:
+      Name: raw_atlas_problem.asset
+      Dependencies:
+        Dependency_0: raw_third_ngui_resources_shaders.asset
+    Info_30:
+      Name: raw_shader.asset
+      Dependencies: {}
+    Info_31:
+      Name: raw_third_ngui_resources_shaders.asset
+      Dependencies: {}
+    Info_32:
+      Name: bundle_prefab_ui_majiang.asset
+      Dependencies:
+        Dependency_0: raw_atlas_majiang.asset
+        Dependency_1: raw_effect_majiang_bawang.asset
+        Dependency_2: raw_effect_majiang_chongguan.asset
+        Dependency_3: raw_effect_majiang_kaiju.asset
+        Dependency_4: raw_atlas_public.asset
+        Dependency_5: internal_ui_mask.asset
+        Dependency_6: raw_atlas_dialog.asset
+        Dependency_7: raw_effect_majiang_operate.asset
+        Dependency_8: raw_atlas_center.asset
+        Dependency_9: raw_atlas_hall.asset
+        Dependency_10: raw_atlas_recordvoice.asset
+        Dependency_11: raw_third_ngui_resources_shaders.asset
+        Dependency_12: raw_font.asset
+        Dependency_13: raw_effect_majiang_biankuang.asset
+    Info_33:
+      Name: raw_scenes_mjscene_model_dice_3.6.asset
+      Dependencies: {}
+    Info_34:
+      Name: raw_effect_majiang_zuomian-hu.asset
+      Dependencies:
+        Dependency_0: raw_effect_majiang_texture.asset
+        Dependency_1: raw_effect_majiang_zuomian-hu_materials.asset
+    Info_35:
+      Name: raw_scenes_mjscene_model_dice_2.6.asset
+      Dependencies: {}
+    Info_36:
+      Name: raw_scenes_mjscene_model_arrow_ziyuan_materials.asset
+      Dependencies:
+        Dependency_0: raw_scenes_mjscene_model_arrow_ziyuan.asset
+    Info_37:
+      Name: raw_scenes_mjscene_model_dice_2.4.asset
+      Dependencies: {}
+    Info_38:
+      Name: bundle_prefab_audio.asset
+      Dependencies:
+        Dependency_0: raw_audio_mj_pt_nan_103_104.asset
+        Dependency_1: raw_audio_mj_pt_nv_101_102.asset
+        Dependency_2: raw_audio_mj_ncfy_nv_101_102.asset
+        Dependency_3: raw_audio_mj_ncfy_nan_sound.asset
+        Dependency_4: raw_audio_ui.asset
+        Dependency_5: raw_audio_mj_ncfy_nv_sound.asset
+        Dependency_6: raw_audio_mj_ncfy_nan_103_104.asset
+        Dependency_7: raw_audio_mj_sound.asset
+        Dependency_8: raw_audio_interaction.asset
+        Dependency_9: raw_audio_bgm.asset
+    Info_39:
+      Name: bundle_prefab_ui_hall.asset
+      Dependencies:
+        Dependency_0: raw_atlas_majiang.asset
+        Dependency_1: raw_atlas_public.asset
+        Dependency_2: internal_ui_mask.asset
+        Dependency_3: raw_effect_main_yanhua.asset
+        Dependency_4: raw_atlas_joinroom.asset
+        Dependency_5: raw_atlas_dialog.asset
+        Dependency_6: raw_atlas_hall.asset
+        Dependency_7: raw_atlas_record.asset
+        Dependency_8: raw_atlas_problem.asset
+        Dependency_9: raw_third_ngui_resources_shaders.asset
+        Dependency_10: raw_font.asset
+    Info_40:
+      Name: raw_effect_majiang_hu.asset
+      Dependencies:
+        Dependency_0: raw_effect_majiang_texture.asset
+    Info_41:
+      Name: raw_effect_majiang_gang_materials.asset
+      Dependencies: {}
+    Info_42:
+      Name: raw_effect_majiang_zuomian_peng.asset
+      Dependencies:
+        Dependency_0: raw_effect_majiang_texture.asset
+    Info_43:
+      Name: raw_scenes_mjscene_model_dice_4.6.asset
+      Dependencies: {}
+    Info_44:
+      Name: bundle_prefab_ui_login.asset
+      Dependencies:
+        Dependency_0: raw_atlas_public.asset
+        Dependency_1: raw_atlas_login.asset
+        Dependency_2: raw_font.asset
+    Info_45:
+      Name: raw_scenes_mjscene_model_dice_ziyuan_materials.asset
+      Dependencies: {}
+    Info_46:
+      Name: raw_effect_ef_ui_jiazai_materials.asset
+      Dependencies: {}
+    Info_47:
+      Name: raw_scenes_mjscene_model_effect_yuanpan_materials.asset
+      Dependencies:
+        Dependency_0: raw_scenes_mjscene_model_effect_yuanpan.asset
+    Info_48:
+      Name: raw_scenes_mjscene_model.asset
+      Dependencies:
+        Dependency_0: raw_scenes_mjscene_model_materials.asset
+    Info_49:
+      Name: bundle_prefab_ui_dialog.asset
+      Dependencies:
+        Dependency_0: raw_atlas_public.asset
+        Dependency_1: raw_scenes_mjscene_model_arrow_ziyuan.asset
+        Dependency_2: raw_effect_ef_ui_jiazai.asset
+        Dependency_3: raw_atlas_dialog.asset
+        Dependency_4: raw_atlas_hall.asset
+        Dependency_5: raw_third_ngui_resources_shaders.asset
+        Dependency_6: raw_font.asset
+    Info_50:
+      Name: raw_scenes_mjscene_model_dice_6.6.asset
+      Dependencies: {}
+    Info_51:
+      Name: raw_effect_majiang_gang.asset
+      Dependencies:
+        Dependency_0: raw_effect_majiang_texture.asset
+        Dependency_1: raw_effect_majiang_gang_materials.asset
+    Info_52:
+      Name: raw_scenes_mjscene_model_dice_1.4.asset
+      Dependencies: {}
+    Info_53:
+      Name: raw_scenes_mjscene_model_dice_1.1.asset
+      Dependencies: {}
+    Info_54:
+      Name: raw_effect_majiang_biankuang_materials.asset
+      Dependencies: {}
+    Info_55:
+      Name: raw_effect_majiang_chongguan_materials.asset
+      Dependencies: {}
+    Info_56:
+      Name: raw_scenes_mjscene_model_dice_2.5.asset
+      Dependencies: {}
+    Info_57:
+      Name: raw_scenes_mjscene_model_dice_3.4.asset
+      Dependencies: {}
+    Info_58:
+      Name: raw_effect_majiang_mailei_materials.asset
+      Dependencies: {}
+    Info_59:
+      Name: raw_scenes_mjscene_model_dice_1.5.asset
+      Dependencies: {}
+    Info_60:
+      Name: raw_scenes_mjscene.asset
+      Dependencies:
+        Dependency_0: raw_scenes_mjscene_model_roomnumber.asset
+        Dependency_1: raw_scenes_mjscene_model_effect_yuanpan.asset
+        Dependency_2: raw_effect_majiang_bawang.asset
+        Dependency_3: raw_effect_majiang_chongguan.asset
+        Dependency_4: raw_scenes_mjscene_model_materials.asset
+        Dependency_5: raw_scenes_mjscene_model_arrow_ziyuan.asset
+        Dependency_6: raw_effect_majiang_player_gang.asset
+        Dependency_7: raw_effect_majiang_player_hu.asset
+        Dependency_8: raw_effect_majiang_player_chi.asset
+        Dependency_9: raw_effect_majiang_mailei.asset
+        Dependency_10: raw_effect_majiang_player_peng.asset
+        Dependency_11: raw_scenes_mjscene_model_dice_ziyuan.asset
+        Dependency_12: raw_effect_majiang_bawangchongguang.asset
+        Dependency_13: raw_scenes_mjscene_model_dice_3.6.asset
+        Dependency_14: raw_effect_majiang_zuomian-hu.asset
+        Dependency_15: raw_scenes_mjscene_model_dice_2.6.asset
+        Dependency_16: raw_scenes_mjscene_model_dice_2.4.asset
+        Dependency_17: raw_effect_majiang_hu.asset
+        Dependency_18: raw_effect_majiang_zuomian_peng.asset
+        Dependency_19: raw_scenes_mjscene_model_dice_4.6.asset
+        Dependency_20: raw_scenes_mjscene_model.asset
+        Dependency_21: raw_scenes_mjscene_model_dice_6.6.asset
+        Dependency_22: raw_effect_majiang_gang.asset
+        Dependency_23: raw_scenes_mjscene_model_dice_1.4.asset
+        Dependency_24: raw_scenes_mjscene_model_dice_1.1.asset
+        Dependency_25: raw_scenes_mjscene_model_dice_2.5.asset
+        Dependency_26: raw_scenes_mjscene_model_dice_3.4.asset
+        Dependency_27: raw_scenes_mjscene_model_dice_1.5.asset
+        Dependency_28: raw_scenes_mjscene_model_dice_5.6.asset
+        Dependency_29: raw_scenes_mjscene_model_dice_4.5.asset
+        Dependency_30: raw_scenes_mjscene_model_dice_3.3.asset
+        Dependency_31: raw_scenes_mjscene_model_dice_2.2.asset
+        Dependency_32: raw_scenes_mjscene_model_dice_1.6.asset
+        Dependency_33: raw_scenes_mjscene_model_dice_1.2.asset
+        Dependency_34: raw_scenes_mjscene_model_dice_1.3.asset
+        Dependency_35: raw_scenes_mjscene_model_dice_5.5.asset
+        Dependency_36: raw_scenes_mjscene_model_dice_4.4.asset
+        Dependency_37: raw_scenes_mjscene_model_dice_2.3.asset
+        Dependency_38: raw_scenes_mjscene_model_dice_3.5.asset
+        Dependency_39: raw_scenes_mjscene_model_cards.asset
+        Dependency_40: raw_effect_majiang_room.asset
+    Info_61:
+      Name: raw_font.asset
+      Dependencies: {}
+    Info_62:
+      Name: raw_effect_majiang_biankuang.asset
+      Dependencies:
+        Dependency_0: raw_effect_majiang_biankuang_materials.asset
+    Info_63:
+      Name: raw_scenes_mjscene_model_dice_5.6.asset
+      Dependencies: {}
+    Info_64:
+      Name: raw_scenes_mjscene_model_dice_4.5.asset
+      Dependencies: {}
+    Info_65:
+      Name: raw_effect_majiang_room_materials.asset
+      Dependencies: {}
+    Info_66:
+      Name: raw_effect_majiang_zuomian-hu_materials.asset
+      Dependencies:
+        Dependency_0: raw_effect_majiang_texture.asset
+    Info_67:
+      Name: raw_scenes_mjscene_model_dice_3.3.asset
+      Dependencies: {}
+    Info_68:
+      Name: raw_scenes_mjscene_model_dice_2.2.asset
+      Dependencies: {}
+    Info_69:
+      Name: raw_scenes_mjscene_model_dice_1.6.asset
+      Dependencies: {}
+    Info_70:
+      Name: raw_scenes_mjscene_model_dice_1.2.asset
+      Dependencies: {}
+    Info_71:
+      Name: raw_scenes_mjscene_model_dice_1.3.asset
+      Dependencies: {}
+    Info_72:
+      Name: raw_scenes_mjscene_model_dice_5.5.asset
+      Dependencies: {}
+    Info_73:
+      Name: raw_scenes_mjscene_model_dice_4.4.asset
+      Dependencies: {}
+    Info_74:
+      Name: raw_scenes_mjscene_model_dice_2.3.asset
+      Dependencies: {}
+    Info_75:
+      Name: raw_scenes_mjscene_model_dice_3.5.asset
+      Dependencies: {}
+    Info_76:
+      Name: raw_audio_mj_pt_nan_103_104.asset
+      Dependencies: {}
+    Info_77:
+      Name: raw_audio_mj_pt_nv_101_102.asset
+      Dependencies: {}
+    Info_78:
+      Name: raw_audio_mj_ncfy_nv_101_102.asset
+      Dependencies: {}
+    Info_79:
+      Name: raw_audio_mj_ncfy_nan_sound.asset
+      Dependencies: {}
+    Info_80:
+      Name: raw_audio_ui.asset
+      Dependencies: {}
+    Info_81:
+      Name: raw_audio_mj_ncfy_nv_sound.asset
+      Dependencies: {}
+    Info_82:
+      Name: raw_audio_mj_ncfy_nan_103_104.asset
+      Dependencies: {}
+    Info_83:
+      Name: raw_audio_mj_sound.asset
+      Dependencies: {}
+    Info_84:
+      Name: raw_audio_interaction.asset
+      Dependencies: {}
+    Info_85:
+      Name: raw_audio_bgm.asset
+      Dependencies: {}
+    Info_86:
+      Name: raw_scenes_mjscene_model_cards.asset
+      Dependencies:
+        Dependency_0: raw_scenes_mjscene_model_materials.asset
+    Info_87:
+      Name: raw_effect_majiang_room.asset
+      Dependencies:
+        Dependency_0: raw_effect_majiang_room_materials.asset

@@ -1,0 +1,78 @@
+
+ò
+
+snatch.txt"1
+GM_Snatch_Item
+objectid (
+count ("]
+GM_Snatch_BuyIfno
+buytype (
+needgold (
+peaceminute (
+objectid ("j
+GM_Snatch_AllInfo
+	peacetime (
+item (2.GM_Snatch_Item#
+buyinfo (2.GM_Snatch_BuyIfno")
+GM_Snatch_Look_Request
+pieceid ("
+GM_Snatch_PlayerInfo
+rolepos (
+roleid (
+rolepro (
+rolelv (
+roleName (	
+probability ("T
+GM_Snatch_Look_Return
+result (+
+m_PlayerInfo (2.GM_Snatch_PlayerInfo">
+GM_Snatch_DoSnatch_Request
+pieceid (
+rolepos ("Ž
+GM_Snatch_DoSnatch_Result
+pieceid (
+count (
+addexp (
+addgold (
+
+costexpval (
+iswin (
+isget ("h
+GM_Snatch_DoSnatch_Return
+result ((
+info (2.GM_Snatch_DoSnatch_Result
+	peacetime ("k
+GM_Snatch_DoMulSnatch_Return
+result ((
+info (2.GM_Snatch_DoSnatch_Result
+	peacetime ("-
+GM_Snatch_BuyPeace_Request
+buytype (">
+GM_Snatch_BuyPeace_Return
+result (
+	peacetime (".
+GM_Snatch_Compound_Request
+objectid ("I
+GM_Snatch_Compound_Return
+result (
+obj (2.GM_CompoundObj"5
+GM_CompoundObj
+objectid (
+	objectnum ("6
+GM_Snatch_Item_Notify
+item (2.GM_Snatch_Item"L
+GM_Snatch_SwitchCardItem
+pos (
+objectid (
+	objectnum ("+
+GM_Snatch_SwitchCard_Request
+pos ("c
+GM_Snatch_SwitchCard_Return
+result (
+pos ('
+item (2.GM_Snatch_SwitchCardItem"R
+GM_Snatch_Reward_Return
+result ('
+item (2.GM_Snatch_SwitchCardItem"/
+GM_Snatch_PeaceTime_Return
+	peacetime (

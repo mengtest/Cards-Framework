@@ -1,0 +1,59 @@
+
+í
+fbunlock.txt"
+GM_UnlockReturn
+
+m_lastfbid (
+
+m_maxelite (
+m_fbdata (2.GM_UnlockFB$
+m_chestsData (2.GM_ChestsData"g
+GM_UnlockFB
+m_chapterId (
+m_fbid (
+m_star (
+m_fight (
+
+m_maxfight ("X
+GM_ChestsData
+m_chapterId (
+m_starCount (
+m_chests (2.GM_cChests"1
+
+GM_cChests
+
+m_chestsId (
+m_state ("O
+GM_StarRank
+m_myrank (
+m_mystar (
+m_data (2.GM_StarInfo"p
+GM_StarInfo
+
+m_rolename (	
+m_rolelv (
+m_starcount (
+m_roleid (
+m_profession ("F
+GM_SweepResult
+m_result ("
+	m_objects (2.GM_SweepObject"2
+GM_SweepObject
+m_objid (
+m_count ("G
+GM_FBNotify
+m_chapterId (
+m_fbId (
+m_starcount ("K
+GM_ChestsNotify
+m_chapterId (
+
+m_chestsId (
+m_state ("\
+GM_SanHuangReturn
+m_totalcount (
+m_fbdata (2.GM_SanHuang
+	matchtime ("3
+GM_SanHuang
+m_fbid (
+m_fightcount (

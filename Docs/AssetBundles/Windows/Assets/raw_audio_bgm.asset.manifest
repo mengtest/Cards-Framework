@@ -1,0 +1,17 @@
+ManifestFileVersion: 0
+CRC: 1163685194
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: b9d1bced53fb0bd51c398ec663537751
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c516f2a3b2b6b67ef759f6410a790acd
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Audio/BGM/CITYBGM.ogg
+- Assets/Resources/Raw/Audio/BGM/majiangBGM.ogg
+Dependencies: []
