@@ -1,0 +1,9 @@
+GameName|QYHZ
+Company|hongzhong
+Channel|hongzhong
+AssetBundle|False
+ScriptBundle|True
+CheckUpdate|False
+ForceUpdate|True
+FileServer|
+AccountServer|

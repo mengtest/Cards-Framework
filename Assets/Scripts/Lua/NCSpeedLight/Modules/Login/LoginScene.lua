@@ -455,6 +455,7 @@ function LoginScene.RecvChooseArea(evt)
 		Log.Info("RecvChooseArea: logic server port is " .. obj.m_PortNumber);
 		LoginScene.LogicServerIP = obj.m_ServerIP;
 		LoginScene.LoginServerPort = obj.m_PortNumber;
+		NetManager.DisconnectFrom(ServerType.Login);
 		NetManager.ConnectTo(ServerType.Logic, LoginScene.LogicServerIP, LoginScene.LoginServerPort, LoginScene.OnConnectLogicServer, LoginScene.OnDisconnectLogicServer, LoginScene.OnReconnectLogicServer, LoginScene.OnLogicServerErrorOccurred);
 	else
 		Log.Info("RecvChooseArea：选区失败");

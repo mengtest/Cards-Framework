@@ -19,6 +19,13 @@ namespace NCSpeedLight
 {
     public static class Constants
     {
+        public static string PREF_FILE_PATH
+        {
+            get
+            {
+                return STREAMING_PATH + "Preferences.txt";
+            }
+        }
         /// <summary>
         /// 游戏名称.
         /// </summary>
