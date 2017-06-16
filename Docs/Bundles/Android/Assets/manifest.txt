@@ -1,4 +1,4 @@
-Assets|9e7fa6c8633f871a9bd8762c4853d1a0|3468
+Assets|968ac71bee61723e49039ab116d7e0fc|3468
 bundle_scenes.asset|fd556933e5711099bc8d58ca59f9d8da|51648
 raw_scenes_mjscene_model_roomnumber.asset|6e14b479d57125c783caabd913d67c43|16606
 raw_atlas_majiang.asset|45467c13c7db9a1ae2b6cd60f98e7d3f|742496
