@@ -1,0 +1,27 @@
+ManifestFileVersion: 0
+CRC: 3411628080
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: e5dc52b4aeb794bcf4cdcd2ee3b148f3
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 6a9f2193d29cd8b4f394cbcae3de6ec0
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Effect/MaJiang/zuomian_peng/yanwu.mat
+- Assets/Resources/Raw/Effect/MaJiang/zuomian_peng/EF_peng.anim
+- Assets/Resources/Raw/Effect/MaJiang/zuomian_peng/peng.controller
+Dependencies:
+- G:/Projects/MJ/MaJiang_Lua/Docs/Bundles/Android/Assets/raw_effect_majiang_texture.asset

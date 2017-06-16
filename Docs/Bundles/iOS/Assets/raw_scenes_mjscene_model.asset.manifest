@@ -1,0 +1,34 @@
+ManifestFileVersion: 0
+CRC: 4191256910
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: b064116fdbe34186958d77b6ea207cec
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 0f74e6ca23ec541f17d7ab76ee8a622b
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 111
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Scenes/MJScene/Model/xipai.anim
+- Assets/Resources/Raw/Scenes/MJScene/Model/Active.anim
+- Assets/Resources/Raw/Scenes/MJScene/Model/Inactive.anim
+- Assets/Resources/Raw/Scenes/MJScene/Model/majiangzhuo.fbx
+Dependencies:
+- G:/Projects/MJ/MaJiang_Lua/Docs/Bundles/iOS/Assets/raw_scenes_mjscene_model_materials.asset

@@ -1,0 +1,26 @@
+ManifestFileVersion: 0
+CRC: 1231159061
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 0c2516a40abc9b6570e9c10173a33c52
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 0520077050483de6babb9bd310d40764
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Effect/MaJiang/hu/shandian 2.mat
+- Assets/Resources/Raw/Effect/MaJiang/hu/shandian 1.mat
+- Assets/Resources/Raw/Effect/MaJiang/hu/shandian 5.mat
+- Assets/Resources/Raw/Effect/MaJiang/hu/shandian 3.mat
+- Assets/Resources/Raw/Effect/MaJiang/hu/shandian 4.mat
+- Assets/Resources/Raw/Effect/MaJiang/hu/shandian.mat
+Dependencies:
+- G:/Projects/MJ/MaJiang_Lua/Docs/Bundles/Android/Assets/raw_effect_majiang_texture.asset

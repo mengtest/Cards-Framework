@@ -1,0 +1,42 @@
+ManifestFileVersion: 0
+CRC: 4291440939
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 8583f2f00def39d5503b2f47d3ea66da
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: d3fbe2642b8d8b8a965f78ca5685daa7
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 111
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Effect/MaJiang/gang/New Material 1.mat
+- Assets/Resources/Raw/Effect/MaJiang/gang/Particle System (3).controller
+- Assets/Resources/Raw/Effect/MaJiang/gang/New Material.mat
+- Assets/Resources/Raw/Effect/MaJiang/gang/gong.anim
+- Assets/Resources/Raw/Effect/MaJiang/gang/luoxuan.FBX
+Dependencies:
+- G:/Projects/MJ/MaJiang_Lua/Docs/Bundles/iOS/Assets/raw_effect_majiang_texture.asset
+- G:/Projects/MJ/MaJiang_Lua/Docs/Bundles/iOS/Assets/raw_effect_majiang_gang_materials.asset

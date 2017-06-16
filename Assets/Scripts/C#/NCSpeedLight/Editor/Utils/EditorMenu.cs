@@ -19,20 +19,8 @@ namespace NCSpeedLight
             }
         }
 
-        [MenuItem("Framework/Package/Backup Asset #%c")]
-        public static void BackupAsset()
-        {
-            EditorHelper.BackupAssetOnPreBuild();
-        }
-
-        [MenuItem("Framework/Package/Restore Asset #%v")]
-        public static void RestoreAsset()
-        {
-            EditorHelper.RestoreAssetOnPostBuild();
-        }
-
-        [MenuItem("Assets/Set AB Tags", false, 5)]
-        public static void SetAssetBundleTag()
+        [MenuItem("Assets/Set Bundle Tag(s)", false, 5)]
+        public static void SetBundleTags()
         {
             UnityEngine.Object[] selected = Selection.objects;
             for (int i = 0; i < selected.Length; i++)

@@ -1,0 +1,35 @@
+ManifestFileVersion: 0
+CRC: 3676569140
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 0dcf1e248a3ce7abc3958fc2452652cc
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: b27395869106ca70862d74db7ea621b3
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4d0c51bb0b6e93049af5e88f93826e3b, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Atlas/Public/publicDynamic.mat
+- Assets/Resources/Raw/Atlas/Public/publicDynamic.prefab
+- Assets/Resources/Raw/Atlas/Public/label_20.png
+- Assets/Resources/Raw/Atlas/Public/public 1.mat
+- Assets/Resources/Raw/Atlas/Public/public 1.png
+- Assets/Resources/Raw/Atlas/Public/publicDynamic.png
+- Assets/Resources/Raw/Atlas/Public/public 1.prefab
+Dependencies:
+- G:/Projects/MJ/MaJiang_Lua/Docs/Bundles/Android/Assets/raw_third_ngui_resources_shaders.asset

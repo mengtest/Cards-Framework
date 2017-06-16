@@ -1,0 +1,73 @@
+ManifestFileVersion: 0
+CRC: 1541126170
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: c0f6a7943d46c35e6947200d9cdc5f63
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 443211baf55c28b294ea750516048cf9
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 20
+  Script: {instanceID: 0}
+- Class: 54
+  Script: {instanceID: 0}
+- Class: 65
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: ae942c9068183dc40a9d01f648273726, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5c041f61e4a9fbf4e830210f5d933ece, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 858a20c1b21a3f94bb5b2d3b901c9aaf, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 87336b627a85f154ab2b074b8a8c3a02, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: eaee0fa3c7a782f43ac65b3fea68c1d6, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 9e2747e3775af504da1a4d5a46c5a1ce, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: e9d0b5f3bbe925a408bd595c79d0bf63, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 1fdca5042b1d12a4890ec1bd4f04290d, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 0b4eb3a400afab046abb8471a9d746d6, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 3d166255cacf07b4292b8402b3ddefc5, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2c5ecb5660b11414fb042fb826e03b73, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2a92b5d748695fd44aac9feef17ba415, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ac5060295fbd39b4a88d20d0c83d925e, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 04d1b7c9e9a19a24ab67123a43c6544b, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 07c4de3b4b6fe9045b059ee627c100df, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4d0c51bb0b6e93049af5e88f93826e3b, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: b1bd99dcf43f97d48bb6215c70f0cd40, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: b56bbc9eec7ee854689e0024113f6215, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 1b3dc54f924693f41b5cbecb267e647a, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Bundle/Prefab/UI/Login/UI_MobileLogin.prefab
+- Assets/Resources/Bundle/Prefab/UI/Login/UI_Register.prefab
+- Assets/Resources/Bundle/Prefab/UI/Login/UI_GuestLogin.prefab
+- Assets/Resources/Bundle/Prefab/UI/Login/UI_BindAccount.prefab
+- Assets/Resources/Bundle/Prefab/UI/Login/UI_NormalLogin.prefab
+Dependencies:
+- G:/Projects/MJ/MaJiang_Lua/Docs/Bundles/Windows/Assets/raw_atlas_public.asset
+- G:/Projects/MJ/MaJiang_Lua/Docs/Bundles/Windows/Assets/raw_atlas_login.asset
+- G:/Projects/MJ/MaJiang_Lua/Docs/Bundles/Windows/Assets/raw_font.asset

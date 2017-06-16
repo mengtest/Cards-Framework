@@ -1,0 +1,34 @@
+ManifestFileVersion: 0
+CRC: 339814699
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 57970f7ce5448b43fc4eeb2006e9f438
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 0520077050483de6babb9bd310d40764
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Scenes/MJScene/Model/Materials/3.jpg
+- Assets/Resources/Raw/Scenes/MJScene/Model/Materials/MJ_zhuozi.jpg
+- Assets/Resources/Raw/Scenes/MJScene/Model/Materials/7.jpg
+- Assets/Resources/Raw/Scenes/MJScene/Model/Materials/6.jpg
+- Assets/Resources/Raw/Scenes/MJScene/Model/Materials/Mj_majiangzi.png
+- Assets/Resources/Raw/Scenes/MJScene/Model/Materials/MJ_zhuozi.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/Materials/7.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/Materials/3.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/Materials/1.jpg
+- Assets/Resources/Raw/Scenes/MJScene/Model/Materials/majiang_0830.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/Materials/1.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/Materials/2.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/Materials/6.mat
+- Assets/Resources/Raw/Scenes/MJScene/Model/Materials/2.jpg
+- Assets/Resources/Raw/Scenes/MJScene/Model/Materials/Mj_majiangzi.mat
+Dependencies: []

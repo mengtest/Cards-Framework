@@ -2,30 +2,12 @@
 # 此 .gitignore 文件已由 Microsoft(R) Visual Studio 自动创建。
 ################################################################################
 
-/.vs
+*.vs
+*.sln
+*.csproj
 /Temp
 /Library
-/Tools/Protocol-Gen/obj/Debug
-/Assets/StreamingAssets/Lua.meta
-/Assets/StreamingAssets/Lua
-/Assets/Scripts/obj
-/Bin
-/AssetBundles/
-/AssetBundles/Android/
-/AssetBundles/iOS/
-/AssetBundles/Win/
-/AssetBundles/Windows/
-/Tools/proto-gen-pb/bin/Debug/
-/Tools/proto-gen-pb/.vs
-/Tools/protocol/protocLua/Temp
-/Tools/protocol/protocLua/PBMessage.pb
-/Tools/protocol/protocLua/PBMessage.lua
-/Tools/protocol/protocLua/GameMessage.lua
-/Cards-Framework.sln
-/Cards-Framework.CSharp.Editor.csproj
-/Cards-Framework.CSharp.csproj
-/MaJiang_Lua.sln
-/MaJiang_Lua.CSharp.Editor.csproj
-/MaJiang_Lua.CSharp.csproj
-/PersistentData
-*.csproj
+/Docs/PersistentData/
+/Docs/Archives/
+
+

@@ -10,69 +10,19 @@ using System.Collections.Generic;
 
 namespace NCSpeedLight
 {
-    public partial class XClass : System.IDisposable
-    {
-        public string ClassPath;
-
-        public XClass(string path)
-        {
-            ClassPath = path;
-            if (File.Exists(ClassPath) == false)
-            {
-                Debug.LogError("Class does not exists at " + path);
-                return;
-            }
-        }
-
-        public void WriteBelow(string below, string text)
-        {
-            StreamReader streamReader = new StreamReader(ClassPath);
-            string text_all = streamReader.ReadToEnd();
-            streamReader.Close();
-            int beginIndex = text_all.IndexOf(below);
-            if (beginIndex == -1)
-            {
-                Debug.LogError("There is no symbol " + below + " at " + ClassPath);
-                return;
-            }
-            int endIndex = text_all.LastIndexOf("\n", beginIndex + below.Length);
-            text_all = text_all.Substring(0, endIndex) + "\n" + text + "\n" + text_all.Substring(endIndex);
-            StreamWriter streamWriter = new StreamWriter(ClassPath);
-            streamWriter.Write(text_all);
-            streamWriter.Close();
-        }
-
-        public void Replace(string below, string newText)
-        {
-            StreamReader streamReader = new StreamReader(ClassPath);
-            string text_all = streamReader.ReadToEnd();
-            streamReader.Close();
-            int beginIndex = text_all.IndexOf(below);
-            if (beginIndex == -1)
-            {
-                Debug.LogError("There is no symbol " + below + " at " + ClassPath);
-                return;
-            }
-            text_all = text_all.Replace(below, newText);
-            StreamWriter streamWriter = new StreamWriter(ClassPath);
-            streamWriter.Write(text_all);
-            streamWriter.Close();
-        }
-        public void Dispose() { }
-    }
-
     public class iOSBuilder : Builder
     {
-        private static bool PROFILE_VERSION = false;
-        public static string BIN_PATH = "Bin/proj.ios";
+        private string archivePath;
         public iOSBuilder(Action preBuild, Action postBuild) : base(preBuild, postBuild) { }
 
         public override void Build()
         {
 #if UNITY_IOS
+            CalculateArchivePath();
             EditorHelper.BackupAssetOnPreBuild();
-            BuildOptions ops = SetBuildOption();
-            BuildPipeline.BuildPlayer(GetBuildScenes(), BIN_PATH, BuildTarget.iOS, ops);
+            CopyBundlesToStreaming();
+            BuildPipeline.BuildPlayer(GetBuildScenes(), archivePath, BuildTarget.iOS, SetBuildOption());
+            DeleteBundlesFromStreaming();
             EditorHelper.RestoreAssetOnPostBuild();
 #endif
         }
@@ -88,17 +38,68 @@ namespace NCSpeedLight
         {
             PlayerSettings.iOS.targetDevice = iOSTargetDevice.iPhoneAndiPad;
             BuildOptions ops = BuildOptions.None;
-            if (PROFILE_VERSION)
-            {
-                ops |= BuildOptions.Development;
-                ops |= BuildOptions.AllowDebugging;
-                ops |= BuildOptions.ConnectWithProfiler;
-            }
-            else
-            {
-                ops |= BuildOptions.None;
-            }
             return ops;
+        }
+
+        private void CalculateArchivePath()
+        {
+            int maxIndex = 1;
+            string datetime = DateTime.Now.ToString("yyyyMMdd");
+            if (Directory.Exists(Constants.BUILD_ARCHIVE_PATH))
+            {
+                DirectoryInfo binDirectory = new DirectoryInfo(Constants.BUILD_ARCHIVE_PATH);
+                DirectoryInfo[] directoryInfos = binDirectory.GetDirectories();
+                if (directoryInfos != null && directoryInfos.Length > 0)
+                {
+                    for (int i = 0; i < directoryInfos.Length; i++)
+                    {
+                        DirectoryInfo directoryInfo = directoryInfos[i];
+                        if (directoryInfo == null) continue;
+                        string fileName = directoryInfo.Name;
+                        if (string.IsNullOrEmpty(fileName)) continue;
+                        if (fileName.EndsWith(".xcode") == false) continue;
+                        string[] dotArray = fileName.Split(new char[] { '.' });
+                        if (dotArray == null || dotArray.Length == 0)
+                        {
+                            continue;
+                        }
+                        if (dotArray.Length < 2) continue;
+                        string newName = dotArray[dotArray.Length - 2];
+                        if (string.IsNullOrEmpty(newName)) continue;
+                        string[] strArray = newName.Split(new char[] { '_' });
+                        if (strArray.Length == 2)
+                        {
+                            string tempdate = strArray[0];
+                            if (string.IsNullOrEmpty(tempdate)) continue;
+                            if (tempdate.EndsWith(datetime))
+                            {
+                                int tempIndex = 0;
+                                int.TryParse(strArray[1], out tempIndex);
+                                if (tempIndex >= maxIndex)
+                                {
+                                    maxIndex = tempIndex;
+                                    maxIndex++;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            archivePath = Helper.StringFormat("{0}{1}{2}_{3}.xcode", Constants.BUILD_ARCHIVE_PATH, Constants.GAME_NAME, datetime, maxIndex);
+        }
+
+        private void CopyBundlesToStreaming()
+        {
+            Helper.CopyDirectory(Constants.BUILD_ASSET_BUNDLE_PATH, Constants.STREAMING_ASSET_BUNDLE_PATH, ".meta", ".manifest", ".DS_Store");
+            Helper.CopyDirectory(Constants.BUILD_SCRIPT_BUNDLE_PATH, Constants.STREAMING_PATH + "Scripts/", ".meta", ".manifest", ".DS_Store");
+            AssetDatabase.Refresh();
+        }
+
+        private void DeleteBundlesFromStreaming()
+        {
+            Helper.DeleteDirectory(Constants.STREAMING_ASSET_BUNDLE_PATH);
+            Helper.DeleteDirectory(Constants.STREAMING_PATH + "Scripts/");
+            AssetDatabase.Refresh();
         }
 
 #if UNITY_IOS
@@ -248,13 +249,57 @@ namespace NCSpeedLight
                 outfiles.Add(directory);
             }
         }
-
-
-        private static void CopyStreamingFile(string root)
-        {
-            Helper.CopyDirectory(Constants.BUILD_ASSET_BUNDLE_PATH, root + "/Data/Raw/Assets/", ".meta", ".manifest", ".DS_Store");
-            Helper.CopyDirectory(Constants.BUILD_SCRIPT_BUNDLE_PATH, root + "/Data/Raw/Scripts/", ".meta", ".manifest", ".DS_Store");
-        }
 #endif
+    }
+
+    public partial class XClass : System.IDisposable
+    {
+        public string ClassPath;
+
+        public XClass(string path)
+        {
+            ClassPath = path;
+            if (File.Exists(ClassPath) == false)
+            {
+                Debug.LogError("Class does not exists at " + path);
+                return;
+            }
+        }
+
+        public void WriteBelow(string below, string text)
+        {
+            StreamReader streamReader = new StreamReader(ClassPath);
+            string text_all = streamReader.ReadToEnd();
+            streamReader.Close();
+            int beginIndex = text_all.IndexOf(below);
+            if (beginIndex == -1)
+            {
+                Debug.LogError("There is no symbol " + below + " at " + ClassPath);
+                return;
+            }
+            int endIndex = text_all.LastIndexOf("\n", beginIndex + below.Length);
+            text_all = text_all.Substring(0, endIndex) + "\n" + text + "\n" + text_all.Substring(endIndex);
+            StreamWriter streamWriter = new StreamWriter(ClassPath);
+            streamWriter.Write(text_all);
+            streamWriter.Close();
+        }
+
+        public void Replace(string below, string newText)
+        {
+            StreamReader streamReader = new StreamReader(ClassPath);
+            string text_all = streamReader.ReadToEnd();
+            streamReader.Close();
+            int beginIndex = text_all.IndexOf(below);
+            if (beginIndex == -1)
+            {
+                Debug.LogError("There is no symbol " + below + " at " + ClassPath);
+                return;
+            }
+            text_all = text_all.Replace(below, newText);
+            StreamWriter streamWriter = new StreamWriter(ClassPath);
+            streamWriter.Write(text_all);
+            streamWriter.Close();
+        }
+        public void Dispose() { }
     }
 }

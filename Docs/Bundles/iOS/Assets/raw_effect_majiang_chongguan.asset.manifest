@@ -1,0 +1,63 @@
+ManifestFileVersion: 0
+CRC: 3404501562
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: ff8eee3b676ba0f2b0bc1c48bae75e2b
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: beb77c722b749c45d489e581b3c4d06a
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 90
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Effect/MaJiang/chongguan/shandiansi.png
+- Assets/Resources/Raw/Effect/MaJiang/chongguan/chongguan 3.mat
+- Assets/Resources/Raw/Effect/MaJiang/chongguan/shandian 1.mat
+- Assets/Resources/Raw/Effect/MaJiang/chongguan/kuosan 2.mat
+- Assets/Resources/Raw/Effect/MaJiang/chongguan/chongguan 5.mat
+- Assets/Resources/Raw/Effect/MaJiang/chongguan/kuosan.mat
+- Assets/Resources/Raw/Effect/MaJiang/chongguan/light0075.png
+- Assets/Resources/Raw/Effect/MaJiang/chongguan/chong_1.mat
+- Assets/Resources/Raw/Effect/MaJiang/chongguan/chongguan_donghua.anim
+- Assets/Resources/Raw/Effect/MaJiang/chongguan/854-1.png
+- Assets/Resources/Raw/Effect/MaJiang/chongguan/jpg_010912.png
+- Assets/Resources/Raw/Effect/MaJiang/chongguan/mengban.png
+- Assets/Resources/Raw/Effect/MaJiang/chongguan/zoutu 1.FBX
+- Assets/Resources/Raw/Effect/MaJiang/chongguan/light0075_Alpha.png
+- Assets/Resources/Raw/Effect/MaJiang/chongguan/New Material 4.mat
+- Assets/Resources/Raw/Effect/MaJiang/chongguan/donghua.controller
+- Assets/Resources/Raw/Effect/MaJiang/chongguan/chongguan.mat
+- Assets/Resources/Raw/Effect/MaJiang/chongguan/kuosan 1.mat
+- Assets/Resources/Raw/Effect/MaJiang/chongguan/New Material 3.mat
+- Assets/Resources/Raw/Effect/MaJiang/chongguan/mengban.mat
+- Assets/Resources/Raw/Effect/MaJiang/chongguan/shandian 2.mat
+Dependencies:
+- G:/Projects/MJ/MaJiang_Lua/Docs/Bundles/iOS/Assets/raw_effect_majiang_bawang.asset
+- G:/Projects/MJ/MaJiang_Lua/Docs/Bundles/iOS/Assets/raw_effect_majiang_kaiju.asset
+- G:/Projects/MJ/MaJiang_Lua/Docs/Bundles/iOS/Assets/raw_effect_majiang_chongguan_materials.asset

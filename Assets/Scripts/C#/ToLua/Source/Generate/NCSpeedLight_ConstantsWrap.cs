@@ -39,8 +39,6 @@ public class NCSpeedLight_ConstantsWrap
 		L.RegVar("JSON_URL", get_JSON_URL, null);
 		L.RegVar("DATA_PATH", get_DATA_PATH, null);
 		L.RegVar("CONFIG_PATH", get_CONFIG_PATH, null);
-		L.RegVar("BUILD_SCRIPT_BUNDLE_PATH", get_BUILD_SCRIPT_BUNDLE_PATH, null);
-		L.RegVar("BUILD_ASSET_BUNDLE_PATH", get_BUILD_ASSET_BUNDLE_PATH, null);
 		L.RegVar("STREAMING_PATH", get_STREAMING_PATH, null);
 		L.RegVar("PLATFORM_NAME", get_PLATFORM_NAME, null);
 		L.RegVar("SCRIPT_BYTE_CODE_MODE", get_SCRIPT_BYTE_CODE_MODE, null);
@@ -519,34 +517,6 @@ public class NCSpeedLight_ConstantsWrap
 		try
 		{
 			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.CONFIG_PATH);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_BUILD_SCRIPT_BUNDLE_PATH(IntPtr L)
-	{
-		try
-		{
-			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.BUILD_SCRIPT_BUNDLE_PATH);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_BUILD_ASSET_BUNDLE_PATH(IntPtr L)
-	{
-		try
-		{
-			LuaDLL.lua_pushstring(L, NCSpeedLight.Constants.BUILD_ASSET_BUNDLE_PATH);
 			return 1;
 		}
 		catch(Exception e)

@@ -13,6 +13,7 @@ using System;
 using System.IO;
 using System.Net.NetworkInformation;
 using UnityEngine;
+using LuaInterface;
 
 namespace NCSpeedLight
 {
@@ -219,7 +220,7 @@ namespace NCSpeedLight
                 if (Application.isEditor)
                 {
                     int i = Application.dataPath.LastIndexOf('/');
-                    return Application.dataPath.Substring(0, i + 1) + "PersistentData/";
+                    return Application.dataPath.Substring(0, i + 1) + "Docs/PersistentData/";
                 }
                 else if (Application.platform == RuntimePlatform.WindowsPlayer)
                 {
@@ -242,24 +243,38 @@ namespace NCSpeedLight
         }
 
         /// <summary>
+        /// 构建可执行文件目录
+        /// </summary>
+        [NoToLua]
+        public static string BUILD_ARCHIVE_PATH
+        {
+            get
+            {
+                return Application.dataPath.Substring(0, Application.dataPath.IndexOf("/Assets")) + "/Docs/Archives/" + PLATFORM_NAME + "/";
+            }
+        }
+
+        /// <summary>
         /// 编译的脚本包路径
         /// </summary>
+        [NoToLua]
         public static string BUILD_SCRIPT_BUNDLE_PATH
         {
             get
             {
-                return Application.dataPath.Substring(0, Application.dataPath.IndexOf("/Assets")) + "/Docs/AssetBundles/" + PLATFORM_NAME + "/Scripts/";
+                return Application.dataPath.Substring(0, Application.dataPath.IndexOf("/Assets")) + "/Docs/Bundles/" + PLATFORM_NAME + "/Scripts/";
             }
         }
 
         /// <summary>
         /// 编译的资源包路径
         /// </summary>
+        [NoToLua]
         public static string BUILD_ASSET_BUNDLE_PATH
         {
             get
             {
-                return Application.dataPath.Substring(0, Application.dataPath.IndexOf("/Assets")) + "/Docs/AssetBundles/" + PLATFORM_NAME + "/Assets/";
+                return Application.dataPath.Substring(0, Application.dataPath.IndexOf("/Assets")) + "/Docs/Bundles/" + PLATFORM_NAME + "/Assets/";
             }
         }
 
@@ -286,17 +301,24 @@ namespace NCSpeedLight
             get
             {
                 string path = string.Empty;
-                switch (Application.platform)
+                if (Application.isEditor)
                 {
-                    case RuntimePlatform.Android:
-                        path = "jar:file://" + Application.dataPath + "!/assets/";
-                        break;
-                    case RuntimePlatform.IPhonePlayer:
-                        path = Application.dataPath + "/Raw/";
-                        break;
-                    default:
-                        path = Application.dataPath + "/StreamingAssets/";
-                        break;
+                    path = Application.dataPath + "/StreamingAssets/";
+                }
+                else
+                {
+                    switch (Application.platform)
+                    {
+                        case RuntimePlatform.Android:
+                            path = "jar:file://" + Application.dataPath + "!/assets/";
+                            break;
+                        case RuntimePlatform.IPhonePlayer:
+                            path = Application.dataPath + "/Raw/";
+                            break;
+                        default:
+                            path = Application.dataPath + "/StreamingAssets/";
+                            break;
+                    }
                 }
                 return path;
             }

@@ -20,20 +20,20 @@ namespace NCSpeedLight
 {
     public class ControlPanel : EditorWindow
     {
-        [MenuItem("Framework/Package/Build Asset %#z")]
+        [MenuItem("Framework/Bundle/Build Asset %#z")]
         public static void BuildAsset()
         {
             AssetBuilder.Build();
         }
 
-        [MenuItem("Framework/Package/Build Script %#x")]
+        [MenuItem("Framework/Bundle/Build Script %#x")]
         public static void BuildScript()
         {
             ScriptBuilder.Build();
         }
 
-        [MenuItem("Framework/Package/Build AB Tag")]
-        public static void BuildABTag()
+        [MenuItem("Framework/Bundle/Build Tag")]
+        public static void BuildTag()
         {
 #if UNITY_ANDROID || UNITY_IOS
             if (EditorUtility.DisplayDialog("Warning", "Operation is denied,plesase switch to PC environment.", "OK"))
@@ -45,19 +45,31 @@ namespace NCSpeedLight
 #endif
         }
 
-        [MenuItem("Framework/Package/Build iOS")]
+        [MenuItem("Framework/Bundle/Backup Asset #%c")]
+        public static void BackupAsset()
+        {
+            EditorHelper.BackupAssetOnPreBuild();
+        }
+
+        [MenuItem("Framework/Bundle/Restore Asset #%v")]
+        public static void RestoreAsset()
+        {
+            EditorHelper.RestoreAssetOnPostBuild();
+        }
+
+        [MenuItem("Framework/Archive/Build iOS")]
         public static void BuildiOS()
         {
             iOSBuilder.Build();
         }
 
-        [MenuItem("Framework/Package/Build Android")]
+        [MenuItem("Framework/Archive/Build Android")]
         public static void BuildAndroid()
         {
             AndroidBuilder.Build();
         }
 
-        [MenuItem("Framework/Package/Build Windows")]
+        [MenuItem("Framework/Archive/Build Windows")]
         public static void BuildWindows()
         {
             WindowsBuilder.Build();

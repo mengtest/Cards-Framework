@@ -1,0 +1,35 @@
+ManifestFileVersion: 0
+CRC: 3503349191
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 343e9faf88d76331b956bf8eedb4e1fe
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 914d779a3453be66b8c911ae9eee705f
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Effect/MaJiang/bawangchongguang/huoyan 1.mat
+- Assets/Resources/Raw/Effect/MaJiang/bawangchongguang/huoyan.mat
+- Assets/Resources/Raw/Effect/MaJiang/bawangchongguang/kuosan 2.mat
+- Assets/Resources/Raw/Effect/MaJiang/bawangchongguang/cgbw(1) 1.png
+- Assets/Resources/Raw/Effect/MaJiang/bawangchongguang/donghua.controller
+- Assets/Resources/Raw/Effect/MaJiang/bawangchongguang/huoyan 2.mat
+- Assets/Resources/Raw/Effect/MaJiang/bawangchongguang/chongguang_donghua.anim
+Dependencies:
+- G:/Projects/MJ/MaJiang_Lua/Docs/Bundles/Windows/Assets/raw_effect_majiang_bawang.asset
+- G:/Projects/MJ/MaJiang_Lua/Docs/Bundles/Windows/Assets/raw_effect_majiang_kaiju.asset
+- G:/Projects/MJ/MaJiang_Lua/Docs/Bundles/Windows/Assets/raw_effect_majiang_operate.asset

@@ -1,0 +1,55 @@
+ManifestFileVersion: 0
+CRC: 2316624341
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: aa3776567d96f8c7e316f672fc3ee473
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: e44c915cff1d7cf0909ab2a26ce46325
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4d0c51bb0b6e93049af5e88f93826e3b, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Raw/Atlas/MaJiang/result.prefab
+- Assets/Resources/Raw/Atlas/MaJiang/OperatorPrompt.prefab
+- Assets/Resources/Raw/Atlas/MaJiang/record_voice.anim
+- Assets/Resources/Raw/Atlas/MaJiang/record.png
+- Assets/Resources/Raw/Atlas/MaJiang/OperatorPrompt.mat
+- Assets/Resources/Raw/Atlas/MaJiang/mj.png
+- Assets/Resources/Raw/Atlas/MaJiang/start.png
+- Assets/Resources/Raw/Atlas/MaJiang/hall.prefab
+- Assets/Resources/Raw/Atlas/MaJiang/chat.png
+- Assets/Resources/Raw/Atlas/MaJiang/hall.png
+- Assets/Resources/Raw/Atlas/MaJiang/hall.mat
+- Assets/Resources/Raw/Atlas/MaJiang/mj.prefab
+- Assets/Resources/Raw/Atlas/MaJiang/chat.prefab
+- Assets/Resources/Raw/Atlas/MaJiang/record.mat
+- Assets/Resources/Raw/Atlas/MaJiang/record.prefab
+- Assets/Resources/Raw/Atlas/MaJiang/result.mat
+- Assets/Resources/Raw/Atlas/MaJiang/chat.mat
+- Assets/Resources/Raw/Atlas/MaJiang/start.mat
+- Assets/Resources/Raw/Atlas/MaJiang/start.prefab
+- Assets/Resources/Raw/Atlas/MaJiang/result.png
+- Assets/Resources/Raw/Atlas/MaJiang/mj.mat
+- Assets/Resources/Raw/Atlas/MaJiang/OperatorPrompt.png
+Dependencies:
+- G:/Projects/MJ/MaJiang_Lua/Docs/Bundles/iOS/Assets/raw_atlas_hall.asset
+- G:/Projects/MJ/MaJiang_Lua/Docs/Bundles/iOS/Assets/raw_third_ngui_resources_shaders.asset

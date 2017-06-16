@@ -1,0 +1,17 @@
+ManifestFileVersion: 0
+CRC: 3423851112
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 45da504d0996ed528f011dc49bbf7ad3
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 31d6cfe0d16ae931b73c59d7e0c089c0
+HashAppended: 0
+ClassTypes: []
+Assets:
+- Assets/Resources/Bundle/Scenes/LoginScene.unity
+- Assets/Resources/Bundle/Scenes/MJScene.unity
+- Assets/Resources/Bundle/Scenes/HallScene.unity
+Dependencies:
+- G:/Projects/MJ/MaJiang_Lua/Docs/Bundles/iOS/Assets/raw_scenes_mjscene.asset
