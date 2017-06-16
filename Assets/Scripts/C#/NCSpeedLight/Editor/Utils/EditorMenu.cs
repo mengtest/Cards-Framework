@@ -19,7 +19,7 @@ namespace NCSpeedLight
             }
         }
 
-        [MenuItem("Assets/Set Bundle Tag(s)", false, 5)]
+        [MenuItem("Assets/Set Bundle Tags", false, 5)]
         public static void SetBundleTags()
         {
             UnityEngine.Object[] selected = Selection.objects;

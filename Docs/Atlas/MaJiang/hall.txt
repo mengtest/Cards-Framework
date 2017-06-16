@@ -1,0 +1,52 @@
+{"frames": {
+
+"BJ-10.png":
+{
+	"frame": {"x":406,"y":0,"w":349,"h":447},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":349,"h":447},
+	"sourceSize": {"w":349,"h":447}
+},
+"BJ-11.png":
+{
+	"frame": {"x":0,"y":447,"w":349,"h":447},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":349,"h":447},
+	"sourceSize": {"w":349,"h":447}
+},
+"BJ-9.png":
+{
+	"frame": {"x":0,"y":0,"w":349,"h":447},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":349,"h":447},
+	"sourceSize": {"w":349,"h":447}
+},
+"CJFJ-1.png":
+{
+	"frame": {"x":0,"y":980,"w":177,"h":40},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":177,"h":40},
+	"sourceSize": {"w":177,"h":40}
+},
+"CJFJ-4.png":
+{
+	"frame": {"x":0,"y":894,"w":406,"h":86},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":406,"h":86},
+	"sourceSize": {"w":406,"h":86}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker ",
+	"version": "1.0",
+	"image": "hall.png",
+	"format": "RGBA8888",
+	"size": {"w":1024,"h":1024},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:6264ad3225dcfc82569288f3a884dd91:1/1$"
+}
+}
